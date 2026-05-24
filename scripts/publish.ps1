@@ -41,11 +41,12 @@ try {
   $hasToken = -not [string]::IsNullOrWhiteSpace($env:GITHUB_TOKEN_PUSH)
   if ($env:GITHUB_TOKEN_PUSH) {
     $askpassSource = Join-Path $repo ".git\weekrep-askpass-source.sh"
+    $token = $env:GITHUB_TOKEN_PUSH.Replace("'", "'\''")
     @(
       "#!/bin/sh",
       'case "$1" in',
       "  *Username*) printf '%s\n' 'x-access-token' ;;",
-      "  *) printf '%s\n' ""`$GITHUB_TOKEN_PUSH"" ;;",
+      "  *) printf '%s\n' '$token' ;;",
       "esac"
     ) | Set-Content -Encoding ASCII -Path $askpassSource
     wsl bash -lc "cd '$wslRepo' && sed -i 's/\r$//' .git/weekrep-askpass-source.sh && cp .git/weekrep-askpass-source.sh /tmp/weekrep-pages-askpass.sh && chmod 700 /tmp/weekrep-pages-askpass.sh"
@@ -53,7 +54,7 @@ try {
 
   Write-Step "Committing and pushing changed site artifacts."
   $pushCommand = if ($hasToken) {
-    "GITHUB_TOKEN_PUSH='$($env:GITHUB_TOKEN_PUSH)' GIT_ASKPASS=/tmp/weekrep-pages-askpass.sh GIT_TERMINAL_PROMPT=0 git push"
+    "GIT_ASKPASS=/tmp/weekrep-pages-askpass.sh GIT_TERMINAL_PROMPT=0 git push"
   } else {
     "git push"
   }
