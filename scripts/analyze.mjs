@@ -25,7 +25,8 @@ const personFilter = new Set((process.env.WEEKREP_ANALYZE_PERSON_SLUGS || "").sp
 const rollingPersonAnalysis = process.env.WEEKREP_ANALYZE_ROLLING === "1";
 const analysisTypes = new Set((process.env.WEEKREP_ANALYZE_TYPES || "longitudinal,weekly-score,week-horizontal").split(",").map((item) => item.trim()).filter(Boolean));
 const concurrency = Math.max(1, Number(process.env.WEEKREP_ANALYZE_CONCURRENCY || 4));
-const personWeekPolicy = process.env.WEEKREP_PERSON_WEEK_ANALYSIS_POLICY || "deadline-once";
+const minValidReportChars = Number(process.env.WEEKREP_MIN_VALID_REPORT_CHARS || 10);
+const personWeekPolicy = process.env.WEEKREP_PERSON_WEEK_ANALYSIS_POLICY || "on-change";
 
 async function loadLocalEnv() {
   for (const name of [".env.local", ".env"]) {
@@ -79,6 +80,10 @@ function compactReport(report) {
     submittedAt: report.submittedAt || report.updatedAt || report.createdAt || "",
     rawText: report.rawText
   };
+}
+
+function isValidReport(report) {
+  return String(report?.rawText || "").trim().length > minValidReportChars;
 }
 
 function textFromResponse(payload) {
@@ -248,7 +253,7 @@ async function main() {
   const reportsByPerson = Map.groupBy(site.reports, (report) => report.slug);
   for (const person of site.people) {
     if (personFilter.size && !personFilter.has(person.slug)) continue;
-    const allReports = (reportsByPerson.get(person.slug) || []).sort((a, b) => a.week.localeCompare(b.week));
+    const allReports = (reportsByPerson.get(person.slug) || []).filter(isValidReport).sort((a, b) => a.week.localeCompare(b.week));
     if (!allReports.length) continue;
     const windows = rollingPersonAnalysis
       ? allReports.map((report, index) => ({
@@ -343,6 +348,7 @@ async function main() {
     if (personFilter.size) continue;
     const reports = site.reports
       .filter((report) => report.week === week.week)
+      .filter(isValidReport)
       .map(compactReport);
     jobs.push({
       key: `week:${week.week}:horizontal`,

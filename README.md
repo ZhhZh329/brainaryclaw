@@ -47,11 +47,12 @@ WEEKREP_LONGITUDINAL_WEEKS=4
 WEEKREP_ANALYZE_FORCE=1
 WEEKREP_ANALYZE_CONCURRENCY=100
 
-# Default: wait until the week deadline, then generate each person-week analysis once.
-WEEKREP_PERSON_WEEK_ANALYSIS_POLICY=deadline-once
-
-# Alternative if the boss wants "analyze as soon as the report lands".
+# Default: analyze a person-week as soon as a valid report lands, and re-analyze when content changes.
 WEEKREP_PERSON_WEEK_ANALYSIS_POLICY=on-change
+WEEKREP_MIN_VALID_REPORT_CHARS=10
+
+# Alternative: wait until the week deadline, then generate each person-week analysis once.
+WEEKREP_PERSON_WEEK_ANALYSIS_POLICY=deadline-once
 ```
 
 Open `public/index.html` or run:
