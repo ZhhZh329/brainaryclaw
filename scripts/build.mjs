@@ -65,6 +65,12 @@ async function readReportJson(file, week, fallbackName) {
 }
 const exists = async (file) => fs.access(file).then(() => true, () => false);
 
+function isSundayWeek(value) {
+  const [year, month, day] = String(value).split("-").map(Number);
+  if (!year || !month || !day) return false;
+  return new Date(Date.UTC(year, month - 1, day)).getUTCDay() === 0;
+}
+
 function slugify(value) {
   const slug = String(value || "")
     .normalize("NFKD")
@@ -303,9 +309,10 @@ async function collectStates() {
   const files = (await fs.readdir(weeklyStateDir)).filter((file) => file.endsWith(".json")).sort();
   const states = {};
   for (const file of files) {
-    if (excludedWeeks.has(path.basename(file, ".json"))) continue;
+    const week = path.basename(file, ".json");
+    if (excludedWeeks.has(week) || !isSundayWeek(week)) continue;
     const state = await readJson(path.join(weeklyStateDir, file));
-    states[path.basename(file, ".json")] = state;
+    states[week] = state;
   }
   return states;
 }
