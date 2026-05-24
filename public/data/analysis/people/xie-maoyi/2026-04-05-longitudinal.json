@@ -1,0 +1,59 @@
+{
+  "key": "person:xie-maoyi:2026-04-05:longitudinal",
+  "generatedAt": "2026-05-24T11:53:19.679Z",
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "reasoningEffort": "high",
+  "inputHash": "05038f504f4e1330ca726d99027965b95af90be757a1c1b98837dff3f70156a8",
+  "result": {
+    "overallTrajectory": "学生从初步原型和调研出发，经历了方法增强、负结果发现、到深刻认知瓶颈，尽管工程产出（如trace pipeline）增加，但核心因果推理图构建始终未落地；研究能力从执行任务提升到识别并聚焦核心科学问题，认知深度显著增长，但执行力在关键创新点上滞后，呈现“认知快于实现”的态势。",
+    "stageByWeek": [
+      {
+        "week": "2026-03-15",
+        "summary": "周1完成文献调研与KernelLocator原型设计，构建了KRDG图模块和评估框架，提出两阶段定位引擎，但未跑实际实验。研究方向聚焦逻辑bug定位，迈出实现第一步。",
+        "hardProgress": "实现了KRDG图构建、Bug Report解析、两阶段引擎，但无实验结果。",
+        "cognitiveInsight": "认识到kernel场景需要依赖图结构进行因果推理，初步提出KernelLocator的思路。",
+        "valueJudgment": "未明确金额，但从原型设计看，认为构建图引导的定位系统有价值。",
+        "plannedNext": "下载内核源码，跑通KRDG并进行端到端验证。"
+      },
+      {
+        "week": "2026-03-22",
+        "summary": "周2深入分析FLBench数据集，提出8类failure pattern，实现LinuxFL⁺后处理框架并取得显著recall提升，同时澄清瓶颈：candidate generation而非ranking。将KernelLocator设计为下一步方向。",
+        "hardProgress": "构建failure taxonomy，实现三阶段增强，Recall@1提升7-11%，每bug成本$0.04；明确了logic bug为主流。",
+        "cognitiveInsight": "核心认知：现有FL方法瓶颈在假设空间生成，结构信息（图）比语义信息更重要；扩展假设空间比优化决策重要。",
+        "valueJudgment": "为任务赋值：FLBench分析5万，FL⁺ 10万，Locator 3万，认为有实际提升的工作价值高，但方法若heuristic则价值受限。",
+        "plannedNext": "构建最小KRDG并验证，对失败case做error analysis。"
+      },
+      {
+        "week": "2026-03-29",
+        "summary": "周3转向ftrace收集和实验，发现trace对LLM定位提升有限，RC覆盖率仅33%。得出关键负结果，并重新聚焦问题本质：需要结构化因果模型。提出KernelLocator核心方向。",
+        "hardProgress": "实现ftrace收集pipeline，60%成功率，trace+LLM实验仅1例提升；明确RC不在backtrace是主因。",
+        "cognitiveInsight": "证伪了“trace显著提升FL”的假设，认识到信息必须结构化才有价值；LLM的不足在于search space不明。",
+        "valueJudgment": "负结果被赋予8万价值，显示学生开始重视科学发现而非仅效果。方向价值仍需验证。",
+        "plannedNext": "实现KCOV baseline，构建最小图并测试。"
+      },
+      {
+        "week": "2026-04-05",
+        "summary": "周4用KCOV替代ftrace，RC覆盖率提升至42.1%，但LLM定位仍无改进。最终明确：瓶颈在candidate ranking和causality。仍计划构建图但未行动。",
+        "hardProgress": "KCOV calltree收集pipeline，覆盖率比原始提升3.3x；calltree+LLM实验几乎无增益。",
+        "cognitiveInsight": "核心认知转为“控制search space比增加信息更重要”，LLM失败主因search space explosion；需要构建execution graph。",
+        "valueJudgment": "KCOV pipeline值6万，实验8万（因有结论），但整体价值未突破，因为仍未形成有效方法。",
+        "plannedNext": "加入calltree压缩策略，并构建函数级依赖图过滤候选。"
+      }
+    ],
+    "trendScores": {
+      "hardProgressTrend": "工程产出增加（数据收集、覆盖率提升），但方法突破不明显，核心指标（定位准确率）陷入停滞。",
+      "cognitiveTrend": "持续深化，从假设验证迅速迭代到识别根本瓶颈，认知质量显著上升。",
+      "cotMaturityTrend": "从现象描述（生成重要性）逐步提炼为可操作方向（构建可推理结构），并积累实证等级，成熟度上升。",
+      "valueReasoningTrend": "从看重工具效果转向看重科学洞察，负结果被视为正价值，判断标准升级，但外在金额赋值变化不大。",
+      "projectManagementTrend": "每周自我纠偏快，但关键动作（图构建）多次延迟，显示执行力在概念性任务上的不足。"
+    },
+    "valueFunctionChange": "初期价值函数：能提高recall的实用增强方法值得投入（周2的FL⁺值10万），纯分析值较低（5万）；经历负结果后，洞察和证伪也获得价值（周3 trace实验值8万），但最高价值仍寄托于未验证的方法突破（图推理）。后期对实用性的判断更严谨，明确需要结构化解决方案而不仅是数据增强。学生从追求“有效果”转向追求“可解释、可泛化的机制”，尽管金额未见增长，但内在价值标准从工程收益转向科学贡献。",
+    "repeatedBlockers": [
+      "因果依赖图（KRDG/Kernel dependency graph）自周1原型后始终未实际构建，连续三周列为下周计划但未执行。",
+      "candidate ranking和causality建模被反复确认为核心瓶颈，但无实质性方法突破，仅停留在方向设计。"
+    ],
+    "professorShouldAsk": "你什么时候能给出最小可行图原型并证明它能过滤80%候选？如果图构建是必要基础，为什么它一直排在执行track的后面？",
+    "nextBestIntervention": "要求学生立即暂停所有数据收集实验（打住KCOV优化），集中两周时间构建函数级依赖图（哪怕手工），在至少5个bug上验证它是否能有效缩小候选集80%以上，再基于结果决定下一步是继续优化图还是补充其他模块。"
+  }
+}

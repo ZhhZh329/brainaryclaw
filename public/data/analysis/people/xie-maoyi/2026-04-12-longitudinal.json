@@ -1,0 +1,50 @@
+{
+  "key": "person:xie-maoyi:2026-04-12:longitudinal",
+  "generatedAt": "2026-05-24T11:52:57.272Z",
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "reasoningEffort": "high",
+  "inputHash": "a12f063623c3c26345b79cbbfb0a99e9c3db31efd5aaddc16b15293c97d8d396",
+  "result": {
+    "overallTrajectory": "学生在研究认知上显著加深，能从失败实验中提炼根本问题（如从重视trace转向重视causal structure、search space控制），但执行层面出现瓶颈：多次指出graph是关键，却将大量时间投入coverage改进等低杠杆任务，导致核心方向（KernelLocator）始终停留在概念。整体呈现“认知能力上升，但研究突破力不足”的态势，有变得更善于思考，但尚未变得更富有成果。",
+    "stageByWeek": [
+      {
+        "week": "2026-03-22",
+        "stageDescription": "开局分析：完成FLBench数据集分类与FL+后处理框架，产出了清晰的failure taxonomy和初步实验结果，发现logic bug是主流且现有方法偏向crash。提出了KernelLocator的graph构想，但尚属概念。",
+        "cognitiveState": "意识到hypothesis space生成是瓶颈，结构信息比语义重要。"
+      },
+      {
+        "week": "2026-03-29",
+        "stageDescription": "转向trace路线：搭建ftrace pipeline并完成小规模实验，获得trace覆盖率60%但RC覆盖仅33%，发现trace增益有限（reinforce而非discover）。认知上开始强调trace需转化为causal structure。",
+        "cognitiveState": "明确增加信息≠增加可用认知，trace无法直接推理root cause。"
+      },
+      {
+        "week": "2026-04-05",
+        "stageDescription": "转投KCOV：实现unified KCOV pipeline，RC coverage提升至42.1%（3.3x改善），但LLM实验仍无实质提升。归纳出覆盖、ranking、causality缺失三类问题，graph路径再次被提出。",
+        "cognitiveState": "确认search space控制比增加信息更重要，LLM失败源于候选空间爆炸。"
+      },
+      {
+        "week": "2026-04-12",
+        "stageDescription": "KCOV及LLM验证深化：稳定pipeline但效果持平，增加了审稿任务。cardinal insight（缩小候选空间、结构化trace）被反复强调，但行动仍停留在coverage优化和简单过滤。",
+        "cognitiveState": "维持原有认知，未产生新的高价值洞察，对graph建构仍无实质性推进。"
+      }
+    ],
+    "trendScores": {
+      "认知深度": "持续上升，从描述现象到定位root cause（search space、causality），但后期增长放缓（4→5→5→4）",
+      "硬进展产出": "前期有分析成果，中期实验改进明显，后期停滞，总体呈平台化（3→3→4→3）",
+      "方向聚焦": "摇摆不定：开始时明确graph方向，随后被trace/KCOV实验分散，虽反复提及graph但未落实（聚焦度：3→2→2→2）",
+      "Brainary映射": "有意识关联能力组件，但始终停留在拼接pipeline阶段，未进行架构性整合（2→2→2→2）",
+      "价值判断": "对所做实验的价值评估随效果变差而下调，但未调整优先级，信心有递减趋势"
+    },
+    "valueFunctionChange": "学生价值观的核心是“实证优先”，认为值得做的事是跑通pipeline、收集数据、完成对比实验，即使结果负向也有insight价值。随着实验效果屡次不达预期，他对coverage改善类任务的估值下降（如KCOV pipeline从6万降至4万），但仍投入大段时间；而对graph等高潜力方向仅口头重视，估值低（2-4万）且无实质行动。这种价值函数未随周次明显进化：始终把短期可验证的事情置于长期突破之上，反映了安全取向压倒突破动力，至今未能将“构建因果模型”升格为真正优先事项。",
+    "repeatedBlockers": [
+      "依赖图（KRDG/dependency graph）始终未构建，仅停留在概念或下周计划中",
+      "LLM无法有效利用calltree/trace：输入太大导致从推理退化为搜索",
+      "候选搜索空间过大，缺乏有效的ranking或过滤手段",
+      "因果建模缺失：无法从执行轨迹推导错误因果链",
+      "trace/calltree信息与reasoning脱节，没有统一的结构化表示"
+    ],
+    "professorShouldAsk": "你屡次指出causal structure是核心瓶颈，但每周仍把大部分时间分配给coverage改进和LLM简单实验，是什么在阻碍你立即启动最小graph原型？你打算什么时候用行动对齐你的认知？",
+    "nextBestIntervention": "立即暂停所有coverage优化和LLM微调实验，集中2周时间构建一个最小可行函数级调用+数据依赖图，在5个已知bug上验证能否将候选集缩减80%以上，用硬结果检验graph路径的可行性，迫使学生从分析者转变为建设者。"
+  }
+}

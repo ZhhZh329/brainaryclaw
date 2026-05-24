@@ -1,0 +1,54 @@
+{
+  "key": "person:xie-maoyi:2026-03-29:weekly-score",
+  "generatedAt": "2026-05-24T11:36:52.859Z",
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "reasoningEffort": "high",
+  "inputHash": "28cb9e60709da2a3e88d664bd2ec6ee5e684197ab04f34c904b2685cd9de6c24",
+  "result": {
+    "hardProgress": {
+      "score": 16,
+      "reason": "本周新增了完整的ftrace自动收集流程，在40个bug上实验，成功收集24个（60%），获得关键数据：RC函数在trace中仅33%覆盖，trace压缩比高达14000x。验证了RC覆盖率低的模式，并据此转向KCOV baseline。同时完成了trace+LLM对比实验，得到负结果（trace仅微弱增益），明确了trace当前作用为增强而非发现。方法资产有whitelist derivation和trace processing。硬进展丰富，有具体数字和发现，但主要属于实验数据和负结果，尚缺突破性方法。",
+      "missingEvidence": "未提供ftrace pipeline的自动化程度和可复用性细节。"
+    },
+    "cognitiveIncrement": {
+      "score": 13,
+      "reason": "从实验中得到三个清晰认知增量：1) trace本身不是瓶颈，关键在trace到reasoning的连接缺失；2) LLM主要问题不是理解代码，而是不知道搜索空间在哪；3) 缺少结构化因果建模。并明确证伪了“trace会显著提升FL”和“更多数据→更好定位”两个路径。认知增量有实验支撑，体现了对问题本质的深入思考。",
+      "missingEvidence": "对“LLM不知道search space”的断言缺乏LLM行为的具体分析或实验证据，目前基于推理。"
+    },
+    "cot2Depth": {
+      "score": 13,
+      "reason": "两个CoT’s CoT戳中核心：1) trace价值取决于能否构建causal structure而非信息量；2) 当前瓶颈是无法从执行轨迹推导错误因果链。两个洞察均触及fault localization的深层挑战，并有自动化潜力分析。尽管老师可能已知，但学生从实践中提炼体现了元认知深度。证据等级B和C，仍需系统验证。",
+      "missingEvidence": "CoT’s CoT 2证据等级为C，缺乏将trace转为causal structure的初步原型或实验支撑。"
+    },
+    "brainaryMapping": {
+      "score": 7,
+      "reason": "正确关联了reasoning、memory、tool orchestration和cognitive control等Brainary能力，指出当前系统尚未统一接口，并建议沉淀为agent module、workflow等。映射合理，但分析仍较泛泛，未深入具体集成点。",
+      "missingEvidence": "未说明当前agent pipeline具体缺失哪些Brainary组件，以及如何设计统一接口。"
+    },
+    "monetaryValue": {
+      "score": 7,
+      "reason": "自评价值总计16万元，分解合理：trace pipeline 5万（基础设施建设），trace+LLM实验8万（负结果+洞察），KernelLocator方向3万（早期想法）。估算方法有参考依据，符合市场价格范围。但负结果降低了整体直接经济价值。",
+      "missingEvidence": "未提供与行业标准构建成本或同行评估的直接对比，仅为自评。"
+    },
+    "projectManagement": {
+      "score": 13,
+      "reason": "项目管理部分完整，包含阶段规划、时间对比、投入（40h）、里程碑、依赖、资源、进度偏差分析（trace路线收益低）及纠偏措施（转向KCOV+graph）。反思到位，符合敏捷纠偏原则。",
+      "missingEvidence": "未提及token成本的具体拆分或预算上限，但成本较低无瓶颈。"
+    },
+    "nextAction": {
+      "score": 8,
+      "reason": "下周动作具体且可验证：1) 实现KCOV baseline并对比RC覆盖率目标>70%；2) 为trace函数补源码测试trace+source效果；3) 构建最小function-level dependency graph并在5-10个bug上验证。动作分解清晰，有明确目标和实验设计。",
+      "missingEvidence": "未提及若KCOV覆盖率不达标的备选方案或后续应对思路。"
+    },
+    "evidenceQuality": {
+      "score": 4,
+      "reason": "实验数据具体（如60%、33%、14000x），部分发现得到定量支撑；CoT’s CoT有证据等级标注（B/C）。整体证据质量较好，但关键洞察（如causal structure重要性）仍属推断，C级证据需进一步验证。",
+      "missingEvidence": "对于C级证据的CoT’s CoT，未提供初步验证实验或模拟。"
+    },
+    "totalScore": 81,
+    "tier": "A",
+    "oneLineJudgment": "周报实验扎实、反思深入，用数据证伪了trace简单增益假设，将问题推进到causal structure层面，但方向仍处早期，需尽快构建graph原型验证。",
+    "professorFollowUp": "建议讨论KernelLocator的dependency graph构建方案，并审视能否直接复用已有静态分析工具来加速，避免重复造轮子。同时关注KCOV超70%覆盖率的可行性。"
+  }
+}

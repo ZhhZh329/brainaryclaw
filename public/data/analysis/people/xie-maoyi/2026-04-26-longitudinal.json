@@ -1,0 +1,55 @@
+{
+  "key": "person:xie-maoyi:2026-04-26:longitudinal",
+  "generatedAt": "2026-05-24T11:52:41.587Z",
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "reasoningEffort": "high",
+  "inputHash": "a4619df3f47e94c459faeae610c039e12d326246f1c3d251e282189c28c99de1",
+  "result": {
+    "overallTrajectory": "学生从搭建KCOV trace pipeline开始，经历LLM直接应用的失败，逐步认识到fault localization的本质瓶颈不是覆盖率，而是候选空间控制和因果推理。随后通过引入bug-type aware reasoning实现关键突破，使Top-10从3.7%提升至59.3%，并进一步通过candidate filtering和结构化压缩将性能提升至66.7%。认知上，从“更多信息更好”转向“控制信息结构与推理引导”的深层理解。当前已从探索阶段进入方法收敛期，形成了“信息补充—候选剪枝—引导推理”的三阶段思路，但方法仍偏启发式，缺乏系统化结构。",
+    "stageByWeek": [
+      {
+        "week": "2026-04-05",
+        "hardProgress": "完成KCOV calltree统一收集pipeline，RC覆盖率达42.1%（较ftrace提升3.3倍）；在24个RC-in-calltree bug上进行LLM实验，发现calltree对定位提升有限（Top-10仅从2/24增至4/24）。",
+        "cognitionChange": "提出三个关键认知：（1）KCOV解决“是否执行”但不解决“为什么错误”；（2）瓶颈是候选排名与因果缺失；（3）LLM在大搜索空间中退化。开始意识到需从execution构建可推理结构。",
+        "valueOrientation": "认为KCOV pipeline（6万）和LLM实验（8万）具有基础价值，但非最终方案；KernelLocator早期想法估值4万。价值重心在实验infra和经验证据。"
+      },
+      {
+        "week": "2026-04-12",
+        "hardProgress": "延续KCOV pipeline稳定性验证，初步对比ftrace与KCOV；完成2篇审稿。但系统性能无明显提升，LLM定位效果仍有限。",
+        "cognitionChange": "深化理解：trace仅提供执行信息，不能直接提升定位；LLM问题在搜索空间而非理解代码。新增审稿带来的方法论视角，意识到benchmark评估常忽略generation与ranking的拆分。",
+        "valueOrientation": "下调了各任务估值（pipeline 4万、LLM实验6万），新增审稿价值1万，反映对前期工作的重新审视，更谨慎评价实际贡献。"
+      },
+      {
+        "week": "2026-04-19",
+        "hardProgress": "完成65个bug的系统性实验分析，划分出easy（BT含RC）与hard（RC不在BT）两类子集；设计Phased calltree方法，将RC保留率提升至81%；最大的突破是引入bug-type aware reasoning，使Top-10从基线1/27提升至16/27（59.3%）。",
+        "cognitionChange": "认知跃迁：明确LLM的真实瓶颈是信息可见性而非能力；calltree的价值是条件性的（仅补充BT缺失信息）；性能飞跃的关键不是数据本身，而是如何引导LLM理解bug语义。开始区分信息补充与推理引导。",
+        "valueOrientation": "估值重心转向方法创新：bug-type prompt估值15万（论文核心），而数据性工作价值相对下降。价值函数开始从“输入规模”转向“推理增益”。"
+      },
+      {
+        "week": "2026-04-26",
+        "hardProgress": "RC保留率提升至92.6%；bug-type reasoning v2将Top-10推至66.7%，Top-5 48.1%；实现candidate filtering缩小搜索空间至120-150函数；KCOV_REMOTE初步增加2个RC；构建轻量级function-level graph，进一步压缩候选至60-80。",
+        "cognitionChange": "提出完整的fault localization步骤：candidate generation → pruning → reasoning。确立“控制搜索空间比增强模型更重要”的元认知。开始将启发式prompt显式化为结构化pipeline。",
+        "valueOrientation": "candidate filtering估值15万（潜在核心模块），bug-type v2估值12万，graph原型6万，基础设施类工作仍在5万左右。价值观进一步向可复用、可自动化的推理/剪枝模块倾斜，强调通用性与系统沉淀。"
+      }
+    ],
+    "trendScores": {
+      "hardProgress": "第1周: 5/10 (pipeline搭建，初步结果); 第2周: 4/10 (无显著提升，但积累经验); 第3周: 8/10 (bug-type方法带来质变，突破低基线); 第4周: 7/10 (性能进一步提升，但增幅趋缓，且开始系统化)。",
+      "cognitionDepth": "第1周: 6/10 (指出瓶颈，方向正确但抽象); 第2周: 5/10 (认知有重复，未深入底层机制); 第3周: 9/10 (关键洞察：信息可见性、条件价值、语义引导); 第4周: 9/10 (融合为pipeline认知，元认知成型)。",
+      "coTsCoTMaturity": "第1周: 6/10 (两个核心点，证据A/B，沉淀形式清晰); 第2周: 4/10 (降级为B/C，缺乏新论证); 第3周: 8/10 (三个A级CoT，系统且可操作); 第4周: 9/10 (进一步抽象为三阶段，自动化路径明确)。",
+      " brainaryMapping ": "第1周: 5/10 (关联到 reasoning/cognitive control/tool orchestration); 第2周: 4/10 (描述较泛); 第3周: 7/10 (对应更具体：reasoning模块、decision policy); 第4周: 8/10 (形成pruning module、reasoning module等明确资产)。",
+      "valueOrientation": "第1周: 偏重实验数据和infra的货币量化; 第2周: 回归保守，重新评估; 第3周: 转向创新方法的溢价，重视推理增益; 第4周: 坚定投资于可复用、结构化模块，不再被“更多信息”迷惑。",
+      "projectManagement": "第1周: 明确但计划偏技术（KCOV_REMOTE）; 第2周: 略显分散（审稿、多任务并行）; 第3周: 聚焦于系统实验和关键突破; 第4周: 方法收敛，并行探索filtering/graph，但主线清晰。"
+    },
+    "valueFunctionChange": "学生的价值函数从第1周的“实验基础设施和实证数据值钱”，到第2周因进展不及预期而调低估值，第3周发生关键转变：认识到创新点（bug-type reasoning）能带来巨大性能提升，其货币价值远超纯数据或工程工作，开始区分“信息提供”与“推理引导”，并将价值锚定在方法论突破和可复用模块上。第4周，价值函数进一步内化，更重视“控制搜索空间”、“剪枝模块”等能放大系统能力的中间件，认为其货币潜力与通用性更高。整体上，学生认为值得做的不再是“更好的trace”，而是“如何让模型更聪明地利用信息”；其价值连接点从“数据收集效率”转向“推理增益/模块沉积”，并能联系到用户（kernel开发者）、通用能力（可扩展到其他大型系统）、产物形式（benchmark/workflow/module）以及Brainary和自动化科研转化。",
+    "repeatedBlockers": [
+      "calltree信息量与可读性之间的 trade-off：太短丢失RC，太长LLM迷失。",
+      "LLM在候选集中难以有效区分关键函数，缺乏结构化筛选机制。",
+      "KCOV覆盖率仍有上限，内核线程/kworker等场景未完全覆盖。",
+      "prompt依赖人工启发式规则，未抽象为可泛化的推理框架。",
+      "缺乏data-flow信息，导致部分bug（如语义弱的工具函数）无法被定位。"
+    ],
+    "professorShouldAsk": "你现在的性能提升主要集中在RC-in-calltree的27个样本上，有没有在完全未见过的bug类型或更大规模数据集上测试过bug-type reasoning的泛化边界？另外，何时应该关闭calltree而回到纯BT推理，你的decision rule能否做成可学习的策略？",
+    "nextBestIntervention": "建议立即将现有组件（calltree构建、bug-type prompt、filtering）梳理成标准化的pipeline，输出成可复现的benchmark和workflow，并设计消融实验分离出每个模块的贡献。同时尝试用RL或LLM自动生成bug-type profiles，摆脱人工规则，向agent module转化。暂停继续堆积KCOV覆盖率，全力聚焦于将当前66.7%的基线稳定化并寻求结构化泛化。"
+  }
+}

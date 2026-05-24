@@ -1,0 +1,57 @@
+{
+  "key": "person:xie-maoyi:2026-03-29:longitudinal",
+  "generatedAt": "2026-05-24T11:52:30.094Z",
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "reasoningEffort": "high",
+  "inputHash": "3227e73c1626175ff428953b056b5d846a9356e4e0cc41272bf530a29afc345e",
+  "result": {
+    "overallTrajectory": "学生从基于文献调研和原型构建起步，迅速过渡到系统化分析benchmark和构建增强方法，并在第三周通过trace实验揭示了核心瓶颈，转向结构化因果推理方向。研究能力显著提升，表现为认知从表层现象深化到本质因果建模，从追求更多信息转为追求信息结构化。项目管理上能够及时纠偏和调整方向。",
+    "stageByWeek": [
+      {
+        "week": "2026-03-15",
+        "summary": "启动阶段，调研相关工作，构建评估子集和原型KernelLocator，工量重在基础设施建设。",
+        "keyProgress": "完成KRDG图构建模块、Bug report解析、两阶段定位引擎和评估框架，但未端到端验证。",
+        "cognition": "尚处于吸收已有方法阶段，无明确认知产出。",
+        "pitfalls": "原型未跑通，缺少真实数据验证。",
+        "nextStepsQuality": "下周计划具体但偏工程化，未触及认知瓶颈。"
+      },
+      {
+        "week": "2026-03-22",
+        "summary": "转向系统分析和增强方法实验，发现logic bug主流未被现有方法覆盖，实现LinuxFL⁺后处理框架并验证有效，同时深化认知提出KernelLocator方向。",
+        "keyProgress": "系统分类250 bug，明确failure taxonomy；实现三阶段增强，Recall@1提升7-11%，成本极低；提出KRDG和因果推理方向。",
+        "cognition": "核心认知：假设空间扩展比排序重要，结构信息比语义信息重要。CoT's CoT首次系统记录，证据等级A/B。",
+        "pitfalls": "taxonomy未转成可计算结构；FL⁺仍heuristic；KRDG未构建。",
+        "nextStepsQuality": "高质量：将failure映射到可计算特征；对失败case做error analysis；构建最小KRDG验证。"
+      },
+      {
+        "week": "2026-03-29",
+        "summary": "通过trace实验检验假设，获得负结果并果断转向，明确核心瓶颈是causal structure构建，进一步强化KernelLocator方向。",
+        "keyProgress": "搭建trace pipeline，对40 bug收集，成功率60%但RC覆盖仅33%；trace+LLM实验表明增益微弱；提出两个关键问题：RC不在backtrace，trace缺因果链。",
+        "cognition": "认知进阶：信息必须结构化才有价值，trace的价值在于构建因果结构而非更多数据。CoT's CoT持续产出，证据等级B/C。",
+        "pitfalls": "trace信息粒度不足，graph仍未构建。",
+        "nextStepsQuality": "高质量：实现KCOV baseline；补source code测试trace+source；构建最小function-level dependency graph验证。"
+      }
+    ],
+    "trendScores": {
+      "researchDepth": "上升（从原型实现到系统分析再到假设检验）",
+      "cognitiveComplexity": "上升（从无记录到结构化CoT再到因果建模）",
+      "valueJudgment": "上升（从模糊方向到量化评估再到期理性审视）",
+      "projectManagement": "稳定良好，能及时纠偏",
+      "automationThinking": "持续深化（从图构建到causal reasoning模块化）"
+    },
+    "valueFunctionChange": {
+      "week1": "初步认为构建KernelLocator原型有价值，但未量化评估，侧重工程实现。",
+      "week2": "价值函数明确化：任务重要性按金额排序（FL⁺>FLBench分析>Locator），认为有实际提升和可复用性的事值得做。连接到了用户（OS厂商等）和通用能力（大系统FL）。但判断方向仍依赖相对比较。",
+      "week3": "价值判断更为审慎：trace pipeline和实验价值因负结果而评估较低，但肯定了其提供的insight价值；KernelLocator方向虽未验证但潜力仍看好。价值观从“提升性能”转向“揭示本质瓶颈”，更注重结构化认知产物的长远价值，而对具体技术路线的投入更吝啬。",
+      "trend": "价值观从成果导向（能跑通）逐渐转向认知导向（能解释问题本质），对负结果的价值认可提升，对金钱价值的估算更基于其对认知深化的贡献而非纯性能增益。"
+    },
+    "repeatedBlockers": [
+      "结构化因果图（KRDG）始终未实现，从第一周概念到第三周仍停留在计划。",
+      "信息无法结构化：从failure taxonomy无法转向可计算特征，到trace信息粒度不够不能用于推理，始终未能将观测转化为可用结构。",
+      "causal reasoning停留在概念，缺乏实际建模。"
+    ],
+    "professorShouldAsk": "你从这四周中获得了什么可复用的graph构建模块或模式，而不只是针对Linux kernel的特定知识？如果明天让你在另一个大型系统（如Kubernetes）上做故障定位，你现在的认知能迁移多少？",
+    "nextBestIntervention": "强制学生在下一周产出一个最小可运行的KRDG prototype（即使只覆盖5个bug），并提供结构化的trace-to-graph转换方案，以便尽快将概念验证落地，否则会陷入无限的概念迭代。"
+  }
+}
