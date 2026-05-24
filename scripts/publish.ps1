@@ -17,7 +17,8 @@ try {
   npm run sync-full
 
   $repo = (Get-Location).Path
-  $wslRepo = (wsl wslpath -a "$repo").Trim()
+  $repoForWsl = $repo -replace "\\", "/"
+  $wslRepo = (wsl wslpath -a "$repoForWsl").Trim()
 
   $pushEnv = ""
   $askpassSetup = ""
