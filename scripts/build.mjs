@@ -7,9 +7,11 @@ const dataDir = path.join(publicDir, "data");
 
 const sourceRoot = process.env.OPENCLAW_ROOT || "\\\\wsl.localhost\\Ubuntu\\home\\brainary\\.openclaw";
 const reportsDir = process.env.WEEKREP_REPORTS_DIR || path.join(sourceRoot, "weekly_reports");
+const inboundDir = process.env.WEEKREP_INBOUND_DIR || path.join(sourceRoot, "media", "inbound");
 const weeklyStateDir = process.env.WEEKREP_STATE_DIR || path.join(sourceRoot, "data", "weekly_state");
 const registryPath = process.env.WEEKREP_REGISTRY_PATH || path.join(sourceRoot, "data", "registry.json");
 const templatePath = process.env.WEEKREP_TEMPLATE_PATH || path.join(sourceRoot, "WEEKLY_REPORT_TEMPLATE.md");
+const nameAliasesPath = process.env.WEEKREP_NAME_ALIASES_PATH || path.join(root, "config", "name-aliases.json");
 const excludedWeeks = new Set((process.env.WEEKREP_EXCLUDED_WEEKS || "2026-03-08").split(",").map((week) => week.trim()).filter(Boolean));
 
 async function readJson(file) {
@@ -139,6 +141,25 @@ function deadlineForWeek(week) {
   return `${monday0800Plus8.toISOString().slice(0, 10)}T08:00:00+08:00`;
 }
 
+function sundayFromDate(value) {
+  const [year, month, day] = String(value).split("-").map(Number);
+  if (!year || !month || !day) return "";
+  const date = new Date(Date.UTC(year, month - 1, day));
+  const delta = 7 - date.getUTCDay();
+  const sunday = new Date(date.getTime() + (delta === 7 ? 0 : delta) * 24 * 60 * 60 * 1000);
+  return sunday.toISOString().slice(0, 10);
+}
+
+function parseInboundReportFileName(fileName) {
+  const baseName = path.basename(fileName, path.extname(fileName));
+  const match = baseName.match(/^(.+?)-周报-(\d{4}-\d{2}-\d{2})至(\d{4}-\d{2}-\d{2})/);
+  if (!match) return null;
+  return {
+    originalName: match[1].trim(),
+    week: sundayFromDate(match[3])
+  };
+}
+
 function parseTime(value) {
   if (!value) return null;
   const time = Date.parse(value);
@@ -265,7 +286,8 @@ function analyzePerson(name, reports) {
   };
 }
 
-async function collectReports() {
+async function collectReports(registry, nameAliases) {
+  const { byId, byName } = registryIndexes(registry);
   const weeks = (await fs.readdir(reportsDir, { withFileTypes: true }))
     .filter((entry) => entry.isDirectory())
     .map((entry) => entry.name)
@@ -301,6 +323,49 @@ async function collectReports() {
       });
     }
   }
+  if (await exists(inboundDir)) {
+    const existingByWeekAndIdentity = new Set(reports.map((report) => {
+      const member = (report.userId ? byId[report.userId] : null) || byName[report.slug];
+      const userId = report.userId || (member?.user_id ? String(member.user_id) : "");
+      const name = member?.name || report.name;
+      return `${report.week}/${identityKeyFromParts(userId, name)}`;
+    }));
+    const inboundFiles = (await fs.readdir(inboundDir, { withFileTypes: true }))
+      .filter((entry) => entry.isFile() && entry.name.endsWith(".md"))
+      .map((entry) => entry.name)
+      .sort();
+    for (const file of inboundFiles) {
+      const parsed = parseInboundReportFileName(file);
+      if (!parsed?.week || excludedWeeks.has(parsed.week) || !isSundayWeek(parsed.week)) continue;
+      const canonicalName = nameAliases[parsed.originalName] || parsed.originalName;
+      const member = byName[slugify(canonicalName)];
+      if (!member || !isCountableMember(member)) continue;
+      const userId = member.user_id ? String(member.user_id) : "";
+      const identityKey = identityKeyFromParts(userId, member.name);
+      if (existingByWeekAndIdentity.has(`${parsed.week}/${identityKey}`)) continue;
+      const sourcePath = path.join(inboundDir, file);
+      const rawText = await fs.readFile(sourcePath, "utf8");
+      const stats = await fs.stat(sourcePath);
+      reports.push({
+        id: `${parsed.week}/${slugify(member.name)}`,
+        week: parsed.week,
+        name: member.name,
+        slug: slugify(member.name),
+        userId,
+        createdAt: stats.birthtime.toISOString(),
+        updatedAt: stats.mtime.toISOString(),
+        submittedAt: stats.mtime.toISOString(),
+        version: 1,
+        rawText,
+        excerpt: snippet(rawText, 260),
+        keywords: keywordScore(rawText).map((item) => item.word),
+        qualityScore: reportQuality({ raw_text: rawText }),
+        sourceKind: "inbound-md",
+        sourceName: parsed.originalName
+      });
+      existingByWeekAndIdentity.add(`${parsed.week}/${identityKey}`);
+    }
+  }
   return reports;
 }
 
@@ -319,11 +384,12 @@ async function collectStates() {
 
 async function main() {
   await fs.mkdir(dataDir, { recursive: true });
-  const [reports, states, registry] = await Promise.all([
-    collectReports(),
+  const [states, registry, nameAliases] = await Promise.all([
     collectStates(),
-    exists(registryPath).then((ok) => ok ? readJson(registryPath) : { members: [] })
+    exists(registryPath).then((ok) => ok ? readJson(registryPath) : { members: [] }),
+    exists(nameAliasesPath).then((ok) => ok ? readJson(nameAliasesPath) : {})
   ]);
+  const reports = await collectReports(registry, nameAliases);
   const templateText = await exists(templatePath).then((ok) => ok ? fs.readFile(templatePath, "utf8") : "");
 
   const weeks = Object.keys({
@@ -407,8 +473,10 @@ async function main() {
     generatedAt: new Date().toISOString(),
     source: {
       reportsDir,
+      inboundDir,
       weeklyStateDir,
       registryPath,
+      nameAliasesPath,
       templatePath
     },
     template: {

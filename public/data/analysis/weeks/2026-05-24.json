@@ -1,283 +1,126 @@
 {
   "key": "week:2026-05-24:horizontal",
-  "generatedAt": "2026-05-25T00:04:34.164Z",
+  "generatedAt": "2026-05-25T13:02:44.212Z",
   "provider": "deepseek",
   "model": "deepseek-v4-pro",
   "reasoningEffort": "high",
-  "inputHash": "bccc7404254f9d6312b3b39da44eb831ef14d8aba211db1971db587072095793",
+  "inputHash": "1915af637203cb9760d0d606be57ad736ce6d995a3df716d20afdec3efdb4ed8",
   "result": {
-    "submissionStatus": {
-      "totalSubmitted": 42,
-      "missingCount": 34,
-      "missingSample": [
-        "Cao Yue",
-        "Chen Huabao",
-        "Dang Wenjing",
-        "Gong Peiliang",
-        "Hu Lianyu",
-        "Hu Yutao",
-        "Huang Yifan",
-        "Jia Xiaojun",
-        "Kan Shuangxiang",
-        "Li Qiankun",
-        "Li Yanzhou",
-        "Liu Chengyue",
-        "Lyu Mengyao",
-        "Lyuye Zhang",
-        "Ma Siyuan",
-        "Ma Xiaoyue",
-        "Qiao Wei",
-        "Song Suwen",
-        "Sun Weisong",
-        "Sun Yuqiang",
-        "Wang Chong",
-        "Wang Kun",
-        "Wang Zhou",
-        "Xu Yijia",
-        "Zhang Jingyao",
-        "Zhang Yiran",
-        "Zhang Yuxin",
-        "Zhao Xuanyue",
-        "乔冠霖",
-        "刘晓夏",
-        "孔祥诺",
-        "肖舒元",
-        "陈骋"
-      ]
-    },
-    "overallRead": "本周42份周报覆盖了从系统安全、智能体研究、自动化科研到工程落地等多个方向。普遍特点是认知层面产出丰富（如Goal Drift、渐进式披露、线间元认知），但实验落地进度不一。资源限制（算力、API）和投稿Deadline压力是共同卡点。最具决策信号的工作集中在：探索月级任务目标漂移的Cao Zong、打通GUI-as-CLI的Li Wenke、将记忆系统推入episodic runtime的Sun Xiao和Ma Xiaoyu、以及用负结果驱动kill criterion的Guo Yaoqi。",
+    "submissionStatus": "已提交 43 份，未提交 29 份（含多名未及时提交的同学）",
+    "overallRead": "本周周报整体质量高，认知密度集中在‘研究系统本身的结构化缺陷’上。多个方向不约而同地触及‘元认知控制’‘记忆的检索与组织’‘自动化科研的品味与止损’等底层问题，工程落地的硬数据开始出现。但部分工作仍停留在概念或实验早期，项目管理上需警惕‘多头并进、缺乏收敛’的风险。",
     "ranking": [
       {
-        "name": "Li Wenke",
-        "rank": 1
+        "name": "曹宗",
+        "mainContribution": "将 Venom fuzzing 框架拓展至蓝牙芯片场景，实现跨 4 类异质目标零修改泛化；系统分析 50+ 小时 agent 开发中的失败模式，提炼出核心研究问题 Goal Drift，并提出‘commit 复刻’方案以补全 month‑level 任务的后训练数据缺口。",
+        "cotCoT": "Goal 就是 attention——agent 在每一步决定看哪里、不看哪里的内在控制信号；后训练数据中缺失 month‑level 目标分解轨迹；commit 复刻是从真实开发者历史中挖掘 goal 分解 ground truth 的唯一路径。这一论断打通了‘长任务 agent 不稳定’的根本原因和工程解法。",
+        "brainaryRelevance": "将 Brainary 定位为 month‑level goal 分解的外部 ground truth 注入层，强制 agent 在每一步从 Brainary 反查 goal，不可‘自己记得’。这为 Brainary 的 cognitive control 和 memory 提供了最关键的锚定机制。",
+        "monetaryValue": "300–600 万元/年（蓝牙 fuzzing 场景） + 5 亿–50 亿元/年（Goal Drift 解决后的品类级价值）。",
+        "evidenceLevel": "A",
+        "projectManagement": "本周投入 50+ 小时，蓝牙端到端 loop 尚未打通但接口适配完成；下周完成蓝牙 loop 并启动 commit 反推。关键路径清晰，资源需求明确。",
+        "automationPath": "高。建议沉淀为 commit‑to‑goal 反推 pipeline、month‑level goal 分解模式库、goal anchoring protocol。",
+        "bossTakeaway": "Goal Drift 是长任务 agent 失败的统一归因，其解不在模型能力，而在补全后训练中缺失的 month‑level goal 分解数据。Commit 复刻是目前最可行的工程入口，应立即启动。"
       },
       {
-        "name": "Cao Zong",
-        "rank": 2
+        "name": "张嘉毅",
+        "mainContribution": "将老师提出的 ASDLC 范式落地为 VBC（Verifiable Behavior Cell）九元组与三层测试结构；明确定位测试 agent 的核心卡点是‘隐式状态转移的挖掘与验证’，并提出探测序列-状态轨迹断言方案；将差分/蜕变测试重新理解为 oracle 生成手段，补强了上周 working memory schema 的薄弱点。",
+        "cotCoT": "backend testing 的难点不是调用 API，而是验证隐式状态机；oracle 的承载单位必须从单次响应升维为跨多步的状态轨迹；测试不仅验证实现，还持续校准 cell 的划分和 oracle 本身的可信度。",
+        "brainaryRelevance": "为 Brainary 的 benchmark & evaluation 层注入了‘oracle 自动生成与校准’的核心能力，让 monitoring 从 pass/fail 升级为‘实现错/oracle 错/划分错’三路分诊。",
+        "monetaryValue": "800–1500 万元（作为 backend testing agent 的通用底座价值）。",
+        "evidenceLevel": "B（方案设计深入，待实验验证）",
+        "projectManagement": "本周为设计/调研周，未跑实验；下周强制跑通一条多步 probe sequence 的最小 demo；风险在于范式整理可能挤占实验时间，已给出纠偏。",
+        "automationPath": "高。优先转化为 memory schema（state‑trajectory 记录、oracle confidence 字段）和 evaluator（oracle‑source 选择基准）。",
+        "bossTakeaway": "验证 agent 生成代码的正确性，瓶颈不在覆盖率而在 oracle 质量和状态可观测性。VBC 和探测序列正是针对这一瓶颈的系统解法，必须尽快用最小实验闭环验证。"
       },
       {
-        "name": "Feng Yebo",
-        "rank": 3
+        "name": "郭耀齐",
+        "mainContribution": "用 49 实例配对评测证伪了 regression 差分优化，果断砍掉该分支；启动 motivation study，提出‘组件成熟度 vs 下游集成成熟度’两轴差异化选题法；提出‘kill criterion’和‘线间元认知’概念，指出自动化科研缺少止损机制。",
+        "cotCoT": "研究线的取舍是组合层认知控制；差异化赛道存在于‘组件很成熟但下游没用好’的背离区；蒸馏知识的价值轴应该是跨环境可迁移性（transfer retention）。",
+        "brainaryRelevance": "为 Brainary 的 cognitive control 补充了组合层（多任务线之间的资源调度与止损），将 calibration 扩展为对研究线价值的动态重定价。",
+        "monetaryValue": "5 万美元（负结果验证与范围收缩的决策价值）。",
+        "evidenceLevel": "L2（配对数据支撑，缺机制拆解）",
+        "projectManagement": "本周投入约 50h，主线 2 偏离上周 flag 但属主动让位；下周需跑通跨环境迁移实验设计，建议与老师 MEET 对齐方向决策。",
+        "automationPath": "高。建议转化为 evaluator（paired ablation 转负自动告警）、workflow（两轴选题法）、benchmark（cross‑environment transfer retention）。",
+        "bossTakeaway": "自动化科研亟需 kill criterion——当前 agent 只会优化单一指标，无法判断一条线是否该停。线间元认知与组合层止损是实现真正自主科研的关键拼图。"
       },
       {
-        "name": "Ma Xiaoyu",
-        "rank": 4
+        "name": "侯昕萌",
+        "mainContribution": "将 MARS（Learn Like Humans）的元认知反思范式成功迁移到多智能体间接提示注入攻击，形成 MIRAGE 方法；在 ASB benchmark 上获得 ASR 20.5%（较基线 +8.5%）；验证了用小模型做群体级反思的跨任务 robustness。",
+        "cotCoT": "MARS 本质是‘稀疏反馈下的群体级模式提取器’，不是教学法框架；Hybrid validation 是任务异质性的显式分区；对抗性任务需要 asymmetric two‑view reflection。",
+        "brainaryRelevance": "可直接为 Brainary 提供 SparseFeedbackReflector 模块（群体级经验聚合）、HeterogeneityProbe（异质性诊断）和 GroupAggregatedMemory，提升 memory 的层次和 reasoning 的效率。",
+        "monetaryValue": "130 万元（攻击方法 30 万 + 范式模块 80 万 + 控制层 20 万）。",
+        "evidenceLevel": "A（有全矩阵实验和 ASR 数据）",
+        "projectManagement": "基线对比矩阵跑慢约 3 天，下周纠偏为统一 adapter 并跑完 12 组对比；关键路径清晰，6 月底投稿。",
+        "automationPath": "高。可优先转为 agent module（SparseFeedbackReflector + HybridRouter）和 evaluation protocol。",
+        "bossTakeaway": "群体级反思是稀疏反馈任务的高杠杆解法，MIRAGE 证明其可跨任务迁移。Brainary 下一步应优先实现自动发现最优 group_key 的 AutoGrouper。"
       },
       {
-        "name": "Sun Xiao",
-        "rank": 5
+        "name": "孙晓",
+        "mainContribution": "将 SOTOPIA 多轮交互改造为 task‑state episodic memory runtime，实现 sequential actor‑turn 和四层可回放 memory；用 8 种 communicative modes 作为 treatment，观察到 mode 通过 utterance memory 真实改变了后续 action trajectory；发现 slot 对 WBD 正收益但对 BPT 需要 versioned agreement memory。",
+        "cotCoT": "benchmark 的 memory 形态应从‘每轮拼接历史’升维为‘分层的 episodic memory runtime’；task_state 并非越多越好，必须匹配 family 的交互拓扑——WBD 适合对象型 memory，BPT 需要协议型 versioned memory。",
+        "brainaryRelevance": "为 Brainary 的 multi‑agent interaction 模块提供了可回放、可归因的 episode memory 设计和 family topology‑aware state ontology。",
+        "monetaryValue": "方法资产重大但未单独计价，可参考同类 agent benchmark 基建估值 300–500 万元。",
+        "evidenceLevel": "A",
+        "projectManagement": "本周投入 35–45h，已进入‘是否能解释 memory 对 trajectory 影响’阶段；下周优先修复 prompt regression 并设计 BPT versioned agreement memory。",
+        "automationPath": "高。建议沉淀为 EpisodicTaskStateRuntime、ModeConditionedTrajectoryDiagnostics 和 FamilyTopologyAwareMemorySelector。",
+        "bossTakeaway": "communication 是否改变行为，取决于是否构造了正确的 episodic memory runtime。slot 泛化不了所有任务，必须为不同交互拓扑设计不同的记忆本体。"
       },
       {
-        "name": "Qian Jiayu",
-        "rank": 6
+        "name": "钱嘉裕",
+        "mainContribution": "将 DeerFlow + ARIS 推进到 spec‑driven cycle，完成 cycle 0038‑0053 的系列硬化；通过小规模实验发现 auto‑research 生成的 idea 品味不足，过份依赖论文 limitation 而非 experiment‑driven gap discovery；明确 human gate 记忆和 idea taste evaluator 的重要性。",
+        "cotCoT": "auto‑research 的最大短板不是执行，而是 taste；真正的 research gap 来自实验发现，而非论文 stated limitation；人必须在环中提供 taste supervision。",
+        "brainaryRelevance": "为 Brainary 的 meta‑cognition 和 workflow management 加入了 taste evaluation 和 experiment‑driven gap discovery 机制，使科研 OS 更贴近真实研究判断。",
+        "monetaryValue": "100 万元（control plane 硬化） + 80 万元（idea taste 评估）。",
+        "evidenceLevel": "A‑（基于实际 idea 验证）",
+        "projectManagement": "工程超预期但 research taste 不足；下周加入 idea taste evaluator 和 pathology VLM literature‑to‑idea cycle。自驱迭代良好。",
+        "automationPath": "高。建议转化为 idea taste evaluator、experiment‑driven gap discovery workflow 和 human judgment memory schema。",
+        "bossTakeaway": "auto‑research 已能生成 idea，但缺乏品味是其致命短板——必须让系统通过实验主动发现 gap，而不是只读论文 limitation。Human‑in‑the‑loop 的核心价值是 taste supervision。"
       },
       {
-        "name": "Guo Yaoqi",
-        "rank": 7
+        "name": "冯业博",
+        "mainContribution": "在 quant‑agent 侧建成 broker ground‑truth 导出与三方对账雏形；在 brainary‑quant 侧完成 Phase 0–6 及动态 metacog、三层 memory、隔离部署；明确双仓库并行的隐性自欺，决策合并主线；提出‘渐进式披露是记忆的本质’和‘token 是未来世界的最终货币’两个高认知观点。",
+        "cotCoT": "多层记忆的本质是渐进式披露，不是存储；token 已具备货币的全部要素，区块链十年题可在 token 经济下重做。",
+        "brainaryRelevance": "直接将 quant 场景作为 Brainary high‑stakes 环境的活体实验场，并将动态 metacog 回灌主框架，是 Brainary 走向‘严苛环境可用’的关键验证。",
+        "monetaryValue": "130–210 万元（本周新增直接价值） + 潜在 5–50 亿（终极能力）。",
+        "evidenceLevel": "B（渐进式披露有案例但缺对照实验；token 经济是方向判断）",
+        "projectManagement": "下周合并主线是关键动作，已识别接口适配四事项，需老师介入确认合并节奏。四条线同时推进但主线明确。",
+        "automationPath": "高。动态 metacog 可直接转为 Brainary 官方 module；渐进式披露可沉淀为 memory schema 和评估协议。",
+        "bossTakeaway": "记忆系统的核心不是‘存了什么’而是‘以什么顺序披露’。动态 metacog 是调度问题而非 prompt 问题——这决定了 Brainary 的 cognitive control 必须是 schedulable policy。"
       },
       {
-        "name": "Hou Xinmeng",
-        "rank": 8
-      },
-      {
-        "name": "Li Chunhan",
-        "rank": 9
-      },
-      {
-        "name": "Wu Zhizhen",
-        "rank": 10
-      },
-      {
-        "name": "Huang Yitan",
-        "rank": 11
-      },
-      {
-        "name": "Zhang Xiaoyu",
-        "rank": 12
-      },
-      {
-        "name": "Wang Suyuan",
-        "rank": 13
-      },
-      {
-        "name": "Wan Wenyuan",
-        "rank": 14
-      },
-      {
-        "name": "Liang Ruichao",
-        "rank": 15
-      },
-      {
-        "name": "Wu Zhangfa",
-        "rank": 16
-      },
-      {
-        "name": "Zhang Haonan",
-        "rank": 17
-      },
-      {
-        "name": "Sun Kairan",
-        "rank": 18
-      },
-      {
-        "name": "Zhou Zhenhong",
-        "rank": 19
-      },
-      {
-        "name": "Liao Zeqin",
-        "rank": 20
-      },
-      {
-        "name": "Huang Xun",
-        "rank": 21
-      },
-      {
-        "name": "Sui Hao",
-        "rank": 22
-      },
-      {
-        "name": "Kong Ziqiao",
-        "rank": 23
-      },
-      {
-        "name": "Yang Yanjing",
-        "rank": 24
-      },
-      {
-        "name": "Hu Zhichao",
-        "rank": 25
-      },
-      {
-        "name": "Jie Wanqing",
-        "rank": 26
-      },
-      {
-        "name": "Liao Jie",
-        "rank": 27
-      },
-      {
-        "name": "Xie Maoyi",
-        "rank": 28
-      },
-      {
-        "name": "Zhang Jiayi",
-        "rank": 29
-      },
-      {
-        "name": "Shi Junjie",
-        "rank": 30
-      },
-      {
-        "name": "Ge Mengmeng",
-        "rank": 31
-      },
-      {
-        "name": "Guo Wenbo",
-        "rank": 32
-      },
-      {
-        "name": "Sun Manqi",
-        "rank": 33
-      },
-      {
-        "name": "Zhang Fangyuan",
-        "rank": 34
-      },
-      {
-        "name": "Zhang Banghai",
-        "rank": 35
-      },
-      {
-        "name": "Wu Junhao",
-        "rank": 36
-      },
-      {
-        "name": "Huang Xinpeng",
-        "rank": 37
-      },
-      {
-        "name": "Yang Bo",
-        "rank": 38
-      },
-      {
-        "name": "Zhou Ziyang",
-        "rank": 39
-      },
-      {
-        "name": "Wu Jiahui",
-        "rank": 40
-      },
-      {
-        "name": "Ke Changbo",
-        "rank": 41
-      },
-      {
-        "name": "Li Kaixuan",
-        "rank": 42
-      }
-    ],
-    "topSignals": [
-      {
-        "title": "Goal Drift与月级目标分解数据缺口",
-        "from": "Cao Zong",
-        "summary": "通过50+小时的fuzzer开发交互，揭示长任务中agent存在Goal Drift，根源在于后训练数据缺乏月级目标分解的ground truth。提出用commit历史复刻来补全数据，将问题从模型能力前推到数据工程。"
-      },
-      {
-        "title": "渐进式披露：记忆系统的本质是披露顺序",
-        "from": "Feng Yebo",
-        "summary": "多层记忆的价值不在于容量，而在于逐层切换视角的对比效应。主张以'披露顺序的认知带宽'为记忆设计第一原则，而非仅考虑相关性。"
-      },
-      {
-        "title": "线上元认知与Kill Criterion",
-        "from": "Guo Yaoqi",
-        "summary": "将元认知从'线内'拓展到'线间'，提出自动化科研需要显式的止损机制（Kill Criterion），当一条研究线的边际价值转负时自动建议终止。"
-      },
-      {
-        "title": "Playwright Headless：Agent时代的商业软件接口层",
-        "from": "Li Wenke",
-        "summary": "指出商业平台只提供GUI，agent需要CLI化操作，headless浏览器是把GUI当CLI用的唯一可持续路径，是未来agent×商业软件的基础设施。"
-      },
-      {
-        "title": "Episodic Memory作为能力体系的经验组织层",
-        "from": "Ma Xiaoyu",
-        "summary": "episodic memory不应只是事件存储，而应成为capability hierarchy中不同能力形成不同粒度经验抽象的载体，实现长期经验组织。"
-      },
-      {
-        "title": "通信模式影响行动轨迹",
-        "from": "Sun Xiao",
-        "summary": "通过改造SOTOPIA为episodic memory runtime，证明不同的communication realization modes（如承诺、软化、施压）会通过记忆传导改变后续task action selection。"
-      },
-      {
-        "title": "Auto-Research的Taste瓶颈",
-        "from": "Qian Jiayu",
-        "summary": "当前auto-research系统生成idea的质量不足，倾向于从论文limitation中找增量，而不是通过实验发现真实gap。需要建立experiment-driven gap discovery和idea taste evaluator。"
-      },
-      {
-        "title": "视觉证据应按任务类型选择",
-        "from": "Wan Wenyuan",
-        "summary": "visual evidence（bbox、crop等）对模型的影响不是中性的，需按题型匹配，提出task-type visual router来调度外部注意力。"
+        "name": "李文珂",
+        "mainContribution": "将 LLM WEB 观测系统从 ChatGPT 单平台拓展至 5 个平台，并完成全方位 Admin 可观测面板、代理 IP 动态资源池、浏览器底层稳定性升级；内容平台采集工程化落地（4 平台爬虫）；明确 Playwright headless 是 agent 时代商业软件生态的通用接口层。",
+        "cotCoT": "Playwright headless 自动化不是反爬手段，而是填补‘商业平台只给 GUI、不给 CLI’的空缺，为 agent 操作商业软件提供统一适配层；可观测性是稳定性的前提，不仅是基础设施。",
+        "brainaryRelevance": "为 Brainary 的 tool orchestration 和 risk modeling 提供了真实商业平台的操作面和资源健康度记忆，是将 agent × commercial‑software 抽象为通用 infrastructure 的关键工程资产。",
+        "monetaryValue": "400 万元（多平台观测） + 250 万元（可观测性基础设施） + 300 万元（通用 headless 底座） + 150 万元（意图采集）。",
+        "evidenceLevel": "A（5 平台 4 内容平台已跑通）",
+        "projectManagement": "工程超预期但报告产出滞后；下周暂停新工程，集中产出压测报告、多平台 GEO 对比和意图样例。需老师选定垂直行业。",
+        "automationPath": "高。可直接沉淀为 agent‑platform adapter infrastructure module、多平台 GEO benchmark 和资源调度 policy module。",
+        "bossTakeaway": "GUI 是给人用的，CLI 是给 agent 用的；但商业平台只给 GUI。因此 Playwright headless 是 agent 时代的基础设施，不是抓取工具。这套统一底座可服务 GEO、意图识别、自动化营销等所有 agent × 商业软件场景。"
       }
     ],
     "commonRisks": [
-      "概念多于实验落地，部分工作仍停留在纸面设计阶段",
-      "资源限制：GPU、API额度、服务器时间窗口（如护网行动）影响实验进度",
-      "投稿Deadline（EMNLP）挤压长期系统项目时间",
-      "多线并行导致注意力分散，缺乏深度收束",
-      "缺乏统一的benchmark和evaluation protocol来验证新概念"
+      "大量高价值认知仍停留在‘纸面设计’或‘最小 demo’阶段，缺少系统实验验证（如 Goal Drift 的 commit 复刻、VBC 的探测序列、kill criterion 等）。",
+      "多头并进现象普遍，部分同学同时维护 3 条以上主线，可能导致核心方向推进偏慢（如冯业博、张晓宇、周振宏）。",
+      "token/API 成本在部分密集型实验（如 MIRAGE、auto‑research）中迅速攀升，需建立更严格的分级实验策略。",
+      "多人存在‘缺失周报’现象（29 人），信息同步和项目可见性存在盲区。",
+      "部分项目管理中对‘实验未跑通’缺乏明确归因和风险升级（如孙晓的 BPT complete_transaction 缺失、王肃源的 Coverage 反馈验证）。"
     ],
     "collaborationCandidates": [
-      "Cao Zong + Qian Jiayu：Goal Drift的commit复刻可与auto-research控制平面结合，形成研究过程的记忆与调度",
-      "Li Chunhan + Wan Wenyuan：视觉感知与evidence router可以联合优化，形成从特征提取到注意力调度的闭环",
-      "Feng Yebo + Ma Xiaoyu + Sun Xiao：Memory系统的理论（渐进式披露）与实现（episodic memory runtime）可互相验证",
-      "Huang Yitan + Zhang Jiayi：漏洞检测agent的oracle分层与VBC的测试结构可以互补",
-      "Guo Yaoqi + Hou Xinmeng：kill criterion与群体级模式抽取可共同提升自动化科研的决策能力"
+      "曹宗 × 钱嘉裕：曹宗的‘commit 复刻’和钱嘉裕的‘experiment‑driven gap discovery’可合并为 auto‑research 的 goal 分解与品味提升联合模块。",
+      "张嘉毅 × 钱嘉裕：VBC 的 oracle 自动生成可对接 DeerFlow 的 verifier，共同构建科研型 agent 的可信执行环境。",
+      "孙晓 × 马晓宇：孙晓的 episodic memory runtime 与马晓宇的 Brainary episodic memory 层级整合，形成统一的多 agent 记忆框架。",
+      "冯业博 × 郭耀齐：渐进式披露记忆和组合层 kill criterion 的结合，可共同设计 Brainary 的 cognitive control 调度器。",
+      "李文珂 × 张晓宇：文珂的商业软件操作面可为晓宇的 MAS 安全提供真实测试环境（如通过 headless 浏览器模拟恶意 agent）。",
+      "侯昕萌 × 黄鑫鹏/王肃源：MIRAGE 的群体级反思与 EvoRepair 的修复演化、AdvTaint 的边界约束可互相借鉴反馈机制。"
     ],
     "bossChecklist": [
-      "确认Cao Zong的commit复刻计划所需资源（标注人力、数据集构建），推动Goal Drift研究尽快落地",
-      "与Feng Yebo讨论brainary-quant合并主线的节奏和架构决策，避免平行开发漂移",
-      "关注投稿Deadline：Zhang Haonan、Zhou Zhenhong等的EMNLP投稿需确保质量，必要时给予写作指导",
-      "解决资源卡点：如Wang Suyuan需要Claude API，Huang Xun需要GPU服务器",
-      "对新兴概念（如Goal Drift、Kill Criterion、渐进式披露）进行评估，决定是否纳入Brainary能力体系"
+      "【关键决策】约两周内确认：是否正式启动‘commit 复刻’数据工程？需要协调哪些内部/外部开源项目？",
+      "【关键决策】ASDLC/VBC 范式是否作为下一阶段 group 级别的核心方法论推进？建议与张嘉毅单独对齐并快速落地最简 demo。",
+      "【风险管控】请关注曹宗、张嘉毅、侯昕萌等同学的下周最小实验是否按期完成，避免陷入持续设计。",
+      "【资源协调】冯业博的 brainary‑quant 主线合并需要主框架侧的支持，建议明确合并节奏和 reviewer。",
+      "【方向对齐】郭耀齐的 skill distill ‘跨环境可迁移性’赛道是否认可？建议其与孙晓的 family topology‑aware memory 交叉讨论。",
+      "【基础设施】李文珂的‘agent × 商业软件’通用基础设施应尽快抽象为独立 module，避免与具体项目过度耦合。",
+      "【投稿窗口】本周 EMNLP 和 ICSE 投稿密集（张晓宇、周振宏、张浩楠等），请确保论文故事收敛，建议最后把关。"
     ]
   }
 }
