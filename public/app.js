@@ -12,6 +12,9 @@ function route() {
   const [path] = hash.slice(1).split("?");
   if (path === "/weeks") return renderWeeks();
   if (path === "/week") return renderWeek(params().get("week"));
+  if (path === "/briefings") return renderBriefings();
+  if (path === "/briefing") return renderBriefing(params().get("week"));
+  if (path === "/briefing-section") return renderBriefingSection(params().get("week"), params().get("section"));
   if (path === "/people") return renderPeople();
   if (path === "/person") return renderPerson(params().get("slug"));
   if (path === "/teacher-unknown") return renderTeacherUnknown(params().get("week"));
@@ -22,6 +25,10 @@ function route() {
 
 function latestWeek() {
   return [...state.weeks].sort((a, b) => a.week.localeCompare(b.week)).at(-1);
+}
+
+function latestAvailableBriefingWeek() {
+  return briefingWeeks().at(-1)?.week || latestWeek().week;
 }
 
 function md(text) {
@@ -71,6 +78,7 @@ function renderHome() {
       </div>
       <div class="toolbar">
         <a class="button" href="#/week?week=${encodeURIComponent(latest.week)}">打开最新周</a>
+        <a class="button" href="#/briefing?week=${encodeURIComponent(latestAvailableBriefingWeek())}">老板摘要</a>
         <a class="button" href="#/teacher-unknown">老师不知道</a>
         <a class="button" href="#/search">全文搜索</a>
       </div>
@@ -217,6 +225,159 @@ function renderWeeks() {
   `;
 }
 
+function briefingWeeks() {
+  return state.weeks
+    .filter((week) => analysisManifest?.items?.[briefingKey(week.week)])
+    .slice()
+    .sort((a, b) => a.week.localeCompare(b.week));
+}
+
+function briefingKey(week) {
+  return `week:${week}:briefing`;
+}
+
+async function loadBriefing(week) {
+  const key = briefingKey(week);
+  const file = analysisManifest?.items?.[key]?.file || `data/analysis/briefings/${week}.json`;
+  const response = await fetch(file, { cache: "no-store" });
+  if (!response.ok) throw new Error(`missing briefing ${week}`);
+  return response.json();
+}
+
+const briefingSectionMeta = {
+  "key-progress": { title: "关键进展", field: "keyProgress" },
+  "teacher-unknown": { title: "老师不知道", field: "teacherUnknown" },
+  risks: { title: "风险与阻塞", field: "risks" },
+  "follow-ups": { title: "下周追问", field: "followUps" },
+  assets: { title: "可沉淀资产", field: "assets" },
+  "people-to-read": { title: "值得细读的人", field: "peopleToRead" }
+};
+
+function renderBriefings() {
+  const weeks = briefingWeeks().reverse();
+  app.innerHTML = html`
+    <section class="hero">
+      <div>
+        <h1>老板周摘要</h1>
+        <p class="muted">每周截止后生成，首页只放入口；每个分区都有独立页面，方便快速读。</p>
+      </div>
+    </section>
+    <section class="cards">
+      ${weeks.map((week) => `
+        <a class="card" href="#/briefing?week=${encodeURIComponent(week.week)}">
+          <strong>${esc(week.week)}</strong>
+          <span class="muted">已交 ${week.submitted} / 应交 ${week.rosterSize}，原件 ${week.reportCount || week.submitted}</span>
+          <span class="badge">老板摘要</span>
+        </a>
+      `).join("")}
+    </section>
+  `;
+}
+
+async function renderBriefing(weekId) {
+  const week = state.weeks.find((item) => item.week === weekId) || briefingWeeks().at(-1) || latestWeek();
+  app.innerHTML = `<section class="panel"><h1>${esc(week.week)} 老板摘要</h1><p class="muted">正在加载离线摘要...</p></section>`;
+  try {
+    const payload = await loadBriefing(week.week);
+    const result = payload.result || {};
+    const cards = Array.isArray(result.sectionCards) ? result.sectionCards : defaultBriefingCards(result);
+    app.innerHTML = html`
+      <section class="hero">
+        <div>
+          <h1>${esc(week.week)} 老板摘要</h1>
+          <p class="muted">${esc(result.headline || "这一周摘要还没有生成完整标题。")}</p>
+        </div>
+        <div class="toolbar">
+          <a class="button" href="#/week?week=${encodeURIComponent(week.week)}">本周原文</a>
+          <a class="button" href="#/briefings">全部摘要</a>
+        </div>
+      </section>
+      <section class="briefing-summary">
+        ${(result.executiveSummary || []).map((item) => `<div class="briefing-point">${esc(item)}</div>`).join("")}
+      </section>
+      <section class="briefing-card-grid">
+        ${cards.map((card) => `
+          <a class="briefing-card" href="#/briefing-section?week=${encodeURIComponent(week.week)}&section=${encodeURIComponent(card.id)}">
+            <span class="badge">${esc(card.count ?? sectionItems(result, card.id).length)} 条</span>
+            <strong>${esc(card.title || briefingSectionMeta[card.id]?.title || card.id)}</strong>
+            <span class="muted">${esc(card.oneLine || "")}</span>
+          </a>
+        `).join("")}
+      </section>
+      <section class="panel" style="margin-top:16px">
+        <h2>老板下一步</h2>
+        <div class="list">
+          ${(result.closingAdvice || []).map((item) => `<div class="row"><strong>建议</strong><span>${esc(item)}</span><span></span></div>`).join("")}
+        </div>
+      </section>
+    `;
+  } catch {
+    app.innerHTML = html`
+      <section class="panel">
+        <h1>${esc(week.week)} 老板摘要</h1>
+        <p class="muted">这一周的老板摘要还没有生成。它会在周一 08:00 截止后由同步任务生成。</p>
+      </section>
+    `;
+  }
+}
+
+async function renderBriefingSection(weekId, sectionId) {
+  const week = state.weeks.find((item) => item.week === weekId) || briefingWeeks().at(-1) || latestWeek();
+  const meta = briefingSectionMeta[sectionId] || briefingSectionMeta["key-progress"];
+  app.innerHTML = `<section class="panel"><h1>${esc(meta.title)}</h1><p class="muted">正在加载...</p></section>`;
+  try {
+    const payload = await loadBriefing(week.week);
+    const result = payload.result || {};
+    const items = sectionItems(result, sectionId);
+    app.innerHTML = html`
+      <section class="hero">
+        <div>
+          <h1>${esc(meta.title)}</h1>
+          <p class="muted">${esc(week.week)} · ${items.length} 条 · ${esc(result.headline || "")}</p>
+        </div>
+        <div class="toolbar">
+          <a class="button" href="#/briefing?week=${encodeURIComponent(week.week)}">返回摘要</a>
+          <a class="button" href="#/week?week=${encodeURIComponent(week.week)}">本周原文</a>
+        </div>
+      </section>
+      <section class="briefing-section-list">
+        ${items.length ? items.map((item) => briefingSectionItem(item)).join("") : `<div class="panel"><p class="muted">这个分区暂无条目。</p></div>`}
+      </section>
+    `;
+  } catch {
+    app.innerHTML = `<section class="panel"><h1>${esc(meta.title)}</h1><p class="muted">摘要文件还没有生成。</p></section>`;
+  }
+}
+
+function sectionItems(result, id) {
+  const meta = briefingSectionMeta[id];
+  return meta ? (result.sections?.[meta.field] || []) : [];
+}
+
+function defaultBriefingCards(result) {
+  return Object.entries(briefingSectionMeta).map(([id, meta]) => ({
+    id,
+    title: meta.title,
+    oneLine: "",
+    count: (result.sections?.[meta.field] || []).length
+  }));
+}
+
+function briefingSectionItem(item) {
+  const people = Array.isArray(item.people) ? item.people.join("、") : (item.people || "");
+  return html`
+    <article class="briefing-section-item">
+      <div class="briefing-section-head">
+        <strong>${esc(item.title || "未命名条目")}</strong>
+        ${people ? `<span class="badge">${esc(people)}</span>` : ""}
+      </div>
+      <p>${esc(item.whyItMatters || item.evidence || "")}</p>
+      ${item.evidence ? `<p class="muted"><strong>证据：</strong>${esc(item.evidence)}</p>` : ""}
+      ${item.action ? `<p class="muted"><strong>动作：</strong>${esc(item.action)}</p>` : ""}
+    </article>
+  `;
+}
+
 function renderWeek(weekId) {
   const week = state.weeks.find((item) => item.week === weekId) || latestWeek();
   const reports = state.reports.filter((report) => report.week === week.week).sort((a, b) => a.name.localeCompare(b.name));
@@ -231,6 +392,7 @@ function renderWeek(weekId) {
         <span class="badge">原件 ${week.reportCount || week.submitted}</span>
         <span class="badge danger">${missingLabel(week)} ${week.missingCount}</span>
         <span class="badge">迟交 ${week.lateCount || 0}</span>
+        <a class="button" href="#/briefing?week=${encodeURIComponent(week.week)}">老板摘要</a>
         <button data-analysis="week:${week.week}:horizontal" data-target="week-analysis">横向分析</button>
       </div>
     </section>

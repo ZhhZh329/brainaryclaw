@@ -22,8 +22,9 @@ const force = process.env.WEEKREP_ANALYZE_FORCE === "1";
 const apiKey = provider === "deepseek" ? process.env.DEEPSEEK_API_KEY : process.env.OPENAI_API_KEY;
 const analyzeLimit = Number(process.env.WEEKREP_ANALYZE_LIMIT || 0);
 const personFilter = new Set((process.env.WEEKREP_ANALYZE_PERSON_SLUGS || "").split(",").map((item) => item.trim()).filter(Boolean));
+const weekFilter = new Set((process.env.WEEKREP_ANALYZE_WEEKS || "").split(",").map((item) => item.trim()).filter(Boolean));
 const rollingPersonAnalysis = process.env.WEEKREP_ANALYZE_ROLLING === "1";
-const analysisTypes = new Set((process.env.WEEKREP_ANALYZE_TYPES || "longitudinal,weekly-score,week-horizontal").split(",").map((item) => item.trim()).filter(Boolean));
+const analysisTypes = new Set((process.env.WEEKREP_ANALYZE_TYPES || "longitudinal,weekly-score,week-horizontal,week-briefing").split(",").map((item) => item.trim()).filter(Boolean));
 const concurrency = Math.max(1, Number(process.env.WEEKREP_ANALYZE_CONCURRENCY || 4));
 const minValidReportChars = Number(process.env.WEEKREP_MIN_VALID_REPORT_CHARS || 10);
 const personWeekPolicy = process.env.WEEKREP_PERSON_WEEK_ANALYSIS_POLICY || "on-change";
@@ -80,6 +81,46 @@ function compactReport(report) {
     submittedAt: report.submittedAt || report.updatedAt || report.createdAt || "",
     rawText: report.rawText
   };
+}
+
+function compactForBriefing(report) {
+  const text = String(report.rawText || "");
+  const lines = text.split(/\r?\n/);
+  const picked = [];
+  const headings = [
+    /^#{0,3}\s*1[.、]?\s*/,
+    /^#{0,3}\s*2[.、]?\s*CoT/i,
+    /^#{0,3}\s*3[.、]?\s*CoT/i,
+    /^#{0,3}\s*4[.、]?\s*/,
+    /^#{0,3}\s*5[.、]?\s*/,
+    /^#{0,3}\s*6[.、]?\s*/,
+    /^#{0,3}\s*7[.、]?\s*/
+  ];
+  for (let i = 0; i < lines.length; i += 1) {
+    if (!headings.some((pattern) => pattern.test(lines[i].trim()))) continue;
+    picked.push(lines.slice(i, Math.min(lines.length, i + 18)).join("\n"));
+  }
+  const extract = picked.join("\n\n---\n\n").slice(0, 4200);
+  return {
+    week: report.week,
+    name: report.name,
+    userId: report.userId || "",
+    submittedAt: report.submittedAt || report.updatedAt || report.createdAt || "",
+    excerpt: report.excerpt || "",
+    extractedText: extract || text.slice(0, 1800)
+  };
+}
+
+function teacherUnknownForWeek(site, week) {
+  return site.teacherUnknown?.weeks?.find((item) => item.week === week)?.items?.map((item) => ({
+    name: item.name,
+    title: item.title,
+    content: item.content,
+    why: item.why,
+    gap: item.gap,
+    insight: item.insight,
+    evidence: item.evidence
+  })) || [];
 }
 
 function isValidReport(report) {
@@ -344,36 +385,60 @@ async function main() {
   }
 
   for (const week of site.weeks.filter(pastDeadline)) {
-    if (!analysisTypes.has("week-horizontal")) continue;
+    if (weekFilter.size && !weekFilter.has(week.week)) continue;
     if (personFilter.size) continue;
     const reports = site.reports
       .filter((report) => report.week === week.week)
-      .filter(isValidReport)
-      .map(compactReport);
-    jobs.push({
-      key: `week:${week.week}:horizontal`,
-      file: path.join(analysisDir, "weeks", `${week.week}.json`),
-      system,
-      prompt: prompts.prompts.weekHorizontalRanking.prompt,
-      input: {
-        week: week.week,
-        deadline: week.deadline,
-        roster: [
-          ...reports.map((report) => ({
-            name: report.name,
-            userId: report.userId,
-            status: "submitted",
-            submittedAt: report.submittedAt
-          })),
-          ...week.missing.map((item) => ({
-            name: item.name,
-            userId: item.userId || "",
-            status: week.pastDeadline ? "missing" : "pending"
-          }))
-        ],
-        reports
-      }
-    });
+      .filter(isValidReport);
+    const compactReports = reports.map(compactReport);
+    const roster = [
+      ...compactReports.map((report) => ({
+        name: report.name,
+        userId: report.userId,
+        status: "submitted",
+        submittedAt: report.submittedAt
+      })),
+      ...week.missing.map((item) => ({
+        name: item.name,
+        userId: item.userId || "",
+        status: week.pastDeadline ? "missing" : "pending"
+      }))
+    ];
+    if (analysisTypes.has("week-horizontal")) {
+      jobs.push({
+        key: `week:${week.week}:horizontal`,
+        file: path.join(analysisDir, "weeks", `${week.week}.json`),
+        system,
+        prompt: prompts.prompts.weekHorizontalRanking.prompt,
+        input: {
+          week: week.week,
+          deadline: week.deadline,
+          roster,
+          reports: compactReports
+        }
+      });
+    }
+    if (analysisTypes.has("week-briefing")) {
+      jobs.push({
+        key: `week:${week.week}:briefing`,
+        file: path.join(analysisDir, "briefings", `${week.week}.json`),
+        system,
+        prompt: prompts.prompts.weekBriefing.prompt,
+        input: {
+          week: week.week,
+          deadline: week.deadline,
+          status: {
+            submitted: week.submitted,
+            rosterSize: week.rosterSize,
+            missingCount: week.missingCount,
+            lateCount: week.lateCount || 0
+          },
+          roster,
+          teacherUnknown: teacherUnknownForWeek(site, week.week),
+          reports: reports.map(compactForBriefing)
+        }
+      });
+    }
   }
 
   const selectedJobs = analyzeLimit > 0 ? jobs.slice(0, analyzeLimit) : jobs;
