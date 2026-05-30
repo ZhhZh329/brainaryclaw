@@ -78,7 +78,7 @@ function renderHome() {
       </div>
       <div class="toolbar">
         <a class="button" href="#/week?week=${encodeURIComponent(latest.week)}">打开最新周</a>
-        <a class="button" href="#/briefing?week=${encodeURIComponent(latestAvailableBriefingWeek())}">老板摘要</a>
+        <a class="button" href="#/briefing?week=${encodeURIComponent(latestAvailableBriefingWeek())}">横向分析</a>
         <a class="button" href="#/teacher-unknown">老师不知道</a>
         <a class="button" href="#/search">全文搜索</a>
       </div>
@@ -258,8 +258,8 @@ function renderBriefings() {
   app.innerHTML = html`
     <section class="hero">
       <div>
-        <h1>老板周摘要</h1>
-        <p class="muted">每周截止后生成，首页只放入口；每个分区都有独立页面，方便快速读。</p>
+        <h1>横向分析</h1>
+        <p class="muted">每周截止后生成；每个分区都有独立页面，方便快速读。</p>
       </div>
     </section>
     <section class="cards">
@@ -267,7 +267,7 @@ function renderBriefings() {
         <a class="card" href="#/briefing?week=${encodeURIComponent(week.week)}">
           <strong>${esc(week.week)}</strong>
           <span class="muted">已交 ${week.submitted} / 应交 ${week.rosterSize}，原件 ${week.reportCount || week.submitted}</span>
-          <span class="badge">老板摘要</span>
+          <span class="badge">横向分析</span>
         </a>
       `).join("")}
     </section>
@@ -275,8 +275,8 @@ function renderBriefings() {
 }
 
 async function renderBriefing(weekId) {
-  const week = state.weeks.find((item) => item.week === weekId) || briefingWeeks().at(-1) || latestWeek();
-  app.innerHTML = `<section class="panel"><h1>${esc(week.week)} 老板摘要</h1><p class="muted">正在加载离线摘要...</p></section>`;
+  const week = briefingWeeks().find((item) => item.week === weekId) || briefingWeeks().at(-1) || latestWeek();
+  app.innerHTML = `<section class="panel"><h1>${esc(week.week)} 横向分析</h1><p class="muted">正在加载离线分析...</p></section>`;
   try {
     const payload = await loadBriefing(week.week);
     const result = payload.result || {};
@@ -284,12 +284,13 @@ async function renderBriefing(weekId) {
     app.innerHTML = html`
       <section class="hero">
         <div>
-          <h1>${esc(week.week)} 老板摘要</h1>
+          <h1>${esc(week.week)} 横向分析</h1>
           <p class="muted">${esc(result.headline || "这一周摘要还没有生成完整标题。")}</p>
         </div>
         <div class="toolbar">
+          ${briefingWeekControls(week.week, "briefing")}
           <a class="button" href="#/week?week=${encodeURIComponent(week.week)}">本周原文</a>
-          <a class="button" href="#/briefings">全部摘要</a>
+          <a class="button" href="#/briefings">全部横向分析</a>
         </div>
       </section>
       <section class="briefing-summary">
@@ -305,24 +306,25 @@ async function renderBriefing(weekId) {
         `).join("")}
       </section>
       <section class="panel" style="margin-top:16px">
-        <h2>老板下一步</h2>
+        <h2>下一步追问</h2>
         <div class="list">
           ${(result.closingAdvice || []).map((item) => `<div class="row"><strong>建议</strong><span>${esc(item)}</span><span></span></div>`).join("")}
         </div>
       </section>
     `;
+    bindBriefingWeekPicker();
   } catch {
     app.innerHTML = html`
       <section class="panel">
-        <h1>${esc(week.week)} 老板摘要</h1>
-        <p class="muted">这一周的老板摘要还没有生成。它会在周一 08:00 截止后由同步任务生成。</p>
+        <h1>${esc(week.week)} 横向分析</h1>
+        <p class="muted">这一周的横向分析还没有生成。它会在周一 08:00 截止后由同步任务生成。</p>
       </section>
     `;
   }
 }
 
 async function renderBriefingSection(weekId, sectionId) {
-  const week = state.weeks.find((item) => item.week === weekId) || briefingWeeks().at(-1) || latestWeek();
+  const week = briefingWeeks().find((item) => item.week === weekId) || briefingWeeks().at(-1) || latestWeek();
   const meta = briefingSectionMeta[sectionId] || briefingSectionMeta["key-progress"];
   app.innerHTML = `<section class="panel"><h1>${esc(meta.title)}</h1><p class="muted">正在加载...</p></section>`;
   try {
@@ -336,7 +338,8 @@ async function renderBriefingSection(weekId, sectionId) {
           <p class="muted">${esc(week.week)} · ${items.length} 条 · ${esc(result.headline || "")}</p>
         </div>
         <div class="toolbar">
-          <a class="button" href="#/briefing?week=${encodeURIComponent(week.week)}">返回摘要</a>
+          ${briefingWeekControls(week.week, "briefing-section", sectionId)}
+          <a class="button" href="#/briefing?week=${encodeURIComponent(week.week)}">返回横向分析</a>
           <a class="button" href="#/week?week=${encodeURIComponent(week.week)}">本周原文</a>
         </div>
       </section>
@@ -344,9 +347,41 @@ async function renderBriefingSection(weekId, sectionId) {
         ${items.length ? items.map((item) => briefingSectionItem(item)).join("") : `<div class="panel"><p class="muted">这个分区暂无条目。</p></div>`}
       </section>
     `;
+    bindBriefingWeekPicker();
   } catch {
-    app.innerHTML = `<section class="panel"><h1>${esc(meta.title)}</h1><p class="muted">摘要文件还没有生成。</p></section>`;
+    app.innerHTML = `<section class="panel"><h1>${esc(meta.title)}</h1><p class="muted">横向分析文件还没有生成。</p></section>`;
   }
+}
+
+function briefingWeekControls(currentWeek, target, sectionId = "") {
+  const weeks = briefingWeeks();
+  const index = Math.max(0, weeks.findIndex((week) => week.week === currentWeek));
+  const previous = weeks[Math.max(0, index - 1)]?.week || currentWeek;
+  const next = weeks[Math.min(weeks.length - 1, index + 1)]?.week || currentWeek;
+  const hrefFor = (week) => target === "briefing-section"
+    ? `#/briefing-section?week=${encodeURIComponent(week)}&section=${encodeURIComponent(sectionId)}`
+    : `#/briefing?week=${encodeURIComponent(week)}`;
+  return `
+    <span class="week-controls inline-week-controls">
+      <a class="button" href="${hrefFor(previous)}" title="上一周">‹</a>
+      <select data-briefing-week-select data-briefing-target="${esc(target)}" data-briefing-section="${esc(sectionId)}">
+        ${weeks.slice().reverse().map((week) => `<option value="${esc(week.week)}" ${week.week === currentWeek ? "selected" : ""}>${esc(week.week)}</option>`).join("")}
+      </select>
+      <a class="button" href="${hrefFor(next)}" title="下一周">›</a>
+    </span>
+  `;
+}
+
+function bindBriefingWeekPicker() {
+  document.querySelectorAll("[data-briefing-week-select]").forEach((select) => {
+    select.addEventListener("change", () => {
+      const target = select.dataset.briefingTarget;
+      const section = select.dataset.briefingSection || "";
+      location.hash = target === "briefing-section"
+        ? `#/briefing-section?week=${encodeURIComponent(select.value)}&section=${encodeURIComponent(section)}`
+        : `#/briefing?week=${encodeURIComponent(select.value)}`;
+    });
+  });
 }
 
 function sectionItems(result, id) {
@@ -392,7 +427,7 @@ function renderWeek(weekId) {
         <span class="badge">原件 ${week.reportCount || week.submitted}</span>
         <span class="badge danger">${missingLabel(week)} ${week.missingCount}</span>
         <span class="badge">迟交 ${week.lateCount || 0}</span>
-        <a class="button" href="#/briefing?week=${encodeURIComponent(week.week)}">老板摘要</a>
+        <a class="button" href="#/briefing?week=${encodeURIComponent(week.week)}">横向分析</a>
         <button data-analysis="week:${week.week}:horizontal" data-target="week-analysis">横向分析</button>
       </div>
     </section>
