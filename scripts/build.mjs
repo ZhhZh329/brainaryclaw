@@ -13,6 +13,7 @@ const registryPath = process.env.WEEKREP_REGISTRY_PATH || path.join(sourceRoot, 
 const templatePath = process.env.WEEKREP_TEMPLATE_PATH || path.join(sourceRoot, "WEEKLY_REPORT_TEMPLATE.md");
 const nameAliasesPath = process.env.WEEKREP_NAME_ALIASES_PATH || path.join(root, "config", "name-aliases.json");
 const excludedWeeks = new Set((process.env.WEEKREP_EXCLUDED_WEEKS || "2026-03-08").split(",").map((week) => week.trim()).filter(Boolean));
+const teacherUnknownStartWeek = process.env.WEEKREP_TEACHER_UNKNOWN_START_WEEK || "2026-05-31";
 
 async function readJson(file) {
   const text = await fs.readFile(file, "utf8");
@@ -286,6 +287,147 @@ function analyzePerson(name, reports) {
   };
 }
 
+const teacherQuestion = "\u8fd9\u662f\u8001\u5e08\u539f\u672c\u4e0d\u77e5\u9053\u7684\u5417";
+const teacherUnknownPart = "\u8001\u5e08\u539f\u672c\u4e0d\u77e5\u9053\u7684\u90e8\u5206";
+const yesText = "\u662f";
+const noText = "\u5426";
+const contentLabel = "\u5185\u5bb9";
+const whyUnknownLabel = "\u8001\u5e08\u4e3a\u4ec0\u4e48\u539f\u672c\u4e0d\u77e5\u9053";
+const infoGapLabel = "\u4fe1\u606f\u5dee\u5728\u54ea\u91cc";
+const newInsightLabel = "\u8fd9\u6b21\u65b0\u589e\u8ba4\u77e5\u662f\u4ec0\u4e48";
+const evidenceLabel = "\u8bc1\u636e\u7b49\u7ea7";
+
+function cleanMarkdownLine(line) {
+  return String(line || "")
+    .replace(/^\s*[-*•]\s*/, "")
+    .replace(/^#+\s*/, "")
+    .replace(/\*\*/g, "")
+    .trim();
+}
+
+function isHeadingLine(line) {
+  const clean = cleanMarkdownLine(line);
+  if (clean.includes(teacherQuestion)) return false;
+  return /^#{1,4}\s+/.test(line) || /^\s*\d+[.、]\s*\S+/.test(line) || /^CoT[’']s CoT\s+\d+/i.test(clean);
+}
+
+function answerLooksYes(line, followingLines = []) {
+  const lookahead = followingLines.map(cleanMarkdownLine).filter(Boolean).slice(0, 3).join(" ");
+  const text = cleanMarkdownLine(`${line} ${lookahead}`);
+  const index = text.indexOf(teacherQuestion);
+  if (index < 0) return false;
+  const answer = text.slice(index + teacherQuestion.length).replace(/^[\s:：]+/, "");
+  if (!answer || answer.includes(`${yesText} / ${noText}`) || answer.includes(`${yesText}/${noText}`)) return false;
+  return answer.startsWith(yesText) && !answer.startsWith(noText);
+}
+
+function previousBlockStart(lines, index) {
+  for (let i = index; i >= 0; i -= 1) {
+    if (isHeadingLine(lines[i])) return i;
+  }
+  return Math.max(0, index - 3);
+}
+
+function nextBlockEnd(lines, start, markerIndex) {
+  for (let i = markerIndex + 1; i < lines.length; i += 1) {
+    if (i > start && isHeadingLine(lines[i])) return i;
+  }
+  return Math.min(lines.length, markerIndex + 16);
+}
+
+function fieldAfter(block, label) {
+  const lines = block.split(/\r?\n/);
+  const picked = [];
+  let started = false;
+  for (const line of lines) {
+    const clean = cleanMarkdownLine(line);
+    if (!started && clean.includes(label)) {
+      started = true;
+      const inline = clean.slice(clean.indexOf(label) + label.length).replace(/^[\s:：]+/, "");
+      if (inline) picked.push(inline);
+      continue;
+    }
+    if (started) {
+      if (!clean) {
+        if (picked.length) break;
+        continue;
+      }
+      if (/^(?:\u8001\u5e08|\u4fe1\u606f\u5dee|\u8fd9\u6b21|\u5982\u679c|\u81ea\u52a8\u5316|\u5efa\u8bae|\u8bc1\u636e)/.test(clean) && picked.length) break;
+      picked.push(clean);
+    }
+  }
+  return picked.join("\n").trim();
+}
+
+function firstContentLine(block) {
+  return block.split(/\r?\n/)
+    .map(cleanMarkdownLine)
+    .find((line) => line && !line.includes(teacherQuestion) && !line.includes(teacherUnknownPart)) || "";
+}
+
+function titleForBlock(block, fallbackIndex) {
+  const heading = block.split(/\r?\n/).map(cleanMarkdownLine).find((line) => (
+    /^CoT[’']s CoT\s+\d+/i.test(line) ||
+    /^\d+[.、]\s*/.test(line) ||
+    /^(?:\u7406\u89e3|\u5173\u8054)\s*\d+/.test(line)
+  ));
+  return heading || `${contentLabel} ${fallbackIndex + 1}`;
+}
+
+function extractTeacherUnknownItems(report) {
+  if (report.week < teacherUnknownStartWeek) return [];
+  const lines = String(report.rawText || "").split(/\r?\n/);
+  const items = [];
+  const seen = new Set();
+  for (let i = 0; i < lines.length; i += 1) {
+    const clean = cleanMarkdownLine(lines[i]);
+    const isQuestionYes = clean.includes(teacherQuestion) && answerLooksYes(clean, lines.slice(i + 1, i + 6));
+    const isUnknownPart = clean.includes(teacherUnknownPart);
+    if (!isQuestionYes && !isUnknownPart) continue;
+    const start = previousBlockStart(lines, i);
+    const end = nextBlockEnd(lines, start, i);
+    const block = lines.slice(start, end).join("\n").trim();
+    const key = `${start}:${end}`;
+    if (!block || seen.has(key)) continue;
+    seen.add(key);
+    const content = fieldAfter(block, contentLabel) || firstContentLine(block);
+    items.push({
+      id: `${report.week}/${report.slug}/teacher-unknown-${items.length + 1}`,
+      week: report.week,
+      name: report.name,
+      slug: report.slug,
+      reportId: report.id,
+      title: titleForBlock(block, items.length),
+      content,
+      why: fieldAfter(block, whyUnknownLabel),
+      gap: fieldAfter(block, infoGapLabel),
+      insight: fieldAfter(block, newInsightLabel),
+      evidence: fieldAfter(block, evidenceLabel),
+      text: block
+    });
+  }
+  return items;
+}
+
+function buildTeacherUnknownSummary(reports, weeks) {
+  const items = reports.flatMap(extractTeacherUnknownItems)
+    .sort((a, b) => a.week.localeCompare(b.week) || a.name.localeCompare(b.name));
+  const availableWeeks = weeks.filter((week) => week >= teacherUnknownStartWeek);
+  return {
+    startWeek: teacherUnknownStartWeek,
+    total: items.length,
+    weeks: availableWeeks.map((week) => {
+      const weekItems = items.filter((item) => item.week === week);
+      return {
+        week,
+        count: weekItems.length,
+        peopleCount: new Set(weekItems.map((item) => item.slug)).size,
+        items: weekItems
+      };
+    })
+  };
+}
+
 async function collectReports(registry, nameAliases) {
   const { byId, byName } = registryIndexes(registry);
   const weeks = (await fs.readdir(reportsDir, { withFileTypes: true }))
@@ -468,6 +610,7 @@ async function main() {
     person.slug,
     analyzePerson(person.name, visibleReports.filter((report) => report.slug === person.slug))
   ]));
+  const teacherUnknown = buildTeacherUnknownSummary(visibleReports, weeks);
 
   const siteData = {
     generatedAt: new Date().toISOString(),
@@ -487,7 +630,8 @@ async function main() {
     reports: visibleReports,
     people,
     weeks: weekSummaries,
-    personAnalyses
+    personAnalyses,
+    teacherUnknown
   };
 
   await fs.writeFile(path.join(dataDir, "site-data.json"), JSON.stringify(siteData));

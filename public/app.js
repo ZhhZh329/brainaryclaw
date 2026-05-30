@@ -14,6 +14,7 @@ function route() {
   if (path === "/week") return renderWeek(params().get("week"));
   if (path === "/people") return renderPeople();
   if (path === "/person") return renderPerson(params().get("slug"));
+  if (path === "/teacher-unknown") return renderTeacherUnknown(params().get("week"));
   if (path === "/search") return renderSearch();
   if (path === "/template") return renderTemplate();
   return renderHome();
@@ -70,6 +71,7 @@ function renderHome() {
       </div>
       <div class="toolbar">
         <a class="button" href="#/week?week=${encodeURIComponent(latest.week)}">打开最新周</a>
+        <a class="button" href="#/teacher-unknown">老师不知道</a>
         <a class="button" href="#/search">全文搜索</a>
       </div>
     </section>
@@ -101,6 +103,102 @@ function renderHome() {
       `).join("")}
     </section>
   `;
+}
+
+function teacherUnknownWeeks() {
+  const weeks = state.teacherUnknown?.weeks || [];
+  return weeks.slice().sort((a, b) => a.week.localeCompare(b.week));
+}
+
+function latestTeacherUnknownWeek() {
+  const weeks = teacherUnknownWeeks();
+  return weeks.filter((week) => week.count > 0).at(-1) || weeks.at(-1);
+}
+
+function renderTeacherUnknown(weekId) {
+  const weeks = teacherUnknownWeeks();
+  const selected = weeks.find((week) => week.week === weekId) || latestTeacherUnknownWeek();
+  if (!selected) {
+    app.innerHTML = html`
+      <section class="hero">
+        <div>
+          <h1>老师不知道</h1>
+          <p class="muted">还没有从周报里抽到条目。</p>
+        </div>
+      </section>
+    `;
+    return;
+  }
+  app.innerHTML = html`
+    <section class="hero">
+      <div>
+        <h1>老师不知道</h1>
+        <p class="muted">从 ${esc(state.teacherUnknown.startWeek)} 开始，直接抽取周报模板里标明为“是”的原文条目。</p>
+      </div>
+      <div class="week-controls teacher-week-controls">
+        <button data-teacher-week-step="-1" title="上一周">‹</button>
+        <select data-teacher-week-select>
+          ${weeks.slice().reverse().map((week) => `<option value="${esc(week.week)}" ${week.week === selected.week ? "selected" : ""}>${esc(week.week)} · ${week.count}</option>`).join("")}
+        </select>
+        <button data-teacher-week-step="1" title="下一周">›</button>
+      </div>
+    </section>
+    <section class="panel teacher-summary">
+      <div>
+        <h2>${esc(selected.week)}</h2>
+        <p class="muted">${selected.count ? `共 ${selected.count} 条，来自 ${selected.peopleCount} 个人` : "本周还没有人写“老师不知道”的条目。"}</p>
+      </div>
+      <a class="button" href="#/week?week=${encodeURIComponent(selected.week)}">打开本周周报</a>
+    </section>
+    <section class="teacher-grid">
+      ${selected.items.map((item) => teacherUnknownCard(item)).join("")}
+    </section>
+  `;
+  bindTeacherUnknownPicker();
+}
+
+function teacherUnknownCard(item) {
+  const detailRows = [
+    item.why ? ["为什么不知道", item.why] : null,
+    item.gap ? ["信息差", item.gap] : null,
+    item.insight ? ["新增认知", item.insight] : null,
+    item.evidence ? ["证据等级", item.evidence] : null
+  ].filter(Boolean);
+  return html`
+    <article class="teacher-card">
+      <div class="teacher-card-head">
+        <div>
+          <a class="teacher-name" href="#/person?slug=${encodeURIComponent(item.slug)}">${esc(item.name)}</a>
+          <div class="muted">${esc(item.week)} · ${esc(item.title)}</div>
+        </div>
+        <a class="button" href="#/week?week=${encodeURIComponent(item.week)}#${encodeURIComponent(item.reportId)}">原文</a>
+      </div>
+      <p class="teacher-content">${esc(item.content || item.text)}</p>
+      ${detailRows.length ? `<dl class="teacher-details">${detailRows.map(([label, value]) => `<dt>${esc(label)}</dt><dd>${esc(value)}</dd>`).join("")}</dl>` : ""}
+      <details>
+        <summary>展开原文块</summary>
+        <pre class="teacher-raw">${esc(item.text)}</pre>
+      </details>
+    </article>
+  `;
+}
+
+function bindTeacherUnknownPicker() {
+  const select = document.querySelector("[data-teacher-week-select]");
+  if (!select) return;
+  const weeks = teacherUnknownWeeks().map((week) => week.week).reverse();
+  const go = () => {
+    location.hash = `#/teacher-unknown?week=${encodeURIComponent(select.value)}`;
+  };
+  select.addEventListener("change", go);
+  document.querySelectorAll("[data-teacher-week-step]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const current = weeks.indexOf(select.value);
+      const next = Math.max(0, Math.min(weeks.length - 1, current + Number(button.dataset.teacherWeekStep)));
+      select.value = weeks[next];
+      go();
+    });
+  });
 }
 
 function renderWeeks() {
