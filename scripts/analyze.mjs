@@ -384,7 +384,12 @@ async function main() {
     }
   }
 
-  for (const week of site.weeks.filter(pastDeadline)) {
+  const pastDeadlineWeeks = site.weeks
+    .filter(pastDeadline)
+    .sort((a, b) => String(a.week).localeCompare(String(b.week)));
+  const latestBriefingWeek = pastDeadlineWeeks.at(-1)?.week || "";
+
+  for (const week of pastDeadlineWeeks) {
     if (weekFilter.size && !weekFilter.has(week.week)) continue;
     if (personFilter.size) continue;
     const reports = site.reports
@@ -418,7 +423,7 @@ async function main() {
         }
       });
     }
-    if (analysisTypes.has("week-briefing")) {
+    if (analysisTypes.has("week-briefing") && (weekFilter.size || week.week === latestBriefingWeek)) {
       jobs.push({
         key: `week:${week.week}:briefing`,
         file: path.join(analysisDir, "briefings", `${week.week}.json`),
