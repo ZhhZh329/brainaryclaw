@@ -386,7 +386,9 @@ function bindBriefingWeekPicker() {
 
 function sectionItems(result, id) {
   const meta = briefingSectionMeta[id];
-  return meta ? (result.sections?.[meta.field] || []) : [];
+  const value = meta ? result.sections?.[meta.field] : null;
+  if (Array.isArray(value)) return value;
+  return value ? [value] : [];
 }
 
 function defaultBriefingCards(result) {
