@@ -1,6 +1,6 @@
 const app = document.querySelector("#app");
-const state = await fetch("data/site-data.json").then((response) => response.json());
-const analysisManifest = await fetch("data/analysis/manifest.json").then((response) => response.ok ? response.json() : null).catch(() => null);
+const state = await fetch("data/site-data.json", { cache: "no-store" }).then((response) => response.json());
+const analysisManifest = await fetch("data/analysis/manifest.json", { cache: "no-store" }).then((response) => response.ok ? response.json() : null).catch(() => null);
 
 const html = (strings, ...values) => strings.reduce((out, string, i) => out + string + (values[i] ?? ""), "");
 const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[ch]));
