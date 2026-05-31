@@ -1,0 +1,60 @@
+{
+  "key": "person:wan-wenyuan:2026-05-31:longitudinal",
+  "generatedAt": "2026-05-31T12:01:14.366Z",
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "reasoningEffort": "high",
+  "inputHash": "f58787914d84ce1d1def52f2640e8207e57c4c4ba6a5c083eda1d2385a5181e6",
+  "result": {
+    "overallTrajectory": "学生的研究能力明显提升，但并非仅因‘更忙’。前三周从 VQA baseline 推向 context memory ablation，发现证据副作用后，迅速转向按题型选择视觉证据的 external attention 路由器；第四周将问题重构为 attention-memory-imagination 认知循环。认知深度与系统化程度逐周增强，但 5.24 后实验产出停滞，定量验证缺位。价值观从‘节约适配成本’转向‘构建通用认知控制模块’，对研究题目的价值论证更成熟。",
+    "stageByWeek": [
+      {
+        "week": "5.10",
+        "题目": "LMEE-Bench 上 RynnBrain-2B 的 VQA 与分割验证",
+        "硬进展": "完成 405 题 no-memory VQA baseline，accuracy 72.84%~73.10%。确认 LMEE-Bench 可同时支撑 VQA 和物体分割验证。",
+        "认知升级": "LMEE-Bench 可统一 VQA 与 grounding，memory 应保存视觉证据而非仅历史文本。",
+        "价值判断": "值 60 万+40 万（减少重复配适成本，轻量文本检测框降低工程风险）",
+        "方法特征": "基线实验 + 文本检测框作为 memory 中间层"
+      },
+      {
+        "week": "5.17",
+        "题目": "text-box memory 验证与内部/外部 attention 路线",
+        "硬进展": "完成 full-set 405 题 context memory ablation，no-memory 73.33% vs bbox-memory 73.09%，整体无提升。发现定位问题有正向信号，属性/计数/全局状态问题受干扰。",
+        "认知升级": "text-box memory 不是无条件增强项；外部 attention 需约束输入内容与格式；内部 attention 应通过 adapter 内化能力。",
+        "价值判断": "值 50 万+40 万+80 万（形成 ablation workflow、text-box memory schema 和内部 adapter 训练路线）",
+        "方法特征": "受控实验 + 失败模式分析 + 内外 attention 分工"
+      },
+      {
+        "week": "5.24",
+        "题目": "按任务类型选择视觉证据的 external attention 路线",
+        "硬进展": "无新定量实验。通过样例分析明确 bbox/crop/marked image 对不同题型的副作用差异。形成按 Location/Relationship/Attribute/State/Counting 选择证据的 router 方案。",
+        "认知升级": "视觉证据本身是认知干预，不能无条件给；需要 evidence applicability layer；内部 attention 先外部可控再内部学习。",
+        "价值判断": "值 40 万+70 万+80 万（减少无效证据堆叠，形成通用 evidence router，打通内化路径）",
+        "方法特征": "概念深化 + 规则版 router 设计（未实施）"
+      },
+      {
+        "week": "5.31",
+        "题目": "attention-memory 循环与 3D imagination 路线重构",
+        "硬进展": "无新定量实验。重整为 perception→external attention→internal attention→relevance extraction→reasoning→memory update 循环；引入 3D imagination，明确应仅对被 attention 选中的目标做空间假设检验。",
+        "认知升级": "attention、memory、imagination 是动态循环系统；meta-cognition 包含回答前判断所需认知资源。",
+        "价值判断": "值 70 万+80 万+60 万（系统设计、memory-conditioned evidence activation、3D imagination 最小验证）",
+        "方法特征": "框架重构 + 路线设计，实验支撑仍依赖 5.17 数据"
+      }
+    ],
+    "trendScores": {
+      "hardProgressTrend": "先升后降：5.10~5.17 有完整实验数据，5.24 无新实验，5.31 无新实验，定量进展停滞",
+      "cognitiveMaturity": "逐周上升：从局部 VQA 优化到外部 attention 路由，再到 attention-memory-imagination 认知循环，反思层深且可操作",
+      "evidenceLevel": "5.17 达 A（full-set ablation），5.24 为 B（样例分析支撑），5.31 为 B/C（多基于现象推演，无闭环验证）",
+      "projectManagement": "中期管理较好，但过分依赖 Chunhan 分割结果却未推进，5.31 因方向调整导致实验脱节",
+      "valueReasoning": "逐渐成熟：从基于工时节省的估值转向可复用模块/通用能力估值，且能区分证据等级（如 3D 估值低于已验证的 router）"
+    },
+    "valueFunctionChange": "第1周：价值 = 减少人工适配成本 + 轻量中间层降低工程风险，金额估算偏重直接劳动替代。第2周：价值 = 形成标准化评测流程避免无效实验方向，开始关注‘避免错误投入’。第3周：价值 = 通用 visual evidence router 打通 perception 到 reasoning 的调度，强调可复用模块。第4周：价值 = 构建认知控制闭环（attention-memory-imagination），内化长期能力，将短期实验价值上升为系统能力资产。学生的价值函数从‘节省单次项目成本’演变为‘沉淀 Brainary 通用认知基座’，认知层面明显升级，但金额估算逐渐主观。",
+    "repeatedBlockers": [
+      "与 Chunhan 的检测/分割验证结果始终未对齐，导致 bbox/mask/crop 可靠性无法实测对比",
+      "规则版 visual router 的 LMEE-Bench full-set 定量实验多次列入下周计划却未执行",
+      "每次周报的新方案均未进入最小闭环验证，尤其是 5.24 的 selected crop + structured memory 对比与 5.31 的 task-region similarity 实现"
+    ],
+    "professorShouldAsk": "你在 5.17 后连续两周没有跑新的定量实验，5.31 更是直接重构框架。你如何确保 attention-memory-imagination 不会变成无人可以实现的纸上系统？下周你能先恢复一个最小实验吗？",
+    "nextBestIntervention": "立即指定一个 5 天内可完成的实验：用 LMEE-Bench 按规则版 router（Location/Attribute 两类即可）对比 no-evidence、text bbox、selected crop 的 accuracy，验证‘按题型选择证据’是否显著优于无条件 bbox memory。该实验成功后，再绘制系统图和 schema，否则全部框架设计缺乏实证锚点。"
+  }
+}
