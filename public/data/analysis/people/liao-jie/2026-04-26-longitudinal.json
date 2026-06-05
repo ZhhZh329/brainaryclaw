@@ -1,48 +1,430 @@
 {
   "key": "person:liao-jie:2026-04-26:longitudinal",
-  "generatedAt": "2026-05-24T11:50:38.454Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "7642ac514275d2f0ee0a19ebb708f786719ddd4f83aa95d33326e2ea108281a0",
+  "generatedAt": "2026-06-05T17:07:07.776Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "12172cfa8ea667358129e47e63459330322833fa31ef52ab2f40d1adc575cb3f",
   "result": {
-    "overallTrajectory": "该生四周内从法律数据集生成的初步探索，逐步演进为结构化行为样本生成框架的构建者。题目轨迹从多LLM生成+KG回填，收敛到以OpenClaw工具链为核心的五大字段行为样本，再转向'从模型蒸馏KG'的生成架构重构，最终落地为字段级算子流水线。硬进展持续产生，从概念验证、可运行框架、架构纠偏到v2流水线，认知深度不断加深，CoT's CoT成熟度提升（出现A级证据），Brainary映射愈益具体，价值推理从任务级估算转向资产化估值，项目管理日趋精细。主线明确，但中途新增的skill scanner工作需注意与主线的协同。",
+    "overallTrajectory": {
+      "judgment": "总体看，学生是在变得更有研究能力，而不只是更忙；但进步主要体现在问题表征、系统分解和验证意识上，尚未充分体现在可复现实验数据、量化指标和外部效度上。",
+      "mainEvidence": [
+        "题目从“法律风险案例生成”逐步收敛为“面向 OpenClaw 法律 agent 行为审计的结构化 benchmark / evaluator / workflow”。这是研究对象定义能力的提升。",
+        "硬进展从静态 KG schema 和人工检查，推进到 generate-audit-memory 框架，再到字段级算子流水线 v2 和代码层 guardrail。到 2026-04-26 已有可运行 v2 流程，这是实质工程进展。",
+        "认知从“生成文本是否合理”升级为“中间状态是否可审计、字段偏序是否正确、内部一致性是否不足以证明真实可靠”。这是研究判断标准的升级。",
+        "价值推理从简单按任务估价，扩展到用户、benchmark、RegTech、agent safety、Brainary 能力映射和自动化沉淀形式；但金额估值波动大，缺少真实买单方、实际样本成本、替代方案成本和市场证据。",
+        "项目管理从泛化的下周继续检查，逐步变成有样本数、对比组、taxonomy leaf、现实案例、v1/v2 对比的实验计划。下一步动作质量明显变好。"
+      ],
+      "mainRisk": [
+        "多周反复出现“schema 未冻结、evaluator 未完成、小规模样本验证不足”，说明研究能力虽提升，但闭环验证仍滞后。",
+        "2026-04-19 相比 2026-04-12 有一定回退或重构：04-12 已称 generate-audit-memory 闭环开始运行，04-19 又说尚未进入小规模实验、处于结构冻结前。这可能是诚实纠偏，也可能是前期硬进展表述偏乐观。",
+        "截至 2026-04-26，仍缺少明确样本数量、通过率、错误率、v1/v2 对照结果、现实案例匹配结果，因此证据等级仍主要是原型证据，不是实验结论证据。",
+        "新增 skill scanner 攻击有价值，但可能分散主线；它目前是单点攻击验证，尚未和主线的法律行为 benchmark 形成明确依赖关系。"
+      ],
+      "researchCapabilityVerdict": "研究能力有提升，尤其是从“做东西”转向“定义评测对象、拆解中间表示、设计可审计流程、提出验证路径”。但还没有证明其能稳定完成研究闭环：提出假设、构造对照、收集数据、量化验证、沉淀可复用 benchmark。教授应推动他从架构思考进入最小实验闭环。"
+    },
     "stageByWeek": [
       {
         "week": "2026-04-05",
-        "stage": "多LLM生成+KG回填验证阶段",
-        "analysis": "本周将拒稿论文转投，并启动基于KG Schema的最小模板生成链路，通过多LLM生成字段并回填KG检查结构自洽。核心产出是让KG从静态表示变为生成检查框架。认识到生成内容需在结构上可落地，但字段粒度不稳定、回填缺失等问题开始暴露。价值观：认为当前任务值9万元，强调验证方法可用性以节省后续试错成本。"
+        "stage": "从 KG schema / 模板进入生成链路的早期验证阶段",
+        "topicTrajectory": "题目仍较宽，核心是 Agent 行为法律风险数据集；关注点从静态 KG 表示转向多 LLM 字段生成、KG 回填和人工检查。",
+        "hardProgress": "完成 ICML 拒稿论文转投 TDSC；主线方面开始多 LLM 生成字段并回填 KG，开始人工检查字段生成、KG 回填和标签判断一致性。",
+        "cognitiveTrend": "认识到 KG 不只是存储结构，而是生成结果的约束和检查框架；开始把文本通顺性与图结构可落地性区分开。",
+        "cotCotMaturity": "有 CoT²，但还偏方法反思，尚未严格回答“老师不知道什么、为什么重要、证据等级、自动化沉淀形式”。成熟度中等偏低。",
+        "brainaryMapping": "能映射到 memory、reasoning、structured generation、calibration、evaluator，但仍是概念连接，缺少模块边界和产物形态。",
+        "valueReasoning": "估值 9 万人民币，理由是 schema 从静态变生成约束、人工检查避免错误投入。价值函数偏内部研发成本节省，尚未明确用户、买单方、规模化收益和真实数据验证。",
+        "projectManagement": "下一步是继续补样本、记录错误模式。动作方向正确，但缺少样本数量、通过标准、时间预算和对照实验。",
+        "oneThingProfessorShouldLearn": "对于法律风险数据集，关键不是多 LLM 生成字段，而是字段能否回填 KG 并形成一致、可解释、可复核的案例结构。",
+        "evidenceLevel": "B-：有流程尝试和人工观察，但缺少样本数、指标和系统对照。"
       },
       {
         "week": "2026-04-12",
-        "stage": "自动化框架接入与五字段闭环",
-        "analysis": "将表示层接入多阶段流水线，明确OpenClaw行为样本需包含上下文、用户指令、工具调用链、违法分类和结果判定五大字段，并启动generate-audit-memory闭环。新增长期记忆机制，使系统可积累。认知升级：数据集最小单元是可审计行为样本，而非泛化法律案例。价值观：本周估值9万，强调从泛数据生成收敛到结构化行为样本生成，买家定位开始出现。"
+        "stage": "从生成链路进入 generate-audit-memory 原型框架阶段",
+        "topicTrajectory": "题目更明确地收敛为 OpenClaw 行为数据集，最小样本单元被定义为上下文、用户指令、工具调用链、违法分类、违法结果判定。",
+        "hardProgress": "接入多阶段流水线，包括 parse、retrieve、build ontology、embed taxonomy、validate、generate、audit；PipelineState 承载状态；接入 library 长期记忆、SQLite checkpointer、回写门槛和去重。",
+        "cognitiveTrend": "从“生成法律案例”升级为“生成可审计行为样本”；认识到 generate、audit、long-term memory 是否闭环才是系统价值。",
+        "cotCotMaturity": "明显提升。开始区分老师是否原本知道，说明信息差、自动化潜力、沉淀形式和证据等级。CoT's CoT 开始具备研究管理价值。",
+        "brainaryMapping": "映射更具体：benchmark / evaluation、risk modeling、calibration、memory、workflow management。已经从概念映射进入可沉淀产物描述。",
+        "valueReasoning": "仍估值 9 万人民币，但计算方法更清楚，开始按研发工程、人工审计、复用 workflow 价值拆分；明确潜在买单方包括 Agent 平台治理、安全控制、AI 合规、风险控制、benchmark 团队。",
+        "projectManagement": "项目管理明显加强：写出阶段、投入时间、关键里程碑、资源、依赖、成本、纠偏动作。仍缺少实际样本数量和自动审计通过率。",
+        "oneThingProfessorShouldLearn": "最小数据单元不是违法标签，而是由上下文、指令、工具链、违法分类和结果判定组成的可审计行为样本。",
+        "evidenceLevel": "B：有可运行框架雏形和具体状态设计，但缺少对照实验和量化结果。"
       },
       {
         "week": "2026-04-19",
-        "stage": "生成架构重构与中间表示优先",
-        "analysis": "重新定义任务为'设计自动法律行为数据集生成agent'，按三层记忆（semantic, working, procedural）重构生成逻辑，将蒸馏目标从最终答案转向working memory schema和operator policy。冻结最小样本结构，并设计多个算子模块。认知深刻转变：高风险agent数据生成中，可检验的中间表示是第一优先级。价值观：整体agent估值跃升至80万元，基于替代人工标注和复用价值，体现资产化视角。"
+        "stage": "架构纠偏与中间表示重定义阶段",
+        "topicTrajectory": "题目进一步抽象为自动生成可评估法律 agent 行为合理性的结构化行为样本；从“从模型蒸馏 KG”改为蒸馏 working memory schema + operator policy。",
+        "hardProgress": "新增主要是设计资产：semantic memory、working memory、operator、consistency evaluator 的模块边界；定义 20–50 条样本和 v1/v2 对比计划。但报告明确说尚未进入大规模实验，也尚未完成小规模样本实证验证。",
+        "cognitiveTrend": "认知质量继续提升：意识到高风险 agent 数据集应先冻结中间表示，再扩规模；过程对错比结果标签更关键；纯 prompt 直出被明确否定。",
+        "cotCotMaturity": "成熟度较高。CoT's CoT 能提出 benchmark 最小有效样本应是 working memory snapshot + expected tool chain + risk judgment，并能解释为什么能区分“结果对但过程错”。",
+        "brainaryMapping": "映射最全面：memory、reasoning、calibration、cognitive control、tool orchestration、risk modeling、benchmark / evaluation。优点是系统性强，风险是映射较多但落地证据不足。",
+        "valueReasoning": "估值跳到 80 万人民币，基于 1 万条样本、每条 30–50 元和 2 倍复用价值。相比前两周，价值函数开始连接规模、人工替代成本、复用资产和潜在产品 feature；但金额依据是强假设，缺少真实标注报价、目标样本规模必要性和用户付费证据。",
+        "projectManagement": "诚实说明样本数量少于预期，结构清晰度高于预期；下周计划冻结 schema、产出 20–50 条样本、做 v1 prompt 直出与 v2 working memory/operator 对比。动作质量提升。",
+        "oneThingProfessorShouldLearn": "把从模型蒸馏 KG 落到法律 agent 上，关键不是蒸馏最终答案，而是蒸馏可执行 working memory schema，再生成结构化行为样本。",
+        "evidenceLevel": "B：认知和设计证据强，但硬实验证据不足；80 万估值证据等级偏 C。"
       },
       {
         "week": "2026-04-26",
-        "stage": "字段级算子流水线与外部验证",
-        "analysis": "完成v2字段级算子流水线，将整体生成拆解为偏序原子操作（plan_tool_chain → classify_violation → judge_result），并增加一致性guardrail和反向子图构造。新增发现：验证必须分层，内部规则保证结构一致，外部现实数据judge结果可信。同时并行完成skill scanner攻击实证。价值观：主任务估值15万元，侧任务5万元，强调框架可靠性和攻击面发现，估值回归到原型研发投入。"
+        "stage": "字段级算子流水线 v2 可运行原型与外部验证准备阶段",
+        "topicTrajectory": "主线从架构设计进入 v2 字段级 / 增量式流水线；新增副线 skill scanner 攻击。主线更接近 workflow / evaluator / benchmark，副线是 security benchmark / red-team workflow。",
+        "hardProgress": "完成完整可运行 v2 流程，包含 plan_tool_chain、classify_violation、judge_result、assemble_kg_subgraph、代码层 guardrail、Layer A 一致性规则；完成一次基于代码复原的 skill scanner 可执行攻击验证。",
+        "cognitiveTrend": "认知从中间表示重要，进一步升级为字段偏序、局部修复、后置 guardrail、现实数据验证的重要性。明确内部一致性只能证明自洽，不能证明真实可靠。",
+        "cotCotMaturity": "成熟度最高。CoT's CoT 1 和 2 给出 A 级证据，原因是已有可运行 v2 和 guardrail；CoT's CoT 3 关于现实数据验证仍是 B，因为尚未完成外部数据实验。",
+        "brainaryMapping": "映射开始回到可执行产物：模块、workflow、memory 结构、benchmark、evaluator。新增 skill scanner 映射到 risk modeling、cognitive control、benchmark / evaluation。",
+        "valueReasoning": "估值从 80 万回落到 20 万总计：主线 15 万，skill scanner 5 万。这个变化更保守，也承认现阶段不是明确商业买单方，而是研究验证价值。价值函数更成熟：不再只讲巨大潜在市场，而承认产品化证据缺失。",
+        "projectManagement": "下周动作具体：选 3–5 个高价值 taxonomy leaf，收集现实案例，让 v2 生成样本，用现实数据 judge class、judgment、事实一致性，并对比 v1/auto 与 v2。项目管理质量为四周最好。",
+        "oneThingProfessorShouldLearn": "把 sample 生成从一次大 LLM 调用改成字段级有偏序的小算子流水线，再用现实数据 judge，可以把一致性校验、失败模式约束和外部校准变成系统能力。",
+        "evidenceLevel": "A- / B+：v2 可运行和 guardrail 是较强硬进展；但外部真实性验证尚未完成，因此研究结论仍不能算 A。"
       }
     ],
     "trendScores": {
-      "hardProgress": "稳步上升，从零散生成到可运行框架，再到架构升级和精密流水线，每周均产出实质性模块或方法资产。",
-      "cognitiveDepth": "显著提升，从关注生成字段可回填，到认识行为链闭环，再到蒸馏中间表示、字段偏序约束和外部验证分层，认知层层递进。",
-      "cot_CoT_maturity": "成熟度提升，第二周两条B级，第三周三条B级，第四周四条且含两条A级，证据等级因更多实验和失败模式而加强。",
-      "brainaryMapping": "越来越系统，从初期较模糊的memory/calibration对应，发展到明确映射memory、reasoning、calibration、cognitive control等七项能力，并落实到benchmark和evaluator设计。",
-      "valueEstimation": "价值意识持续增强，能从节省试错、替代人工、资产复用等角度估值，但数值波动较大，第三周整体性估值后第四周回落至任务级，整体趋向更理性。"
+      "scale": "1 表示弱，5 表示强；评分只基于周报文本，不代表外部验证。",
+      "hardProgress": [
+        {
+          "week": "2026-04-05",
+          "score": 3,
+          "reason": "开始生成字段、回填 KG、人工检查，但缺少样本数和可运行系统细节。"
+        },
+        {
+          "week": "2026-04-12",
+          "score": 4,
+          "reason": "接入 generate-audit-memory 框架、PipelineState、library 和 SQLite checkpointer，硬进展明显。"
+        },
+        {
+          "week": "2026-04-19",
+          "score": 2,
+          "reason": "主要是架构重定义和模块设计，报告明确说尚未完成小规模样本实证验证。"
+        },
+        {
+          "week": "2026-04-26",
+          "score": 4,
+          "reason": "完成可运行 v2 字段级流水线和一次 skill scanner 攻击验证。"
+        }
+      ],
+      "cognitiveDepth": [
+        {
+          "week": "2026-04-05",
+          "score": 3,
+          "reason": "能区分文本生成和结构可落地性。"
+        },
+        {
+          "week": "2026-04-12",
+          "score": 4,
+          "reason": "能定义可审计行为样本和 generate-audit-memory 闭环。"
+        },
+        {
+          "week": "2026-04-19",
+          "score": 5,
+          "reason": "能提出先冻结中间表示再扩规模、蒸馏 working memory schema 和 operator policy。"
+        },
+        {
+          "week": "2026-04-26",
+          "score": 5,
+          "reason": "能提出字段偏序、局部修复、guardrail 和现实数据验证分层。"
+        }
+      ],
+      "cotCotMaturity": [
+        {
+          "week": "2026-04-05",
+          "score": 2,
+          "reason": "有二阶反思，但格式和证据管理不完整。"
+        },
+        {
+          "week": "2026-04-12",
+          "score": 4,
+          "reason": "开始写信息差、自动化潜力、沉淀形式和证据等级。"
+        },
+        {
+          "week": "2026-04-19",
+          "score": 4,
+          "reason": "CoT's CoT 能连接 benchmark 样本粒度、procedure knowledge 和自动化科研。"
+        },
+        {
+          "week": "2026-04-26",
+          "score": 5,
+          "reason": "能区分 A/B 证据，并将 CoT's CoT 落到可运行 v2 和现实数据验证门槛。"
+        }
+      ],
+      "brainaryMappingMaturity": [
+        {
+          "week": "2026-04-05",
+          "score": 3,
+          "reason": "能映射到 memory、reasoning、calibration，但偏抽象。"
+        },
+        {
+          "week": "2026-04-12",
+          "score": 4,
+          "reason": "映射到 benchmark、risk modeling、workflow 和 memory 结构，并说明沉淀形式。"
+        },
+        {
+          "week": "2026-04-19",
+          "score": 4,
+          "reason": "覆盖 Brainary 多项能力，但映射多、实证少。"
+        },
+        {
+          "week": "2026-04-26",
+          "score": 4,
+          "reason": "映射回 workflow、agent module、evaluator、benchmark，和 v2 原型更贴近。"
+        }
+      ],
+      "valueReasoning": [
+        {
+          "week": "2026-04-05",
+          "score": 2,
+          "reason": "有金额，但主要是主观任务价值，缺少用户和买单逻辑。"
+        },
+        {
+          "week": "2026-04-12",
+          "score": 3,
+          "reason": "开始说明买单方、通用能力和沉淀形式，金额计算仍偏估算。"
+        },
+        {
+          "week": "2026-04-19",
+          "score": 3,
+          "reason": "能用样本规模和人工成本估算 80 万，但假设过强，证据不足。"
+        },
+        {
+          "week": "2026-04-26",
+          "score": 4,
+          "reason": "估值更保守，承认现阶段商业买单方不明确，价值判断更诚实。"
+        }
+      ],
+      "projectManagement": [
+        {
+          "week": "2026-04-05",
+          "score": 2,
+          "reason": "下周动作正确但不够可检验。"
+        },
+        {
+          "week": "2026-04-12",
+          "score": 4,
+          "reason": "写出阶段、时间、资源、依赖、成本和纠偏。"
+        },
+        {
+          "week": "2026-04-19",
+          "score": 4,
+          "reason": "承认偏差并提出 20–50 条样本与 v1/v2 对比。"
+        },
+        {
+          "week": "2026-04-26",
+          "score": 4,
+          "reason": "提出 3–5 个 taxonomy leaf、现实案例、v1/v2 对比，但仍缺具体验收阈值。"
+        }
+      ],
+      "automationPath": [
+        {
+          "week": "2026-04-05",
+          "score": 3,
+          "reason": "看到 evaluator 和 calibration 潜力。"
+        },
+        {
+          "week": "2026-04-12",
+          "score": 4,
+          "reason": "明确 workflow、evaluator、benchmark harness、memory schema。"
+        },
+        {
+          "week": "2026-04-19",
+          "score": 4,
+          "reason": "把 memory schema、operator、agent module 作为自动化对象。"
+        },
+        {
+          "week": "2026-04-26",
+          "score": 5,
+          "reason": "已有字段级算子、guardrail、反向构图和外部 judge 路线。"
+        }
+      ],
+      "evidenceDiscipline": [
+        {
+          "week": "2026-04-05",
+          "score": 2,
+          "reason": "多为人工观察，缺少样本量和指标。"
+        },
+        {
+          "week": "2026-04-12",
+          "score": 3,
+          "reason": "开始标证据等级 B，但仍无对照实验。"
+        },
+        {
+          "week": "2026-04-19",
+          "score": 3,
+          "reason": "能承认没有系统对照实验，计划合理。"
+        },
+        {
+          "week": "2026-04-26",
+          "score": 4,
+          "reason": "能区分内部一致性和现实数据验证，证据意识增强。"
+        }
+      ]
     },
-    "valueFunctionChange": "学生的价值函数随周次变化明显：初期看重'让KG从静态变为约束框架'和'验证方法是否可用'，以规避后续错误投入为主要价值来源；随后价值感转移到'将泛化目标收敛为可审计行为样本'，强调结构明确带来的方向节省；第三周出现重大跃迁，以整条agent生成替代人工标注的高成本来估值（80万），价值判断从局部工具性上升为可复用资产性；第四周回归任务级，但更注重'形成更稳定、可诊断、可对齐现实数据的生成框架'，同时引入安全攻击面探索，价值视角更趋系统与风险平衡。总体而言，该生已从单纯追求'生成更多'，转向追求'生成得更对、更可检修、更可信'，价值函数向长期可复用、可诊断的资产化方向收敛。",
+    "valueFunctionChange": {
+      "summary": "价值观从“做出结构化数据生成链路很值钱”逐步转向“可审计、可修复、可复用、可外部验证的 agent benchmark / evaluator / workflow 才值钱”。这是正向变化。",
+      "weekByWeek": [
+        {
+          "week": "2026-04-05",
+          "valueFunction": "认为 KG schema 从静态表示变成生成约束和检查框架、人工检查能避免错误投入，因此值钱。",
+          "moneyEstimate": "9 万人民币",
+          "connectedToUsers": "缺失或很弱；未明确谁会买单。",
+          "connectedToProductForm": "提到法律数据集和结构化生成校验方法，但产物形态不够具体。",
+          "connectedToBrainary": "连接到 memory、reasoning、structured generation、calibration、evaluator。",
+          "connectedToAutomation": "有自动 evaluator / calibration 的雏形，但仍以人工检查为主。",
+          "assessment": "价值判断主要来自研究者内部效率和方法正确性，商业和用户证据不足。"
+        },
+        {
+          "week": "2026-04-12",
+          "valueFunction": "认为可审计 OpenClaw 行为样本、generate-audit-memory 闭环和长期记忆复用有价值。",
+          "moneyEstimate": "9 万人民币",
+          "connectedToUsers": "明确 Agent 平台治理、安全控制、AI 合规、风险控制、benchmark 团队。",
+          "connectedToProductForm": "benchmark、evaluator、workflow、memory schema、agent module。",
+          "connectedToBrainary": "更明确连接 benchmark / evaluation、risk modeling、calibration、memory、workflow management。",
+          "connectedToAutomation": "明确转化为 workflow、evaluator、benchmark harness、memory schema。",
+          "assessment": "价值函数比前一周成熟，开始从任务成本走向用户和产物；但金额仍主要是工作量估值。"
+        },
+        {
+          "week": "2026-04-19",
+          "valueFunction": "认为自动生成高风险 agent 结构化行为 benchmark 是通用能力，价值来自替代人工样本构造、复用到模型比较和 agent 诊断。",
+          "moneyEstimate": "80 万人民币",
+          "connectedToUsers": "法律 LLM / agent 团队、RegTech、合规法务自动化、高风险 agent 安全评估、内部研发选型团队。",
+          "connectedToProductForm": "benchmark、workflow、agent module、evaluation protocol、product feature。",
+          "connectedToBrainary": "全面连接 memory、reasoning、calibration、cognitive control、tool orchestration、risk modeling、benchmark / evaluation。",
+          "connectedToAutomation": "明确 memory schema、operator、evaluator 和 cognitive control module。",
+          "assessment": "价值视野扩大，但金额跳跃过大。1 万条样本、每条 30–50 元、2 倍复用价值都是假设，缺少外部报价、必要样本规模和付费意愿证据。"
+        },
+        {
+          "week": "2026-04-26",
+          "valueFunction": "认为字段级算子流水线的价值在于可审计、可修复、可对齐现实数据；skill scanner 的价值在于发现可恢复性攻击面。",
+          "moneyEstimate": "20 万人民币，其中主线 15 万，skill scanner 5 万",
+          "connectedToUsers": "主线承认现阶段只是对法律 / 合规 LLM、agent benchmark、RegTech / legal AI 有潜在价值，尚不能写成明确商业买单方；副线主要是研究和安全分析价值。",
+          "connectedToProductForm": "workflow、module、benchmark、evaluator、security benchmark、red-team workflow。",
+          "connectedToBrainary": "主线连接 memory、reasoning、calibration、cognitive control、tool orchestration、benchmark / evaluation；副线连接 risk modeling、cognitive control、benchmark / evaluation。",
+          "connectedToAutomation": "主线已经有字段级算子、guardrail、反向构图和现实数据 judge 路线；副线需要 threat model 和 recoverability 指标。",
+          "assessment": "价值函数最成熟的一周：金额更保守，也承认商业证据不足；从“估一个大市场价值”回到“当前原型研发价值 + 后续验证价值”。"
+        }
+      ],
+      "monetaryValueAssessment": "金额估值的方向有进步，但证据仍不足。04-19 的 80 万估值是潜在资产估值，不是当前已实现价值；04-26 的 15 万主线估值更接近当前原型价值。教授应要求学生把金额拆成当前已完成价值、下周可验证增量价值、未来可选项价值，不能混在一起。",
+      "valueFunctionMaturity": "中高。学生已经能连接金额、用户、通用能力、产物形式、Brainary 和自动化；但还缺少真实用户访谈、标注成本样本、benchmark adoption 路径和商业转化证据。"
+    },
     "repeatedBlockers": [
-      "生成结果的结构一致性不足：早期表现为字段粒度不稳定、回填KG时节点归属不清；中期为五大字段之间无法形成闭环，工具链与违法分类映射不稳定；后期演化为整体生成易导致错误污染，需要字段级偏序约束。",
-      "缺乏外部验证手段：前两周仅依赖人工直觉检查，第三周意识到需要一致性evaluator但尚未实现，第四周明确提出需用现实数据judge生成结果，但该验证流程仍未标准化。",
-      "生成规模与质量平衡：每次架构升级后，样本产出数量较少，验证局限于小规模，难以快速得出统计结论，卡在'结构冻结→小批验证'的循环中。"
+      {
+        "blocker": "schema / taxonomy / 违法分类边界长期未冻结",
+        "weeksObserved": [
+          "2026-04-05",
+          "2026-04-12",
+          "2026-04-19",
+          "2026-04-26"
+        ],
+        "whyItMatters": "没有稳定 schema，就无法稳定生成样本、做 evaluator、比较 v1/v2，也无法判断生成错误来自模型还是表示层。",
+        "currentStatus": "到 2026-04-26 已有字段级流水线，但仍计划下周选 3–5 个 taxonomy leaf 和现实案例，说明 taxonomy 层仍未完成外部校准。"
+      },
+      {
+        "blocker": "缺少最小 evaluator 和量化指标",
+        "weeksObserved": [
+          "2026-04-05",
+          "2026-04-12",
+          "2026-04-19",
+          "2026-04-26"
+        ],
+        "whyItMatters": "没有 evaluator，人工判断会持续占主导，自动化科研转化路径会停在概念层。",
+        "currentStatus": "04-26 出现代码层 guardrail 和 Layer A 一致性规则，是进步；但现实数据 judge 流程还未标准化。"
+      },
+      {
+        "blocker": "样本数量、通过率和错误分布缺失",
+        "weeksObserved": [
+          "2026-04-05",
+          "2026-04-12",
+          "2026-04-19",
+          "2026-04-26"
+        ],
+        "whyItMatters": "没有数量和指标，无法判断硬进展是真提升还是个别样例成功。",
+        "currentStatus": "04-19 计划 20–50 条样本，04-26 计划选 3–5 个 taxonomy leaf，但仍未报告实际样本数、通过率、失败率。"
+      },
+      {
+        "blocker": "内部一致性与外部真实性之间的缺口",
+        "weeksObserved": [
+          "2026-04-12",
+          "2026-04-19",
+          "2026-04-26"
+        ],
+        "whyItMatters": "结构自洽不等于法律上真实可靠；若不接现实案例，benchmark 可能只是在评估模型是否符合自造规则。",
+        "currentStatus": "04-26 已明确下周用现实数据 judge，这是正确纠偏，但尚未执行。"
+      },
+      {
+        "blocker": "项目范围扩张风险",
+        "weeksObserved": [
+          "2026-04-26"
+        ],
+        "whyItMatters": "skill scanner 攻击有价值，但若没有明确与主线 benchmark / evaluator 的关系，可能分散主线验证。",
+        "currentStatus": "副线目前是单点攻击验证，尚未沉淀为 threat model、recoverability 指标或 benchmark。"
+      },
+      {
+        "blocker": "价值估算缺少外部证据",
+        "weeksObserved": [
+          "2026-04-05",
+          "2026-04-12",
+          "2026-04-19",
+          "2026-04-26"
+        ],
+        "whyItMatters": "金额估值如果没有用户、成本、竞品、标注报价或购买场景支撑，会变成自我激励而不是决策依据。",
+        "currentStatus": "04-26 比 04-19 更诚实，但仍需把潜在价值和已实现价值分开。"
+      }
     ],
-    "professorShouldAsk": "1. 你在第三周对整体agent估价80万元，但第四周任务估值仅15万，请问这其中的巨大落差是因为估值颗粒度不同，还是你认为当前方向价值大幅缩水？\n2. 你的v2流程强调用现实数据校验生成结果，但当前缺乏系统收集和比对现实案例的方法，你计划如何解决现实数据的可用性和权威性问题？\n3. Skill scanner攻击虽然有趣，但与法律行为数据生成主线似乎无明显依赖，你如何评估这两条线的时间分配与最终协同价值？\n4. 你的CoT's CoT中已出现A级证据，这很好，但A级证据是否可被进一步固化成可重复的自动校验规则？例如，如何让系统自主判断'先judge再找证据'这类反模式？",
-    "nextBestIntervention": "1. 优先推进v2流程的现实数据对齐实验，协助其获取新加坡金融法律相关判例或合规审查案例集，建立外部验证基准。\n2. 引导其将v2流程中的一致性规则和反失败模式沉淀为可配置的evaluator module，使其能脱离人工检查，逐步达到自动化科研转化。\n3. 明确skill scanner的定位：若为长期安全研究方向，建议在完成2-3个case后产出简要的安全评估报告即可，避免分散主线精力；若与主线有关联，需清晰阐述其对法律agent benchmark的互补性。\n4. 鼓励其在下一周期内产出至少一轮完整的v1 vs v2对比数据，并用现实数据作为golden set，量化两种方法的逻辑一致性、分类准确率等，以支撑CoT's CoT的证据等级跃升。"
+    "professorShouldAsk": [
+      {
+        "question": "请给出过去四周实际生成了多少条样本、多少条通过五字段完整性检查、多少条通过 KG 回填、多少条通过违法判定一致性检查？",
+        "why": "这是判断硬进展是否真实的最低证据。当前报告多次说“跑一批”“检查一批”，但缺少数量。"
+      },
+      {
+        "question": "04-12 你说 generate-audit-memory 闭环已经初步形成，04-19 又说处于小规模原型验证前的结构冻结阶段。两者差异是什么？之前的闭环哪里不成立？",
+        "why": "需要区分真实重构、表达不严谨，还是前期进展高估。"
+      },
+      {
+        "question": "v2 相比 v1 的可验证假设是什么？请写成三个指标和验收阈值，例如 tool chain 一致性提升多少、违法分类稳定性提升多少、人工修复成本下降多少。",
+        "why": "学生已经有对比意识，但还缺定量假设和成功标准。"
+      },
+      {
+        "question": "你下周选的 3–5 个 taxonomy leaf 是什么？为什么是高价值 leaf？它们分别对应什么真实用户风险或 benchmark 区分能力？",
+        "why": "防止 taxonomy 选择变成方便样例，而不是高价值评测点。"
+      },
+      {
+        "question": "现实案例如何作为 judge？是作为 gold label、事实约束、风险分类参考，还是只作为灵感来源？",
+        "why": "外部验证必须定义清楚，否则现实数据只是案例素材，不能成为证据。"
+      },
+      {
+        "question": "assemble_kg_subgraph 的输出能否被机器检查？请给出一个具体子图样例和自动检查规则。",
+        "why": "反向构图是 04-26 的关键硬进展，需要验证不是只是生成文本结构。"
+      },
+      {
+        "question": "skill scanner 攻击和法律行为数据集主线的关系是什么？是独立副项目，还是会纳入 Brainary risk benchmark？本月优先级如何？",
+        "why": "避免副线分散主线闭环。"
+      },
+      {
+        "question": "请把 20 万、80 万、9 万估值拆成已实现价值、下周可验证价值、未来期权价值，并标注证据等级。",
+        "why": "学生价值推理在进步，但金额波动大，需要变成管理工具。"
+      },
+      {
+        "question": "当前最应该沉淀的是 benchmark、evaluator、workflow 还是 memory schema？如果只能选一个两周内完成，选哪个？",
+        "why": "学生列出的沉淀形式很多，需要逼迫其做项目优先级选择。"
+      }
+    ],
+    "nextBestIntervention": {
+      "intervention": "把学生从“继续架构升级”推到“两周内完成最小可证伪实验闭环”。",
+      "specificPlan": [
+        "冻结 3–5 个 taxonomy leaf，不再临时扩展范围。",
+        "每个 leaf 收集至少 3 个现实案例或权威规则片段，总计 9–15 个外部验证锚点。",
+        "生成固定规模样本，例如 v1 直出 30 条、v2 字段级流水线 30 条，使用同一批 seed 和 taxonomy leaf。",
+        "定义四个指标：五字段完整率、tool chain 与 context 一致率、violation class 与规则匹配率、final judgment 被证据支持率。",
+        "加入人工修复成本指标：每条样本平均需要改几个字段，v2 是否真的支持局部修复。",
+        "输出一页错误矩阵：错误来自 context、instruction、tool chain、classification、judgment、KG subgraph、现实数据不匹配中的哪一类。",
+        "只在这个实验完成后，再决定是否扩展 skill scanner 副线。"
+      ],
+      "successCriteria": [
+        "有明确样本数，而不是只说“一批”。",
+        "有 v1/v2 对照，而不是只描述 v2 更合理。",
+        "有现实案例或规则作为外部锚点，而不是只做内部自洽。",
+        "有失败样例和错误分布，而不是只展示成功样例。",
+        "能回答 v2 是否值得继续做：如果 v2 没有显著提升，应知道是 schema、operator、guardrail 还是 taxonomy 的问题。"
+      ],
+      "professorRole": "教授不需要直接写代码，应主要做三件事：第一，确认 taxonomy leaf 是否有研究价值；第二，审查评价指标是否能区分 agent 行为能力；第三，要求学生用一张表汇报 v1/v2 对照结果和错误分布。",
+      "riskIfNotIntervened": "如果不干预，学生可能继续在 Brainary 映射、架构重构和价值叙事上变得更复杂，但缺少可发表、可复用、可比较的实验资产。"
+    }
   }
 }

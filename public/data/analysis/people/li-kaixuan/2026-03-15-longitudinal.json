@@ -1,33 +1,240 @@
 {
   "key": "person:li-kaixuan:2026-03-15:longitudinal",
-  "generatedAt": "2026-05-24T11:48:48.076Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "97fb19493968eff691d95e5a9e98044065f000964f5d32ac8d14903282b0454d",
+  "generatedAt": "2026-06-05T17:05:08.409Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "d6ce00bb939f795169146b8df0ce057e6d1465b49014bc11c3554a29e831dd71",
   "result": {
-    "overallTrajectory": "仅有一周数据，无法确认长期轨迹。本周报告显示该生从任务执行向研究策略思考转变：开始用统一抽象重构多个安全问题，并尝试对任务进行基于时间窗口与战略价值的优先级排序。但硬进展（投稿、实验产出）仍在进行中，未见闭环产物。若此方向持续，可能从“做任务”走向“设计研究路线”，但证据尚不充分。",
+    "overallTrajectory": {
+      "judgment": "目前无法做真正的多周纵向判断，因为输入中只有 2026-03-15 一周周报。基于这一周，可以看到学生不只是忙：他在多个题目上开始做抽象、形式化和价值排序，体现出一定研究能力增量；但是否“变得更有研究能力”缺少前几周对照证据。",
+      "researchCapabilitySignal": "较强信号是：能把 fuzz driver generation 抽象为带语义约束的程序合成问题，能把 PoC migration 拆成 adaptation 与 realizability 两层，能提出 program analysis 与 LLM 的分工。这些是研究问题建模能力，而不是单纯执行任务。",
+      "busynessSignal": "同时存在明显忙碌信号：PoC migration、fuzz driver、hypervisor survey、组内 slides、文献阅读、Claude Code 实验并行推进，但每项硬产物的完成状态、实验数据、论文具体进展和可验证里程碑都不够清楚。",
+      "bottomLine": "这一周显示出从工程推进向研究抽象上升的趋势，但硬进展证据不足。教授应重点确认：这些抽象是否已经转化为实验设计、论文论证、系统实现和可投稿材料。"
+    },
     "stageByWeek": [
       {
         "week": "2026-03-15",
-        "stage": "正在从分散任务执行向结构化研究路径收敛。PoC迁移、fuzz driver生成、hypervisor综述三条线并行，但已出现统一抽象（程序合成+语义约束）。同时开始进行任务价值矩阵排序（时间窗口>战略>探索），显示出初步的策略意识。硬产出仍待论文投稿验证。"
+        "stage": "多项目并行冲刺与研究抽象形成期",
+        "topicTrajectory": {
+          "summary": "学生同时推进三个主线：PoC migration 面向 ASE 短期投稿，fuzz driver generation 面向 CCS 中期投稿，hypervisor testing survey 面向 TOSEM 与实验室 KPI。题目之间开始被统一到“program synthesis under semantic constraints”的框架下。",
+          "maturity": "题目之间的概念统一能力较强，但题目数量偏多，主次虽有排序但执行闭环证据不足。"
+        },
+        "hardProgress": {
+          "evidence": [
+            "提出 SCoPE 框架描述：vulnerability-trigger constraint synthesis + satisfiability validation。",
+            "继续梳理论文方法与实验结果，准备 ASE 投稿。",
+            "测试 Claude Code 在 fuzz driver 生成中的效果，得到复杂库上下文下可生成可编译 driver skeleton 的初步观察。",
+            "整理 hypervisor testing survey 的分类体系与文献方向。",
+            "协助准备 Conti Lab 内部会议 slides。"
+          ],
+          "assessment": "有硬进展线索，但缺少量化证据。例如没有说明 SCoPE 当前实现完成度、实验结果数量、baseline、ablation、论文完成比例、Claude Code 测试样本规模、survey 已读文献数量或分类表版本。"
+        },
+        "cognitiveTrend": {
+          "summary": "本周认知重点从具体任务推进上升到统一建模。学生开始用 state/action/constraint/objective 描述 fuzz driver generation，并区分 PoC migration 中的代码适配与漏洞可实现性判断。",
+          "assessment": "这是有效的 CoT 增量，说明学生在形成研究问题的结构化表达。"
+        },
+        "cotIncrement": {
+          "quality": "中高",
+          "evidence": "将 fuzz driver synthesis 建模为结构化搜索问题，并把 PoC migration 拆成 adaptation 与 realizability。",
+          "missingEvidence": "缺少这些 reasoning 如何改变实验设计、系统模块、论文 claim 或评估指标的证据。"
+        },
+        "cotOfCotMaturity": {
+          "quality": "中高",
+          "evidence": "提出 LLM 与 program analysis 的分工：LLM 负责 search guidance、pattern recognition、heuristic reasoning；program analysis 提供 semantic constraint 与 program structure。",
+          "assessment": "这已经不是单点技巧，而是方法论层面的 neuro-symbolic program synthesis 视角。成熟度较好。",
+          "risk": "仍偏概念化，尚未看到稳定 pipeline、失败模式分析、variance 控制实验或自动化评估。"
+        },
+        "brainaryMappingMaturity": {
+          "quality": "中",
+          "evidence": "学生将 Brainary 定位为研究知识结构与长期记忆系统，用于 program synthesis guidance、vulnerability reasoning、exploit reasoning。",
+          "assessment": "Brainary 关联开始出现，但目前主要是愿景层映射，没有说明具体知识单元、schema、检索路径、自动化接口、如何服务当前 ASE/CCS/TOSEM 任务。",
+          "missingEvidence": "缺少 Brainary 中实际沉淀了哪些节点、边、模板、案例库、失败经验、自动化 prompt 或 agent workflow。"
+        },
+        "valueReasoning": {
+          "summary": "价值函数从简单任务完成转向按研究影响力、时间窗口、团队战略价值排序。",
+          "currentPriority": [
+            "PoC migration：最高，因为 ASE 截止时间不足两周，边际收益最高。",
+            "fuzz driver generation：高，因为是 CCS 核心方向，也是后续 agent-based vulnerability detection 与 PoC generation 的基础。",
+            "Conti Lab slides：高，因为影响实验室内部研究同步与方向协同。",
+            "hypervisor testing survey：高，因为是 TOSEM 目标与 Lab KPI。",
+            "Claude Code 实验：中，因为是方法探索，短期不直接影响投稿。",
+            "行政事务：低，因为对科研产出贡献较小。"
+          ],
+          "assessment": "价值推理明显优于普通周报，能考虑 deadline、战略价值与团队价值。但还没有充分连接金额、真实用户、产物形态、可复用资产、自动化收益和 Brainary 的复利价值。",
+          "monetaryValueEvidence": "缺失。没有把研究题目与经费、产业用户、安全分析成本节省、商业化工具价值或云/车载场景的经济价值连接起来。",
+          "userValueEvidence": "部分存在。PoC migration 的用户是安全分析人员，hypervisor testing 关联云计算与 SDV 场景；但没有具体用户画像、痛点强度、使用流程和价值验证。",
+          "artifactValueEvidence": "部分存在。产物可能包括 SCoPE 框架、driver generation pipeline、survey 技术地图、slides，但没有明确每个产物的交付格式、可复用程度和验收标准。",
+          "automationValueEvidence": "部分存在。fuzz driver generation 与 agent-assisted pipeline 有自动化方向，但没有路线图、自动化边界、人工节省量或评测指标。"
+        },
+        "projectManagement": {
+          "assessment": "优先级排序清楚，但项目管理仍偏任务列表，不够里程碑化。",
+          "strength": "知道 ASE 剩余不到两周，应把 PoC migration 放在最高优先级。",
+          "weakness": "下周计划没有明确每天或每个项目的可验收输出，例如论文哪几节完成、实验表格哪几个补齐、driver pipeline 哪个模块实现、survey 分类表是否冻结。"
+        },
+        "nextStepQuality": {
+          "assessment": "方向正确但动作粒度偏粗。",
+          "examples": [
+            "“推进 PoC migration 并准备 ASE 投稿”应拆成：冻结 claim、补齐实验表、完成 related work、完成 threat model、完成 rebuttal 风险检查。",
+            "“继续设计 fuzz driver generation 框架”应拆成：定义搜索状态空间、实现 Type-Dependency Graph 构建器、选定 3 个库做 pilot、定义 coverage 与 compile success 指标。",
+            "“推进 survey 文献整理”应拆成：产出 taxonomy v1、文献矩阵、每类代表论文与空白点。"
+          ]
+        }
       }
     ],
     "trendScores": {
-      "hardProgress": "中等偏下：论文框架整理中，实验还在测试阶段，无量化结果或投稿接收信号。",
-      "cognitionDepth": "上升趋势（单周观察）：从工程问题上升到程序合成问题，并对研究方法论进行分工抽象（neural+symbolic），出现了CoT's CoT萌芽。",
-      "metacognitionMaturity": "初步形成：能识别安全问题统一结构，但未涉及方法论的自我迭代或修正框架，缺少对‘统一’的证明思路。",
-      "brainaryMapping": "初级映射：提及Brainary可作为知识结构支撑程序合成，但未具体说明如何使用或存储何种知识项。",
-      "valueReasoning": "开始从‘任务完成’转向‘影响力×时间窗口’评估，但未关联到金额、用户规模、通用能力复用、自动化程度等可量化价值指标。",
-      "projectManagement": "有优先级列表，但无明确的里程碑、风险预案或并行资源分配策略。时间管理依赖紧急度驱动。"
+      "note": "由于只有一周报告，以下不是多周趋势分数，而是基于当前周的能力信号评分；纵向变化证据缺失。",
+      "hardProgress": {
+        "score": 3,
+        "scale": "1-5",
+        "rationale": "有多个硬进展线索，但缺少具体完成度、数据、实验表、代码模块、论文页数和可验收结果。"
+      },
+      "researchAbstraction": {
+        "score": 4,
+        "scale": "1-5",
+        "rationale": "能将 fuzz driver generation、PoC migration 和漏洞相关任务统一到 program synthesis under semantic constraints，研究抽象能力较强。"
+      },
+      "cotIncrement": {
+        "score": 4,
+        "scale": "1-5",
+        "rationale": "CoT 增量清晰，尤其是 state/action/constraint/objective 建模和 PoC realizability 拆分。"
+      },
+      "cotOfCot": {
+        "score": 4,
+        "scale": "1-5",
+        "rationale": "已经开始反思 LLM 与程序分析的合理分工，具备方法论意识。"
+      },
+      "brainaryMapping": {
+        "score": 3,
+        "scale": "1-5",
+        "rationale": "能说出 Brainary 的长期定位，但还没有落到知识结构、schema、自动化 pipeline 和当前项目交付。"
+      },
+      "valueReasoning": {
+        "score": 3,
+        "scale": "1-5",
+        "rationale": "能按 deadline、研究战略和团队价值排序，但金额、用户、产物、自动化收益和可复用资产的连接不足。"
+      },
+      "projectManagement": {
+        "score": 3,
+        "scale": "1-5",
+        "rationale": "优先级清楚，但缺少里程碑、验收标准、风险燃尽和资源分配。"
+      },
+      "automationPath": {
+        "score": 3,
+        "scale": "1-5",
+        "rationale": "有 agent-assisted driver generation 的方向，但尚未说明自动化路径、评测指标、失败闭环和人工节省。"
+      },
+      "evidenceLevel": {
+        "score": 2,
+        "scale": "1-5",
+        "rationale": "周报中概念和计划多，客观证据少。缺少实验规模、代码提交、论文完成度、benchmark、数据表和对比结果。"
+      }
     },
-    "valueFunctionChange": "仅一周数据，无法判定变化。但从内容看，本周出现价值排序觉醒：学生明确区分了‘时间窗口价值’与‘研究战略价值’，并以此为决策依据。然而，价值函数仍局限于学术节点（投稿、KPI）和团队内部展示，未延伸到产业转化、能力沉淀或自动化效率收益。若后续能连接‘投稿→引用→项目经费’或‘driver生成→工具自动化程度→节省人力天数’，价值函数将更稳健。",
-    "repeatedBlockers": [
-      "Fuzz driver生成搜索空间过大，缺乏更紧致的结构约束（已连续出现可能，但仅一周无法确认重复）",
-      "PoC迁移中触发条件的形式化表达不完善",
-      "LLM在程序合成中的输出方差高，无法直接依赖"
+    "valueFunctionChange": {
+      "longitudinalAssessment": "无法判断价值函数随周次变化，因为只有一周数据。",
+      "currentValueFunction": {
+        "whatStudentThinksWorthDoing": [
+          "临近投稿 deadline 的工作最值得做，尤其是 PoC migration 的 ASE 投稿。",
+          "能支撑核心安全研究路线的基础题目值得做，例如 fuzz driver generation。",
+          "能服务实验室战略与 KPI 的工作值得做，例如 hypervisor testing survey 和 Conti Lab slides。",
+          "方法探索值得做，但如果短期不影响投稿，优先级低于主线论文。"
+        ],
+        "whyWorthDoing": [
+          "时间窗口带来边际收益。",
+          "顶会投稿带来研究影响力。",
+          "核心方向可支撑后续 agent-based vulnerability detection 与 PoC generation。",
+          "实验室同步和 KPI 对团队战略有价值。"
+        ],
+        "connectionsPresent": [
+          "连接到论文投稿：ASE、CCS、TOSEM。",
+          "连接到团队战略：Conti Lab KPI 与研究方向同步。",
+          "连接到通用能力：program synthesis、semantic constraints、neuro-symbolic 方法。",
+          "连接到自动化：fuzz driver generation、LLM-assisted pipeline。",
+          "连接到 Brainary：长期记忆与研究知识结构。"
+        ],
+        "connectionsMissing": [
+          "金额价值缺失：没有估算能节省多少安全分析人力、漏洞验证成本、fuzzing 工程成本或云/车载安全测试成本。",
+          "用户价值不足：没有具体说明安全分析师、fuzzer 开发者、云厂商、SDV 团队如何使用这些产物。",
+          "产物形态不够明确：没有区分论文、工具、benchmark、taxonomy、dataset、agent workflow、Brainary 知识库模板。",
+          "自动化收益不够明确：没有量化人工步骤减少、成功率、覆盖率提升、迁移准确率或 driver 编译通过率。",
+          "Brainary 复利机制不够明确：没有说明本周哪些知识进入 Brainary，以及下周如何被复用。"
+        ]
+      },
+      "risk": "学生当前价值函数偏学术投稿和团队 KPI，已经合理，但如果不补上用户、金额、产物和自动化指标，可能会形成‘概念上很统一、产出上不够硬’的问题。"
+    },
+    "repeatedBlockers": {
+      "longitudinalEvidence": "无法确认是否重复，因为只有一周报告。",
+      "currentBlockers": [
+        {
+          "blocker": "fuzz driver generation 搜索空间过大",
+          "type": "技术建模与约束不足",
+          "risk": "如果没有更强结构约束，LLM 生成可能停留在 skeleton，无法稳定提升 coverage 或处理复杂初始化。"
+        },
+        {
+          "blocker": "PoC migration 中漏洞触发条件的形式化表达不完善",
+          "type": "核心理论与方法风险",
+          "risk": "这直接影响 SCoPE 的核心 claim：能否进行 satisfiability validation。若形式化不稳，ASE 投稿风险高。"
+        },
+        {
+          "blocker": "LLM 在 program synthesis 中 variance 高",
+          "type": "系统可靠性风险",
+          "risk": "如果没有 constraint-guided generation、失败分类和重复实验，结果可能不可复现。"
+        },
+        {
+          "blocker": "任务并行度高",
+          "type": "项目管理风险",
+          "risk": "ASE 冲刺期仍并行 CCS、TOSEM、slides 和方法探索，可能导致最高价值任务没有足够深度。"
+        },
+        {
+          "blocker": "证据记录不足",
+          "type": "周报质量与研究管理风险",
+          "risk": "教授难以判断真实进展，也难以帮助排优先级和消除风险。"
+        }
+      ]
+    },
+    "professorShouldAsk": [
+      "PoC migration 的 SCoPE 当前最小可投稿 claim 是什么？哪些实验表已经完成，哪些还缺？如果 ASE 截止前只能保一个贡献点，你保哪一个？",
+      "vulnerability-trigger constraint synthesis 的形式化对象到底是什么？是路径条件、数据依赖、API 前置条件、sanitizer 状态，还是它们的组合？请给一个具体漏洞案例。",
+      "PoC realizability 与 adaptation 的边界如何在论文中论证？现有工作为什么没有解决 satisfiability validation？",
+      "Claude Code 生成 fuzz driver 的实验规模是多少？测试了几个库、几个 API、编译通过率、coverage、人工修改时间分别是多少？",
+      "Type-Dependency Graph 现在是概念、设计还是已有实现？下周能否给出一个可运行 demo？",
+      "Brainary 本周具体沉淀了什么？是 taxonomy、漏洞案例、driver 模板、prompt、失败模式，还是文献知识图谱？下周如何复用它？",
+      "hypervisor testing survey 的 taxonomy 是否已经冻结？和已有 survey 的差异化 claim 是什么？",
+      "这些题目中哪个最可能产生可复用工具或 benchmark？哪个最可能产生论文但不可复用？你如何取舍？",
+      "如果用金额或人力节省来评价，PoC migration 和 fuzz driver generation 分别能为安全分析人员节省什么成本？",
+      "下周结束时，教授可以检查的三个硬产物是什么？"
     ],
-    "professorShouldAsk": "在你的统一抽象中，‘程序合成+语义约束’有多大的实证覆盖面？下周能否用一个具体案例（如一个PoC迁移例子）画出从约束生成到求解验证的完整CoT链，并标注哪一步能对应到Brainary的长期知识存储？",
-    "nextBestIntervention": "立即聚焦PoC迁移的ASE投稿：要求下周三前产出一份‘约束生成到验证’的端到端示例（walkthrough），并用它填充论文的running example。同时在此过程中定义出‘可存储的研究知识项’（如漏洞触发约束的模板），作为Brainary填充的第一批内容。Fuzz driver生成实验改为周末并行探索，不占用投稿冲刺时间。"
+    "nextBestIntervention": {
+      "intervention": "要求学生把下周计划从方向性任务改成三项可验收交付，并建立‘投稿冲刺燃尽表 + Brainary 沉淀表 + 自动化评测表’。",
+      "why": "当前学生的抽象能力不错，但最大风险是硬证据不足和项目过载。干预目标不是增加任务，而是把研究抽象压实为论文、实验、系统和知识资产。",
+      "concreteActions": [
+        {
+          "action": "ASE PoC migration 冲刺燃尽表",
+          "expectedOutput": "列出论文每一节、每个实验表、每个图、每个 claim、每个风险点的状态：已完成、进行中、缺证据、需导师决策。",
+          "deadline": "下次汇报前"
+        },
+        {
+          "action": "SCoPE 核心案例深挖",
+          "expectedOutput": "用一个真实漏洞完整展示从旧版 PoC 到 trigger constraint，再到目标版本 satisfiability validation 的全过程。",
+          "deadline": "下次汇报前"
+        },
+        {
+          "action": "fuzz driver 自动化最小评测",
+          "expectedOutput": "选择 2-3 个库，报告 Claude Code 或 LLM pipeline 的 driver 编译率、coverage、人工修改时间和失败类型。",
+          "deadline": "一周内给初版"
+        },
+        {
+          "action": "Brainary 结构化沉淀",
+          "expectedOutput": "每个项目至少沉淀 5 个知识节点：问题定义、约束类型、失败案例、评测指标、可复用模板，并说明如何被下周任务调用。",
+          "deadline": "下次汇报前"
+        },
+        {
+          "action": "价值函数补全",
+          "expectedOutput": "为 PoC migration 和 fuzz driver generation 各写一段用户价值与金额价值假设，例如节省多少人工验证时间、减少多少 driver 编写成本、服务哪类安全团队。",
+          "deadline": "下次汇报前"
+        }
+      ],
+      "oneThingProfessorShouldLearn": "这个学生的关键成长点不在于让他做更多项目，而在于把他已经形成的统一抽象压成可验证的硬产物：实验表、系统 demo、论文 claim、Brainary 知识资产和自动化评测指标。"
+    }
   }
 }

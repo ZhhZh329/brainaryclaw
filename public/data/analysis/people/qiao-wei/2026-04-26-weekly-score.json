@@ -1,54 +1,104 @@
 {
   "key": "person:qiao-wei:2026-04-26:weekly-score",
-  "generatedAt": "2026-05-24T11:35:21.640Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "138d9670ed5ff0001e8f297d2cd22dd9719ed9db877731f7ebd5db9d511c9f79",
+  "generatedAt": "2026-06-05T17:07:36.235Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "7b1b41f3d138a666330685770bf5fa8015aecb2ebea79ba817013db5e244279d",
   "result": {
     "hardProgress": {
-      "score": 17,
-      "reason": "本周硬进展显著：System 2 已能够精准还原攻击链路，并通过证据搜索召回 System 1 的 false negative 告警，将慢系统从概念推进到能力验证。但结果仍为 case-level，缺少量化指标和可复现协议，因此未给满分。",
-      "missingEvidence": "缺少攻击链路步骤覆盖率、证据引用正确率等量化指标，且未展示具体样例输出或对比数据，仅凭文字描述。"
+      "score": 16,
+      "reason": "本周有两个明确硬推进：一是 System 2 已从概念推进到小规模能力验证，能够基于已有告警和上下文证据做攻击链路还原；二是验证了 System 2 可用 evidence search agent 从已有告警出发召回部分 System 1 未触发的同事件证据。这是实质性实验推进，不只是方案描述。但目前仍停留在 case-level validation，缺少样例数量、具体输入输出、召回数量、失败案例和量化指标，因此不能给满分。",
+      "missingEvidence": [
+        "缺少具体攻击样例编号、数据集名称或实验场景说明。",
+        "缺少 System 2 实际输出的攻击链路报告样例。",
+        "缺少召回了多少个 false negative node / alert 的统计。",
+        "缺少失败案例和误召回案例。",
+        "缺少与人工标注或 ground truth 的逐步对齐结果。"
+      ]
     },
     "cognitiveIncrement": {
       "score": 14,
-      "reason": "认知增量突出：重新定义了 System 2 为主动调查系统，明确了双系统评价不应只看单层指标，并将攻击链路还原作为核心评测对象。这些认知更新直接改变了课题推进方向，价值高。",
-      "missingEvidence": "认知更新主要基于现象观察，尚未通过严格实验或对比验证其泛化性，但本周案例已提供初步支撑。"
+      "reason": "认知增量清楚：将 System 2 从“慢速裁决器”重新定义为“主动证据搜索与事件恢复系统”，并提出 System 1 的 false negative 不必然等于系统级 false negative。这一增量对双系统架构评价方式有实质影响，能够改变后续实验设计。但报告中对该认知增量的支撑仍主要来自定性现象，尚未用指标证明其普遍性。",
+      "missingEvidence": [
+        "缺少该认知在多个样例上的稳定性验证。",
+        "缺少 System 1 单层指标与双系统整体指标的对比表。",
+        "缺少哪些 false negative 可被恢复、哪些不可被恢复的边界分析。"
+      ]
     },
     "cot2Depth": {
-      "score": 14,
-      "reason": "三条 CoT's CoT 均深入揭示了信息差和新增认知：System 2 的 false negative 召回改变了系统失败判定，主动调查能力扩展了慢系统边界，攻击链路还原成为关键中间指标。每一条都清晰说明了老师原本不知道的原因，且给出了证据等级。深度足够。",
-      "missingEvidence": "CoT's CoT 3 的证据等级为 B，表明攻击链路还原作为评测指标还缺少固定的 scoring rubric，但本周已有初步现象支撑。"
+      "score": 13,
+      "reason": "CoT's CoT 写出了三层较有价值的元认知：双系统评价应看整体恢复能力、System 2 应是 active investigation、攻击链路还原可作为中间评测指标。每条都包含信息差、自动化潜力和沉淀形式，结构符合模板要求。扣分点在于多处声称“老师原本不知道”和证据等级 A，但缺少可核查证据，且第三条从现象到 benchmark 的论证还没有落到具体 scoring rubric。",
+      "missingEvidence": [
+        "缺少支持 CoT's CoT 1 和 2 被评为 A 级证据的原始实验记录。",
+        "缺少 attack-chain reconstruction evaluator 的具体评分维度和权重。",
+        "缺少主动调查相较于被动 reasoning 的消融实验。",
+        "缺少对误召回、过宽搜索、证据污染的元认知分析。"
+      ]
     },
     "brainaryMapping": {
-      "score": 9,
-      "reason": "Brainary 映射清晰且有新意：具体映射到 reasoning、working memory、tool orchestration、calibration 等模块，并解释了新意——System 2 通过证据搜索主动扩展 working memory 并召回漏报，这对 Brainary 的认知架构有贡献。",
-      "missingEvidence": "映射目前还是概念层面，未展示具体组件或数据流如何沉淀为 Brainary 模块，但方向合理。"
+      "score": 8,
+      "reason": "Brainary 映射较完整，覆盖 reasoning、tool orchestration、working memory、long-term memory、calibration、risk modeling、benchmark/evaluation、cognitive control 和 workflow management，并能说明 evidence search agent、链路还原、漏报召回分别对应哪些能力。主要不足是映射仍偏概念层，缺少具体模块接口、数据结构、memory schema 或回写机制。",
+      "missingEvidence": [
+        "缺少 evidence search agent 的模块边界和输入输出定义。",
+        "缺少 working memory / long-term memory 的实际 schema。",
+        "缺少 System 2 召回结果如何回写 System 1 的流程图或协议。",
+        "缺少 Brainary 能力映射到具体实验指标的表格。"
+      ]
     },
     "monetaryValue": {
-      "score": 9,
-      "reason": "货币价值估算有理有据：System 2 攻击链路还原估值 300 万，false negative 召回估值 500 万，基于替代高级分析师、降低漏报风险等计算，参考了 SOC 成本。虽然绝对值可能偏高，但逻辑自洽，体现商业潜力。",
-      "missingEvidence": "估算未基于实际市场调研或客户验证，但作为早期研究价值判断合理。"
+      "score": 6,
+      "reason": "报告给出了两个货币价值估计：攻击链路还原 300 万人民币、false negative 召回 500 万人民币，并说明价值来自替代高级安全分析师、降低漏报风险、形成 evaluator 和 workflow。方向合理，但估值依据仍比较主观，没有拆成可验证的成本项、客户支付意愿、人工节省小时数、事故损失概率或产品转化路径，因此只能给中等分。",
+      "missingEvidence": [
+        "缺少 SOC 分析师人工成本、平均研判时长和可替代比例。",
+        "缺少 MDR / XDR 客户愿意为该能力付费的证据。",
+        "缺少漏报风险降低带来的期望损失减少模型。",
+        "缺少 benchmark / evaluator 作为科研资产或产品资产的估值依据。",
+        "缺少与现有安全产品能力的差异化比较。"
+      ]
     },
     "projectManagement": {
-      "score": 14,
-      "reason": "项目管理非常清晰：两个项目均明确了原计划、实际完成、投入时间、偏差分析和纠偏动作，依赖关系清楚，指出了关键路径和卡点。下周计划具体。唯一不足在于纠偏动作尚未执行。",
-      "missingEvidence": "纠偏动作只是计划，还未看到实际调整后的结果，但本周报告已包含清晰规划。"
+      "score": 13,
+      "reason": "项目管理部分较完整，包含当前阶段、原计划与实际完成、投入时间、下周时间、关键里程碑、资源、依赖、关键路径、token 成本、进度偏差和纠偏动作。两个项目都能说明下一步如何从 case-level 成功转为标准化 evaluator。扣分点是两条主线合计 50h 的时间分配不够精确，里程碑仍偏短期，风险管理主要集中在评估协议缺失，对搜索成本、误召回和数据标注质量的风险预案还不够细。",
+      "missingEvidence": [
+        "缺少 50h 在两个任务之间的具体分配。",
+        "缺少已完成实验的版本号、脚本、配置或日志位置。",
+        "缺少下周 deliverable 的验收标准。",
+        "缺少对误召回风险、搜索半径膨胀和 token 成本上升的量化预案。",
+        "缺少如果 ground truth 不完整时的替代评估方案。"
+      ]
     },
     "nextAction": {
       "score": 9,
-      "reason": "下周行动具体且可执行：固定 1-2 个代表性攻击样例整理标准化报告，制作 false-negative recovery table，统计召回前后 node-level recall。这些动作直指本周卡点，最小可验证。",
-      "missingEvidence": "尚未定义评价协议的具体模板，但已在计划中提及。"
+      "reason": "下周动作明确且可验证：固定 1-2 个代表性攻击样例，形成 attack-chain reconstruction report；建立 false-negative recovery table；统计召回前后 node-level recall；制定报告 schema 和 evaluator；请老师确认评价指标。这些动作能直接把本周 case-level 结论推进为可复现实验。扣 1 分是因为还没有明确每个动作的完成标准、表格字段和最小样例选择原则。",
+      "missingEvidence": [
+        "缺少 1-2 个代表性攻击样例的选择标准。",
+        "缺少 false-negative recovery table 的字段定义。",
+        "缺少 attack-chain reconstruction report 的模板。",
+        "缺少 node-level recall 提升的计算公式。",
+        "缺少下周完成后教授如何验收的标准。"
+      ]
     },
     "evidenceQuality": {
       "score": 3,
-      "reason": "证据质量中等：周报声称有实验结果支撑，如 System 2 精准还原攻击链路和召回漏报，但未提供任何数据、截图或对比表格，仅为叙述性结论。虽然声称证据等级 A/B，但读者无法独立验证。",
-      "missingEvidence": "缺少具体实验数据、样例截图、统计数据或 ground truth 对比，仅凭文字描述不足以构成强证据。"
+      "reason": "报告提供了较多结论性描述，并自评 CoT's CoT 证据等级为 A/B，但实际可审计证据不足。没有原始样例、输出片段、统计表、人工标注对齐、消融对比或失败案例。因此证据质量只能算初步可信，尚不足以支撑强论文结论。",
+      "missingEvidence": [
+        "缺少原始输入告警和 provenance graph 查询结果。",
+        "缺少 System 2 输出样例。",
+        "缺少人工标注或 ground truth 对齐结果。",
+        "缺少量化指标：链路步骤覆盖率、证据引用正确率、路径顺序一致性、最终研判一致性、召回前后 node-level recall。",
+        "缺少失败案例、误召回案例和噪声分析。"
+      ]
     },
-    "totalScore": 89,
+    "totalScore": 82,
     "tier": "A",
-    "oneLineJudgment": "本周硬进展突出，认知深度优秀，项目管理与行动规划扎实，但实验证据尚未量化，需尽快落地评估协议。",
-    "professorFollowUp": "建议教授帮助确认攻击链路还原和 false negative 召回的核心评价指标，以推动下周量化评估，并确保论文叙事成立。"
+    "oneLineJudgment": "本周是有实质推进的 A 档周报：方向从 System 2 裁决推进到主动调查和漏报恢复，但目前仍是 case-level 成功，下一步必须用标准化报告、召回表和量化指标把结论变成可复现实验证据。",
+    "professorFollowUp": [
+      "请学生下周必须提交 1-2 个完整 attack-chain reconstruction report，包含原始告警、检索到的证据、链路步骤、System 2 推理结果和 ground truth 对齐。",
+      "请学生把 System 1 false negative 列成表，逐项标注是否被 System 2 召回、召回路径、证据充分性、是否误召回，并给出召回前后 node-level recall。",
+      "请教授重点确认三个评价指标是否足够支撑论文：攻击链路步骤覆盖率、证据引用正确率、召回前后 recall 提升。",
+      "请追问 System 2 主动搜索的停止条件和搜索边界，否则 false negative 召回可能被过宽上下文污染。",
+      "教授本周最应该学到的一点是：System 2 的核心价值不是更慢地判定告警，而是以已有告警为锚点主动改变证据边界，从而还原攻击链并恢复部分快系统漏报。"
+    ]
   }
 }

@@ -1,98 +1,220 @@
 {
   "key": "person:li-chunhan:2026-05-31:longitudinal",
-  "generatedAt": "2026-05-31T10:00:59.884Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "46551667a8643bf3e0b0291be34cdd3c2d23550f5d249aecfc610174054f3e6a",
+  "generatedAt": "2026-06-05T17:05:47.199Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "2575e93131c8f1b39cb42f1816ff37f407b0c4760a4856955427bab41d109b39",
   "result": {
-    "overallTrajectory": "学生从初步跑通基线、分析失败案例起步，快速迭代感知与记忆模块，第三周通过弱标注适配器显著提升性能，第四周在方法论上发生重大转向——从大模型加补丁路线收敛至小模型加类脑结构化拆解。整个过程体现从现象观察→机制设计→系统验证→原理校准的螺旋上升，研究能力从单点实验推进升级到自驱的方法论重构。题目轨迹收敛至可拆解、可解释、与认知科学对齐的感知架构。",
+    "overallTrajectory": {
+      "judgment": "学生确实出现了研究能力增量，但不是线性变强；第3周达到目前最强的“假设—实验—归因”闭环，第4周在方法论上更宏大但硬证据回落。总体不是单纯变忙，因为他能从 failure case 推出模块假设，并在 2026-05-24 用 adapter-only 实验得到约 +5pt 的量化验证；但也存在频繁换路线、上周计划未闭环、价值估算偏工程成本而非真实用户价值的问题。",
+      "capabilityGain": "主要增量在三个方面：一是能把 LMEE-Bench 的 Counting/Location/Relationship/Attribute failure 映射到特征粒度与模块选择；二是开始重视干净归因协议，例如冻结主 ViT 与 LLM、仅训 adapter；三是 Brainary 映射从概念关联走向接口设计，例如 scene-structure graph、attention 接口、memory 概念锚点。",
+      "mainRisk": "最大风险是从“可验证研究”滑向“路线叙事”：第4周从大模型 adapter 转向小模型 + 类脑 structure understanding，逻辑上可能更符合老师路线，但缺少 LMEE-Bench 对照实验；如果下周不能把前景/背景拆分、Depth、small-model-only pipeline 跑成数字，研究能力增量会被路线漂移抵消。",
+      "oneThingProfessorShouldLearn": "目前最有证据价值的点不是“小模型一定优于大模型”，而是“failure-driven 模块加法 + 干净归因协议”已经被第3周实验部分验证：在主干冻结下 DINOv3+SigLIP adapter 让 LMEE-Bench 从 76.33% 到约 81.46%，且 Attribute 提升最大。教授应优先保住这个可验证闭环，再允许学生扩展到 structure understanding。"
+    },
     "stageByWeek": [
       {
         "week": "2026-05-10",
-        "stage": "原型探索与失败分析",
-        "keyProgress": "跑通 RynnBrain‑2B 基线，在 LMEE‑Bench 上完成失败案例归档，建立 5 类失败（计数/位置/关系/状态/属性）与感知模块拆分假设。",
-        "cognitiveShift": "将记忆粒度分为三层（自然语言/结构化 JSON/知识图谱），先以多模态 RAG 接入；提出失败驱动的模块加法策略。",
-        "metaCognition": "事后归因：模型应能判断失败模式并选择性触发记忆检索。",
-        "valueReasoning": "估值 160 万人民币，侧重端到端链路复用与系统化错误分析。",
-        "brainaryMapping": "Perception + Memory + Evaluation",
-        "blockers": "证据等级多为 C，缺少多 benchmark 交叉验证。"
+        "stage": "基线摸底与 failure taxonomy 建立",
+        "topicTrajectory": "题目从 RynnBrain-2B 基线、LMEE-Bench、memory 接入开始，核心是先测能力边界，再决定 perception 与 memory 如何加模块。",
+        "hardProgress": "有实质硬进展：跑通 RynnBrain-2B 与 LMEE-Bench，并给出 Counting 42、Location 22、Relationship 21、State 14、Attribute 10 的 failure 统计。多模态 RAG 尚未跑通，只是计划。",
+        "cognitiveTrend": "认知重点是从总分转向 failure 类别，把失败模式作为模块选型依据。这是研究能力的早期有效信号。",
+        "cotOfCotMaturity": "中等偏高。提出“先测边界再加 encoder”“多模态 RAG 先于知识图谱”“failure 类别对应感知模块先验”。其中第一点有 B 级证据，后两点为 C 级，仍偏假设。",
+        "brainaryMapping": "主要映射到 perception、memory、evaluation，并尝试把 Counting/Location/Relationship 等映射到脑区或脑通路。映射有启发性，但当周主要是概念映射，跨 benchmark 证据缺失。",
+        "valueReasoning": "价值函数以“节省工程成本”为主：端到端评测链路估 120 万，failure-case 分析估 40 万。能连接到复用评测链路和论文/模块，但没有明确用户、购买方或真实付费场景。",
+        "projectManagement": "本周目标与产出基本一致；下周计划清楚，但包含多模态 RAG、memory 三档对比等较重任务，执行风险较高。",
+        "nextActionQuality": "下一步动作质量较好，因为直接围绕无 memory / 多模态 RAG / RAG+图结构做对照；但后来周报未显示该计划被完成。"
       },
       {
         "week": "2026-05-17",
-        "stage": "特征分解与动态路由",
-        "keyProgress": "将视觉特征分解为轮廓/颜色/材质等子通道，利用 DINOv3 内部多层多 token 作为多源特征，设计 query‑aware × frame‑aware 双条件 Router。",
-        "cognitiveShift": "认识到单编码器内部多源特征可替代外挂多编码器；将时序差分作为特征通道并预埋为短期记忆边。",
-        "metaCognition": "事前选路：模型应输出通道置信度向量，动态决定调用哪些特征。",
-        "valueReasoning": "估值 140 万人民币，强调动态路由与特征关联表的可复用性。",
-        "brainaryMapping": "Perception（通道分解）+ Workflow（Router 决策）+ Pre‑memory（时序差分）",
-        "blockers": "仍停留在方案与小规模探针，证据等级 C，跨编码器验证缺失。"
+        "stage": "从 failure taxonomy 转向特征通道分解与 Router 设计",
+        "topicTrajectory": "题目从 memory/RAG 转向视觉特征通道：DINOv3 layer/token probe、query-aware × frame-aware Router、前后帧差分。",
+        "hardProgress": "硬进展弱于上一周。报告有 DINOv3 初步层级 probe、Router 草案、差分特征方案，但没有端到端分数、没有 LMEE 改善数字，也没有完成上一周承诺的多模态 RAG 对比。",
+        "cognitiveTrend": "认知有推进：把单一 embedding 拆成轮廓、颜色、材质、物体、空间布局、运动等通道，并提出 query+frame 双条件路由。这比简单加 encoder 更有研究味。",
+        "cotOfCotMaturity": "有结构，但证据等级全部为 C。CoT's CoT 能指出为什么社区没有自动化吸收，但尚未形成可证伪实验结果。",
+        "brainaryMapping": "从 perception + memory 扩展到 workflow，提出 Router 决策和时序差分作为 short-term memory 节点边。映射比第1周更工程化，但仍缺实现证据。",
+        "valueReasoning": "估值继续按研究员/工程时间折算：DINOv3 probe 60 万，Router 设计 80 万。价值连接到了 Router 训练标签和减少盲试，但缺少用户价值与产物使用场景。",
+        "projectManagement": "出现第一次明显路线漂移：第1周计划的 RAG/memory 对照没有报告完成，转向特征分解。该转向可能合理，但需要说明为什么暂缓 memory。",
+        "nextActionQuality": "计划聚焦 SigLIP/RADIO 交叉验证与 Counting/Attribute 消融，质量尚可；但任务仍偏多，且 Router 训练数据构造风险未拆解。"
       },
       {
         "week": "2026-05-24",
-        "stage": "系统提升与归因验证",
-        "keyProgress": "搭建多尺度视觉特征框架（SAM/ViT/DINOv3/CLIP），落地双编码器 Adapter（DINOv3+SigLIP），冻结主干仅训 Adapter 在 LMEE‑Bench 上获得 +5 pt，Attribute 类提升最显著。",
-        "cognitiveShift": "按输出粒度（像素/区域/token/图像）组织特征，明确瓶颈在视觉表征侧且归因干净；失败分析假设得到验证。",
-        "metaCognition": "训练标签可由失败驱动探测自动生成，将元认知先验建立在粒度‑失败矩阵的实验证据上。",
-        "valueReasoning": "估值 180 万人民币，突出多尺度感知框架与适配器协议的可复用性与可量化收益。",
-        "brainaryMapping": "Perception（多尺度特征）+ Workflow（Adapter 融合协议）+ Memory 提供 token 级储备",
-        "blockers": "仍需在更多基准上交叉验证，SAM 与检测框通路尚未接入。"
+        "stage": "最强硬证据周：adapter-only 实验验证 failure-driven 假设",
+        "topicTrajectory": "题目从内部多源特征和 Router 扩展为多尺度视觉特征框架：SAM、RynnBrain ViT、DINOv3、CLIP/SigLIP，并落地 DINOv3+SigLIP adapter。",
+        "hardProgress": "这是四周中最强硬进展：完成 DINOv3+SigLIP adapter-only 训练，主 ViT 与 LLM 冻结，LMEE-Bench 从 76.33% 到约 81.46%，提升约 5pt；Attribute 类提升最显著。类别细分具体数字缺失，报告称以最终复跑为准。",
+        "cognitiveTrend": "研究能力明显增强：不再只提出模块，而是用冻结主干的实验设计做干净归因，证明视觉表征侧是瓶颈之一。",
+        "cotOfCotMaturity": "成熟度最高。三个 CoT's CoT 都有 B 级证据：按输出粒度组织特征、adapter-only 作为归因协议、Attribute 提升验证短板归因。",
+        "brainaryMapping": "Brainary 映射更成熟：perception 的多尺度特征与 workflow 的 adapter-only 协议结合，并为 memory 预留 token 级表征。产物形式也更清楚：多尺度视觉特征 SOP、adapter-only 评测协议、开源 adapter 权重。",
+        "valueReasoning": "价值函数从“节省搭建成本”进化到“用量化收益证伪/证实瓶颈位置”。这比前两周更像研究价值。但金额仍是成本替代法，缺少对论文影响、开源使用者、企业部署收益的具体估算。",
+        "projectManagement": "本周完成了可复现实验，但也没有报告第2周计划中的 Router 小规模训练是否完成。下周计划又扩到 SAM、检测框 overlay、四路融合、meta-cognition head，范围偏大。",
+        "nextActionQuality": "下一步动作有正确方向：四路 vs 三路 vs 两路 vs 单路梯度消融。但计划过宽，教授应要求先锁定最小消融矩阵。"
       },
       {
         "week": "2026-05-31",
-        "stage": "方法论重构：小模型+类脑结构化拆解",
-        "keyProgress": "组会后路线陡转，放弃大模型主干，确定感知第一步为 Structure Understanding（前景/背景拆分+深度输入），将大模型降维为概念印射器，推理与元认知外置。",
-        "cognitiveShift": "根本性认知：识别误差源于结构定义而非模型容量；结构先于参数，小模型组合加类脑流程更鲁棒、可解释。",
-        "metaCognition": "扩展为语义冲突仲裁与主动补全触发器，融合旋转验证与记忆检索。",
-        "valueReasoning": "估值 160 万人民币，从算力节省与模块化可解释角度重估价值，规避大模型内卷。",
-        "brainaryMapping": "Perception（Structure Understanding）+ 模块化重构（小模型组件）+ 元认知调度器",
-        "blockers": "路线切换未跑端到端对照，小模型替换大模型的可行性待验证；结构拆分模块仍为 v0。"
+        "stage": "路线重校准：从大模型 adapter 转向小模型 + structure understanding",
+        "topicTrajectory": "题目发生大转向：从大模型主干 + adapter 微调，改为小模型组件 + 类脑结构化拆解；核心模块变成前景/背景拆分、Depth、scene-structure graph、2D/3D rotation。",
+        "hardProgress": "硬进展回落。报告有路线校准、Depth 输入接入、前景/背景拆分 v0、与王文渊接口对齐，但没有 LMEE-Bench 数字、没有小模型替换大模型对照、没有证明 Depth 降低 Counting/Relationship failure。",
+        "cognitiveTrend": "抽象层提高：能把 perception 第一阶段定义为 structure understanding，并把 attention、memory、meta-cognition 的接口串起来。但这周更多是方法论吸收与架构重构，不等于已证明研究假设。",
+        "cotOfCotMaturity": "混合。结构定义先于模型容量给 B 级证据，但该 B 主要来自心理学文献与上周 failure 的间接佐证；小模型 + 类脑流程、Depth 前置均为 C 级。CoT's CoT 的叙事成熟，但实验成熟度下降。",
+        "brainaryMapping": "Brainary 映射最完整：perception 输出 fg/bg 掩码、候选物体、scene-structure graph；attention 在节点级选择；memory 接概念锚点；meta-cognition 接 confidence 并触发二次验证。问题是该映射尚未被 LMEE 数字验证。",
+        "valueReasoning": "价值函数明显变化：从追求大模型分数提升转向节省 GPU、避免 SOTA 内卷、提高模块化与可解释性。它更贴近 Brainary 与自动化，但仍未说明谁会为 structure understanding SOP 付钱、如何部署、对用户任务节省多少成本。",
+        "projectManagement": "发生第二次重大路线漂移。第3周计划的 SAM 接入、检测框 overlay、四路融合全量重测没有在本周报告中出现完成结果。若这是组会后的有意校准，需要教授要求他保留第3周结果作为对照基线，而不是丢弃。",
+        "nextActionQuality": "下周计划如果压缩为两个关键实验会很好：前景/背景拆分是否降低 Relationship/Counting，small-model-only 是否接近 81.46%。但当前计划包含 rotation、小模型管线、attention 接口、心理学 bench，仍过宽。"
       }
     ],
     "trendScores": {
-      "researchCapability": [
-        3,
-        4,
-        5,
-        5
+      "scale": "1=弱，5=强；分数基于周报内证据，不补充外部信息。",
+      "byWeek": [
+        {
+          "week": "2026-05-10",
+          "hardProgress": 4,
+          "cognitiveDepth": 4,
+          "cotOfCotMaturity": 3,
+          "brainaryMappingMaturity": 3,
+          "valueReasoning": 2,
+          "projectManagement": 3,
+          "evidenceLevel": 3,
+          "automationPath": 3,
+          "nextActionQuality": 4
+        },
+        {
+          "week": "2026-05-17",
+          "hardProgress": 2,
+          "cognitiveDepth": 4,
+          "cotOfCotMaturity": 3,
+          "brainaryMappingMaturity": 3,
+          "valueReasoning": 2,
+          "projectManagement": 2,
+          "evidenceLevel": 2,
+          "automationPath": 4,
+          "nextActionQuality": 3
+        },
+        {
+          "week": "2026-05-24",
+          "hardProgress": 5,
+          "cognitiveDepth": 5,
+          "cotOfCotMaturity": 4,
+          "brainaryMappingMaturity": 4,
+          "valueReasoning": 3,
+          "projectManagement": 3,
+          "evidenceLevel": 4,
+          "automationPath": 4,
+          "nextActionQuality": 4
+        },
+        {
+          "week": "2026-05-31",
+          "hardProgress": 2,
+          "cognitiveDepth": 4,
+          "cotOfCotMaturity": 3,
+          "brainaryMappingMaturity": 5,
+          "valueReasoning": 3,
+          "projectManagement": 2,
+          "evidenceLevel": 2,
+          "automationPath": 4,
+          "nextActionQuality": 3
+        }
       ],
-      "cognitionDepth": [
-        3,
-        4,
-        5,
-        5
-      ],
-      "valueMaturity": [
-        3,
-        4,
-        5,
-        5
-      ],
-      "projectManagement": [
-        4,
-        4,
-        4,
-        4
-      ],
-      "automationPotential": [
-        4,
-        4,
-        5,
-        5
-      ]
+      "trendSummary": {
+        "hardProgressTrend": "先强、再弱、第三周峰值、第四周回落。真正的硬证据集中在 2026-05-10 的 failure 统计和 2026-05-24 的 +5pt adapter-only 实验。",
+        "cognitionTrend": "认知从 failure taxonomy 到 feature granularity，再到 structure understanding，抽象层持续提高；但抽象提高没有始终伴随实验闭环。",
+        "cotOfCotTrend": "从“为什么先测边界”发展到“什么实验能干净归因”，第3周最成熟；第4周 CoT's CoT 更像路线哲学，证据回到 C/B 混合。",
+        "brainaryMappingTrend": "持续成熟。第1周是 perception/memory/evaluation 三块，第2周加入 workflow/router，第3周加入 adapter-only SOP，第4周形成 perception-attention-memory-meta-cognition 接口图。",
+        "valueReasoningTrend": "金额意识稳定存在，但多为工程成本替代法。到第4周开始出现“避免 GPU 浪费、避免大模型内卷、追求可解释模块”的价值观变化，这是方向性进步；缺口是没有真实用户、市场、部署收益、论文影响的量化。"
+      }
     },
-    "valueFunctionChange": "价值观从初期看重“跑通闭环、端到端加分”转向“结构正确、可解释、防内卷”。最初估值基于工程人力等价成本与链路复用价值；中期显著重视动态路由与适配器协议带来的方向收敛与归因干净；最后转向节约算力、避免大模型内卷，将价值锚定在模块化与心理学保真度上。学生逐渐将“值得做”与通用模块沉淀、跨任务可复用性、节省冗余算力直接挂钩，并能用金额量化路径选择的机会成本。",
+    "valueFunctionChange": {
+      "week1": {
+        "whatStudentThinksWorthDoing": "跑通 VLM 基线 + memory 接入 + 长时记忆 bench；做 failure-case 归档。",
+        "whyWorthDoing": "因为后续所有 memory/perception 实验可复用评测链路，failure 类别可指导模块加法。",
+        "moneyConnection": "估值 120 万 + 40 万，依据是替代 2–3 名工程师或 1 名研究员的时间成本。",
+        "userConnection": "缺失。没有说明谁是直接用户，是组内研究者、开源社区、还是企业具身团队。",
+        "artifactConnection": "论文、可复用 perception/memory module、failure-driven agent。",
+        "brainaryAndAutomationConnection": "连接到 Brainary 的 perception、memory、evaluation；自动化方向是 failure-case 自动归类与模块选型 agent。",
+        "assessment": "价值函数偏基础设施和降本，研究方向合理，但商业价值证据缺失。"
+      },
+      "week2": {
+        "whatStudentThinksWorthDoing": "DINOv3 内部多源特征 probe、feature-source × failure-type 关联、query/frame 双条件 Router。",
+        "whyWorthDoing": "减少盲目加 encoder，用已有 encoder 内部 token/layer 差异支持动态路由。",
+        "moneyConnection": "估值 60 万 + 80 万，仍按研究/工程时间折算。",
+        "userConnection": "仍缺失。未说明 Router 的使用者和部署约束，只提到端侧友好。",
+        "artifactConnection": "feature-source × failure-type 关联表、Router 模块、训练协议。",
+        "brainaryAndAutomationConnection": "连接 Brainary perception 与 workflow，并预接 short-term memory；自动化方向是自动 probing 与 Router 样本构造。",
+        "assessment": "价值函数从“建 bench”转为“减少模块盲试”，更接近研究自动化，但没有实验收益数字。"
+      },
+      "week3": {
+        "whatStudentThinksWorthDoing": "多尺度视觉特征 SOP、DINOv3+SigLIP adapter-only 实验、粒度 × failure 类矩阵。",
+        "whyWorthDoing": "因为冻结主干后仍有 +5pt，可干净证明额外视觉表征带来信息增益，且 Attribute 提升验证了 failure-driven 假设。",
+        "moneyConnection": "估值 100 万 + 80 万，仍基于工程时间与 GPU 成本，但这次附带了 LMEE-Bench 量化收益。",
+        "userConnection": "部分缺失。可推断用户是后续 perception 实验者，但报告没有明确用户画像。",
+        "artifactConnection": "论文、多尺度视觉特征 SOP、adapter-only 评测协议、开源 adapter 权重。",
+        "brainaryAndAutomationConnection": "连接 perception、workflow，并为 memory 提供 token 级表征；自动化方向是自动 probing 与 adapter 结构选型。",
+        "assessment": "这是最健康的价值函数：金额、产物、实验收益、研究协议首次对齐。仍需补真实用户价值。"
+      },
+      "week4": {
+        "whatStudentThinksWorthDoing": "路线校准到小模型 + 类脑 structure understanding；前景/背景拆分、Depth 输入、scene-structure graph、推理外置。",
+        "whyWorthDoing": "因为他认为识别错误根源在结构定义而非模型容量，小模型组件加类脑流程可更鲁棒、可解释、避免大模型内卷。",
+        "moneyConnection": "估值 60 万路线校准 + 100 万 Structure Understanding，理由是节省 GPU 成本与替代结构化感知工程开发。",
+        "userConnection": "仍缺失。没有说明该 SOP 的客户、下游系统节省多少失败率或人力。",
+        "artifactConnection": "类脑感知 SOP、心理学幻觉风格 evaluation、foreground/background 模块、小模型组件清单、元认知调度器。",
+        "brainaryAndAutomationConnection": "连接最强：perception 产出结构图，attention 在节点上选择，memory 存概念锚点，meta-cognition 用 confidence 触发重看；自动化方向是结构标签自动生成与大模型能力到小模型组件的映射。",
+        "assessment": "价值观从“提升 benchmark 分数”转向“模块化、可解释、低成本、类脑”。这是重要变化，但目前证据不足，必须用第3周的 81.46% 作为硬基线来检验。"
+      },
+      "overallChange": "学生的价值函数越来越偏向“可复用模块 + 自动化科研 + Brainary 架构”，而不是单纯跑分。这是积极变化。但金额估算一直主要是成本法，缺少收入法或用户价值法；他还没有回答：哪个用户会用、替代现有方案的收益是多少、失败率降低能带来多少实际金额、开源产物如何形成影响力。"
+    },
     "repeatedBlockers": [
-      "跨基准验证延迟：前三周几乎所有 CoT's CoT 证据等级为 C，依赖单一 LMEE‑Bench，未及时引入 EmbodiedQA、OpenEQA 等基准，第四周才计划构建幻觉风格微基准。",
-      "实验闭环滞后：动态路由、小模型替换大模型等关键主张常停留在方案/pipeline 设计阶段，缺乏端到端对照数据支撑。",
-      "项目管理中时间与范围压力：每周投入时长递增（25h→28h→30h→28h），但路线第四周剧烈转向，可能导致前期适配器工作被部分废弃，后续需重新建立实验基础。"
+      {
+        "blocker": "上周计划经常未闭环就转向",
+        "evidence": "2026-05-10 计划多模态 RAG 对比，2026-05-17 未报告完成；2026-05-17 计划 Router 训练与 SigLIP/RADIO 交叉验证，2026-05-24 主要报告 adapter；2026-05-24 计划 SAM、检测框 overlay、四路融合，2026-05-31 转向 structure understanding。",
+        "risk": "容易形成“每周都有新路线，但可发表实验链不连续”。"
+      },
+      {
+        "blocker": "证据等级周期性回落",
+        "evidence": "第3周多个 B 级证据来自 +5pt 实验；第4周关键主张“小模型 + 类脑流程”“Depth 前置”又回到 C 级。",
+        "risk": "如果不保留第3周的实验证据作为基线，第4周会变成路线宣言。"
+      },
+      {
+        "blocker": "价值估算偏成本替代，缺少真实用户与付费逻辑",
+        "evidence": "四周估值均主要按工程师/月、研究员/月、GPU 成本折算。",
+        "risk": "能说明省钱，但不能说明为什么有人愿意采用、付费或引用。"
+      },
+      {
+        "blocker": "Brainary 映射越来越完整，但验证不足",
+        "evidence": "第4周已有 scene-structure graph 到 attention/memory/meta-cognition 的接口，但尚无端到端数字。",
+        "risk": "架构图成熟可能掩盖模块有效性未验证。"
+      },
+      {
+        "blocker": "meta-cognition 一直在扩展定义，尚未落地实验",
+        "evidence": "第1周是 failure mode 归因，第2周是特征通道置信度，第3周是由 probing 生成训练标签，第4周是语义冲突仲裁与主动补全；但没有报告 confidence head、触发器或二次验证带来的指标变化。",
+        "risk": "概念越来越丰富，但没有形成最小可测模块。"
+      },
+      {
+        "blocker": "跨 benchmark 证据缺失",
+        "evidence": "多次提到需要 EmbodiedQA / OpenEQA 交叉验证，但四周内没有报告完成。",
+        "risk": "当前结论可能过拟合 LMEE-Bench。"
+      }
     ],
     "professorShouldAsk": [
-      "第四周路线从大模型+适配器彻底转向小模型+结构化拆解，你如何评估第三周+5pt 适配器结果的价值？如果小模型管线在 LMEE‑Bench 上不能达到同等性能，你的论文故事是否仍然成立？",
-      "Structure Understanding 模块的前景/背景拆分能否明确量化对计数/关系/状态错误的有效降低？你是否已准备好心理物理基准作为类脑保真度的独立验证？",
-      "你的元认知模块目前仍停留于概念设计，何时能从路由扩展为真正的语义冲突仲裁，并给出可复现的干预实验？",
-      "你是否评估了第四周转路之后，之前积累的 DINOv3/SigLIP 适配器、动态 Router 方案是否可以部分复用，还是需要重头搭建？"
+      "第3周 DINOv3+SigLIP adapter-only 的完整类别表是什么？Attribute、Counting、Relationship、Location、State 分别提升多少？有没有复跑均值和方差？",
+      "第4周小模型 + structure understanding 路线是否要替代第3周 adapter 路线，还是作为与 81.46% adapter 基线对照的新分支？请明确保留哪个作为主线。",
+      "前景/背景拆分模块的最小验证指标是什么？是 mask IoU、对象候选 recall，还是最终 LMEE Counting/Relationship 准确率下降？",
+      "Depth 前置的消融怎么做？请给出 RGB-only、RGB+SAM、RGB+Depth、RGB+Depth+SAM 四组最小实验，而不是只讲方法论。",
+      "meta-cognition 下周到底落地哪个最小功能：通道置信度 head、语义冲突检测、还是 2D/3D rotation 触发器？只能选一个。",
+      "为什么第1周的 multimodal RAG 和 memory 对比没有继续？是因为证据显示 perception 是瓶颈，还是因为工程难度被绕开？请给出取舍理由。",
+      "金额估值里的用户是谁？如果产物是 SOP、adapter 权重、structure module 或 agent，谁会用它、用来省什么、能省多少钱、证据是什么？",
+      "自动化科研 agent 的训练样本从哪里来？现有 failure case 数量是否足够？自动分类准确率如何评估？",
+      "Brainary 映射中哪些接口已经有代码输出，哪些只是设计？请区分 fg/bg mask、scene-structure graph、memory concept anchor、attention node selection、meta-cognition confidence。"
     ],
-    "nextBestIntervention": "要求学生在两周内完成三项闭环：1) 用小模型组合（SigLIP+DINOv3+Depth‑Anything+SAM‑Lite）重跑 LMEE‑Bench，与第三周适配器结果对比，证明结构拆解前亦可维持或逼近大模型性能；2) 将前景/背景拆分单独消融，验证其对于 Counting 和 Relationship 失败案例的直接效应；3) 设计 10–20 例心理学视觉幻觉（如鲁宾杯、缪勒‑莱尔错觉）的小型基准，作为 structure understanding 模块的保真度测试。同步推进元认知触发器的有限状态机原型，避免概念滞留，确保路线收敛后的快速实验产出。"
+    "nextBestIntervention": {
+      "intervention": "要求学生未来一周停止扩大路线，做一个“第3周 adapter 基线 vs 第4周 structure understanding”的最小可证伪对照实验。",
+      "specificPlan": [
+        "固定 LMEE-Bench 同一子集，保留 76.33% RynnBrain 单 ViT 与约 81.46% DINOv3+SigLIP adapter-only 作为两条硬基线。",
+        "只实现一个 structure understanding v0：RGB+Depth 前景/背景拆分，输出候选物体与 scene-structure graph；暂不做完整心理学 bench、完整 long-term memory、完整 attention。",
+        "做四组消融：RynnBrain 单 ViT、DINOv3+SigLIP adapter、RGB-only structure v0、RGB+Depth structure v0。优先报告 Counting 与 Relationship 两类，因为第4周声称结构定义能解释这两类失败。",
+        "每组必须给总分、类别分、失败样例、计算成本、参数量或推理延迟。否则无法判断小模型路线是否真的优于 adapter 路线。",
+        "把 meta-cognition 限定为一个可测触发器：当前景/背景置信度低或语义冲突高时触发 rotation 重看；先报告触发前后准确率差，不再扩展概念定义。"
+      ],
+      "successCriterion": "如果 RGB+Depth structure v0 在 Counting/Relationship 上相对 RynnBrain 单 ViT 有明确提升，并且接近或超过 adapter-only 的对应类别收益，同时成本更低，则第4周路线校准成立；如果没有，则回到第3周的 adapter-only failure-driven 路线继续扩展四路消融。",
+      "managementRule": "每周只能新增一个模块，必须关闭上周计划中的至少一个实验债；所有新 Brainary 映射必须绑定一个可测指标。"
+    }
   }
 }

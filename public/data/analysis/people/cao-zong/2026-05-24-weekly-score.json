@@ -1,6 +1,6 @@
 {
   "key": "person:cao-zong:2026-05-24:weekly-score",
-  "generatedAt": "2026-06-05T14:00:46.497Z",
+  "generatedAt": "2026-06-05T17:00:58.868Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
@@ -10,49 +10,55 @@
     "name": "Cao Zong",
     "scores": {
       "hardProgress": {
-        "score": 13,
-        "reason": "本周有明确硬进展：将 Venom 从原有文件系统/OS/存储场景拓展到蓝牙芯片场景，并声称核心双空间变异引擎零修改适配第四类异质目标；同时完成了与 Claude 交互历史的失败模式归纳，提出 Goal Drift 作为研究问题。但蓝牙场景尚未跑通端到端 fuzzing loop，coverage 反馈机制未打通，也没有报告 crash、bug、可复现实验结果、代码提交链接或性能指标。因此硬进展更接近“新场景接入与架构验证”，还不是完整实验闭环。",
-        "missingEvidence": "缺少蓝牙场景端到端运行日志、代码 diff、commit 链接、目标芯片型号、输入通道定义、fuzzing loop 截图/日志、coverage 替代信号方案、crash 或 bug 产出、四类目标零修改复用的具体证据。"
+        "score": 14,
+        "reason": "本周有明确硬进展：Venom 接入蓝牙芯片场景，形成 SDK API 与蓝牙协议双输入通道，并声称核心双空间变异引擎在四类目标上零修改复用；同时从 50+ 小时开发交互中抽象出 Goal Drift，并提出 commit 复刻作为数据路径。但关键工程目标没有完成：端到端 fuzzing loop 尚未跑通，coverage 反馈机制未打通，也没有 crash、bug、覆盖率、吞吐量或可复现实验结果。因此硬进展主要停留在场景接入和框架适配层，还不是漏洞发现或闭环验证层。",
+        "missingEvidence": "缺少蓝牙 fuzzing loop 的运行日志、目标芯片型号、SDK/API 接口清单、蓝牙协议输入格式、核心引擎零修改的代码 diff、端到端执行截图或命令、crash/coverage/吞吐量数据。"
       },
       "cognitiveIncrement": {
         "score": 12,
-        "reason": "认知增量较强：把长任务 agent 失败从“meta-cognition 不够好”重新定位为“长任务自反思暂时不可信任”，并进一步把问题转化为 Goal Drift、外部状态、commit-to-goal 数据采集和 goal anchoring。这不是简单复述工程问题，而是形成了可继续推进的研究抽象。扣分点在于部分判断，如“month-level goal 分解数据在后训练里近乎为零”“self-reflection 全部是 confabulation”，表达过于绝对，当前周报中的证据不足以支撑强断言。",
-        "missingEvidence": "缺少对 Claude 交互历史的系统编码结果、失败类型统计、漂移判定标准、不同模型或不同任务的对照，以及支持“后训练数据缺口”的实证或文献依据。"
+        "reason": "认知增量较强：把长任务 agent 失败从笼统的 meta-cognition 不足，重定位为 self-reflection 在 month-level 任务上的不可信；把短期策略从改 prompt 转为外化状态、滑动窗口、端到端实验校准；把 goal 分解问题转化为 commit 历史数据采集与模式抽取问题。这些增量与本周工程失败有对应关系。但部分判断如“后训练中根本不存在 month-level goal 分解数据”“self-reflection 全部是 confabulation”表述过强，周报内没有给出可检验边界或反例处理。",
+        "missingEvidence": "缺少与 Claude 交互 history 的样本片段、失败分类统计、不同 agent/不同任务的对照、self-reflection 与真实结果偏差的量化表。"
       },
       "cot2Depth": {
-        "score": 11,
-        "reason": "CoT's CoT 部分有较深抽象：把 Goal 解释为 attention 控制信号，并将 CoT、memory、long-term memory、goals 串成 agent 长任务能力演化路径；同时将 commit 复刻定位为补足 month-level goal decomposition 数据缺口。该层次已经超出单周工程复盘，具备研究命题雏形。但目前推理链条中有若干跳跃：从 50+ 小时失败案例推到“后训练数据根本不存在”，从 fuzzer commit 推到通用 month-level agent 能力，证据链仍不闭合。证据等级自评为 A 偏高。",
-        "missingEvidence": "缺少具体失败轨迹样本集、漂移量化指标、commit-to-goal 标注 schema、已有 agent 训练数据时间尺度的文献/数据支持、以及用 commit 历史反推 goal 是否可行的先导实验。"
+        "score": 12,
+        "reason": "CoT's CoT 有较深抽象：提出 Goal-as-Attention，把 CoT、memory、long-term memory、goals 串成任务时间尺度扩展路径，并将 commit 复刻定位为补齐 month-level goal decomposition 数据缺口；同时把 Venom 的抽象从具体场景提升到任意双输入通道联合变异。深度足够，且能连接工程路径、数据路径和论文方向。主要问题是若干核心命题还缺少可证伪定义，例如 goal drift 的度量、attention 的操作化定义、commit-to-goal 标注一致性标准尚未建立。",
+        "missingEvidence": "缺少 Goal Drift 的形式化指标、漂移检测样例、commit-to-goal schema 初稿、标注准则、至少一个 commit 反推样例、四类目标泛化的实验矩阵。"
       },
       "brainaryMapping": {
         "score": 8,
-        "reason": "Brainary 映射较清楚：将 Brainary 定位为 month-level goal 分解的外部 ground truth 注入层，并提出 goal anchoring protocol、commit-to-goal pipeline、模式库 schema、agent 自评 vs Brainary 外部信号 benchmark。这与周报模板中的能力映射要求吻合，也能连接阶段 2 固化路径。扣分点是接口和落地形态仍偏概念化，尚未说明 Brainary 中具体存什么字段、如何检索、如何约束 agent、如何评估注入后的效果。",
-        "missingEvidence": "缺少 Brainary schema 草案、goal anchoring protocol 的执行规则、样例 commit-to-goal 条目、检索/注入流程、agent 使用 Brainary 前后对比实验。"
+        "reason": "Brainary 映射清晰：将 Brainary 定位为 month-level goal 分解的外部 ground truth 注入层，用于替代 agent 内部不可靠记忆和自评；提出 goal anchoring protocol、commit-to-goal pipeline、模式库 schema、agent 自评与外部信号差异 benchmark。这些都与 Brainary 的长期能力建设相关。扣分点是仍偏架构设想，没有说明 Brainary 当前已有能力如何接入、需要新增哪些数据结构、查询接口和执行约束。",
+        "missingEvidence": "缺少 Brainary 数据表/schema、检索接口、goal anchoring protocol 的具体流程、agent 每一步强制反查 Brainary 的实现方案、与现有 Brainary 模块的映射表。"
       },
       "monetaryValue": {
         "score": 6,
-        "reason": "报告给出了两个价值层级：蓝牙 fuzzing 工具 300–600 万人民币/年，以及 Goal Drift/超大型软件自动化构建 5 亿–50 亿人民币/年，并尝试用市场规模、渗透率、竞品估值进行估算。优点是有商业对象和付费方假设。主要问题是金额跨度大、假设链长，尤其第二项从 fuzzer 自动化外推到超大型软件自动化构建，商业价值判断远超当前证据；引用的 IDC、Cursor、Devin 等依据未给出具体来源、年份、口径，也没有说明本项目能捕获价值的路径。",
-        "missingEvidence": "缺少可核验市场数据来源、具体客户访谈、竞品价格、蓝牙芯片厂商安全预算证据、销售路径、产品形态、付费意愿、从当前技术进展到收入的里程碑。"
+        "reason": "周报给出了两个层级的货币价值：蓝牙芯片 fuzzing 工具 300–600 万人民币/年，以及 Goal Drift/month-level 软件构建能力 5 亿–50 亿人民币/年。优点是区分了直接工具价值和品类级能力价值，也尝试用市场规模、渗透率和竞品估值解释。但估值跨度很大，引用来源不具体，且从当前本周进展到数十亿级市场之间缺少里程碑转化假设，例如谁付费、以什么产品形态付费、采购周期、交付边界、早期可售版本是什么。",
+        "missingEvidence": "缺少具体市场报告出处、商业 fuzzing 厂商客单价数据、潜在客户访谈、蓝牙厂商安全预算证据、从阶段 1 到阶段 3 的商业化路径、定价模型和销售假设。"
       },
       "projectManagement": {
-        "score": 11,
-        "reason": "项目管理信息比较完整：说明了原计划、实际完成、偏差原因、投入时间、下周投入、M1-M5 里程碑，并把当前状态放入三阶段路线。对本周未达成端到端 loop 也有明确披露。扣分点是里程碑验收标准还不够工程化，例如“跑通”没有定义日志、输入、输出、运行时长、bug 判定；coverage 反馈作为关键风险没有具体备选路径和决策点；commit 复刻计划也没有数据量、标注规范、验收样例。",
-        "missingEvidence": "缺少每个里程碑的验收标准、风险清单、阻塞项 owner、具体日期、代码/实验交付物、coverage 替代方案的技术路线、commit 复刻第一批样本规模和标注规范。"
+        "score": 12,
+        "reason": "项目管理信息较完整：列出原计划与实际完成差异、投入时间、下周投入、阶段路线和 M1–M5 里程碑；也明确当前最大风险是 coverage 反馈机制未打通，以及 agent 长任务失控消耗 12 小时。该部分能帮助判断项目偏差和下一步优先级。扣分点是里程碑仍缺少验收标准和风险预案，例如无 coverage loop 如何判定成功、coverage proxy 何时设计、commit 复刻第一版包含多少 commit、谁来标注、如何控制质量。",
+        "missingEvidence": "缺少任务拆分到日级计划、每个里程碑的验收指标、风险优先级、依赖资源、失败时 fallback、coverage proxy 的技术选型列表、commit 复刻标注量目标。"
       },
       "nextAction": {
         "score": 8,
-        "reason": "下周动作明确且基本可验证：蓝牙场景先跑无 coverage 的端到端 fuzzing loop，再补反馈机制；启动 commit 复刻，从自己的 Venom 开发 commit 反推 goal/subgoal。该计划符合当前卡点，且能同时推进工程和研究数据基础。扣分点是动作还可以更小颗粒度、更可验收，例如端到端 loop 的成功标准、运行时间、输入规模、输出格式、第一批 commit 数量没有写清。",
-        "missingEvidence": "缺少下周最小实验的验收指标，例如运行多少小时、产生多少测试用例、是否记录崩溃/超时、commit 复刻至少标注多少条、标注字段是什么、谁来复核。"
+        "reason": "下周动作明确且基本可验证：先跑通无 coverage 的蓝牙端到端 fuzzing loop，再补反馈机制；启动 commit 复刻，从自己的 Venom commit 反推 goal/subgoal。两条动作分别对应工程闭环和研究数据基础，方向正确。扣分点是动作仍不够细：没有定义 loop 成功标准、最小运行时长、输入种子数量、输出产物、失败诊断路径，也没有定义 commit 复刻的样本规模和标注格式。",
+        "missingEvidence": "缺少下周最小实验配置、成功/失败判据、预期输出文件、commit 样本数量、标注模板、coverage 反馈替代信号候选清单。"
       },
       "evidenceQuality": {
         "score": 3,
-        "reason": "证据质量中等偏弱。报告中有一线证据描述，例如 50+ 小时开发、7 小时 agent 漂移案例、0 bug 发现、四类目标零修改泛化，但大多是叙述性证据，没有附日志、代码、实验表格、截图、指标或可复现材料。外部市场和训练数据判断也没有具体引用。证据足以支持“发现了重要问题和方向”，不足以支持多个 A 级证据判断和大额商业估值。",
-        "missingEvidence": "缺少原始交互 history 摘要、失败轨迹标注、代码提交、运行日志、实验指标、市场数据链接、文献引用、四类目标适配矩阵。"
+        "reason": "证据质量中等偏弱。周报提供了一线案例：7 小时从找 s132 bug 漂移到维护 v4 alive，最终 0 bug；也提供 50+ 小时投入和四类目标零修改泛化的主张。但大多数证据是叙述性，没有原始日志、实验表格、代码 diff、commit 链接或可复现命令。报告自评证据等级为 A，但按周报内可核查材料看，尚不足以支撑 A 级。",
+        "missingEvidence": "缺少 Claude 交互记录摘录、时间线、代码仓库 diff、运行日志、实验结果表、目标列表、复现实验说明、第三方或自动化验证。"
       }
     },
-    "totalScore": 72,
+    "totalScore": 75,
     "tier": "B",
-    "oneLineJudgment": "这一周的强项是把蓝牙场景接入失败与 agent 长任务失控抽象成 Goal Drift 研究方向，并给出 commit 复刻路径；弱项是端到端 fuzzing 尚未闭环，核心论断和商业价值的证据仍主要停留在叙述层。",
-    "professorFollowUp": "老师下周最应该追问三件事：第一，蓝牙无 coverage 端到端 fuzzing loop 是否真的跑通，要求给出日志、代码 diff、运行时长和输出样例；第二，Goal Drift 的 7 小时案例能否被结构化标注成 goal/subgoal/action/outcome 序列，而不是只做概念总结；第三，commit 复刻第一版至少交付 20–50 条 commit-to-goal 标注样例，用来验证 Brainary 的 goal anchoring 是否有真实数据基础。"
+    "oneLineJudgment": "本周最有价值的是把蓝牙场景接入与 Goal Drift 抽象连成一条研究路线，但工程闭环、数据证据和可复现实验还没跟上，当前属于高潜力但未充分验证的一周。",
+    "professorFollowUp": [
+      "要求下周优先交付蓝牙无 coverage 端到端 fuzzing loop 的可复现实验包：命令、日志、输入、输出、运行时长和失败点。",
+      "要求把“四类目标零修改泛化”做成一张实验矩阵，列出每类目标、输入通道、改动 diff、运行状态和产出。",
+      "要求 Goal Drift 不要只停留在概念层，先给出 5–10 条 Claude 交互时间线样本，并标注 root goal、实际行为、漂移点和结果。",
+      "要求 commit 复刻先完成最小数据集，例如 20 个自己的 Venom commit，每个 commit 标注 goal、subgoal、证据文件和标注置信度。",
+      "要求重新校准证据等级：区分已实测、叙述观察、合理推断和商业假设，避免把强概念判断直接标为 A 级证据。"
+    ]
   }
 }

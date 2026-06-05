@@ -1,34 +1,146 @@
 {
   "key": "person:jia-xiaojun:2026-03-22:longitudinal",
-  "generatedAt": "2026-05-24T11:48:40.324Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "5b9792435ad66ef2aaf791b9511ddcd92bb6c7b57b7c558422206d5de3748742",
+  "generatedAt": "2026-06-05T17:03:51.809Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "83e2059ff1f7a043fff1df8083b69c699b6a1b10c857feda917254128b77c868",
   "result": {
-    "overallTrajectory": "学生从多任务并行（Skill Scan调研与FOA扩展）转向聚焦一个具有新发现的核心方向（多模态执行语义恶意Skill检测）。硬进展从概念定义阶段推进到实证发现和Benchmark构建，认知深度从一般方法论深入到领域特有问题，研究能力从探索转向突破，呈现出研究独立性和深度显著提升的轨迹，而非仅增加工作量。",
+    "overallTrajectory": {
+      "summary": "从已提供的两周看，学生不是单纯变忙，而是在研究能力上有可见增量：题目从“Skill Scan 调研与最小 taxonomy”推进到“执行语义模拟框架 + 718 个恶意 skill benchmark 雏形 + 明确 scanner API 卡点”。这说明其能力从概念定义进入到对象重定义、数据资产构建和最小评测闭环设计。但证据窗口只有两周，不能判断长期稳定性。",
+      "researchAbilityJudgment": "倾向于变得更有研究能力，而不只是更忙。理由是第二周不是简单增加阅读或实验数量，而是把上一周的抽象判断“扫描对象需要重新定义”具体化为“图像中的操作语义应纳入检测对象”，并产生了 benchmark 数据规模与框架方向。",
+      "mainProgression": "第一周重点是意识到 skill 是包含指令、工具调用、执行逻辑、依赖关系和跨文件协同的复合攻击面；第二周进一步收敛为一个更明确的研究命题：现有扫描器结构性失效的根因是没有建模多模态执行语义。",
+      "mainRisk": "当前仍缺少真正跑通的自动化评测证据。第二周有 718 个恶意 skill 的数据整理，但尚未证明这些数据能通过统一 scanner API 形成可复现实验结果。因此研究能力提升已经出现，但还未完成从“好问题定义”到“强证据闭环”的跃迁。",
+      "evidenceLevel": "中等偏低。两周均有清晰认知与计划，第二周有具体数据规模，但缺少实际评测结果、消融结果、scanner 对比表、失败案例分析和代码/接口可复现证据。"
+    },
     "stageByWeek": [
       {
         "week": "2026-03-15",
-        "stage": "多线并行探索阶段：Skill Scan方向处于对象定义和攻击面分析层面，FOA方向处于实验验证与归因阶段。整体认知框架初步形成，但缺乏可落地的具体产出。"
+        "topicTrajectory": "两条主线：Skill Scan 调研与 FOA 多模态攻击扩展到 PAMI。Skill Scan 处于对象定义阶段，FOA 处于方法归因和核心消融准备阶段。",
+        "hardProgress": "硬进展主要是概念层收敛：明确 skill 不是普通 prompt 或代码，而是由指令、工具调用、执行逻辑、依赖关系和跨文件协同构成的复合攻击面。FOA 的 PAMI 扩展方法已完成，但核心消融尚未完成。",
+        "cognitiveTrend": "认知增量是意识到研究第一步不是做方法，而是定义作用对象和验证逻辑。这是较好的研究元认知，但仍偏抽象。",
+        "cotOfCotMaturity": "处于早期到中期：能说出“作用对象定义”和“机制归因流程”比结果更值得自动化，但还没有给出可操作的流程模板、输入输出格式或自动化节点。",
+        "brainaryMappingMaturity": "初步映射：Skill Scan 对应 agent skill 风险扫描能力，FOA 对应方法归因与自动验证能力。但模块边界、接口、数据结构和复用方式尚不清楚。",
+        "valueReasoning": "价值判断为短期 50–100 万人民币，依据是安全扫描 SaaS、agent 风险评测、论文资产转 benchmark/toolkit。已经开始连接金额、产品形态和资产转化，但依据仍是类比式，没有用户画像、付费场景、竞品价格或采购路径证据。",
+        "projectManagement": "能识别卡点并提出下周最小动作：整理最小版 skill risk taxonomy，完成 FOA 核心消融。项目管理有最小动作意识，但两个主线并行，存在注意力分散风险。",
+        "nextActionQuality": "动作质量中等。taxonomy 和核心消融都是正确动作，但缺少验收标准，例如 taxonomy 至少多少类、覆盖哪些攻击面、消融要证明哪个模块贡献。"
       },
       {
         "week": "2026-03-22",
-        "stage": "聚焦突破阶段：完全聚焦Skill Scan，发现了现有扫描器的结构性失效并提出新方法，开始构建可量产的Benchmark（已收集718个恶意skill），从想法推进到有数据支撑的验证阶段，研究重心明确且产出更具说服力。"
+        "topicTrajectory": "Skill Scan 明显成为主线，并从调研进入具体问题重构：现有扫描器在图像隐藏恶意指令场景下结构性失效，原因是未纳入执行语义。FOA 在本周报告中没有出现，说明可能被暂停、降优先级或遗漏，证据不足。",
+        "hardProgress": "硬进展增强：提出基于执行语义模拟的多模态检测框架；开始构建 benchmark；已整理恶意 skill 718 个，其中 skill_inject 84、Github 265、Skill_com 49、Clawhub 320。硬资产从无到有。",
+        "cognitiveTrend": "认知从“扫描对象复杂”推进到“扫描对象定义错了”。这比上一周更强，因为它能解释现有 scanner 失败的机制，并形成论文/系统的核心论点。",
+        "cotOfCotMaturity": "中期：能把研究对象、自动化科研体系、benchmark、workflow、module 联系起来，并提出执行语义安全这个更高层抽象。但仍缺少具体自动化流程，例如如何把 skill 解析为执行语义、如何模拟、如何判定恶意、如何记录失败。",
+        "brainaryMappingMaturity": "比上一周更成熟：映射为多模态 agent skill 风险理解、执行语义模拟、批量安全评测三个模块。相比第一周，模块粒度更清楚，也更接近可产品化能力。但仍缺接口层和可复用实现。",
+        "valueReasoning": "价值判断上升到短期至少 50–150 万人民币，依据仍是 agent 安全扫描工具、企业级评测服务、benchmark/toolkit 转化价值。相比第一周，价值函数更集中在 skill scan，而不是同时覆盖 FOA；但仍缺少真实用户、采购人、愿意付费的问题、部署场景和成本收益模型。",
+        "projectManagement": "项目管理更聚焦，明确当前核心卡点是缺少可稳定调用的 API 进行批量测试。下周动作是补齐 SkillJect 恶意 skill、接入 benchmark、打通 scanner API 测试链路，先完成最小批量评测。动作更接近实验闭环。",
+        "nextActionQuality": "动作质量较高。它直接针对当前最大瓶颈 API 链路，且目标是最小批量评测。仍需补充明确验收标准：至少跑通几个 scanner、多少样本、输出哪些指标、如何处理调用失败、是否可复现。"
       }
     ],
     "trendScores": {
-      "hardProgress": "从无到有，显著提升（第一周无具体产出，第二周有方法发现和Benchmark雏形）",
-      "cognition": "从泛化认知（定义对象与验证逻辑）到领域深水区认知（操作语义缺失是根因），认知层次深化",
-      "cotCotMaturity": "从一般性元认知（自动化问题对象定义）到结合具体问题的元认知（执行语义安全问题的未沉淀现状），与具体研究结合更紧密",
-      "brainaryMapping": "从简单的能力模块对应到系统化的三个模块划分，映射更加具体和可操作",
-      "valueReasoning": "估值区间扩大（50-100→50-150万），商业转化信心增强；价值依据从参考SaaS到结合自身工具潜力，连接更加扎实",
-      "projectManagement": "从双线并行到聚焦单点，但存在忽略另一线的风险；动作规划更加具体可执行",
-      "nextActionQuality": "从抽象整理taxonomy到具体补齐数据与打通API，动作颗粒度更细，自动化路径更清晰"
+      "hardProgress": {
+        "score": 7,
+        "trend": "上升",
+        "reason": "第一周主要是对象定义和计划，第二周已有 718 个恶意 skill 数据整理和框架方向。硬进展从概念推进到数据资产与评测雏形。但尚无批量评测结果，所以不能给更高分。"
+      },
+      "cognitiveIncrement": {
+        "score": 8,
+        "trend": "上升",
+        "reason": "认知从“skill 是复合攻击面”进化到“现有 scanner 的根本问题是没有纳入图像中的执行语义”。这是研究问题重构，不是工作量堆叠。"
+      },
+      "cotOfCotMaturity": {
+        "score": 6,
+        "trend": "小幅上升",
+        "reason": "学生能反思研究自动化中真正要沉淀的是对象定义、机制归因、benchmark、workflow 和 module。但还没有把这些反思转成具体自动化流程、数据 schema 或评测协议。"
+      },
+      "brainaryMapping": {
+        "score": 6,
+        "trend": "上升",
+        "reason": "第一周只是把方向对应到风险扫描和自动验证，第二周拆成多模态风险理解、执行语义模拟、批量安全评测三个模块。映射更细，但还缺模块接口和复用路径。"
+      },
+      "valueReasoning": {
+        "score": 5,
+        "trend": "小幅上升但证据不足",
+        "reason": "学生持续给出金额估计，并把价值连接到 SaaS、企业评测、benchmark/toolkit。但金额仍缺证据支撑，没有用户、市场价格、竞品、付费意愿或商业转化路径。"
+      },
+      "projectManagement": {
+        "score": 6,
+        "trend": "上升",
+        "reason": "第二周能识别 API 批量测试链路是核心卡点，并提出最小可验证动作。相比第一周的 taxonomy 和消融计划，第二周更接近闭环。"
+      },
+      "automationPath": {
+        "score": 5,
+        "trend": "小幅上升",
+        "reason": "学生已经把自动化目标指向 benchmark、workflow、module 和 scanner API，但还未形成可自动运行的链路。自动化路径存在，但没有跑通证据。"
+      },
+      "topicValue": {
+        "score": 7,
+        "trend": "上升",
+        "reason": "Skill Scan 方向从宽泛调研变成多模态 agent skill 执行语义安全，具有更清楚的问题边界和差异化。FOA 主线本周消失，需确认是否战略收缩。"
+      },
+      "evidenceLevel": {
+        "score": 4,
+        "trend": "小幅上升",
+        "reason": "第二周的数据数量提高了证据强度，但核心 claim 仍缺实验支持：现有 scanner 结构性失效、执行语义模拟有效、benchmark 可稳定评测，这些都需要实测结果。"
+      }
     },
-    "valueFunctionChange": "学生的价值函数整体稳定提升：始终认为研究价值在于可沉淀为Benchmark、Toolkit和自动化模块，并能转化为商业产品（安全扫描服务）。从第一周到第二周，估值提高（上限从100万到150万），依据从泛化SaaS参考扩展到自身发现的结构性漏洞带来的独特市场价值。更加重视‘可落地的评测集’和‘可复现的测试链路’，表明其价值判断从理论走向工程化。连接到了金额、企业用户、通用语义模拟能力、Benchmark/API产物形式、Brainary模块和自动化流程，这些连接在第二周更加明确。",
-    "repeatedBlockers": "卡点从第一周的‘最小扫描单元未定’转移到第二周的‘缺少批量测试API’，但深层重复模式是：研究推进到工程化验证阶段时，总是缺乏可自动化执行的基础设施（第一周缺定义，第二周缺接口）。这意味着学生需要系统性地构建自己研究领域的自动化链路，而不是每次都从头开始。",
-    "professorShouldAsk": "FOA扩展那条线是不是被放弃了？如果是，为什么？Skill Scan方向的发现是否足够支撑一篇完整论文，还是需要配合FOA才能形成更大的贡献？如何确保benchmark和方法的社区认可度？",
-    "nextBestIntervention": "建议教授推动学生优先将Benchmark和最小测试API开源或形成可演示的原型，以便快速验证影响力并吸引合作。同时，帮助学生梳理如何将‘执行语义模拟’模块化融入Brainary，并规划Publishable Unit（如一篇Benchmark论文+一篇方法论文），避免只停留在内部工具。"
+    "valueFunctionChange": {
+      "week1ValueFunction": "第一周的价值函数是：值得做的是能沉淀为 taxonomy、benchmark、workflow、module 的研究对象定义和机制归因流程；金额来自安全扫描 SaaS、agent 风险评测和论文资产转工具包，估计 50–100 万人民币。",
+      "week2ValueFunction": "第二周的价值函数更聚焦：值得做的是把 skill scan 从内容安全升级为执行语义安全，并通过 benchmark、scanner API 和批量评测形成可验证资产；金额估计提高到至少 50–150 万人民币。",
+      "change": "价值函数从“抽象研究资产化”推进到“具体安全评测产品化”。学生越来越认为值得做的不是单个模型或分类器，而是定义正确扫描对象、构建 benchmark、形成批量评测与工具能力。",
+      "positiveShift": "价值判断开始连接金额、用户可能需求、产物形式、Brainary 模块和自动化路径。尤其是第二周把价值集中到企业级 agent skill 安全扫描和评测服务，方向更清楚。",
+      "remainingGap": "金额判断仍主要是主观估计。缺少明确用户是谁、谁付钱、付费触发事件是什么、企业为什么不用现有 scanner、benchmark/toolkit 如何定价、从论文到产品需要哪些工程成本。也缺少与 Brainary 自动化能力的商业闭环，例如模块如何被复用、调用、计费或嵌入工作流。",
+      "professorInterpretation": "学生的价值观正在从“做出一个研究结果”转向“沉淀可复用能力和评测资产”。这是研究能力增强的信号。但如果下周仍没有评测闭环和用户/金额证据，价值推理可能停留在概念营销层。"
+    },
+    "repeatedBlockers": [
+      {
+        "blocker": "扫描对象或最小单元定义尚未完全工程化",
+        "evidence": "第一周说最小扫描单元未定清；第二周虽然提出执行语义，但尚未说明 skill 的执行语义如何表示、解析、模拟和判定。",
+        "impact": "如果对象定义不能落到 schema 和评测协议，benchmark 和 scanner 结果会不可比。"
+      },
+      {
+        "blocker": "缺少自动化批量测试链路",
+        "evidence": "第二周明确说缺少可稳定调用的 API 进行批量测试。",
+        "impact": "这是从研究想法到证据闭环的主要瓶颈。没有 API 链路，就无法验证 scanner 失效、无法证明新框架有效，也无法形成可复用 Brainary 模块。"
+      },
+      {
+        "blocker": "证据链还没有跟上核心论断",
+        "evidence": "学生提出现有 skill 扫描器结构性失效，但报告中没有提供对比实验、失败样例、指标或 scanner 名单。",
+        "impact": "论文核心贡献目前是强论点弱证据。若不尽快补证据，容易变成概念性 claim。"
+      },
+      {
+        "blocker": "多主线管理不透明",
+        "evidence": "第一周有 FOA 和 Skill Scan 两条主线；第二周只报告 Skill Scan，FOA 没有更新。",
+        "impact": "可能是合理聚焦，也可能是项目掉线。教授需要确认 FOA 是否暂停、移交、完成，避免隐性拖延。"
+      },
+      {
+        "blocker": "商业价值估算缺少外部证据",
+        "evidence": "两周都有金额估计，但没有市场数据、用户访谈、竞品定价、采购场景或转化路径。",
+        "impact": "价值金额目前只能作为方向感，不能作为资源投入或产品判断依据。"
+      }
+    ],
+    "professorShouldAsk": [
+      "你说现有 skill scanner 在图像隐藏恶意指令场景下结构性失效，请列出具体测试过或准备测试的 scanner 名单、每个 scanner 的输入输出接口、失败样例和失败类型。",
+      "718 个恶意 skill 的质量如何保证？去重了吗？每个来源的标签定义一致吗？是否包含正常 skill 作为负样本？是否有 train/test split 或 held-out set？",
+      "你所谓“执行语义模拟”的最小表示是什么？是工具调用序列、文件依赖图、用户意图、图像 OCR/视觉理解结果，还是 agent 执行 trace？请给出一个样例 schema。",
+      "下周最小批量评测的验收标准是什么？至少跑通几个 scanner、多少样本、哪些指标、失败调用如何处理、结果如何复现？",
+      "FOA PAMI 扩展本周为什么没有进展记录？是战略性暂停，还是已经完成，还是被 Skill Scan 挤掉？需要明确优先级和交付物。",
+      "50–150 万人民币的金额判断依据是什么？目标用户是谁？是企业安全团队、agent 平台、插件市场、还是研究机构？他们为什么会付费，付费买 benchmark、API、扫描服务还是报告？",
+      "这项工作进入 Brainary 后，具体会变成哪几个可调用模块？每个模块的输入、输出、评测指标和自动化触发条件是什么？",
+      "如果执行语义模拟是核心创新，那么与更强分类器、OCR 加规则、静态代码分析相比，你如何设计消融来证明它不可替代？"
+    ],
+    "nextBestIntervention": {
+      "intervention": "要求学生下周交付一个最小可复现评测闭环，而不是继续扩展概念或数据数量。",
+      "concreteDeliverable": "一份包含 3 个部分的最小包：第一，benchmark v0.1，包括样本 schema、来源、标签、正负样本比例、去重规则；第二，scanner API runner，包括至少一个可稳定调用的 scanner 接口、批量运行脚本、日志格式；第三，结果表，包括至少 100 个样本的初步评测、失败样例、指标和对“执行语义必要性”的初步证据。",
+      "whyThisIntervention": "当前学生最大风险不是没有想法，而是核心论断还没有实验证据。把干预点放在最小评测闭环，可以检验其是否真的从认知进步进入研究生产力提升。",
+      "acceptanceCriteria": [
+        "至少跑通一个 scanner 的端到端批量测试。",
+        "至少给出 100 个样本的结果，不只是数据收集数量。",
+        "至少展示 5 个现有 scanner 失败的具体案例，说明失败是因为缺少执行语义，而不是 OCR、格式或接口问题。",
+        "给出执行语义模拟框架的输入输出 schema。",
+        "明确下一个实验要证明哪个模块有效，并对应一个消融设计。"
+      ],
+      "professorOneThingToLearn": "这名学生本阶段真正有价值的增量是：他把 skill scan 的问题重心从“内容分类”改写为“agent skill 的多模态执行语义安全”。教授应重点判断这个重写能否被 benchmark 和自动化评测链路证明，而不是只看数据量或报告中的金额估计。"
+    }
   }
 }

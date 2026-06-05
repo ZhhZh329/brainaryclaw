@@ -1,28 +1,198 @@
 {
   "key": "person:li-kaixuan:2026-03-22:longitudinal",
-  "generatedAt": "2026-05-24T11:49:31.916Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "edb45f51fd10219abb6aeb5d6c24b8d757e485e3c4f01e1c976ef4a52bffb62b",
+  "generatedAt": "2026-06-05T17:05:12.145Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "dd1e7c43e17ae1a60ef3002c3511a8ec31e31548871ab187a89f739a087fa6d8",
   "result": {
-    "overallTrajectory": "学生从多任务并行初步设计转向核心任务聚焦与可衡量实验推进，认知层面完成从工程方法到统一理论抽象的跃迁，项目管理从计划驱动转为数据驱动，价值评估从任务优先级升级为市场估值，整体显示出研究深度与自主性的显著增长，而不仅是任务量的堆积。",
-    "stageByWeek": {
-      "2026-W11": "多任务并行与概念设计阶段：提出PoC Migration的SCoPE框架和Fuzz Driver的搜索建模，初步统一抽象，价值观以任务优先级定性评估为主。",
-      "2026-W12": "核心任务实现与验证阶段：TDG+LLM pruning pipeline落地，编译成功率量化提升；SCoPE实验完成，精度达97.9%；认知跃迁至约束满足与判定系统，价值观对标AI公司估值，项目管理精细至人天成本与进度判断。"
+    "overallTrajectory": {
+      "judgment": "有变得更有研究能力，不只是更忙；但证据窗口只有两周，结论为中等置信度。",
+      "reason": "从 2026-03-15 到 2026-03-22，学生从同时罗列多个方向与投稿节点，进步到能给出可运行模块、实验指标、失败模式、最小验证动作、成本和自动化转化路径。研究能力的增量主要体现在：问题重定义能力、约束化建模、实验量化、价值推理货币化、项目管理颗粒度提升。",
+      "mainImprovement": "最大变化是从“研究方向抽象”进入“方法资产 + 证据 + 产品化路径”的表达：例如 TDG-based driver skeleton generator 可运行，编译成功率 32% 到 61%，SCoPE 有 905 个任务、accuracy 94.3%、precision 97.9%。",
+      "mainRisk": "仍可能存在“高层统一叙事过强、实际自动化闭环不足”的风险。两个主线都被统一为约束满足与状态可达性，但 Driver Generation 还缺 coverage-guided feedback，PoC Migration 还依赖人工 Trigger Specification，说明核心自动化能力尚未闭环。",
+      "evidenceLimits": "输入中只有 2026-03-15 与 2026-03-22 两份周报，不足以判断四周趋势；缺少 2026-03-01、2026-03-08 或其他周的证据。"
     },
+    "stageByWeek": [
+      {
+        "week": "2026-03-15",
+        "stage": "多项目并行推进与统一抽象形成期",
+        "topicTrajectory": "同时推进 PoC Migration、Fuzz Driver Generation、Hypervisor Testing Survey 和组内 slides。题目轨迹集中在软件安全自动化、程序分析、LLM 辅助程序合成。",
+        "hardProgress": "硬进展证据偏弱，主要是框架完善、论文结构梳理、Claude Code 初步测试、survey 文献整理。缺少可运行模块、具体实验数量、指标变化和失败样本统计。",
+        "cognitiveTrend": "已经开始把 fuzz driver generation 抽象为 state/action/constraint/objective 的结构化搜索问题，把 PoC migration 拆成 adaptation 与 realizability 两层。这是从工程任务向研究建模的进步。",
+        "cotCotMaturity": "CoT's CoT 处于初级到中级：能提出 Program analysis 与 LLM 的分工、软件安全问题可统一为 program synthesis + semantic constraints，但还没有明确说明“老师原本不知道什么”、证据等级、可沉淀组件和自动化路径。",
+        "brainaryMappingMaturity": "Brainary 映射较泛：把 Brainary 描述为研究知识结构和长期记忆系统，服务于 program synthesis guidance、vulnerability reasoning、exploit reasoning。映射方向正确，但还没有拆到 memory、reasoning、calibration、tool orchestration 等具体能力模块。",
+        "valueReasoning": "价值函数主要是投稿时间窗口、研究影响力、团队战略价值。优先级排序清楚，但仍偏学术管理视角，尚未连接金额、用户、付费方、产品模块或估值模型。",
+        "projectManagement": "有下周计划和优先级，但计划多为继续推进，缺少最小可验证动作、投入小时数、成本、依赖、关键路径和进度偏差。",
+        "nextActionQuality": "下一步动作偏方向性，例如推进 ASE、继续设计 synthesis 框架、推进 survey、实验 LLM pipeline；可执行性中等，但验证标准不足。"
+      },
+      {
+        "week": "2026-03-22",
+        "stage": "研究原型、实验指标与转化路径明确期",
+        "topicTrajectory": "主线明显收敛为两条：LLM + Static Analysis 驱动的 Fuzz Driver Generation，以及 Java 跨版本 PoC Migration/SCoPE。Hypervisor Survey 本周未出现，说明注意力从多线并行转向核心论文与系统能力。",
+        "hardProgress": "硬进展显著增强：完成 TDG 到 driver skeleton 自动构建 pipeline，引入 LLM-based API pruning，在 OSS-Fuzz 上做 pruning/no-pruning 对比，编译成功率从 32% 提升到 61%；SCoPE 完成 905 个任务实验，accuracy 94.3%，precision 97.9%，并形成 slicing + abstraction + SMT pipeline。",
+        "cognitiveTrend": "从“program synthesis under semantic constraints”进一步推进到“约束满足 + 状态可达性”，并区分 driver generation 是构造 execution path，PoC migration 是恢复 execution path。认知更精确，能解释两个题目的同构性。",
+        "cotCotMaturity": "CoT's CoT 明显成熟：明确提出从 generation 到 decision problem、从生成候选到表达约束与不变量，并给出信息差、自动化潜力、沉淀形式和证据等级 A。但证据等级 A 的依据主要来自自述，缺少外部验证或消融实验细节，教授应追问评级标准。",
+        "brainaryMappingMaturity": "Brainary 映射从泛化愿景进入模块化架构：memory 对应 TDG/Trigger Specification/program evolution graph，reasoning 对应 SMT，calibration 对应 SAT/UNSAT，cognitive control 对应 constraint enforcement，tool orchestration 对应 static + LLM + SMT + fuzzing。这是明显进步。",
+        "valueReasoning": "价值函数从学术 deadline 与团队战略，升级为 AI 公司核心能力模块、产品化能力、decision layer、平台级扩展，并尝试估算 Driver Generation 为 800 万元、PoC Migration 为 1500 万元。价值推理更商业化，但金额依据仍粗糙，需要验证 TAM、付费意愿、竞品差异和交付形态。",
+        "projectManagement": "项目管理颗粒度提升明显：有阶段、原计划/实际、投入小时、资源、依赖、token 成本、是否关键路径和进度判断。说明不是单纯忙碌，而是在建立研究生产系统。",
+        "nextActionQuality": "下一步动作质量提高：Driver Generation 要引入 coverage-guided refinement，并在 3 个项目上验证 crash discovery rate；SCoPE 要自动化 Trigger Spec 提取和优化 constraint encoding。这些动作有验证对象和技术瓶颈，但仍需定义成功阈值。"
+      }
+    ],
     "trendScores": {
-      "hardProgress": "从框架设计到可运行模块与初步实验数据，编译成功率32%→61%，PoC实验精度97.9%，出现量化硬进展。",
-      "cognition": "从具体方法建模（搜索问题）上升到统一抽象（约束满足与可达性），并进一步提炼为判定存在性与约束表达能力两大元认知。",
-      "cotsCOTMaturity": "从初步的分工与统一结构认知发展为带证据等级（A）和自动化沉淀建议的系统性元认知。",
-      "brainaryMapping": "从统一认知与长期记忆设想细化为具体记忆、推理、校准、控制等能力映射，并给出可沉淀的组件形式。",
-      "valueReasoning": "从研究影响力、时间窗口、团队战略的定性排序进化为对标AI公司、可产品化能力、决策层价值的货币估值（￥800万／￥1500万）。",
-      "projectManagement": "从计划描述变为包含时间投入、成本、依赖、进度判断的精细化管理。",
-      "nextActionQuality": "从“推进、设计、整理”等宽泛计划改进为“引入coverage-guided refinement并在3个项目验证”、“自动化Trigger Spec提取”等最小可验证动作。"
+      "hardProgress": {
+        "score": 8,
+        "trend": "显著上升",
+        "evidence": "从第一周的框架梳理和初步测试，变为第二周的可运行 TDG generator、对比实验、编译成功率 32% 到 61%、905 个 PoC migration 任务和 97.9% precision。",
+        "caveat": "Driver Generation 的关键结果仍是编译成功率，不是 coverage 或 crash discovery；PoC Migration 的人工 Trigger Specification 依赖仍未解决。"
+      },
+      "topicFocus": {
+        "score": 7,
+        "trend": "从多线发散到双主线聚焦",
+        "evidence": "第一周有 PoC、Driver、Survey、Slides；第二周核心只剩 Driver 和 PoC，且两者被统一到约束满足与状态可达性。",
+        "caveat": "Hypervisor Survey 在第二周消失，未说明是暂停、降优先级还是遗漏。"
+      },
+      "cognitiveIncrement": {
+        "score": 8,
+        "trend": "明显上升",
+        "evidence": "第一周是 program synthesis under semantic constraints；第二周进一步提出 generation 与 decision problem 的区别、execution path 构造/恢复、constraints/invariants 是系统能力核心。",
+        "caveat": "统一抽象强，但需要防止把不同问题过度套入同一范式而忽略领域细节。"
+      },
+      "cotCotMaturity": {
+        "score": 8,
+        "trend": "从概念反思到可沉淀系统设计",
+        "evidence": "第二周开始回答信息差、老师原本不知道什么、自动化潜力、沉淀形式、证据等级。",
+        "caveat": "证据等级 A 的判定缺少可复核标准，可能是自我标注而非严格证据分级。"
+      },
+      "brainaryMapping": {
+        "score": 8,
+        "trend": "从愿景型映射到组件型映射",
+        "evidence": "第二周将 Brainary 映射到 memory、reasoning、calibration、cognitive control、tool orchestration、risk modeling，并提出 evaluator、benchmark、agent、workflow。",
+        "caveat": "尚未证明这些模块已经进入真实 Brainary 系统或自动化工具链。"
+      },
+      "valueReasoning": {
+        "score": 7,
+        "trend": "从 deadline/战略价值转向用户/金额/产品化价值",
+        "evidence": "第二周明确谁会买单、能力类型、对标公司、估值区间、企业年费假设、早期折算价值。",
+        "caveat": "金额估算有启发性，但商业证据缺失；没有真实客户访谈、预算归属、采购流程或竞品性能对比。"
+      },
+      "projectManagement": {
+        "score": 8,
+        "trend": "明显上升",
+        "evidence": "第二周有投入 40h/10h、成本 $80、资源依赖、关键路径和进度判断。",
+        "caveat": "仍缺风险缓冲、里程碑日期、投稿倒排表、失败后的替代路线。"
+      },
+      "automationPath": {
+        "score": 7,
+        "trend": "明显增强",
+        "evidence": "第二周提出 evaluator、benchmark、constraint constructor、semantic validation workflow，且明确门槛是 Trigger Spec 自动化提取和 constraint encoding 泛化。",
+        "caveat": "Driver Generation 的 automation path 还停留在 TDG + pruning + coverage loop，尚未展示端到端自动发现漏洞。"
+      },
+      "nextActionQuality": {
+        "score": 7,
+        "trend": "从继续推进变为最小可验证动作",
+        "evidence": "第二周下周动作包含在 3 个项目上验证 crash discovery rate、自动化 Trigger Spec、优化 encoding。",
+        "caveat": "需要补充成功标准，例如 coverage 提升多少、crash discovery rate 与 baseline 比较、Trigger Spec 自动抽取准确率阈值。"
+      }
     },
-    "valueFunctionChange": "第一周通过时间窗口和战略价值定性排序任务，第二周则引入AI公司估值模型，将研究任务映射到可货币化的能力模块（企业测试自动化、安全验证平台），价值判断标准转变为是否可产品化、是否处于决策层、是否具备平台扩展性。学生开始将研究产出与市场需求、估值空间对齐，体现出从学术影响导向到市场价值导向的转变。",
-    "repeatedBlockers": "Fuzz driver generation存在语义正确性缺失，缺乏执行反馈；PoC migration的Trigger Specification仍需人工干预，SMT编码在复杂场景（反射、堆）存在规模问题。两周中这些卡点均有进展但未完全解决，且出现新失败模式（semantic mismatch）。",
-    "professorShouldAsk": "当PoC migration的Trigger Spec自动化提取完成后，如何将该能力泛化到其他漏洞类别？Driver generation的coverage-guided refinement能否与约束表达结合，形成类似SMT的验证闭环？估值模型中对市场渗透的假设是否基于真实客户访谈？",
-    "nextBestIntervention": "立即帮助学生对Driver generation的semantic correctness问题进行根因分析，引入程序语义约束（如前置条件、不变量）来过滤skeleton，并设计一个轻量级的执行反馈回路（例如结合slither/type feedback）。同时推动PoC migration的Trigger Spec提取自动化，可考虑用LLM辅助生成SMT约束条件，并评估规模瓶颈的解决方案。"
+    "valueFunctionChange": {
+      "summary": "价值观变化是本窗口最明显的成熟点：从“哪件事因 deadline 和团队战略值得做”，转向“哪个能力模块能被用户购买、能形成 decision layer、能产品化并沉淀为 Brainary 组件”。",
+      "week20260315": {
+        "valueFunction": "以时间窗口价值、研究影响力、团队战略价值为主。",
+        "whatIsValuable": "ASE 投稿、CCS 主线、组内同步、TOSEM Survey、Claude Code 方法探索。",
+        "whyValuable": "因为有投稿截止、是实验室核心方向、能支持团队研究同步或形成技术地图。",
+        "missingConnections": "缺少金额、明确用户、付费场景、产品形态、Brainary 组件化、自动化交付路径。"
+      },
+      "week20260322": {
+        "valueFunction": "以真实 AI 公司核心能力模块、产品化、decision layer、平台级扩展为主要价值标准。",
+        "whatIsValuable": "Driver Generation 被定义为 AI-driven testing/code generation infrastructure；PoC Migration 被定义为 AI-driven vulnerability validation/security reasoning。",
+        "whyValuable": "因为能降低 fuzz driver 构建成本、提升漏洞验证 precision、减少误报，并可能变成企业安全团队愿意购买的验证能力。",
+        "connectionsBuilt": "连接到用户：企业安全团队、漏洞数据库；连接到金额：800 万元与 1500 万元估计；连接到产物：论文、benchmark、evaluator、agent、workflow；连接到 Brainary：memory、reasoning、calibration、cognitive control、tool orchestration；连接到自动化：SMT-based validator、constraint constructor、coverage-guided refinement。"
+      },
+      "qualityAssessment": "价值函数更成熟，但仍需从“类比估值”升级到“证据化价值”。目前金额是推演，不是市场证据；用户画像和购买理由初步出现，但缺少客户痛点强度、替代方案成本、部署门槛和商业闭环。",
+      "bestCurrentValueBet": "在两条主线中，PoC Migration/SCoPE 的价值推理更强，因为已有 905 个任务、94.3% accuracy、97.9% precision，并能直接对应 patch validation 与 affected version analysis。Driver Generation 仍需证明从编译成功率提升转化为覆盖率、漏洞发现率或工程节省。"
+    },
+    "repeatedBlockers": [
+      {
+        "blocker": "约束表达与语义正确性不足",
+        "appearsInWeeks": [
+          "2026-03-15",
+          "2026-03-22"
+        ],
+        "evidence": "第一周提到 fuzz driver 搜索空间大、PoC trigger condition 形式化表达需完善；第二周变为 semantic correctness 缺失、Trigger Specification 仍部分依赖人工抽象、SMT encoding 在 Java reflection/heap 场景规模困难。",
+        "interpretation": "这是核心研究卡点，不是普通工程卡点。学生已经能把卡点从“搜索空间大”升级为“合法性约束、语义不变量、可判定验证”的问题。"
+      },
+      {
+        "blocker": "LLM 生成结果 variance 高，需要约束和反馈闭环",
+        "appearsInWeeks": [
+          "2026-03-15",
+          "2026-03-22"
+        ],
+        "evidence": "第一周说 LLM 在 program synthesis 场景中 variance 高，需要 constraint-guided generation；第二周说缺 execution feedback loop，提出 coverage-guided refinement。",
+        "interpretation": "学生没有停留在试用 Claude Code，而是在把 LLM 放进静态分析、SMT、fuzzing 组成的受控系统中，这是研究能力提升的正向信号。"
+      },
+      {
+        "blocker": "从可编译到有效执行路径仍未打通",
+        "appearsInWeeks": [
+          "2026-03-22"
+        ],
+        "evidence": "第二周明确指出 semantic mismatch：type-level correct，但行为不正确；当前缺 coverage-guided refinement。",
+        "interpretation": "这是 Driver Generation 的下一道硬门槛。编译率提升不能等同于漏洞发现能力，必须转向 coverage、path reachability、crash discovery rate。"
+      },
+      {
+        "blocker": "价值估算缺少外部市场证据",
+        "appearsInWeeks": [
+          "2026-03-22"
+        ],
+        "evidence": "第二周给出 800 万元和 1500 万元估值，但没有客户访谈、预算、采购方、竞品实测或转化率依据。",
+        "interpretation": "价值推理方向正确，但还不是强证据。教授应要求把金额假设拆成可验证市场命题。"
+      }
+    ],
+    "professorShouldAsk": [
+      {
+        "question": "Driver Generation 的 61% 编译成功率是否带来了 coverage、unique paths、crash discovery rate 或 bug finding 的提升？",
+        "why": "避免学生把工程可编译性误判为研究有效性。真正价值在于执行路径质量和漏洞发现能力。"
+      },
+      {
+        "question": "pruning vs no-pruning 的实验设计是什么？样本数、项目选择、统计显著性、失败类型分布分别是多少？",
+        "why": "第二周出现关键指标，但缺少实验可信度细节。"
+      },
+      {
+        "question": "SCoPE 的 905 个任务如何构造？label 从何而来？94.3% accuracy 和 97.9% precision 的 baseline 是什么？",
+        "why": "这是 PoC Migration 是否能投稿和产品化的核心证据。"
+      },
+      {
+        "question": "Trigger Specification 中人工抽象占比是多少？自动化提取的最小可行目标是什么？",
+        "why": "如果关键抽象依赖人工，自动化科研和商业价值都会打折。"
+      },
+      {
+        "question": "CoT's CoT 证据等级 A 的判定标准是什么？哪些来自实验，哪些来自概念重构？",
+        "why": "防止高层认知表述自我强化，但证据级别没有客观依据。"
+      },
+      {
+        "question": "PoC Migration 的付费用户到底是谁：企业 PSIRT、SCA 厂商、漏洞数据库、云安全平台，还是开源维护者？他们现有替代方案成本是多少？",
+        "why": "把价值函数从估值类比推进到真实商业判断。"
+      },
+      {
+        "question": "Hypervisor Testing Survey 本周为何消失？是战略性降优先级、已委派，还是管理遗漏？",
+        "why": "观察学生是否真正掌握多项目取舍，而不是被最紧急任务牵引。"
+      },
+      {
+        "question": "如果下周 coverage-guided refinement 没有提升 crash discovery rate，Driver Generation 的备选路线是什么？",
+        "why": "检查项目管理是否包含失败分支和风险控制。"
+      }
+    ],
+    "nextBestIntervention": {
+      "intervention": "让学生下周提交一页“证据化研究仪表盘”，强制把两个主线从概念统一推进到可复核证据。",
+      "requiredSections": [
+        "Driver Generation：列出 3 个 OSS-Fuzz 项目的 baseline、TDG-only、TDG+LLM pruning、TDG+LLM+coverage refinement 四组结果，至少包含编译率、coverage、有效 API 序列比例、crash discovery rate、失败模式分布。",
+        "PoC Migration：列出 905 个任务的数据来源、label 方式、baseline、人工 Trigger Spec 占比、自动提取计划、reflection/heap 失败案例。",
+        "价值验证：为 Driver Generation 和 SCoPE 各写 3 个潜在用户、现有替代方案、付费理由、不能付费的原因、最小产品形态。",
+        "Brainary 转化：把 TDG、Trigger Specification、SMT evaluator、coverage feedback 分别映射成可复用 memory schema、reasoning module、calibration module、workflow 节点。",
+        "项目管理：写出下周每个实验的成功阈值、失败阈值、负责人、预计小时、token/算力预算、失败后的替代路径。"
+      ],
+      "professorOneThingToLearn": "这名学生本周最有价值的新认知是：未来安全自动化系统的核心不只是生成更多候选，而是先用约束和不变量定义什么是正确答案，再用 evaluator 做可判定验证；教授应把这个认知转化成实验要求，逼他证明 evaluator 确实提升了覆盖率、漏洞验证精度或人工成本节省。",
+      "expectedOutcome": "如果学生能完成该仪表盘，就说明他正在从忙项目转向管理研究证据、价值假设和自动化系统；如果只能继续给高层统一叙事而缺少指标和失败案例，则说明研究能力提升尚未稳定。"
+    }
   }
 }

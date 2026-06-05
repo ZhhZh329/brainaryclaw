@@ -1,11 +1,318 @@
 {
   "key": "person:li-wenke:2026-05-17:longitudinal",
-  "generatedAt": "2026-05-24T11:49:57.060Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "9912a17f244cec2220afae0f79701f8bb2f38fe75b5b60db6383b81bf0e5de0a",
+  "generatedAt": "2026-06-05T17:06:27.129Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "efd7ff02431f58674060cf0e3c9b3ccca586649da9c96fcf88c8b0d8945d87b3",
   "result": {
-    "text": ""
+    "overallTrajectory": {
+      "judgment": "学生整体是在变得更有研究能力，而不只是更忙；但能力增量主要体现在“把抽象问题降维为可观测系统、用失败结果调整题目边界、把工程变成评测基础设施”，而不是体现在“理论模型已被系统验证”。",
+      "mainEvidence": [
+        "4月26日主要是方法论设计：识别GEO评估只测引用层、不测检索层，并提出双层评估协议。",
+        "5月3日开始能主动杀掉低可行性方向：用户A影响用户B方向因反馈闭环过长被降级，说明不是盲目扩展任务。",
+        "5月10日通过小实验发现Phase 1内容池路线的根本难点，并把路线从“仿真检索层”收缩/转向“真实WEB端观测”。这是研究判断，不只是执行。",
+        "5月17日把WEB端观测从脚本推进为可运维系统，并修正关键指标：从请求成功率转为Web Search触发率和来源捕获率。这个指标修正是研究能力增量。"
+      ],
+      "notJustBusyBecause": [
+        "他不是简单增加平台数量，而是在每周更新“什么才算有效观测”的定义：引用层评估不足、API不能代表WEB、请求成功不等于搜索成功、query不能只由LLM生成。",
+        "他能识别负结果的价值：用户A影响用户B方向降级、Phase 1信息采集路线搁置、ChatGPT稳定性风险上升。",
+        "他逐步把工作沉淀为可复用对象：evaluation protocol、workflow、memory schema、harness、evaluator、platform profile、intent schema。"
+      ],
+      "remainingConcern": [
+        "研究主线在过去4周发生多次重心迁移：可信链评估 → 仿真平台 → benchmark/可信度 → WEB端排名观测 → 意图资产排序。迁移有合理性，但需要防止变成产品工程堆叠，导致核心科学问题被稀释。",
+        "价值估算越来越产品化，但金额依据仍多为类比和假设，缺少真实客户访谈、付费意愿、竞品功能对照和最小销售验证。",
+        "Brainary映射越来越丰富，但多数仍是概念映射；除WEB probe/harness外，尚缺可直接并入Brainary的正式接口、schema样例和评测结果。",
+        "5月17日工程进展很强，但用户意图价值排序仍未完成真实小闭环，证据等级仍是B。"
+      ],
+      "oneThingProfessorShouldLearn": "这个学生最有价值的增量不是“做了很多WEB自动化”，而是把GEO从一个内容优化问题重构成了“真实用户端观测 + 来源证据链 + 意图价值排序”的测量问题；教授应重点帮助他把这个测量问题收敛成可发表/可产品化的最小闭环。"
+    },
+    "stageByWeek": [
+      {
+        "week": "2026-04-26",
+        "stage": "评价框架发现期",
+        "topicTrajectory": "从GEO方法论进入仿真平台设计，核心发现是现有GEO评估只测生成/引用层，跳过检索层。",
+        "hardProgress": "完成可信链三层框架；设计三套仿真方案；提出检索成功率+引用率双层评估协议；明确推荐从快照语料库方案开始。",
+        "cognitiveTrend": "认知重点是“评价体系要走在方法论前面”。这是研究型认知，能识别现有文献实验设计的隐性前提。",
+        "cotCotMaturity": "较高。CoT's CoT能说明跨社区迁移：RAG安全攻击评估协议可迁移到GEO评估；同时明确证据等级为B/C，没有过度宣称。",
+        "brainaryMapping": "从GEO方法论映射到Brainary的benchmark/evaluation和信息获取质量评测，成熟度中等偏高，但仍停留在协议层，未有系统接入。",
+        "valueReasoning": "价值函数以市场迁移和研发效率为核心：SEO到GEO预算迁移、仿真平台缩短验证周期。金额估算具体，但多为类比和假设。",
+        "projectManagement": "能记录里程碑偏差：Phase 1延期一周。问题是下周动作较多，仿真原型和Phase 1并行风险偏高。",
+        "nextActionQuality": "较好，有5条query、Top-5页面、修改文档、测引用率的最小闭环；但没有明确成功判据和统计阈值。"
+      },
+      {
+        "week": "2026-05-03",
+        "stage": "方向筛选与理论锚定期",
+        "topicTrajectory": "一方面降级“用户A影响用户B”方向，另一方面把GEO Benchmark扩展为五阶段架构，并提出可信度度量作为正向GE引擎理论锚点。",
+        "hardProgress": "完成政策和训练机制分析；形成方向降级结论；定义Retrieval Gate Rate、Citation Gate Rate、End-to-end Citation Rate；确认逆向/正向两条路线。",
+        "cognitiveTrend": "明显进步：开始用反馈闭环长度作为方向筛选标准，能判断“技术上可能但研究上不可迭代”的方向应降级。",
+        "cotCotMaturity": "成熟度提升。CoT's CoT从单个洞察发展为可自动化checklist：预计反馈闭环时长。可信度=结构中心性+语义可信+脑科学类比仍偏概念，证据等级C合理。",
+        "brainaryMapping": "新增输入侧calibration和risk modeling，说明他开始把GEO信源可信度转成Brainary感知过滤层；但缺少schema字段实例和评测数据。",
+        "valueReasoning": "价值函数从“仿真平台研发效率”扩展到“可信度度量模块IP”。开始连接API调用、模块估值和RAG通用能力，但商业假设仍未验证。",
+        "projectManagement": "计划更清楚，任务量下降到15-20小时，更现实；但工程实现尚未启动，仍处于方案确认后阶段。",
+        "nextActionQuality": "下周动作包含Phase 5 ground truth收集、可信度调研、memory reasoning设计。动作方向合理，但仍偏多，且没有定义每个产物的验收格式。"
+      },
+      {
+        "week": "2026-05-10",
+        "stage": "负结果驱动的路线收缩期",
+        "topicTrajectory": "从试图复现信息搜集/检索层，转向真实WEB端排名观测和品牌/行业GEO可视化。题目从“仿真平台”向“真实平台观测系统”迁移。",
+        "hardProgress": "完成Phase 1关键词和滚雪球实验；识别内容平台无搜索、反爬、平台搜索偏好差异等失败模式；完成4个平台WEB端仿真；得到API/WEB差异数据：precision@10约70%、Spearman约0.6。",
+        "cognitiveTrend": "研究能力继续增强。关键点是他没有把Phase 1失败包装成小问题，而是上升为方法论边界问题：统一内容池难以模拟平台条件化搜索环境。",
+        "cotCotMaturity": "较成熟。提出“GE仿真是平台条件化认知过程复现”以及“thinking更多不等于结果更稳定”。其中WEB端不稳定性有实验支撑，被标为A级较合理。",
+        "brainaryMapping": "映射从单纯评测扩展到platform profile、稳定性评估、cognitive control。比前两周更接近系统能力，但仍缺实际Brainary接口。",
+        "valueReasoning": "价值函数发生重要变化：从“验证GEO策略的仿真平台”转为“真实WEB/APP端排名监控是产品核心观测能力”。用户对象更清楚：品牌、公关、强排名行业、GEO工具公司。",
+        "projectManagement": "能承认方法路线需要调整，并请求老师介入讨论边界；工程进度强，但结果解析模块延后。项目风险从理论不清转为工程闭环不完整。",
+        "nextActionQuality": "动作质量较好：补齐意图拆解、结果解析、强弱方向诊断。缺点是没有明确一个行业/品牌样例，也没有稳定性重复采样的最小设计。"
+      },
+      {
+        "week": "2026-05-17",
+        "stage": "观测系统工程化与上游意图资产化期",
+        "topicTrajectory": "从多平台WEB仿真原型升级为真实WEB端LLM Search观测系统，同时把品牌排名问题上升为用户意图资产识别与价值排序。",
+        "hardProgress": "完成llm_web_probe框架、多账户池、游客池、Admin后台、API Key、账号轮询、限流冷却、5个平台覆盖、压测脚本、日志统计、未触发搜索统计、代理和cloakbrowser集成。",
+        "cognitiveTrend": "认知继续进步，尤其是把成功口径改为Web Search触发率和来源捕获率；同时意识到query生成应从真实内容平台意图反推，而不是从行业名想象。",
+        "cotCotMaturity": "工程类CoT's CoT很成熟：把WEB端采集定义为观测系统而非普通爬虫，证据等级A。意图价值排序CoT's CoT仍是方法论，证据等级B，尚未完成闭环。",
+        "brainaryMapping": "Brainary映射达到目前最高成熟度：tool orchestration、risk modeling、benchmark/evaluation、platform state memory、intent memory schema、cognitive control都有对应系统入口。但是否能真正并入Brainary，证据缺失。",
+        "valueReasoning": "价值函数进一步升级：WEB probe决定“能不能真实观测”，意图排序决定“应该观测什么”。开始把金额、用户、通用能力、产物形式、Brainary和自动化路径连接起来。",
+        "projectManagement": "项目管理明显成熟：区分工程进度快于预期与稳定性风险高于预期；下周不盲目堆并发，改做稳定性矩阵实验。仍需要外部账号/IP/行业样例资源。",
+        "nextActionQuality": "下一步动作质量高：正式账号池/游客池/代理/cloakbrowser四条件矩阵、多平台来源差异统计、账号容量模型、一个垂直领域意图树闭环。动作可验证且能直接降低不确定性。"
+      }
+    ],
+    "trendScores": {
+      "scale": "1代表弱，5代表强；分数基于4周周报内部证据，不代表外部真实效果。",
+      "hardProgress": {
+        "score": 4.5,
+        "trend": "持续上升",
+        "reason": "从框架和方案，到小实验，再到多平台可运维系统，硬产物明显增加。5月17日的工程系统是实质进展，不是报告堆字。"
+      },
+      "researchAbility": {
+        "score": 4,
+        "trend": "上升但需收敛",
+        "reason": "能提出评估缺口、杀掉低反馈闭环方向、从负结果重构路线、修正观测指标。风险是研究问题多次迁移，需要收敛为一个核心可验证命题。"
+      },
+      "cotIncrement": {
+        "score": 4,
+        "trend": "稳定增强",
+        "reason": "每周都有真实认知更新，且多数来自实验或路线失败，不只是概念总结。最强增量是反馈闭环、WEB/API差异、搜索触发率、真实意图来源。"
+      },
+      "cotCotMaturity": {
+        "score": 4,
+        "trend": "从概念迁移走向系统设计",
+        "reason": "早期CoT's CoT是跨文献机制同构，后期变成观测系统、平台画像、稳定性协议、意图价值排序。证据等级意识较好。"
+      },
+      "brainaryMapping": {
+        "score": 3.5,
+        "trend": "广度上升，落地不足",
+        "reason": "映射覆盖tool orchestration、calibration、risk modeling、memory、benchmark、cognitive control。但多数仍是“可沉淀成什么”，缺少实际schema样例、接口和Brainary内评测。"
+      },
+      "metaCognition": {
+        "score": 4,
+        "trend": "明显上升",
+        "reason": "从评价先于方法，到认知控制回路，到推理链不等于稳定，到真实意图先于query生成，元认知逐步变得可操作。"
+      },
+      "topicValue": {
+        "score": 4,
+        "trend": "从学术评估题转向产品基础设施题",
+        "reason": "题目价值越来越贴近真实用户端观测和品牌客户需求。风险是学术论文命题需要重新明确。"
+      },
+      "monetaryValueReasoning": {
+        "score": 3,
+        "trend": "更具体但仍缺外部验证",
+        "reason": "金额估算越来越细，包括客户数、月费、模块价值、内部效率。但依据主要是SEO工具类比和假设，没有报告真实客户访谈、竞品报价细节、付费转化证据。"
+      },
+      "evidenceLevelDiscipline": {
+        "score": 4,
+        "trend": "较好",
+        "reason": "能标注A/B/C证据等级，且对未验证的理论如可信度二维框架、意图价值排序保持B/C。5月10和5月17有实际实验/工程证据支撑。"
+      },
+      "projectManagement": {
+        "score": 3.8,
+        "trend": "从任务记录走向风险管理",
+        "reason": "能记录延期、偏差原因、关键路径、资源和成本；5月17开始明确稳定性矩阵和失败口径。仍需更强的验收标准和单周优先级收敛。"
+      },
+      "automationPath": {
+        "score": 4.2,
+        "trend": "非常强",
+        "reason": "每周都能把洞察转成checklist、evaluator、workflow、memory schema、agent module、harness。5月17已经有实际harness雏形。"
+      },
+      "nextStepQuality": {
+        "score": 4,
+        "trend": "逐周提高",
+        "reason": "早期动作是小闭环但略宽；后期动作更具体，能回答关键不确定性，如稳定性矩阵、触发率、来源捕获率、账号容量模型、单领域意图闭环。"
+      }
+    },
+    "valueFunctionChange": {
+      "summary": "学生的价值函数从“GEO赛道大、仿真平台能提升研发效率”，逐步演化为“真实WEB端观测是GEO产品入口，用户意图价值排序决定观测优先级，平台状态和来源证据链构成壁垒”。这是明显进步。",
+      "weekByWeek": [
+        {
+          "week": "2026-04-26",
+          "whatStudentThinksWorthDoing": "值得做GEO仿真平台，因为真实GE验证周期长、变量不可控，仿真能把周级反馈压缩到分钟级。",
+          "whyWorthDoing": "它是GEO策略研发基础设施，能测内容优化是否影响引用率。",
+          "moneyConnection": "估算GEO赛道可承接SEO市场，仿真平台价值约1500万人民币。依据是SEO市场规模、研发效率节省和工具订阅类比。",
+          "userConnection": "公司内部研发团队、GEO SaaS公司、大型品牌内容团队。",
+          "generalCapabilityConnection": "通用GEO评估基础设施，可沉淀benchmark和方法论论文。",
+          "brainaryConnection": "作为Brainary信息获取质量评测协议和共用evaluator。",
+          "automationConnection": "evaluator和workflow优先。",
+          "weakness": "价值估算依赖宏观类比，缺少真实用户付费证据。"
+        },
+        {
+          "week": "2026-05-03",
+          "whatStudentThinksWorthDoing": "值得做可快速闭环的方向，降级用户A影响用户B；值得做可信度度量作为GEO理论锚点。",
+          "whyWorthDoing": "反馈闭环长度决定研究可迭代性；可信度度量可统一检索门和引用门。",
+          "moneyConnection": "新增可信度度量框架估值约2000万人民币，参考Rerank API和通用RAG模块调用价值。",
+          "userConnection": "SEO/GEO工具公司、品牌公关、企业内容团队、情报安全公司。",
+          "generalCapabilityConnection": "从GEO扩展到任何RAG系统的信源质量评估。",
+          "brainaryConnection": "输入侧calibration、risk modeling、tool orchestration。",
+          "automationConnection": "反馈闭环checklist可立刻自动化；可信度框架需转memory schema和evaluator。",
+          "weakness": "可信度二维框架仍是概念性，证据等级C；脑科学类比尚未转成实验变量。"
+        },
+        {
+          "week": "2026-05-10",
+          "whatStudentThinksWorthDoing": "值得做品牌/行业GEO排名可视化和WEB端真实观测，因为API不能代表用户端结果。",
+          "whyWorthDoing": "客户买的是用户在真实LLM产品里看到的品牌排名、情感和引用来源，不是API近似结果。",
+          "moneyConnection": "品牌GEO排名可视化估值1000万，WEB端仿真模块300万，平台偏好画像和稳定性协议500万。",
+          "userConnection": "品牌、公关、教育/医疗/金融/本地服务等强排名行业、GEO/SEO工具公司。",
+          "generalCapabilityConnection": "排名、情感、引用归因、稳定性评估可跨行业复用。",
+          "brainaryConnection": "platform profile、稳定性evaluator、cognitive control。",
+          "automationConnection": "workflow从用户画像生成到WEB仿真再到结果解析；evaluator抽取品牌、排名、情感、来源。",
+          "weakness": "结果解析尚未完成；排名可视化价值已清楚，但内容优化闭环还没有证明。"
+        },
+        {
+          "week": "2026-05-17",
+          "whatStudentThinksWorthDoing": "值得做真实WEB端LLM Search观测系统和用户意图资产排序；前者解决能不能真实观测，后者解决应该优先观测什么。",
+          "whyWorthDoing": "没有WEB端来源数据，GEO结论偏离真实用户；没有意图价值排序，采集资源会浪费在低商业价值问题上。",
+          "moneyConnection": "WEB观测系统估值500万，多账号/反自动化能力200万，意图识别与价值排序300万。",
+          "userConnection": "品牌方、公关市场团队、强决策行业、GEO/SEO工具公司、内容营销团队。",
+          "generalCapabilityConnection": "多平台观测、账号风险管理、行业意图树、来源域名情报池可复用于任意行业。",
+          "brainaryConnection": "tool orchestration、risk modeling、benchmark/evaluation、intent memory、platform state memory、cognitive control。",
+          "automationConnection": "harness、workflow、benchmark、memory schema、agent module、evaluator都有明确路径。",
+          "weakness": "意图排序尚未完成一个真实垂直领域闭环；金额仍是内部估算，没有客户验证。"
+        }
+      ],
+      "changeAssessment": {
+        "maturityGain": "价值函数明显成熟：从市场规模类比，变成“观测入口—证据链—意图资产—采样优先级—产品壁垒”的链式逻辑。",
+        "remainingGap": "尚未把价值函数落到真实业务KPI，例如客户愿意为哪些诊断付费、一次报告能减少多少营销损失、排名变化和转化率之间如何连接。"
+      }
+    },
+    "repeatedBlockers": [
+      {
+        "blocker": "真实数据和真实平台可观测性不足",
+        "weeks": [
+          "2026-04-26",
+          "2026-05-10",
+          "2026-05-17"
+        ],
+        "evidence": "4月26日可注入性缺真实情报池数据；5月10日内容平台无搜索和反爬导致信息池路线受阻；5月17日ChatGPT Web Search触发、限流、IP和DOM变化影响观测。",
+        "whyItMatters": "这是GEO研究的核心瓶颈，不解决就无法区分理论假设、工程失败和平台行为差异。",
+        "suggestedHandling": "把数据可得性本身变成研究对象和系统指标：搜索触发率、来源捕获率、平台覆盖率、账号容量、样本有效率。"
+      },
+      {
+        "blocker": "仿真平台边界反复变化",
+        "weeks": [
+          "2026-04-26",
+          "2026-05-03",
+          "2026-05-10"
+        ],
+        "evidence": "从快照语料库方案，到五阶段Benchmark，再到Phase 1搁置和真实WEB观测转向。",
+        "whyItMatters": "变化有研究依据，但如果不收敛，会造成论文命题和产品模块边界不清。",
+        "suggestedHandling": "教授需要要求他写一页“当前不做什么”：短期不复现完整检索层，只做真实WEB观测、来源捕获、排名解析和意图驱动query集。"
+      },
+      {
+        "blocker": "价值估算缺外部验证",
+        "weeks": [
+          "2026-04-26",
+          "2026-05-03",
+          "2026-05-10",
+          "2026-05-17"
+        ],
+        "evidence": "每周都有金额估算，但均主要基于SEO市场、工具订阅和内部效率类比；周报未提供客户访谈、竞品实测报价、试点付费、销售反馈。",
+        "whyItMatters": "如果目标包括产品化，金额判断需要从假设变成证据。",
+        "suggestedHandling": "下周至少补3类证据：竞品功能/价格表、2-3个潜在客户访谈问题和反馈、一个可展示demo对应的付费场景。"
+      },
+      {
+        "blocker": "Brainary映射多，但落地接口少",
+        "weeks": [
+          "2026-04-26",
+          "2026-05-03",
+          "2026-05-10",
+          "2026-05-17"
+        ],
+        "evidence": "每周都提出Brainary关联，但多为可以沉淀成schema、evaluator、module；尚未报告一个实际schema JSON样例、模块API、Brainary评测结果。",
+        "whyItMatters": "如果Brainary是研究管理框架的重要目标，概念映射不足以证明贡献。",
+        "suggestedHandling": "要求交付一个最小Brainary schema：platform profile、account risk、intent tree、source domain四张表或JSON对象，以及一个evaluator输入输出样例。"
+      },
+      {
+        "blocker": "结果解析和闭环验证滞后于采集工程",
+        "weeks": [
+          "2026-05-10",
+          "2026-05-17"
+        ],
+        "evidence": "5月10日结果解析模块未完成；5月17日WEB probe工程显著增强，但意图排序闭环尚未完成。",
+        "whyItMatters": "采集系统如果不能输出排名、情感、来源、稳定性和商业意图价值，就仍是基础设施，不是研究结论。",
+        "suggestedHandling": "限制下周工程扩展，优先完成一个行业的端到端报告：意图树、query集、多平台观测、排名/来源/稳定性表、诊断结论。"
+      }
+    ],
+    "professorShouldAsk": [
+      {
+        "question": "你现在的唯一核心研究问题是什么？是“GEO评估协议”、是“真实WEB端观测系统”、还是“意图驱动的GEO监控”？",
+        "whyAsk": "4周内题目迁移合理但过多，需要收敛，否则论文、产品和Brainary贡献会互相稀释。",
+        "expectedGoodAnswer": "学生应能给出一个主问题和两个支撑模块，例如：主问题是“如何可靠测量品牌在真实LLM Search中的可见性”；支撑模块是WEB观测harness和意图驱动query生成。"
+      },
+      {
+        "question": "下周一个垂直领域闭环的验收标准是什么？",
+        "whyAsk": "他已经有很多工程能力，但需要转成研究证据。",
+        "expectedGoodAnswer": "应包含行业、平台、query数量、有效Web Search触发率、来源捕获率、排名抽取准确率、重复采样次数、输出报告格式。"
+      },
+      {
+        "question": "你如何定义‘高价值意图’？热度、转化、品牌风险、内容可操作性四者权重是多少？",
+        "whyAsk": "价值排序是5月17日新主线，但目前还没有业务定义和验证标签。",
+        "expectedGoodAnswer": "应给出可计算公式和人工标注规则，并承认当前权重是假设，需要小样本验证。"
+      },
+      {
+        "question": "WEB probe的数据质量门槛是什么？哪些样本必须丢弃？",
+        "whyAsk": "请求成功不等于有效观测，他已经认识到这一点，需要制度化。",
+        "expectedGoodAnswer": "应明确无cited_urls/source_urls、未触发搜索、账号限流、Google AIO未出现、DOM抽取失败等情况的处理规则。"
+      },
+      {
+        "question": "Brainary这边你能本周交付哪个最小可复用模块，而不是再写一个关联说明？",
+        "whyAsk": "Brainary映射已足够多，下一步应产出schema或evaluator。",
+        "expectedGoodAnswer": "例如提交platform profile schema、intent memory schema、Web Search有效性evaluator的输入输出样例。"
+      },
+      {
+        "question": "你的金额估算中，哪一个假设最脆弱？准备如何验证？",
+        "whyAsk": "价值推理有进步，但商业证据不足。",
+        "expectedGoodAnswer": "应指出客户愿不愿为WEB端真实观测付费、愿付多少钱、是否需要意图发现模块是关键假设，并提出访谈或demo测试。"
+      },
+      {
+        "question": "你现在不做完整检索层仿真，是暂缓、放弃，还是作为长期研究问题保留？",
+        "whyAsk": "Phase 1被搁置，但仿真平台最初科学价值来自检索层可观测性，不能模糊处理。",
+        "expectedGoodAnswer": "短期收缩为真实WEB观测；长期保留平台条件化检索仿真，但需等待平台画像和来源数据积累。"
+      }
+    ],
+    "nextBestIntervention": {
+      "intervention": "让学生下周停止扩展新平台和新概念，强制完成一个“意图驱动的多平台WEB端GEO观测最小闭环”。",
+      "specificAssignment": {
+        "scope": "只选一个垂直领域，例如新能源汽车、雅思培训或本地服务；只选2-3个内容/社交平台做意图样本；只跑5个LLM平台中的稳定子集和一个挑战平台。",
+        "deliverables": [
+          "一份意图层次树：一级意图、二级意图、样例原文、互动信号、价值评分。",
+          "一组由真实意图转化来的GEO query，不少于30条，但先人工审核。",
+          "一张多平台观测质量表：请求成功率、Web Search触发率、来源捕获率、限流率、平均耗时、无效样本比例。",
+          "一张品牌/行业结果表：品牌是否出现、排名、情感、引用URL、来源域名、重复采样稳定性。",
+          "一个Brainary最小schema：platform profile、intent memory、source domain、account risk四类对象。",
+          "一页结论：这个闭环证明了什么、没证明什么、下一步最值得优化的是采集稳定性、解析准确率还是意图价值排序。"
+        ],
+        "successCriteria": [
+          "有效Web Search观测样本比例达到可报告水平；如果达不到，也必须报告失败原因分布。",
+          "至少能展示一个高价值意图如何映射为query，并在LLM平台中产生可解释的品牌/来源差异。",
+          "不能只展示工程截图，必须输出可复查的数据表和失败样本。"
+        ]
+      },
+      "professorRole": [
+        "指定或确认一个优先行业，避免学生在行业选择上继续发散。",
+        "确认‘高价值意图’的业务定义，尤其是热度和转化价值的权重。",
+        "要求学生把Brainary映射从文字说明变成一个实际JSON schema或evaluator样例。",
+        "要求学生明确论文/产品双路线的主次：短期以产品观测系统为数据基础，论文命题可围绕API vs WEB差异、Web Search触发率、平台来源偏好和意图驱动query集展开。"
+      ],
+      "riskIfNotIntervened": "如果不干预，学生可能继续增加平台、账号池、反自动化和意图方法论，变得更忙、更工程化，但缺少一个能说服教授、公司或论文审稿人的闭环证据。"
+    }
   }
 }

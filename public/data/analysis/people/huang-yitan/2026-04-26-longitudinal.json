@@ -1,75 +1,205 @@
 {
   "key": "person:huang-yitan:2026-04-26:longitudinal",
-  "generatedAt": "2026-05-24T11:48:28.152Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "3d7c08acbf7a98c09d6683b4bec4b50b3fd52065502686031e33a44f3f38b5df",
+  "generatedAt": "2026-06-05T17:04:09.836Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "6bdb4028aee17dd792b1c8531506abe2b712b9aef9b03cf36ca037837ccc27e0",
   "result": {
-    "overallTrajectory": "学生从‘Multi-Agent Workflow 诊断系统’方案转向‘Brainary-guided 单 Agent 架构’，研究重心由工程实现向方法论与数据资产倾斜。硬进展从架构设计与 Demo 代码推进到 Benchmark 构建与架构重构，但端到端验证始终缺失。认知深度明显提升，表现为对问题本质的反复迭代（诊断 vs 检测、多 Agent 局限、Benchmark 可复现瓶颈），CoT's CoT 质量从分散推测转向数据支撑。Brainary 映射由泛化能力描述深入至具体的认知模块（Self-ability Understanding、Confidence 等），显示架构思想正在内化。价值判断从统一 5 万保守估值精细化为分项估值（Benchmark 3 万 + 架构 4 万），更注重长期资产和通用能力。项目管理上，方向调整合理但原计划部分搁置（如 MOCGuard 精读），可能引入外部对齐风险。重复卡点为 Benchmark 构建和 Demo 验证，始终未突破到可发表级别的完整证据链。下一步动作集中于扩大数据和跑通新 Demo，若能完成将形成坚实节点。整体轨迹表现研究能力在深化，但速度与外部对照稍缓，需警惕自我闭环风险。",
+    "overallTrajectory": {
+      "judgment": "学生在这两周内表现出一定研究能力增长，不只是变忙；增长主要体现在从“架构想象”转向“数据可复现性、ground truth、架构适配性”的约束意识。但硬证据仍不足以证明系统已经具备研究产出能力，因为真实应用端到端验证、HTTP 验证、变异植入、零日确认发现都还缺失。",
+      "mainChange": "2026-04-19 的核心是提出完整叙事：跨层语义不一致、Multi-Agent、诊断而非检测、CLSIC Benchmark；2026-04-26 的核心是开始被现实约束修正：25 个候选 CVE 只有 11 个可用，发现 benchmark 可复现性才是瓶颈，并且主动推翻原 Multi-Agent workflow，转向 Brainary-guided 单 agent。",
+      "researchAbilitySignal": "正向信号是学生能根据 demo 和数据筛选结果修改研究假设，而不是机械执行原计划；能把“为什么 benchmark 难做”“为什么 agent 架构不适配”上升为可检验的研究问题。负向信号是仍有较多设计文档和概念重构，真正闭环实验还没有出现。",
+      "notJustBusyEvidence": [
+        "从 25 个候选 CVE 中确认 11 个可复现，这比单纯读论文或写架构更接近研究基础设施建设。",
+        "意识到已知 CVE ground truth 质量不可控，提出变异植入作为可控 ground truth 来源，这是评测意识增强。",
+        "从多 agent 协调转向单 agent 内部认知模块，说明不是迷信复杂架构，而是在反思架构与任务的匹配。"
+      ],
+      "remainingConcern": [
+        "第一周承诺的真实 Spring Boot HTTP 验证、5 个 Java Spring 应用端到端 pipeline、MOCGuard 精读与 artifact 获取，在第二周没有明确完成。",
+        "新架构 Demo 仍未跑通，说明架构重构可能变成新的拖延点。",
+        "零日挖掘尚无 confirmed finding，变异植入尚未实施，benchmark 仍处于筛选和规划阶段。"
+      ]
+    },
     "stageByWeek": [
       {
         "week": "2026-04-19",
-        "summary": "项目初始阶段，完成研究计划书与 Multi-Agent Workflow 架构设计，产出 950 行 Demo 代码并验证 4 类 CVE 检测逻辑，确定诊断 vs 检测的差异化叙事。",
-        "hardProgress": "新增：研究计划书 v1.0、5 Agent+Orchestrator 架构、6 类不一致分类、7 组实验设计、CLSIC Benchmark 目录、9 组 Baseline 对比、950 行 Demo 代码、4 类 CVE 验证通过。",
-        "cognition": "认识到 Multi-Agent 适合跨层分析、BAC 本质是诊断问题、三阶段 pipeline 功能分层、Hard negative 是差异化关键、Demo 使方案具体化。",
-        "cotcotMaturity": "4 条 CoT's CoT，证据等级 B/B/B/C，多为推测和方向判断，仅一条有架构支撑。",
-        "brainaryMaturity": "提到 tool orchestration、workflow、benchmark、reasoning、memory 等通用能力，映射较泛化。",
-        "valueEstimate": "综合估值 5 万人民币（保守），基于论文+benchmark+工具潜力，连接金额、用户与产物。",
-        "blockers": "CLSIC Benchmark 未开始构建；Multi-Agent 技术栈未定；真实代码解析和 HTTP 验证环境未完成。",
-        "nextActions": "精读 MOCGuard，跑通端到端 pipeline 原型，确定技术栈。"
+        "stage": "题目成型与概念原型阶段",
+        "topicTrajectory": "题目从 BAC 检测转向 Cross-Layer Semantic Inconsistency 诊断，主张差异化在于输出不一致层、原因和修复建议，而不只是 vulnerable/not-vulnerable。",
+        "hardProgress": "有研究计划书、taxonomy、E1-E7 实验设计、950 行 demo、4 类跨层 gap 的模拟检测验证。但真实代码解析、HTTP 验证、benchmark 构建均未完成，demo 证据偏工程可行性而非研究有效性。",
+        "cognitionTrend": "认知重点是“诊断优于检测”“跨层知识组合是瓶颈”“Orchestrator 做层间对齐”。这些是合理研究叙事，但多数还停留在框架化解释。",
+        "cotCotMaturity": "CoT's CoT 数量多，但成熟度不均。部分判断有 B/C 证据，且存在证据等级表述不一致，例如 CoT's CoT 2 正文说 B，表格写 A。说明学生已开始做元认知，但证据纪律还不稳定。",
+        "brainaryMapping": "Brainary 映射偏泛化，主要映射到 tool orchestration、workflow management、benchmark、reasoning、memory，能连接但还没有明确到可执行模块。",
+        "valueReasoning": "价值函数以论文、benchmark、工具 MVP 为主，估值写 5 万人民币，但计算逻辑不严：前面估 25-50 万，最后取 5 万，缺少为何大幅折扣的解释。用户有安全团队、企业安全、DevSecOps，但没有付费场景、采购路径或节省成本测算。",
+        "projectManagement": "计划完整，里程碑清楚，但阶段判断仍称“想法”，说明学生知道还没进入真正实验。下周动作包括精读 MOCGuard、5 个应用跑通、技术栈选择，范围偏大。",
+        "nextActionQuality": "动作可验证性中等。HTTP 验证和真实应用端到端是好动作，但同时推进 MOCGuard、5 个应用、技术栈选择，容易分散。"
       },
       {
         "week": "2026-04-26",
-        "summary": "方向转向 Brainary-guided 单 Agent，重心放在 Benchmark 构建与架构重构。开始筛选 CVE 和零日挖掘，完成新架构设计文档，Demo 重做中。",
-        "hardProgress": "新增：3 个 Benchmark 集定位定义、25 候选 CVE / 11 可用、零日挖掘启动、变异植入方案、Brainary-guided 架构（LangGraph+MCP、四维置信向量）、完整架构设计文档。",
-        "cognition": "反思 Multi-Agent Workflow 的根本局限（通信复杂度、不适合深度领域任务）；Benchmark 瓶颈是可复现性而非漏洞数量；变异植入是唯一可靠 ground truth 来源。",
-        "cotcotMaturity": "2 条 CoT's CoT，证据等级 B/A，其中一条有直接数据支撑（25 选 11，44% 通过率），质量提升。",
-        "brainaryMaturity": "明确映射到 Self-ability Understanding、Confidence（四维向量）、Target Understanding、Monitoring，并作为架构设计核心，映射深入具体。",
-        "valueEstimate": "分项估值：Benchmark 3 万、Agent 架构 4 万，总 7 万。价值判断精细化，强调数据资产与方法论创新的独立价值。",
-        "blockers": "剩余 CVE 环境测试未完成（可用集不足）；零日挖掘未产出；变异植入未实施；新架构 Demo 未跑通端到端。",
-        "nextActions": "扩大 CVE 可用集至 15+，首轮零日挖掘，确定变异策略；跑通 Demo 核心流程并验证置信向量效果。"
+        "stage": "现实约束发现与架构重构阶段",
+        "topicTrajectory": "题目没有漂移，仍是跨层语义不一致诊断；但技术路线从 Multi-Agent workflow 转向 Brainary-guided 单 agent，研究贡献从“多 agent 分工”调整为“认知结构内化与 confidence 流控”。",
+        "hardProgress": "新增 3 类 benchmark 定位、25 个候选 CVE、11 个确认可用 CVE、advisory 完整度问题观察、agent_design.md、新架构设计。硬进展比第一周更接近数据资产，但系统 demo 尚未跑通，变异植入和零日发现未产出。",
+        "cognitionTrend": "认知明显更具体：从“跨层诊断很重要”转向“benchmark 难在可复现”“ground truth 需要变异植入”“agent 架构应匹配任务认知结构”。这是研究能力提升的核心证据。",
+        "cotCotMaturity": "CoT's CoT 变少但更聚焦，尤其 benchmark 瓶颈有 25/11 的直接数据支撑，证据等级 A 合理。架构反思仍为 B，因为还没有系统对比实验。",
+        "brainaryMapping": "Brainary 映射成熟度提高：从泛化能力标签转向 Self-ability Understanding、Target Understanding、Confidence、Monitoring，并提出四维置信向量和短板驱动决策。相比第一周更接近可实现模块。",
+        "valueReasoning": "价值函数开始拆分为 benchmark 3 万、agent 架构 4 万，总体从单一题目估值转为资产单元估值，这是进步。但金额仍主要基于学术影响力和方法论稀缺性，没有连接真实用户愿付费金额、节省人工成本、漏洞发现收益或自动化复用收益。",
+        "projectManagement": "项目状态从“想法”变为“原型”，但实际偏离上周计划：未明确完成 MOCGuard 精读、artifact 获取、5 个真实应用 pipeline、HTTP 验证。学生解释为方向调整合理，但需要教授追问是否是必要重构还是逃避真实端到端验证。",
+        "nextActionQuality": "下周动作比第一周更聚焦：15+ 可用 CVE、新架构 demo 跑通、1-2 个应用零日尝试、确定变异策略。但仍缺少一个强制闭环指标，例如“一个真实应用上输入仓库到输出带证据诊断报告”。"
       }
     ],
     "trendScores": {
-      "researchRigor": {
-        "w1": 6,
-        "w2": 7,
-        "trend": "上升"
+      "hardProgress": {
+        "score": 3,
+        "trend": "小幅上升但未闭环",
+        "rationale": "从计划书和模拟 demo 进展到 CVE 筛选与可复现性数据，硬度提高；但没有真实应用端到端、没有 HTTP 验证、没有变异植入、没有 confirmed finding，所以不能给高分。"
       },
-      "cognitiveDepth": {
-        "w1": 6,
-        "w2": 8,
-        "trend": "上升"
+      "researchCognition": {
+        "score": 4,
+        "trend": "明显上升",
+        "rationale": "学生能识别 benchmark 可复现性、ground truth 可靠性、agent 架构适配性，这些是研究问题形成能力，而非单纯执行能力。"
       },
-      "projectExecution": {
-        "w1": 7,
-        "w2": 5,
-        "trend": "下降"
+      "cotIncrement": {
+        "score": 4,
+        "trend": "从叙事洞察转向方法约束",
+        "rationale": "第一周的 CoT 增量偏概念化，第二周开始出现由数据和工程失败驱动的认知更新，质量更高。"
       },
-      "automationPotential": {
-        "w1": 7,
-        "w2": 8,
-        "trend": "上升"
+      "cotCotMaturity": {
+        "score": 3,
+        "trend": "上升",
+        "rationale": "第二周 CoT's CoT 更少更硬，特别是 25/11 可复现率支撑 benchmark 判断。但架构判断尚未经过对比实验，仍属于中等证据。"
       },
-      "valueJudgment": {
-        "w1": 6,
-        "w2": 8,
-        "trend": "上升"
+      "brainaryMapping": {
+        "score": 4,
+        "trend": "明显成熟",
+        "rationale": "第一周是把项目贴到 Brainary 能力标签上，第二周开始把 Self-ability、Confidence、Monitoring 设计成 agent 内部模块，映射从概念连接进入系统设计。"
       },
-      "ecosystemAlignment": {
-        "w1": 7,
-        "w2": 5,
-        "trend": "下降"
+      "metaCognition": {
+        "score": 4,
+        "trend": "明显上升",
+        "rationale": "学生开始把架构选择本身视为元认知问题，并识别“任务需要什么认知结构”。这比第一周只讨论预测误差更进一步。"
+      },
+      "topicValue": {
+        "score": 3,
+        "trend": "稳定但仍需验证",
+        "rationale": "题目价值叙事稳定：诊断而非检测、benchmark、agent module。但是否能成为 Security Top-4 级别题目取决于真实数据集规模、诊断准确性、与 BACScan/MOCGuard 的实证差异，目前证据缺失。"
+      },
+      "monetaryValueReasoning": {
+        "score": 2,
+        "trend": "形式上改善，实质仍弱",
+        "rationale": "第二周把价值拆到 benchmark 和 agent 架构，优于第一周单一估值；但金额依据仍是类比和主观估算，缺少用户付费、替代人工、漏洞收益、维护成本和自动化复用次数。"
+      },
+      "evidenceLevel": {
+        "score": 3,
+        "trend": "从 B/C 走向局部 A",
+        "rationale": "benchmark 可复现性已有直接数据，属于强证据；但 agent 架构优劣、诊断系统有效性、zero-day 能力仍缺少实验。"
+      },
+      "projectManagement": {
+        "score": 2,
+        "trend": "有计划但执行漂移",
+        "rationale": "里程碑和资源规划完整，但上周承诺的关键闭环没有明确交付，第二周发生较大路线调整。调整可能合理，但目前缺少变更控制和放弃项说明。"
+      },
+      "automationPath": {
+        "score": 3,
+        "trend": "更具体",
+        "rationale": "自动化路径从 benchmark/workflow/memory schema 扩展到 CVE 筛选 workflow、Brainary-guided agent module、复现 CVE skill。但尚未形成可复用脚本、状态机运行结果或标准输入输出。"
+      },
+      "nextStepQuality": {
+        "score": 3,
+        "trend": "略有改善",
+        "rationale": "动作有数量指标，如 15+ 可用 CVE、1 个真实应用验证 confidence；但仍需要收敛为一条最小端到端链路，而不是同时做 benchmark、零日、变异、架构 demo。"
       }
     },
-    "valueFunctionChange": "学生价值判断发生显著变化：从第一周综合估算 5 万（论文+工具+数据模糊估算），转为第二周分项评定 Benchmark 3 万、架构 4 万，总价值认知提升至 7 万。价值观细化：更重视可积累的数据资产（Benchmark 三个子集 + advisory 完整度）和通用方法论（Brainary-guided 架构可泛化到其他安全分析任务），而不再仅以顶会论文为唯一目标。价值连接更牢固：明确提及谁会买单（安全研究团队、企业安全团队、DevSecOps），并强调自动化路径中的 Benchmark 和 Agent Module 沉淀。表明学生从‘做一件事发篇论文’转向‘建立一个可复用的研究资产和方法体系’，对长期研究能力的意识增强。",
+    "valueFunctionChange": {
+      "summary": "学生的价值函数从“论文 + benchmark + 工具 MVP 的综合价值”转向“可复用数据资产 + 可泛化 agent 架构”的双资产价值。变化方向是好的，因为更接近研究可沉淀物；但价值推理仍没有真正闭环到用户付费、金额来源和自动化 ROI。",
+      "week20260419": {
+        "whatStudentThinksWorthDoing": [
+          "做跨层语义不一致诊断，而不是普通 BAC 检测。",
+          "构建 CLSIC Benchmark。",
+          "实现 Multi-Agent 诊断系统。",
+          "形成 Security Top-4 论文、workflow、module。"
+        ],
+        "whyWorthDoing": "理由是现有 detector 缺少解释能力，安全研究团队和企业安全团队需要根因分析与修复建议。",
+        "moneyConnection": "估值 5 万人民币，但计算口径不稳定：先说综合估计 25-50 万，再取保守 5 万，缺少折扣逻辑。",
+        "userConnection": "提到安全研究团队、企业安全团队、DevSecOps，但没有说明谁最先用、用在什么流程、替代哪个工具或岗位劳动。",
+        "brainaryConnection": "连接到 tool orchestration、workflow、benchmark、reasoning、memory，较宽泛。",
+        "automationConnection": "提出 benchmark、workflow、memory schema，但还没有具体自动化入口和产物接口。"
+      },
+      "week20260426": {
+        "whatStudentThinksWorthDoing": [
+          "先做 benchmark 数据资产，尤其三个 benchmark 集和 advisory 完整度标注。",
+          "做 Brainary-guided 单 agent，而不是继续多 agent workflow。",
+          "把 Confidence 四维向量和 Monitoring 做成 agent module。",
+          "通过变异植入获得可靠 ground truth。"
+        ],
+        "whyWorthDoing": "理由从“顶会叙事差异化”增加到“评测基础设施必须可靠”和“agent 架构本身是安全分析任务的核心变量”。",
+        "moneyConnection": "拆成 benchmark 3 万人民币、agent 架构 4 万人民币，粒度更好；但仍缺少收益模型，金额仍主要来自主观类比。",
+        "userConnection": "用户群体基本未变化，仍是安全研究团队、企业安全团队、DevSecOps；没有新增真实用户证据。",
+        "brainaryConnection": "明显增强，已映射到 Self-ability Understanding、Target Understanding、Confidence、Monitoring，并进入设计文档。",
+        "automationConnection": "比上一周更具体，提出 CVE 筛选流程、agent module、复现 CVE skill。但缺少已自动化运行证据。"
+      },
+      "valueFunctionMaturity": "中等。学生开始知道“值得做”的不只是功能 demo，而是 benchmark、ground truth、可复用 agent 架构；这是研究价值观成熟。但金额估算和用户价值仍是弱项，需要强制从“学术可发表”扩展到“谁用、何时用、省多少钱、自动化后复用多少次”。",
+      "missingEvidence": [
+        "没有用户访谈或真实安全团队需求证据。",
+        "没有与现有工具在真实项目中的节省时间对比。",
+        "没有说明 benchmark 被引用或复用的概率如何估计。",
+        "没有 token/API/人工标注成本与产出价值的 ROI 计算。",
+        "没有商业安全工具 MVP 的具体可比案例。"
+      ]
+    },
     "repeatedBlockers": [
-      "端到端验证始终未完成：第一周 Demo 仅验证 4 类 CVE 但依赖模拟数据，第二周 Demo 重做未跑通，真实代码解析和 HTTP 验证环境反复延迟。",
-      "Benchmark 构建持续处于初始阶段：第一周仅规划目录，第二周开始筛选但可用集不足，始终未形成可评测的标准化数据集。",
-      "技术栈选型虽初步确定（LangGraph+MCP），但尚未在真实场景下证明可行性，之前 Multi-Agent 技术栈未定的问题转移为单 Agent 架构的实现风险。"
+      {
+        "blocker": "真实端到端验证持续缺失",
+        "evidence": "2026-04-19 提到真实代码解析、HTTP 验证待完成；2026-04-26 新架构 Demo 尚未跑通，也没有报告真实应用端到端结果。",
+        "risk": "如果不尽快闭环，项目会停留在架构设计和 benchmark 筛选，无法证明诊断能力。"
+      },
+      {
+        "blocker": "Benchmark 规模与 ground truth 不稳定",
+        "evidence": "25 个候选 CVE 只有 11 个确认可用，零日无 confirmed finding，变异植入尚未开始。",
+        "risk": "实验基础可能不足，导致论文贡献只能停留在概念系统而非可评测系统。"
+      },
+      {
+        "blocker": "技术路线频繁重构",
+        "evidence": "第一周主张 5 Agent + Orchestrator，第二周转向单一 Brainary-guided agent。",
+        "risk": "重构可能是研究能力提升，也可能是逃避实现难点；需要用一周内可运行 demo 判断。"
+      },
+      {
+        "blocker": "价值估算缺少外部校准",
+        "evidence": "两周都写了金额，但都主要依据论文奖励、benchmark 引用价值、方法论稀缺性，没有真实付费或成本节省证据。",
+        "risk": "学生可能把“看起来像论文贡献”误当作“真实价值”。"
+      },
+      {
+        "blocker": "下周动作多线并行",
+        "evidence": "同时推进 CVE 扩容、零日挖掘、变异策略、新架构 demo、confidence 验证。",
+        "risk": "容易每条线都有进展但没有一条线形成可展示证据。"
+      }
     ],
-    "professorShouldAsk": "为什么选择绕过 MOCGuard 精读而直接投入 Benchmark 构建和架构重构？这样可能丢失与现有 strongest baseline 的对齐机会，并导致系统设计与前人工作脱节，你如何确保自己的诊断机制确实优于已有检测器？",
-    "nextBestIntervention": "建议要求学生在下周同步完成三件事：(1) 精读 MOCGuard（或至少 BACScan）并产出对比表格，明确自身诊断模块与已有检测器的差异层次；(2) 挑选一个已确认可跑的 CVE，用新架构 Demo 完整跑穿端到端流程（包括 HTTP 验证），产出第一份诊断报告作为最小可行证据；(3) 将 Benchmark 暂时锁定在 11 个可用 CVE 上，优先完成变异植入子集（选 2-3 个应用手动植入 5 种跨层不一致），构造小规模但高可信的 ground truth，使实验立刻具备可评测性。"
+    "professorShouldAsk": [
+      "你第一周承诺的真实 Spring Boot 应用 HTTP 验证为什么没有完成？是环境问题、架构问题，还是发现原路线不可行？请给出具体失败日志或证据。",
+      "从 Multi-Agent 改成单 agent 的决定，最小反证实验是什么？你准备用什么指标证明不是因为实现 multi-agent 太麻烦才改路线？",
+      "下周能否只交付一个最小闭环：输入一个真实仓库，输出一份含证据链、层间不一致、POC 或 HTTP 验证、修复建议的诊断报告？",
+      "25 个候选 CVE 到 11 个可用的筛选表在哪里？每个 CVE 的不可用原因是否结构化记录为 advisory 完整度、版本不可确定、环境不可构建、POC 缺失等字段？",
+      "变异植入 ground truth 的最小版本是什么？准备在哪一个应用、哪一层植入、植入几类不一致、如何验证真阳性和真阴性？",
+      "四维置信向量 understanding、competence、evidence、exploitability 的取值规则是什么？是 LLM 自评、工具证据计算，还是人工标注？",
+      "你的 3 万和 4 万人民币估值分别对应什么可交付物？如果没有论文录用，这些资产还有没有独立价值？",
+      "谁是第一个真实用户？安全研究员、企业 AppSec、还是 DevSecOps？他们会在什么场景下使用你的诊断报告，而不是继续用 CodeQL/Semgrep/BACScan？"
+    ],
+    "nextBestIntervention": {
+      "intervention": "把下一周强制收敛为“一个真实应用上的端到端诊断闭环”，暂停继续扩写架构，除非它服务于这个闭环。",
+      "oneWeekDeliverable": [
+        "选择 1 个已确认可复现的 CVE 或 1 个手动植入变异的 Java Web 应用。",
+        "完成从仓库输入到层语义抽取、hypothesis、证据收集、HTTP/POC 验证、诊断报告输出的最小链路。",
+        "报告必须包含失败案例：系统在哪一步 confidence 低、为什么低、下一步调用什么工具补证据。",
+        "同时保留一份 baseline 对照：人工规则或简单 detector 能输出什么，ConformAgent 多输出了什么诊断信息。"
+      ],
+      "successCriteria": [
+        "至少 1 个真实或植入漏洞被完整诊断，不接受纯模拟数据。",
+        "至少 1 个 hard negative 被判断为非漏洞，并说明层间一致性证据。",
+        "诊断报告包含具体文件、函数、路由、权限语义、数据对象、验证请求或 POC。",
+        "四维置信向量至少在 3 个决策点实际影响流程，而不是只作为文档概念。",
+        "形成一张结构化 benchmark 表，记录候选 CVE、可复现状态、不可复现原因、所需环境、ground truth 来源。"
+      ],
+      "professorRole": "教授不应主要讨论大叙事，而应要求学生交付最小闭环证据，并追问每个架构模块是否真的减少错误、减少人工或提高诊断质量。",
+      "ifFails": "如果下一周仍没有真实端到端闭环，应判断项目存在架构化拖延风险，建议砍掉零日挖掘和复杂 agent 设计，先做变异植入 benchmark 与规则基线。"
+    }
   }
 }

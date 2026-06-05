@@ -1,38 +1,214 @@
 {
   "key": "person:huang-xun:2026-05-17:longitudinal",
-  "generatedAt": "2026-05-24T11:47:57.903Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "7ccac69ca064068eac8acf5befdb5fe2dd199a88dd93b54049117824c8b527b5",
+  "generatedAt": "2026-06-05T17:04:01.702Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "4320371ca640ae85b6ef4af4cf7c08b7df92d8442c1eef01eeaa08900e7d69af",
   "result": {
-    "overallTrajectory": "学生从复现论文、收集实验数据，迅速转向质疑方法本身并开辟新攻击面，展现了独立批判性思维和问题驱动的研究能力。两周内，核心发现从‘指标偏差’推进到‘评测范式系统性缺陷’，且主动识别资源瓶颈并规划纠偏，研究深度和自主性显著增强，而非简单增加工作量。",
-    "stageByWeek": {
-      "2026-05-10": "多任务处于小规模实验和原型验证阶段，侧重复现论文、收集基础数据和观察偏差。",
-      "2026-05-17": "红队任务进入消融实验与攻击面挖掘阶段；SafeClaw转向端到端真实路由测试并暴露重大缺陷；DARWIN因资源受阻但完成重构。整体从复现向实用化、系统化转化。"
+    "overallTrajectory": {
+      "judgment": "学生在两周内表现出研究能力提升，不只是变忙；提升主要体现在能从“复现指标”转向“评测设置是否真实有效”的层级判断，并能用新实验推翻或修正上一周的解释。但提升不均衡：构造语言和 SafeClaw 的研究判断在变强，DARWIN 主要停留在工程排障，Brainary 映射和商业价值估算在第二周反而变粗。",
+      "researchAbilityChange": "上升，但不是全面上升。最强增量是能识别 benchmark 与真实端到端部署之间的鸿沟；最弱环节是资源依赖、实验闭环和价值金额推理的证据链。",
+      "notJustBusyEvidence": [
+        "构造语言方向从 4% ASR、回复变短，推进到修复评测 bug、恢复输出长度，并得到 plain 方法 14% 越狱率、英文 baseline 0% 的对照信号。",
+        "SafeClaw 从 1971 条分类评测 accuracy 88.64% 转向端到端路由测试，发现 risk 1A 只有 21% 准确率、约 1% 真正进入 safe-gog 检查节点；这不是单纯多跑实验，而是改变了评测层级。",
+        "DARWIN 虽未产生新性能结果，但定位到策略收集后评估/验证流程中断的代码 bug，并重构 API 与 Local 模式冲突；这是必要工程修复，但研究产出弱于前两项。"
+      ],
+      "mainConcern": "学生开始把三个项目合并成“企业级安全红队/Agent 安全评测”大叙事，但当前证据仍是小样本、单模型、缺少完整对照、缺少稳定 judge 和资源闭环。若不收缩，会从研究能力提升转为多线消耗。"
     },
-    "trendScores": {
-      "2026-05-10": {
-        "hardProgress": 6,
-        "cognitiveDepth": 7,
-        "cotsCotsMaturity": 6,
-        "valueReasoning": 5,
-        "projectManagement": 7
+    "stageByWeek": [
+      {
+        "week": "2026-05-10",
+        "topicTrajectory": "三条线并行：SafeClaw-R 复现、DARWIN 自演化越狱复现、构造语言 red team 初探。题目仍偏分散，但都围绕安全评测与自动化 red team。",
+        "hardProgress": "SafeClaw 有 1971 条分类评测，accuracy 88.64%，并有 runtime mock 初步验证；DARWIN 完成 100 条 DeepSeek-V4-Pro 实验，ASR 81%，低于 baseline 100%；构造语言完成 40 条规则遵循与 50 条 sub AdvBench，ASR 4%。",
+        "cognitiveTrend": "能区分 classification、runtime mock gating、real API execution；能意识到 DARWIN 低于 baseline 不应只怪进化轮数，而要看 strategy pool；能看到复杂语言规则同时影响安全与正常能力。",
+        "cotCotMaturity": "较成熟。三个 CoT's CoT 都有自动化潜力、沉淀形式和证据等级；尤其 SafeClaw 的实验层级区分有 A 级证据。但其中“老师原本不知道吗”多数为否，说明信息新颖性一般。",
+        "brainaryMappingMaturity": "较细。能把 SafeClaw 映射到 risk modeling、tool orchestration、benchmark、workflow；把 DARWIN 映射到 memory、reasoning、calibration、workflow；把构造语言映射到 cognitive control、calibration、evaluation。",
+        "valueReasoning": "偏谨慎，按研究原型、节省人工时间和内部项目复用估算：SafeClaw 5–15 万，DARWIN 8–20 万，构造语言 3–8 万。价值函数较保守，但有用户、产物和证据边界。",
+        "projectManagement": "计划粒度较好，每条线有下周最小动作、资源、依赖和偏差判断；但三条线同时推进，存在分散风险。",
+        "nextStepQuality": "中上。下一步多为可验证实验：OpenClaw workflow、strategy pool 抽样分析、三组对照实验。动作明确，但仍偏多。"
       },
-      "2026-05-17": {
-        "hardProgress": 7,
-        "cognitiveDepth": 8,
-        "cotsCotsMaturity": 7,
-        "valueReasoning": 8,
-        "projectManagement": 6
+      {
+        "week": "2026-05-17",
+        "topicTrajectory": "题目开始收敛为两个核心：构造语言红队攻击面与 SafeClaw 端到端 Agent 安全路由评估；DARWIN 转为支撑自动演化红队框架的工程线。",
+        "hardProgress": "构造语言方向硬进展最强：修复 user_only decoded_output bug，输出中位长度从 29.5 词提升至 111.5 词，plain 方法 50 条全量测试 jailbreak rate 14%，英文 0%。SafeClaw 端到端 risk 1A 100 例准确率 21%，触发 safe-gog 仅约 1%。DARWIN 主要是发现流程中断 bug 和接口重构，缺少新实验性能。",
+        "cognitiveTrend": "明显升级。学生从上一周的“实验层级要区分”推进到更强判断：论文高准确率可能依赖 batch prompting、Claude 和显式规则读取，无法代表真实 Agentic 自主路由。构造语言方向也从风险信号变成可观测安全降级假设。",
+        "cotCotMaturity": "混合。SafeClaw 的 CoT's CoT 更成熟，因为有端到端测试数据支撑 benchmark 与部署鸿沟；构造语言 CoT's CoT 有新颖性，但证据仍只有 50 条和未完成四组对照；DARWIN 没有形成新的 CoT's CoT，只是工程脆弱性判断。",
+        "brainaryMappingMaturity": "相比上一周变粗。第二周只列出 risk modeling、evaluation protocol、tool orchestration 等标签，没有继续展开 memory、calibration、workflow schema。DARWIN 被映射为 tool orchestration，反而弱化了上一周更有价值的 strategy memory 视角。",
+        "valueReasoning": "价值叙事变大：从单项 3–20 万研究原型，跃迁到 200 万人民币/年企业安全合规订阅服务。方向上更贴近用户和商业场景，但金额证据不足：没有客户访谈、付费意愿、竞品价格细分、单位调用成本、成功率门槛或产品闭环。",
+        "projectManagement": "暴露资源瓶颈：GPU、稳定 API、Anthropic API、judge 模型都成为关键路径。学生能识别需要老师介入，这是进步；但原计划跑通 DARWIN 闭环和 SafeClaw 全量端到端未完成，说明前一周排期低估工程依赖。",
+        "nextStepQuality": "中等。红队四组对照和攻击面消融是好动作；SafeClaw 接 Claude 验证论文设置也关键；但同时要求完成剩余 risk 类型、code-execution、malicious-skills 和 DARWIN 闭环，动作过多，缺少优先级和止损标准。"
+      }
+    ],
+    "trendScores": {
+      "hardProgress": {
+        "score": 7,
+        "trend": "总体上升但结构不均。构造语言显著上升，SafeClaw 从大规模分类转为小规模但更关键的端到端证据，DARWIN 从实验结果退回工程修复。",
+        "evidence": "第一周有 1971 条 SafeClaw 分类、100 条 DARWIN、50 条构造语言；第二周有构造语言长度修复和 14% ASR、SafeClaw risk 1A 端到端 21% 准确率，但 DARWIN 没有新闭环实验。"
+      },
+      "cognitiveIncrement": {
+        "score": 8,
+        "trend": "明显上升。",
+        "evidence": "从“要区分实验层级”推进到“高 benchmark 指标可能掩盖真实 Agent 路由失效”，这是更接近研究问题本质的判断。"
+      },
+      "cotCotMaturity": {
+        "score": 7,
+        "trend": "SafeClaw 上升，构造语言小幅上升，DARWIN 下降或停滞。",
+        "evidence": "第二周 SafeClaw CoT's CoT 有 100 例端到端数据支撑；构造语言仍缺四组对照；DARWIN 没有形成新的 strategy memory 证据。"
+      },
+      "brainaryMapping": {
+        "score": 5,
+        "trend": "从细到粗，第二周有退步。",
+        "evidence": "第一周逐项目映射到 risk modeling、memory、calibration、workflow、evaluator；第二周压缩成几个泛标签，缺少 schema、memory object、自动化路径细节。"
+      },
+      "metaCognition": {
+        "score": 8,
+        "trend": "上升。",
+        "evidence": "能把失败归因从模型结果转向评测层级、控制流路由、judge/验证环节脆弱性；能承认资源和 API 是关键路径。"
+      },
+      "topicValue": {
+        "score": 7,
+        "trend": "方向更集中，价值叙事更强，但证据没有同步增强。",
+        "evidence": "从三个分散项目逐步收敛到 Agent 安全路由与自动红队评测；但构造语言仍是 50 条、SafeClaw 仅 risk 1A、DARWIN 无闭环。"
+      },
+      "monetaryValueReasoning": {
+        "score": 5,
+        "trend": "金额变大，但严谨性下降。",
+        "evidence": "第一周按研究原型和节省人工估 3–20 万较可信；第二周直接估 200 万/年，虽连接企业合规与人工红队替代，但缺少客户、产品成熟度、交付能力和转化率证据。"
+      },
+      "evidenceLevel": {
+        "score": 6,
+        "trend": "关键假设证据增强，但外推证据不足。",
+        "evidence": "SafeClaw 端到端失效有直接数据，但只有 risk 1A、DeepSeek 和 100 例；构造语言 14% 有信号但未完成攻击模板对照、消融、judge 稳定性验证。"
+      },
+      "projectManagement": {
+        "score": 5,
+        "trend": "识别依赖能力上升，排期控制下降。",
+        "evidence": "第二周明确需要 GPU/API/Anthropic 支持，这是成熟信号；但原计划未完成，且下周动作仍过载。"
+      },
+      "automationPath": {
+        "score": 6,
+        "trend": "方向清楚但实现路径不够收敛。",
+        "evidence": "benchmark、evaluator、agent、evaluation protocol 方向合理；但缺稳定 judge、统一 schema、端到端日志标准和资源闭环。"
+      },
+      "nextStepQuality": {
+        "score": 6,
+        "trend": "实验动作更关键，但数量过多。",
+        "evidence": "四组构造语言对照、攻击面消融、Claude 端到端验证都很好；同时推进全 risk、code execution、malicious skills、DARWIN 闭环则超过当前资源承载。"
       }
     },
-    "valueFunctionChange": "第一周将任务视为独立研究原型，估值保守（3～20万）；第二周整合为‘企业级安全合规订阅服务’，估值达200万/年，并给出替代人工红队成本的计算依据。价值观从‘这个点子值得做’转向‘这项能力能卖多少钱’，开始连接市场需求和成本节约，商业化思维明显提升。",
+    "valueFunctionChange": {
+      "week1ValueFunction": "第一周的价值函数是“研究原型价值”：是否有真实问题、谁会买单、是否通用、能否沉淀为 benchmark/workflow/evaluator/schema，以及能节省多少人工复现和评测时间。金额估算偏保守，且按证据成熟度分层。",
+      "week2ValueFunction": "第二周的价值函数转向“企业安全合规与红队订阅服务”：认为 Agent 安全路由失效和构造语言绕过是通用缺陷，买单方是企业本地 Agent、大模型厂商安全团队和 red team 团队，产物是端到端安全 benchmark、自动红队 agent、论文。",
+      "positiveChange": [
+        "价值判断从单个论文复现，升级到实际部署中的 Agent 安全问题。",
+        "开始连接企业用户、合规、安全审计、人力替代和自动化红队框架。",
+        "构造语言方向从“有趣攻击”升级为“非自然语言编码导致安全边界漂移”的可产品化评测变量。"
+      ],
+      "negativeChange": [
+        "金额估算从 3–20 万跃迁到 200 万/年，证据链不足。",
+        "第二周没有给出 200 万价值所需的产品条件：稳定 judge、批量 API、客户场景、误报漏报容忍度、交付周期、成本结构。",
+        "Brainary 连接变粗，没有说明这些实验如何变成 memory、workflow、module、evaluator 的可执行 schema。"
+      ],
+      "currentValueFunctionDiagnosis": "学生的价值观正在从“跑出结果”转向“找到能被企业安全团队购买的通用评测能力”，这是好变化；但目前价值函数带有叙事超前风险。教授应要求其把金额估算降回可验证单元：一个 benchmark 报告值多少钱、一次企业模型上线前审计需要哪些指标、自动化能替代哪几个人工步骤。",
+      "missingEvidence": [
+        "缺少用户访谈或真实买单方需求证据。",
+        "缺少竞品价格与功能对比的具体表格。",
+        "缺少自动化红队 agent 的稳定闭环成功率。",
+        "缺少多模型、多 judge、多攻击模板和多任务场景证据。",
+        "缺少从实验脚本到可交付 benchmark/evaluator 的接口定义。"
+      ]
+    },
     "repeatedBlockers": [
-      "GPU算力与稳定API持续缺失，导致自动演化框架（DARWIN）等需要大规模评估的任务无法形成闭环。",
-      "评测环境与真实部署的落差始终存在，论文高指标在端到端测试中大幅坍塌，反映复现方法和评估体系的脆弱性未被根本解决。"
+      {
+        "blocker": "评测层级混淆反复出现",
+        "weeksObserved": [
+          "2026-05-10",
+          "2026-05-17"
+        ],
+        "description": "第一周已意识到 classification、runtime mock、real API execution 不能混；第二周进一步发现论文高分可能来自 batch prompting，而真实端到端自主路由几乎失效。",
+        "impact": "这是研究机会，也是风险。如果不固定评测 schema，后续数据会继续不可比。",
+        "neededAction": "建立统一日志字段：任务输入、系统提示、是否显式读取规则、是否自主触发安全节点、触发节点、verdict、工具是否执行、side-effect level、judge 模型。"
+      },
+      {
+        "blocker": "资源和 API 依赖未提前锁定",
+        "weeksObserved": [
+          "2026-05-17"
+        ],
+        "description": "第二周明确 GPU、稳定 API、Anthropic API、judge 模型都卡住自动评测闭环。第一周项目管理中低估了这些依赖。",
+        "impact": "DARWIN 无法闭环，SafeClaw 无法验证 Claude 假设，构造语言无法扩展多模型评测。",
+        "neededAction": "先做资源矩阵和降级方案：有 Claude 时跑什么，无 Claude 时跑什么；有 GPU 时跑 DARWIN，没 GPU 时只做日志/schema/小样本 API。"
+      },
+      {
+        "blocker": "judge 与 target model 单一",
+        "weeksObserved": [
+          "2026-05-17"
+        ],
+        "description": "构造语言和 DARWIN 都依赖 judge 质量，但目前 PAIR judge 不完善，deepseek-chat 和 target model 单一。",
+        "impact": "14% ASR 和 DARWIN ASR 的可信度受限，可能受 judge 偏差影响。",
+        "neededAction": "至少建立双 judge 或人工抽样校准，并记录 judge disagreement。"
+      },
+      {
+        "blocker": "多线并行导致下周动作过载",
+        "weeksObserved": [
+          "2026-05-10",
+          "2026-05-17"
+        ],
+        "description": "两周都同时推进 SafeClaw、DARWIN、构造语言。第二周还计划红队四组对照、攻击面消融、Claude 端到端、全 risk、code-execution、malicious-skills、DARWIN 闭环。",
+        "impact": "容易每条线都有进展但没有一条线形成可提交报告或可复用 artifact。",
+        "neededAction": "下周只保一个主线里程碑：建议优先构造语言四组对照或 SafeClaw Claude 验证二选一。"
+      },
+      {
+        "blocker": "价值金额外推过快",
+        "weeksObserved": [
+          "2026-05-17"
+        ],
+        "description": "从研究原型估值跳到 200 万/年订阅服务，但当前证据仍是小样本和未闭环系统。",
+        "impact": "会让选题判断被商业叙事带偏，忽略当前最需要补的证据。",
+        "neededAction": "把 200 万拆成可验证假设：客户数、客单价、交付内容、自动化替代人工比例、最低性能门槛。"
+      }
     ],
-    "professorShouldAsk": "从复现论文到质疑论文方法，你是否已经开始思考自己定义安全评测范式的可能性？如果学术界主流评测本身就有缺陷，你打算如何建立更可靠的评测基准？下一步如何将‘发现缺陷’转化为‘构建新的防御或评测工具’？",
-    "nextBestIntervention": "协助解决GPU算力和Anthropic API资源，确保端到端验证快速推进；引导学生将现有发现抽象为标准化的评测协议或benchmark，而非停留于实验报告；每周固定时间讨论实验假设与验证逻辑，强化从失败中提炼通用原则的能力。"
+    "professorShouldAsk": [
+      {
+        "question": "你下周只能完成一个能改变研究判断的实验，是构造语言四组对照，还是 SafeClaw Claude 端到端验证？为什么？",
+        "whyAsk": "迫使学生从多线忙碌转为关键假设优先级管理。"
+      },
+      {
+        "question": "SafeClaw 的 21% 准确率和 1% 触发率中，多少是 DeepSeek 指令遵循能力问题，多少是安全路由机制设计问题？你的实验如何隔离这两者？",
+        "whyAsk": "这是第二周最关键的因果识别问题。"
+      },
+      {
+        "question": "构造语言 plain 14% ASR 是语言编码导致，还是 system/user prompt 截断、输出长度变化、judge 偏差或样本选择导致？",
+        "whyAsk": "防止把相关性误判为攻击机制。"
+      },
+      {
+        "question": "你现在的 Brainary 产物到底是什么：benchmark schema、evaluator、strategy memory、runtime gate，还是 red team agent？请选一个两周内能交付的 artifact。",
+        "whyAsk": "第二周 Brainary 映射变粗，需要重新落到可产出的系统对象。"
+      },
+      {
+        "question": "200 万/年的估值中，哪一个环节已经有证据，哪一个环节完全是假设？",
+        "whyAsk": "校准商业价值推理，避免叙事超前。"
+      },
+      {
+        "question": "DARWIN 现在还值得占主线时间吗？如果没有 GPU/API，本周能产出的最小研究资产是什么？",
+        "whyAsk": "DARWIN 当前硬进展弱，需决定降级为 schema/日志分析，还是暂停。"
+      }
+    ],
+    "nextBestIntervention": {
+      "recommendation": "教授应要求学生下周收缩为一个主实验加一个工程辅助，不允许三线全量推进。建议主实验选择“构造语言四组对照 + 攻击面消融”，辅助实验选择“SafeClaw Claude 小样本端到端验证”。DARWIN 暂时只做接口健康检查和日志 schema，不追求性能结果。",
+      "oneThingProfessorShouldLearn": "这名学生本周真正带来的新信息不是某个 ASR 数字，而是：Agent 安全论文中的高准确率可能依赖显式规则读取和特定模型，在真实端到端自主路由中会出现数量级下降；因此未来评测必须把静态判别、显式规则 batch prompting、runtime mock、真实端到端轨迹分开。",
+      "concretePlan": [
+        "构造语言：完成 plain、DAN、角色扮演、Prompt Injection 四组各 50 条；同时记录英文 baseline、规则遵循率、输出长度、拒答率、ASR、judge 置信度。",
+        "构造语言消融：只做 split、user_only、natural 三种 prompt 模式的小样本对比，目标是判断 14% ASR 是否来自语言编码本身还是 prompt 面变化。",
+        "SafeClaw：只跑 Claude risk 1A 小样本复核，不扩展所有 risk 类型；目标是验证论文高分是否依赖 Claude 与 live_runner.py，而不是追求覆盖率。",
+        "DARWIN：本周不追求 ASR，只提交一页流程图和日志 schema，证明收集、评估、进化三个节点的输入输出已经统一。"
+      ],
+      "successCriteria": [
+        "下周至少有一张对照表能回答关键因果问题，而不是只列完成事项。",
+        "每个 ASR 数字必须同时报告样本量、baseline、judge 方法、target model、prompt 模式。",
+        "SafeClaw 必须报告自主触发率，而不只报告分类准确率。",
+        "价值估算必须回到当前 artifact 层级：一个可复用 benchmark/evaluator 原型的价值，而不是直接估企业订阅年收入。"
+      ]
+    }
   }
 }

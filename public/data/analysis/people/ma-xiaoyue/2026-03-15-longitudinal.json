@@ -1,32 +1,145 @@
 {
   "key": "person:ma-xiaoyue:2026-03-15:longitudinal",
-  "generatedAt": "2026-05-24T11:49:51.840Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "60dd858a51366e263b553bd1a47b7d81c6167cdf9ec3c991f44be5bd32d37719",
+  "generatedAt": "2026-06-05T17:07:20.950Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "963a49f93cbddcc73503b91d9c8ff734275ee7a8014e6fd16e0eee26135bf44f",
   "result": {
-    "overallTrajectory": "由于仅提供一周报告，无法进行纵向轨迹分析。本周该生展示了从文献到设计的转化能力，但缺少前期和后续数据点，难以判断研究能力的演变。",
+    "overallTrajectory": {
+      "judgment": "目前只有 1 周周报，无法做真正的多周纵向判断；只能判断这一周呈现出的研究能力状态。该周显示学生不只是变忙，而是在尝试把论文中的 agent failure patterns 映射到 Brainary runtime monitoring，并实现 prototype。但证据仍偏早期，硬进展主要是原型和概念映射，缺少测试、实验、用户价值、金额价值和可合并工程产物。",
+      "researchAbilitySignal": "中等偏正向：有从文献 failure taxonomy 到系统 detector/recovery 机制的转译能力，也开始思考 domain-specific failure taxonomy 和 reliability knowledge base；但尚未证明这些机制有效、可维护、可集成、可自动化。",
+      "busyVsCapability": "不是单纯忙碌。周报中有明确 CoT 增量、CoT² 增量和 Brainary 映射。但由于代码是 vibe coding prototype，且没有测试指标、失败案例集、消融或集成结果，所以还不能判定为成熟研究能力提升。",
+      "evidenceLimit": "缺少前 3 周报告，无法比较题目是否收敛、硬进展是否加速、价值函数是否变化、重复卡点是否持续存在。"
+    },
     "stageByWeek": [
       {
         "week": "2026-03-15",
-        "hardProgress": "完成 Brainary runtime reliability 机制的原型设计，新增三类 failure reasoning 和 recovery actions，实现了 MetacognitiveMonitor 的 detector 机制。",
-        "CoTIncrement": "新增 Plan–Execution mismatch、Resource exhaustion、Liveness failure 的推理，以及 REPLAN/ROLLBACK/ABORT 等恢复动作。",
-        "CoT2Maturity": "初现：实现了运行时观察者模式的 metacognitive monitoring，不影响 planner 和 executor，具备独立性。",
-        "brainaryMapping": "将 agent failure patterns 映射到 Brainary 的 metacognitive monitoring layer，具体到 detector 设计。",
-        "valueFunction": "认为深度思考（动脑子）是研究者的核心竞争力，在工具自动化的趋势下更应强调逻辑和主动思考。",
-        "blockers": "原型采用 vibe coding 快速开发，后续需要讨论代码合并与测试流程，可能引入质量和维护阻碍。",
-        "nextActionQuality": "计划系统化加入新 failure modes、实现 snapshot 机制和团队讨论，方向明确且务实。"
+        "topicTrajectory": "题目聚焦 Brainary 的 runtime reliability，具体包括 agent runtime failure detection、failure recovery mechanism、tool execution access control。相比泛泛研究 agent failure，已经进入 Brainary 系统机制层。",
+        "hardProgress": "新增三类 runtime failure reasoning：Plan–Execution mismatch、Resource exhaustion、Liveness failure；新增 recovery actions：REPLAN、ROLLBACK、ABORT、DEGRADE、INSERT_STEP、SKIP_REFLECTION；实现 MetacognitiveMonitor 的 runtime failure detector，包括 plan registration、session lifecycle tracking、action loop detection、state stagnation detection、runtime detector orchestration。",
+        "CoTIncrement": "CoT 增量较清楚，围绕 failure 类型、检测逻辑和 recovery action 展开。它不是简单读论文摘要，而是把 failure mode 转成可执行推理分类。",
+        "CoTsCoTMaturity": "CoT² 成熟度处于原型阶段。学生已经把 detector 设计成 runtime observer，不修改 planner 或 executor，这说明有系统边界意识和元认知监控意识。但还缺少 detector 之间的优先级、误报/漏报处理、恢复策略选择依据、监控成本评估。",
+        "BrainaryMappingMaturity": "映射成熟度中等。能把 agent framework reliability failures 映射到 Brainary metacognitive monitoring layer，并提出 knowledge base 方向。但当前仍主要是 failure pattern 到 detector 的单层映射，尚未形成 Brainary 内部对象、接口、数据结构、评估集、自动化闭环的完整映射。",
+        "metaCognition": "有一层元认知：意识到 vibe coding 提高效率但不能替代思考；也意识到需要学习代码合并与测试流程。更深层的自我监控还不足，例如没有说明自己如何判断 prototype 是否可信、哪些假设最危险、哪些结果会推翻当前设计。",
+        "valueReasoning": "价值推理开始出现，但还不够商业化或用户化。学生认为 runtime reliability、domain-specific failure taxonomy、agent reliability knowledge base 值得做，理由是能从真实 GitHub projects 和 Issues 中抽取 failure patterns，积累 detection rules 与 recovery mechanisms。缺少金额价值、目标用户、使用场景、节省成本、产物形式和自动化路径的明确量化。",
+        "projectManagement": "下周计划具体，包括加入 state drift、实现 system snapshot、讨论代码合并与测试流程。计划质量尚可，但缺少验收标准，例如完成多少 detector、用哪些 cases 测试、何时 merge、谁 review、成功指标是什么。",
+        "automationPath": "已有自动化雏形：自动分析 GitHub agent projects 与 Issues，抽取真实 failure patterns，构建 domain-specific failure taxonomy，再沉淀到 Brainary reliability knowledge base。但这仍是想法，缺少 pipeline 设计、数据 schema、人工审核流程、规则生成方式和评估指标。",
+        "evidenceLevel": "证据等级为原型级。已有实现描述，但没有代码链接、测试结果、运行日志、案例集、对比基线、用户反馈或集成状态。"
       }
     ],
     "trendScores": {
-      "hardProgress": "无法判断趋势（仅一周）",
-      "cognition": "无法判断趋势（仅一周）",
-      "automationPath": "无法判断趋势（仅一周）"
+      "note": "由于只有 1 周报告，以下不是纵向趋势分数，而是当前周状态评分；无法判断上升、下降或稳定。",
+      "topicConvergence": {
+        "score": 7,
+        "trend": "证据不足，无法纵向判断",
+        "reason": "本周题目较集中，围绕 Brainary runtime reliability，但缺少历史周次比较。"
+      },
+      "hardProgress": {
+        "score": 6,
+        "trend": "证据不足，无法纵向判断",
+        "reason": "有 detector 与 recovery 原型实现，但没有测试、合并、实验或可复现证据。"
+      },
+      "CoTIncrement": {
+        "score": 7,
+        "trend": "证据不足，无法纵向判断",
+        "reason": "新增 failure reasoning 分类明确，能把抽象 failure 转成推理与恢复动作。"
+      },
+      "CoTsCoT": {
+        "score": 6,
+        "trend": "证据不足，无法纵向判断",
+        "reason": "MetacognitiveMonitor 作为 runtime observer 是好的系统设计，但缺少策略选择、监控反馈、自我校验机制。"
+      },
+      "BrainaryMapping": {
+        "score": 6,
+        "trend": "证据不足，无法纵向判断",
+        "reason": "已经映射到 metacognitive monitoring layer，但尚未展示与 Brainary 现有架构、接口、数据结构和测试流程的深度绑定。"
+      },
+      "valueReasoning": {
+        "score": 4,
+        "trend": "证据不足，无法纵向判断",
+        "reason": "价值判断主要停留在研究意义和可靠性意义，尚未连接金额、用户、市场、部署成本、产品形态。"
+      },
+      "projectManagement": {
+        "score": 5,
+        "trend": "证据不足，无法纵向判断",
+        "reason": "下周动作具体，但缺少验收标准、时间切分、风险控制和可交付物定义。"
+      },
+      "automationPath": {
+        "score": 5,
+        "trend": "证据不足，无法纵向判断",
+        "reason": "提出了从 GitHub Issues 自动抽取 failure taxonomy 的方向，但还没有 pipeline、数据结构或最小可行自动化实验。"
+      },
+      "evidenceLevel": {
+        "score": 3,
+        "trend": "证据不足，无法纵向判断",
+        "reason": "周报多数为自述，没有实验结果、测试结果、代码证据、评估指标或外部验证。"
+      }
     },
-    "valueFunctionChange": "仅有一周数据，无法观察价值观函数的变化。本周价值观重视思考深度与工具使用的平衡。",
-    "repeatedBlockers": "由于仅一周，未观察到重复卡点。本周潜在卡点为 vibe coding 的代码质量和测试问题。",
-    "professorShouldAsk": "本周报告只有一周数据，教授可追问：1.前期周报是否缺失？2.该生之前的 Brainary 研究基础和进展如何？3.vibe coding 原型如何过渡到可维护代码？",
-    "nextBestIntervention": "建议补充前几周报告以完成纵向评估；同时指导该生制定从 prototype 到正式集成的测试标准，并鼓励其将自动化 failure 采集想法落地为最小可行产品。"
+    "valueFunctionChange": {
+      "longitudinalChange": "无法判断变化，因为只有 1 周数据。",
+      "currentValueFunction": "学生当前认为值得做的事情包括：提升 agent runtime reliability；把 failure patterns 落到 Brainary monitoring layer；从真实 GitHub projects 与 Issues 中抽取 domain-specific failure taxonomy；构建 Brainary 的 agent reliability knowledge base；在工具自动化时代保持主动思考和逻辑能力。",
+      "whyStudentThinksItMatters": "理由主要是 agent 在实际运行中会发生 planning–execution inconsistency、resource mismanagement、liveness failure 等问题；如果能检测并恢复，就能提高系统可靠性。同时，真实项目 Issues 能提供领域特定 failure patterns，帮助 Brainary 积累可复用规则和机制。",
+      "connectionToMoney": "缺失。周报没有说明 runtime reliability 能为谁节省多少钱、减少多少失败成本、带来什么付费场景或商业转化。",
+      "connectionToUsers": "较弱。隐含用户可能是 Brainary 开发者、agent 框架开发者、coding/browser/data agent 使用者，但没有明确用户画像、痛点强度、使用场景或验证对象。",
+      "connectionToGeneralCapability": "较强。学生把该方向连接到通用 agent reliability、metacognitive monitoring、failure recovery、domain-specific failure taxonomy，这些是可迁移能力。",
+      "connectionToArtifact": "中等。已有 prototype、detector、recovery actions、未来 system snapshot 和 reliability knowledge base 的产物意识，但缺少明确 artifact 规格，例如库、模块、benchmark、dashboard、dataset、paper section 或 demo。",
+      "connectionToBrainary": "较强。明确映射到 Brainary runtime monitoring 和 metacognitive monitoring layer，也考虑不修改 planner/executor 的 observer 机制。",
+      "connectionToAutomation": "中等。提出自动分析 GitHub agent projects 与 Issues，但还没给出自动化抽取、人工审核、规则生成、回灌 Brainary 的闭环流程。",
+      "riskInValueFunction": "当前价值函数偏研究者内部视角：可靠性重要、动脑重要、taxonomy 重要。但缺少外部约束：谁会用、为什么现在用、失败一次损失多少、检测误报代价多少、这个系统相比已有 logging/monitoring/guardrail 工具有什么不可替代性。"
+    },
+    "repeatedBlockers": {
+      "note": "只有 1 周，无法确认哪些是重复卡点。以下是本周暴露的潜在卡点。",
+      "blockers": [
+        {
+          "blocker": "vibe coding prototype 与可合并工程代码之间存在鸿沟",
+          "evidence": "学生明确说本周代码主要通过 vibe coding 快速完成，需要进一步学习和讨论代码合并与测试流程。",
+          "risk": "如果不补测试和 review，研究会停留在看起来能跑的 demo，无法成为 Brainary 可靠模块。"
+        },
+        {
+          "blocker": "缺少系统化测试与验证",
+          "evidence": "学生计划后续逐步完成系统化测试与验证，但本周没有测试结果。",
+          "risk": "runtime detector 容易产生误报、漏报或干扰 executor，若无 benchmark 或 case suite，无法证明有效。"
+        },
+        {
+          "blocker": "recovery action 的选择逻辑不明",
+          "evidence": "列出了 REPLAN、ROLLBACK、ABORT、DEGRADE、INSERT_STEP、SKIP_REFLECTION，但没有说明何时选哪个、代价如何、失败后如何升级。",
+          "risk": "检测与恢复之间断裂，可能只能发现问题，不能稳定修复问题。"
+        },
+        {
+          "blocker": "价值论证缺少用户和金额",
+          "evidence": "价值观总结强调主动思考和逻辑能力，但没有商业价值、用户价值或成本收益量化。",
+          "risk": "方向可能学术上合理，但难以判断优先级，也难以指导产物形态。"
+        }
+      ]
+    },
+    "professorShouldAsk": [
+      "你这周实现的 detector 有没有最小测试集？请列出 5 个真实或合成 failure case，每个 case 的预期 detector、recovery action 和成功标准是什么？",
+      "Plan–Execution mismatch、Resource exhaustion、Liveness failure 三类中，哪一类对 Brainary 当前最有价值？为什么？依据是用户痛点、出现频率、损失金额，还是系统基础性？",
+      "REPLAN、ROLLBACK、ABORT、DEGRADE、INSERT_STEP、SKIP_REFLECTION 的选择策略是什么？有没有 decision table 或 policy？",
+      "MetacognitiveMonitor 作为 runtime observer 不修改 planner/executor，这是优点；但它如何拿到足够状态？监控成本、延迟和误报如何控制？",
+      "你说要从 GitHub projects 和 Issues 自动总结 failure patterns。请定义一个最小 pipeline：输入是什么、抽取什么字段、人工审核什么、最后如何变成 Brainary rule？",
+      "本周 prototype 哪些部分是 vibe coding 生成的？你自己理解到什么程度？如果让你不用 AI 重写核心 detector，你能否解释关键逻辑和边界条件？",
+      "这个方向最后的产物是什么：Brainary 模块、failure taxonomy dataset、benchmark、paper contribution、demo，还是 knowledge base？优先级如何排序？",
+      "如果要把这个方向连接到钱，你认为 agent failure recovery 可以为哪类用户减少什么成本？有没有可估算的金额模型？"
+    ],
+    "nextBestIntervention": {
+      "intervention": "把当前 prototype 从“功能堆叠”转成“可验证的最小研究闭环”。",
+      "specificActions": [
+        "要求学生下周提交一个 10-case failure benchmark，其中至少覆盖 Plan–Execution mismatch、Resource exhaustion、Liveness failure、state drift，每个 case 包含输入、预期失败、检测信号、recovery action、成功标准。",
+        "要求学生画出 Brainary runtime monitoring 的接口图：MetacognitiveMonitor 从哪里读状态、输出给谁、是否阻塞执行、如何记录日志、如何触发 recovery。",
+        "要求学生为 recovery actions 做一个 decision table：failure type、confidence、state availability、cost、recommended action、fallback action。",
+        "要求学生选择一个真实 GitHub agent project，手动抽取 20 条 Issues，标注 failure taxonomy，形成未来自动化抽取 pipeline 的 schema。",
+        "要求学生补一个价值页：目标用户是谁、失败带来的损失是什么、Brainary detector 能减少什么成本、这个能力最终以什么产物交付。",
+        "要求学生把 vibe coding prototype 分成三类：可直接保留、需要重写、需要测试后决定，并与 Wangchong 完成一次代码 review。"
+      ],
+      "successCriteriaForNextWeek": [
+        "至少有一个 detector 在 3 个 case 上跑通并输出可读日志。",
+        "至少有一个 recovery action 不只是被列出，而是真正被触发并改变系统状态。",
+        "有明确测试结果，而不是只描述实现。",
+        "有一个最小 Brainary 集成路径或合并计划。",
+        "有一版 failure taxonomy 到 Brainary rule 的数据结构。"
+      ],
+      "oneThingProfessorShouldLearn": "这个学生已经开始从“读 agent failure 文献”转向“把 failure 变成 Brainary runtime metacognition 机制”，这是研究能力的正向信号；但目前最大风险是原型驱动过快、验证和价值论证不足。教授应把她推向可测试 case、recovery policy、Brainary 接口和用户/金额价值，而不是继续增加 failure mode 数量。"
+    }
   }
 }

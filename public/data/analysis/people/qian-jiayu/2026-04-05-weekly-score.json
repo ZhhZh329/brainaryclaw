@@ -1,54 +1,64 @@
 {
   "key": "person:qian-jiayu:2026-04-05:weekly-score",
-  "generatedAt": "2026-05-24T11:35:01.630Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "b52dd0dec0dd212907731d1ff1a2c2205926a7670c1c6fd11da83e6ee327f25e",
+  "generatedAt": "2026-06-05T17:07:12.958Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "a6f5586516c12126485ce3c6666eadf1328a0cd3a407d70f6bf0298f0e45dc14",
   "result": {
-    "hardProgress": {
-      "score": 18,
-      "reason": "本周围绕 Clinical Logic Benchmark -> Mix Direct-CoT -> Logic GRPO 主线完成了系统收敛，新增了多层级 benchmark、clinically grounded CoT 数据、混合训练实验、API 失败模式识别、数据入口治理规则等硬资产，硬进展明确且可复用。",
-      "missingEvidence": "缺少混合训练的具体提升数值与对照实验详细数据。"
+    "week": "2026-04-05",
+    "name": "Qian Jiayu",
+    "scores": {
+      "hardProgress": {
+        "score": 16,
+        "reason": "本周有明确硬进展：论文主线从分散的 benchmark、CoT、API 生成、训练探索收敛为“Clinical Logic Benchmark -> Mix Direct-CoT -> Logic GRPO”的统一框架；完成了 clinically grounded CoT 数据构造、short/long/mixed CoT 训练尝试、RGB-only 输入清理、GF 图过滤、API 路线失败模式定位，并形成了可复用的方法接口。扣分点是所有“显著提升”“原型完成”“小规模实验完成”都没有给出具体指标、样本量、训练配置、baseline 或实验表格，硬进展可信但不可复核。",
+        "missingEvidence": "缺少具体性能指标、实验表格、数据规模、训练超参、baseline 对比、失败样例、代码或日志链接。"
+      },
+      "cognitiveIncrement": {
+        "score": 13,
+        "reason": "认知增量清楚：从 blind lesion generation 转向 clinical logic 约束下的 support mining；从单点 benchmark/CoT/training 模块转向统一 formalism；明确 API pseudo-lesion 不适合作为主训练真值。这是对研究路线的实质性收敛，不只是复述工作量。扣分点是“clinically grounded CoT + direct VQA mixed training 有效”的认知仍缺少量化证据支撑。",
+        "missingEvidence": "缺少支持该认知转向的对比实验结果，例如 blind lesion generation 与 support mining 在准确率、一致性、成本、稳定性上的定量差异。"
+      },
+      "cot2Depth": {
+        "score": 12,
+        "reason": "CoT’s CoT 部分有较好的二阶抽象：把 label 视为 protocol anchor，把 reasoning 定义为 support mining，把 Clinical Logic 作为贯穿 benchmark、SFT、reward 的统一中间层，并讨论自动化沉淀形式。扣分点是对“老师原本不知道”的判断较主观，证据等级 A/B 是自评，没有说明评级依据；第三条与已有常识接近，新增性弱于前两条。",
+        "missingEvidence": "缺少每条 CoT’s CoT 的外部或实验依据、反例、触发该认知的具体实验现象，以及为什么证据等级为 A/B 的判定标准。"
+      },
+      "brainaryMapping": {
+        "score": 8,
+        "reason": "Brainary 映射较完整，能把 Clinical Logic 对应到 reasoning、calibration、risk modeling、benchmark/evaluation，把 support mining 对应到 memory、agent state、workflow cache，把 Logic-guided post-training 对应到 reward module 和 evaluator-to-reward pipeline。扣分点是仍停留在概念映射，缺少接口定义、数据结构、输入输出 schema 或最小 agent workflow。",
+        "missingEvidence": "缺少 Brainary 可直接吸收的模块规格，例如 memory schema 字段、reward module 输入输出、evaluator-to-reward pipeline 的执行流程。"
+      },
+      "monetaryValue": {
+        "score": 6,
+        "reason": "报告给出了三个资产的估值：Clinical Logic Workflow 20 万、Mix Direct-CoT 25 万、Clinical Logic GRPO 15 万，并尝试用研究工程成本、医学标注成本、复用价值解释。问题是估值仍主要是主观成本法，没有拆解人天、GPU/API 成本、替代采购价格、潜在客户付费场景、交付物边界和复用次数，因此只能作为方向性判断，不能作为真实商业价值判断。",
+        "missingEvidence": "缺少人力成本明细、API/GPU 消耗金额、人工标注替代成本测算、市场竞品价格、潜在买方验证、可交付资产清单。"
+      },
+      "projectManagement": {
+        "score": 12,
+        "reason": "项目管理信息较完整：三个项目都有阶段、原计划、实际完成、投入时间、下周投入、里程碑、依赖关系、资源瓶颈、关键路径判断和是否需要老师介入。关键路径也比较清楚：benchmark 和 logic schema 支撑 mixed training，mixed training 支撑 GRPO。扣分点是里程碑大多是“完成一版”“系统 ablation”“最小 reward 原型”，缺少可验收标准；也没有风险优先级、任务拆分、实验编号或失败预案。",
+        "missingEvidence": "缺少明确验收指标、实验排期表、任务优先级、风险矩阵、每个里程碑的完成判据、当前实验版本记录。"
+      },
+      "nextAction": {
+        "score": 8,
+        "reason": "下周动作明确：完成更完整的 Mix Direct-CoT 对照实验，做 short/long/mixed CoT 配比 ablation，在额外数据集做小规模迁移验证，进入 Logic GRPO 最小可运行版本。这些动作与当前卡点匹配。扣分点是动作还不够工程化，没有说明具体数据量、模型、评价指标、ablation 变量、成功/失败阈值和优先级顺序。",
+        "missingEvidence": "缺少下周实验矩阵、每个实验的最小样本量、评价指标、预期结果、失败时的替代路径。"
+      },
+      "evidenceQuality": {
+        "score": 2,
+        "reason": "证据质量是本周最大短板。报告中有大量关键判断，例如“获得显著提升”“API 路线成本高、稳定性差”“support mining 更适合第一篇 paper”“原型完成”，但没有任何数值、表格、图、样例、链接或日志。当前证据主要是叙述性证据，适合判断方向，不足以支持论文主实验决策。",
+        "missingEvidence": "缺少所有核心结论的可复核证据：指标提升幅度、标准差、样本量、数据构造样例、错误案例、成本统计、实验日志、模型配置和对照组结果。"
+      }
     },
-    "cognitiveIncrement": {
-      "score": 14,
-      "reason": "认知更新清晰：明确了在高质量标签医学任务中，最有效的中间层是 clinical logic 约束下的 support mining，而非盲生成病灶；同时认识到 benchmark、CoT、训练、后训练必须用统一骨架串联。",
-      "missingEvidence": "未给出原认知与新认知的量化对比或卡点突破实例。"
-    },
-    "cot2Depth": {
-      "score": 14,
-      "reason": "三个 CoT’s CoT 均直击方法设计核心：从 support mining 的定位，到 Clinical Logic 贯穿全流程，再到重新设计中间监督层，层次清晰，证据等级较高（2个A级1个B级），且均属于老师可能未知的见解。",
-      "missingEvidence": "第三个 CoT’s CoT 虽已有解释，但缺少具体失败案例或对比实验佐证“重新设计中间层”的必要性。"
-    },
-    "brainaryMapping": {
-      "score": 9,
-      "reason": "三个关联分别将 Clinical Logic、Support Mining、Logic-guided post-training 映射到 Brainary 的推理、校准、记忆、工作流管理等核心能力，并提出沉淀形式，新意足，且多属于老师未知。",
-      "missingEvidence": "未给出与现有 Brainary 模块的具体接口或集成方案证明。"
-    },
-    "monetaryValue": {
-      "score": 9,
-      "reason": "三项任务估值合计60万人民币，分别基于研究工程成本、标注成本、方法链条外延价值计算，参考依据合理，且与项目的可复用性匹配。",
-      "missingEvidence": "缺少外部类似项目定价或团队内部成本核算的交叉验证。"
-    },
-    "projectManagement": {
-      "score": 13,
-      "reason": "三个子项目均明确了阶段、实际投入、里程碑、依赖关系和关键路径，进度符合预期，纠偏措施具体（减少分支、集中做混合与奖励闭环），风险管理到位。",
-      "missingEvidence": "缺少风险应对的备选方案和更细化的资源分配计划。"
-    },
-    "nextAction": {
-      "score": 8,
-      "reason": "下周最小可验证动作均分解为具体任务：补全混合训练消融实验、准备 Logic GRPO 最小原型、小规模迁移验证，可执行性强。",
-      "missingEvidence": "未给出这些动作的预期输出形式或成功标准。"
-    },
-    "evidenceQuality": {
-      "score": 4,
-      "reason": "周报提供了大量实验与资产名称，但多数描述为定性总结，除失败模式外，缺少具体实验数据、提升幅度、统计显著性等定量证据。",
-      "missingEvidence": "缺少混合训练效果数值、消融实验对比、API失败的具体量化指标。"
-    },
-    "totalScore": 89,
-    "tier": "A",
-    "oneLineJudgment": "本周主线收敛清晰，硬进展扎实，但实验具体提升数值缺失。",
-    "professorFollowUp": "建议验证混合训练的最优配比，并尽早设计 GRPO 最小原型；同时请补充关键实验的量化结果，以支撑论文实验部分。"
+    "totalScore": 77,
+    "tier": "B",
+    "oneLineJudgment": "本周真正完成了研究主线收敛和关键模块串联，但实验结果仍停留在不可复核叙述层，下一步必须把“显著提升”和“统一框架价值”转成表格、指标和可验收闭环。",
+    "professorFollowUp": [
+      "要求学生下周提交一张主实验表：baseline、short CoT、long CoT、mixed CoT、logic-grounded CoT、API pseudo-lesion 路线的统一对比。",
+      "要求明确 Mix Direct-CoT 的成功标准：至少包括准确率、一致性、安全性或 clinical logic violation rate 中的若干指标。",
+      "要求学生给出 5 到 10 个具体样例，展示 support mining 相比 blind lesion generation 为什么更稳定。",
+      "建议讨论一次是否把 GRPO 放入主文；如果放入，必须先定义最小 reward/verifier 的输入输出和验收指标。",
+      "老师本周最应该学到的一点是：在已有高质量临床标签的医学影像任务中，最有价值的中间层可能不是盲目发现病灶，而是用 clinical logic 约束 support evidence，从而把 benchmark、CoT、训练和 reward 连成同一条方法链。"
+    ]
   }
 }

@@ -1,64 +1,60 @@
 {
   "key": "person:guo-yaoqi:2026-04-19:weekly-score",
-  "generatedAt": "2026-06-05T14:01:33.404Z",
+  "generatedAt": "2026-06-05T17:01:37.518Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "f261217b08a14ced355f22132fdb549652c5b993484a2d81d978d54c003732b1",
   "result": {
-    "week": "2026-04-19",
-    "name": "郭尧奇",
-    "dimensionScores": {
-      "hardProgress": {
-        "score": 14,
-        "reason": "本周有明确硬产出：升级版 Reproduction Test Agent 检索模块、独立 Debugging Agent 主体实现，以及把 RCA loop 复用到 Agent 失败归因层的实现尝试。进展不是停留在想法层。但核心问题是两个模块都尚未完成端到端评测，无法证明它们改善了原 30% fail-to-pass 基线，也无法证明 Debugging Agent 的归因质量高于人工 diff。",
-        "missingEvidence": "缺少代码提交链接、模块接口说明、运行样例、SWE-bench Pro 新结果、与旧检索方案的对照实验、Debugging Agent 输出样例及人工一致性评估。"
-      },
-      "cognitiveIncrement": {
-        "score": 12,
-        "reason": "认知增量比较清楚：从平面混合检索转向结构化/层级检索；从人工失败分析转向可自动化的 Agent 层 RCA；并识别出只做 post-hoc 静态分析可能没有增益。这些更新对后续研发决策有用，尤其是把失败归因本身定义成可建模任务。但目前主要来自实现观察和论文启发，尚未被实验结果闭环。",
-        "missingEvidence": "缺少哪类失败 case 触发了这些认知变化的具体例子，缺少结构化检索相对平面检索的 ablation，缺少 Debugging Agent 主动 probe 与静态分析的对比。"
-      },
-      "cot2Depth": {
-        "score": 13,
-        "reason": "CoT's CoT 有较深的抽象：将 RCA 从代码 bug 定位提升为跨抽象层级的因果归因原语，并进一步连接到外置元认知、通用 Debug Agent、memory schema 和 workflow。第二个 CoT's CoT 也指出结构化检索需要 DSL/schema，而不是继续手写任务特定流程。这部分有方法论价值。不过证据等级自标为 L2/L3，且主要是架构推演，尚未到可证伪或可复用模块验证阶段。",
-        "missingEvidence": "缺少跨两个以上任务层级复用同一 RCA 骨架的实证，缺少具体参数化接口设计，缺少失败归因 taxonomy，缺少证明该抽象能减少人工调试成本或提升 benchmark 的数据。"
-      },
-      "brainaryMapping": {
-        "score": 8,
-        "reason": "Brainary 映射较完整，覆盖 cognitive control、reasoning、tool orchestration、benchmark/evaluation，并提出 RCA/Debug Agent 可成为自我归因原语。这不是简单贴标签，而是有模块、workflow、memory schema 的落点。扣分点在于映射仍偏概念层，尚未说明 Brainary 中现有组件如何调用该模块、输入输出协议是什么、如何进入长期记忆或评测闭环。",
-        "missingEvidence": "缺少 Brainary 具体接口、数据结构草案、调用时机规则、与现有 Brainary module 的依赖关系，以及一个端到端 Brainary workflow 示例。"
-      },
-      "monetaryValue": {
-        "score": 4,
-        "reason": "报告给出 $50,000 估值，并说明来自成熟 Unified Repair Agent 年化 $2M 假设下的 2.5% 权重。但该估值主要是主观权重分摊，没有本周新增 benchmark、用户价值、节省人力、成本下降或商业转化证据支撑。由于本周尚未验证效果，货币价值只能视为潜在期权价值，而不是已实现价值。",
-        "missingEvidence": "缺少 fail-to-pass 提升、调试时间节省、API 成本变化、可复用模块减少开发时间的量化、市场需求或客户价值证据。"
-      },
-      "projectManagement": {
-        "score": 11,
-        "reason": "项目管理信息比较充分：列出本周投入、下周投入、资源需求、成本、进度偏差、纠偏动作和里程碑。也明确承认评测顺延，并把下周第一优先级放在拿数据上。主要问题是本周计划与结果之间缺少可核查任务拆分，评测延期没有给出具体剩余工作量和风险缓冲；同时两个新模块并行推进，容易造成实现完成但验证滞后的项目风险。",
-        "missingEvidence": "缺少任务看板、完成百分比、具体 case 运行计划、实验所需算力/token 预算、失败时的止损标准、以及下周 50 case 评测的时间排程。"
-      },
-      "nextAction": {
-        "score": 9,
-        "reason": "下周最小可验证动作非常明确：跑完 SWE-bench Pro 50 个 case，得到新 fail-to-pass 数字、Debugging Agent 失败归因分布，并据此决定优化入口。这是可执行、可检验、和当前最大不确定性直接对应的 next action。扣分点是没有定义什么算显著提升、归因分布如何验真、如果 50 case 结果不稳定如何处理。",
-        "missingEvidence": "缺少成功阈值，例如 fail-to-pass 至少提升多少；缺少归因准确性的人工标注方案；缺少 ablation 设计；缺少 50 case 的抽样标准。"
-      },
-      "evidenceQuality": {
-        "score": 2,
-        "reason": "证据质量偏弱。本周最关键结论主要依赖实现完成声明、论文启发和架构推演。报告主动说明尚未完成完整评测，这是诚实的，但也意味着硬证据不足。目前只能确认方向和实现尝试，不能确认效果。",
-        "missingEvidence": "缺少实验结果、日志、样例输出、代码证据、人工评估、对照组、统计显著性和错误案例分析。"
-      }
+    "hardProgress": {
+      "score": 14,
+      "reason": "本周报告了两个明确硬产出：升级版 Reproduction Test Agent 检索模块，以及独立 Debugging Agent 主体实现。两者都直接服务当前 pipeline 的最上游瓶颈，方向与任务目标一致。但硬进展仍主要停留在“已实现/已联调”的表述，没有当前周的可复现实验结果、代码证据或端到端指标，因此不能按高分处理。",
+      "missingEvidence": "缺少代码提交链接、模块接口说明、关键实现差异、运行日志、失败 case 示例、SWE-bench Pro 当前周评测结果，以及升级前后对照数据。"
     },
-    "totalScore": 73,
+    "cognitiveIncrement": {
+      "score": 12,
+      "reason": "认知增量比较清楚：一是从平面混合检索转向结构化/层级检索；二是把 RCA 从代码层 bug 定位外推为 Agent 层失败归因范式；三是意识到 Debugging Agent 不能只做静态 post-hoc log 分析，而需要主动 replay/probe。这些都不是简单工作记录，而是对方法边界和下一步验证方式的更新。",
+      "missingEvidence": "缺少实验支撑这些认知更新是否真实有效，例如结构化检索相对平面混合检索的 ablation，Debugging Agent 静态分析与主动 probe 的归因质量对比。"
+    },
+    "cot2Depth": {
+      "score": 13,
+      "reason": "CoT's CoT 部分有较强抽象深度，尤其是将 RCA 上升为“跨抽象层级的因果归因原语”，并明确了 hypothesis/test/observe/update 在代码层与 Agent 层的同构关系。也能区分老师是否已知、信息差在哪里、自动化沉淀形式是什么。扣分点在于证据等级主要是 L2/L3，仍是架构推演和实现观察，尚未被端到端结果验证。",
+      "missingEvidence": "缺少 Debugging Agent 在真实失败样本上的归因准确率、归因一致性、与人工归因的对照，以及跨层 RCA 骨架在多个任务上的复用证明。"
+    },
+    "brainaryMapping": {
+      "score": 8,
+      "reason": "Brainary 映射比较具体，覆盖 cognitive control、reasoning、tool orchestration、benchmark/evaluation，并提出 RCA/Debug Agent 可作为 Brainary 的自我归因原语。这不是泛泛对应，而是说明了模块在系统架构中的基础设施位置。",
+      "missingEvidence": "缺少 Brainary 内部实际接口、数据结构、memory schema 草案、模块调用边界，以及该 Debugging Agent 如何接入现有 Brainary workflow 的具体路径。"
+    },
+    "monetaryValue": {
+      "score": 5,
+      "reason": "报告给出了 $50,000 的估值和计算逻辑，且承认未计入 benchmark 数字溢价。但估值核心依赖“成熟 Unified Repair Agent 年化 $2M”和本周贡献 2.5% 权重，这两个参数缺少当前周证据。由于本周没有效果评测，商业价值只能算潜在期权价值，而不是已验证价值。",
+      "missingEvidence": "缺少商业价值基准来源、2.5% 权重依据、指标提升与收入/成本节省之间的映射、实验结果带来的价值增量证明。"
+    },
+    "projectManagement": {
+      "score": 12,
+      "reason": "项目管理信息较完整：说明了本周投入、下周投入、资源需求、成本、进度是否符合预期、偏差原因和纠偏动作。也清楚指出评测被顺延是当前最大风险。扣分点是本周主线目标之一是质量提升，但没有完成质量验证，导致项目状态仍处于未闭环。",
+      "missingEvidence": "缺少更细的任务拆分、完成标准、评测排期、风险缓冲方案、若 50 case 评测失败时的明确停损阈值。"
+    },
+    "nextAction": {
+      "score": 9,
+      "reason": "下周最小可验证动作非常明确：跑完 SWE-bench Pro 50 个 case，得到 fail-to-pass 新数字、Debugging Agent 失败归因分布，并据此决定下一步优化入口。这是可执行、可验收、能驱动决策的 next action。",
+      "missingEvidence": "缺少 50 个 case 的选择规则、评测脚本、成功阈值、对照组设置，以及归因分布如何转化为具体优化动作的判定表。"
+    },
+    "evidenceQuality": {
+      "score": 2,
+      "reason": "当前周证据质量偏弱。报告中最关键的两个进展都没有当前周实验数字支撑，主要证据是作者自述的实现完成和架构观察。虽然主动标注了证据等级和缺少评测，这是加分项，但硬证据仍不足。",
+      "missingEvidence": "缺少可复现运行结果、评测表、样例 trace、失败归因输出、人工对照、ablation、代码或日志证据。"
+    },
+    "totalScore": 75,
     "tier": "B",
-    "oneLineJudgment": "本周是有实质实现和较强方法论抽象的一周，但核心价值仍停留在待验证状态；下周评测结果将决定它是进入可沉淀资产，还是只是一次架构推演。",
+    "oneLineJudgment": "本周有真实模块实现和较强方法论抽象，但核心价值尚未被评测闭环验证，当前应视为“高潜力未证实进展”。",
     "professorFollowUp": [
-      "要求学生下周必须先交 50 个 SWE-bench Pro case 的表格化结果：旧版结果、新版结果、是否 fail-to-pass、失败阶段、Debugging Agent 归因、人工复核归因。",
-      "追问 Debugging Agent 是否具备主动 replay/probe 能力；如果只是看日志做 post-hoc 总结，需要明确它相比人工 diff 的增益在哪里。",
-      "要求定义成功阈值：检索升级至少把 30% 基线提升到多少才算继续投入；如果没有提升，是否转向 issue 理解或 test 生成环节。",
-      "要求给出通用 RCA 骨架的最小接口草案：hypothesis、test、observe、update 分别如何参数化，代码层 RCA 和 Agent 层 Debug 是否真的共用同一接口。",
-      "提醒不要过早按 $50,000 计入实际价值；在没有 benchmark 提升或调试成本节省前，只能按潜在方法资产处理。"
+      "下周必须优先看 50 个 SWE-bench Pro case 的 fail-to-pass 新结果，判断检索升级是否真的超过原 30% 基线。",
+      "要求提交 Debugging Agent 的失败归因分布，并至少给出 3 到 5 个具体 case 的 trace、归因输出和人工核验结果。",
+      "追问 Debugging Agent 是否具备主动 replay/probe 能力；如果只是静态看 log，它相对人工 diff 的增益可能不足。",
+      "要求做结构化/层级检索相对原混合检索的 ablation，否则无法判断新增结构是否贡献了效果。",
+      "教授本周最应该学到的一点是：RCA 可能不只是代码修复环节，而是可被抽象为多步系统的通用因果归因原语；但这个判断目前仍需要真实 case 验证。"
     ]
   }
 }

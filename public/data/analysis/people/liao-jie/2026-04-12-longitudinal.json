@@ -1,31 +1,262 @@
 {
   "key": "person:liao-jie:2026-04-12:longitudinal",
-  "generatedAt": "2026-05-24T11:50:22.981Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "913905ab3c5fd06776ac75d5068b0955ce10510ac02bd3cc86635f6b5a1496f9",
+  "generatedAt": "2026-06-05T17:06:43.220Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "733b0cf51c50f7f57bd7ae4913fdd9f68153182474eef792db5d32567ea9572d",
   "result": {
-    "overallTrajectory": "学生从设计法律风险KG Schema开始，逐步将题目从通用法律数据集收敛为面向OpenClaw行为审计的结构化数据集自动生成。研究能力体现在能够识别核心问题（行为链闭环）、设计并实现多阶段生成框架、并开始引入长期记忆机制。认知从表示必要性深入到生成-审计-记忆闭环，价值观从静态设计转向动态生成和长期积累。整体研究成熟度和项目执行能力有明显提升，已从概念设计阶段进入原型验证阶段。",
-    "stageByWeek": {
-      "2026-03-22": "形成KG Schema v1和最小标注模板，确立KG为核心表示层，设计对照案例原型验证KG必要性。认知：KG是必要表示，关系结构决定法律判断。",
-      "2026-03-29": "开发自动化benchmark构建skill（taxonomy-builder），并实现法律安全KG种子数据。提出先知识沉淀后自动化执行的方法论。认知：内嵌约束优于自由生成，数据结构选择决定研究路线。",
-      "2026-04-05": "构建多LLM生成字段+KG回填的数据生成链路，并手工检查生成结果的可结构化性。认知：KG是生成检查框架，生成不等于数据成立，需验证字段回填闭合。",
-      "2026-04-12": "将KG schema接入框架，开始生成五字段OpenClaw行为样本，并扩展为带长期记忆的生成系统，引入generate-audit-memory闭环。题目收敛为可审计行为轨迹生成。认知：最小数据单元是五字段可复核链路，强结构对象是前验约束。"
+    "overallTrajectory": {
+      "judgment": "学生在这 4 周中确实表现出研究能力提升，而不只是变忙；提升主要体现在题目收敛、表示层意识、生成—回填—审计闭环意识、以及把工作映射到 Brainary/自动化科研产物的能力。但硬证据仍偏弱：缺少真实样本数量、通过率、错误分布、KG 与平面表格的对照结果、长期记忆是否提升质量的实验结果。",
+      "topicTrajectory": "题目从“Agent 行为法律风险 KG Schema”逐步演化为“面向 OpenClaw 行为审计的数据集自动生成框架”。轨迹是：KG 表示层设计 → 通用 taxonomy-builder skill 与法律安全 KG 示例 → 多 LLM 字段生成并回填 KG → generate–audit–memory 闭环与五字段可审计行为样本。方向整体更聚焦，尤其最后一周把最小数据单元明确为“上下文—用户指令—工具调用链—违法分类—违法结果判定”，这是题目边界的重要收敛。",
+      "hardProgressTrend": "硬进展从概念设计走向原型系统：第 1 周有 KG Schema v1、最小标注模板和对照案例原型；第 2 周有 taxonomy-builder skill、3 个脚本、参考文件、法律安全 KG 种子数据；第 3 周开始多 LLM 生成—字段回填—人工检查；第 4 周接入多阶段流水线、PipelineState、library 长期记忆、SQLite checkpointer，并开始 generate–audit–memory 闭环。趋势是增强的，但缺少可复现实验输出和质量指标，因此还不能判定数据集方法已经成立。",
+      "cognitiveTrend": "认知从“KG 是必要表示层”推进到“KG 是生成约束、质量检查框架和前验约束”。这不是简单工作量增加，而是对研究对象的抽象层级提高：学生开始识别数据集的核心不是文本样本，而是可审计行为链与判定链。",
+      "mainRisk": "最大风险是学生不断搭框架、命名模块和扩展系统，但没有用足够样本和指标证明框架比简单方案更好。当前最需要从‘系统搭建’切到‘小规模严密验证’。"
     },
+    "stageByWeek": [
+      {
+        "week": "2026-03-22",
+        "stage": "表示层确立阶段",
+        "topicPosition": "从分层字段标注升级为以 KG 为核心的法律风险数据集表示。中心节点是 BehaviorCase，并加入 Instruction、Tool、Environment、Target、DataObject、Authorization、Jurisdiction、RiskType 等实体。",
+        "hardProgress": "形成 OpenClaw 行为法律风险 KG Schema v1、最小标注模板 v1、对照案例原型。硬进展是真实的，但仍停留在设计和少量原型层面。",
+        "CoTIncrement": "认识到法律风险判断的关键不是动作词，而是动作与授权、对象、数据、法域、意图之间的关系结构。",
+        "CoTsCoTMaturity": "中等。已经能解释为什么 KG 对治理类任务不是装饰，而是判定对象的正确建模；但证据主要是概念论证和少量对照案例构想，缺少样本验证。",
+        "BrainaryMapping": "初步成熟。能映射到 memory、reasoning、risk modeling、benchmark、evaluator，但还没有说明具体接口和评测方式。",
+        "valueReasoning": "认为 KG Schema 值 6 万、标注模板与对照案例值 3 万，总计 9 万。价值逻辑主要来自节省返工、提高可迁移性和作为底层表示层。金额有计算尝试，但市场和用户证据缺失。",
+        "projectManagement": "下周动作是标注 10 到 20 个种子样本并比较 KG 与普通字段表示。这个动作质量较好，因为能验证必要性。",
+        "evidenceLevel": "证据等级偏 C 到 B-：有 schema 和模板，但没有实际标注结果、对照数据和一致性指标。"
+      },
+      {
+        "week": "2026-03-29",
+        "stage": "通用 skill 原型与领域示例扩展阶段",
+        "topicPosition": "题目从法律 KG 扩展到自动化 benchmark 构建 skill，同时以 Agent 法律安全数据集作为示例。出现了两个层次：通用 taxonomy-builder 和具体法律安全 KG。",
+        "hardProgress": "完成 SKILL.md、3 个 Python 脚本、2 个参考文件，并构建法律安全 KG：6 大类、42 个叶子节点、9 种节点、14 种关系、64 个节点、72 条边。相较前一周硬产物明显增加。",
+        "CoTIncrement": "提出‘知识沉淀先于执行自动化’和‘先 skill 后 agent’。这是较重要的方法论增量。",
+        "CoTsCoTMaturity": "中等偏上。开始按照老师是否已知、为什么未被自动化科研吸收、自动化潜力、沉淀形式来组织。但两个 CoT's CoT 都标注老师原本不知道为‘否’，新信息密度有限。",
+        "BrainaryMapping": "更具体。taxonomy-builder 对应 workflow management/tool orchestration，KG 结构对应 reasoning，法律安全种子数据对应 memory。但仍缺少 Brainary 内部如何调用、如何评价、如何复用的细节。",
+        "valueReasoning": "估值升到 15 万，理由是领域 KG 外包报价、论文产出价值和工具复用节省时间。相比第 1 周更强调通用 skill 的复用价值，但金额依据仍较粗，缺少真实报价、用户访谈或替代方案成本。",
+        "projectManagement": "补充了阶段、投入时间、里程碑、资源、token 成本和纠偏动作。项目管理质量比第 1 周明显增强。",
+        "evidenceLevel": "证据等级 B：有实现和种子数据，但未做多领域 A/B 对比，也未做 KG 与 JSONL/平面结构的系统对照。"
+      },
+      {
+        "week": "2026-04-05",
+        "stage": "生成链路与结构回填验证阶段",
+        "topicPosition": "题目重新收回到基于 KG Schema 和最小模板构造法律数据生成链路。重点从‘设计 KG’转向‘多 LLM 生成字段后能否回填 KG’。",
+        "hardProgress": "ICML 拒稿论文已转投 TDSC，这是硬交付但不属于当前主线研发。主线进展是开始形成多 LLM 字段生成—KG 回填—人工检查链路，识别字段粒度不稳定、关系归属不明、授权/对象/法域信息缺失等问题。",
+        "CoTIncrement": "认识到 KG 不只是表示层，也是生成结果的检查框架；生成文本通顺不等于数据成立；关键是字段生成—KG 回填—标签判断链路是否闭合。",
+        "CoTsCoTMaturity": "中等。CoT's CoT 抽象到治理类数据生成的本质难点是满足结构约束，但本周没有像第 2 周和第 4 周那样明确证据等级和自动化沉淀细节。",
+        "BrainaryMapping": "从静态 memory/reasoning 映射推进到 structured generation、calibration 和 evaluator。成熟度提升，因为开始把人工检查看作未来 evaluator 的来源。",
+        "valueReasoning": "估值回到 9 万：生成链路 4 万、人工检查 5 万。价值逻辑从‘资产本身值钱’转为‘验证方法是否可用、避免错误方向投入值钱’。这是价值函数的成熟变化，但金额仍缺少可验证基准。",
+        "projectManagement": "下周动作是继续手工检查一批样本并记录典型错误模式。动作方向正确，但不够量化：没有说明样本数、通过标准、错误分类表和停止/继续准则。",
+        "evidenceLevel": "证据等级 B-：有运行和人工检查迹象，但没有披露样本数、错误率、通过率或具体样例。"
+      },
+      {
+        "week": "2026-04-12",
+        "stage": "可审计行为样本与 generate–audit–memory 闭环阶段",
+        "topicPosition": "题目进一步收敛为面向 OpenClaw 行为审计的数据集自动生成框架，以新加坡金融法律为例。最小样本单元明确为五字段：上下文、用户指令、OpenClaw 工具调用链、违法分类、违法结果判定。",
+        "hardProgress": "将 KG Schema/模板接入多阶段流水线，组织 parse、retrieve、build ontology、embed taxonomy、validate、generate、audit 等阶段；PipelineState 承载 spec、ontology、taxonomy、references_text、scratchpad、coverage_ledger；接入 library 长期记忆、近似去重、版本替代、SQLite checkpointer。硬进展是系统结构增强。",
+        "CoTIncrement": "认知重点变成：核心产物不是泛化法律案例，而是可复核的 OpenClaw 行为轨迹；generate、audit 和 long-term memory 的闭环比单次生成更重要。",
+        "CoTsCoTMaturity": "四周中最成熟。能指出老师可能不知道的信息差：数据集核心单位不是普通法律分类样本，而是可审计行为轨迹；也能说明 KG 是前验约束而非后验解释。证据等级自评为 B，合理但仍未到 A。",
+        "BrainaryMapping": "成熟度继续提高。明确对应 benchmark/evaluation、risk modeling、calibration、memory、workflow management，并提出可能沉淀为 benchmark、evaluator、evaluation protocol、memory schema、agent module。但仍缺少 Brainary 内部落地规格。",
+        "valueReasoning": "估值仍为 9 万，拆成框架接入 4 万、人工检查 3 万、长期记忆 2 万。价值逻辑更接近产物化：从泛法律样本生成转为可审计行为样本生成，并强调长期记忆带来‘越跑越稳’潜力。但‘谁会付费’仍停留在类别层面，没有具体用户、预算或采购场景。",
+        "projectManagement": "项目管理最完整：阶段、关键路径、投入时间、资源、依赖、成本、进度偏差、纠偏动作都写出。下周最小动作是小批量样本五字段一致性检查，方向正确，但仍缺少明确数量和验收阈值。",
+        "evidenceLevel": "证据等级 B：有框架接入和失败模式观察，但没有系统对照实验、自动审计准确率、长期记忆收益或样本质量指标。"
+      }
+    ],
     "trendScores": {
-      "研究聚焦度": "逐步收敛，从泛化法律风险评测聚焦到OpenClaw行为审计结构化样本生成",
-      "硬进展累积": "每周新增实质性产物，从静态设计到可运行框架，进展扎实",
-      "认知深度": "持续深化，从表示必要性到生成闭环审计，识别核心问题更精确",
-      "CoT's CoT成熟度": "从抽象认知到具体可操作洞察，证据等级逐步积累，最新提出老师未知的信息差",
-      "Brainary映射": "越来越具体，从能力对应到明确记忆分层和benchmark定位",
-      "价值推理": "价值估计稳定在9万左右，但价值构成从设计费转向生成链路和长期记忆，强调可落地性和积累潜力",
-      "项目管理": "从无到有，第四周出现详细项目管理，包括关键路径和纠偏",
-      "自动化路径": "第一周隐式，第二周提出skill->agent路径，第三四周实施并识别转化门槛"
+      "researchCapabilityOverall": {
+        "score": 4,
+        "maxScore": 5,
+        "trend": "上升",
+        "rationale": "研究能力提升主要体现在从表示层到生成链路再到审计闭环的抽象递进，而不是单纯做更多任务。扣分原因是验证证据不足，很多结论仍停留在原型和观察。"
+      },
+      "hardProgress": {
+        "score": 4,
+        "maxScore": 5,
+        "trend": "上升",
+        "rationale": "每周都有可描述产物：schema、模板、skill、脚本、KG 种子数据、生成链路、PipelineState、library、SQLite checkpointer。但报告没有提供代码链接、样本文件、审计结果表或运行日志，硬进展可核验性不足。"
+      },
+      "topicFocus": {
+        "score": 4,
+        "maxScore": 5,
+        "trend": "先扩散后收敛",
+        "rationale": "第 2 周一度扩展到通用 benchmark skill，可能分散；第 4 周重新收敛为 OpenClaw 行为审计五字段样本，题目边界更清楚。"
+      },
+      "CoTIncrement": {
+        "score": 4,
+        "maxScore": 5,
+        "trend": "持续上升",
+        "rationale": "从‘KG 必要’到‘KG 检查生成质量’再到‘可审计行为链是最小数据单元’，认知递进明确。"
+      },
+      "CoTsCoTMaturity": {
+        "score": 3.5,
+        "maxScore": 5,
+        "trend": "上升但证据未闭合",
+        "rationale": "能反思为什么这些认知未被自动化科研吸收，也能提出沉淀形式；但大多证据等级为 B，缺少对照实验支撑，尚未形成可迁移规则的实证证明。"
+      },
+      "BrainaryMappingMaturity": {
+        "score": 3.5,
+        "maxScore": 5,
+        "trend": "上升",
+        "rationale": "映射从 memory/reasoning/risk modeling 逐步扩展到 benchmark/evaluator/calibration/workflow/agent module。问题是映射仍偏概念，没有明确 Brainary 中的接口、输入输出、评测指标和自动化闭环。"
+      },
+      "valueReasoning": {
+        "score": 3,
+        "maxScore": 5,
+        "trend": "结构更清楚但商业证据不足",
+        "rationale": "学生开始把价值连接到金额、返工成本、外包成本、通用能力、benchmark、evaluator、memory schema、agent module。缺口是付费用户和金额依据泛化，没有真实需求证据、竞品成本、采购预算或产物定价逻辑。"
+      },
+      "projectManagement": {
+        "score": 3.5,
+        "maxScore": 5,
+        "trend": "明显改善",
+        "rationale": "后两周尤其第 4 周开始写阶段、时间、资源、依赖、关键路径、成本和纠偏。问题是最小可验证动作仍缺少量化验收标准。"
+      },
+      "automationPath": {
+        "score": 4,
+        "maxScore": 5,
+        "trend": "上升",
+        "rationale": "从 skill 到 workflow，再到 generate–audit–memory 闭环，自动化路径逐步清楚。当前卡点是自动化 evaluator 还不强，人工检查仍是关键判断来源。"
+      },
+      "evidenceLevel": {
+        "score": 2.5,
+        "maxScore": 5,
+        "trend": "小幅上升但仍偏弱",
+        "rationale": "报告中多次自评证据等级为 B，但实际缺少样本规模、错误率、通过率、对照组、消融实验和长期记忆收益。当前证据足以支持‘方向有信息增量’，不足以支持‘方法已有效’。"
+      },
+      "nextActionQuality": {
+        "score": 3,
+        "maxScore": 5,
+        "trend": "方向正确但不够可验收",
+        "rationale": "每周下步动作都围绕样本检查和错误模式，方向正确；但经常写成‘继续跑一批’、‘继续检查’，没有固定 N、指标、通过门槛和决策规则。"
+      }
     },
-    "valueFunctionChange": "学生价值判断逻辑从‘避免返工和迁移价值’转向‘生成链路的可落地性与长期积累潜力’。最初强调KG设计可节省重标成本，后来注重生成方法的通用性和复用价值，最后关心系统能否越跑越稳，强调可审计的闭环。虽然金额估算保持在9万左右，但价值函数的关注点已从静态结构转为动态生成系统。",
-    "repeatedBlockers": "多次出现‘字段生成与KG回填的一致性’问题，具体表现为生成字段粒度不稳定、回填对齐困难、授权和上下文信息不完整，导致后续判定不稳定。另一重复卡点是‘判定链路闭合性’，即上下文-行为-判定之间缺乏严密支撑，导致标签表面化。这些问题虽然每周表述不同，但本质上是结构化生成系统中的数据质量与逻辑自洽挑战。",
-    "professorShouldAsk": "你的五字段生成-审计-记忆闭环中，目前最薄弱的环节是什么？你打算如何逐步将人工检查转为自动化evaluator？你如何证明转换后的自动化审计不会降低行为判定的可靠性？",
-    "nextBestIntervention": "建议下周或近期帮助廖捷明确自动化审计模块的设计要求，并讨论如何构建一个小型对照实验，以量化KG回填结构对违法判定一致性的提升效果。同时，可推动将现有生成框架沉淀为可复用的workflow或agent module，并联系潜在用户（如合规团队）获取早期反馈，加速价值显性化。"
+    "valueFunctionChange": {
+      "summary": "价值函数从‘底层表示层能防止返工’演化为‘可复用自动化 benchmark 构建能力’再演化为‘生成—回填—审计闭环能验证数据是否成立’，最后收敛到‘可审计行为样本生成框架可沉淀为 benchmark/evaluator/workflow/memory schema/agent module’。这是正向变化：学生越来越把价值绑定到可复用产物、自动化路径和评测单元，而不是单个数据集文件。",
+      "byWeek": [
+        {
+          "week": "2026-03-22",
+          "whatIsValuable": "KG Schema 和最小标注模板值得做。",
+          "whyValuable": "因为它们是法律风险数据集和后续评测体系的底层表示层，能避免动作关键词分类和后续返工。",
+          "moneyConnection": "总估值 9 万人民币，主要依据研究设计天数、返工节省和迁移价值。",
+          "userConnection": "用户是 Agent 平台治理、安全控制、AI 合规、风险控制、benchmark 和 governance layer 团队。",
+          "productConnection": "benchmark、memory schema、reasoning/risk module、evaluator。",
+          "weakness": "金额更多是内部成本估算，不是用户支付意愿；缺少真实样本证明 KG 必要性。"
+        },
+        {
+          "week": "2026-03-29",
+          "whatIsValuable": "taxonomy-builder skill 加法律安全 KG 值得做。",
+          "whyValuable": "因为每个新领域都需要 taxonomy、数据结构和数据生成，通用 skill 能减少重复劳动。",
+          "moneyConnection": "估值 15 万人民币，依据领域 KG 外包报价、论文产出价值和工具复用节省时间。",
+          "userConnection": "隐含用户是需要构建新领域 benchmark 的研究者或产品团队，但报告没有具体用户验证。",
+          "productConnection": "workflow、论文、benchmark。",
+          "weakness": "价值函数从法律风险扩展到通用 benchmark，复用价值更大，但也引入题目扩散风险；外包报价依据没有证据。"
+        },
+        {
+          "week": "2026-04-05",
+          "whatIsValuable": "多 LLM 生成链路和人工回填检查值得做。",
+          "whyValuable": "因为它能判断方法是否真的能形成法律数据集，避免在结构不成立的链路上继续投入。",
+          "moneyConnection": "总估值 9 万人民币，生成链路 4 万，人工检查 5 万。",
+          "userConnection": "用户连接较弱，主要强调研究方法可用性和避免错误投入。",
+          "productConnection": "结构化数据生成机制、evaluator、calibration 流程。",
+          "weakness": "价值更接近研发风险控制，但没有量化节省了多少错误样本、多少返工或多少人工审核成本。"
+        },
+        {
+          "week": "2026-04-12",
+          "whatIsValuable": "面向 OpenClaw 的可审计行为样本生成框架、五字段一致性检查和长期记忆机制值得做。",
+          "whyValuable": "因为数据集的最小单元被定义为可审计行为轨迹，而不是违法标签；generate–audit–memory 闭环有可能稳定产生可复核样本。",
+          "moneyConnection": "总估值 9 万人民币，框架接入 4 万、人工检查 3 万、长期记忆 2 万。",
+          "userConnection": "用户是 Agent 平台治理、安全控制、AI 合规、风险审计、benchmark 产品团队。",
+          "productConnection": "benchmark、evaluator、workflow、memory schema、agent module。",
+          "weakness": "价值函数更成熟，但仍没有真实买单证据；长期记忆的经济价值只是潜力，没有实验表明它提升了通过率或降低了人工成本。"
+        }
+      ],
+      "valueFunctionMaturity": "中等偏上。学生已经能把工作连接到金额、用户、通用能力、产物形式、Brainary 和自动化，但多数连接仍是研究者推断，不是市场证据或实验数据。下一阶段必须把价值函数转成指标：每 100 条样本节省多少人工审核时间、KG 相比平面表格提高多少一致性、长期记忆提高多少 audit pass rate。"
+    },
+    "repeatedBlockers": [
+      {
+        "blocker": "KG 必要性仍未被实验证明",
+        "weeksAppeared": [
+          "2026-03-22",
+          "2026-03-29",
+          "2026-04-05",
+          "2026-04-12"
+        ],
+        "evidence": "多次提出要比较 KG 与普通字段/JSONL/平面表格，但报告中没有提供对照实验结果。",
+        "impact": "如果没有对照，KG 可能只是更复杂的表示，而不是更有效的表示。"
+      },
+      {
+        "blocker": "样本级证据缺失",
+        "weeksAppeared": [
+          "2026-03-22",
+          "2026-04-05",
+          "2026-04-12"
+        ],
+        "evidence": "有计划标注 10 到 20 个种子样本、继续检查一批新样本，但没有实际样本数、样例、通过率、错误率。",
+        "impact": "教授无法判断数据集是否真的开始成立，也无法判断系统是否比人工写样本更好。"
+      },
+      {
+        "blocker": "字段之间不能稳定闭合",
+        "weeksAppeared": [
+          "2026-04-05",
+          "2026-04-12"
+        ],
+        "evidence": "字段粒度不稳定、文本合理但图中无法落点、授权/对象/法域缺失、调用链不完整、违法分类和判定缺少前文支撑。",
+        "impact": "这是当前主线的核心技术风险，会导致样本退化成表面违法标签。"
+      },
+      {
+        "blocker": "自动化审计能力不足",
+        "weeksAppeared": [
+          "2026-04-05",
+          "2026-04-12"
+        ],
+        "evidence": "人工检查仍是主要质量判断来源；第 4 周明确说卡在把生成后审计转成更强的结构化 evaluator。",
+        "impact": "如果审计无法自动化，数据集生成规模化价值会受限。"
+      },
+      {
+        "blocker": "价值估算缺少外部证据",
+        "weeksAppeared": [
+          "2026-03-22",
+          "2026-03-29",
+          "2026-04-05",
+          "2026-04-12"
+        ],
+        "evidence": "每周都有金额估值，但没有真实报价、用户访谈、竞品成本、采购预算或愿付价格。",
+        "impact": "金额能体现学生开始做价值推理，但还不能作为项目优先级决策依据。"
+      },
+      {
+        "blocker": "下一步动作缺少验收阈值",
+        "weeksAppeared": [
+          "2026-04-05",
+          "2026-04-12"
+        ],
+        "evidence": "反复写‘继续跑一批’、‘继续手工检查’，但没有明确 N、通过标准、错误分类表和是否继续投入的决策门槛。",
+        "impact": "容易进入持续迭代但无法收敛的状态。"
+      }
+    ],
+    "professorShouldAsk": [
+      "请下周拿出一个包含至少 30 条样本的表格：每条样本是否具备上下文、用户指令、工具调用链、违法分类、违法结果判定五字段，以及是否能完整回填 KG。",
+      "请给出 KG 表示与平面 JSONL/字段表表示的对照结果：在同一批边界样本上，哪一种更能支撑判定一致性？指标是什么？",
+      "请展示 3 个成功样本和 3 个失败样本。失败样本要标出具体断点：上下文不足、调用链缺失、分类映射失败、法律依据不足，还是 KG schema 缺关系。",
+      "请明确新加坡金融法律约束的来源和粒度：用了哪些法规或条文？是否足以支持违法分类？如果证据缺失，请标注为缺失。",
+      "请定义 audit 通过标准：什么叫五字段闭合？什么叫 KG 回填完整？什么叫违法判定一致？每项能否转成自动规则？",
+      "请说明长期记忆是否真的提升生成质量：library 回写前后，字段完整率、KG 回填率、audit 通过率有没有变化？如果没有数据，请不要继续扩大长期记忆模块。",
+      "请解释当前项目的主产物到底是数据集、生成框架、evaluator，还是 Brainary 的 memory schema/agent module？四者优先级如何排序？",
+      "请把每周 9 万或 15 万的估值改成可检验价值指标：节省多少人工小时、降低多少错误率、提高多少覆盖率、能支持什么论文或产品 demo。"
+    ],
+    "nextBestIntervention": {
+      "intervention": "让学生暂停继续扩展框架 1 周，做一次小规模但严格的验证冲刺。",
+      "oneWeekDeliverable": "交付一个可审计验证包：30 条 OpenClaw 行为样本、对应 KG 回填、五字段完整性表、audit 结果、错误分类统计、3 个成功样本、3 个失败样本、KG vs 平面表格对照结论。",
+      "acceptanceCriteria": [
+        "至少 30 条样本中，每条都标注五字段是否完整。",
+        "至少给出 KG 回填完整率、违法判定可支撑率、调用链完整率三个数字。",
+        "至少做 10 条边界样本的 KG 与平面表格对照，说明 KG 是否带来可观察优势。",
+        "每一种主要失败模式至少给出一个真实例子。",
+        "明确下一阶段是修 schema、修 generator、修 audit，还是缩小法律域。"
+      ],
+      "whyThisIntervention": "当前学生的抽象和系统搭建能力已经够用，短板是证据闭环。继续增加 memory、workflow 或 agent module 会增加复杂度，但不会回答方法是否成立。最优干预是把研究推进从‘搭系统’压回‘验证一个小闭环’。",
+      "professorRole": "教授不需要直接介入实现，但需要强制设定验收标准和停止规则。如果验证包显示 KG 相比平面表格没有优势，或五字段闭合率很低，应要求学生先缩小法律域或简化 schema，而不是继续扩大自动化框架。",
+      "oneThingProfessorShouldLearn": "这个学生当前最有价值的认知增量是：OpenClaw 法律风险数据集的最小单位不是违法标签，而是可审计行为链；但教授应同时看到，学生还没有用足够实验数据证明这条链已经能稳定生成。"
+    }
   }
 }

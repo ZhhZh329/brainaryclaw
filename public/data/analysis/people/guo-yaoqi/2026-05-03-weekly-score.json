@@ -1,64 +1,54 @@
 {
   "key": "person:guo-yaoqi:2026-05-03:weekly-score",
-  "generatedAt": "2026-06-05T14:01:29.502Z",
+  "generatedAt": "2026-06-05T17:01:38.515Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "70c377b76ae3d11c92bde5beb61b8d18cb74ec1754de3e64e660af9b27736135",
   "result": {
-    "week": "2026-05-03",
-    "name": "Guo Yaoqi",
-    "scores": {
-      "hardProgress": {
-        "score": 16,
-        "reason": "本周有明确硬进展：声称在 SWE-bench Pro 49-python 全量测试上，相对 baseline 提升 8-10%，solve rate 接近或突破 60%；同时新增了 PDB-augmented Working Memory、Harness Controller、Task-aware Plan-then-Act Router 三类系统模块，并识别出单轨 failing trace 的定位天花板。扣分点是关键结果缺少原始表格、baseline 数值、成功/失败 case 列表、commit 或实验日志，无法确认提升是否来自模块本身、随机波动或样本选择。",
-        "missingEvidence": "缺少 baseline solve rate、当前 solve rate 的精确值、49 个样本逐项结果、模块 ablation、运行日志、代码提交链接、失败 case 归因统计。"
-      },
-      "cognitiveIncrement": {
-        "score": 13,
-        "reason": "认知增量较强。报告从三个层面形成了新的判断：高密度 PDB 信息必须配套强 Harness；修复规划需要按任务类型异构路由；复杂 Bug 定位应从单轨错误搜索转向成功轨与失败轨的差分定位。这些不是泛泛反思，而是直接来自当前系统实验和失败模式归因。扣分点是差分定位仍主要是推演，下周才验证，因此部分认知还没有闭环成实证结论。",
-        "missingEvidence": "缺少高密度 PDB 无 Harness 时 solve rate 崩塌的对照数据；缺少 task-aware routing 相比统一 prompt 的单独贡献；缺少剩余失败样本中“缺少参照物”占比。"
-      },
-      "cot2Depth": {
-        "score": 12,
-        "reason": "CoT's CoT 有较好的二阶抽象：把问题从“给模型更多信息”提升为“信息消费协议设计”，又把差分调试解释为压缩搜索空间的认知控制机制。它确实触及了系统设计原则，而不是只复述实验现象。扣分点是多处使用‘老师原本不知道’和‘最后一块拼图’等强判断，但证据不足；差分执行分析尚未落地验证，因此二阶结论有一定前瞻性，但还不是已证实机制。",
-        "missingEvidence": "缺少失败案例的具体二阶归因样例；缺少信息量、Harness 强度、定位准确率之间的量化关系；缺少差分调试在本系统中实际降低搜索空间的实验结果。"
-      },
-      "brainaryMapping": {
-        "score": 8,
-        "reason": "Brainary 映射较清楚：PDB Working Memory 对应 Memory，Task-aware Router 与差分触发对应 Cognitive Control，双轨 Trace 对齐对应 Reasoning 与 Tool Orchestration。报告也指出可沉淀为 Differential Diagnostic Agent 和 Task-aware Policy Router。扣分点是映射仍偏概念层，缺少具体 Brainary 对象、接口、数据结构、触发条件和可复用模板。",
-        "missingEvidence": "缺少 memory schema 的字段设计；缺少 agent policy 的输入输出定义；缺少 Brainary 中现有模块如何接入该 workflow 的接口说明；缺少可复用资产清单。"
-      },
-      "monetaryValue": {
-        "score": 5,
-        "reason": "题目价值本身较高：若 solve rate 在 SWE-bench Pro 上稳定提升，并形成差分诊断 Agent，确实可能有论文价值、系统资产价值和商业化价值。但本周给出的 $120,000 定价依据较弱，主要是用 $2M × 6% 反推，缺少市场场景、替代方案成本、性能提升对应收入、客户支付意愿或论文/产品转化概率。该部分更像主观估值，不足以作为管理决策依据。",
-        "missingEvidence": "缺少商业场景定义、潜在客户、部署节省成本、API 成本收益比、与竞品性能差距、论文价值转化路径、估值参数来源。"
-      },
-      "projectManagement": {
-        "score": 11,
-        "reason": "项目管理信息较完整：说明了本周 45 小时投入、下周 45 小时计划、算力/API 需求、当前无外部支持需求，并明确从准备论文转向差分链路攻坚。也识别了 Regression Test 质量是主要门槛。扣分点是计划缺少量化验收标准，例如下周什么指标算成功、失败后如何回退、Regression Test 生成失败率如何控制、预算上限是多少。",
-        "missingEvidence": "缺少下周成功阈值，例如 localization accuracy 提升多少、solve rate 提升多少；缺少预算上限；缺少风险列表和备选路径；缺少实验排期和每日里程碑；缺少论文时间线的重新规划。"
-      },
-      "nextAction": {
-        "score": 8,
-        "reason": "下周动作明确且可验证：引入 Regression Test 生成模块，并行运行 Reproduction Test 与 Regression Test，在 Debug Agent 中实现双轨 PDB 差分比对，评估 RCA 定位准确率是否提升。这是一个清晰的最小实验闭环。扣分点是还没有定义评估协议和停止条件，例如使用哪些样本、如何度量定位准确率、是否先在人审标注的 failure set 上做验证。",
-        "missingEvidence": "缺少样本选择标准；缺少 RCA 定位准确率定义；缺少人工标注 ground truth；缺少差分模块的验收指标；缺少如果 Regression Test 质量不足时的替代动作。"
-      },
-      "evidenceQuality": {
-        "score": 2,
-        "reason": "证据质量偏低。报告有具体 benchmark 名称、样本规模和提升幅度，但没有任何可复核材料。大部分关键结论以叙述形式出现，缺少表格、日志、case study、ablation 和代码证据。对于单周管理判断，足以说明方向，但不足以确认结果可靠性。",
-        "missingEvidence": "缺少实验表格、运行日志、代码 diff、ablation、随机种子、prompt 版本、失败案例样例、API 成本明细、可复现实验命令。"
-      }
+    "hardProgress": {
+      "score": 16,
+      "reason": "本周有明确硬进展：声称在 SWE-bench Pro 49-python 全量测试上达到接近 60% solve rate，较 baseline 相对提升 8-10%；同时落地了 PDB-augmented Working Memory、Harness Controller、Task-aware Plan-then-Act Router 三类系统改造。这些属于端到端修复系统的实质工程进展，不只是想法。但报告没有给出具体 solved 数、baseline 数值、当前数值、失败/成功 case 列表、消融结果，因此不能按接近满分处理。",
+      "missingEvidence": "缺少具体实验表格、baseline 与当前 solve rate 的精确数字、49 个任务逐项结果、模块消融对比、重复运行稳定性、失败样例归因证据。"
     },
-    "totalScore": 75,
+    "cognitiveIncrement": {
+      "score": 13,
+      "reason": "认知增量较强：从“加运行时信息”推进到“信息必须配 Harness 约束”；从统一 Plan-then-Act 推进到 task-aware routing；从单条 failing trace 推进到成功/失败轨迹差分定位。这些都是对自动修复 agent 架构有操作性的认知更新。扣分点在于差分定位目前仍主要是下周计划，尚未被本周实验验证。",
+      "missingEvidence": "缺少高密度 PDB 无约束时 solve rate 下降或失焦的量化证据；缺少不同任务类型对应不同 repair strategy 的分类表和效果对比；差分定位尚无实验数据。"
+    },
+    "cot2Depth": {
+      "score": 12,
+      "reason": "CoT's CoT 能从现象上升到机制层：信息密度、使用契约、Harness、双轨 trace 对齐、解空间压缩等都讲清楚了，并尝试说明为什么这些认知对老师有信息差。但部分表述存在过度断言，例如“最后一块拼图”“彻底打破上限”等，目前证据还停留在推演层。其深度高于普通反思，但尚未达到已被实验闭环支撑的理论贡献。",
+      "missingEvidence": "缺少证明 Harness 是必要条件的反事实实验；缺少双轨差分分析的实际样例；缺少定位准确率从 block-level 到 line-level 的量化变化。"
+    },
+    "brainaryMapping": {
+      "score": 7,
+      "reason": "Brainary 映射覆盖了 Memory、Cognitive Control、Reasoning & Tool Orchestration，并能对应到 PDB Working Memory、Task-aware Router、Differential Diagnostic Agent，基本符合模板要求。问题是映射仍偏概念化，没有明确到 Brainary 中具体对象、接口、数据结构、调用协议或可复用模块边界。",
+      "missingEvidence": "缺少 Brainary 侧的模块接口定义、memory schema 示例、agent policy 草案、与现有 Brainary 能力的差距清单。"
+    },
+    "monetaryValue": {
+      "score": 4,
+      "reason": "报告给出 120,000 美元估值，并尝试分解为性能突破和架构资产，但定价方法主要是主观乘法，缺少市场锚点、替代方案成本、论文/产品/算力节省/商业转化路径等外部证据。当前金额更像自我估值，不足以作为教授决策依据。",
+      "missingEvidence": "缺少估值基准、客户或论文价值锚点、与已有 APR/SWE-agent 系统的性能差异、可变现路径、节省人力或 API 成本的计算。"
+    },
+    "projectManagement": {
+      "score": 11,
+      "reason": "项目管理信息较完整：有本周投入时间、下周预计时间、资源需求、成本、里程碑、纠偏动作，并明确从准备论文转向攻坚差分链路。优点是知道当前卡点并主动调整路线。扣分点是缺少验收标准、风险优先级、实验排期细化、如果 Regression Test 质量不足时的备选方案。",
+      "missingEvidence": "缺少下周实验的成功判据，例如定位准确率提升多少算有效；缺少具体任务拆分、日程、风险矩阵、回滚方案、论文时间线影响评估。"
+    },
+    "nextAction": {
+      "score": 8,
+      "reason": "下周最小可验证动作清楚：接入 Regression Test 生成模块，并行运行 failing 与 passing trace，在 Debug Agent 中做双轨 PDB 差分比对，验证定位准确率是否提升。这是可执行的下一步。扣分点是没有说明具体先选多少 case、如何生成 regression test、如何评价 regression test 是否有效、定位准确率如何定义。",
+      "missingEvidence": "缺少最小实验集规模、case 选择规则、Regression Test 生成质量标准、差分算法实现方案、量化指标和验收阈值。"
+    },
+    "evidenceQuality": {
+      "score": 2,
+      "reason": "报告有强结果声明和模块声明，但证据层级偏低。没有实验表、日志、commit、配置、消融、统计置信度、样例 trace 或失败归因明细。当前更像高质量进展叙述，而不是可审计实验报告。",
+      "missingEvidence": "缺少可复核材料：运行日志、代码提交、benchmark 配置、逐题结果、消融表、失败案例、PDB/Harness 示例、成本明细。"
+    },
+    "totalScore": 73,
     "tier": "B",
-    "oneLineJudgment": "本周方向和认知增量很强，硬进展也有明确数字，但核心性能提升和机制判断缺少可复核证据，因此应视为有潜力的系统突破，而不是已充分验证的结果。",
-    "professorFollowUp": [
-      "要求学生下周先提交一张 49 个 SWE-bench Pro 样本的逐项结果表，包含 baseline、当前版本、是否 solved、失败原因、是否受 PDB/Harness/Router 影响。",
-      "要求补一个最小 ablation：无 PDB、PDB 无 Harness、PDB 加 Harness、PDB 加 Harness 加 Task-aware Router，分别给 solve rate 和失败模式变化。",
-      "要求定义 Differential Trace Analysis 的验收指标：例如 block-level localization accuracy、line-level localization accuracy、最终 solve rate、token 成本。",
-      "要求先在剩余失败 case 中抽样 5-10 个做人工标注，确认‘缺少成功参照物’是否真是主因，而不是 prompt、工具调用或 patch generation 的问题。",
-      "教授本周最应该学习的一点是：复杂 Bug 定位的关键可能不是继续堆失败轨迹信息，而是主动生成成功参照轨，通过成功/失败执行差分来压缩根因搜索空间。"
-    ]
+    "oneLineJudgment": "本周方向和系统改造有实质价值，认知增量明显，但核心性能突破和差分路线目前缺少可审计证据，不能按里程碑满分处理。",
+    "professorFollowUp": "老师应要求学生下周优先提交一页实验表：baseline/current 精确 solve 数、PDB 与 Harness 消融、Task-aware Router 消融、至少 3 个失败案例的 trace 归因，以及 Regression-vs-Reproduction 差分实验的最小可验证结果；在这些数据出现前，不宜仅凭 8-10% 提升和 120,000 美元估值做论文或资源决策。"
   }
 }

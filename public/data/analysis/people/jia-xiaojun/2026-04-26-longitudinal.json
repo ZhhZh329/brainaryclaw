@@ -1,28 +1,212 @@
 {
   "key": "person:jia-xiaojun:2026-04-26:longitudinal",
-  "generatedAt": "2026-05-24T11:48:38.691Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "83e792d1e12d1db9bf453eea6ecd65adf143d37c42a0b5a354f1b0bf1399cc5a",
+  "generatedAt": "2026-06-05T17:04:10.869Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "d058b5e8af9fb9a8904a030ec23fac42178f75bd8a5f2a87ccc5869692931a66",
   "result": {
-    "overallTrajectory": "学生从同时探索两个方向的早期调研，逐步收敛到一个核心问题并完成系统化的攻击生成论文，研究主线明显收窄且深度递增。前三周先经历‘发现结构性缺口—提出新框架—搭建评测基准’的立题过程，后两周进入实验收敛与论文逐轮对齐的收尾阶段，已形成‘方法—实验—防御—消融’的完整闭环。整体不是简单地做更多事情，而是逐步获得‘定义对象—识别关键缺口—构建系统方案—严格对齐主张与证据’的连贯研究能力，研究成熟度明显提升。",
-    "stageByWeek": {
-      "2026-03-15": "双线并行探索期：Skill Scan 仍在明确扫描对象与最小单元，FOA 扩展需补消融实验；本周主要产出是问题定义而非硬结果，认知上意识到‘先定义对象和验证逻辑’的价值。",
-      "2026-03-22": "问题立题与框架提出期：发现现有扫描器对图像隐藏指令的结构性失效，提出执行语义模拟方案，并开始构建可落地的恶意 skill 基准。硬进展从概念进入可评测状态，但自动化测试接口尚缺。",
-      "2026-04-19": "论文主实验收敛与写作闭环期：完成 SkillJect 论文主文，实验结果定型，但陷入‘哪些结果支撑主 claim’的精细对齐工作，认知上升到‘论文写作是 claim 对 evidence 的压缩映射’。",
-      "2026-04-26": "论文深化与证据压实期：补齐关键实验并形成完整方法闭环（front-loaded inducement+payload hiding+feedback refinement），主 claim 与证据边界仍需进一步压实，开始准备 rebuttal 版本。"
+    "overallTrajectory": {
+      "judgment": "学生表现出研究能力在增强，不只是变忙。主要证据是：题目从“调研 Skill Scan”推进到“定义执行语义扫描对象、构建 benchmark、完成 SkillJect/DNSS 论文闭环与关键实验”；认知从“做方法/看工作”上升到“对象定义、验证逻辑、claim-evidence 对齐、自动化 workflow”；硬进展也从概念与 taxonomy 进入可投稿论文、实验结果、消融、检测率、迁移实验和防御分析。",
+      "mainTrajectory": "轨迹是从问题空间定义 → benchmark 与攻击/检测框架 → 论文主文与核心实验收敛 → claim-evidence 压缩与投稿准备。能力增长集中在研究问题成型、实验归因、论文结构化表达，而不是单纯增加任务量。",
+      "risk": "主要风险是价值推理和项目管理仍偏概念化。金额估计一直有，但没有真实用户、付费场景、商业验证、工具 demo、API 链路或外部评测证据支撑。自动化路径也多停留在“应该沉淀 workflow/module”，缺少实际自动化原型。",
+      "missingEvidence": "缺少 2026-03-29、2026-04-05、2026-04-12 的周报，无法判断中间三周是否连续推进、是否有返工、是否有实验失败与修正过程。"
     },
+    "stageByWeek": [
+      {
+        "week": "2026-03-15",
+        "topicStage": "题目处于定义期。Skill Scan 从普通 prompt/代码检测重新定义为包含指令、工具调用、执行逻辑、依赖和跨文件协同的复合攻击面；FOA 则从 NeurIPS 扩展到 PAMI，重点转向归因。",
+        "hardProgress": "Skill Scan 尚未产出 benchmark 或实验结果，硬进展主要是扫描对象重定义；FOA 方法已完成，但还需要核心消融证明有效模块。",
+        "cognitiveProgress": "认知增量是意识到研究第一步不是做方法，而是定义作用对象和验证逻辑。",
+        "CoTsCoTMaturity": "中等。能抽象出“对象定义—验证逻辑”是科研自动化前置环节，但还没有具体 workflow 或可执行检查表。",
+        "BrainaryMapping": "初步映射到 agent skill 风险扫描能力、方法归因与自动验证能力，但映射偏能力名，没有具体模块接口、输入输出或复用方式。",
+        "valueReasoning": "给出 50–100 万人民币估值，依据是安全扫描 SaaS、agent 风险评测、benchmark/toolkit 转化，但缺少客户、竞品、付费意愿或转化路径证据。",
+        "projectManagement": "能提出下周最小动作：整理最小版 skill risk taxonomy、完成核心消融。动作合理但仍偏研究内部。",
+        "nextActionQuality": "中等偏高。动作小且与卡点匹配，但没有明确交付格式、完成标准和验收指标。"
+      },
+      {
+        "week": "2026-03-22",
+        "topicStage": "题目进入框架和数据建设期。学生把现有 scanner 的失效归因为没有纳入图像中的执行语义，并提出执行语义模拟的多模态检测框架。",
+        "hardProgress": "benchmark 从想法进入落地：已整理 718 个恶意 skill，来源包括 skill_inject 84、Github 265、Skill_com 49、Clawhub 320。硬进展明显高于上一周。",
+        "cognitiveProgress": "从“skill 是复合攻击面”进一步推进到“skill scan 是执行语义安全问题，而不是普通内容安全问题”。这是实质性认知增量。",
+        "CoTsCoTMaturity": "较高。能把老师可能知道但未系统化的部分表述为 benchmark、workflow、module 的缺口，开始形成科研自动化视角。",
+        "BrainaryMapping": "较上一周更成熟，明确对应多模态 agent skill 风险理解、执行语义模拟、批量安全评测三个模块。但仍未说明模块间数据流和自动化接口。",
+        "valueReasoning": "估值提高到 50–150 万人民币，理由仍是 agent 安全扫描工具、企业评测服务和 benchmark/toolkit。相比上一周，价值对象更清楚，但仍没有用户验证。",
+        "projectManagement": "核心卡点识别为缺少可稳定调用的 API 进行批量测试。下周动作是补齐 SkillJect 恶意 skill 并打通 scanner API 测试链路，项目管理质量提升。",
+        "nextActionQuality": "高。动作直接对准自动化批量评测瓶颈，也有最小可验证结果：跑通一个 scanner API 链路。"
+      },
+      {
+        "week": "2026-04-19",
+        "topicStage": "题目进入论文闭环期。SkillJect 主文写作与核心实验收敛，形成 Attack/Victim/Evaluate 三代理闭环、payload hiding、trace-based refinement 的方法叙事。",
+        "hardProgress": "硬进展强。主实验总体 ASR 82.1%；更强新模型 30 条子集 ASR 60.1%；prompt-based defense 将平均 ASR 从 97.3% 降到 48.3% 但无法彻底阻断 workflow-compatible 攻击。",
+        "cognitiveProgress": "认知从问题定义转向论文证据组织：论文写作是 claim 对 evidence 的压缩映射。说明学生开始理解研究贡献不是结果堆叠。",
+        "CoTsCoTMaturity": "较高。能提出自动化科研中缺少 claim-check、evidence alignment、limitation drafting workflow，说明已能反思科研过程本身。",
+        "BrainaryMapping": "映射到论文级证据对齐、实验归因和安全 benchmark 组织能力。比早期更贴近论文生产流程，但仍缺少实际 Brainary artifact。",
+        "valueReasoning": "估值变为 30–80 万人民币，依据是投稿成果、benchmark/toolkit、agent 安全评测能力。价值函数从工具/服务想象转向论文资产与实验资产，金额下降但更贴近当前产物形态。",
+        "projectManagement": "卡点识别为主 claim、机制结论和 limitation 的压实。下周动作是补齐必要消融/统计显著性与 checklist，进行 claim–evidence 对齐。",
+        "nextActionQuality": "高。动作与投稿前质量控制直接相关，有明确产物：消融、统计显著性、checklist、主文对齐。"
+      },
+      {
+        "week": "2026-04-26",
+        "topicStage": "题目进入投稿强化期。DNSS 版本主文完成，形成方法—主实验—泛化—防御—消融闭环。方法明确为 front-loaded inducement、payload hiding、feedback refinement。",
+        "hardProgress": "硬进展继续增强。Claude Code 平均 ASR 80.7%，OpenClaw 平均 ASR 80.5%；更强模型整体 ASR 68.4%；与 Skill-Inject 公平对比从 32.3% 提升到 69.1%；补充跨任务迁移、跨模型迁移、scanner 检测和消融；现有 scanner 平均检测率仅 61.5%；front-loaded strategy 和 refinement 被识别为关键组件。",
+        "cognitiveProgress": "认知进一步稳定为“主张—证据—边界”的结构化压缩。相比上一周不是新范式，但更成熟、更贴近可投稿论文。",
+        "CoTsCoTMaturity": "高但开始重复。claim 对齐、证据筛选、limitation 抽取的自动化意识清晰；但还没有报告实际工具、模板、脚本或自动检查流程。",
+        "BrainaryMapping": "继续映射到论文级证据对齐、实验归因、攻击/防御 benchmark 组织能力。成熟度稳定，但缺少可复用模块的具体定义。",
+        "valueReasoning": "继续估值 30–80 万人民币。理由是接近可投稿论文、可复用 benchmark、scanner/评测工具原型。价值判断比早期更产物化，但仍未连接真实金额证据、用户反馈或商业路径。",
+        "projectManagement": "卡点从实验完成转为主 claim、limitations 和 rebuttal-ready 版本。说明项目已进入论文交付管理阶段。",
+        "nextActionQuality": "中等偏高。精修稿件是必要动作，但“压实主 claim、limitations 和 rebuttal-ready”略抽象，最好拆成具体 checklist、表格、反驳问题集和责任时间点。"
+      }
+    ],
     "trendScores": {
-      "硬进展趋势": "从第1周几乎无硬产出，到第2周获得明确的漏洞发现与评测基准雏形，再到第3-4周完成系统实验并产出完整论文草稿，硬进展强度逐周递增，后期达到可投稿水平。",
-      "认知趋势": "从‘重视问题定义’到‘重新定位 skill 安全的本质（执行语义）’，再到‘论文的内核是 claim-evidence 映射’和‘主张-证据-边界’结构，认知不断抽象化和可迁移化，不再局限于单点技术。",
-      "CoT's CoT成熟度": "前两周停留在‘什么环节值得自动化’的初步判断，后两周开始具体化出‘自动 claim-check、证据筛选、limitation 抽取’等可流程化的模块，但尚未实际搭建，仍处于认知设计阶段。",
-      "Brainary映射成熟度": "始终将工作关联到具体能力模块（风险扫描、实验归因、证据对齐等），后期更加聚焦于论文级自动化能力，映射更加具体且可复用，但都还停留在设想层面。",
-      "价值推理": "价值估计从 50-100万 调整到 30-80万，后期更聚焦于单一论文资产的现实转化（投稿、benchmark 复用），而非早期的 SaaS/评测平台，显示价值判断更贴近当前产出，更务实。"
+      "researchAbilityGrowth": {
+        "score": 8,
+        "rationale": "能力增长明显。学生从定义问题对象、构建 benchmark，到完成攻击方法、实验闭环、消融和防御分析，再到论文 claim-evidence 对齐，表现出研究闭环能力增强。"
+      },
+      "busyNotCapabilityRisk": {
+        "score": 3,
+        "rationale": "不是单纯变忙，因为每周都有对象定义、实验证据、benchmark 或论文结构上的硬增量。但后期周报有一定模板化重复，需防止只是在重复“claim-evidence 对齐”的表述。"
+      },
+      "hardProgressTrend": {
+        "score": 8,
+        "rationale": "硬进展从 taxonomy 想法到 718 个恶意 skill 数据集，再到 ASR、对比实验、迁移、防御、scanner 检测、消融，趋势明显向上。"
+      },
+      "cognitiveTrend": {
+        "score": 8,
+        "rationale": "认知从研究对象定义，进阶到执行语义安全，再到论文 claim-evidence-limitation 结构。不是只描述任务，而是在抽象科研过程。"
+      },
+      "CoTsCoTMaturity": {
+        "score": 7,
+        "rationale": "能识别哪些科研认知尚未进入自动化体系，并反复提出 workflow、benchmark、module、claim-check 等概念。但成熟度受限于没有实际自动化产物证据。"
+      },
+      "BrainaryMappingMaturity": {
+        "score": 6,
+        "rationale": "每周都能映射到 Brainary 能力模块，且从风险扫描扩展到执行语义模拟、批量评测、论文证据对齐。但映射仍偏口号化，缺少模块输入输出、数据结构、接口、复用案例。"
+      },
+      "valueReasoningMaturity": {
+        "score": 5,
+        "rationale": "有金额估计，也能连接 SaaS、企业评测、benchmark/toolkit、论文资产。但证据层级偏低，没有客户、用户、市场、竞品、成本、转化率或付费验证。价值函数从商业工具转向论文资产，说明更贴近阶段产物，但商业论证没有同步成熟。"
+      },
+      "projectManagementMaturity": {
+        "score": 7,
+        "rationale": "能持续识别核心卡点并给出最小动作，尤其 03-22 和 04-19 的动作质量高。弱点是后期精修动作不够可验收，缺少里程碑、责任分解和截止标准。"
+      },
+      "automationPathMaturity": {
+        "score": 5,
+        "rationale": "自动化意识强，反复提到 benchmark、workflow、module、API、claim-check、evidence alignment，但实际自动化路径只在 scanner API 批量测试上较具体；论文自动化部分尚无实现证据。"
+      },
+      "evidenceLevel": {
+        "score": 7,
+        "rationale": "实验数字和数据量较多，尤其 ASR、检测率、对比提升、消融关键组件。但报告没有给出实验设置细节、置信区间、统计显著性、样本构成完整性和失败案例，因此证据还未完全可审计。"
+      }
     },
-    "valueFunctionChange": "初期认为值得做的是‘定义问题对象和验证逻辑’，中期转向‘揭示结构性失效并将执行语义纳入扫描’，后期完全聚焦于‘论文主张与证据的严格对齐’。价值依据从较宽泛的安全扫描 SaaS、评测平台（50-150万）收敛到可直接投稿的论文与可复用 benchmark（30-80万），说明学生从‘广泛潜在影响’转向‘现实可交付成果’，对价值判断更加具体且与当前阶段匹配。同时始终与 Brainary 的自动化能力沉淀关联，未脱离‘通用科研能力’这个长期价值锚点，但价值观从探索性价值转向交付性价值。",
-    "repeatedBlockers": "连续两周（第3、4周）均卡在‘如何将实验结果压缩成强主 claim 并完成 claim–evidence 对齐’这一问题上，学生明知重要但缺乏自动化 workflow 辅助，导致论文收尾阶段反复在‘证据筛选—主张提炼—边界确认’中打磨，反映出抽象对齐能力已具备，但缺少工具化手段将其稳定下来。",
-    "professorShouldAsk": "如果把你这篇论文的 claim–evidence 对齐过程固化成一套可复用的 checklist 或轻量脚本，它需要包含哪三个关键步骤？每个步骤的输入和输出分别是什么？",
-    "nextBestIntervention": "与其让学生继续独自打磨对齐细节，不如要求他本周内拿出一页‘对齐手册’草稿：用表格列出论文的每条核心 claim、对应的 evidence、当前证据强弱评级以及潜在 rebuttal 预判。教授直接对此表格给出评审式反馈，帮助学生把内隐的判断外化为可讨论、可修改的结构，这既是论文收尾的加速器，也是 Brainary 中对齐模块的原型基础。"
+    "valueFunctionChange": {
+      "summary": "学生的价值函数发生了明显变化：早期认为值得做的是“定义新的安全扫描对象并形成 taxonomy/benchmark/toolkit”；中期认为值得做的是“执行语义扫描与批量评测，因为现有 scanner 失效”；后期认为值得做的是“把论文结果压缩为可投稿、可复用的证据资产，并沉淀 claim-evidence 对齐 workflow”。",
+      "byWeek": [
+        {
+          "week": "2026-03-15",
+          "whatIsValuable": "值得做的是定义 skill 作为复合攻击面，并把问题对象定义和机制归因流程自动化。",
+          "whyValuable": "因为这可以从关键词检测升级为 taxonomy、benchmark、workflow 等可沉淀资产。",
+          "moneyConnection": "估值 50–100 万人民币，连接到安全扫描 SaaS、agent 风险评测和论文资产转 benchmark/toolkit。",
+          "weakness": "金额依据是类比判断，不是市场或用户证据。"
+        },
+        {
+          "week": "2026-03-22",
+          "whatIsValuable": "值得做的是执行语义模拟、多模态 skill 风险理解和批量安全评测。",
+          "whyValuable": "因为现有 scanner 的失败不是分类器弱，而是扫描对象定义错误，没有纳入图像中的操作语义。",
+          "moneyConnection": "估值 50–150 万人民币，连接到 agent 安全扫描工具、企业级评测服务、benchmark/toolkit。",
+          "weakness": "价值对象更清楚，但仍没有说明谁会买、为什么现在买、如何从 benchmark 变成服务。"
+        },
+        {
+          "week": "2026-04-19",
+          "whatIsValuable": "值得做的是完成 SkillJect 论文资产、实验闭环，以及 claim-evidence-limitation 自动对齐。",
+          "whyValuable": "因为论文价值不只是实验结果，而是结论与证据之间的压缩映射。",
+          "moneyConnection": "估值 30–80 万人民币，连接到投稿成果、benchmark/toolkit 和 agent 安全评测能力。",
+          "weakness": "价值函数从商业转向学术产物，更符合当前阶段，但金额下降且缺乏外部验证。"
+        },
+        {
+          "week": "2026-04-26",
+          "whatIsValuable": "值得做的是 DNSS 可投稿论文、可复用 benchmark、scanner/评测工具原型，以及 rebuttal-ready 的主 claim。",
+          "whyValuable": "因为论文增量在于证明自动化生成有效恶意 skill，并揭示现有防御系统性缺口。",
+          "moneyConnection": "估值 30–80 万人民币，理由是接近可投稿论文、benchmark、scanner/评测工具原型。",
+          "weakness": "价值推理仍没有进入用户、销售、部署、维护成本或自动化产品路线层面。"
+        }
+      ],
+      "changeAssessment": "价值观变得更研究化、更产物化，但没有变得更商业可验证。学生越来越重视 benchmark、workflow、证据对齐和论文资产，这是研究能力提升的信号；但如果教授关心 Brainary 或商业转化，需要逼学生把价值从“我认为值多少钱”改为“哪个用户在什么任务中用什么产物节省多少钱或降低什么风险”。"
+    },
+    "repeatedBlockers": [
+      {
+        "blocker": "主 claim 与 evidence 的对齐反复出现",
+        "weeks": [
+          "2026-04-19",
+          "2026-04-26"
+        ],
+        "interpretation": "这是论文成熟期的正常卡点，也说明学生开始关注研究贡献的可证明性。但如果继续停留在表述层面，会变成写作内耗。需要转化为表格化的 claim-evidence-limitation-rebuttal matrix。"
+      },
+      {
+        "blocker": "自动化科研 workflow 只被提出，未被实现",
+        "weeks": [
+          "2026-03-15",
+          "2026-03-22",
+          "2026-04-19",
+          "2026-04-26"
+        ],
+        "interpretation": "学生持续意识到 workflow、benchmark、module 的价值，但报告没有证据显示已沉淀成可运行工具、模板或 Brainary 模块。"
+      },
+      {
+        "blocker": "价值金额缺少外部证据",
+        "weeks": [
+          "2026-03-15",
+          "2026-03-22",
+          "2026-04-19",
+          "2026-04-26"
+        ],
+        "interpretation": "每周都有金额估计，但没有真实客户、用户、竞品、采购预算、使用场景或付费验证。金额更像内部直觉，不是可投资判断。"
+      },
+      {
+        "blocker": "API/批量评测链路是否打通不明",
+        "weeks": [
+          "2026-03-22"
+        ],
+        "interpretation": "03-22 明确缺少稳定 API 进行批量测试，但后续周报没有直接交代 scanner API 链路是否打通，只报告了 scanner 检测率 61.5%。需要确认自动化评测链路的可复现程度。"
+      },
+      {
+        "blocker": "Brainary 映射缺少工程化细节",
+        "weeks": [
+          "2026-03-15",
+          "2026-03-22",
+          "2026-04-19",
+          "2026-04-26"
+        ],
+        "interpretation": "映射从能力名层面稳定存在，但没有说明模块输入、输出、调用方式、可复用数据结构、失败模式和自动化收益。"
+      }
+    ],
+    "professorShouldAsk": [
+      "你现在的主 claim 只有一句话会是什么？请分别列出支撑它的前三个实验、对应数字、可能被审稿人攻击的点。",
+      "03-22 提到的 scanner API 批量测试链路是否已经打通？如果打通，请给出可复现实验脚本、输入输出格式、运行时间和失败率；如果没有，为什么 04-26 能报告 scanner 检测率 61.5%。",
+      "SkillJect 与 DNSS 是同一个工作不同版本，还是两个可分离贡献？命名、方法组件和实验叙事是否会让审稿人困惑？",
+      "front-loaded inducement、payload hiding、feedback refinement 三个组件中，哪个是不可替代的核心创新？消融是否足以证明？",
+      "你估值 30–80 万或 50–150 万人民币的最小外部证据是什么？谁是用户？他们现在用什么替代方案？你的 benchmark/toolkit 能让他们节省什么成本或发现什么风险？",
+      "Brainary 中你本周实际沉淀了什么？是数据集、评测脚本、claim-evidence 表、limitation 模板，还是 scanner 接口？请不要只说能力模块。",
+      "如果把 claim-evidence 对齐自动化，下周能交付的最小工具是什么？输入是一篇论文草稿还是实验表？输出是什么？如何判断它有用？",
+      "目前最可能导致论文被拒的不是实验不足，而是哪一个叙事或证据断裂？你准备用哪一个补充实验或分析解决？"
+    ],
+    "nextBestIntervention": {
+      "intervention": "要求学生在下一周提交一个“投稿前证据矩阵 + 自动化评测最小产物”，而不是继续泛泛精修论文。",
+      "deliverables": [
+        "一页 claim-evidence-limitation-rebuttal matrix：每个主 claim 对应实验编号、关键数字、图表位置、可攻击点、反驳材料。",
+        "一个可复现 benchmark/scanner 评测包的最小版本：数据样例、运行脚本、scanner 接口说明、输出表格、失败日志。",
+        "一个 Brainary 模块卡片：模块名称、输入、输出、依赖、可复用场景、自动化程度、当前缺口。",
+        "一个价值验证表：潜在用户、使用场景、现有替代方案、可节省成本或降低风险、金额估计依据、缺失证据。"
+      ],
+      "whyThisIntervention": "学生已经不缺实验热情和论文推进力，下一步最需要把研究能力固化为可审计、可复用、可自动化的资产。这个干预可以同时检验硬进展、CoT's CoT、Brainary 映射、价值推理和项目管理是否真的成熟。",
+      "successCriteria": [
+        "教授能在 10 分钟内看出论文主 claim 是否被证据支撑。",
+        "其他成员能在不询问学生的情况下跑通一个最小评测。",
+        "Brainary 映射从能力名变成可调用或可复用模块。",
+        "金额判断至少有一个外部用户场景或成本假设支撑。"
+      ],
+      "oneThingProfessorShouldLearn": "这个学生真正的增量不是更忙，而是开始把安全攻击研究从“做出攻击”推进到“定义攻击对象、组织 benchmark、证明机制、对齐论文证据”的研究闭环；但教授需要立刻把他从概念化的 workflow/Brainary/价值估计，推到可复现产物和外部价值证据。"
+    }
   }
 }

@@ -1,6 +1,6 @@
 {
   "key": "person:cao-yue:2026-03-15:weekly-score",
-  "generatedAt": "2026-06-05T14:00:36.157Z",
+  "generatedAt": "2026-06-05T17:00:42.036Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
@@ -8,47 +8,88 @@
   "result": {
     "hardProgress": {
       "score": 7,
-      "reason": "本周有明确研究方向：继续优化 Typographic Attack pipeline 中的 Working Memory，并区分单样本多轮信息与跨样本经验信息。但周报没有给出任何可验证的硬产出，例如代码改动、实验次数、攻击成功率变化、planner 稳定性指标、失败案例数量或具体 prompt/memory 结构版本。因此只能判定为概念设计推进，而不是实证进展。",
-      "missingEvidence": "缺少实验结果、指标对比、实现细节、样例、版本变更记录、失败/成功案例。"
+      "reason": "本周有明确研究方向：继续优化 Typographic Attack pipeline 中的 Working Memory，并围绕多轮 attack 的信息保留、review、diagnosis、策略修正做框架调整。但周报没有给出任何可验证的硬进展，例如代码实现、实验轮数、攻击成功率变化、稳定性指标或具体样例，因此硬进展偏弱。",
+      "missingEvidence": [
+        "缺少本周实际完成的模块、代码提交或 pipeline 变更说明。",
+        "缺少实验结果，例如不同 Working Memory 设计下的 attack success rate、planner 稳定性、泛化表现。",
+        "缺少具体样本案例，无法判断优化是否真实改善了多轮 attack。"
+      ]
     },
     "cognitiveIncrement": {
       "score": 9,
-      "reason": "认知增量主要体现在对 Working Memory 的作用边界有更清晰认识：信息保留可以改善多轮 attack 的连续性，但过多信息会引入噪声、削弱重点并影响稳定性。这比单纯说‘增加记忆’更进一步，开始关注信息压缩与有效性之间的权衡。",
-      "missingEvidence": "缺少该认知来自哪些实验现象、具体错误模式或样本观察的证据。"
+      "reason": "认知增量主要体现在从“增加记忆”转向“记忆压缩与噪声控制”的权衡意识，能识别 Working Memory 信息过多会削弱重点并影响修改稳定性。这是有效的问题抽象。但该增量仍停留在概念层，尚未形成可测试假设或设计准则。",
+      "missingEvidence": [
+        "缺少对‘有效信息’与‘噪声信息’的可操作定义。",
+        "缺少判断信息压缩是否成功的评价指标。",
+        "缺少从本周实验或失败案例中提炼出的具体认知变化。"
+      ]
     },
     "cot2Depth": {
       "score": 8,
-      "reason": "CoT² 层面能把 memory 分为单样本多轮信息和跨样本累积信息，并关注上一轮策略、review、diagnosis、修改效果之间的信息传递，说明已开始从‘推理过程的管理机制’角度分析系统。但深度仍停留在结构分类，没有进一步说明如何判断信息重要性、如何压缩、如何防止错误经验累积，也没有形成可执行的元推理算法。",
-      "missingEvidence": "缺少信息选择准则、压缩策略、元层评价机制、递归反思链条示例。"
+      "reason": "CoT² 部分能够区分两类记忆：单样本跨轮次信息与跨样本积累信息，并提到上一轮策略、review 反馈、diagnosis 归因、修改效果等链条，说明已经在观察推理过程如何被反馈机制二次调节。但深度不足，尚未说明 planner 如何利用这些信息、如何选择保留内容、如何避免错误归因被反复强化。",
+      "missingEvidence": [
+        "缺少 CoT² 机制的结构图或流程定义。",
+        "缺少 planner 读取 Working Memory 后如何改变策略生成的具体例子。",
+        "缺少对错误反馈、错误 diagnosis、记忆污染的处理机制。",
+        "缺少跨样本经验如何被抽象成可复用策略的说明。"
+      ]
     },
     "brainaryMapping": {
       "score": 3,
-      "reason": "周报提到与 Brainary 的关联是：让系统在多轮过程中保留真正重要的信息，并控制保留程度。但这是非常抽象的对应，没有把 Brainary 中的具体节点、关系、层级、可视化结构或知识组织方式映射到当前 attack pipeline。",
-      "missingEvidence": "缺少 Brainary 具体映射图、节点定义、边关系、memory 与 Brainary 单元之间的对应关系。"
+      "reason": "周报提到与 Brainary 的关联是让系统在多轮过程中保留真正重要的信息，并控制保留程度。但映射非常笼统，没有把 Brainary 中的节点、层级、路径、反馈回路或知识组织方式对应到当前 attack pipeline。",
+      "missingEvidence": [
+        "缺少 Brainary 概念与 Working Memory 组件之间的逐项映射。",
+        "缺少当前研究对象在 Brainary 中的位置、上下游关系和演化路径。",
+        "缺少如何用 Brainary 指导实验设计或项目决策的说明。"
+      ]
     },
     "monetaryValue": {
-      "score": 2,
-      "reason": "报告没有说明该研究如何转化为论文价值、基准价值、安全评测工具价值、模型红队服务价值或可复用自动化资产。唯一可推断的价值是 AI Robustness 和 LVLM 攻击研究本身可能具有安全评测意义，但周报中没有展开。",
-      "missingEvidence": "缺少目标产出形态、潜在用户、论文投稿方向、工具化路径、商业或科研资源价值评估。"
+      "score": 1,
+      "reason": "周报没有讨论该研究的货币价值、应用场景、潜在客户、论文价值转化、算力成本、数据成本或安全评测服务化路径。只能看出其学术方向是 AI Robustness，但商业或资源价值证据缺失。",
+      "missingEvidence": [
+        "缺少该 typographic attack 对安全评测、模型红队或鲁棒性基准的潜在应用说明。",
+        "缺少成本估计，例如实验算力、人工标注、模型调用成本。",
+        "缺少可转化产物，例如 benchmark、toolkit、评测服务、论文影响力路径。"
+      ]
     },
     "projectManagement": {
-      "score": 7,
-      "reason": "周报包含研究任务、当前阻碍和下周计划，说明有基本项目管理意识。阻碍也比较明确：memory 信息过多导致噪声和不稳定。但项目管理仍不够工程化，没有里程碑、优先级、实验矩阵、时间安排、验收标准或风险处置方案。",
-      "missingEvidence": "缺少本周计划完成度、下周具体任务拆分、截止时间、负责人、实验表、成功判据。"
+      "score": 6,
+      "reason": "周报有研究任务、当前阻碍和下周计划，说明基本项目管理框架存在。但任务拆解不够具体，没有里程碑、优先级、验收标准、风险登记或时间安排。‘继续优化’无法判断下周是否完成。",
+      "missingEvidence": [
+        "缺少本周计划与实际完成情况的对照。",
+        "缺少明确 deliverable，例如完成几种 memory schema、跑多少样本、产出哪些表格。",
+        "缺少风险优先级和应对方案。",
+        "缺少时间节点和完成标准。"
+      ]
     },
     "nextAction": {
-      "score": 6,
-      "reason": "下周行动方向明确：继续优化 Working Memory，观察不同 memory 粒度与组织方式对 planner 稳定性和泛化能力的影响，并梳理反馈、归因与 prompt 修改之间的信息传递。但行动仍偏笼统，没有说明要比较哪些 memory 版本、跑多少样本、用什么指标判断稳定性和泛化能力。",
-      "missingEvidence": "缺少具体实验设置，例如 memory 粒度 A/B/C、样本规模、评价指标、预期结果、失败时的替代方案。"
+      "score": 5,
+      "reason": "下周计划方向合理：比较不同 memory 粒度与组织方式对 planner 稳定性和泛化能力的影响，并梳理反馈、归因、prompt 修改之间的信息传递。但行动仍偏抽象，没有实验矩阵、变量控制、样本规模、评价指标和预期决策。",
+      "missingEvidence": [
+        "缺少要比较的具体 memory 粒度，例如 full history、summary、key-value、top-k strategy、error-only memory。",
+        "缺少样本数量、模型设置和 attack 轮数。",
+        "缺少评价指标，例如 ASR、修改次数、策略重复率、诊断一致性、跨样本迁移成功率。",
+        "缺少下周结束时要做出的决策，例如保留哪一种 memory 结构。"
+      ]
     },
     "evidenceQuality": {
       "score": 1,
-      "reason": "证据质量较弱。报告列出了两篇相关文献，并描述了阅读方向，但没有文献中的具体机制如何影响当前设计，也没有任何实验数据、案例截图、日志、表格或定量观察。",
-      "missingEvidence": "缺少文献摘录与方法迁移、实验记录、定量指标、定性案例、对比结果。"
+      "reason": "证据质量很弱。周报主要是概念性描述和阅读列表，没有实验数据、对比表、失败案例、prompt 示例、代码链接或具体观察记录。无法验证本周工作是否产生了实质进展。",
+      "missingEvidence": [
+        "缺少实验日志或结果表。",
+        "缺少具体 attack case。",
+        "缺少 memory 前后版本对比。",
+        "缺少文献阅读如何影响当前设计的具体引用点。"
+      ]
     },
-    "totalScore": 43,
-    "tier": "Risk",
-    "oneLineJudgment": "本周主要是围绕 Working Memory 的概念性思考和问题识别，认知方向有价值，但缺少硬实验、可验证产出和 Brainary/价值映射，尚不足以证明项目实质推进。",
-    "professorFollowUp": "建议追问：请下周提交一个最小实验矩阵，至少包含 3 种 Working Memory 组织方式、固定样本集、攻击成功率、修改轮次、planner 输出稳定性、失败案例归因，并给出一个具体样例展示 review、diagnosis、memory、prompt 修改之间的信息流。"
+    "totalScore": 40,
+    "tier": "C",
+    "oneLineJudgment": "本周形成了一个有价值的问题意识：Working Memory 需要在信息保留与信息压缩之间平衡，但硬进展、实验验证和项目化执行都不足。",
+    "professorFollowUp": [
+      "要求学生下周提交一个最小可验证实验：至少比较三种 Working Memory 结构，并报告 ASR、稳定性、修改轮数和失败案例。",
+      "要求学生给出一张信息流图，明确 strategy、review、diagnosis、prompt revision、memory update 之间的输入输出关系。",
+      "要求学生定义什么是‘有效记忆’和‘噪声记忆’，并说明 planner 如何选择、压缩和遗忘信息。",
+      "教授本周最该关注的一件事是：这个项目的关键瓶颈不是继续增加 meta 框架描述，而是把 Working Memory 设计转化为可消融、可量化、可复现的实验变量。"
+    ]
   }
 }

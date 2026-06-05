@@ -1,57 +1,416 @@
 {
   "key": "person:hu-zhichao:2026-05-24:longitudinal",
-  "generatedAt": "2026-05-24T11:48:23.873Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "79eef022b973d844b2d2718975e137b451e97b3ff21b795a0f4d717c562981fa",
+  "generatedAt": "2026-06-05T17:04:08.747Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "733bb81ea6b93441f87e822a689a0fa768dbd3cdcc678a3f750fad0b8d6b0a06",
   "result": {
-    "overallTrajectory": "学生胡志超在四周内从 APT 数据集的 Agent‑Memory 概念设计出发，经历了系统实现、方法论重构、多 Agent Working Memory 通用设计策略的提出，最终落地为轻量级集成验证框架，并在真实数据上开始验证。研究方向从认知架构的抽象逐渐收拢到可运行、可验证、可复用的认知工程方法，研究能力显著增强。",
+    "overallTrajectory": {
+      "judgment": "这个学生在 4 周内呈现出研究能力上升，而不只是变忙。能力提升主要体现在：题目从多个松散 APT 子任务，逐步收敛为“APT 数据集构建 + Memory-driven Multi-Agent + Working Memory + 集成验证框架”的统一研究主线；认知从概念理解推进到 schema、runtime、真实数据验证和最小闭环。但硬实验结果仍明显不足，尤其是可解释日志异常检测、ProvBreak 扰动验证、真实数据 case replay 和量化指标都还没有完成闭环。",
+      "notJustBusyReason": "不是单纯更忙的证据是：每周都在改变问题表述和系统边界，而不是只增加任务列表。5 月 3 日重构 Agent 与 Memory 边界，5 月 10 日把 Memory 理解为数据集质量治理机制，5 月 17 日提出 Decision-Sufficient Information State 作为 Working Memory 统一建模主线，5 月 24 日把该主线迁移到多个 Agent 并搭建轻量级集成验证框架。这些是研究抽象、系统设计和自动化路径上的增量。",
+      "mainConcern": "能力提升仍主要发生在方法论、架构和 schema 层，实证层落后。多次承诺的“最小链路验证”“实验结果补齐”“意图扰动验证”“真实数据完整 trace”尚未在周报中给出完成证据。如果下周仍没有一个可运行 case、实验结果或失败案例复盘，研究能力会滑向概念设计过度。",
+      "topicTrajectory": "题目轨迹从 APT 检测、日志异常检测、ProvBreak、数据集构建等并行任务，逐步收敛到一个统一基础设施题目：面向 APT 数据集构建的 Memory-driven Multi-Agent 系统。日志异常检测和 ProvBreak 被重新解释为 evidence reasoning、adversarial strategy memory、benchmark 难度控制机制的一部分。",
+      "researchCapabilityChange": "研究能力有增强，尤其是抽象能力、系统边界意识、Brainary 映射能力、meta-cognition 工程化意识和自动化沉淀意识增强；但实验闭环能力、指标定义能力、价值金额论证能力和项目里程碑兑现能力仍未充分证明。",
+      "professorOneThingShouldLearn": "学生真正形成的一个可教训点是：Working Memory 不应从字段堆叠出发，而应从 Agent 当前关键决策出发，反推最小充分认知状态；这个原则已经开始从 Deduction Agent 迁移到真实数据分析溯源 Agent、攻击注入 Agent 和数据集演绎 Agent。教授需要判断的是：这是否足以成为 Brainary 中可复用的 Agent Working Memory 设计方法。"
+    },
     "stageByWeek": [
       {
         "week": "2026-05-03",
-        "titleStatus": "APT 数据集构建 Agent 与 Memory 系统进入架构设计阶段；可解释日志异常检测和 APT 检测对抗安全评估处于方法梳理与实验准备阶段。",
-        "hardProgress": "完成 Agent 重构（1 总控 + 7 核心），明确 Long‑term Memory / Working Memory 边界与 KG 关系；日志异常检测初步对齐 Memory 思想；对抗策略与数据集构建建立初步关联。暂无实验数据，停留在方案层面。",
-        "cognition": "核心认知：Agent 划分应由 Memory 边界与决策边界决定，而非流程步骤；Memory 应从业务知识库上升为认知结构。CoT’s CoT 成熟度表现为从局部设计到架构层面，但尚未经过实例验证。",
-        "valueJudgment": "整体 APT 方向估值 3000 万 + 500 万人民币，依据为国家重大专项预算，理由是提升攻防智能化与可解释性。价值判断停留在宏观项目金额层面，未与当周具体产物挂钩。"
+        "stage": "统一架构成形期",
+        "topicTrajectory": "从多个 APT 子课题转向以 APT 数据集构建 Agent 与 Memory 系统为中心，把日志异常检测、ProvBreak 和 Benchmark 都纳入同一叙事。",
+        "hardProgress": "完成 1 个总控 Agent 和 7 个核心 Agent 的方案重构；完成 Long-term Memory、Working Memory、KG、Vector、Metadata、Object Store 的职责划分；明确 APT 数据集构建的最小链路方向。硬进展主要是架构和 schema，不是实验结果。",
+        "cognitiveTrend": "认知增量是从“Agent 是流程模块”转向“Agent 必须有独立 Memory 边界、决策边界和 handoff 边界”。这是研究问题建模能力的提升。",
+        "cotCOTMaturity": "CoT's CoT 已经能区分老师已知概念与自己的落地增量，成熟度中等偏高；但仍偏概念设计，缺少可证伪命题。",
+        "brainaryMapping": "Brainary 映射较清楚，把 Long-term Memory、Working Memory、KG Index、Meta-Cognition、Workflow、Benchmark 对应到 APT 数据集构建场景。",
+        "metaCognition": "把 Meta-Cognition 理解为 Memory 管理控制机制，包括检查记忆调用、Working Memory 是否过载、KG 子图是否遗漏、低置信结论是否过早采用。",
+        "valueReasoning": "价值函数已经连接到国家安全机构、网络安全厂商、科研院所和高校实验室，也连接到数据集、Benchmark、Agent workflow、Memory schema、KG schema、平台和论文。但金额估算仍粗糙，只写 3000 万人民币 + 500 万人民币，依据是国家重大科技专项预算，没有拆分到用户付费场景和交付物单价。",
+        "evidenceLevel": "证据等级主要是方案设计支撑。日志异常检测和 ProvBreak 都明确缺少完整实验结果。",
+        "projectManagement": "项目管理较完整，能写人力、关键路径、依赖、成本、纠偏动作；但下周动作仍偏大，包括跑实验、Memory 自动构建、KG 细化、样例验证。",
+        "nextActionQuality": "下周动作有最小验证意识，但仍有发散风险。最关键动作应收敛为一个从 APT 报告到 MemoryObject、KG Index、Working Memory、输出 artifact 的最小样例。"
       },
       {
         "week": "2026-05-10",
-        "titleStatus": "APT 数据集构建 Agent 进入系统开发阶段；可解释异常检测完成全量 Findings 提取；对抗评估完成意图扰动生成，并进一步与 Agent 结构关联。",
-        "hardProgress": "搭建项目框架，实现各 Agent 的 Memory Schema 与 KG/Vector/Metadata 存储；异常检测全量 Findings 提取完成；对抗评估完成关系梳理与初步生成。Long‑term Memory 自动构建仍未启动，但工程底座已建。",
-        "cognition": "核心认知：数据集不应是静态案例，而是基于攻击约束和环境约束的动态演绎机制。CoT’s CoT 从架构设计上升为对数据本质的理解，同时 Memory 进一步被视为质量治理机制。成熟度进一步提升，但尚未进入运行验证。",
-        "valueJudgment": "估值金额未变，但隐含价值主张开始转向“演化的攻击场景生成与评测基础设施”，强调可演化和可评测能力，从一次性项目交付转向长期可维护的智能基础设施。"
+        "stage": "从架构设计进入初步工程实现期",
+        "topicTrajectory": "主线继续围绕 APT 数据集构建 Agent 与 Memory 系统，新增重点是 EvidenceObject、Finding、Hypothesis、StepSummary 等中间证据结构。",
+        "hardProgress": "搭建项目框架，完成各 Agent 的 Memory 类型和 Schema 实现，建立 KG、Vector、Metadata 和 Object Store 的存储与搜索逻辑；日志异常检测完成所有数据集上的 Findings 全量提取；ProvBreak 完成意图扰动生成。比前一周有更多工程硬进展。",
+        "cognitiveTrend": "认知从 Memory 作为知识存储，上升到 Memory 作为数据集质量治理机制，开始区分 Long-term Memory 与 Execution Record，提出 Memory 写回门控。",
+        "cotCOTMaturity": "CoT's CoT 更成熟，能说明错误证据和未确认假设污染长期记忆的风险，这是从系统设计走向数据治理的关键认知。",
+        "brainaryMapping": "Brainary 映射从 Agent 架构扩展为认知型安全数据生产系统，加入 Evidence-centered Reasoning 和数据集演化机制。",
+        "metaCognition": "Meta-Cognition 被具体化为质量检查、Memory 写回和数据版本治理机制，包括标签泄漏、因果不一致、证据包充分性和对抗扰动语义保真。",
+        "valueReasoning": "价值判断基本沿用上一周，金额、买单方、产物形式没有新增实质变化。价值函数稳定但没有更精确。",
+        "evidenceLevel": "Agent 与 Memory 有项目框架和 schema 实现支撑；日志异常检测有 Findings 全量提取，但仍缺少最终实验指标；ProvBreak 有生成但缺少对检测结果影响验证。",
+        "projectManagement": "工程推进更实，但项目管理中出现不一致：日志异常检测写实际推进较多，却仍说偏差原因是精力转向 Agent 和 Memory；说明复盘模板可能复制较多，真实优先级和偏差解释需要更严谨。",
+        "nextActionQuality": "下周动作仍是最小链路验证、攻击注入、数据分析 Agent 和 Long-term Memory 自动构建，方向正确，但还没有明确验收标准。"
       },
       {
         "week": "2026-05-17",
-        "titleStatus": "Working Memory 方法论重构阶段，主项目重心从工程开发回退到理论深化，其余子任务进度放缓。",
-        "hardProgress": "提出 Decision‑Sufficient Information State 作为 Working Memory 统一建模主线，融合控制论、POMDP、信息论；完成 Deduction Agent 的完整 Working Memory example 与字段级 schema。工程实现暂时放缓，实验数据依然缺失。",
-        "cognition": "核心认知：Working Memory 不应从字段出发，而应从 Agent 关键决策反向推导最小充分认知状态。CoT’s CoT 达到方法论级别，具备跨 Agent 的潜在迁移性。认知深度跃升明显，但仍未在真实任务中验证。",
-        "valueJudgment": "金额未变，但通过方法论提炼，学生开始重视“可迁移性”和“认知抽象”，价值函数从具体项目估值隐约向通用认知工程能力倾斜，但尚未显性化为新的估值方式。"
+        "stage": "方法论重构期",
+        "topicTrajectory": "题目从 APT 数据集构建 Agent 的工程实现，转向 Working Memory 的统一理论主线：Decision-Sufficient Information State，并以 Deduction Agent 为样例。",
+        "hardProgress": "完成基于 Decision-Sufficient Information State 的 Working Memory 统一建模策略；形成控制论、POMDP、信息论、认知科学的解释框架；完成 Deduction Agent 的完整 Working Memory example 与字段级 schema。硬进展偏理论和 schema，工程链路推进少于计划。",
+        "cognitiveTrend": "这是 4 周中认知抽象跳跃最大的一周。学生意识到 Working Memory 不是存字段，而是为关键决策维护最小充分认知状态。",
+        "cotCOTMaturity": "CoT's CoT 成熟度上升，开始提出可迁移方法论和需要验证泛化性的条件。但理论来源较多，存在叙事过宽、形式化不足的风险。",
+        "brainaryMapping": "Brainary 映射聚焦 Working Memory 与 cognitive state abstraction，少了前两周的数据集全链路细节，但更接近通用 Agent 设计方法。",
+        "metaCognition": "Meta-Cognition 被嵌入 Working Memory 本身，成为 Decision-Sufficient Information State 的运行时充分性检查、偏差识别和状态重构触发机制。",
+        "valueReasoning": "价值观没有明显新增，仍沿用 APT 整体任务 3000 万人民币 + 500 万人民币估值。价值函数对通用能力的连接增强，但金额论证没有跟随方法论变化而更新。",
+        "evidenceLevel": "证据等级是理论解释和 schema 支撑，缺少多个 Agent 的运行验证。学生自己也承认需要验证泛化性和动态更新机制。",
+        "projectManagement": "能够明确原计划工程推进与实际理论重构的偏差，并解释原因：先解决 Working Memory 核心建模原则。这个偏差合理，但必须限时，否则会拖延可运行系统。",
+        "nextActionQuality": "下周动作质量较好：以 Deduction Agent 验证字段初始化、更新和清理机制，同时设计一个推理型 Agent 验证非特定性。关键是必须产出运行 trace，而不是继续扩展理论。"
       },
       {
         "week": "2026-05-24",
-        "titleStatus": "多 Agent Working Memory 设计与集成验证阶段，主项目进入真实数据闭环验证，其余子项目继续保持低速推进。",
-        "hardProgress": "将 Decision‑Sufficient 设计策略迁移到数据集演绎、数据分析溯源、攻击注入三个 Agent，完成初版 Working Memory；搭建轻量级集成验证框架，初步支持多 Agent 任务调度、状态更新与产物追踪；开始在半个月真实数据上暴露问题。工程可运行性明显增强。",
-        "cognition": "核心认知：Decision‑Sufficient 方法已成为可复用的跨 Agent 设计策略，且必须通过真实运行验证才能从‘好看的字段’变成‘能支撑决策的状态’。CoT’s CoT 成熟度达到实用级，并在多 Agent 和真实环境接受检验。",
-        "valueJudgment": "估值金额仍重复相同数字，但当周最希望老师学到的内容已完全聚焦于可迁移、可验证的认知工程方法，表明深层价值观已转向‘通过可运行和可复现的认知基础设施创造长效价值’，而非仅盯着项目金额。"
+        "stage": "多 Agent 迁移与轻量级运行验证期",
+        "topicTrajectory": "主线进一步收敛为“多 Agent Working Memory 设计方法 + 轻量级集成验证框架 + 半个月真实数据验证”。题目更像一个可运行的研究基础设施。",
+        "hardProgress": "完成数据集演绎 Agent、真实数据分析溯源 Agent、攻击注入 Agent 的 Working Memory 初版；搭建轻量级集成验证框架，包括 task queue、case state、working memory file、event log、artifact store、tool registry、run directory；开始在半个月真实数据集上验证。硬进展明显增强，但还没有完成多 Agent 最小闭环。",
+        "cognitiveTrend": "认知从单 Agent Working Memory 方法论，推进到跨 Agent 状态一致性、产物追踪、任务调度和真实数据倒逼设计修正。研究能力更接近系统科研能力。",
+        "cotCOTMaturity": "CoT's CoT 已经能反思为什么真实数据验证是 Working Memory 是否成立的关键，能识别 schema 好看但不可用的风险。成熟度较高。",
+        "brainaryMapping": "Brainary 映射从 Memory 模块扩展到 Agent Runtime Validation、Task Scheduler、Tool Registry、Artifact Store、Event-driven Control Loop、Multi-Agent Coordination，映射成熟度最高。",
+        "metaCognition": "Meta-Cognition 从单 Agent 自检扩展为多 Agent 状态一致性与决策充分性检查，包括跨 Agent 产物可追踪、状态更新正确性、失败重试或回滚。",
+        "valueReasoning": "价值判断仍基本稳定，没有更新金额模型。新增的 runtime、case replay、artifact store 实际上更接近可交付系统，但周报没有重新估算其项目价值、产品价值或可售卖模块。",
+        "evidenceLevel": "证据等级较前一周提高：已有三个 Agent 初版设计和验证框架，并开始真实数据验证。但量化指标、完整 case replay、接口稳定性、失败恢复仍缺失。",
+        "projectManagement": "项目管理更贴近关键路径，能说明框架层、Agent Working Memory、Artifact 的边界问题，也能提出固化目录结构、task schema、event log schema 和 artifact 引用规则。仍需警惕接口不稳定导致其他同学开发受阻。",
+        "nextActionQuality": "下周动作质量较高且更可验证：固定小时间窗口、形成可复盘 evidence package、做最小攻击注入样例、接入集成验证框架、固化编码规范。若能完成，将形成真正研究闭环。"
       }
     ],
     "trendScores": {
-      "研究系统性": "从第 1 周的零散概念设计，到第 4 周形成跨 Agent 统一方法论与集成验证框架，系统性显著增强。",
-      "认知深度": "从划分 Memory 类型逐步深化为 Decision‑Sufficient Information State 的理论抽象，再通过多 Agent 实例检验其通用性，深度持续提升。",
-      "工程成熟度": "由‘打算做’到‘搭框架’到‘方法论’再到‘真实数据验证’，工程实现从无到有，进入可运行闭环阶段，成熟度跃升明显。",
-      "价值聚焦": "表层金额估计未变，但内在价值主张从项目总价转向可验证、可迁移的认知工程能力，长期价值意识有所强化。",
-      "证据层次": "每周均有方案设计支撑，但实验证据始终薄弱；第 4 周开始尝试用真实数据运行暴露问题，底层证据等级开始从理论向实证过渡。"
+      "scale": "1 表示弱，5 表示强；分数依据仅来自周报文本，不代表外部验证。",
+      "hardProgress": {
+        "scoresByWeek": [
+          {
+            "week": "2026-05-03",
+            "score": 2.5
+          },
+          {
+            "week": "2026-05-10",
+            "score": 3.5
+          },
+          {
+            "week": "2026-05-17",
+            "score": 3
+          },
+          {
+            "week": "2026-05-24",
+            "score": 4
+          }
+        ],
+        "trend": "总体上升，中间一周从工程转回理论，最后一周重新回到工程验证。",
+        "interpretation": "硬进展从架构文档和 schema，推进到项目框架、存储检索逻辑、Working Memory 样例、多 Agent 初版和轻量级 runtime。真正缺的是闭环运行结果和指标。"
+      },
+      "cognitiveDepth": {
+        "scoresByWeek": [
+          {
+            "week": "2026-05-03",
+            "score": 3.5
+          },
+          {
+            "week": "2026-05-10",
+            "score": 4
+          },
+          {
+            "week": "2026-05-17",
+            "score": 4.5
+          },
+          {
+            "week": "2026-05-24",
+            "score": 4.5
+          }
+        ],
+        "trend": "持续上升并趋于稳定。",
+        "interpretation": "认知从 Agent/Memory 边界，到 Memory 写回治理，再到 Decision-Sufficient Information State，最后到跨 Agent 运行验证。不是简单任务堆叠。"
+      },
+      "cotCOTMaturity": {
+        "scoresByWeek": [
+          {
+            "week": "2026-05-03",
+            "score": 3.5
+          },
+          {
+            "week": "2026-05-10",
+            "score": 4
+          },
+          {
+            "week": "2026-05-17",
+            "score": 4
+          },
+          {
+            "week": "2026-05-24",
+            "score": 4.5
+          }
+        ],
+        "trend": "逐步成熟。",
+        "interpretation": "学生越来越能说明自己的增量不是老师不知道的概念，而是概念在 APT 数据集、Memory 治理、Working Memory 和 runtime 中的具体落地。缺点是仍少可证伪实验命题。"
+      },
+      "brainaryMapping": {
+        "scoresByWeek": [
+          {
+            "week": "2026-05-03",
+            "score": 3.5
+          },
+          {
+            "week": "2026-05-10",
+            "score": 4
+          },
+          {
+            "week": "2026-05-17",
+            "score": 4
+          },
+          {
+            "week": "2026-05-24",
+            "score": 4.5
+          }
+        ],
+        "trend": "从模块映射走向运行时系统映射。",
+        "interpretation": "早期主要映射 Long-term Memory、Working Memory、KG、Meta-Cognition；后期加入 Task Scheduler、Tool Registry、Artifact Store、Event Log、Multi-Agent Coordination，说明对 Brainary 的理解更系统。"
+      },
+      "valueReasoning": {
+        "scoresByWeek": [
+          {
+            "week": "2026-05-03",
+            "score": 3
+          },
+          {
+            "week": "2026-05-10",
+            "score": 3
+          },
+          {
+            "week": "2026-05-17",
+            "score": 3
+          },
+          {
+            "week": "2026-05-24",
+            "score": 3
+          }
+        ],
+        "trend": "基本停滞。",
+        "interpretation": "学生能连接用户、项目系统、数据集、Benchmark、平台和通用 Agent 能力，但金额一直是 3000 万人民币 + 500 万人民币，计算方法没有细化，未随产物形态变化而重估。价值函数稳定但不够可决策。"
+      },
+      "projectManagement": {
+        "scoresByWeek": [
+          {
+            "week": "2026-05-03",
+            "score": 3.5
+          },
+          {
+            "week": "2026-05-10",
+            "score": 3.5
+          },
+          {
+            "week": "2026-05-17",
+            "score": 4
+          },
+          {
+            "week": "2026-05-24",
+            "score": 4
+          }
+        ],
+        "trend": "结构完整度较高，但兑现压力增加。",
+        "interpretation": "能写人力、依赖、关键路径、成本、纠偏动作，并逐步把任务收敛到关键路径。但多个里程碑从 5 月中旬推到 5 月下旬，说明执行闭环仍需强约束。"
+      },
+      "automationPath": {
+        "scoresByWeek": [
+          {
+            "week": "2026-05-03",
+            "score": 3.5
+          },
+          {
+            "week": "2026-05-10",
+            "score": 3.5
+          },
+          {
+            "week": "2026-05-17",
+            "score": 4
+          },
+          {
+            "week": "2026-05-24",
+            "score": 4.5
+          }
+        ],
+        "trend": "明显增强。",
+        "interpretation": "自动化路径从 schema、workflow、memory builder、KG builder，推进到 working memory template、state update policy、integrated validation runtime、event log schema、case replay pipeline。更接近可复用系统。"
+      },
+      "empiricalEvidence": {
+        "scoresByWeek": [
+          {
+            "week": "2026-05-03",
+            "score": 2
+          },
+          {
+            "week": "2026-05-10",
+            "score": 2.5
+          },
+          {
+            "week": "2026-05-17",
+            "score": 2
+          },
+          {
+            "week": "2026-05-24",
+            "score": 3
+          }
+        ],
+        "trend": "低位缓慢上升。",
+        "interpretation": "一直承认需要实验验证。5 月 24 日开始用半个月真实数据集验证，是重要改善；但仍没有量化指标、完整 trace、baseline 对比或失败案例复盘。"
+      },
+      "nextStepQuality": {
+        "scoresByWeek": [
+          {
+            "week": "2026-05-03",
+            "score": 3
+          },
+          {
+            "week": "2026-05-10",
+            "score": 3
+          },
+          {
+            "week": "2026-05-17",
+            "score": 3.5
+          },
+          {
+            "week": "2026-05-24",
+            "score": 4
+          }
+        ],
+        "trend": "逐步从宽泛任务变成可验收动作。",
+        "interpretation": "最后一周的动作最具体：小时间窗口、evidence package、最小攻击注入、event log、artifact store、编码规范。教授应要求每个动作给出完成定义。"
+      }
     },
-    "valueFunctionChange": "学生连续四周对整体课题的估值均为 3000 万 + 500 万人民币，计算方法与依据未变。但在工作推进中，其价值判断的锚点从‘项目金额’逐渐转移到‘可运行、可复用、可验证的认知工程方法’。例如，第 2 周强调数据集应成为动态演绎机制，第 3 周抽象出 Decision‑Sufficient Information State，第 4 周明确‘真实数据验证是是否成立的关键’。这说明他逐渐认为工作值得做的核心理由是能够沉淀出一套可迁移的 Agent 认知架构与验证基础设施，而不仅仅是交付一个具体的 APT 数据集。这种转变尚未体现为金额的重估，但已通过 CoT 增量和个人反思反映出价值函数的深层修正：从‘值多少钱’转向‘能支撑多少后续研究和产品’。",
+    "valueFunctionChange": {
+      "stableValueFunction": "学生持续认为值得做的事情是：能服务真实 APT 攻防落地、能构建跨源可验证可对抗数据集、能沉淀 Benchmark、Agent workflow、Memory schema、KG schema、安全评测平台和论文的工作。买单方长期写为国家安全机构、网络安全厂商、科研院所、高校实验室和需要 APT 攻防评测平台的单位。",
+      "changeByWeek": [
+        {
+          "week": "2026-05-03",
+          "valueView": "价值主要来自 APT 数据集与 Benchmark 作为安全研究基础设施，同时连接 Agent + Memory 在复杂安全任务中的通用能力。",
+          "moneyReasoning": "写出 3000 万人民币 + 500 万人民币，依据国家重大科技专项项目预算，但没有拆分为数据集、平台、服务、工具链或论文价值。"
+        },
+        {
+          "week": "2026-05-10",
+          "valueView": "价值新增一层：Memory 不只是知识存储，而是数据集质量治理和演化机制。这使题目的价值从一次性数据集扩展到可长期维护的数据生产系统。",
+          "moneyReasoning": "金额没有变化，说明价值理解变深，但商业或项目估值模型没有更新。"
+        },
+        {
+          "week": "2026-05-17",
+          "valueView": "价值进一步连接到通用 Working Memory 设计方法，即从 APT 具体场景外溢为任意复杂 Agent 的 Cognitive State Abstraction。",
+          "moneyReasoning": "金额仍未变化，也没有说明通用 Working Memory 方法本身能否成为可售卖工具、平台能力或 Brainary 核心模块。"
+        },
+        {
+          "week": "2026-05-24",
+          "valueView": "价值开始从概念和 schema 转向 runtime、case replay、artifact store、event log 和多 Agent 验证框架，实际更接近可交付工程系统。",
+          "moneyReasoning": "金额仍未变化。周报没有把轻量级集成验证框架、真实数据 case replay、攻击注入 Agent 的交付价值单独估算。"
+        }
+      ],
+      "maturityJudgment": "价值函数方向正确但成熟度中等。它能连接金额、用户、通用能力、产物形式、Brainary 和自动化，但金额计算仍像项目预算口号，不像可决策估值。最缺的是：不同交付物的单独价值、最小付费用户、验收指标、替代方案成本和失败时的残值。",
+      "missingEvidence": [
+        "没有用户访谈、采购需求或项目申报书证据。",
+        "没有说明 3000 万人民币和 500 万人民币分别对应哪两个项目系统、各自交付边界是什么。",
+        "没有把数据集、Benchmark、Agent runtime、Memory schema、KG schema、case replay pipeline 分别估值。",
+        "没有说明网络安全厂商或国家安全机构会为哪个最小能力先付费。",
+        "没有把 Brainary 通用能力与 APT 专用产物的价值分摊清楚。"
+      ],
+      "professorInterpretation": "学生的价值观从“做一个有用的 APT 数据集”升级为“做一个可演化、可验证、可对抗、可自动化的安全数据生产和评测基础设施”。这是积极变化。但教授要压他把价值函数从宏观叙事变成可验收、可报价、可复用的模块清单。"
+    },
     "repeatedBlockers": [
-      "Long‑term Memory 自动构建始终未真正启动，停留在概念设计或 Schema 阶段",
-      "可解释日志异常检测的实验结果验证持续滞后，每周均以‘精力转向主项目’为由延期",
-      "APT 检测对抗安全评估（ProvBreak）的实验验证同样反复推迟，意图扰动策略未在检测模型上充分验证",
-      "主项目的 Working Memory 设计长期缺少真实任务闭环的量化效果验证，直到第 4 周才着手集成验证"
+      {
+        "blocker": "实验和运行验证持续滞后于架构设计",
+        "weeks": [
+          "2026-05-03",
+          "2026-05-10",
+          "2026-05-17",
+          "2026-05-24"
+        ],
+        "pattern": "每周都有新的 schema、方法论或框架，但完整实验结果、最小链路、意图扰动效果、case replay 和量化指标一直未闭环。",
+        "consequence": "研究容易停留在高级概念和系统设计，无法证明方法真的提高检测、溯源、数据集质量或 Agent 决策质量。",
+        "neededResolution": "下周必须交付一个端到端最小 case：真实数据小窗口分析、evidence package、攻击注入计划、实际痕迹、event log、artifact、Working Memory 更新和复盘报告。"
+      },
+      {
+        "blocker": "关键概念边界反复需要澄清",
+        "weeks": [
+          "2026-05-03",
+          "2026-05-10",
+          "2026-05-17",
+          "2026-05-24"
+        ],
+        "pattern": "反复讨论 Agent 边界、Long-term Memory 与 Execution Record 边界、Working Memory 与框架状态边界、Artifact 边界。",
+        "consequence": "边界意识是能力提升，但如果不固化规范，会拖慢多人协作和代码实现。",
+        "neededResolution": "冻结第一版规范：Agent 内部状态、框架运行状态、长期记忆、artifact、event log 的字段归属和引用规则。后续只允许通过变更记录修改。"
+      },
+      {
+        "blocker": "可解释日志异常检测论文实验推进慢",
+        "weeks": [
+          "2026-05-03",
+          "2026-05-10",
+          "2026-05-17"
+        ],
+        "pattern": "多次写需要补齐实验结果、验证 Findings 和证据推理是否带来提升。5 月 10 日有 Findings 全量提取，但后续仍称结构性推进较少。",
+        "consequence": "论文风险存在，且 evidence reasoning 的有效性缺少实验支撑，会削弱 APT 数据集构建叙事。",
+        "neededResolution": "明确一个截止日期和最小实验表：数据集、baseline、指标、Findings 质量、证据组合提升、失败案例。"
+      },
+      {
+        "blocker": "ProvBreak 对抗扰动缺少检测影响验证",
+        "weeks": [
+          "2026-05-03",
+          "2026-05-10",
+          "2026-05-17"
+        ],
+        "pattern": "从意图扰动、证据稀释、行为伪装，到 Strategy Memory 和 Deduction Agent Working Memory，概念联系增强，但没有报告对 Frequency baseline 或溯源模型判断的实际影响。",
+        "consequence": "Adversarial Strategy Agent 作为高对抗数据集来源的证据不足。",
+        "neededResolution": "至少完成 1 个扰动策略的 before/after：原始样本、扰动样本、检测结果变化、语义保真检查、标签保真检查。"
+      },
+      {
+        "blocker": "价值金额模型重复但未细化",
+        "weeks": [
+          "2026-05-03",
+          "2026-05-10",
+          "2026-05-17",
+          "2026-05-24"
+        ],
+        "pattern": "四周都写 3000 万人民币 + 500 万人民币，计算方法和参考依据几乎不变。",
+        "consequence": "说明学生知道要谈价值，但还没有形成可用于项目申报、产品化或资源分配的价值推理。",
+        "neededResolution": "把金额拆成至少 5 个可交付模块，并写明每个模块的用户、验收物、替代成本和估价依据。"
+      },
+      {
+        "blocker": "下一步动作有时仍偏大",
+        "weeks": [
+          "2026-05-03",
+          "2026-05-10",
+          "2026-05-17"
+        ],
+        "pattern": "前几周的下周动作包括跑实验、自动构建 Memory、KG 细化、多个 Agent 验证，范围较宽。",
+        "consequence": "容易导致每周都有进展但没有一个完成件。",
+        "neededResolution": "下周只认一个主闭环，其他任务降级为支持任务。"
+      }
     ],
-    "professorShouldAsk": "你提出的 Decision‑Sufficient Information State 设计方法，在多 Agent 和真实数据上初步跑通后，能否给出一个量化的自评指标？例如，通过对比有/无该设计策略时，证据链完整性、异常覆盖度、或者注入成功率等维度的差异，来证明它确实‘支撑了决策’。",
-    "nextBestIntervention": "要求学生在下次汇报时提交一份最小可运行的多 Agent case replay 报告，报告中必须包含：1) 该 case 中各 Agent 的 Working Memory 快照；2) 一次完整的证据链从发现到标签的追踪；3) 与现有简单脚本方案对比的定性分析。以此推动学生将理论自证扎根于可观察的实证，并倒逼其完善评价体系。"
+    "professorShouldAsk": [
+      "你下周能否只交付一个最小闭环 case？请定义输入、输出、运行步骤、成功标准和失败标准，不要再增加新概念。",
+      "半个月真实数据验证现在具体跑到了哪一步？有没有一个完整时间窗口的 Observation、Finding、Evidence、Hypothesis、artifact 和 event log？如果没有，缺哪一环？",
+      "Decision-Sufficient Information State 的最小字段模板是什么？哪些字段是所有 Agent 共享的，哪些必须放在 agent-specific state？",
+      "Working Memory、case state、event log、artifact store、Long-term Memory、Execution Record 的边界分别是什么？请用一个具体样例说明同一条证据分别存在哪里、如何引用。",
+      "攻击注入 Agent 的第一个最小注入样例是什么？注入前的预期证据、注入后的实际证据、验证结论、标签依据分别是什么？",
+      "真实数据分析溯源 Agent 是否已经能从小时间窗口生成可复盘 evidence package？如果不能，是解析问题、检索问题、证据标准问题，还是 Working Memory 字段问题？",
+      "可解释日志异常检测的 Findings 全量提取之后，实验表什么时候出来？有哪些指标能证明 observation 到 finding/evidence/hypothesis 的链路有效？",
+      "ProvBreak 的 1 个意图扰动策略到底有没有改变 Frequency baseline 或溯源模型判断？如果没有实验，为什么仍把它作为高对抗数据集构建的关键来源？",
+      "你写的 3000 万人民币 + 500 万人民币分别对应什么交付物？如果只交付 multi-agent working memory runtime，单独值多少钱？如果只交付 APT benchmark，单独值多少钱？",
+      "这 4 周最大的研究假设是什么？什么结果会证明它错了？"
+    ],
+    "nextBestIntervention": {
+      "interventionName": "冻结概念扩展，强制完成一个真实数据驱动的多 Agent 最小闭环",
+      "whyThisIntervention": "学生的抽象和系统设计能力已经足够继续推进，但当前最大风险是实证闭环不足。最优干预不是继续讲概念，而是要求他用一个真实 case 证明 Working Memory、Meta-Cognition、Artifact、Event Log 和多 Agent 协作真的能运行。",
+      "oneWeekDeliverable": "用半个月真实数据中的一个小时间窗口完成一个可复盘 case：真实数据分析溯源 Agent 生成 Observation、Finding、Evidence、Hypothesis；攻击注入 Agent 读取 evidence package 并生成最小注入计划、预期证据、实际痕迹和验证结论；所有中间产物写入 event log 和 artifact store；最后形成一页 case replay 报告。",
+      "acceptanceCriteria": [
+        "有固定目录结构和状态文件。",
+        "有至少两个 Agent 的 Working Memory 初始化、更新和归档记录。",
+        "有 event log，能按时间复盘任务执行。",
+        "有 artifact store 引用，能找到每个证据包和注入结果。",
+        "有一次失败或偏差记录，并说明 Meta-Cognition 如何触发修正。",
+        "有最小量化指标，例如证据链完整率、预期证据命中率、跨 Agent artifact 可追踪率、任务失败恢复次数。",
+        "有明确说明哪些字段被保留为通用模板，哪些字段被移入 agent-specific state。"
+      ],
+      "whatToStop": [
+        "暂停新增理论框架，例如继续扩展控制论、POMDP、信息论、认知科学叙事。",
+        "暂停新增 Agent 类型，除非最小闭环需要。",
+        "暂停泛泛重写价值叙事，改为拆分已有产物的金额模型。",
+        "暂停全量真实数据分析，先固定一个小时间窗口。"
+      ],
+      "whatProfessorShouldProvide": "教授应提供一次 30 分钟设计审查，只审三个问题：第一，Decision-Sufficient Information State 是否能作为 Working Memory 统一主线；第二，Working Memory、case state、artifact、event log、Long-term Memory 的边界是否可执行；第三，下周最小闭环的验收标准是否足够硬。",
+      "riskIfNotDone": "如果下周没有闭环，学生可能继续在高质量概念层面前进，但研究证据等级不会提高，项目会形成“看起来系统很完整、但没有一个 case 能跑通”的风险。"
+    }
   }
 }

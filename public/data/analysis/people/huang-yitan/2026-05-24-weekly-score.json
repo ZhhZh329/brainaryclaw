@@ -1,54 +1,91 @@
 {
   "key": "person:huang-yitan:2026-05-24:weekly-score",
-  "generatedAt": "2026-05-24T11:33:56.377Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "181ff068ff8b2bceb86e9a2e1cd8ecd714b10f1bd8d2c9aeb8c9225ead919e86",
+  "generatedAt": "2026-06-05T17:03:22.110Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "4d41b43bfd0947ce4c4afe375fb9e95f929f0662a00dd2e3addd810558ad2a99",
   "result": {
     "hardProgress": {
       "score": 15,
-      "reason": "本周新增2个现实BAC漏洞候选并拿到利用链，静态+动态结合的v4 pipeline初步跑通，实验计划从单点漏洞验证转向大规模实证研究，并有明确的数据资产规划。但漏洞尚未最终确认，pipeline仅初步闭环，大规模筛选尚未启动，硬进展仍处于初期落地阶段。",
-      "missingEvidence": "漏洞真实性复核未完成，pipeline未在真实大量样本上运行，样本筛选规则和清单未产出。"
+      "reason": "本周报告中有两类硬进展：一是新增 2 个现实 BAC 漏洞候选且声称已拿到利用链；二是静态+动态结合的 v4 pipeline 初步跑通，并形成 AuthzIntent、BACHypothesis、DynamicValidationPlan、oracle verdict、report schema 等中间结构。硬进展方向正确，且从单点漏洞转向实证研究是重要推进。但漏洞仍处于“候选/核查阶段”，pipeline 也只是“初步跑通”，缺少可审计产物，因此不能给满分。",
+      "missingEvidence": [
+        "2 个新增现实漏洞的最小 PoC、触发请求、响应证据、影响边界和根因路径尚未提供。",
+        "v4 pipeline 跑通的具体样本项目、运行日志、输入输出示例、oracle verdict 示例缺失。",
+        "没有展示新增中间表示的实际 JSON/schema 样例或一次完整链路报告。"
+      ]
     },
     "cognitiveIncrement": {
       "score": 13,
-      "reason": "报告提炼了三点重要认知：从单一agent命中能力升级为系统性风险解释；明确静态分析仅生成假设，确认权交给oracle；提出agent需要长期统一取向核心。认知有深度且与系统设计直接关联。",
-      "missingEvidence": "认知更新主要基于当前设计和少量案例，尚未通过系统实验验证，如实证研究的分布统计、诚实性约束的误报影响等。"
+      "reason": "认知增量较强，主要体现在三个转变：从“agent 能否找到漏洞”转向“真实项目中 BAC 风险分布和自动化边界”；从“静态确认漏洞”转向“静态只生成授权假设，动态和 oracle 才能确认”；从短期推理链转向长期研究取向核心。这些增量直接改变实验设计、证据标准和 agent 架构，属于有效认知更新。",
+      "missingEvidence": [
+        "尚未用样本级统计证明从单点漏洞到实证研究的转向会带来更强论文证据。",
+        "长期取向核心目前仍是概念设计，缺少实际 memory/policy/replanning 的运行案例。"
+      ]
     },
     "cot2Depth": {
-      "score": 14,
-      "reason": "三个CoT's CoT分别涉及agent意识层次、证据权力分配、大规模实验痕迹设计，并给出沉淀路径和证据等级（B或C），反思层次较深，与Brainary框架有明确映射。",
-      "missingEvidence": "CoT之CoT的证据等级多为C或B，缺乏系统实验对比数据，例如对比不同证据分层对finding准确率的影响。"
+      "score": 12,
+      "reason": "CoT's CoT 写出了三层反思：agent 长期自我取向、证据权力分配、失败痕迹数据化。每一项都说明了为什么尚未被自动化科研吸收，并给出 workflow、module、benchmark、memory schema 等沉淀路径。深度较好。但第一项偏哲学类比，和当前 BAC 实验的直接证据连接较弱；三项都承认老师原本可能已知道，因此新颖性主要在工程落地而非概念本身。",
+      "missingEvidence": [
+        "缺少 Self-Orientation Core 的具体接口、状态字段和更新规则。",
+        "缺少 Evidence Authority Controller 在 pipeline 中实际阻止错误 confirmed 的案例。",
+        "缺少失败原因结构化记录在真实样本上产生统计价值的初步表格。"
+      ]
     },
     "brainaryMapping": {
-      "score": 8,
-      "reason": "详细关联了Brainary的Target Understanding、Self-ability Understanding、Confidence、Architecture Modeling等十余层能力，并指出当前映射的转化潜力和差距，覆盖面广。",
-      "missingEvidence": "映射仍停留在设计层面，未通过大规模样本验证是否真正提高了confirmed finding的质量和实验可信度。"
+      "score": 9,
+      "reason": "Brainary 映射非常完整，覆盖 Target Understanding、Self-ability Understanding、Confidence、Architecture Modeling、Solving、Evaluation、Working Memory、Long-Term Memory、Monitoring、Project Management 等层，并能对应到具体 BAC agent 模块和状态字段。不是泛泛贴标签，而是把 AuthzIntent、BACHypothesis、runtime profile、oracle judge、not_executed 等对象映射到 Brainary 能力。扣分点是映射面很广，但尚未说明哪些 Brainary 节点是当前最关键瓶颈、哪些只是计划性对应。",
+      "missingEvidence": [
+        "缺少一张实际 Brainary 到 v4 pipeline 的节点级映射表或执行 trace。",
+        "缺少说明 Brainary 映射如何改变了具体工程决策或提升了结果质量。"
+      ]
     },
     "monetaryValue": {
-      "score": 8,
-      "reason": "任务一估值4万，任务二估值5万，基于v4架构创新、现实漏洞经济价值和数据集潜力，估算合理且有支撑。",
-      "missingEvidence": "漏洞尚未完成披露或确认，实际奖金或论文定价未实现；大规模样本池尚未建立，数据资产价值有待验证。"
+      "score": 7,
+      "reason": "报告明确给出金额：agent 架构改进估值 4 万人民币，真实应用挖掘与实证研究数据资产估值 5 万人民币，并说明了估值依据，包括论文系统贡献、真实漏洞经济价值、数据集和评测协议价值。金额表达符合模板要求。但估值仍较主观，且新增漏洞尚未确认，v4 pipeline 尚无规模化结果，当前金额更多是潜在价值而非已兑现价值。",
+      "missingEvidence": [
+        "缺少漏洞可能对应的实际 bounty 区间、厂商响应或 CVSS/影响等级。",
+        "缺少样本数据集建设的人力替代成本估算明细。",
+        "缺少 v4 pipeline 相比现有 SAST/DAST/agent 的经济收益或误报降低数据。"
+      ]
     },
     "projectManagement": {
       "score": 13,
-      "reason": "项目管理部分明确了当前阶段、时间里程碑（5月30日、6月7日、6月21日）、资源依赖、token成本估算和纠偏动作，规划清晰且关键路径明确。",
-      "missingEvidence": "样本筛选规则和漏洞披露节奏尚需老师确认，大规模实验的资源瓶颈和成本细节未细化。"
+      "reason": "项目管理信息较完整：写明当前阶段、原计划与实际完成、投入时间、下周时间、里程碑、资源需求、外部支持、依赖关系、关键路径、成本规划、偏差原因和纠偏动作。尤其是把大规模样本筛选识别为关键路径，并提出费用控制方案，项目管理质量较高。扣分点是关键里程碑仍偏计划，没有绑定可验收交付物编号或产物链接。",
+      "missingEvidence": [
+        "缺少本周实际交付物清单，例如代码 commit、实验目录、报告文件、漏洞复核文档。",
+        "缺少样本筛选规则的初稿或字段模板。",
+        "缺少风险优先级排序，例如披露风险、成本风险、样本不可运行风险各自的应对阈值。"
+      ]
     },
     "nextAction": {
       "score": 9,
-      "reason": "下周行动具体、可验证：筛出第一批高优先级样本清单，复核新增2个漏洞，在少量样本上跑v4 pipeline并分类not_executed原因，同时整理CVE可复现性。",
-      "missingEvidence": "暂无。"
+      "reason": "下周动作具体且可验证：形成第一批高优先级样本清单；对 2 个漏洞产出最小 PoC、触发条件、影响边界和根因路径；整理第一批 BAC CVE 并分为可复现、待复现、不可复现；在少量样本上跑 v4 pipeline；把 not_executed 原因标准化。这些动作都能直接推动当前关键路径。",
+      "missingEvidence": [
+        "未明确第一批样本的目标数量，例如 10 个、20 个或 50 个。",
+        "未明确少量项目跑 v4 pipeline 的验收标准，例如每个项目至少几个 endpoint、几个身份、几个 probe。",
+        "未明确 2 个现实漏洞复核的完成判定标准和披露安全边界。"
+      ]
     },
     "evidenceQuality": {
       "score": 3,
-      "reason": "提供了一定证据：漏洞候选、pipeline设计、实验计划，但缺少具体证据输出，如利用链细节、pipeline实际运行日志、样本筛选规则初稿等。",
-      "missingEvidence": "缺乏可核验的证据材料，如pipeline各节点的实际输出片段、现实漏洞的利用步骤截图或日志、样本筛选规则的草稿。"
+      "reason": "报告内部结构清晰，也主动标注了 CoT's CoT 证据等级，能区分 B/C 级证据，说明证据意识较好。但当前证据主要是自述，没有附带可独立检查的日志、PoC、代码、截图、实验结果表或项目名称。对于安全漏洞和 pipeline 跑通这类强事实主张，现有证据质量只能算中等偏弱。",
+      "missingEvidence": [
+        "缺少漏洞复现材料。",
+        "缺少 v4 pipeline 执行日志和输出样例。",
+        "缺少样本池初稿或 CVE 列表。",
+        "缺少 oracle 判断的具体证据格式。"
+      ]
     },
-    "totalScore": 83,
+    "totalScore": 81,
     "tier": "A",
-    "oneLineJudgment": "本周在硬进展和认知重构上均有实质推进，v4 pipeline闭环和实证研究转向是关键突破，但落地证据尚不充分，需加速从设计到统计的过渡。",
-    "professorFollowUp": "建议确认样本筛选标准与漏洞披露策略，并关注v4 pipeline在少量真实项目上的诚实性记录与实际效果，以判断大规模实验的可行性。"
+    "oneLineJudgment": "本周从单点漏洞挖掘推进到可发表的实证研究框架，并初步跑通静动结合 pipeline，但关键事实仍需要 PoC、日志、样本表和 oracle 证据来支撑。",
+    "professorFollowUp": [
+      "请优先确认大规模样本筛选标准，避免后续 evaluation 因样本口径不稳而失去说服力。",
+      "请要求学生下周必须交付 2 个现实漏洞的最小 PoC、触发条件、影响边界和根因路径，否则漏洞价值仍只能按候选计算。",
+      "请要求学生提供一次 v4 pipeline 的完整执行 trace：从 AuthzIntent 到 BACHypothesis、DynamicValidationPlan、probe result、oracle verdict、final report。",
+      "请提醒学生把 not_executed 当作正式实验结果，而不是工程失败；这是这周最值得教授抓住的核心：BAC 自动化研究的可信度来自对执行条件和失败原因的诚实记录。",
+      "请控制哲学类比的篇幅，把“长期统一取向核心”尽快落成 memory schema、policy 和 replanning 机制，否则会停留在元认知表达。"
+    ]
   }
 }

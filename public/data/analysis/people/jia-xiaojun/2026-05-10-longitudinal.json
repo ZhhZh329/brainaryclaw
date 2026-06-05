@@ -1,43 +1,323 @@
 {
   "key": "person:jia-xiaojun:2026-05-10:longitudinal",
-  "generatedAt": "2026-05-24T11:48:37.540Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "7d30b021cedcd4dfeb615b5bcd0c76b2fcbf05d1e7577b2886812e97a86521e5",
+  "generatedAt": "2026-06-05T17:04:32.623Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "4d1f202ff6e55110fa503e53618d8d090042abd0816b4d83f34f49c056911c7d",
   "result": {
-    "overallTrajectory": "从发现图像隐藏指令导致 skill 扫描器结构性失效，到提出 SkillJect 攻击框架，再到 DNSS 与 Seeing Is Not Screening 两篇论文闭环，题目轨迹持续向“执行语义安全”收敛。硬进展从想法逐渐资产化为完整论文与实验，认知从具体方法上升至扫描范式与方法论，CoT's CoT 与 Brainary 映射日臻成熟。但项目管理上始终卡在论文 claim 与证据对齐，缺乏突破性进展，显示出论文写作自动化的缺失。整体研究能力显著提升，但需外部干预突破写作瓶颈。",
+    "overallTrajectory": {
+      "verdict": "学生在变得更有研究能力，不只是更忙；但提升主要体现在问题重构、实验闭环、论文主张压缩意识上，尚未充分体现在可复用系统、自动化流程和外部价值验证上。",
+      "confidence": "中等。周报提供了实验指标、论文状态、benchmark 和方法名，但没有提供代码、论文版本、实验日志、API 链路或真实用户反馈，因此只能判断研究能力趋势，不能完全验证产出质量。",
+      "mainChange": "从第1周识别“scanner 没有看执行语义”这个结构性问题，到第4周能把问题压成“scanner 的观察视角与 multimodal agent 的执行视角错位”，认知表述更精确；同时从数据集雏形推进到 attack、defense、benchmark、论文闭环。",
+      "notJustBusyEvidence": [
+        "不是单纯增加任务量，而是连续围绕 agent skill 安全、prompt injection、scanner blind spot、execution-grounded scanning 做问题深化。",
+        "每周都能给出较具体的实验指标，例如 ASR、Recall、FPR、F1、scanner 检测率、跨模型结果，而不是只报告阅读或写作时间。",
+        "能反复识别 claim–evidence–limitation 对齐问题，说明开始从做实验转向构造可发表论证。"
+      ],
+      "remainingRisk": [
+        "多个题名和版本之间关系不清：SkillJect、DNSS、《Seeing Is Not Screening》是同一工作演化、并行论文，还是拆分成果，周报没有交代清楚。",
+        "重复卡在“主 claim 压实”和“claim–evidence 对齐”，说明他已经意识到论文结构问题，但还没有形成稳定解决机制。",
+        "Brainary 映射目前多是能力标签，还没有变成模块接口、数据结构、自动化工作流或可复用资产说明。",
+        "价值金额判断仍偏主观，没有用户、采购方、竞品、定价、部署场景或转化路径证据。"
+      ]
+    },
     "stageByWeek": [
       {
         "week": "2026-03-22",
-        "stage": "提出图像隐藏指令导致 scanner 失效的认知，定义新问题，构建 benchmark，计划打通 API 测试。为后续攻击和防御奠定基础。"
+        "stage": "问题发现与 benchmark 雏形期",
+        "topicTrajectory": "主线是 skill scanner 对图像隐藏恶意指令失效，提出基于执行语义模拟的多模态检测框架，并开始收集恶意 skill benchmark。",
+        "hardProgress": "整理恶意 skill 共 718 个，初步提出 execution semantic simulation 框架；但批量 scanner API 尚未打通。",
+        "cognitiveTrend": "关键认知是把 skill scan 从内容安全问题重构为 agent skill 的执行语义安全问题。这是较强的问题定义能力。",
+        "cotCotMaturity": "能说明老师可能还没有系统化沉淀的点：缺少 benchmark、workflow 和 reusable module。成熟度中等偏高。",
+        "brainaryMapping": "映射到多模态 agent skill 风险理解、执行语义模拟、批量安全评测三个模块；但仍是概念标签，缺少模块输入输出定义。",
+        "valueReasoning": "估值 50万–150万元，理由是安全扫描工具、企业评测服务、benchmark/toolkit 转化价值。价值函数偏市场和工具化，但缺少客户与支付证据。",
+        "projectManagement": "下周动作清楚：补 SkillJect 恶意 skill、打通 scanner API 测试链路。动作可验证性较好。",
+        "evidenceLevel": "中等。数据规模明确，但没有说明数据质量、去重、标签标准、API 计划和评测协议。"
       },
       {
         "week": "2026-04-19",
-        "stage": "完成 SkillJect 论文主文与实验闭环，ASR 达 82.1%，认知转向论文写作本质，开始关注 claim-evidence 对齐。"
+        "stage": "论文闭环与核心实验收敛期",
+        "topicTrajectory": "从 scanner blind spot 转到 SkillJect 自动化 prompt injection 论文，强调 Attack/Victim/Evaluate 三代理闭环、payload hiding 和 trace-based refinement。",
+        "hardProgress": "论文主文基本完成，主实验总体 ASR 82.1%，强模型 30 条子集 ASR 60.1%，prompt-based defense 将 ASR 从 97.3% 降到 48.3%。",
+        "cognitiveTrend": "从发现问题转向论证结构，认识到论文写作是 claim 对 evidence 的压缩映射。",
+        "cotCotMaturity": "能把个人认知增量上升为可自动化问题：claim-check、evidence alignment、limitation drafting workflow。成熟度提升。",
+        "brainaryMapping": "映射到论文级证据对齐、实验归因、安全 benchmark 组织能力；但仍未说明如何沉淀为 Brainary 节点、模板或自动检查器。",
+        "valueReasoning": "估值 30万–80万元，依据是投稿成果、benchmark/toolkit、agent 安全评测能力。价值函数从市场工具稍微转向论文资产。",
+        "projectManagement": "下周动作是补消融、统计显著性、checklist、claim–evidence 对齐。方向正确，但没有明确最小实验清单。",
+        "evidenceLevel": "中等偏高。指标较具体，但强模型只用 30 条子集，统计显著性尚未补齐。"
       },
       {
         "week": "2026-04-26",
-        "stage": "DNSS 版本论文闭环，强调 front-loaded 策略与 refinement，实验丰富，认知加深为“主张-证据-边界”稳定结构。"
+        "stage": "DNSS 版本论文强化期",
+        "topicTrajectory": "报告称完成 DNSS 版本主文，方法为 front-loaded inducement、payload hiding、feedback refinement。与 SkillJect 关系不清，可能是改名、扩展版或另一个版本。",
+        "hardProgress": "Claude Code 平均 ASR 80.7%，OpenClaw 80.5%，强模型整体 68.4%；与 Skill-Inject 公平对比从 32.3% 提升到 69.1%；补充迁移、scanner 检测和消融。",
+        "cognitiveTrend": "继续强化“主张—证据—边界”的论文压缩意识，说明他已经进入研究表达层面的迭代。",
+        "cotCotMaturity": "成熟度与上一周相近，主要是重复强化 claim–evidence 对齐，新增认知有限。",
+        "brainaryMapping": "仍是论文级证据对齐、实验归因、攻击/防御 benchmark 组织能力；没有看到新的 Brainary 结构化沉淀。",
+        "valueReasoning": "估值 30万–80万元，理由与上一周类似。价值函数稳定但没有新增外部验证。",
+        "projectManagement": "下周动作仍是精修稿件、压实 claim、limitations、rebuttal-ready 版本。可执行但偏写作收敛，缺少明确完成标准。",
+        "evidenceLevel": "中等偏高。实验维度更完整，但周报未给出样本规模、统计检验、scanner 列表和失败案例。"
       },
       {
         "week": "2026-05-10",
-        "stage": "Seeing Is Not Screening 论文闭环，提出 SkillCamouflage 与 ExecScan，揭示 scanner 与 agent 执行视角错位，认知跃升至扫描范式层面。"
+        "stage": "Seeing Is Not Screening 成稿与 attack-defense 合流期",
+        "topicTrajectory": "回到第1周的 scanner 图像盲区问题，形成《Seeing Is Not Screening》，提出攻击 SkillCamouflage 和防御 ExecScan。",
+        "hardProgress": "完成主文和核心实验闭环；benchmark 包含 100 个良性 skill、7 个 scanner；SCfull 在多个 scanner 上 ASR 78%–100%；ExecScan 将图像攻击 ASR 降到 8% / 31% / 17%，Recall 86.0%、FPR 2.0%、F1 92.2。",
+        "cognitiveTrend": "认知更精确：不是“图片里也能藏指令”，而是 scanner 观察视角与 agent 执行视角不一致。这是比第1周更成熟的问题机制化表达。",
+        "cotCotMaturity": "较成熟。能区分现象、机制、workflow 缺口，并提出 execution-grounded multimodal scanning 作为可沉淀方向。",
+        "brainaryMapping": "映射到多模态 skill 风险理解、execution simulation、scanner benchmark 评测；比前几周更贴近一个可复用系统，但仍缺模块接口、数据格式和自动化运行方案。",
+        "valueReasoning": "估值 50万–120万元，依据是投稿论文、benchmark setting、attack framework、defense prototype、scanner/toolkit/评测服务。价值函数重新接回工具和服务转化，比中间两周更完整。",
+        "projectManagement": "下周动作是精修主文、补 limitations/checklist/submission-ready，并做 claim–evidence 对齐。动作合理，但仍没有解决反复出现的 claim 选择问题。",
+        "evidenceLevel": "中等偏高。指标具体，但缺少 benchmark 构造细节、7 个 scanner 名单、良性集来源、FPR 计算方式和真实部署评测。"
       }
     ],
     "trendScores": {
-      "题目收敛度": 8,
-      "硬进展量": 9,
-      "认知深度": 9,
-      "CoT's CoT成熟度": 8,
-      "Brainary映射成熟度": 8,
-      "价值推理具体化": 7,
-      "项目管理稳定性": 6,
-      "下一步动作质量": 7
+      "researchCapability": {
+        "score": 4,
+        "max": 5,
+        "trend": "上升",
+        "reason": "从问题定义、实验闭环到论文主张压缩都有进步；尤其能从单一攻击现象抽象到执行视角错位这一机制。扣分点是产物边界、自动化沉淀和价值验证仍不清。"
+      },
+      "hardProgress": {
+        "score": 4,
+        "max": 5,
+        "trend": "上升但需验收",
+        "reason": "连续报告 benchmark、论文主文、核心实验、消融、迁移、防御指标；但缺少外部可复现材料和版本关系说明。"
+      },
+      "cognitiveIncrement": {
+        "score": 4,
+        "max": 5,
+        "trend": "明显上升",
+        "reason": "第1周是执行语义扫描，第4周升级为 scanner 观察视角与 agent 执行视角错位，抽象层次更高。"
+      },
+      "cotCotMaturity": {
+        "score": 4,
+        "max": 5,
+        "trend": "上升后趋稳",
+        "reason": "能讲清老师应学到的新东西、为什么尚未进入自动化科研、哪些 workflow 需要沉淀；但多周重复 claim–evidence，没有展示自己实际构建了自动检查机制。"
+      },
+      "brainaryMappingMaturity": {
+        "score": 3,
+        "max": 5,
+        "trend": "小幅上升",
+        "reason": "Brainary 映射稳定围绕多模态风险理解、execution simulation、benchmark、证据对齐；但仍停留在能力名词，没有模块边界、输入输出、复用路径和自动化接口。"
+      },
+      "metaCognition": {
+        "score": 4,
+        "max": 5,
+        "trend": "上升",
+        "reason": "能识别真正值得自动化的不是写作表面，而是 claim–evidence–limitation 一致性和执行阶段隐含指令恢复。"
+      },
+      "valueReasoning": {
+        "score": 3,
+        "max": 5,
+        "trend": "从市场想象到论文资产再回到工具化，但证据不足",
+        "reason": "能连接金额、论文、benchmark、toolkit、评测服务，但金额区间缺少用户、采购、定价、竞品和转化概率依据。"
+      },
+      "projectManagement": {
+        "score": 3,
+        "max": 5,
+        "trend": "中等稳定",
+        "reason": "每周有最小动作，但反复是精修、压实 claim、补 checklist；缺少里程碑验收标准、责任拆分、风险优先级和自动化交付物。"
+      },
+      "automationPath": {
+        "score": 2,
+        "max": 5,
+        "trend": "认知上升，落地证据不足",
+        "reason": "学生多次指出应自动化 claim-check、evidence alignment、limitation drafting、execution-grounded scanning，但周报没有证据显示已经实现稳定 workflow 或工具链。"
+      },
+      "evidenceLevel": {
+        "score": 3,
+        "max": 5,
+        "trend": "中等偏上",
+        "reason": "实验数字具体，但缺少可复现细节、数据来源、统计显著性、失败案例和外部评测。"
+      }
     },
-    "valueFunctionChange": "最初认为 skill 安全扫描的价值在于发现新攻击面与提供扫描工具，估值 50–150 万；随后在论文写作中逐渐看重“claim-evidence 对齐”与“实验资产化”，估值稳定在 30–80 万；到第四周，价值认知升级为“建立 execution-grounded 扫描范式”，并明确可转化的具体产物（论文、benchmark、attack framework、defense prototype、scanner/toolkit/评测服务），估值 50–120 万。总体而言，价值函数从单纯的技术发现，转向系统化、可复现、可自动化的研究框架与 Brainary 能力沉淀，连接金额、用户、通用能力与自动化路径的清晰度持续增强。",
-    "repeatedBlockers": "论文主 claim 与证据的对齐问题反复出现，周 2 至周 4 均作为核心卡点，表明学生尚未内化一套稳定的 claim 提炼与验证流程，写作自动化程度不足。",
-    "professorShouldAsk": "如果你只能选一个核心贡献来讲这个故事，你会选“图像隐藏指令暴露出 scanner 结构性盲区”还是“execution-grounded scanning 是下一代防御框架”？为什么？哪种选择更能让论文成为该领域的奠基性工作？",
-    "nextBestIntervention": "与学生进行一次 30 分钟的一对一讨论，帮助其明确论文的唯一主 claim，并基于此重新组织实验证据链，提供一份一页的 claim-evidence mapping 模板，要求在下周周报中完成填写。同时建议引入自动化 claim-check 脚本，初步实现写作流程的机械化。"
+    "valueFunctionChange": {
+      "summary": "价值函数从“安全扫描工具和企业评测服务”开始，中间转向“投稿论文和实验资产”，最后尝试把论文、benchmark、attack framework、defense prototype、scanner/toolkit/评测服务重新连接起来。变化方向是好的，但金额判断仍主要是自我估计。",
+      "byWeek": [
+        {
+          "week": "2026-03-22",
+          "whatWorthDoing": "值得做的是把 scanner 的检测对象从文本/静态规则扩展到执行语义，并建设 skill scan benchmark。",
+          "whyWorthDoing": "因为现有 scanner 存在结构性失效，且 benchmark/toolkit 可转化为企业级评测和安全扫描工具。",
+          "moneyConnection": "给出 50万–150万元估值，但没有用户或采购证据。",
+          "userConnection": "隐含用户是 agent 安全扫描工具使用者和企业安全团队，但未具体定义。",
+          "generalCapabilityConnection": "连接到执行语义模拟、多模态风险理解、批量安全评测。",
+          "artifactConnection": "benchmark 雏形和检测框架。",
+          "brainaryConnection": "多模态 agent skill 风险理解、执行语义模拟、批量安全评测。",
+          "automationConnection": "提到缺 workflow 和 reusable module，但没有实现证据。"
+        },
+        {
+          "week": "2026-04-19",
+          "whatWorthDoing": "值得做的是把 SkillJect 论文写成 claim 与 evidence 严格对齐的成果。",
+          "whyWorthDoing": "因为结果已能支持投稿和后续 benchmark/toolkit。",
+          "moneyConnection": "估值 30万–80万元，金额较第1周下降，价值依据更偏论文资产。",
+          "userConnection": "用户连接变弱，更多面向审稿人与研究社区。",
+          "generalCapabilityConnection": "论文级证据对齐、实验归因、limitation drafting。",
+          "artifactConnection": "论文主文、核心实验、defense 分析。",
+          "brainaryConnection": "论文级证据对齐和安全 benchmark 组织能力。",
+          "automationConnection": "提出 claim-check、evidence alignment、limitation drafting workflow。"
+        },
+        {
+          "week": "2026-04-26",
+          "whatWorthDoing": "值得做的是把 DNSS 版本压成强主 claim，并使结果支撑自动化生成有效恶意 skill 与现有防御系统性缺口。",
+          "whyWorthDoing": "因为实验闭环已较完整，核心瓶颈转为论文论证结构。",
+          "moneyConnection": "仍为 30万–80万元，价值估计稳定但没有新增证据。",
+          "userConnection": "仍主要面向投稿、benchmark 和 scanner/评测工具原型，具体用户缺失。",
+          "generalCapabilityConnection": "实验归因、攻击/防御 benchmark 组织、论文论证压缩。",
+          "artifactConnection": "DNSS 主文、迁移实验、scanner 检测、消融。",
+          "brainaryConnection": "与前一周类似，未明显深化。",
+          "automationConnection": "继续强调 claim–evidence workflow，但未展示工具化。"
+        },
+        {
+          "week": "2026-05-10",
+          "whatWorthDoing": "值得做的是把图像隐藏指令的 scanner blind spot 与 execution-grounded multimodal scanning 统一为一篇 attack-defense 论文。",
+          "whyWorthDoing": "因为它揭示了 scanner 观察视角与 agent 执行视角错位，可形成论文、benchmark、攻击框架、防御原型和评测服务。",
+          "moneyConnection": "估值 50万–120万元，重新把论文资产和工具服务连接起来。",
+          "userConnection": "隐含用户是 scanner 开发者、企业 agent 安全部门、评测服务客户，但仍无真实访谈或采购证据。",
+          "generalCapabilityConnection": "执行模拟、多模态意图恢复、scanner benchmark、attack-defense 评测。",
+          "artifactConnection": "《Seeing Is Not Screening》主文、SkillCamouflage、ExecScan、100 良性 skill benchmark、7 scanner 评测。",
+          "brainaryConnection": "从 artifact-level scanning 提升到 execution-level scanning，是 Brainary 映射中最清晰的一次。",
+          "automationConnection": "提出 execution-grounded multimodal scanning workflow，但是否自动化实现仍缺证据。"
+        }
+      ],
+      "diagnosis": [
+        "学生的价值观正在从“做出一个攻击/实验”转向“形成可发表、可复用、可工具化的研究资产”。",
+        "他开始能同时考虑金额、论文、benchmark、toolkit、评测服务和 Brainary，但用户与金额仍是弱连接。",
+        "价值函数的最大缺口是没有把‘谁会付钱、为什么现在付、替代方案是什么、单次评测或工具订阅如何定价’说清楚。",
+        "如果只看学术价值，方向变清楚；如果看货币价值，证据仍不足。"
+      ]
+    },
+    "repeatedBlockers": [
+      {
+        "blocker": "反复无法一次性压清主 claim",
+        "weeksAppeared": [
+          "2026-04-19",
+          "2026-04-26",
+          "2026-05-10"
+        ],
+        "meaning": "学生已从做实验进入论文论证阶段，但 claim 选择和证据映射仍依赖人工反复打磨，没有稳定模板。",
+        "risk": "如果不解决，论文会呈现为 attack、defense、benchmark 的堆叠，而不是一个中心机制驱动的贡献。"
+      },
+      {
+        "blocker": "claim–evidence–limitation 自动化只停留在认知，没有落地",
+        "weeksAppeared": [
+          "2026-04-19",
+          "2026-04-26",
+          "2026-05-10"
+        ],
+        "meaning": "多次提出应自动化，但没有报告具体脚本、表格、检查器或流程产物。",
+        "risk": "会导致每篇论文都重新经历同样的写作卡点，难以形成可复制研究能力。"
+      },
+      {
+        "blocker": "项目命名和版本关系不清",
+        "weeksAppeared": [
+          "2026-04-19",
+          "2026-04-26",
+          "2026-05-10"
+        ],
+        "meaning": "SkillJect、DNSS、Seeing Is Not Screening、SkillCamouflage、ExecScan 之间的关系没有被解释清楚。",
+        "risk": "教授难以判断这是一个成果的迭代、多个可投稿论文，还是范围失控。"
+      },
+      {
+        "blocker": "API 和自动批量评测链路证据不足",
+        "weeksAppeared": [
+          "2026-03-22",
+          "2026-05-10"
+        ],
+        "meaning": "第1周明确缺 scanner API；第4周虽报告 7 个 scanner 评测，但没有说明 API 链路是否稳定、是否可复现。",
+        "risk": "benchmark 和评测服务价值无法真正成立。"
+      },
+      {
+        "blocker": "价值金额缺少外部证据",
+        "weeksAppeared": [
+          "2026-03-22",
+          "2026-04-19",
+          "2026-04-26",
+          "2026-05-10"
+        ],
+        "meaning": "每周都有金额估计，但没有用户访谈、采购场景、竞品价格、服务包或转化概率。",
+        "risk": "容易把论文资产价值和商业价值混为一谈。"
+      },
+      {
+        "blocker": "Brainary 映射偏标签化",
+        "weeksAppeared": [
+          "2026-03-22",
+          "2026-04-19",
+          "2026-04-26",
+          "2026-05-10"
+        ],
+        "meaning": "能说出对应能力模块，但没有说明模块如何被调用、复用、组合、评价和自动化。",
+        "risk": "Brainary 只是周报术语，不会变成实验和写作生产力。"
+      }
+    ],
+    "professorShouldAsk": [
+      {
+        "question": "SkillJect、DNSS、《Seeing Is Not Screening》三者到底是什么关系？",
+        "why": "这是判断学生是在聚焦深化，还是同时铺太多摊子的关键。请他画一张项目谱系图：问题、方法、数据、实验、论文目标、投稿 venue、复用资产分别是什么。"
+      },
+      {
+        "question": "这篇《Seeing Is Not Screening》的唯一中心 claim 是什么？",
+        "why": "当前学生自己也不确定中心是“图像隐藏指令 blind spot”还是“execution-grounded multimodal scanning”。教授需要逼他二选一或明确主从关系。"
+      },
+      {
+        "question": "每个主 claim 对应的最小证据表是什么？",
+        "why": "要求他提交一张表：claim、必要实验、当前结果、缺失证据、limitation、最可能被审稿人攻击的点。"
+      },
+      {
+        "question": "ExecScan 的真实增量来自哪里？",
+        "why": "要区分是多模态识别能力、执行模拟、intent extraction、behavior reconstruction，还是 deliberative simulation 带来的增益；否则 defense claim 不稳。"
+      },
+      {
+        "question": "第1周缺 scanner API 的问题是否已经解决？如果解决，自动化链路在哪里？",
+        "why": "这决定 benchmark 和评测服务是否是可复用资产，而不只是一次性实验。"
+      },
+      {
+        "question": "100 个良性 skill 和恶意样本的构造、标注、去重、难度分层和泄漏控制是什么？",
+        "why": "这是 FPR、Recall、ASR 是否可信的基础。周报中证据缺失。"
+      },
+      {
+        "question": "金额估值的最小外部证据是什么？",
+        "why": "要求他至少给出三个潜在用户画像、两个竞品或替代方案、一个服务定价假设、一个实际可卖的产物形式。"
+      },
+      {
+        "question": "本周是否已经沉淀了任何 Brainary 或自动化模块？",
+        "why": "如果没有，要求他不要只写‘对应 Brainary’，而要交付一个可复用模板、脚本、数据 schema 或自动检查器。"
+      }
+    ],
+    "nextBestIntervention": {
+      "intervention": "让学生暂停新增实验 2–3 天，先完成一个“论文主张—证据—资产—价值”验收包。",
+      "deliverables": [
+        {
+          "name": "一页项目谱系图",
+          "content": "说明 SkillJect、DNSS、《Seeing Is Not Screening》、SkillCamouflage、ExecScan 的关系：哪些是同一论文，哪些是方法组件，哪些是可复用资产。"
+        },
+        {
+          "name": "claim–evidence 矩阵",
+          "content": "每个 claim 必须对应必要实验、当前指标、缺失证据、失败案例、limitation 和审稿风险。没有证据的 claim 删除或降级。"
+        },
+        {
+          "name": "Brainary 模块卡",
+          "content": "至少沉淀三个模块卡：多模态 skill 风险理解、execution simulation、scanner benchmark。每张卡写清输入、输出、调用方式、评价指标、可复用场景。"
+        },
+        {
+          "name": "自动化最小原型",
+          "content": "做一个最小 claim-check 脚本或表格工作流，自动检查论文中的 claim 是否有对应实验编号、表格编号、limitation 和 rebuttal 预案。"
+        },
+        {
+          "name": "价值验证小表",
+          "content": "列出潜在付费用户、痛点、现有替代方案、可能定价、交付形式、为什么比人工 scanner audit 更好。没有外部证据的金额估值标为假设。"
+        }
+      ],
+      "successCriteria": [
+        "教授能在 10 分钟内判断这到底是一篇论文还是多篇论文。",
+        "每个核心 claim 都能找到直接证据，且没有明显 unsupported claim。",
+        "至少一个 Brainary 映射从标签变成可复用模块。",
+        "下周周报不再只说‘压实 claim’，而能说明哪个 claim 被保留、哪个被删除、哪个被降级。",
+        "价值金额从主观估计变成带假设、用户和产物形式的估计。"
+      ],
+      "oneThingProfessorShouldLearn": "这个学生最有价值的增量不是又做了一个 prompt injection 攻击，而是把 scanner 安全问题重构为“扫描器观察视角与 agent 执行视角不一致”的执行级安全问题；教授下一步应帮助他把这个机制压成唯一主线，并沉淀为可复用的 Brainary/自动化评测资产。"
+    }
   }
 }

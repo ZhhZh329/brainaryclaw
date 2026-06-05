@@ -1,54 +1,104 @@
 {
   "key": "person:liao-jie:2026-05-10:weekly-score",
-  "generatedAt": "2026-05-24T11:34:47.340Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "be036c233c4fbdf146b641a7c9ef487f793a048875c555cb95dbec4cefe3a09f",
+  "generatedAt": "2026-06-05T17:05:48.085Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "9153ae1e63089dbc74f8f0f76ca4d383e2c568ad41b08b2f719b83937aff0e61",
   "result": {
-    "totalScore": 64,
-    "tier": "C",
-    "oneLineJudgment": "本周从攻击案例转向反馈优化闭环的方向思考有价值，但硬进展为零，认知增量未验证，需尽快产出实际实验结果。",
-    "professorFollowUp": "请推动下周完成最小反馈闭环实验，产出至少一组优化前后对比数据，用证据支撑本周提出的认知和方法论。",
     "hardProgress": {
-      "score": 5,
-      "reason": "重新定义研究价值、拆解反馈优化机制和明确最小闭环，但无任何实验数据、demo 或可验证产出，进展停留在思维层面。",
-      "missingEvidence": "缺少实际运行实验的数据、日志、代码或工具链，无法证实所提闭环的有效性或可行性。"
+      "score": 8,
+      "reason": "本周主要硬进展是完成研究问题重定义：从单次绕过 skill scanner 转向 feedback-driven optimization，并拆出了 scanner 反馈、模型复原、sandbox marker、失败阶段等闭环要素。这个进展有研究方向价值，但仍主要停留在概念框架和实验设计层面，没有看到实际运行的样本、代码、日志、指标或初步结果。",
+      "missingEvidence": [
+        "缺少已运行的 scanner 实验结果",
+        "缺少初始 skill 样本集合",
+        "缺少反馈字段的真实示例",
+        "缺少优化前后成功率或漏检率对比",
+        "缺少任何可复现 artifact，例如代码、表格、日志或实验配置"
+      ]
     },
     "cognitiveIncrement": {
-      "score": 10,
-      "reason": "提出三个新认知，将问题从静态攻击升级为反馈驱动的优化，有思考深度，但认知增量未通过实验验证，仍属假设阶段。",
-      "missingEvidence": "缺少优化前后对比数据、反馈信号有效性的实证分析，三个认知暂未获得实验支撑。"
+      "score": 12,
+      "reason": "认知增量比较明确：从“攻击是否成功”上升到“反馈是否能形成可迭代优化机制”，并进一步指出 scanner 反馈本身可能成为攻击面。这比单个 case 的思考更接近研究问题定义，也能改变后续实验设计。但认知仍偏理论判断，尚未被实验反证或验证。",
+      "missingEvidence": [
+        "缺少具体案例证明反馈确实提升了攻击或复原效果",
+        "缺少不同反馈类型优化价值的排序或实测比较",
+        "缺少对该认知与已有安全评估文献或 benchmark 的对照"
+      ]
     },
     "cot2Depth": {
-      "score": 12,
-      "reason": "在 CoT's CoT 部分对认知进行了反思，分析了从单次攻击到优化机制的转变，以及 meta-cognition 的启发，有一定深度。",
-      "missingEvidence": "缺少对自身认知过程的显性元认知记录，如错误修正、思维路径迭代的具体记录，反思内容偏描述性。"
+      "score": 11,
+      "reason": "CoT’s CoT 部分有二阶反思：不仅说明自己学到了什么，还尝试判断老师可能已知什么、为什么该点尚未系统化，并提出 feedback leakage evaluation 作为潜在模块。深度较好。但部分判断依赖主观推测，例如“老师大概率知道”“尚未系统化的原因”，缺少外部证据或项目上下文支撑。",
+      "missingEvidence": [
+        "缺少证明这些认知确实是新增信息差的证据",
+        "缺少对已有 scanner benchmark 是否已考虑 adaptive attacker 的调研",
+        "缺少对 feedback leakage evaluation 的可操作定义和实验边界"
+      ]
     },
     "brainaryMapping": {
       "score": 8,
-      "reason": "清晰地将反馈优化闭环映射到 Brainary 的自动化科研能力，并指出新意在于将 Brainary 视为优化系统而非生成器，关联合理。",
-      "missingEvidence": "未提供 Brainary 能力在 skill scanner 场景下的原型演示或最小实现，关联仍停留在概念类比。"
+      "reason": "Brainary 映射较清楚：把 Brainary 从单轮生成器理解为生成、评估、反馈解释、策略更新、再生成的 optimization system，并将 skill scanner 作为反馈优化能力的测试场。这一映射贴合自动化科研闭环。不过还没有说明 Brainary 具体调用哪些模块、如何存储反馈、如何自动选择下一轮策略。",
+      "missingEvidence": [
+        "缺少 Brainary 系统中的具体模块映射",
+        "缺少自动化执行流程图或接口设计",
+        "缺少反馈信号如何进入策略更新器的机制描述",
+        "缺少 Brainary 相比普通脚本循环或 agent loop 的差异"
+      ]
     },
     "monetaryValue": {
-      "score": 6,
-      "reason": "对年度化潜在价值进行了粗估，给出 20-60 万美元范围，具备逻辑拆解，但无市场调研或客户验证支撑。",
-      "missingEvidence": "无任何市场数据、付费意向、竞品定价或内部成本核算的引用，价值估计为推测性数字。"
+      "score": 5,
+      "reason": "报告给出了 20 万到 60 万美元每年的潜在价值估算，并说明来自企业安全测试、agent red-team、benchmark 平台和人工节省。但估算仍是粗略假设，没有客户类型验证、付费意愿、竞品价格、使用频率、交付成本或产品化路径，所以商业可信度中等偏低。",
+      "missingEvidence": [
+        "缺少目标客户画像和具体使用场景",
+        "缺少竞品或替代方案价格",
+        "缺少节省人工成本的计算明细",
+        "缺少企业是否愿意购买此类 scanner robustness evaluation 的证据",
+        "缺少产品化所需成本和交付形态"
+      ]
     },
     "projectManagement": {
-      "score": 13,
-      "reason": "本周方向明确从 case 攻击转向优化评估，拆解了推进重点和闭环设计，无卡点，项目逻辑清晰。",
-      "missingEvidence": "缺少时间线、里程碑和资源需求的具体规划，但本周暂无重大项目管理问题。"
+      "score": 7,
+      "reason": "项目管理上有主线、有当前重点、有下周最小动作，也列出了要记录的三个核心指标。但本周没有明确完成物清单、任务拆分、时间计划、风险管理、样本规模、成功标准、失败预案或优先级。整体更像研究方向说明，而不是可追踪的项目管理记录。",
+      "missingEvidence": [
+        "缺少本周实际完成任务与未完成任务的列表",
+        "缺少实验资源、代码仓库、数据集或环境状态",
+        "缺少时间排期和里程碑",
+        "缺少风险项，例如安全合规、scanner 限流、样本污染、评估偏差",
+        "缺少明确验收标准"
+      ]
     },
     "nextAction": {
-      "score": 9,
-      "reason": "下周最小可验证动作设计具体，包含固定样本、运行 scanner、记录反馈、模型修改、对比优化前后结果，并定义了三个指标，可操作性高。",
-      "missingEvidence": "未提及预期完成时间、所需资源和风险预案，但计划本身足够清晰。"
+      "score": 8,
+      "reason": "下周动作较具体：固定初始样本、运行 scanner、记录反馈、让模型生成修改版本、再次测试并比较漏检率、复原成功率和迭代轮数。这是可执行的最小闭环。但还缺少样本数量、对照组、停止条件、统计方法和实验记录格式，因此可验证性还不完整。",
+      "missingEvidence": [
+        "缺少初始 skill 样本数量和来源",
+        "缺少每个样本最多迭代几轮",
+        "缺少成功与失败的精确定义",
+        "缺少对照实验设计，例如无反馈修改 vs 有反馈修改",
+        "缺少结果记录表 schema"
+      ]
     },
     "evidenceQuality": {
       "score": 1,
-      "reason": "全篇无任何实验数据、图表、代码片段或结果支撑，所有论述均基于推演，证据质量为极低。",
-      "missingEvidence": "整份周报缺乏任何形式的客观证据，如扫描日志、模型输出样例、优化迭代记录或失败率数据。"
-    }
+      "reason": "证据质量较弱。报告几乎全部是概念重构、判断和计划，没有展示真实实验输出、截图、日志、数据表、代码、scanner 返回样例或 sandbox 结果。当前只能证明作者想清楚了一个方向，不能证明该方向已经产生实证进展。",
+      "missingEvidence": [
+        "缺少实验数据",
+        "缺少运行日志",
+        "缺少 scanner 输出样例",
+        "缺少模型复原测试结果",
+        "缺少 sandbox marker 验证结果",
+        "缺少可复现材料"
+      ]
+    },
+    "totalScore": 60,
+    "tier": "C",
+    "oneLineJudgment": "本周是一次有价值的研究问题重构，但硬实验产出和证据严重不足，仍不能证明 feedback-driven optimization 在 skill scanner 场景中真实有效。",
+    "professorFollowUp": [
+      "要求下周必须交付一个最小闭环实验表：至少包含样本 ID、scanner 反馈、模型修改策略、优化前后 scanner 结果、复原结果、sandbox marker 结果和迭代轮数。",
+      "追问是否能设置对照组：有反馈优化与无反馈随机修改相比，是否显著提高绕过率或复原成功率。",
+      "要求明确 feedback leakage evaluation 的定义：哪些 scanner 输出算泄露优化信号，如何量化泄露强度。",
+      "要求把 monetary value 暂时降级为假设，除非补充客户、竞品、成本节省或产品化证据。",
+      "老师本周最应该学习的一点是：scanner 的反馈不是中性诊断信息，而可能成为 adaptive attacker 的优化信号，因此 scanner benchmark 应评估反馈闭环下的鲁棒性。"
+    ]
   }
 }

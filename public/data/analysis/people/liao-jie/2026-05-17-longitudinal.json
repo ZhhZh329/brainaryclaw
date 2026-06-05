@@ -1,92 +1,297 @@
 {
   "key": "person:liao-jie:2026-05-17:longitudinal",
-  "generatedAt": "2026-05-24T11:50:22.370Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "b73d53b9b93024b4f453f3440cd58a9bfae461a5223870eb06cdd549da321c4f",
+  "generatedAt": "2026-06-05T17:06:55.949Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "9c5c4e9a18079dd01f4e2dbb8e363710a2fdfa9114d6d9f53aefd07755e4baeb",
   "result": {
-    "overallTrajectory": "学生四周内研究路径从法律数据集生成的结构化升级（工程深化），转向数据集行为属性的概念抽象（认知提升），再转向 skill scanner 攻击的反馈优化机制（范式转换），最后一周扩展到多条攻击路径的小规模验证（广度拓展）。整体看，认知维度持续进步，能够不断重新定义问题，但执行上尚未形成完整闭环，存在任务切换过快、早期成果未充分沉淀的问题。研究能力在思维深度和元认知上有明显增长，但项目聚焦和系统化执行仍是瓶颈。",
+    "overallTrajectory": {
+      "judgment": "学生在研究能力上有增量，不只是变忙；但增量主要体现在问题重构、实验闭环意识、自动化转化意识和价值推理上，硬证据仍停留在小规模验证，尚未进入稳定 benchmark / 消融 / 可复现结论阶段。",
+      "mainChange": "四周内，题目从“法律行为数据集生成 agent + skill scanner 单点攻击”逐步收缩到“skill scanner 鲁棒性评测、反馈优化、KG 辅助防御增强”。这是一个从多线探索到安全主线聚焦的变化，但法律数据集方向在后两周没有交代收尾或放弃理由，是项目管理上的断点。",
+      "researchCapabilityAssessment": "研究能力确实提升：他开始反复把单次结果上升为 workflow、benchmark、evaluator、memory schema 和反馈闭环，也能识别“攻击成功不等于研究贡献”。但目前还没有证明他能把这些认知落实成论文级实验矩阵和稳定证据。",
+      "notJustBusyEvidence": [
+        "2026-04-26 将法律数据生成从整体 prompt 改成字段级算子流水线，并提出现实数据 judge，这是结构性进展，不是单纯堆样本。",
+        "2026-05-10 将 skill scanner 从单次绕过重新定义为 feedback-driven optimization，这是研究问题层级提升。",
+        "2026-05-17 引入 KG 作为 scanner 的结构化风险记忆，开始从攻击转向防御增强与系统模块。"
+      ],
+      "busyButNotResearchEvidence": [
+        "2026-05-03 报告 200 条样本，但没有给出抽样质量结果、错误率、与 v1/v2 对比或现实数据对齐结果。",
+        "2026-05-17 三条 skill 子任务同时推进，但均处于小规模验证，缺少统一 coding plan、批量脚本、指标和消融。",
+        "多周持续说要形成 benchmark / evaluator，但截至 2026-05-17 尚未形成系统 benchmark。"
+      ],
+      "biggestRisk": "学生的概念抽象速度快于实验固化速度；如果下周仍继续扩展攻击路径，而不是固定威胁模型、实验矩阵、指标和消融，研究会变成“很多有趣现象”而非论文贡献。",
+      "oneThingProfessorShouldLearn": "这名学生真正有潜力的方向不是“发现某个 scanner 漏洞”，而是把恶意 skill 生成、scanner 反馈、KG 风险记忆和消融评测组织成一个自动化安全评测闭环；教授需要逼他证明这个闭环是否真的比静态 scanner 或人工规则更有效。"
+    },
     "stageByWeek": [
       {
         "week": "2026-04-26",
-        "title": "数据集生成流水线重构",
-        "summary": "将法律行为数据集生成从整体式大模型调用重构为字段级算子流水线，引入双层一致性校验和反向构图能力，关注生成系统的可靠性和可诊断性。同时完成 skill scanner 单点攻击验证。",
-        "hardProgress": "完成 v2 完整流程，解锁字段间一致性校验、局部修复、反向子图构造。攻击实验证实 skill 可复原性风险。",
-        "cognitiveShift": "核心认知更新：生成系统的优化对象应从最终输出转向中间状态设计，验证必须分层（内部一致性与外部现实数据）。",
-        "bottleneck": "缺少外部现实数据验证生成样本质量，攻击尚未沉淀为标准 benchmark。"
+        "stage": "结构化原型阶段",
+        "topicTrajectory": "两条主线：法律行为数据集生成 agent 是主线，skill scanner 攻击是次主线。",
+        "hardProgress": "法律方向完成 v2 字段级算子流水线，包括 plan_tool_chain、classify_violation、judge_result、assemble_kg_subgraph、guardrail 和 Layer A 一致性规则；skill 方向完成一次代码复原攻击验证。",
+        "cognitiveIncrement": "关键认知是生成系统不能靠大 prompt，而要靠字段级偏序、中间状态、后置校验和现实数据 judge。",
+        "cotCotMaturity": "较成熟。能区分老师是否已知、为什么未自动化、沉淀形式和证据等级；但证据等级中 CoT’s CoT 3 为 B，说明外部现实验证还未完成。",
+        "brainaryMappingMaturity": "较成熟。能映射到 memory、reasoning、calibration、cognitive control、tool orchestration、benchmark / evaluation，但仍偏概念映射，尚未有 Brainary 可复用模块。",
+        "valueReasoning": "价值函数偏向“可审计、可修复、可验证的生成框架”。金额估算以人民币人力成本计，法律方向 15 万，skill 方向 5 万，较保守且与当前原型阶段匹配。",
+        "projectManagement": "能识别关键路径是现实数据验证；下周动作具体到 3–5 个 taxonomy leaf、现实案例、v1/v2 对比。项目管理质量较好。",
+        "missingEvidence": "缺少 v2 相比 v1 的量化稳定性、错误率、现实数据对齐结果；skill 攻击缺少 threat model、case 数和风险分类标准。"
       },
       {
-        "week": "2026-05-02",
-        "title": "数据集行为属性抽象与 scanner 动态风险发现",
-        "summary": "生成 200 条法律行为数据集，并将其重新定义为“行为评估仪器”，强调评估对象是行为链路而非最终答案。skill scanner 方向发现动态复原型风险。",
-        "hardProgress": "产出 200 条结构化样本，明确行为评估 schema。揭示 scanner 盲区：模型可在交互中复原隐藏恶意逻辑。",
-        "cognitiveShift": "新增认知：数据集不应是样本集合，而是行为评估仪器；scanner 风险评估需涵盖模型可复原空间，不能只看静态代码。",
-        "bottleneck": "数据集尚未完成 evidence chain 验证，scanner 攻击仍为单点 case，缺少系统化实验。"
+        "week": "2026-05-03",
+        "stage": "扩量与评估意识阶段",
+        "topicTrajectory": "法律数据集仍在推进，skill scanner 动态复原风险继续推进；两条线仍并行。",
+        "hardProgress": "法律方向生成约 200 条结构化样本；skill 方向初步验证动态复原型风险。",
+        "cognitiveIncrement": "从“数据集是样本集合”升级到“数据集是行为评估仪器”；从“scanner 漏检”升级到“模型可复原空间是风险边界”。",
+        "cotCotMaturity": "中等偏成熟。认知表达清楚，但证据等级没有像上一周那样严格标注 A/B；对 200 条数据质量缺少实际检查结果。",
+        "brainaryMappingMaturity": "中等。提出 Legal Behavior Benchmark Generator 和 Dynamic Reconstruction Risk Benchmark，方向清楚，但仍是命名级映射，未展示模块接口或自动化流程。",
+        "valueReasoning": "价值函数从人民币原型成本转向年度化美元价值，估算为 15–45 万美元 / 年。比上一周更商业化，但证据支撑更弱，因为还没有可复现 benchmark 或实际用户。",
+        "projectManagement": "下周动作明确为抽样 20 条质量检查和小型可复现实验集，动作质量较好。但报告称“没有明显卡点”，与上一周提出的现实数据 judge 卡点没有形成闭环。",
+        "missingEvidence": "缺少 20 条抽样检查结果；缺少 200 条样本的生成方法与 v2 流水线关系；缺少 scanner 攻击的成功率、样本规模、sandbox marker 结果。"
       },
       {
-        "week": "2026-05-09",
-        "title": "反馈优化机制转化",
-        "summary": "将 skill scanner 攻击研究从一次性攻击升级为反馈驱动优化问题，重新定义研究价值为“scanner 是否抵抗自适应攻击者”，并拆解出最小闭环。",
-        "hardProgress": "完成研究问题重新定义，明确反馈优化闭环结构，列出可用的反馈信号和优化阶段。",
-        "cognitiveShift": "核心认知升级：攻击本身不是研究价值，优化机制才是；反馈本身也是攻击面；Brainary 应被理解为 optimization system。",
-        "bottleneck": "闭环尚未实际运行，仍停留在概念设计阶段；缺少可复现实验和指标。"
+        "week": "2026-05-10",
+        "stage": "研究问题重定义阶段",
+        "topicTrajectory": "法律数据集方向消失；skill scanner 成为唯一主线，并从单点攻击转向 feedback-driven optimization。",
+        "hardProgress": "硬进展主要是研究问题重定义和反馈闭环设计，而不是新实验结果。明确了候选 skill、scanner、反馈、模型复原、sandbox、下一轮修改的最小闭环。",
+        "cognitiveIncrement": "最重要增量是“攻击成功价值有限，优化机制才有研究价值”；进一步提出 scanner 反馈本身是攻击面。",
+        "cotCotMaturity": "较成熟。能够从 case-level attack 抽象到 adaptive attacker、feedback leakage evaluation 和 optimization benchmark；但这周硬证据偏少。",
+        "brainaryMappingMaturity": "明显提升。Brainary 不再只是生成器，而被理解为 optimization system：生成、评估、反馈解释、策略更新、再生成。",
+        "valueReasoning": "价值函数转向“可迭代优化机制”的年度化价值，估算 20–60 万美元 / 年。价值推理比上一周更围绕用户和产品形态，但仍依赖假设，没有实验提升率支撑。",
+        "projectManagement": "下周动作具体到固定样本、运行 scanner、记录反馈、模型修改、对比优化前后，并提出漏检率、复原成功率、迭代轮数三个指标。动作质量高。",
+        "missingEvidence": "缺少上周计划中的法律数据抽样质量报告；缺少已执行的 feedback loop 实验结果；缺少任何优化前后指标。"
       },
       {
-        "week": "2026-05-16",
-        "title": "多路径恶意 skill 实验与 KG 增强",
-        "summary": "并行推进三条攻击路径验证：自然语言重建恶意代码、编译文件嵌入 payload、抽取恶意 skill KG 辅助 scanner。均完成小规模验证，KG 初步提升扫瞄成功率。",
-        "hardProgress": "验证了三种攻击路径的可行性，积累样例和初步流程。观察到 KG 能提升 scanner 检测率。",
-        "cognitiveShift": "明确下一步重点不是堆案例，而是将攻击路径、失败模式、scanner 反馈做成可复现实验闭环；认识到安全研究的 meta-cognition 在于判断失败模式能否驱动下一轮实验设计。",
-        "bottleneck": "三条路径均缺少 coding plan 和批量实验脚本，KG schema 不稳定，验证集未标准化，早期数据集的验证计划被搁置。"
+        "week": "2026-05-17",
+        "stage": "安全主线系统化原型阶段",
+        "topicTrajectory": "完全转向恶意 skill / scanner 方向，分为自然语言重建代码、编译文件 payload、KG 辅助 scanner 三条子线。",
+        "hardProgress": "完成三类小规模验证：自然语言到代码重建再隐藏恶意行为、编译产物嵌入 payload、恶意 skill 和生成方式抽取为 KG 并辅助 scanner；观察到 KG 可能提升扫描成功率。",
+        "cognitiveIncrement": "认识到风险不只在源码文本，还在生成链路、文件载体和行为语义；KG 可作为 scanner 的中间记忆层；单点攻击必须升级为闭环实验系统。",
+        "cotCotMaturity": "成熟度继续提升。能明确 workflow、benchmark、evaluation protocol、agent module、memory schema；但把小规模观察标为 A 证据偏乐观，因为没有批量实验和消融。",
+        "brainaryMappingMaturity": "较成熟。KG 被定位为结构化风险记忆，和 Brainary 的 memory、reasoning、calibration、risk modeling 连接更具体。",
+        "valueReasoning": "价值函数从“攻击 case”转向“scanner 鲁棒性评测与增强框架”。金额估算回到人民币人力成本：20 万、15 万、30 万。相比美元年度价值更可落地，但仍缺少实际买单方访谈或平台需求证据。",
+        "projectManagement": "项目管理信息最完整：投入时间、依赖、关键路径、token、纠偏动作都有。但三条子任务都依赖批量实验脚本、coding plan、指标和 schema，说明执行系统尚未成型。",
+        "missingEvidence": "缺少 KG 提升扫描成功率的具体数值；缺少样本数量、对照组、消融设计、统计显著性；缺少 coding plan；缺少法律方向终止或暂停说明。"
       }
     ],
     "trendScores": {
-      "题目轨迹": {
-        "score": 7,
-        "comment": "从数据集生成流畅转向 skill scanner 安全评测，第四周出现发散迹象，但整体保持对评估方法和安全性的聚焦。"
+      "scale": "1 表示很弱，5 表示很强；分数依据周报中的硬证据、实验闭环、价值推理和自动化沉淀程度判断。",
+      "hardProgress": {
+        "scoresByWeek": [
+          {
+            "week": "2026-04-26",
+            "score": 4,
+            "reason": "有完整可运行 v2 流水线和攻击验证，是实质性工程结构进展。"
+          },
+          {
+            "week": "2026-05-03",
+            "score": 3,
+            "reason": "有 200 条样本和动态复原风险验证，但缺少质量报告与指标。"
+          },
+          {
+            "week": "2026-05-10",
+            "score": 2,
+            "reason": "主要是研究问题重定义，硬实验结果不足。"
+          },
+          {
+            "week": "2026-05-17",
+            "score": 3,
+            "reason": "有三类小规模验证和 KG 初步结果，但均未系统化。"
+          }
+        ],
+        "trend": "硬进展不是单调上升；4 月底工程进展最实，5 月中旬认知更强但实验仍小规模。"
       },
-      "硬进展趋势": {
-        "score": 6,
-        "comment": "前两周有实质的结构升级和数据产出，第三周以概念定义为主，第四周虽多线验证但缺少完整的系统实验，硬进展平稳但未突破。"
+      "cognitiveTrend": {
+        "scoresByWeek": [
+          {
+            "week": "2026-04-26",
+            "score": 4,
+            "reason": "从 prompt 优化转向中间状态和现实数据验证。"
+          },
+          {
+            "week": "2026-05-03",
+            "score": 4,
+            "reason": "把数据集理解为行为评估仪器，把 scanner 风险理解为模型可复原空间。"
+          },
+          {
+            "week": "2026-05-10",
+            "score": 5,
+            "reason": "把单次攻击重构为反馈驱动优化，认知层级明显提升。"
+          },
+          {
+            "week": "2026-05-17",
+            "score": 5,
+            "reason": "将攻击、失败模式、KG 记忆和 scanner 增强连接成闭环系统。"
+          }
+        ],
+        "trend": "认知能力持续增强，尤其是能把现象上升为可自动化闭环。"
       },
-      "认知趋势": {
-        "score": 8,
-        "comment": "持续深化，从中间状态设计到行为评估、再到优化闭环和反馈攻击面，认知更新显著且连贯。"
+      "cotCotMaturity": {
+        "score": 4,
+        "trend": "从列举 insight 逐步转向判断是否可自动化、为什么未系统化、沉淀为何种资产。主要不足是证据等级偏乐观，常把小规模现象标成 A。"
       },
-      "CoT's CoT 成熟度": {
-        "score": 7,
-        "comment": "多数 CoT's CoT 有证据支撑，创新性逐步提升（如 KG 增强 scanner 为老师未知），但部分认知仍属已知原则的具体化。"
+      "brainaryMappingMaturity": {
+        "score": 4,
+        "trend": "从泛化映射到 memory / reasoning / benchmark，逐步进化到 optimization system 和 KG 风险记忆。成熟度提高，但还缺真实 Brainary 模块接口、输入输出 schema 和自动调度策略。"
       },
-      "Brainary 映射成熟度": {
-        "score": 6,
-        "comment": "能将工作映射到 Brainary 特定能力并构想沉淀形式，第四周的 KG 映射有新意，但尚未形成可运行的 Brainary 模块。"
-      },
-      "价值推理": {
-        "score": 7,
-        "comment": "价值估算从内部成本转向潜在市场价值，金额阶梯增长，能关联到通用能力和自动化资产，但估算仍较粗略，未对接具体用户。"
-      },
-      "项目管理": {
-        "score": 6,
-        "comment": "每周有明确的下周动作和偏差纠偏，但存在任务切换导致的成果未闭环问题，如数据集验证计划被搁置，第四周多个项目缺乏统筹。"
-      },
-      "重复卡点": {
+      "metaCognition": {
         "score": 5,
-        "comment": "‘缺少批量实验方案和标准化验证集’贯穿后三周，前期数据集的验证也未完成，显示从原型到系统实验的跨越能力不足。"
+        "trend": "元认知显著提升：能判断产出是否应转成 workflow、module、benchmark、memory 或 agent；也能识别从 case exploration 切换到 batch experiment / ablation 的必要性。"
       },
-      "下一步动作质量": {
-        "score": 7,
-        "comment": "多数下周计划具体可操作，但第四周的多个计划齐头并进可能分散精力，且缺少对前期任务收束的安排。"
+      "valueReasoning": {
+        "score": 3,
+        "trend": "价值推理从人力成本估算扩展到年度化美元价值、用户类型和产品形态，再回到具体人民币模块价值。方向在变成熟，但金额仍主要是类比估算，缺少真实客户、采购预算、替代成本和使用频率证据。"
+      },
+      "projectManagement": {
+        "score": 3,
+        "trend": "下周动作逐渐更具体，5 月 17 日项目信息最完整。但存在方向切换未交代、前周计划未回收、benchmark 长期未落地的问题。"
+      },
+      "automationPath": {
+        "score": 4,
+        "trend": "自动化路径越来越清晰：workflow、harness、benchmark、evaluation protocol、memory schema、agent module。但实际瓶颈仍是 coding plan、批量脚本、统一指标、KG schema 和消融。"
+      },
+      "evidenceLevel": {
+        "score": 2,
+        "trend": "证据水平仍偏弱。多处只有小规模验证、初步观察和计划，没有量化指标、对照组、统计结果或可复现实验包。"
+      },
+      "topicValue": {
+        "score": 4,
+        "trend": "skill scanner 方向的题目价值逐渐清晰，已从 scanner 绕过扩展到 agent tool supply-chain risk modeling；法律数据集方向本身也有价值，但被暂停且未解释。"
       }
     },
-    "valueFunctionChange": "学生的价值函数逐渐从‘任务的人力成本等价’转向‘可自动化、可复用的系统资产的价值’。最初认为值得做的事是能降低试错成本、提升可诊断性的原型，价值由研发投入估算；第二周开始将成果视为市场基准或评估工具，引入年度化商业价值估算；第三周进一步强调优化闭环，认为能产生可迭代优化机制的工作才有高价值；第四周回归人力成本估算，但更注重 KG 等可沉淀模块的价值。整体上，价值定义始终围绕‘是否能进入自动化科研体系、是否通用、能否连接 Brainary 能力’，但在金额、用户、产物形式的联系上还不够具体，更像是理念推动。学生认为值得做的事已经从‘做出成果’转向‘做出能持续进化的系统部件’，这是价值观上的关键变化。",
+    "valueFunctionChange": {
+      "summary": "学生的价值函数从“做出可运行原型和样本”逐步转向“能否形成可复现、可评估、可自动化、可产品化的系统能力”。这是积极变化。但他仍倾向用抽象潜力和人力成本给价值定价，缺少真实用户、采购场景和指标提升证据。",
+      "byWeek": [
+        {
+          "week": "2026-04-26",
+          "whatStudentThoughtWorthDoing": "值得做的是字段级、可审计、可修复、可现实数据验证的法律数据生成系统，以及 skill 可恢复性攻击面。",
+          "whyWorthDoing": "因为能降低生成系统试错成本，暴露 skill 系统的能力边界泄露风险。",
+          "moneyConnection": "以人民币原型研发成本估值，法律方向 15 万，skill 攻击 5 万。",
+          "userConnection": "法律方向用户仍模糊，只说 RegTech / legal AI / agent benchmark 有潜在价值；skill 方向也主要是研究和安全分析价值。",
+          "artifactConnection": "workflow、agent module、benchmark、evaluator、red-team workflow。",
+          "brainaryConnection": "对应 memory、reasoning、calibration、tool orchestration、benchmark / evaluation。",
+          "automationConnection": "强调字段级算子和现实数据 judge 可自动化。",
+          "assessment": "价值函数较稳健，但商业买单方不清。"
+        },
+        {
+          "week": "2026-05-03",
+          "whatStudentThoughtWorthDoing": "值得做的是法律 agent 行为评估数据集和 skill scanner 动态复原型风险 benchmark。",
+          "whyWorthDoing": "因为最高价值不是 200 条数据或一次绕过，而是可生成、可验证、可回放的行为评估仪器和动态安全 benchmark。",
+          "moneyConnection": "估算为 15–45 万美元 / 年，开始用年度化系统资产价值而非单次人力成本。",
+          "userConnection": "提到企业内部 benchmark、合规评估工具、agent security benchmark，但没有具体客户。",
+          "artifactConnection": "Legal Behavior Benchmark Generator、Dynamic Reconstruction Risk Benchmark、Red-Team Agent。",
+          "brainaryConnection": "对应自动生成领域行为 benchmark 和自动发现动态安全失败模式。",
+          "automationConnection": "强调混淆样本生成、多轮诱导、复原检测、scanner 对比的自动化流程。",
+          "assessment": "价值视野扩大，但估值跳升快于证据积累。"
+        },
+        {
+          "week": "2026-05-10",
+          "whatStudentThoughtWorthDoing": "值得做的是 feedback-driven scanner evaluation，而不是单纯攻击 case。",
+          "whyWorthDoing": "因为单个攻击难复用，反馈闭环能测试 scanner 面对自适应攻击者的鲁棒性。",
+          "moneyConnection": "估算为 20–60 万美元 / 年，依据是企业级安全测试、agent red-team 和 benchmark 平台。",
+          "userConnection": "明确指向 agent / security 团队和 scanner robustness evaluation 服务。",
+          "artifactConnection": "feedback-driven optimization benchmark、Feedback Leakage Evaluation。",
+          "brainaryConnection": "Brainary 被定义为 optimization system，而非生成器。",
+          "automationConnection": "明确生成、评估、反馈解释、策略更新、再生成闭环。",
+          "assessment": "这是四周中价值函数最重要的跃迁：从结果价值转向优化机制价值。问题是尚无实验结果证明反馈提高绕过率或复原率。"
+        },
+        {
+          "week": "2026-05-17",
+          "whatStudentThoughtWorthDoing": "值得做的是 scanner 鲁棒性评测与增强框架，尤其是 KG 作为结构化风险记忆。",
+          "whyWorthDoing": "因为恶意 skill 风险不只在源码文本，还在生成链路、编译文件、附件载体和行为语义中；KG 能把一次性样本转为可复用检测知识。",
+          "moneyConnection": "分别估算自然语言重建代码 20 万人民币、编译产物 payload 15 万人民币、KG scanner 增强 30 万人民币。",
+          "userConnection": "明确列出 AI 平台、企业安全团队、agent 工具市场、模型安全评测团队、第三方插件审核平台。",
+          "artifactConnection": "论文、benchmark、workflow、scanner module、evaluation protocol、memory schema。",
+          "brainaryConnection": "KG 作为 Brainary 的 memory、reasoning、calibration、risk modeling 载体。",
+          "automationConnection": "提出 workflow、harness、benchmark、memory schema、agent module、evaluator，但卡在 coding plan、批量实验脚本和 KG schema。",
+          "assessment": "价值函数更贴近真实用户和产品形态，且 KG 是最有系统资产潜力的部分；但金额仍无外部市场证据。"
+        }
+      ],
+      "netChange": "价值判断从“做出东西”变为“能否沉淀成自动化评测与优化系统”；从“研究者自己觉得有用”变为“AI 平台、安全团队、插件审核平台可能需要”；从“单个原型人力成本”变为“年度化工具价值和模块资产价值”。这是研究成熟度提升的强信号。"
+    },
     "repeatedBlockers": [
-      "缺少批量实验方案与标准化验证集，导致实验停留在小规模案例，无法形成系统性结论。",
-      "前期任务（如数据集验证）被新方向打断，成果沉淀不足，存在项目切换后的遗留问题。",
-      "攻击研究多次提及闭环设计，但始终未执行，编程计划（coding plan）的缺失成为第四周明确瓶颈，但该问题在前几周已隐含。",
-      "KG 等增强方案的消融实验滞后，难以确认具体价值来源。"
+      {
+        "blocker": "长期缺少系统 benchmark",
+        "evidence": "2026-04-26 skill scanner 说尚未沉淀成 benchmark；2026-05-03 说要整理成小型可复现实验集；2026-05-17 三个主线均写明尚未形成系统 benchmark。",
+        "impact": "没有 benchmark 就无法证明方法可复现、可比较、可论文发表。"
+      },
+      {
+        "blocker": "小规模验证多，量化证据少",
+        "evidence": "2026-05-17 多处使用“小规模验证”“初步观察”，但没有成功率、样本数、对照组、消融结果。",
+        "impact": "目前只能说明方向可能有效，不能说明贡献成立。"
+      },
+      {
+        "blocker": "前周计划回收不足",
+        "evidence": "2026-04-26 计划做法律 v1/v2 与现实数据对齐；2026-05-03 计划抽样 20 条质量检查；后两周没有报告这些结果。",
+        "impact": "项目管理存在开新线快、关闭旧问题慢的问题。"
+      },
+      {
+        "blocker": "coding plan 和批量实验脚本缺失",
+        "evidence": "2026-05-17 三个项目都卡在 coding plan、批量生成、统一脚本、实验矩阵、指标或 KG schema。",
+        "impact": "这是从研究想法到论文实验的关键瓶颈。"
+      },
+      {
+        "blocker": "证据等级偏乐观",
+        "evidence": "2026-05-17 将 KG 辅助 scanner 小规模验证标为 A，但同时承认需要系统消融确认提升来源。",
+        "impact": "如果不校准证据等级，容易高估结论可靠性。"
+      },
+      {
+        "blocker": "题目切换未显式决策",
+        "evidence": "法律数据集方向在 2026-05-10 后消失，没有说明暂停、完成、失败或移交。",
+        "impact": "教授无法判断这是战略聚焦，还是遗留任务被自然遗忘。"
+      },
+      {
+        "blocker": "价值金额缺少外部依据",
+        "evidence": "多周估值主要来自人力成本、类比企业安全工具或内部 benchmark，缺少用户访谈、采购预算、节省工时实测或竞品价格。",
+        "impact": "价值推理方向对，但商业可信度不足。"
+      }
     ],
-    "professorShouldAsk": "你的法律数据集 v2 验证结果如何？为什么没有继续推进？在 skill scanner 的多个攻击方向中，你认为哪一条最有可能形成可复现 benchmark 和论文核心贡献？你是否意识到每次任务切换都可能使前期投入变成沉没成本？",
-    "nextBestIntervention": "建议 Liao Jie 立即暂停新攻击方式的探索，聚焦 ‘KG 辅助 scanner’ 这一条线，用两周时间完成：1) 稳定 KG Schema；2) 构建标准验证集并完成字段级消融实验；3) 输出可复现评估协议。将前期法律数据集的字段级流水线经验迁移到 KG 构建和 scanner 评测中，形成一套可演示的 Brainary 记忆增强安全评测模块。同时，指导其将价值估算与具体安全平台的用户需求对齐，例如第三方 skill 审核服务的付费场景，使商业逻辑更具说服力。"
+    "professorShouldAsk": [
+      {
+        "question": "法律行为数据集方向现在的状态是什么：继续、暂停、失败，还是被 skill scanner 方向替代？请给出 20 条抽样质量检查或明确放弃理由。",
+        "whyAsk": "这是检验学生是否能关闭前序计划，而不是不断开新题。"
+      },
+      {
+        "question": "下周能否只选一个论文主贡献：feedback-driven scanner robustness，还是 KG-assisted scanner enhancement？不要三条线同时平均推进。",
+        "whyAsk": "当前最大风险是题目扩散，必须收束到可发表的核心因果主张。"
+      },
+      {
+        "question": "KG 提升 scanner 成功率的具体数字是多少？样本数、baseline、对照组、提升幅度、失败案例分别是什么？",
+        "whyAsk": "KG 是最像论文贡献的部分，但目前只有小规模观察。"
+      },
+      {
+        "question": "feedback loop 是否真的提升绕过率或复原成功率？请给出优化前后对比、迭代轮数和失败阶段分布。",
+        "whyAsk": "这是 2026-05-10 提出的核心价值，如果没有实验验证，认知不会转化为贡献。"
+      },
+      {
+        "question": "你的 threat model 到底是什么：攻击者能看到 scanner 的哪些反馈？能修改哪些 artifact？scanner 能访问源码、编译产物、运行日志还是 KG？",
+        "whyAsk": "没有 threat model，scanner 鲁棒性评测无法定义。"
+      },
+      {
+        "question": "请把所有小规模实验写成一个实验矩阵：攻击路径、样本来源、scanner 输入、检测输出、复原测试、sandbox marker、KG 字段、指标。",
+        "whyAsk": "这会直接暴露哪些部分只是故事，哪些部分已经可自动化。"
+      },
+      {
+        "question": "你说的 20 万、30 万、60 万美元价值，分别对应哪个真实用户、哪个工作流、每年节省多少人工或风险成本？",
+        "whyAsk": "需要把价值推理从类比估值推进到用户和采购逻辑。"
+      },
+      {
+        "question": "如果论文只能有一个表和一个图，表中指标是什么，图中系统框架是什么？",
+        "whyAsk": "这能迫使学生从多现象收敛到论文叙事和证据结构。"
+      }
+    ],
+    "nextBestIntervention": {
+      "intervention": "要求学生用一周时间冻结题目并交付一个最小可复现实验包，而不是继续扩展新攻击路径。",
+      "specificInstruction": "下周只做一个统一 harness：固定 30–50 个 skill 样本，覆盖自然语言重建、编译产物 payload、普通混淆三类；固定 scanner baseline；记录 scanner 检测率、模型复原成功率、sandbox marker 触发率、反馈优化前后变化、KG 增强前后变化；至少做一个字段级 KG 消融。",
+      "requiredDeliverables": [
+        "一页 threat model：攻击者权限、可见反馈、可修改对象、scanner 可见信息。",
+        "一个实验矩阵：样本类型、数量、变量、对照组、指标、预期结论。",
+        "一份 coding plan：脚本结构、数据目录、日志格式、缓存策略、复现实验命令。",
+        "一个结果表：baseline scanner、feedback optimization、KG-assisted scanner 三者对比。",
+        "一个失败模式 taxonomy：源码层、生成链路层、编译产物层、行为语义层、反馈泄露层。",
+        "一个决策说明：法律数据集方向是否暂停，以及暂停原因。"
+      ],
+      "successCriterion": "如果下周能给出可复现实验包和至少一个清晰指标提升，说明学生已从“会想研究问题”进入“能生产研究证据”；如果仍只有新 case 和新概念，说明研究能力提升主要停留在表达和抽象层。",
+      "professorRole": "教授不需要介入日常实现，但需要强制收束 framing：确定主贡献是“自适应攻击下的 scanner 鲁棒性评测”，还是“KG 风险记忆增强 scanner”。两者可以共存，但只能有一个作为论文主线。"
+    }
   }
 }

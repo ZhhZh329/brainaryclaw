@@ -1,58 +1,65 @@
 {
   "key": "person:qian-jiayu:2026-03-15:weekly-score",
-  "generatedAt": "2026-05-24T11:35:21.010Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "b3221cce9c8e75e3e96f0475473c851ede16f6d986680a1e1ab809bf1c6221d1",
+  "generatedAt": "2026-06-05T17:07:11.498Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "2725baa1ebfbf5726c2c02a489d6785e2d422a0315322b66eb086c4bf6fa01dd",
   "result": {
     "week": "2026-03-15",
     "name": "钱加宇",
+    "totalScore": 67.5,
+    "tier": "B",
+    "oneLineJudgment": "本周有实质实验推进和可用指标，核心价值在于把医疗 VLM 从准确率评估推进到层级一致性评估；但 Auto Memory / KG Agent 与 Brainary 的映射仍偏方向性，缺少可验证的项目闭环和论文级证据。",
     "dimensions": {
       "hardProgress": {
-        "score": 16,
-        "reason": "提供了层次一致性实验的具体数据（500病例，各项准确率、一致性率等），并进行了Qwen 3.5医疗测试，有可比分数；但Auto Memory方向仅处于搭建阶段，无结果。",
-        "missingEvidence": "Auto Memory / KG Agent方向尚无实验结果，仅提及在coding。"
+        "score": 17,
+        "reason": "完成了 EyePACS 上 500 个病例的 Hierarchical Consistency 初步实验，给出了四层结构、case-level consistency、L1/L2/L3/L4 准确率、L2 详细指标、L3 各类别 recall，并初步测试了 Qwen 3.5 在多个 medical VQA benchmark 上的表现。这些属于硬进展，不只是读文献或想法。扣分点在于 ECCV benchmark zero-shot pipeline 仍在 coding，Auto Memory / KG Agent 还没有结果，9 数据集 4 疾病扩展尚未发生。",
+        "missingEvidence": "缺少实验配置细节、模型版本、prompt、数据划分、评测脚本链接、是否人工复核一致性规则、统计显著性或置信区间。Qwen 3.5 测试也缺少完整表格和评测协议。"
       },
       "cognitiveIncrement": {
-        "score": 12,
-        "reason": "认识到医疗任务中层次一致性与逻辑一致性的重要性，超越了单纯的准确率，对后续研究有启示。",
-        "missingEvidence": "未说明该认知增量如何改变后续实验设计或假设。"
+        "score": 11,
+        "reason": "CoT 增量明确指出医疗任务不能只看 accuracy，还要看不同诊断层级之间的逻辑一致性；这与本周实验结果直接相关，能够解释为什么 L2/L3 冲突值得单独研究。该增量有研究判断价值。扣分点是目前仍停留在‘一致性重要’这一层，没有进一步拆解不一致的来源、可修复机制或与临床风险的对应关系。",
+        "missingEvidence": "缺少对一致性错误样例的具体分析，例如哪些图像或疾病等级最容易导致 L2/L3 冲突；缺少从认知增量到模型改进方案的明确推导。"
       },
       "cot2Depth": {
-        "score": 12,
-        "reason": "提出了从层级推理可靠性重新评估医疗VLM的元认知观点，触及现有工作盲区，但未展开方法论层面思考。",
-        "missingEvidence": "缺少对该方向具体评估框架或指标的初步构思。"
+        "score": 10,
+        "reason": "CoT^2 提出从 hierarchical reasoning reliability 角度重新评估医疗 VLM，这比单任务指标更接近研究问题重构，有一定二阶价值。它把现有 medical AI 评估范式从性能排名转向推理可靠性。但目前深度还不够，尚未形成清晰理论框架，例如 reliability 的定义、分解维度、测量函数、与 clinical safety 的关系。",
+        "missingEvidence": "缺少 CoT 的 CoT：为什么层级可靠性是比准确率更高阶的评价轴？如何设计通用评价协议？一致性、可解释性、风险校准之间的关系是什么？这些没有展开。"
       },
       "brainaryMapping": {
-        "score": 8,
-        "reason": "指出层次一致性问题可从眼科迁移至病理，与Brainary多领域互通有潜在关联，但描述简短。",
-        "missingEvidence": "未明确对应Brainary现有项目或技术栈的具体结合点。"
+        "score": 5,
+        "reason": "报告提到层级一致性问题可能从眼科迁移到 pathology VLM，也提到 Auto Memory / KG Agent 和 PathMem 方向，这与 Brainary 可能存在连接。但映射仍然较浅，只是说‘可能迁移’，没有说明 Brainary 中的哪个节点、哪类知识结构、哪条自动化路径或哪种 memory transformation 会被当前实验推进。",
+        "missingEvidence": "缺少明确的 Brainary mapping：当前 Hierarchical Consistency 对 Brainary 的节点、边、任务、benchmark、agent memory 或知识图谱构建有什么具体贡献；也缺少产物形态，如 schema、taxonomy、KG relation、可复用评测模块。"
       },
       "monetaryValue": {
-        "score": 4,
-        "reason": "层次一致性若实现可提升医疗AI可靠性，具潜在商业化前景，但目前处于早期，未量化价值。",
-        "missingEvidence": "缺乏市场分析、竞品对比或价值预估。"
+        "score": 3,
+        "reason": "报告隐含的货币价值主要来自两个方向：一是医疗 VLM 评测和可靠性 benchmark 可能形成论文、工具或模型选择价值；二是 Qwen 3.5 如果 zero-shot 接近医疗专用模型，可能降低训练和部署成本。但周报没有直接讨论应用场景、成本节省、商业化路径、算力预算、数据成本或客户需求，因此 monetary value 证据较弱。",
+        "missingEvidence": "缺少任何关于成本、收益、部署场景、临床/产业用户、算力开销、数据标注成本、benchmark 商业价值或论文转化价值的量化说明。"
       },
       "projectManagement": {
-        "score": 13,
-        "reason": "清晰列出阻碍与下周计划，实验按层级结构推进，管理有序。",
-        "missingEvidence": "未提及任务优先级、时间节点或风险应对。"
+        "score": 10,
+        "reason": "报告列出了本周任务、当前进展、问题阻碍和下周计划，项目线包括 Hierarchical Consistency、Pathology benchmark、Auto Memory / KG Agent、Qwen 3.5 测试，基本能看出工作流。阻碍也明确指出 DR grading 困难、consistency rule 简单、zero-shot pipeline 仍在 coding。扣分点是项目管理仍缺少优先级、时间节点、完成标准、依赖关系和风险缓解策略。",
+        "missingEvidence": "缺少代码完成百分比、预计完成日期、实验排期、谁负责什么、下周必须交付物、失败备选方案、数据集扩展的具体顺序和资源需求。"
       },
       "nextAction": {
-        "score": 9,
-        "reason": "下周计划具体：扩展多数据集实验，完成zero-shot代码与测试。",
-        "missingEvidence": "未说明若zero-shot编码延迟或结果不符预期的备选方案。"
+        "score": 7,
+        "reason": "下周计划比较明确：继续推进 Hierarchical Consistency，扩展到多数据集 benchmark，完成 ECCV benchmark zero-shot 代码并补充模型测试。这些行动与本周结果和阻碍相连接。扣分点是 next action 仍偏概括，没有拆成可验收任务，例如先扩哪几个数据集、完成哪些模型、输出什么表格、何时给老师看。",
+        "missingEvidence": "缺少具体验收标准，例如‘完成 9 个数据集中前 2 个数据集的清洗与评测’、‘跑完 Qwen 2.5/Qwen 3.5/InternVL 三个模型’、‘提交 repo 和结果表’等。"
       },
       "evidenceQuality": {
-        "score": 4,
-        "reason": "提供了详细定量指标和数据集信息，证据较扎实，但缺少图表或统计检验。",
-        "missingEvidence": "未附实验数据可视化或显著性检验，部分结果仅列数字。"
+        "score": 4.5,
+        "reason": "报告提供了较多定量证据，包括 500 例样本、一致性率、各层准确率、L2 precision/recall/F1/specificity、L3 macro-F1 和类别 recall，以及 medical VQA benchmark 对比结果。相对于普通周报，证据密度较高。扣分点是这些证据还不能完全复现，也没有说明统计可靠性、评测设置和误差分析。",
+        "missingEvidence": "缺少数据来源版本、样本抽样方式、模型具体 checkpoint、prompt 模板、解码参数、评估代码、随机种子、人工标注标准、错误案例和显著性检验。"
       }
     },
-    "totalScore": 78,
-    "tier": "B",
-    "oneLineJudgment": "工作方向明确，实验推进扎实，但深度和远期价值思考不足。",
-    "professorFollowUp": "追问：如何将层次一致性思路具体落地到pathology任务？请提供更量化的商业价值分析。"
+    "professorFollowUp": [
+      "要求学生下周提交 Hierarchical Consistency 实验的可复现包：数据列表、prompt、评测脚本、规则定义、结果表和 10 个典型错误案例。",
+      "追问 R1 冲突是否只是规则设计导致的表面冲突，还是模型真实推理不一致；需要区分 label noise、prompt ambiguity、模型错误和规则错误。",
+      "要求把 hierarchical reasoning reliability 定义成可发表的 metric 或 benchmark protocol，而不是只作为观察结论。",
+      "要求明确 Brainary 映射：当前四层诊断结构如何转成 Brainary 中的节点、边、记忆单元或 KG schema。",
+      "要求 Auto Memory / KG Agent 方向下周至少交付一个最小闭环：选定 benchmark、跑通一个模型、输出 zero-shot 结果表，并说明后续 instruction-tuning 的必要性。",
+      "要求补充 Qwen 3.5 medical VQA 结果的评测协议，否则不能判断它是否真的超过医疗专用模型。"
+    ]
   }
 }

@@ -1,54 +1,56 @@
 {
   "key": "person:jie-wanqing:2026-04-26:weekly-score",
-  "generatedAt": "2026-05-24T11:34:19.912Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "733fea18c10a48abe65151b2f6dfbda9da0379087b9035ac513641ded4298cde",
+  "generatedAt": "2026-06-05T17:03:30.290Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "94a747b6b64893095268d1db2129f039b1dde24dc407c821355ab7b728052cfb",
   "result": {
+    "week": "2026-04-26",
+    "name": "Jie Wanqing",
     "hardProgress": {
-      "score": 12,
-      "reason": "本周完成了结构化证据路线的实验复核，重新对齐测试集并排查数据泄露后，发现真实性能与SOTA存在明显差距，但报告中未提供任何量化指标，硬进展有限。",
-      "missingEvidence": "缺少标准测试集上精度、召回率等具体性能数据，以及差距的量化幅度。"
+      "score": 11,
+      "reason": "本周有实际推进：重新对齐标准测试集、排查潜在数据泄露、复核指标，并对 v2 增强、Type-RAG、Topology V1 和 DPO 实验做了复盘；也得出了当前方法明显落后于 Smart-LLaMA-DPO 的结论。但周报没有给出任何具体实验数值、误差分布、复核前后差异或已完成产物，因此硬进展可信但不够可审计。",
+      "missingEvidence": "缺少统一评估后的具体指标、与 Smart-LLaMA-DPO 的差距数值、各漏洞类型错误统计、数据泄露排查方法与结果、实验复盘表或链接。"
     },
     "cognitiveIncrement": {
-      "score": 13,
-      "reason": "根因分析深化，明确指出瓶颈非单一参数问题，而是结构化证据、训练范式和判决之间未形成稳定闭环，并认识到实验设计应转向单假设、可归因、可消融，认知增量显著。",
-      "missingEvidence": "未说明该认知是否推翻了前期关键假设，或与领域内其他解决方案的对比。"
+      "score": 12,
+      "reason": "认知增量较明确：从继续优化 Struct-LLM 转向承认非 SOTA，并重新定位问题为结构化证据无法表达漏洞判定所需因果关系；同时区分了 reentrancy、integeroverflow、timestamp 的不同失败机制。这比单纯汇报实验失败更有价值。",
+      "missingEvidence": "缺少将这些认知转化为可检验假设的明确列表，例如每类漏洞对应的失败样例、假设、预期改进指标。"
     },
     "cot2Depth": {
-      "score": 12,
-      "reason": "对实验方法进行了复盘，反思了多增强耦合的弊端，但缺乏对当前根因分析方法本身的局限性的再思考，深度稍显不足。",
-      "missingEvidence": "未讨论根因分析可能存在的偏见或遗漏，也未提出验证根因的下一步计划。"
+      "score": 13,
+      "reason": "CoT² 深度较好：不仅分析了当前方法为什么失败，还上升到方法论层面，指出瓶颈不是单一 prompt 或超参数，而是结构化证据、训练范式和合约级判决之间没有闭环；并提出后续应从多增强耦合转向单假设、可归因、可消融实验。这是有效的二阶反思。",
+      "missingEvidence": "缺少一个明确的因果图或闭环设计草图，说明结构化证据如何进入训练、推理、判决和消融验证。"
     },
     "brainaryMapping": {
-      "score": 8,
-      "reason": "明确指出了Brainary后续需强调“证据质量”和“判定逻辑对齐”，关联清晰，但未具体说明如何在Brainary框架中落地。",
-      "missingEvidence": "缺少与Brainary现有模块或概念（如语义仲裁、知识图谱）的具体映射关系。"
+      "score": 7,
+      "reason": "周报能把本周失败复盘映射到 Brainary：Agent Code Retrieve 不能依赖表面解释生成，而要构造可验证、可消融、能支撑判定的中间证据；也提出 Brainary 需要强调证据质量和判定逻辑对齐。但映射仍偏概念，没有说明对 Brainary 系统模块、数据结构、检索策略或产品路线的具体贡献。",
+      "missingEvidence": "缺少 Brainary 中对应模块的变更方案，例如 Structured Trace 如何进入 Brainary 的索引、检索、证据组织、仲裁或审计流程。"
     },
     "monetaryValue": {
-      "score": 6,
-      "reason": "代码安全检测具有商业价值，但本周工作未体现任何货币化思路或应用场景的量化价值。",
-      "missingEvidence": "未估算漏洞检测准确率提升可能带来的经济收益或成本节约。"
+      "score": 1,
+      "reason": "周报几乎没有呈现货币价值或商业价值。虽然代码安全和漏洞检测本身有潜在应用价值，但本周内容没有说明该路线如何降低审计成本、提升客户价值、形成可交付产品，或与实际市场需求挂钩。",
+      "missingEvidence": "缺少任何关于成本节省、审计效率、可售卖功能、客户场景、竞品差异、商业化路径或风险收益的证据。"
     },
     "projectManagement": {
-      "score": 11,
-      "reason": "下周计划列出了三项具体任务，但未区分优先级，缺少时间节点和里程碑，对负迁移等风险仅提及而未制定应对措施。",
-      "missingEvidence": "缺少任务DAG、预估工时和风险登记表。"
+      "score": 9,
+      "reason": "项目管理有一定结构：明确了当前阻碍、下周三项任务，并给出 3,542 个合约标准测试集作为评估范围；也能主动收束方向，避免继续做多增强耦合式优化。但缺少本周任务完成度、时间分配、优先级依据、风险缓解方案和验收标准。",
+      "missingEvidence": "缺少本周原计划与实际完成对照、各实验状态表、失败实验归档、下周任务的完成定义、时间节点和风险预案。"
     },
     "nextAction": {
       "score": 8,
-      "reason": "行动计划较为具体，但细节不足，如评估时使用的指标、判定推进的阈值、字段设计的方法论均未说明。",
-      "missingEvidence": "未给出Verification Phase1是否推进的决策标准或成功定义。"
+      "reason": "下周行动较具体：完成 Verification Phase1 在 3,542 个合约上的完整评估，针对 reentrancy 设计 Structured Trace 字段，并尝试 Selected Type-RAG。行动方向与本周根因分析一致，且具备一定可执行性。",
+      "missingEvidence": "缺少每个行动的成功判据，例如 Verification prompt 继续推进的阈值、Structured Trace 的字段定义样例、Selected Type-RAG 的消融对照设置。"
     },
     "evidenceQuality": {
       "score": 2,
-      "reason": "仅提及阅读5篇文献，未列出关键文献或观点；实验复核未展示任何数据或图表，证据质量低。",
-      "missingEvidence": "缺少实验对比表格、文献核心摘要或可复现的实验细节。"
+      "reason": "证据质量偏弱。周报提到了标准测试集、数据泄露排查、指标复核、基线 Smart-LLaMA-DPO 和若干实验名称，但没有提供任何可核查数据、表格、样例或链接。结论有方向感，但证据不足以支持教授直接判断技术路线是否该继续投入。",
+      "missingEvidence": "缺少实验结果表、错误案例、消融结果、指标定义、数据集版本、评估脚本、复现链接和关键样例。"
     },
-    "totalScore": 72,
-    "tier": "B",
-    "oneLineJudgment": "实验复核揭示性能差距，根因分析深化认知，但缺乏量化证据和管理细节。",
-    "professorFollowUp": "请补充对比实验的具体指标数据，并明确下周验证的判断阈值。"
+    "totalScore": 63,
+    "tier": "C",
+    "oneLineJudgment": "本周最大的价值是诚实识别了 Struct-LLM 非 SOTA 的根因并收束到可归因实验，但缺少量化证据和商业价值表达，当前更像一次有质量的失败复盘，而不是可直接决策的研究进展。",
+    "professorFollowUp": "教授应重点追问三件事：第一，统一评估后与 Smart-LLaMA-DPO 的具体差距是多少；第二，reentrancy 的 Structured Trace 字段能否用 5 到 10 个错误样例证明确实覆盖关键因果链；第三，下周 Verification Phase1 的继续或停止阈值是什么。"
   }
 }

@@ -1,54 +1,97 @@
 {
   "key": "person:ma-xiaoyu:2026-03-22:weekly-score",
-  "generatedAt": "2026-05-24T11:35:19.822Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "32c9ffff3bbfdc01e11208e954d42e90ca2b4183adf352f53946318129d3013f",
+  "generatedAt": "2026-06-05T17:06:57.122Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "4b935411f176ef0461d0dd75b682be055ec2594b21b4f9d56e00c889268c2d68",
   "result": {
     "hardProgress": {
-      "score": 15,
-      "reason": "本周完成了视觉感知→世界模型→memory的初步pipeline，观察到结构化后的memory在多步推理中更稳定；视频agent构建了top-down graph结构，在video understanding benchmark上取得明显提升；与真实机器人团队交流获得感知噪声、强耦合等关键认知。但进展主要停留在实验观察和定性分析，缺少量化指标。",
-      "missingEvidence": "未提供video benchmark的名称及具体分数提升数值，具身memory实验也缺少量化对比数据。"
+      "score": 14,
+      "reason": "本周有三个可识别的硬进展：一是完成了 perception → world representation → memory 的初步 pipeline，并观察到结构化 memory 在多步推理中更稳定；二是与真实机器人实验室交流并提炼出噪声、实时性、fallback 等迁移约束；三是构建了 video agent 的 top-down graph 表示，并声称在 video understanding benchmark 上有明显提升。进展覆盖实验、系统设计和外部调研，但多数仍停留在原型和观察层，缺少可复现指标与具体实验记录。",
+      "missingEvidence": [
+        "没有给出 embodied memory 实验的任务名称、数据集、评价指标、baseline 和提升幅度。",
+        "没有给出 video benchmark 的具体名称、分数、对照方法、样本规模和失败案例。",
+        "没有说明 pipeline 是否有代码、配置、日志或可复现实验产物。",
+        "真实机器人交流没有会议纪要、具体系统约束参数或可转化需求清单。"
+      ]
     },
     "cognitiveIncrement": {
-      "score": 13,
-      "reason": "本周认知增量源自实验与交流，包括：memory结构化表示优于直接存储、长视频瓶颈是信息密度而非长度、感知与world model存在层级mismatch等，均直指问题本质，对后续研究有明确指导。",
-      "missingEvidence": "缺少认知增量如何直接转化为具体实验假设或设计改进的明确说明。"
+      "score": 12,
+      "reason": "认知增量比较明确，核心增量包括：memory 不是存储而是结构化表示，长视频失败不只是上下文长度而是信息密度选择问题，真实机器人引入仿真中未暴露的鲁棒性和实时性约束。这些增量不是单纯读文献总结，而是与本周实验和交流绑定。扣分点是部分判断仍偏概念化，例如“信息密度无法通过局部 embedding 计算”“当前方法本质是扩大容量”等说法缺少实验证明或文献对照。",
+      "missingEvidence": [
+        "缺少具体实验现象如何支持每条认知增量的对应关系。",
+        "缺少与已有长视频、agent memory、world model 方法的对照，无法判断增量是否真正新。",
+        "缺少失败案例截图、推理轨迹或 memory 内容对比。"
+      ]
     },
     "cot2Depth": {
-      "score": 14,
-      "reason": "两个CoT's CoT非常深刻：1) 长视频失败根源是缺乏信息密度判断能力，而非上下文长度；2) memory的本质是结构化世界状态表示，而非存储。对为何未被自动化科研吸收给出了逻辑解释，并指明了沉淀方向。",
-      "missingEvidence": "虽已自评证据等级A，但未附上失败案例的对比数据或示例，说服力略受影响。"
+      "score": 12,
+      "reason": "CoT’s CoT 层面有较好的二阶抽象：把长视频问题抽象为信息密度判断，把 memory 问题抽象为连续经验到可推理世界状态的压缩，并进一步讨论为什么这些想法尚未进入自动化科研体系，包括缺少 benchmark、缺少优化目标、缺少 cognitive control 模块等。这个层次符合模板要求。主要不足是二阶解释中有较多强判断，但没有足够证据区分‘合理假设’和‘已被验证的机制’。",
+      "missingEvidence": [
+        "没有证明长视频失败的根因确实是信息密度判断，而不是检索、视觉编码、时间定位或推理模块问题。",
+        "没有展示 memory 结构化前后的推理链、错误类型或稳定性统计。",
+        "没有说明‘老师原本不知道的吗：否’之后，该观点相对于已有共识的新增边界在哪里。"
+      ]
     },
     "brainaryMapping": {
-      "score": 8,
-      "reason": "清晰地将工作映射到memory、reasoning、cognitive control和workflow管理四个模块，指出了当前三个方向割裂的问题，体现了系统化思考。",
-      "missingEvidence": "缺少将映射转化为统一架构的初步设计草图或接口定义。"
+      "score": 7,
+      "reason": "报告将工作映射到 Brainary 的 memory、reasoning、cognitive control、workflow management 四类能力，并提出可能沉淀为 memory module、video agent、information selection benchmark 和 agent workflow。映射方向合理，且能把 video 与 embodied 两条线统一到信息选择和结构化 memory 上。扣分点是映射仍较抽象，没有说明每个能力对应的输入、输出、接口、评价指标和模块边界。",
+      "missingEvidence": [
+        "没有给出 Brainary 模块级架构图或接口定义。",
+        "没有说明 memory module、information selection benchmark 与现有系统如何集成。",
+        "没有明确 cognitive control 模块的可计算信号、训练目标或调用位置。"
+      ]
     },
     "monetaryValue": {
-      "score": 9,
-      "reason": "给出了视频agent（300万）和具身memory（5亿）的商业价值估计，分别参考了SaaS定价和灵境估值，展示了市场化意识。",
-      "missingEvidence": "估值依据较粗略，未提供同类产品详细对比或市场分析。"
+      "score": 4,
+      "reason": "报告尝试判断买单方和商业价值，指出机器人公司、AI agent 公司、视频理解平台可能受益，并给出 video agent 300 万人民币、embodied memory 5 亿人民币的估值。但商业论证较弱，尤其是 embodied memory 用‘灵境估值’作参考，不能直接推出本项目可捕获价值；video agent 参考 SaaS 定价也没有说明客户场景、付费单位、销售路径或竞争替代。货币价值有意识，但证据不足。",
+      "missingEvidence": [
+        "没有具体客户访谈、需求强度或采购场景。",
+        "没有竞品价格、可替代方案、成本结构或市场规模测算。",
+        "没有说明本周进展如何转化为可售产品功能。",
+        "5 亿人民币估值依据过粗，缺少与本项目技术壁垒和收益分成的关系。"
+      ]
     },
     "projectManagement": {
-      "score": 13,
-      "reason": "明确了项目阶段（原型与小规模实验）、本周投入40小时、进度基本符合预期，偏差原因（方法探索成本高）和资源卡点（API token）都有交代，纠偏动作合理。",
-      "missingEvidence": "缺少具体的里程碑完成率或时间节点对比表。"
+      "score": 11,
+      "reason": "项目管理信息较完整：有项目名称、阶段、投入时间、进度状态、偏差原因、资源瓶颈、关键路径和下周纠偏动作。能看出当前处于原型和小规模实验阶段，关键路径是 memory abstraction 与信息密度建模。扣分点是缺少明确里程碑、验收标准、任务拆分、风险优先级和时间预算；api token 资源问题也没有给出截止时间和备选方案。",
+      "missingEvidence": [
+        "没有本周原计划与实际完成项的逐项对照。",
+        "没有下周每个任务的负责人、预计耗时和完成标准。",
+        "没有列出关键风险的优先级和缓解方案。",
+        "没有说明 api token 问题若未解决时的替代实验路径。"
+      ]
     },
     "nextAction": {
-      "score": 9,
-      "reason": "下周计划针对三个任务均给出了最小可验证动作：对比两种memory abstraction、映射memory结构到真实机器人pipeline、引入信息密度评分机制，可执行性强。",
-      "missingEvidence": "未说明三个任务之间的优先级和资源分配方案。"
+      "score": 8,
+      "reason": "下周动作较具体，包括构建 low-level 与 semantic-level 两种 memory abstraction 并在 planning 任务中对比，映射当前 memory 结构到真实机器人 pipeline，梳理仿真与真机差异，引入信息密度评分机制并测试泛化能力。这些动作与本周卡点对应度高，具备最小验证意识。扣分点是缺少量化成功标准和实验优先级，容易同时推进三条线导致发散。",
+      "missingEvidence": [
+        "没有定义 planning 任务的成功指标和预期对照。",
+        "没有说明信息密度评分机制的候选算法或最小实现。",
+        "没有说明三项下周任务的优先级排序。",
+        "没有设置停止条件：如果实验不提升，下一步如何判断是假设错还是实现问题。"
+      ]
     },
     "evidenceQuality": {
-      "score": 4,
-      "reason": "自我评级为A，基于benchmark提升和失败案例对比；虽未附量化数据，但从实验设计来看可信度较高。",
-      "missingEvidence": "缺少video benchmark提升的具体数值和统计显著性测试结果。"
+      "score": 2,
+      "reason": "证据质量偏弱。报告多次使用‘明显提升’‘更稳定’‘鲁棒性更强’等判断，但没有提供任何数字、表格、样例、日志、benchmark 名称或消融实验。证据等级自评为 A，但从报告内容看更接近 B-/C+：有实验观察，但不可复核。真实机器人部分主要来自交流认知，也缺少一手参数和部署约束。",
+      "missingEvidence": [
+        "没有 benchmark 分数和对照结果。",
+        "没有实验设置、随机种子、样本规模、任务定义。",
+        "没有失败案例与成功案例的具体对比。",
+        "没有代码、图表、日志或外部交流纪要。"
+      ]
     },
-    "totalScore": 75,
+    "totalScore": 70,
     "tier": "B",
-    "oneLineJudgment": "本周在方向上取得了关键实验进展和深层认知突破，但量化指标不足，后续需强化数据驱动的验证。",
-    "professorFollowUp": "请在下周报告中提供video benchmark的具体提升数据，并尽快完成memory abstraction对比实验，同时评估信息密度建模的可行性。"
+    "oneLineJudgment": "本周有真实原型推进和较强的二阶问题抽象，但证据链明显不足，商业价值论证偏弱，当前更像方向收敛周而不是结果可验收周。",
+    "professorFollowUp": [
+      "要求他下周必须给出 video benchmark 的具体分数、baseline、提升幅度和失败案例对比，否则‘明显提升’不能作为硬进展计入。",
+      "要求他把 embodied memory 的 low-level vs semantic-level 实验设计写成一页，包括任务、指标、输入输出、对照组和成功标准。",
+      "追问‘信息密度’的可计算定义：它到底由 saliency、task relevance、uncertainty、novelty 还是 compression gain 来度量。",
+      "让他收敛优先级：下周只允许一个主验证目标，建议优先验证信息密度评分是否能提升长视频 reasoning，因为这是 video 与 embodied 两条线的共同瓶颈。",
+      "要求重新做 monetary value：至少列出一个具体买单场景、一个竞品或替代方案、一个可收费功能和一个粗略收入模型。"
+    ]
   }
 }

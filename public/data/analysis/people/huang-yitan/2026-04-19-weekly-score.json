@@ -1,54 +1,64 @@
 {
   "key": "person:huang-yitan:2026-04-19:weekly-score",
-  "generatedAt": "2026-05-24T11:34:11.595Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "03a42929cee7e96b3f1288864b36617ff73d0fe298e622ee7eb10e40265c75cc",
+  "generatedAt": "2026-06-05T17:03:19.545Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "ee5be5d35711c5a23b26d2a7cc706e94d467f0b662c96dc3e2ef587536b4dc4c",
   "result": {
-    "hardProgress": {
-      "score": 17,
-      "reason": "本周完成了研究计划书 v1.0 和 Demo 系统原型（950 行代码），定义了 6 种不一致类型、设计了 7 组实验、对比了 9 种基线方法，并通过模拟数据验证了 4 种跨层 gap 检测逻辑。但真实代码解析和 HTTP 验证尚未完成，Demo 仍基于模拟环境。",
-      "missingEvidence": "缺少真实应用端到端测试的日志或报告，研究计划书未附链接或截图。"
+    "week": "2026-04-19",
+    "name": "Huang Yitan",
+    "scores": {
+      "hardProgress": {
+        "score": 15,
+        "reason": "本周有明确硬产出：研究计划书 v1.0、多 Agent 架构设计、6 类跨层语义不一致分类、7 组实验设计、benchmark 目录结构、baseline 列表、风险矩阵，以及 950 行 demo 代码和 4 类检测逻辑测试。硬进展不是停留在想法层，已经有原型。但主要问题是 demo 仍基于模拟数据，真实代码解析、HTTP 验证、真实 Spring Boot 应用端到端验证都尚未完成，因此距离可发表或可复现实验还有明显距离。",
+        "missingEvidence": "缺少研究计划书链接、代码仓库、测试日志、4 个 CVE/gap 检测样例的输入输出、benchmark 目录实际文件、真实应用运行结果。"
+      },
+      "cognitiveIncrement": {
+        "score": 12,
+        "reason": "认知增量较清楚：从单一 LLM 检测转向多 Agent 跨层诊断；从 vulnerable/not-vulnerable 转向解释不一致发生在哪两层、为什么发生、该修哪一层；明确 Orchestrator 是瓶颈；提出 hard negative 是关键差异化点。这些认知与本周 demo 和实验规划有连接，不是纯口号。但部分判断仍偏叙事，例如“诊断叙事更吸引安全顶会审稿人”尚未由论文对比或审稿标准支撑。",
+        "missingEvidence": "缺少对 BACScan、BACAgent、MOCGuard 的具体技术差异表；缺少 hard negative 样例；缺少诊断输出相对检测输出的具体样例对比。"
+      },
+      "cot2Depth": {
+        "score": 10,
+        "reason": "CoT's CoT 有尝试回答“老师是否原本不知道”“为什么没有进入自动化科研体系”“如何沉淀为 benchmark/workflow/module/memory”，符合模板要求。最有价值的是把跨层诊断的门槛定位为“跨层知识组合能力”，并连接到 Multi-Agent 的必要性。但深度仍不稳定：多个条目承认老师原本知道，新增性有限；证据等级有自评但不够严格，例如 CoT's CoT 2 在正文说证据等级 B，表格里又写 A，存在不一致。",
+        "missingEvidence": "缺少对“为什么前人没做”的文献证据；缺少对跨层知识组合瓶颈的系统拆解；缺少每个 CoT's CoT 对应的可验证实验或 benchmark 字段设计。"
+      },
+      "brainaryMapping": {
+        "score": 7,
+        "reason": "报告把工作映射到 Brainary 的 tool orchestration、workflow management、benchmark/evaluation、reasoning、memory，并提出可沉淀为 benchmark、workflow、memory schema、evaluation protocol。映射方向合理，尤其是三阶段 pipeline 与 memory schema 有一定具体性。但目前多为概念映射，还没有明确接口、数据结构、自动化调用链或 Brainary 中可复用模块边界。",
+        "missingEvidence": "缺少 memory schema 的字段定义样例；缺少 Agent 输入输出协议；缺少 Orchestrator 对齐规则；缺少如何接入 Brainary 的实际系统路径。"
+      },
+      "monetaryValue": {
+        "score": 5,
+        "reason": "报告按模板给出了金额估计，并尝试从顶会论文奖励、benchmark 数据资产、工具化潜力三个方向估值。但估值逻辑不严谨：前面估计综合价值 25-50 万，最后却取保守值 5 万，内部不一致；“安全工具 MVP 估值逻辑”没有具体依据；买单方虽然列出，但没有对应付费场景、预算来源、替代方案成本或转化路径。",
+        "missingEvidence": "缺少具体高校奖励标准来源；缺少企业安全团队愿意为诊断能力付费的证据；缺少 benchmark 引用价值的量化参照；缺少商业化 MVP 的真实估值或采购案例。"
+      },
+      "projectManagement": {
+        "score": 12,
+        "reason": "项目管理信息较完整：有当前阶段、原计划与实际完成对比、投入时间、下周投入、关键里程碑、资源需求、依赖、成本和纠偏动作。下周进入 Phase 0 的路径也清楚。主要不足是风险管理仍偏轻：真实代码解析、HTTP 验证、artifact 获取、Java/Docker 环境、Agent 框架选择都是关键风险，但没有给出优先级、备选方案、失败判据和时间缓冲。报告称 MOCGuard artifact 是可选项，但下周又把获取 artifact 列为关键动作，依赖关系表述不够一致。",
+        "missingEvidence": "缺少甘特式关键路径；缺少每个里程碑的验收标准；缺少技术栈选择矩阵；缺少环境失败时的替代计划；缺少 benchmark 构建的人力和数据规模估计。"
+      },
+      "nextAction": {
+        "score": 8,
+        "reason": "下周动作总体可验证：精读 MOCGuard、获取 artifact/target apps、在 5 个 Java Spring 应用上跑通端到端 pipeline、确定 Agent 框架、完成 HTTP 验证、生成带 POC 的检测报告。这些动作比泛泛计划更具体。但范围偏大，一周内同时完成文献精读、环境搭建、5 个应用端到端、HTTP 验证和 POC 报告可能超负荷；缺少最小成功标准和优先级排序。",
+        "missingEvidence": "缺少 5 个 Spring 应用名单；缺少端到端 pipeline 的通过标准；缺少 POC 报告模板；缺少如果 artifact 获取失败时的替代数据源。"
+      },
+      "evidenceQuality": {
+        "score": 3,
+        "reason": "报告提供了较多自述性证据，例如 950 行代码、4 种检测逻辑通过、CVE 覆盖、计划书完成、实验编号和里程碑。但证据主要是声明，没有外部可核查材料。没有代码链接、commit、测试截图、日志、样例输入输出、论文笔记或运行环境记录。因此证据质量只能算中低。",
+        "missingEvidence": "缺少仓库链接、commit hash、运行日志、测试用例、demo 输出、计划书附件、benchmark 文件树截图、CVE 复现实验记录。"
+      }
     },
-    "cognitiveIncrement": {
-      "score": 13,
-      "reason": "梳理了 5 点认知更新，包括 Multi-Agent 分工的必要性、BAC 的诊断本质、三阶段 Pipeline 的分层逻辑、Hard negative 的差异化价值，以及 Demo 如何使方案具体化。部分观点在之前已出现，但本周通过工程验证加深了理解。",
-      "missingEvidence": "诊断 vs 检测的叙事差异缺乏对比分析或审稿人反馈佐证。"
-    },
-    "cot2Depth": {
-      "score": 12,
-      "reason": "对认知进行了二次审视，提出了 4 个 CoT's CoT，其中“跨层诊断的门槛是知识组合而非算法”这一条是老师原本不知道的，并点出了 Multi-Agent 的价值。其他条目分析了未被自动化吸收的原因，但多数证据等级为 B 或 C，深度不足。",
-      "missingEvidence": "缺少对“跨层知识组合瓶颈”的系统分析，以及对 MOCGuard 团队为何未做诊断的具体调研。"
-    },
-    "brainaryMapping": {
-      "score": 9,
-      "reason": "明确将工作关联到 Brainary 的 tool orchestration、workflow management、benchmark、reasoning、memory 等能力，并指出了尚未系统化的原因与可能的沉淀形式（benchmark、workflow、memory schema）。映射清晰且覆盖全面。",
-      "missingEvidence": "缺少与 Brainary 已有模块的对比或具体集成路径。"
-    },
-    "monetaryValue": {
-      "score": 8,
-      "reason": "估计价值 5 万人民币，计算方法引用了 CCF-A 论文奖励、数据集引用价值和工具 MVP 估值，考虑了保守情况。估值合理但略显保守，且未考虑潜在商业转化或开源社区影响力。",
-      "missingEvidence": "缺少对同类安全工具或 benchmark 的商业/引用价值的客观数据支撑。"
-    },
-    "projectManagement": {
-      "score": 13,
-      "reason": "给出了 Phase 0-4 的分阶段计划、关键里程碑和资源需求，实际进度与计划完全匹配，并明确了依赖关系和纠偏动作。但风险应对较为笼统，缺乏细化任务拆解和备选方案。",
-      "missingEvidence": "缺少 WBS 或甘特图，资源瓶颈（如 Docker 环境）的解决时间未明确。"
-    },
-    "nextAction": {
-      "score": 8,
-      "reason": "列出了具体的下周最小可验证动作，如精读 MOCGuard 论文、在 5 个应用上跑通原型、修复环境等。动作可执行，但部分工作量较大（如精读论文+获得 artifact+跑通原型），缺少优先级区分和时间分配。",
-      "missingEvidence": "未给出每项动作的预估耗时，也未说明若 MOCGuard artifact 无法获取的备选路径。"
-    },
-    "evidenceQuality": {
-      "score": 3,
-      "reason": "声称有 950 行代码和测试通过，但未提供代码仓库链接、测试输出截图或日志；认知的支撑材料多为文字描述，缺乏可复现证据。",
-      "missingEvidence": "缺少 github 链接、测试报告、结果日志或录屏。"
-    },
-    "totalScore": 83,
-    "tier": "A",
-    "oneLineJudgment": "本周在多 Agent 架构设计和原型验证上取得扎实进展，认知聚焦于诊断突破口，但真实代码验证和证据提供仍有欠缺。",
-    "professorFollowUp": "建议确认下周精读 MOCGuard 的目标是否过于乐观，是否需要实验室已有资源协助搭建测试环境；并提醒尽快将代码和测试结果实体化，以便提高证据可查验性。"
+    "totalScore": 72,
+    "tier": "B",
+    "oneLineJudgment": "这一周完成了从研究构想到可运行 demo 的重要推进，但核心验证仍停留在模拟数据和自述测试层，下一步必须用真实 Spring 应用、真实 HTTP 复现和可核查代码证据把方案从“设计可信”推进到“实验可信”。",
+    "professorFollowUp": [
+      "要求学生下周只保留一个最高优先级验收目标：在一个真实 Spring Boot 应用上完成从代码解析到 HTTP 验证再到诊断报告的端到端闭环。",
+      "要求提交代码仓库、运行命令、测试日志、样例输入输出和一个完整 POC 报告，而不是只写“测试通过”。",
+      "追问 Multi-Agent 的必要性如何通过 ablation 证明：需要比较单 Agent、多 Agent、无 Orchestrator、无 ExploitAgent 等版本，而不是只比较 token 数或 prompt 长度。",
+      "要求把 CLSIC Benchmark 的最小 v0.1 定义清楚：至少包含多少应用、多少真实漏洞、多少 hard negative、每个样本标注哪些跨层语义字段。",
+      "老师本周最该学习的一点是：该题目的潜在价值不在于再做一个 BAC detector，而在于把 BAC 表述为跨层语义不一致的诊断问题；但这个价值只有在真实样本、诊断指标和可复现实验成立后才算成立。"
+    ]
   }
 }
