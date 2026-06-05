@@ -1,54 +1,102 @@
 {
   "key": "person:guo-wenbo:2026-03-22:weekly-score",
-  "generatedAt": "2026-05-24T11:33:13.706Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "d4d5af4cdadbd9ce40a44f056d0625deddbcdc3c0e4cd6868887c22bf88b0928",
+  "generatedAt": "2026-06-05T14:01:25.470Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "856051b33862c7c30ef2ef893d39812b462d86ef082b554f6d46fd3f6381d9c2",
   "result": {
     "hardProgress": {
-      "score": 17,
-      "reason": "本周产出明确：双维正交分类法设计完成、AITD Pipeline框架并跑通、skillatlas包协议与CLI接口定义完成；SkillGuard两阶段检测流水线框架搭建完成、真实攻击数据集构建完成、知识库接入FAISS。但AITD Pipeline的O*NET对齐验证未完成，安全检测实验因token不足中断，硬进展有缺口。",
-      "missingEvidence": "O*NET对齐覆盖率数字、全量安全扫描初步结果、AITD分类收敛性定量证据。"
+      "score": 14,
+      "reason": "本周报告了两个项目的实质性推进：SkillAtlas 完成双维正交分类法、AITD Pipeline 框架、skill 包协议、CLI 接口和事件驱动发布流水线设计；SkillGuard 完成两阶段检测框架、真实生态数据集、攻击模式知识库和 FAISS 检索接入。但多数成果仍停留在“设计完成/框架搭完/流程跑通”的表述，缺少可检验产物和结果数字；关键实验与 O*NET 对齐验证均未完成。",
+      "missingEvidence": [
+        "没有提供 AITD Pipeline 跑通后的分类树样例、节点数量、覆盖率或错误案例。",
+        "没有提供 skillatlas 包协议或 CLI 的具体字段/API 示例。",
+        "没有提供 SkillGuard 数据集规模、攻击类别分布、样本来源和标注方式。",
+        "没有提供静态分析层、LLM 层的初步检测指标或运行日志。",
+        "没有代码仓库、实验截图、表格或可复现实验入口。"
+      ]
     },
     "cognitiveIncrement": {
-      "score": 14,
-      "reason": "本周认知增量清晰且重要：澄清了Skill分类必须双维正交（Domain×Function），明确taxonomy定义了skill生态的solution space边界，证实AITD Pipeline自动发现分类树路径可行。这些判断加深了对问题本质的理解，且与设计决策直接关联。",
-      "missingEvidence": "未量化双维检索与单维检索的效果差异，缺乏用户验证或基准测试支撑判断。"
+      "score": 11,
+      "reason": "认知增量比较明确：从单一 Function 分类推进到 Domain × Function 双维 taxonomy，并将 taxonomy 理解为 skill 生态的 solution space 边界，而不只是分类工具；同时确认数据驱动的多 Agent BFS 构建路径比人工拍脑袋设计更有潜力。问题是这些判断目前主要来自设计推理，还没有被覆盖率、检索质量或用户场景实验验证。",
+      "missingEvidence": [
+        "缺少单维 Function 分类与双维分类在检索质量上的对比结果。",
+        "缺少 taxonomy 对推荐、调度、检索效率提升的实测证据。",
+        "缺少 AITD Pipeline 相比人工 taxonomy 的质量对比。"
+      ]
     },
     "cot2Depth": {
-      "score": 14,
-      "reason": "两个CoT's CoT均达到深度反思：将当前skill生态类比PyPI出现前的混乱状态，指出基础设施缺失是关键瓶颈；揭示跨生态攻击行为的同构性，提出可迁移检测框架。每个判断都分析了自动化吸收障碍并给出沉淀建议，但均依赖类比而未经过系统性验证。",
-      "missingEvidence": "跨生态攻击行为系统性对比实验、PyPI历史类比的具体指标映射。"
+      "score": 11,
+      "reason": "CoT's CoT 覆盖了两个较有价值的上层判断：skill 生态缺基础设施，以及 skill 安全检测与传统包管理安全检测在攻击行为层面的同构性。报告也说明了为什么尚未被自动化科研吸收，并提出 workflow、benchmark、memory schema、agent module 等沉淀形式。扣分点在于两个判断都标注为“老师原本不知道的吗：否”，新知识冲击不足；并且深层机制、失败边界、反例和验证路径还不够细。",
+      "missingEvidence": [
+        "缺少跨生态攻击行为同构性的系统对齐表。",
+        "缺少 PyPI/npm/skill 生态在分发、安全、检索机制上的结构化比较。",
+        "缺少将 CoT's CoT 转成自动化科研模块的具体 schema 或 workflow 草案。",
+        "缺少哪些攻击模式不能迁移、哪些 skill 类型不适用的边界分析。"
+      ]
     },
     "brainaryMapping": {
-      "score": 8,
-      "reason": "清晰映射了SkillAtlas对Brainary的memory（结构化solution space）和tool orchestration的能力，SkillGuard对risk modeling和可信知识节点管理的能力，并说明当前Brainary缺少skill调用前风险评估。但映射仍停留在功能对应层面，未给出集成后性能预估或改造路径。",
-      "missingEvidence": "Brainary当前skill调用的具体失败案例或效率数据，集成后的预期改善量化指标。"
+      "score": 7,
+      "reason": "报告能把 SkillAtlas 映射到 Brainary 的 memory、tool orchestration，把 SkillGuard 映射到 risk modeling 和可信知识节点管理，并说明潜在沉淀物是 skill knowledge base、taxonomy-aware retrieval、风险评估模块和评测协议。这是有效映射。但仍偏概念层，没有说明 Brainary 现有系统中具体接入点、数据结构、调用链、模块接口和成功标准。",
+      "missingEvidence": [
+        "缺少 Brainary memory schema 的具体字段设计。",
+        "缺少 taxonomy-aware skill retrieval 的调用流程图或伪代码。",
+        "缺少 SkillGuard 接入 Brainary 调用前风险评估的接口定义。",
+        "缺少 Brainary 当前缺口与本周产物之间的一一对应证据。"
+      ]
     },
     "monetaryValue": {
-      "score": 7,
-      "reason": "给出了平台年营收估值（5000万-1亿美元）和产品估值（3000-5000万人民币），计算方法类比JFrog、Snyk等，有参考意义。但早期估值假设过于乐观（成为行业标准的概率未评估），未区分市场培育期与爆发期，SecurityGuard的客户数量与客单价估算缺少市场调研支撑。",
-      "missingEvidence": "目标客户访谈或需求验证、竞品定价详细分析、市场规模渗透率模型。"
+      "score": 4,
+      "reason": "报告尝试给出商业价值，并区分平台方、企业用户和开发者等买单方，也引用 JFrog、Sonatype、npm、Snyk 等类比。但金额推导存在明显问题：SkillAtlas 将估值、年营收和平台化潜力混在一起；SkillGuard 估计为 3000 万到 5000 万人民币年营收，但计算过程按 10 到 20 个客户、每客户 15 到 25 万/年，只能得到约 150 万到 500 万人民币/年，和结论差一个数量级。商业价值有方向，但证据链弱。",
+      "missingEvidence": [
+        "缺少目标客户访谈或真实需求证据。",
+        "缺少可服务市场规模、定价、转化率、销售周期的基本假设。",
+        "SkillGuard 金额估算与计算过程不一致。",
+        "缺少竞品对比和差异化付费理由。",
+        "缺少从研究原型到产品收入的路径和时间表。"
+      ]
     },
     "projectManagement": {
       "score": 12,
-      "reason": "项目管理框架完整：两个项目均明确阶段、时间投入、里程碑、资源需求、依赖关系和关键路径。识别出token是共同瓶颈，进度偏差给出了协作和资源原因，纠偏措施具体（约俊逸对齐、申请token）。但未量化token缺口，协作对齐节奏没有缓冲计划。",
-      "missingEvidence": "token需求具体数值、俊逸侧进度同步机制、备选资源（如小模型）的提前评估结果。"
+      "reason": "项目管理部分较完整：两个项目都写明阶段、原计划、实际进度、投入时间、下周投入、里程碑、资源、依赖、关键路径、token/成本瓶颈、偏差原因和纠偏动作。尤其明确指出需要老师介入 token 配额，这是决策有用信息。扣分点是交付物定义还不够量化，关键里程碑缺少验收指标，风险优先级和替代路径仍较粗。",
+      "missingEvidence": [
+        "缺少每个里程碑的验收标准，例如覆盖率达到多少、检测指标达到多少。",
+        "缺少 token 需求量、预计成本和申请额度数字。",
+        "缺少当前任务拆分到具体日期的执行计划。",
+        "缺少如果 token 仍无法解决时的降级实验方案细节。"
+      ]
     },
     "nextAction": {
-      "score": 8,
-      "reason": "下周动作具体且可验证：完成O*NET对齐验证、与俊逸对齐分类边界；解决token后跑完实验拿到初步检测结果。动作直接对应卡点，优先级明确。但未说明若token仍无法解决时的应急预案，对齐会议议程未预定义。",
-      "missingEvidence": "token申请的渠道与预期批复时间、对齐会议需确认的具体问题清单。"
+      "score": 7,
+      "reason": "下周动作基本可执行：SkillAtlas 要完成 O*NET 对齐验证、看覆盖率、与俊逸确认分类边界；SkillGuard 要解决 token 问题、跑完实验、拿到初步检测结果。这些动作与当前卡点一致。但仍不够“最小可验证”：没有明确覆盖率阈值、实验指标、样本规模、截止时间和失败后的判断规则。",
+      "missingEvidence": [
+        "缺少 O*NET 对齐验证的具体评价指标和合格阈值。",
+        "缺少 SkillGuard 初步结果要报告哪些指标，例如准确率、召回率、误报率、成本。",
+        "缺少下周每日或阶段性时间安排。",
+        "缺少与俊逸对齐后必须产出的文档或决策项。"
+      ]
     },
     "evidenceQuality": {
-      "score": 3,
-      "reason": "CoT's CoT证据等级均为B：有案例支撑（PyPI历史、攻击模式对比），但无系统性实验或定量对比，全量扫描也未完成。整体周报依赖设计描述和逻辑推理，缺乏外部数据或用户反馈。",
-      "missingEvidence": "AITD分类与人工分类的一致性数据、安全检测的误报率/召回率、真实用户对分类体系的试用反馈。"
+      "score": 2,
+      "reason": "报告有自评证据等级，并承认两个 CoT's CoT 目前都是 B 级；这比完全没有证据意识要好。但整体证据主要是叙述性和类比性，缺少数据、实验结果、样例、表格、链接、日志或复现材料。多个核心结论仍处在设计假设阶段。",
+      "missingEvidence": [
+        "缺少实验数据和定量指标。",
+        "缺少数据集样例与统计信息。",
+        "缺少协议、pipeline、检测模块的具体产物链接或截图。",
+        "缺少负例、失败案例和误差分析。",
+        "缺少第三方基准或外部验证。"
+      ]
     },
-    "totalScore": 83,
-    "tier": "A",
-    "oneLineJudgment": "本周在SkillAtlas框架和SkillGuard流水线上取得实质性设计与认知进展，实验验证虽受token限制中断，但下步动作明确且价值方向正确，整体处于高质量推进。",
-    "professorFollowUp": "建议优先协助解决token配额问题，这是两个项目卡点的共同根源；同时关注O*NET对齐验证的进展，确保分类体系有实证支撑。"
+    "totalScore": 68,
+    "tier": "C",
+    "oneLineJudgment": "这一周有清楚的系统设计和项目推进，但硬证据不足，商业估值不稳，关键验证尚未完成；目前更像高质量方案周报，不是结果周报。",
+    "professorFollowUp": [
+      "优先问他要三个可验证产物：AITD Pipeline 输出的分类树样例、SkillGuard 数据集统计表、两阶段检测的初步实验日志。",
+      "要求他下周必须给出 O*NET 对齐覆盖率、分类边界错误案例和至少一版 taxonomy 质量评估。",
+      "帮助判断是否批准 token 配额；批准前应让他提交预计 token 消耗、模型选择、样本规模和降级方案。",
+      "指出 SkillGuard 商业估算存在数量级错误，要求重算收入模型，区分年营收、估值和市场空间。",
+      "本周老师最应该学到的一件事是：该项目的核心价值不只是安全检测，而是把 AI skill 生态从“堆积的 skill”推进到“可分类、可检索、可分发、可风控”的基础设施层。"
+    ]
   }
 }

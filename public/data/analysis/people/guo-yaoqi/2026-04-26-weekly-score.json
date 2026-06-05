@@ -1,54 +1,98 @@
 {
   "key": "person:guo-yaoqi:2026-04-26:weekly-score",
-  "generatedAt": "2026-05-24T11:33:35.532Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "81ac3c544b081e0b5431d7df167a8c5b9c9d80f453c417d89be6f69bf5879865",
+  "generatedAt": "2026-06-05T14:01:42.614Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "54816f67fc0ffb6b984cc0d35f1f3fe2ec61b587c53976faba035574d2594da7",
   "result": {
     "hardProgress": {
       "score": 18,
-      "reason": "v2三阶段全部重构完成，49条全量评测运行，首次实现pipeline solve rate超过baseline（+5pp），并完成Aspect-Repro Bundle、Dynamic Python Debug Agent等新模块代码与测试，进展扎实。",
-      "missingEvidence": "精确solve rate数字（不是约数），Aspect-Repro Bundle在不同case上的接受率分布，Debug Agent的详细轨迹分析。"
+      "reason": "本周有明确的硬产出：完成 v1 相对 baseline 的结构化回归归因，提出 H1-H3；将 pipeline 重构为 v2，包含 Aspect-Repro Bundle、Dynamic Python Debug Agent、三路降级模板；在 SWE-bench Pro 49 条 python-only 上完成端到端评测，并报告 v2 相对 baseline 约 +5pp、相对 v1 约 +11pp。还给出了部分工程证据，如 27 个 TDD 测试全绿、容器 smoke、openlibrary e390c12 的候选与 accepted 数。扣分点是关键结果仍写成“约 26–27/49”，没有给出精确 resolved 列表、失败列表和可复现实验表。",
+      "missingEvidence": [
+        "v2 精确 resolved 数到底是 26/49 还是 27/49 缺失。",
+        "49 条逐例结果表缺失，无法确认哪些 case 从失败变成功、哪些从成功变失败。",
+        "v1、baseline、v2 是否使用相同模型、预算、随机种子、运行条件没有完整说明。",
+        "代码提交链接、评测日志、artifact 路径没有在周报中给出。"
+      ]
     },
     "cognitiveIncrement": {
-      "score": 15,
-      "reason": "认知更新显著且反直觉，包括v1比baseline更差、错的锚点比没锚点更坏、证据必须是运行时、契约而非现象，均基于v1回归实验，对老师原有假设形成有力翻转。",
-      "missingEvidence": "对v1与baseline差异的统计显著性检验，对H1-H3假设的单独控制变量验证。"
+      "score": 14,
+      "reason": "认知增量强，核心不是一般性地说“要做更准 RCA”，而是从 v1 低于 baseline 的反事实中抽出“错误信息以权威语气进入下游会产生负收益”“信息必须带置信度和使用权限”“空 hint 比不 hint 更坏”等可操作原则。这些认知直接反向驱动了 v2 的设计，并有 49 条评测作为初步支撑。扣分点是部分认知仍可能混杂多个改动源，尚未通过 ablation 拆分出 calibration、Debug Agent、Repro Bundle 各自贡献。",
+      "missingEvidence": [
+        "没有 ablation 表来区分三路降级、Debug Agent、Aspect-Repro Bundle、Verification Requirements 各自的增益。",
+        "“v2 主要收益来自 calibration”仍是合理解释，但周报未提供单独实验验证。",
+        "没有对失败 case 的系统性反例分析来界定该认知的边界条件。"
+      ]
     },
     "cot2Depth": {
       "score": 14,
-      "reason": "三条CoT's CoT均有证据等级标注（L4/L3/L3），剖析了校准能力作为一等公民、Debug Agent工具集设计原则和evidence gating的架构意义，思考深度高，但CoT3缺少多实例分布数据。",
-      "missingEvidence": "CoT2缺少对gdb port路径的对照实验；CoT3缺少多实例的分布级证据。"
+      "reason": "CoT's CoT 写到了方法论层：stage-to-stage 接口应是字段、provenance、confidence、使用权限的组合；evidence gating 是行为层硬约束；Python Debug Agent 的 action space 应从语言原生调试需求出发，而不是机械移植 gdb。这些不是普通复盘，而是能指导后续系统设计的二阶认知。每条还标注了证据等级、老师是否可能已知、自动化沉淀形式。扣分点是证据等级自评偏乐观，特别是 CoT's CoT 1 把 42.9% 到约 54% 基本归因于模板语气/降级协议，但实际 v2 同时改了多个模块。",
+      "missingEvidence": [
+        "缺少对 CoT's CoT 1 的单变量对照：相同 RCA 产物，仅改变语气和降级协议后的 solve rate。",
+        "CoT's CoT 2 缺少与“gdb port 式工具集”或其他 action set 的对照实验。",
+        "CoT's CoT 3 只有 smoke 事件和一个 fix，没有多实例分布级证据。"
+      ]
     },
     "brainaryMapping": {
       "score": 9,
-      "reason": "将本周工作清晰映射到calibration、cognitive control、memory/reasoning和benchmark能力，并创新地主张calibration应与reasoning同级，沉淀路径具体。",
-      "missingEvidence": "未提供与Brainary现有组件接口的具体对齐方案。"
+      "reason": "Brainary 映射清楚，能把本周工作落到 calibration、cognitive control、memory/reasoning、benchmark/evaluation 四类能力上。尤其是将 calibration 提升到与 reasoning 同级，是从具体工程失败中抽出的系统能力定义；同时给出了可沉淀对象：calibration-aware prompt 组装器、evidence-gated 归因 Agent、三路降级 workflow、结构化 memory schema、净增益评测协议。扣 1 分是因为这些映射多数仍停留在设计和概念层，尚未证明跨任务、跨 agent 可复用。",
+      "missingEvidence": [
+        "没有第二个任务或第二条 pipeline 证明该 Brainary 映射可迁移。",
+        "memory schema 仍未完全落地到 Enricher 和 Stage 3 的端到端使用中。",
+        "calibration 指标尚未被形式化为可自动监控的 Brainary benchmark。"
+      ]
     },
     "monetaryValue": {
-      "score": 9,
-      "reason": "价值金额计算方法清晰，权重分配合理（$120K = $2M × 6%），有保守情形的反思，逻辑完备。",
-      "missingEvidence": "年化价值增益$2M的假设依据未在本周报中说明。"
+      "score": 7,
+      "reason": "周报给出了金额、计算框架和保守情形，能把本周价值拆成架构重构、正增益验证、方法论资产三部分，且承认 Enricher 未落地会影响权重。这比单纯报一个数字更可审计。主要扣分在于 $2M 年化商业价值和 6% 权重完全来自假设，缺少客户、成本节省、算力节省、修复吞吐、成功率换算收入等外部或内部经济证据；$120,000 更像战略价值估算，不是可兑现价值。",
+      "missingEvidence": [
+        "$2M 年化商业价值的来源缺失。",
+        "6% 权重分配缺少可验证依据。",
+        "没有把 +5pp solve rate 转换为实际人力节省、交付收入或成本下降。",
+        "没有说明评测成本、失败成本、维护成本对净价值的抵扣。"
+      ]
     },
     "projectManagement": {
-      "score": 14,
-      "reason": "时间、资源、进度、纠偏动作记录详细，进度超出预期的原因解释清楚，下周计划具体。",
-      "missingEvidence": "未提供合作依赖或外部风险管理信息。"
+      "score": 13,
+      "reason": "项目管理信息较完整：有本周投入约 50 小时、下周预计 40 小时、资源/API 情况、token 成本约 50 SGD、里程碑、当前卡点、纠偏动作和是否需要老师介入。风险识别也较具体，包括 Enricher 未实现、22 条 both-fail 未归因、dual-run 兜底未决策、对 +5pp 过度自信。扣分点是下周验收标准还不够量化，例如 Enricher 开/关要达到多少提升才继续投入、dual-run 的复杂度成本如何判定，尚未明确。",
+      "missingEvidence": [
+        "Enricher 下周成功/失败的量化门槛缺失，例如最低增益、置信区间或 case-level 目标。",
+        "dual-run 兜底的决策标准缺失，例如复杂度、成本、收益阈值。",
+        "both-fail 22 条归因的分类 schema 和输出格式未提前定义。",
+        "没有给出主要工程风险的回滚方案。"
+      ]
     },
     "nextAction": {
       "score": 9,
-      "reason": "下周三个动作直接针对当前卡点（Enricher落地、第二轮归因、dual-run决策），动作可验证且优先级明确。",
-      "missingEvidence": "未明确每个动作的完成定义和预期输出。"
+      "reason": "下周动作明确且可验证：实现 Enricher 4 个 pass 并接入 Schema B，做 Enricher 开/关 49 条对比；对 22 条 both-fail 做第二轮结构化归因；决策是否保留 dual-run fallback。这些动作直接针对当前最大不确定性，不是泛泛继续优化。扣 1 分是因为每个动作的完成定义和决策阈值还不够硬。",
+      "missingEvidence": [
+        "Enricher 开/关实验的成功阈值缺失。",
+        "both-fail 分类完成后的具体决策规则缺失。",
+        "dual-run fallback 是否保留的量化判断标准缺失。",
+        "没有说明如果 Enricher 无增益，下一个替代方向是什么。"
+      ]
     },
     "evidenceQuality": {
-      "score": 5,
-      "reason": "所有进展均有具体证据支撑：全量评测数字、设计文档、测试通过数量、commit hash、反事实对比，证据等级标注规范。",
-      "missingEvidence": "缺少实验环境完全重现说明。"
+      "score": 4,
+      "reason": "证据质量总体较好：有 baseline、v1、v2 的核心数字，有 top-1/top-5 RCA 命中率，有 accepted repro test 缺失数，有 27 tests、容器 smoke、49 条全量评测、成本和时间数据。报告也区分了已证实与暂未证实。扣分在于核心评测结果不够可复现，精确数字、逐例表、日志、实验条件、统计波动均缺失；多个强结论仍依赖单次 49 条评测。",
+      "missingEvidence": [
+        "49 条逐例 resolved/unresolved 结果表缺失。",
+        "精确 solve rate 缺失，只写约 26–27/49。",
+        "评测运行配置、模型版本、预算、随机性控制缺失。",
+        "没有显著性或不确定性分析。",
+        "没有公开 artifact 路径或日志引用。"
+      ]
     },
-    "totalScore": 93,
-    "tier": "S",
-    "oneLineJudgment": "本周实现pipeline首次正增益并提炼出校准能力作为一等公民的方法论，硬进展与认知增量双突破。",
-    "professorFollowUp": "下周Enricher对比实验后需再做一次MEET对齐增益归因，防止对+5pp过度自信。"
+    "totalScore": 88,
+    "tier": "A",
+    "oneLineJudgment": "这是一个高质量的单周进展：本周真正把 pipeline 从负增益拉到正增益，并抽出了 calibration-first 的方法论；但教授不能直接接受“v2 增益主要来自 calibration”的归因，必须要求下周用 ablation 和逐例表坐实。",
+    "professorFollowUp": [
+      "请下周必须带一张 49 条逐例表：baseline、v1、v2、v2+Enricher 开/关分别是否 resolved，并标注变化类型。",
+      "请把 v2 的约 26–27/49 改成精确数字，并说明所有实验是否同模型、同预算、同环境。",
+      "请做最小 ablation：只改三路降级模板、不改 Debug Agent；只加 Debug Agent、不改模板；只加 Aspect-Repro Bundle。否则无法判断 +5pp 的真实来源。",
+      "请给 Enricher 设定继续投入阈值：例如至少新增解决多少条、或至少改善哪类 both-fail case，低于阈值就转向其他方向。",
+      "请把 dual-run fallback 的决策标准量化，包括额外 token/时间成本、复杂度成本、解决率收益和失败时副作用。"
+    ]
   }
 }

@@ -1,54 +1,111 @@
 {
   "key": "person:guo-yaoqi:2026-03-29:weekly-score",
-  "generatedAt": "2026-05-24T11:33:50.420Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "7b7404873a0b64441e12c73c851c9c6f1d8a057df28c0676a31883dd35649130",
+  "generatedAt": "2026-06-05T14:01:35.555Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "87c1b2471eceb10333ac79cf70efbebd8f7c8b3fc95ab2797cf1f6b63655c685",
   "result": {
-    "hardProgress": {
-      "score": 18,
-      "reason": "本周硬进展显著：实现了 Root Cause Analysis Agent 主体模块，在 SWE-bench Pro 上以准确 test case 为条件达到 47/50（94%）的函数行级定位精度，首次在公认 benchmark 上建立可对外展示的定位数字，并明确了涉及新文件创建的三例失败模式，验证了 hypothesis→test→observe→update 的 Agent loop 范式的有效性。这些进展具有可量化的实验结果和方法论资产，但 Agent 的实现细节和实验复现材料未在周报中直接给出。",
-      "missingEvidence": "未提供 Agent 实现的关键技术细节、实验运行日志或复现脚本，无法独立验证 94% 准确率的实验条件与测量方法。"
+    "week": "2026-03-29",
+    "name": "郭曜齐",
+    "scores": {
+      "hardProgress": {
+        "score": 17,
+        "reason": "本周有明确硬进展：完成 Root Cause Analysis Agent 主体，将执行引擎封装为可进行假设生成、测试、观察、更新的 Agent loop；在 SWE-bench Pro 50 个 case 上报告了 47/50 的函数行级定位结果，并识别出 3 个失败均与新文件创建相关。这个进展不是文字性总结，而是有模块、有实验、有失败模式的实质推进。扣分点在于：当前结果依赖人工提供准确 test case，尚未形成全自动闭环；实验规模仍是 50 个 case，且报告中没有给出可复现实验配置。",
+        "missingEvidence": [
+          "缺少代码仓库、commit、运行脚本或模块接口说明",
+          "缺少 SWE-bench Pro 50 个 case 的具体列表与选择标准",
+          "缺少 47/50 成功案例的判定标准和逐例结果表",
+          "缺少失败案例的具体样例、日志和人工归因过程",
+          "缺少与已有 line-level localization 方法或静态方法的直接对比"
+        ]
+      },
+      "cognitiveIncrement": {
+        "score": 13,
+        "reason": "认知增量清楚：将瓶颈从“Agent 推理能力”重新定位为“test case 质量”；将失败模式抽象为“动态 RCA 的可观测状态边界”；并解释了为什么本周没有按原计划接入 test generation，而是先补强 RCA Agent。这些判断能改变下周研究优先级，属于有效 CoT 增量。扣分点在于，对“Agent 已经足够好”的判断仍建立在人工准确 test case 条件下，端到端条件下是否成立尚未证明。",
+        "missingEvidence": [
+          "缺少人工 test case 与自动生成 test case 对定位准确率影响的对照实验",
+          "缺少证明瓶颈已经转移到 test case 质量的消融实验",
+          "缺少不同类型 bug 下 RCA Agent 表现的分层统计",
+          "缺少与上周原计划相比的具体任务耗时拆解"
+        ]
+      },
+      "cot2Depth": {
+        "score": 12,
+        "reason": "CoT's CoT 有较好的二阶抽象：不是停留在“3 个 case 失败”，而是提出“可观测状态空间决定推理上限”，并将其转化为 Unified Repair Agent 需要新文件类 bug 专用分支的设计原则。这对系统架构有启发。扣分点在于：该结论目前只来自 3 个失败 case，样本量太小；“不是推理能力问题，而是结构性边界”的归因仍需要更多证据支持。",
+        "missingEvidence": [
+          "缺少 3 个失败 case 的详细错误轨迹",
+          "缺少证明这些 case 必须创建新文件才能修复的证据",
+          "缺少对其他可能失败原因的排除，例如检索失败、测试覆盖不足、上下文截断、工具调用错误",
+          "缺少更大规模 benchmark 上“新文件类 bug”失败率统计",
+          "缺少新文件类 bug 专用处理路径的初步设计或验证"
+        ]
+      },
+      "brainaryMapping": {
+        "score": 8,
+        "reason": "报告将本周工作映射到 Brainary 的 reasoning、tool orchestration、calibration、cognitive control、benchmark/evaluation，并指出 calibration 和 cognitive control 目前未显式模块化，这是有价值的系统映射。扣分点在于映射仍偏概念层，缺少 Brainary 中具体模块接口、输入输出、监控指标和可沉淀资产格式。",
+        "missingEvidence": [
+          "缺少 RCA Agent 作为 Brainary module 的接口定义",
+          "缺少 calibration 的可观测指标，例如置信度、停止条件、探索轮数上限",
+          "缺少 cognitive control 的策略规则或失败恢复机制",
+          "缺少 benchmark 分类标注 schema",
+          "缺少该模块与 Brainary Self-evolution 诊断层的具体集成路径"
+        ]
+      },
+      "monetaryValue": {
+        "score": 5,
+        "reason": "题目有潜在商业价值：如果 RCA 能稳定提升 repair agent 的定位能力，确实可能对代码修复产品有价值；SWE-bench Pro 上的数字也具备对外沟通价值。但本周给出的 100,000 美元估值主要基于假设的 2M 年化价值和 5% 里程碑权重，缺少市场、产品、客户或转化证据。当前更适合表述为研究期权价值，而不是可兑现价值。",
+        "missingEvidence": [
+          "缺少 2M 年化商业价值假设的来源",
+          "缺少 5% 里程碑权重的客观依据",
+          "缺少与 Cursor、Claude Code 或其他 repair 产品指标的可比数据",
+          "缺少端到端 repair 成功率提升数据",
+          "缺少潜在用户、部署场景或付费意愿证据"
+        ]
+      },
+      "projectManagement": {
+        "score": 12,
+        "reason": "项目管理信息较完整：说明了本周投入时间、下周预计投入、资源瓶颈、API 成本、偏差原因、纠偏动作和关键里程碑。能够看出研究节奏从“表面闭环”调整为“先提高 RCA 精度”，这是合理的管理判断。扣分点在于下周 reproduction test 生成任务仍偏大，缺少拆解、验收标准和风险预案；Claude Code 权限依赖也没有明确替代方案。",
+        "missingEvidence": [
+          "缺少下周 reproduction test 生成的具体技术路线和候选前人方法",
+          "缺少下周任务的日级或子任务级拆解",
+          "缺少端到端闭环的成功判定指标，例如生成 test 的通过率、定位准确率、总体成本",
+          "缺少 Claude Code 权限未到位时的备选执行方案",
+          "缺少成本上限和实验预算控制规则"
+        ]
+      },
+      "nextAction": {
+        "score": 8,
+        "reason": "下周动作明确：跑通 reproduction test 自动生成第一个版本，并在 SWE-bench Pro 50 个 case 上做端到端测试。这是可验证动作，且直指当前瓶颈。扣分点在于“第一个版本”的范围、成功标准、最小可交付结果和失败后如何调整尚不够具体。",
+        "missingEvidence": [
+          "缺少 reproduction test 生成的最小成功标准",
+          "缺少端到端测试要记录的指标清单",
+          "缺少若自动生成 test 质量不足时的 fallback 方案",
+          "缺少预计完成哪些 case、是否仍使用同一 50 个 case 的说明",
+          "缺少自动生成 test 与人工 test 的对照实验设计"
+        ]
+      },
+      "evidenceQuality": {
+        "score": 3,
+        "reason": "报告提供了关键数字 47/50、94% 和失败类别，这比纯叙述强；但证据仍停留在周报声明层，没有附带实验表、日志、代码、case 列表、判定标准或复现实验说明。因此证据质量中等偏弱，足以支持教授追问，但不足以直接作为对外结论。",
+        "missingEvidence": [
+          "缺少实验原始记录",
+          "缺少可复现命令和环境",
+          "缺少 case-by-case 结果表",
+          "缺少定位正确性的人工标注规范",
+          "缺少失败归因的独立验证"
+        ]
+      }
     },
-    "cognitiveIncrement": {
-      "score": 14,
-      "reason": "认知增量深刻：明确指出性能瓶颈已从 Agent 推理能力迁移至 test case 质量，这是研究重心的正确转移；重新解释原计划偏差为“深度优先于广度”的正确认知更新；从失败模式中提炼出动态 RCA 的结构性天花板——涉及新文件的 bug 超出可观测状态边界。这些认知直接改变了后续工作的优先级和设计方向。",
-      "missingEvidence": "未给出与纯静态分析或其他定位方法的定量对比数据，以支撑“94% 是难以达到的置信度上限”这一论断。"
-    },
-    "cot2Depth": {
-      "score": 14,
-      "reason": "CoT's CoT 深度突出：将失败模式提升为“Agent 的可观测状态空间决定了它的推理上限，而不是推理算法本身”这一底层判断，明确指出过去讨论的盲点，并基于实验事实（L4 证据）将理论预期升级为实验事实。该抽象对未来 Unified Repair Agent 的架构设计有直接指导意义，且归因清晰，自动化潜力高。",
-      "missingEvidence": "没有提供可观测状态空间的形式化定义或边界量化方法，使得这一判断更多停留在定性层面。"
-    },
-    "brainaryMapping": {
-      "score": 8,
-      "reason": "系统地将本周工作映射到 Brainary 的 reasoning、tool orchestration、calibration、cognitive control、benchmark/evaluation 等能力，并准确指出 calibration 和 cognitive control 在 Brainary 中缺乏显式模块的结构性缺口。但老师已知映射方向，并非全新发现，且未给出切实的模块化整合方案细节。",
-      "missingEvidence": "未说明如何将 calibration 和 cognitive control 显式化为可监控、可调节组件，以及集成到 Brainary 的具体技术路径。"
-    },
-    "monetaryValue": {
-      "score": 8,
-      "reason": "给出明确的价值金额 $100,000，计算逻辑清晰：以 Unified Repair Agent 的年化商业价值 $2M 为基准，按 5% 的里程碑权重折算，并额外提及 benchmark 证据的沟通与融资杠杆溢价。估算框架合理，但基准数值 $2M 仅为假设，缺乏市场调研或对标数据支撑。",
-      "missingEvidence": "未有对 Cursor / Claude Code 的 Repair 功能市场价值的量化分析，或任何第三方数据佐证 $2M 年化增益的假设。"
-    },
-    "projectManagement": {
-      "score": 14,
-      "reason": "项目管理维度覆盖全面：明确了时间投入（40-50 小时）、下周计划（40 小时）、里程碑路线图；识别出 Claude Code 权限未到位、test case 自动生成等资源与进度风险；对进度偏差进行了理性归因（认知问题，非拖延），并给出了聚焦下周的纠偏动作（基于前人工作改进 reproduction test）。整体体现良好的风险意识和节奏控制。",
-      "missingEvidence": "没有提供更细粒度的任务分解或 checkpoints，但周报级别的规划已足够清晰。"
-    },
-    "nextAction": {
-      "score": 9,
-      "reason": "下周最小可验证动作明确：跑通 reproduction test 自动生成的第一个版本，并在 SWE-bench Pro 的 50 个 case 上完成端到端测试。目标具体、可度量，且与当前卡点直接对应，有利于快速形成闭环反馈。",
-      "missingEvidence": "未说明如果自动生成第一个版本效果不达预期的备选方案或快速试错策略。"
-    },
-    "evidenceQuality": {
-      "score": 4,
-      "reason": "核心实验基于公开 benchmark SWE-bench Pro，给出明确的 47/50 定量结果，失败模式可归因，自评证据等级 L4，具有较高客观性。但未提供实验配置、日志等过程证据，外部无法直接复现。",
-      "missingEvidence": "无实验配置细节（如数据集划分、评估脚本等），也未附上可复现的材料链接。"
-    },
-    "totalScore": 89,
-    "tier": "A",
-    "oneLineJudgment": "本周在动态 RCA Agent 上取得了 solid 的 benchmark 突破（94%），并提炼出可观测状态边界这一深层认知，但全自动闭环仍差最后一公里（reproduction test 生成），进度与项目管理俱佳。",
-    "professorFollowUp": "请老师协助加速 Claude Code 高限额权限的审批，这是当前大规模实验的主要瓶颈；同时建议与老师同步“可观测状态边界”这一发现，讨论其在 Brainary 评测体系分层中的具体落地方案。"
+    "totalScore": 78,
+    "tier": "B",
+    "oneLineJudgment": "本周是有实质硬进展的一周：RCA Agent 和 47/50 定位结果值得重视，但当前结论强依赖人工准确 test case，且证据链尚不足以支撑对外发布或高额商业估值。",
+    "professorFollowUp": [
+      "要求学生提交 50 个 SWE-bench Pro case 的逐例结果表，包括 case ID、是否成功、定位行、ground truth、测试输入来源、失败原因。",
+      "追问 3 个失败 case 是否真的全部属于“必须创建新文件”的结构性失败，还是可能由检索、上下文、执行工具或测试覆盖不足导致。",
+      "要求下周 reproduction test 自动生成必须同时报告两个指标：test 生成成功率和在自动 test 条件下的 RCA 定位准确率，不能只报告是否跑通。",
+      "建议把“涉及新文件”作为 benchmark 标签沉淀下来，但必须先定义标注规则和至少完成当前 50 个 case 的标注。",
+      "对 100,000 美元估值保持保留：目前可以认可研究期权价值，但不能当作商业价值结论。"
+    ]
   }
 }

@@ -1,29 +1,281 @@
 {
   "key": "person:cao-yue:2026-05-10:longitudinal",
-  "generatedAt": "2026-05-24T11:48:10.026Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "15e4995d344d095c6d724dc94668f9873706305611a6e4d2552b085b6c2421a2",
+  "generatedAt": "2026-06-05T14:01:53.409Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "403ca386b541bf10a2676a7a766e9999d6fd63649d2bfc31d383315164cd864f",
   "result": {
-    "overallTrajectory": "学生从对比实验的意外发现出发，逐步提炼出隐式建模、策略先验、双层约束、元格式控制等一系列设计原则，将框架优化从外部观察收敛至内在原理，认知层次从“发现现象”进阶到“设计控制机制”，研究能力在深度与系统性上显著成长，而非单纯增加工作量。",
-    "stageByWeek": {
-      "2026-04-19": "通过LLaVA与GPT-5的evaluator对比，发现evaluator感知能力反向塑造攻击策略，揭示meta-cognition框架隐式建模被攻击模型的结构性行为，将“信号来源”纳入反思边界，并开始显式化evaluator选取的风险。",
-      "2026-04-26": "分析接受门槛对planner策略空间的塑造，提出threshold是隐式编程（breadth、dual utility、early stop共同注入策略先验），将训练终止条件纳入meta-cognition的反思对象，扩展了认知控制与风险建模的范畴。",
-      "2026-05-03": "发现batch级阈值掩盖局部崩盘与chain-drift，设计per-sample双层硬约束，将约束颗粒度和反思尺度作为独立设计变量，明确群体指标与个体指标的职能分离，使风险建模下沉到个体不变量保护。",
-      "2026-05-10": "处理output format膨胀问题，将format状态纳入working memory，由diagnosis和modifier形成闭环控制；主线二提出跨语种攻击的无限性来自稀疏性与多对多映射的叠加，统一视角的贡献必须落在框架本身；meta-cognition反思维度扩展至“输出形式”，价值估计因成本可控而上调。"
+    "overallTrajectory": {
+      "judgment": "学生在研究能力上有上升，不只是更忙；但上升主要体现在“从现象中抽象控制变量”的能力，而不是已经完成可发表级验证。",
+      "mainTrajectory": "四周内，主线一从 evaluator 能力边界、threshold 设计、per-sample 不变量保护，推进到 output format 成本控制。轨迹不是简单堆任务，而是在逐步扩大 meta-cognition 框架的反思对象：从判分信号来源，到停止条件，到样本粒度，再到输出 schema 和成本。",
+      "hardProgressAssessment": "硬进展存在，但多为机制观察和设计完成，缺少系统实验矩阵、量化指标、消融结果和跨模型迁移数据。2026-04-19 有 LLaVA 与 GPT-5 evaluator 对比，证据等级 A；之后三周主要是 B 级观察与机制设计，硬证据强度没有同步上升。",
+      "researchCapabilityChange": "学生变强的地方是：能把工程异常上升为研究变量，例如把 threshold 解释为策略先验，把 per-sample 约束解释为不变量保护，把 output format 解释为受控对象。这说明其研究能力在“问题重构”和“机制抽象”上提升。尚未充分变强的地方是：每周都说‘持续观察’，但没有把观察转成可复现实验计划、统计检验和论文级证据链。",
+      "topicTrajectory": "题目轨迹稳定，核心仍是自动化 VLM 攻击规划与 alignment/防御不可能性边界。主线一越来越工程-机制化，主线二从文献堆叠走向统一框架和新攻击构造，但主线二仍停留在框架直觉与 novelty 边界判断，缺少形式定义和实证落点。",
+      "oneThingProfessorShouldLearn": "最值得老师学习的一点是：这个学生已经把 meta-cognition 的对象从‘策略本身’扩展为‘训练信号、约束粒度、输出格式和成本结构’；这是一条有研究价值的抽象线。但老师应要求其把这条线压缩成一个统一命题和一套可验证实验，而不是每周新增一个局部洞察。"
     },
+    "stageByWeek": [
+      {
+        "week": "2026-04-19",
+        "stage": "从 evaluator 对比实验中提出“信号来源即隐式建模对象”。",
+        "hardProgress": "完成 LLaVA 与 GPT-5 作为 evaluator 的对比观察，发现 OCR 能力和语义绑定能力会影响攻击策略收敛形态。报告给出具体现象：LLaVA-eval 倾向 BLACK/YELLOW 极简文本，GPT-5-eval 保留实体加属性表达，且中长度表达对 LLaVA 反而更有效。",
+        "CoTIncrement": "新增认知是 evaluator 不只是判分器，而是通过反馈信号塑造策略空间。学生能从实验现象中抽象出因果链：evaluator 能力边界到训练信号到策略收敛。",
+        "CoTsCoTMaturity": "较成熟。第一个 CoT's CoT 证据等级 A，来自实际对比实验；第二个为 B，仍是副产品观察。成熟点是能区分强证据与待系统化观察。",
+        "BrainaryMappingMaturity": "中等偏高。映射到 Cognitive Control 和 Risk Modeling 有逻辑，因为 evaluator 选择确实是信号控制和迁移风险节点。但还没有形成 Brainary 内部的可执行模块接口或指标。",
+        "metaCognitionMaturity": "明显推进。把 meta-cognition 的反思对象从攻击策略扩展到信号来源模型，是本窗口的起点。",
+        "valueReasoning": "价值判断连接了买单方、顶会、红队工具和 benchmark 市场，并给出 80 万与 120 万估值。但金额依据是类比式，缺少用户访谈、竞品价格、转化路径和付费假设。",
+        "projectManagement": "时间投入清晰，关键路径判断清晰，但下周动作是‘持续观察框架运行效果’，不够可检验。",
+        "automationPath": "提出 workflow 和 evaluation protocol，方向正确；门槛是 evaluator 能力匹配度量化，识别准确但未拆成具体指标。",
+        "evidenceLevel": "主线一有 A 级局部证据；主线二主要是文献支撑，缺少统一框架产物。"
+      },
+      {
+        "week": "2026-04-26",
+        "stage": "从 threshold 机制中提出“参数即策略先验”。",
+        "hardProgress": "整理 breadth 硬约束、utility 双门槛、early stop 三类机制如何塑造 planner 搜索轨迹。硬进展是机制解释完成，但没有报告参数扫描、对照组或性能曲线。",
+        "CoTIncrement": "新增认知是接受门槛不是停止信号，而是策略空间边界；能把广度对深度、探索对保守、够用对最优这些权衡显式化。",
+        "CoTsCoTMaturity": "中等。CoT's CoT 只有一个，证据等级 B。抽象质量高，但证据弱于上一周。",
+        "BrainaryMappingMaturity": "中等。映射到 Cognitive Control 与 Risk Modeling 合理，尤其是把 early stop 作为能力上限风险。但仍是概念映射，没有 Brainary 任务流或数据结构。",
+        "metaCognitionMaturity": "继续扩展。学生把训练终止条件纳入反思范围，说明其开始意识到元控制参数也是认知对象。",
+        "valueReasoning": "价值函数基本沿用上一周：同样买单方、同样估值、同样市场依据。变化在于把可解释性和部署价值作为任务 A 值钱的理由，但没有重新计算经济价值。",
+        "projectManagement": "工作节奏稳定，但仍以‘持续观察’作为下一步，项目管理偏维护式，不像实验驱动式。",
+        "automationPath": "workflow 和 evaluation protocol 更具体，指向 threshold 配置规范化与不同组合下策略风格对比。转化门槛识别为参数到策略风格的量化映射，合理。",
+        "evidenceLevel": "B 级为主。机制说法有研究潜力，但尚未变成可复现实验。"
+      },
+      {
+        "week": "2026-05-03",
+        "stage": "从 batch 指标失效推进到 per-sample 不变量保护。",
+        "hardProgress": "发现两类具体失效：single-step collapse 和 chain-drift，并设计 per-sample 双阈值。硬进展比上一周更接近系统设计，因为提出了可实现机制：对当前 step 最好分的 0.6 上限和对历史最高分的 0.6 上限。",
+        "CoTIncrement": "新增认知是 batch 级指标负责优化方向，per-sample 指标负责不变量保护；平均值不能替代最坏情况约束。这是比 threshold 分析更细的控制粒度意识。",
+        "CoTsCoTMaturity": "中等偏高。两个 CoT's CoT 都是 B，但结构清楚：群体指标与个体指标分离、约束颗粒度下沉。缺点是 0.6 阈值仍依赖经验，未被数据校准。",
+        "BrainaryMappingMaturity": "中等。主要映射到 Risk Modeling，聚焦局部崩盘、chain-drift 和颗粒度选择。映射比前两周更具体，但缺少自动监控仪表盘或触发规则。",
+        "metaCognitionMaturity": "继续成熟。学生把‘反思尺度’作为设计变量，说明其不只是优化一个指标，而是在设计多尺度控制系统。",
+        "valueReasoning": "价值判断没有显著更新。虽然本周的双层 threshold 具有通用性，报告也说可用于多样本迭代优化，但估值仍保持 80 万和 120 万，说明经济模型没有随技术发现动态修正。",
+        "projectManagement": "报告称暂无明显卡点，但同时承认 per-sample 阈值经验化。这里存在项目管理盲点：真正卡点不是实现，而是阈值标准化和验证。",
+        "automationPath": "自动化路径较清晰：双层 threshold workflow 与 chain-drift 检测 protocol。门槛是 per-sample 阈值取值标准化，识别准确。",
+        "evidenceLevel": "B 级为主。观察到失败模式是好信号，但缺少失败率、样本数、复现次数和阈值敏感性分析。"
+      },
+      {
+        "week": "2026-05-10",
+        "stage": "从性能控制扩展到 output format 与成本控制，同时主线二开始寻找统一框架落点。",
+        "hardProgress": "主线一发现 reasoning 细化导致 output format 膨胀，并设计字段准入、working memory 承载 format 状态、diagnosis 和 modifier 裁剪闭环。主线二提出三性质统一视角，并把构造新语言加低资源语种 mapping 的攻击思路挂入 framework。",
+        "CoTIncrement": "新增认知是 utility 控制和 output format 控制不同；format 是动态对象；统一视角贡献必须落在框架本身；跨语种攻击无限性来自稀疏性和多对多映射叠加。",
+        "CoTsCoTMaturity": "中等。两个 CoT's CoT 均为 B。第一个有较强自动化潜力，能沉淀为 agent module 和 memory schema；第二个对 novelty 边界有判断，但证据仍是概念组合，尚未实验化。",
+        "BrainaryMappingMaturity": "中等偏高。第一次把 Memory 明确纳入，不再只映射 Cognitive Control 和 Risk Modeling。把 schema 状态作为 memory 条目是 Brainary 映射成熟度的提升。",
+        "metaCognitionMaturity": "进一步成熟。学生把‘说得有没有必要’纳入 meta-cognition，说明其意识到推理系统的成本外溢问题。",
+        "valueReasoning": "价值函数有小幅变化：任务 A 从 80 万上调到 85 万，理由是 cost 控制提升部署可行性。这是四周内第一次把金额随技术进展调整。但调整仍是主观上调，缺少 token 成本节省比例、部署场景、用户预算和收益模型。",
+        "projectManagement": "仍然稳定投入，但下一步是‘继续观察’和‘继续精读’，动作质量偏低。没有列出要产出的表格、指标、代码模块、实验矩阵或论文段落。",
+        "automationPath": "本周自动化路径最具体：字段准入规则、diagnosis 加 modifier 控制闭环、memory schema。门槛是字段有用性的可计算度量，识别准确且重要。",
+        "evidenceLevel": "B 级为主。主线一有机制设计但缺少成本下降数据；主线二有新攻击构想但缺少 operationalization。"
+      }
+    ],
     "trendScores": {
-      "hardProgress": "每周均有可验证的新机制或新发现（evaluator对比→threshold设计→双层per-sample约束→format控制闭环），硬进展持续累进，从实验观察走向系统化设计。",
-      "cognitiveDepth": "认知从“发现现象”深化至“提炼原理”（隐式建模→策略先验→粒度分离→元格式控制），抽象层次逐周提升，对meta-cognition的理解从策略本身扩展到信号生成、停止条件、反思尺度直至输出形式，构成完整的认知控制链条。",
-      "cotCotMaturity": "每周产出的CoT's CoT从个案类比逐步形成结构化设计原则（如异质阈值、颗粒度变量、format作为memory对象），数量稳定，证据等级以B为主，但关联度与系统性明显增强，开始思考贡献边界（如性质组合层）。",
-      "brainaryMapping": "每周均将发现映射至Brainary的认知控制、风险建模及后期memory模块，映射从类比走向具体模块扩展（如format状态条目、coverage gap风险类别），沉淀内容从方案描述演进为可实施的schema与协议。",
-      "valueClarity": "价值函数始终锚定在论文折算、工具授权等可量化经济指标上，连接了金额、用户、通用性；后期因成本控制提升部署可行性而主动上调估价，显示从“能做”到“好用”的务实演进。",
-      "projectManagement": "两条主线并行稳定，时间与资源分配合理，关键路径明确，每周偏差均为正向意外，纠偏措施自主有效，无需外部介入。"
+      "scaleNote": "分数为 1 到 5，5 表示该维度在周报证据中表现最成熟。",
+      "hardProgressTrend": {
+        "scoresByWeek": {
+          "2026-04-19": 4,
+          "2026-04-26": 3,
+          "2026-05-03": 3,
+          "2026-05-10": 3
+        },
+        "assessment": "硬进展没有持续增强。第一周有较强对比实验，之后多为机制观察和设计完成。研究能力在抽象上升，但证据链没有同步加厚。"
+      },
+      "cognitiveTrend": {
+        "scoresByWeek": {
+          "2026-04-19": 4,
+          "2026-04-26": 4,
+          "2026-05-03": 4,
+          "2026-05-10": 5
+        },
+        "assessment": "认知趋势上升。学生持续把隐含工程变量上升为研究变量：evaluator、threshold、granularity、format、memory。"
+      },
+      "CoTsCoTMaturityTrend": {
+        "scoresByWeek": {
+          "2026-04-19": 4,
+          "2026-04-26": 3,
+          "2026-05-03": 3,
+          "2026-05-10": 4
+        },
+        "assessment": "CoT's CoT 成熟度整体中上，但证据等级从 A 回落到 B。成熟在于能提炼‘老师原本不知道什么’和自动化沉淀形式；不足在于缺少跨周统一命题和可证伪实验。"
+      },
+      "BrainaryMappingTrend": {
+        "scoresByWeek": {
+          "2026-04-19": 3,
+          "2026-04-26": 3,
+          "2026-05-03": 3,
+          "2026-05-10": 4
+        },
+        "assessment": "Brainary 映射从 Cognitive Control 和 Risk Modeling 扩展到 Memory，成熟度小幅上升。但多数仍是模块名级映射，未见输入输出定义、数据结构、触发条件和自动化接口。"
+      },
+      "metaCognitionTrend": {
+        "scoresByWeek": {
+          "2026-04-19": 4,
+          "2026-04-26": 4,
+          "2026-05-03": 4,
+          "2026-05-10": 5
+        },
+        "assessment": "meta-cognition 理解明显深化。反思边界从策略本身扩展到信号来源、训练条件、反思尺度、输出格式和成本。"
+      },
+      "valueReasoningTrend": {
+        "scoresByWeek": {
+          "2026-04-19": 3,
+          "2026-04-26": 3,
+          "2026-05-03": 3,
+          "2026-05-10": 3
+        },
+        "assessment": "价值推理框架稳定但不够进化。学生能说买单方、金额、市场类比和通用性，但金额主要是静态估算，缺少用户证据、竞品对比、成本节省测算和商业转化假设。"
+      },
+      "projectManagementTrend": {
+        "scoresByWeek": {
+          "2026-04-19": 3,
+          "2026-04-26": 3,
+          "2026-05-03": 3,
+          "2026-05-10": 3
+        },
+        "assessment": "项目管理稳定但偏弱。每周时间和资源清楚，关键路径清楚；但下一步动作经常是‘持续观察’或‘继续整理’，缺少可验收里程碑。"
+      },
+      "automationPathTrend": {
+        "scoresByWeek": {
+          "2026-04-19": 3,
+          "2026-04-26": 3,
+          "2026-05-03": 4,
+          "2026-05-10": 4
+        },
+        "assessment": "自动化路径逐渐具体。后两周从 protocol 走向检测机制、agent module 和 memory schema。但关键门槛均停在‘标准化量化方案缺失’。"
+      },
+      "nextActionQualityTrend": {
+        "scoresByWeek": {
+          "2026-04-19": 2,
+          "2026-04-26": 2,
+          "2026-05-03": 2,
+          "2026-05-10": 2
+        },
+        "assessment": "下一步动作质量是持续短板。报告能识别问题，但下周计划几乎没有实验矩阵、验收指标、交付物和时间盒。"
+      }
     },
-    "valueFunctionChange": "学生的价值函数以可量化的经济回报为核心（论文折算、工具授权/SaaS授权），并建立了“通用性→可复用→值钱”的推理链。前期侧重攻击有效性，后期将cost可控性纳入估值（主线一从80万上调至85万），表明价值函数已融入工程可行性等务实维度，对“什么样的进展值得追求”的判断更趋近商业部署视角。",
-    "repeatedBlockers": "无明显重复卡点，每周卡点不同且均在后续得到针对性解决（evaluator匹配→threshold配比→chain-drift→format判定）；但“缺少系统性结论/标准化方案”反复出现，属于研究由点及面过程中的共性挑战。",
-    "professorShouldAsk": "1. 你如何区分format控制中字段的‘真正有用’与暂时冗余？是否可建立基于下游决策影响度的量化判定指标？ 2. chain-drift的检测能否自动化，而不依赖事后人工观察？ 3. 跨语种攻击的‘无限性’是否可以形式化为概率边界或覆盖率度量，从而直接作为风险建模的输入？",
-    "nextBestIntervention": "安排一次专题工作坊，整合四周发现（隐式建模、策略先验、双层约束、元格式控制），提炼出一个统一的meta-cognition控制理论框架，明确其对Brainary各模块（cognitive control, risk modeling, memory）的具体扩展接口与自动化路径的优先级，并制定从实验原型到标准化workflow的转化里程碑。"
+    "valueFunctionChange": {
+      "summary": "价值观变化不大，但出现一个重要转向：从‘攻击效果和理论解释值得做’逐步加入‘部署成本可控也值得做’。这是研究价值函数从论文导向向系统可用性导向的小幅移动。",
+      "whatStudentThinksWorthDoing": [
+        "构建自动化 VLM 攻击规划框架，因为它可服务 AI 安全红队、顶会论文和 benchmark 工具市场。",
+        "解释 alignment 或安全防御的不可能性边界，因为它有长期引用价值和 benchmark SaaS 化可能。",
+        "把 evaluator、threshold、per-sample 约束、output format 等工程变量做成 workflow、evaluation protocol、agent module 或 memory schema，因为这些可以沉淀为可复用自动化科研资产。",
+        "将局部攻击现象统一到 distributional semantics 的三性质框架中，因为贡献可能落在统一解释框架和新攻击族。"
+      ],
+      "whyWorthDoing": "学生的理由主要有四类：顶会论文价值、红队工具授权价值、benchmark SaaS 价值、通用 agent 框架复用价值。理由结构完整，但证据主要来自市场类比和学术直觉，不是来自真实用户需求或实际收入数据。",
+      "moneyConnection": {
+        "taskAChange": "Meta-Cognition Attack Framework 从前三周的 80 万人民币上调到 2026-05-10 的 85 万人民币，理由是 output format 控制提升 cost 可控性和部署可行性。",
+        "taskBChange": "Distributional Semantics 不可能性分析四周均为 120 万人民币，没有随文献增加、新攻击思路或 novelty 风险发生调整。",
+        "assessment": "金额意识存在，但经济模型偏静态。任务 A 的 5 万上调说明学生开始把成本控制纳入价值函数；但没有给出 token 成本下降、运行时间下降、红队工具客户付费意愿或 benchmark 授权转化率。任务 B 估值未随风险变化，说明价值推理对 novelty 不确定性不敏感。"
+      },
+      "userConnection": "用户连接稳定指向 AI 安全红队企业、顶会学术赛道和 AI 安全 benchmark 工具市场。但报告中没有具体用户画像、采购场景、使用频率、预算、替代方案或痛点证据。",
+      "generalCapabilityConnection": "通用能力连接越来越清楚。threshold、per-sample 不变量、format 控制、memory schema 都被描述为可迁移到多样本迭代优化或 reasoning-heavy agent 框架的能力。",
+      "artifactConnection": "产物形式从 workflow 和 evaluation protocol，逐渐扩展到 agent module、memory schema、benchmark 和攻击设计模板。产物意识增强。",
+      "BrainaryConnection": "价值函数越来越能连接 Brainary：前期主要是 Cognitive Control 和 Risk Modeling，后期加入 Memory。真正缺失的是把 Brainary 映射转成可复用组件的规格说明。",
+      "automationConnection": "自动化价值逐步增强。每周都能提出自动化沉淀方向，但关键瓶颈反复是‘缺乏可计算指标’。这说明学生知道自动化路径，但尚未跨过度量设计这一关。",
+      "valueFunctionMaturity": "中等。学生已经不只问‘这是否有趣’，也问‘谁买单、多少钱、能沉淀成什么、能否通用’。但价值函数还没有足够数据化，尤其缺少用户证据、成本收益模型和 novelty 风险折价。"
+    },
+    "repeatedBlockers": [
+      {
+        "blocker": "系统化量化不足",
+        "evidence": "四周反复出现‘匹配度尚无系统性结论’、‘参数配比尚无系统性结论’、‘阈值取值依赖经验’、‘字段有用性缺乏可计算度量’。",
+        "impact": "导致洞察停留在 B 级机制解释，难以升级为论文级证据或自动化模块。"
+      },
+      {
+        "blocker": "下一步动作过于笼统",
+        "evidence": "主线一多次写‘持续观察框架运行效果’或‘继续观察’，主线二多次写‘继续整理文献’或‘继续精读最相关工作’。",
+        "impact": "项目管理看似稳定，但无法判断下周是否会产生可验收成果。"
+      },
+      {
+        "blocker": "证据等级没有随认知增长同步提高",
+        "evidence": "第一周有 A 级 evaluator 对比实验；后三周核心 CoT's CoT 多为 B 级。",
+        "impact": "学生越来越会解释，但还没有越来越会证明。"
+      },
+      {
+        "blocker": "主线二仍处于统一框架前夜",
+        "evidence": "四周持续补充不可能性文献和三性质视角，但仍未给出形式定义、定理草图、可操作攻击算法族或 benchmark 设计。",
+        "impact": "主线二的价值估计高，但产物成熟度落后于估值。"
+      },
+      {
+        "blocker": "Brainary 映射多为概念层",
+        "evidence": "每周都能映射到 Cognitive Control、Risk Modeling 或 Memory，但缺少模块输入、输出、状态变量、触发规则和评估指标。",
+        "impact": "难以判断 Brainary 关联是实质架构贡献，还是事后标签化。"
+      },
+      {
+        "blocker": "货币价值估算依据薄弱",
+        "evidence": "估值主要引用顶会论文折算、Scale AI red team 服务定价、benchmark SaaS 授权区间，但没有用户、竞品、转化率、成本节省或收入假设。",
+        "impact": "价值观有商业意识，但决策可信度不足。"
+      },
+      {
+        "blocker": "‘暂无卡点’与实际未解决问题不一致",
+        "evidence": "2026-05-03 和 2026-05-10 写暂无卡点，但同时承认阈值经验化、字段有用性缺乏可计算度量、统一框架还需形式化。",
+        "impact": "学生可能把‘没有实现阻塞’误认为‘没有研究卡点’。"
+      }
+    ],
+    "professorShouldAsk": [
+      {
+        "question": "请把四周主线一统一成一个论文级命题：evaluator、threshold、per-sample、format 四者共同说明了 meta-cognition 框架的什么一般规律？",
+        "whyAsk": "防止每周新增局部洞察但无法合成中心贡献。"
+      },
+      {
+        "question": "请给出一个实验矩阵：至少包含 evaluator 类型、threshold 组合、是否 per-sample 约束、是否 format 控制四个变量，以及每个变量对应的指标。",
+        "whyAsk": "把 B 级机制解释推进为可验证证据链。"
+      },
+      {
+        "question": "你说 output format 控制能提升部署价值，请量化 token 成本、运行时间、成功率和 naturalness 的变化；没有数据就不能上调估值。",
+        "whyAsk": "迫使价值推理从主观估值转为成本收益模型。"
+      },
+      {
+        "question": "per-sample 阈值 0.6 的依据是什么？如果改成 0.4、0.8，single-step collapse、chain-drift、整体 utility 会怎样？",
+        "whyAsk": "检验机制是否稳健，而不是经验参数碰巧有效。"
+      },
+      {
+        "question": "Brainary 映射中，每个模块的输入、输出、状态变量和触发条件是什么？请不要只写 Cognitive Control、Risk Modeling、Memory 的名称。",
+        "whyAsk": "区分真实架构贡献与概念贴标签。"
+      },
+      {
+        "question": "Distributional Semantics 主线到底走理论路线还是实证路线？如果走理论路线，请定义 boundary unreliability；如果走实证路线，请给出三性质如何 operationalize 成攻击算法族。",
+        "whyAsk": "主线二目前价值估计高但产物路径不够收敛。"
+      },
+      {
+        "question": "请列出 Wolf et al.（ICML 2024）和 Wei et al.（NeurIPS 2023）与你的统一框架差异表，说明 novelty 落在什么不可替代的位置。",
+        "whyAsk": "学生自己已识别 novelty 风险，下一步必须转为差异化证据。"
+      },
+      {
+        "question": "你每周写‘无需老师介入’，但哪些判断其实需要老师拍板？例如主线一是否收敛成论文，主线二是否降级为相关工作或附录。",
+        "whyAsk": "改善项目管理中的假独立性，避免关键路线长期无人校准。"
+      }
+    ],
+    "nextBestIntervention": {
+      "intervention": "要求学生进行一次两周的“证据升级冲刺”，目标不是继续发现新洞察，而是把已有洞察压缩成统一命题、实验矩阵和最小可发表证据包。",
+      "deliverables": [
+        {
+          "deliverable": "一页统一命题图",
+          "content": "把 evaluator、threshold、per-sample 约束、output format 统一为‘meta-cognition 框架中控制信号与控制对象共同塑造策略空间和成本结构’的因果图。每条边标注已有证据等级和缺失证据。"
+        },
+        {
+          "deliverable": "一个实验矩阵表",
+          "content": "列出变量、对照组、样本数、指标和预期结果。最低要求包括攻击成功率、naturalness、token cost、per-sample collapse rate、chain-drift rate、跨 evaluator 迁移表现。"
+        },
+        {
+          "deliverable": "一个自动化模块规格",
+          "content": "从本周 output format 控制开始，写清 diagnosis、modifier、working memory 中 format 状态字段的输入输出、触发条件和裁剪规则。"
+        },
+        {
+          "deliverable": "一个价值重估表",
+          "content": "重新估算任务 A 和任务 B 的金额。任务 A 必须用成本下降或部署效率数据支撑 85 万；任务 B 必须对 novelty 风险和形式化难度做折价。"
+        },
+        {
+          "deliverable": "一个主线二路线选择备忘录",
+          "content": "明确 Distributional Semantics 是走理论定理、攻击算法族、benchmark，还是降级为主线一的理论动机。每条路线列出四周内可交付产物。"
+        }
+      ],
+      "successCriteria": [
+        "至少一个核心 CoT's CoT 从 B 级证据升级到 A 级或接近 A 级。",
+        "至少完成一个消融实验或参数敏感性分析，而不是继续观察。",
+        "Brainary 映射至少有一个模块达到可实现规格，而不是概念映射。",
+        "价值估算至少包含一个真实量化变量，例如 token 成本节省、运行时间节省、成功率提升或潜在用户场景。",
+        "下周计划必须写成可验收动作，不能只写‘继续观察’或‘继续整理’。"
+      ],
+      "professorAction": "老师应暂时压制新方向扩张，要求学生用两周把已有机制做成证据链。最关键的干预不是给新想法，而是要求其停止横向增加变量，开始纵向验证一个统一命题。"
+    }
   }
 }

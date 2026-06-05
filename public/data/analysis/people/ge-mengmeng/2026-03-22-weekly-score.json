@@ -1,57 +1,110 @@
 {
   "key": "person:ge-mengmeng:2026-03-22:weekly-score",
-  "generatedAt": "2026-05-24T11:33:30.197Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "d59506c71ed5dcaf0982e6b0dc451a4d84ba2c3635b417bf17e18533db4b9a9e",
+  "generatedAt": "2026-06-05T14:00:47.030Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "652c7ea566c9b0cbb689f0100e34294be30b4d9feb3cfcc9a06afb107b7c3bcb",
   "result": {
     "week": "2026-03-22",
     "name": "Ge Mengmeng",
-    "userId": "6089492894",
-    "hardProgress": {
-      "score": 18,
-      "reason": "本周新增多个可复用模块（groundtruth构建、mapping pipeline、taxonomy、TI schema等），并明确标注了失败模式与卡点，符合硬进展定义。",
-      "missingEvidence": "缺少对新增模块的代码或实际运行结果截图，以及更量化的成功指标。"
+    "scores": {
+      "hardProgress": {
+        "score": 16,
+        "reason": "本周有较明确的硬产出：完成 NODELIKE 数据集 ATT&CK groundtruth 构建，建立 Security Alerts→ATT&CK Techniques→Attack Chain→ATT&CK Tactics 映射流程，形成 APT reconstruction pipeline 初版，并产出 Auto Research taxonomy、APT TI formatting schema、threat→skill mapping 等模块。进展不是单纯阅读或想法，而是有模块、框架和 benchmark draft。但周报没有给出 groundtruth 样例、数据规模、映射覆盖率、pipeline 输入输出示例或仓库链接，因此硬进展的可核验性不足。",
+        "missingEvidence": [
+          "NODELIKE groundtruth 的样例、规模、字段定义和标注规范缺失",
+          "ATT&CK mapping pipeline 的输入输出示例缺失",
+          "APT reconstruction pipeline 的结构图、伪代码或仓库链接缺失",
+          "Auto Research taxonomy 的完整分类表缺失",
+          "threat→skill mapping 的具体映射样例缺失"
+        ]
+      },
+      "cognitiveIncrement": {
+        "score": 12,
+        "reason": "CoT 增量比较清楚，尤其是把问题从单条 alert 推理转向 multi-alert reasoning，把 ATT&CK mapping 定义为结构化知识对齐问题，并提出 threat semantics 驱动 skill orchestration。这些认知能改变后续实验设计和系统架构。但部分表述仍偏原则性，例如“taxonomy 要从能力层划分”还没有展示它如何改变分类结果或减少歧义。",
+        "missingEvidence": [
+          "multi-alert reasoning 相比 single-alert reasoning 的失败案例对比缺失",
+          "ATT&CK mapping 多对多歧义的具体例子缺失",
+          "能力层 taxonomy 相比任务层 taxonomy 的优势证据缺失",
+          "threat-driven skill orchestration 的具体触发规则缺失"
+        ]
+      },
+      "cot2Depth": {
+        "score": 11,
+        "reason": "CoT’s CoT 按模板回答了“老师是否原本不知道、为什么不知道、信息差在哪里、新增认知、自动化潜力、沉淀形式、证据等级”。其中第一个判断“alert representation quality 决定 chain reconstruction 上限”有较强研究价值，也能导向 memory schema、benchmark 和 agent module。第二个判断“threat semantics 触发 skill orchestration”有潜力，但证据等级只有 C，且没有实验或案例支撑。整体深度达到可讨论水平，但还没有到可以直接决定研究路线的证据强度。",
+        "missingEvidence": [
+          "alert-level semantic normalization 如何影响 chain reconstruction 的定量证据缺失",
+          "planner-driven 与 threat-driven skill invocation 的对比实验缺失",
+          "CoT’s CoT 中“老师原本不知道”的判断依据缺失",
+          "证据等级 B/C 的判定标准缺失"
+        ]
+      },
+      "brainaryMapping": {
+        "score": 7,
+        "reason": "周报把工作映射到了 Brainary 的 reasoning、tool orchestration、memory、benchmark/evaluation，并提出 threat reasoning module、skill routing agent、APT reconstruction benchmark 等沉淀方向。映射方向正确，也指出缺少 threat-aware memory schema 和 skill routing policy。但映射仍比较粗，没有说明每个模块如何接入 Brainary、输入输出协议是什么、与现有 memory/reasoning/tool 模块如何解耦。",
+        "missingEvidence": [
+          "Brainary threat reasoning module 的接口定义缺失",
+          "threat-aware memory schema 的字段设计缺失",
+          "skill routing agent 的策略形式和评估指标缺失",
+          "APT reconstruction benchmark 与 Brainary 自动化科研流程的连接方式缺失"
+        ]
+      },
+      "monetaryValue": {
+        "score": 6,
+        "reason": "周报给出了三个方向的估值：APT reconstruction pipeline 120 万、Auto research taxonomy 30 万、Threat-driven skill orchestration 80 万，并说明了大致计算方法。优点是没有只停留在学术价值，而是尝试把 SOC 自动分析、人力节省、agent routing 能力提升转成钱。但估算非常粗，主要基于人力成本和主观平台能力提升，没有客户访谈、竞品价格、采购场景、部署成本或转化周期，因此只能作为早期价值假设。",
+        "missingEvidence": [
+          "SOC 平台厂商或威胁情报公司的真实需求证据缺失",
+          "安全分析师年薪 40 万的来源缺失",
+          "自动化 attack chain 分析能替代多少人工时间的测算缺失",
+          "agent routing 准确率提升对应 80 万价值的计算依据缺失",
+          "产品化部署成本、销售周期和竞品价格缺失"
+        ]
+      },
+      "projectManagement": {
+        "score": 12,
+        "reason": "项目管理部分较完整，说明了项目阶段、原计划与实际完成、本周投入、下周投入、两周 baseline 里程碑、资源、依赖、token 成本和进度判断。实际完成超过原计划，说明本周推进有效。但管理上仍缺少验收标准，例如 baseline 的指标、2 个 APT case 的选择标准、groundtruth 质量控制方法和风险优先级。",
+        "missingEvidence": [
+          "两周内 baseline 的验收指标缺失",
+          "2 个 APT case 的选择标准缺失",
+          "groundtruth 标注质量控制流程缺失",
+          "多 alert 时间依赖建模不稳定的风险缓解计划缺失",
+          "任务 1、任务 2、任务 3 之间的优先级排序缺失"
+        ]
+      },
+      "nextAction": {
+        "score": 8,
+        "reason": "每个任务都有下周最小可验证动作：multi-alert temporal reasoning baseline、2 个 APT case 验证、5 篇 paper taxonomy 覆盖率验证、skill selection baseline、1 个 APT case 验证 skill orchestration。这些动作具备可执行性和验证方向。扣分点是没有定义成功标准，例如 chain reconstruction 准确率如何计算、taxonomy 覆盖率多少算通过、skill orchestration 用什么指标评估。",
+        "missingEvidence": [
+          "chain reconstruction 准确率的指标定义缺失",
+          "taxonomy 覆盖率验证的通过阈值缺失",
+          "skill selection baseline 的候选方法缺失",
+          "下周每个动作的交付物形式缺失",
+          "如果 2 个 APT case 失败，下一步诊断路径缺失"
+        ]
+      },
+      "evidenceQuality": {
+        "score": 2,
+        "reason": "周报有自评证据等级，并且明确 CoT’s CoT 1 为 B、CoT’s CoT 2 为 C，这是加分项。但整体证据质量偏弱：缺少实验结果、样例、链接、数据量、评估指标、对照组和失败案例。当前更多是结构化汇报与研究假设，尚不足以证明 pipeline 或方法有效。",
+        "missingEvidence": [
+          "实验结果缺失",
+          "数据规模缺失",
+          "groundtruth 样例缺失",
+          "baseline 结果缺失",
+          "失败模式的具体案例缺失",
+          "代码、文档或图表链接缺失"
+        ]
+      }
     },
-    "cognitiveIncrement": {
-      "score": 13,
-      "reason": "思维链增量清晰，揭示了安全推理中的关键表征问题，但部分增量（如能力层划分）在领域内已有讨论。",
-      "missingEvidence": "缺少对比实验或具体案例证明这些认知跃迁如何提升系统效果。"
-    },
-    "cot2Depth": {
-      "score": 14,
-      "reason": "对推理链本身的反思深入，触及问题本质（信息表示瓶颈），提出可操作的新认知，但证据等级多为B/C，缺乏严格验证。",
-      "missingEvidence": "缺少实验或形式化分析来支持“alert-level语义规范化未被系统建模”这一核心断言。"
-    },
-    "brainaryMapping": {
-      "score": 8,
-      "reason": "能力映射合理，沉淀方向具体，但老师已经知道关联，缺少为什么还没被做成系统的深层分析。",
-      "missingEvidence": "缺少具体如何将当前工作集成到Brainary架构的技术路线图和接口设计。"
-    },
-    "monetaryValue": {
-      "score": 9,
-      "reason": "货币化思路清晰，有市场对标，但部分价值估算依赖主观人力成本换算，未考虑实际落地时间与风险。",
-      "missingEvidence": "缺少更具体的询价或客户验证数据支持价值数字。"
-    },
-    "projectManagement": {
-      "score": 14,
-      "reason": "管理信息完整，有明确里程碑和进度判断，符合小规模实验阶段特征。",
-      "missingEvidence": "缺少风险应对预案和下周更细化的任务分解。"
-    },
-    "nextAction": {
-      "score": 10,
-      "reason": "下周动作具体、可量化（2个case准确率、5篇paper覆盖率、1个case skill orchestration），符合最小验证原则。",
-      "missingEvidence": "无，动作已足够明确。"
-    },
-    "evidenceQuality": {
-      "score": 4,
-      "reason": "CoT's CoT有证据等级划分，但实际支持证据仍较弱，多为概念设计。",
-      "missingEvidence": "缺少 A/B 测试或统计显著性的实验结果。"
-    },
-    "totalScore": 90,
-    "tier": "S",
-    "oneLineJudgment": "本周在APT重构上取得关键认知突破，硬进展扎实，但证据强度有待提升。",
-    "professorFollowUp": "建议跟进alert-level表示结构的设计实验，以提升证据等级。"
+    "totalScore": 74,
+    "tier": "B",
+    "oneLineJudgment": "本周有实质模块化进展和较好的 CoT 增量，但核心结论仍主要停留在设计与假设层，下一周必须用小规模 case、指标和样例把 APT reconstruction pipeline 变成可验证结果。",
+    "professorFollowUp": [
+      "要求学生下周必须展示 NODELIKE groundtruth 的 3 条样例，包括原始 alert、ATT&CK technique、attack chain 位置和 tactic 映射。",
+      "要求学生定义 chain reconstruction 的评价指标，例如 technique 命中率、顺序一致性、tactic 覆盖率和 chain-level F1。",
+      "要求学生在 2 个 APT case 上跑出 baseline 结果，而不只是完成 baseline 设计。",
+      "要求学生把 threat-aware memory schema 和 skill routing policy 写成最小接口文档，说明输入、输出、字段和调用条件。",
+      "建议老师重点学习这一点：APT reconstruction 的瓶颈可能不是大模型推理能力本身，而是 alert-level 信息表示和语义对齐质量。"
+    ]
   }
 }
