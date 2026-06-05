@@ -1,6 +1,6 @@
 {
   "key": "person:huang-xun:2026-05-17:weekly-score",
-  "generatedAt": "2026-06-05T18:02:51.404Z",
+  "generatedAt": "2026-06-05T22:03:15.173Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
@@ -8,47 +8,47 @@
   "result": {
     "hardProgress": {
       "score": 16,
-      "reason": "本周有明确硬进展：修复红队脚本关键 bug，使输出不再为空；将构造语言回答中位长度从 29.5 词提升到 111.5 词；完成 50 条 plain 红队测试并得到 14% 越狱率；搭建 SafeClaw-R Docker 环境并完成 risk 1A 的 100 个端到端用例；DARWIN 完成接口重构和流程中断原因定位。扣分点是三个方向都还处在小规模或未闭环阶段：红队缺少四组对照，SafeClaw 只覆盖 risk 1A，DARWIN 尚未端到端跑通。",
-      "missingEvidence": "缺少 50 条红队测试样本明细、成功越狱判定标准、SafeClaw 100 个用例的原始轨迹、DARWIN 重构后的测试日志。"
+      "reason": "本周有明确硬进展：修复红队评测脚本关键 bug，使输出不再为空；通过 few-shot、长度约束和词表扩充把构造语言回答中位长度从 29.5 词提升到 111.5 词；完成 50 条 plain 红队测试并得到 14% 越狱率；搭建 SafeClaw-R Docker 与 OpenClaw 环境，并完成 risk 1A 的 100 个端到端用例评估；DARWIN 完成接口重构和 bug 定位。硬进展不是停留在阅读或想法层面，而是有代码、环境、实验和数据。但多个核心闭环仍未完成：红队尚无 4 组对照，SafeClaw 只做了 risk 1A，DARWIN 尚未跑通完整收集—评估—进化闭环。",
+      "missingEvidence": "缺少实验结果表、运行日志、代码提交链接、50 条红队样本明细、100 个 SafeClaw 用例分布、DARWIN 重构后的测试记录。"
     },
     "cognitiveIncrement": {
       "score": 12,
-      "reason": "认知增量较明确：从 SafeClaw 实验中提出静态规则评测与真实端到端路由之间存在鸿沟；从构造语言实验中提出非自然语言编码可能扰动安全对齐；从 DARWIN 调试中识别自动演化框架的脆弱点在 judge 与验证闭环。这些增量均与本周实验结果相关。扣分点是部分结论仍有混杂因素，例如 DeepSeek 指令遵循能力不足、prompt 模式差异、judge 单一等，尚不能完全归因为安全机制失效或构造语言本身。",
-      "missingEvidence": "缺少不同模型、不同 prompt 模式、不同 judge 的交叉验证；缺少对失败案例的分类统计。"
+      "reason": "认知增量较清楚：一是区分了论文式静态安全评测与真实端到端 Agent 路由之间的差异；二是用 14% 越狱率初步支持构造语言可能削弱安全对齐；三是识别 DARWIN 自动进化框架中最脆弱的环节是 judge 与验证闭环。这些不是泛泛总结，而是由本周实验失败和数据触发的更新。但部分结论仍偏早，例如将 SafeClaw 失效归因于论文评测假设、将构造语言越狱归因于 RLHF 边界绕过，都还需要更多模型、更多 prompt 模式和更多攻击模板验证。",
+      "missingEvidence": "缺少与 Claude 或其他模型的对比，缺少 natural/split/user_only 消融，缺少 judge 一致性分析，缺少失败样例的定性归类。"
     },
     "cot2Depth": {
       "score": 12,
-      "reason": "CoT's CoT 部分不仅写了结论，还尝试回答为什么尚未自动化吸收、为什么没有沉淀成 workflow 或 benchmark，并标注证据等级。SafeClaw 的端到端路由问题具有较好的二阶反思价值。扣分点是 CoT's CoT 1 自称老师原本不知道为“否”，新颖性不足；CoT's CoT 2 虽有潜在新意，但 14% 越狱率来自 50 条 plain 测试，尚未完成消融，证据支撑还不够。",
-      "missingEvidence": "缺少端到端路由失败的轨迹样例；缺少构造语言攻击与自然语言、split、user_only、natural 模式的对照结果；缺少对“RLHF 安全边界被绕过”的直接证据。"
+      "reason": "CoT’s CoT 部分有较好的二阶判断：不只是说 SafeClaw 准确率低，而是指出 Agent 安全评测中“是否自主触发安全节点”与“给定规则做分类”是两个不同问题；也指出构造语言不是普通多语言翻译，而是可控重构语法和词表的攻击面。还尝试解释为什么这些发现没有被自动化科研吸收，并给出 benchmark、evaluation protocol 等沉淀方向。主要不足是证据等级标注偏乐观，尤其 SafeClaw 的 A 级证据目前只来自 DeepSeek + risk 1A + 100 用例，尚不足以支撑对整个学术界 Agent 安全评测的强判断。",
+      "missingEvidence": "缺少跨模型复现、跨风险类型复现、端到端轨迹日志、原论文评测脚本与当前端到端设置的严格差异表。"
     },
     "brainaryMapping": {
       "score": 7,
-      "reason": "报告将 SafeClaw 映射到 risk modeling 和 evaluation protocol，将构造语言红队映射到 benchmark/evaluation，将 DARWIN 映射到 tool orchestration，并提出可能沉淀为自动红队 agent 和端到端安全评测协议。方向正确。扣分点是映射仍停留在能力标签层面，没有说明 Brainary 中应新增哪些数据结构、接口、记忆模块、评测流水线或调度策略。",
-      "missingEvidence": "缺少具体 Brainary 模块设计，例如输入输出 schema、评测任务定义、失败轨迹存储方式、agent 调用链路。"
+      "reason": "能把三项工作映射到 Brainary 的 risk modeling、evaluation protocol、benchmark/evaluation、tool orchestration 等能力，并指出可沉淀为 Automated Red-Teaming Agent 和 End-to-End Agentic Safety Evaluation Protocol。映射方向合理。但当前仍停留在能力标签层面，没有进一步给出 Brainary 中应新增的对象、接口、记忆结构、评测输入输出 schema 或调度策略，因此离可执行系统设计还有距离。",
+      "missingEvidence": "缺少 Brainary 模块级设计，例如 evaluator 的输入输出格式、risk taxonomy、trajectory logging schema、judge 调用策略、自动化红队 agent 的 workflow 图。"
     },
     "monetaryValue": {
-      "score": 7,
-      "reason": "给出了 200 万人民币/年的估值，并说明潜在客户是企业级 Agent 部署公司和模型厂商安全团队，计算逻辑参考企业合规年费和人工红队替代成本。商业方向清楚。扣分点是估值仍偏假设，没有客户访谈、采购预算、竞品价格细节、交付形态和销售周期验证。",
-      "missingEvidence": "缺少真实客户需求证据、竞品报价来源、单位测试成本、API 成本、毛利率、合规采购场景验证。"
+      "score": 6,
+      "reason": "报告给出了 200 万人民币/年的价值估计，并说明基于企业安全合规订阅、红队厂商费率、人工红队替代成本等逻辑。这个估算有商业方向感，知道谁可能付费：企业 Agent 部署方、大模型厂商安全团队。但证据仍较弱，更多是类比估算，缺少真实客户访谈、采购预算、竞品价格、产品交付边界、合规刚需场景和销售周期判断。DARWIN 与构造语言红队能否稳定产品化也尚未被本周实验充分证明。",
+      "missingEvidence": "缺少客户需求验证、竞品报价证据、目标行业清单、单客户付费意愿、部署成本、毛利率、合规或审计场景的具体买单机制。"
     },
     "projectManagement": {
       "score": 12,
-      "reason": "项目管理部分清楚写出了原计划、实际完成、偏差原因、资源瓶颈、关键路径和是否需要老师介入。能看出当前最大风险是 GPU/API 资源不足，以及论文代码与真实端到端部署之间的落差。扣分点是没有量化本周投入时间，没有拆出各任务优先级，也没有在资源无法解决时给出降级方案。",
-      "missingEvidence": "缺少具体工时分配、下周任务优先级排序、资源不到位时的替代方案、每个里程碑的验收标准。"
+      "reason": "项目管理部分比较完整：说明了原计划与实际进展的偏差，明确 SafeClaw、DARWIN、红队三条线的阶段、卡点、资源依赖、关键路径和需要老师介入的事项。能承认进度不符合预期，并把偏差归因到 GPU/API 资源缺失、论文代码与真实部署落差、环境调试超期。下周里程碑也有提出。主要问题是任务并行过多，三条线都卡在关键实验闭环，优先级还不够收敛；时间投入只说“大量周期”，没有量化；下周计划范围偏大，存在继续发散风险。",
+      "missingEvidence": "缺少具体工时分配、任务优先级排序、每个实验预计 token/API 成本、风险缓冲计划、如果 Anthropic API 不可得的替代方案。"
     },
     "nextAction": {
       "score": 8,
-      "reason": "下周动作较具体：完成三种攻击方法全量评测，做 split/user_only/natural 攻击面消融，接入 Anthropic API 验证 Claude，继续 SafeClaw 剩余 risk 类型和 DARWIN 闭环测试。这些动作基本可验证。扣分点是任务量偏大，缺少最小闭环优先级；如果 API 或 GPU 继续不可用，行动计划可能再次失效。",
-      "missingEvidence": "缺少明确的下周最低交付物定义，例如必须产出的表格、图、报告页数、成功/失败判定阈值；缺少无 Claude 或无 GPU 时的备选实验。"
+      "reason": "下周动作具有可验证性：完成三种攻击方法全量评测形成 4 组对照，做 split/user_only/natural 消融，接入 Anthropic API 跑 Claude 端到端路由，补齐 SafeClaw 剩余 risk 类型，测试 DARWIN 重构后的完整闭环。这些动作能直接验证本周的关键假设。但动作数量偏多，超过单周最小可验证动作的合理负载。最应该优先的是红队 4 组对照和 SafeClaw Claude 对照，而不是同时扩展所有 risk 类型与 DARWIN 全闭环。",
+      "missingEvidence": "缺少下周优先级、验收标准、最小样本量、失败时的降级路线，以及每项动作的预计完成时间。"
     },
     "evidenceQuality": {
-      "score": 4,
-      "reason": "报告提供了多个可核验数字：50 条红队测试、14% 越狱率、英语 baseline 0%、输出长度中位数从 29.5 到 111.5、SafeClaw risk 1A 100 用例、整体准确率 21%、真实进入检查节点 1 个、模糊请求触发率约 1%。证据密度较高。扣分点是没有附原始数据、日志、样例、judge 标准和统计置信度，因此证据可复现性不足。",
-      "missingEvidence": "缺少实验配置、prompt 模板、模型版本、随机种子、原始输出、判定脚本、失败案例样例、置信区间。"
+      "score": 3,
+      "reason": "报告提供了若干关键数字：50 条 plain 测试、14% 越狱率、英语 baseline 0%、回答中位长度 29.5 到 111.5、SafeClaw risk 1A 100 用例、整体准确率 21%、真实进入检查节点 1 个。这比纯叙述强。但证据质量仍只是摘要级，没有原始数据、统计置信、样本构成、评判标准、攻击成功定义、judge prompt、失败案例表和可复现实验配置。证据足以支持本周内部判断，不足以支持论文级或系统级结论。",
+      "missingEvidence": "缺少原始样本、实验脚本版本、模型版本、温度参数、judge 规则、成功/失败判定标准、每类攻击模板结果、置信区间和可复现日志。"
     },
-    "totalScore": 78,
+    "totalScore": 76,
     "tier": "B",
-    "oneLineJudgment": "本周有实质实验进展和有价值的安全评测洞察，但关键结论仍受模型、judge、prompt 模式和资源瓶颈混杂影响，尚未形成可发表或可产品化的闭环证据。",
-    "professorFollowUp": "老师最应追问一件事：请学生下周优先产出一个最小可复现对照表，至少包括构造语言 plain、三种攻击模板、英语 baseline、不同 prompt 模式的越狱率，并附 5 个成功与 5 个失败原始样例；同时明确是否需要老师协调 Claude API 或 GPU，如果资源不到位，就先把红队轻量实验闭环做完。"
+    "oneLineJudgment": "本周是一个有实质实验推进和有效认知增量的 B 级周报，但核心结论仍依赖小规模、单模型、缺少对照的证据，下一步必须从“发现现象”转向“可复现验证”。",
+    "professorFollowUp": "老师最该跟进两件事：第一，是否协调 Anthropic API 或稳定 GPU/API 资源，因为这是 SafeClaw 与 DARWIN 闭环的关键路径；第二，要求学生下周只交付两个硬结果：红队 4 组对照表，以及 SafeClaw 在 Claude 与 DeepSeek 下的端到端路由对比表，附样本、judge 规则和轨迹日志。"
   }
 }

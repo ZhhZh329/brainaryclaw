@@ -1,101 +1,108 @@
 {
   "key": "person:huang-yitan:2026-05-10:weekly-score",
-  "generatedAt": "2026-06-05T18:03:17.542Z",
+  "generatedAt": "2026-06-05T22:03:41.122Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "e19a5a0c33a6d5163206c889aeba451d254624941c032a16cb1467c8e3ece44e",
   "result": {
-    "hardProgress": {
-      "score": 15,
-      "reason": "本周有明确硬产出：新增复现 10 个越权相关 CVE，累计数据集从 11 个扩展到 21 个；覆盖 Directus、Grafana、Spring 等框架；开发了代码分析模块和响应分析模块，并将其设计为 LangGraph 状态机节点。问题是这些进展主要是自述，缺少 CVE 编号、复现脚本、模块接口、运行截图或输出样例，因此硬进展可信但未充分可审计。",
-      "missingEvidence": [
-        "10 个新增 CVE 的具体编号、版本、漏洞类型、复现步骤和成功判据",
-        "Directus、Grafana、Spring 测试项目的仓库、分支或环境配置",
-        "代码分析模块和响应分析模块的代码提交记录、接口说明、输入输出样例",
-        "LangGraph 状态机中两个模块的实际运行 trace"
-      ]
+    "week": "2026-05-10",
+    "name": "Huang Yitan",
+    "scores": {
+      "hardProgress": {
+        "score": 16,
+        "reason": "本周有较明确的硬进展：复现 10 个越权相关 CVE，覆盖水平越权、垂直越权、IDOR；测试 Directus、Grafana、Spring 等框架；开发了代码分析模块和响应分析模块，并将其作为 LangGraph 状态机节点。进展不是纯思考，有数据集和系统模块两条实物线。但报告没有给出 CVE 编号、复现脚本、测试日志、模块接口、运行截图或 commit，因此硬进展可信但不可外部核验。",
+        "missingEvidence": [
+          "10 个 CVE 的具体编号、项目版本、漏洞类型和复现状态",
+          "Directus、Grafana、Spring 测试用例或复现日志",
+          "代码分析模块和响应分析模块的代码链接、commit、接口说明或运行截图",
+          "模块在至少一个 CVE 上的输入输出样例",
+          "累计 21 个 CVE 数据集的清单和标注格式"
+        ]
+      },
+      "cognitiveIncrement": {
+        "score": 12,
+        "reason": "认知增量比较清楚：从单一 Spring 场景扩展到跨框架的“路由层允许但查询层未过滤”模式；从“代码 bug”转向“跨层语义失配”；从单静态分析转向静态加动态双通道验证。这些认知直接反哺了 agent 架构设计。但其中“名实失配”“礼制秩序”等表述仍偏抽象，尚未转化为可计算定义或稳定分类体系。",
+        "missingEvidence": [
+          "不同 CVE 如何分别支持这些认知增量的逐例分析",
+          "“名实 gap”的形式化定义",
+          "“路由层允许但查询层未过滤”与其他失败模式的判定标准",
+          "认知增量如何改变模块设计的具体 diff 或设计文档"
+        ]
+      },
+      "cot2Depth": {
+        "score": 12,
+        "reason": "CoT's CoT 部分数量充足，能从漏洞本质、权限秩序、跨框架共性、双通道架构四个层次反思，并且尝试回答为什么尚未被自动化科研吸收、如何沉淀为 module/workflow/benchmark/evaluation。深度优于普通周报。但多个 CoT's CoT 都标注“老师原本不知道的吗：否”，说明新颖性更多在工程转译而非教授层面的新知识；且哲学类比较多，形式化和验证路径不足。",
+        "missingEvidence": [
+          "每个 CoT's CoT 对应的具体 CVE 证据表",
+          "“名实失配”“礼制失序”的可执行定义",
+          "如何从 CoT's CoT 落到 agent policy 的伪代码或流程图",
+          "与 BACScan、MOCGuard 等现有方法的逐项差异表"
+        ]
+      },
+      "brainaryMapping": {
+        "score": 8,
+        "reason": "报告将工作映射到 Calibration、Reasoning、Target Understanding、Tool Orchestration、Benchmark/Evaluation，并说明双通道分析如何扩展 Brainary 的 calibration 维度。这是有结构的映射，不是简单贴标签。但映射仍停留在概念层，缺少 Brainary 内部状态、记忆结构、置信向量更新方式、模块输入输出协议等具体实现。",
+        "missingEvidence": [
+          "Brainary-guided agent 的状态表示或 schema",
+          "“名实 gap”如何进入 Calibration 的计算公式",
+          "Reasoning、Target Understanding、Tool Orchestration 的模块边界和数据流",
+          "Brainary 映射前后 agent 行为差异的实验或示例"
+        ]
+      },
+      "monetaryValue": {
+        "score": 7,
+        "reason": "报告按模板给出了金额：Benchmark 扩展估值 1 万人民币，Agent 模块开发估值 4 万人民币，并解释了估值依据。相比只写“价值高”，这是合格的。但估值仍主要是主观判断，没有用人天成本、替代采购成本、企业安全审计节省成本、潜在论文/漏洞奖金价值等方式交叉验证。",
+        "missingEvidence": [
+          "10 个 CVE 复现的实际人时成本和可复用程度",
+          "类似安全 benchmark 或 agent 模块的市场/外包成本参考",
+          "模块若用于企业审计可节省的人工成本估算",
+          "潜在 CVE 挖掘、漏洞奖金或论文产出的价值折算依据"
+        ]
+      },
+      "projectManagement": {
+        "score": 12,
+        "reason": "项目管理信息较完整：列出了当前阶段、原计划与实际完成、投入时间、下周时间、里程碑、资源、依赖、token 成本、偏差原因和纠偏动作。尤其是承认 Mutant Benchmark 尚未开始，并说明优先级调整，这是有效的项目管理信号。扣分点是缺少更细的验收标准、风险优先级、任务拆分和可追踪 issue。",
+        "missingEvidence": [
+          "每个下周任务的明确完成定义",
+          "Mutant Benchmark 延后的影响评估",
+          "代码模块、数据集、实验三条线的优先级排序",
+          "风险清单及对应缓解动作",
+          "项目仓库、issue、里程碑看板或实验记录链接"
+        ]
+      },
+      "nextAction": {
+        "score": 8,
+        "reason": "下周动作比较可验证：在 5 个以上已复现 CVE 上验证模块输出质量，将动态执行迁移到本地沙盒，完成 Grafana/Directus 跨层语义模式适配，并尝试主动挖掘未公开越权漏洞。这些动作和当前卡点匹配。但“尝试 CVE 挖掘”范围偏大，且缺少每项动作的验收指标，例如准确率、标注字段、沙盒成功标准。",
+        "missingEvidence": [
+          "5+ CVE 验证的评价指标，例如 precision、recall、gap 评分一致性",
+          "Grafana/Directus 适配后的标注 schema",
+          "本地沙盒迁移的最小成功条件",
+          "主动挖掘未公开漏洞的目标项目清单和停止条件",
+          "下周任务的优先级和预计工时分配"
+        ]
+      },
+      "evidenceQuality": {
+        "score": 2,
+        "reason": "报告内部叙述完整，但证据质量偏弱。几乎所有关键进展都停留在自述层面，没有 CVE 编号、复现命令、日志、代码 commit、模块输出、benchmark 样例或实验结果表。证据等级虽然自评为 A/B，但缺少可审计材料支撑。因此只能认为方向和工作量可信，结果质量尚不能独立确认。",
+        "missingEvidence": [
+          "CVE 列表与复现证据",
+          "测试环境和复现步骤",
+          "模块代码、运行日志和输出样例",
+          "数据集标注样例",
+          "对比实验或最小定量结果"
+        ]
+      }
     },
-    "cognitiveIncrement": {
-      "score": 12,
-      "reason": "认知增量较清楚：从单一 Spring 配置层/控制器层不一致，扩展到路由层允许但查询层未过滤；从静态代码检查转向静态声明与动态效果对比；将越权理解为跨层语义失配而非局部代码 bug。这些认知能反向推动 agent 架构设计。但周报自己也标注这些不是老师原本不知道的内容，且缺少与已有工具或论文的系统对比，因此增量主要体现在学生自身理解和项目框架内，而非已证明的新科学发现。",
-      "missingEvidence": [
-        "与 BACScan、MOCGuard 等现有工具在检测目标和失败模式上的具体对照表",
-        "每类认知增量对应的 CVE 案例证据",
-        "静态-only、动态-only、双通道三种方案的初步对比结果"
-      ]
-    },
-    "cot2Depth": {
-      "score": 11,
-      "reason": "CoT's CoT 有四条，覆盖名实失配、礼制秩序、跨框架共性、双通道认知架构，并且每条都尝试回答为什么还没有自动化、如何沉淀为 module/workflow/benchmark/evaluation。这符合模板要求。主要不足是哲学类比较多，形式化定义不足；证据等级虽有自评，但没有列出具体证据链，导致深度更像概念框架而非可验证理论。",
-      "missingEvidence": [
-        "名实 gap 的形式化定义、变量、评分公式或判定规则",
-        "礼制秩序到角色、资源、边界、查询过滤之间的可计算映射",
-        "四个 CoT's CoT 分别对应哪些 CVE、哪些代码片段、哪些运行时响应",
-        "证明单通道会漏报、双通道可发现 gap 的具体案例"
-      ]
-    },
-    "brainaryMapping": {
-      "score": 8,
-      "reason": "Brainary 映射较完整，分别对应 Calibration、Reasoning、Target Understanding、Tool Orchestration、Benchmark/Evaluation，并提出名实 gap 作为 Calibration 新维度，双通道分析作为 Tool Orchestration 和 Reasoning 的落地方式。缺点是映射仍主要停留在语义对应层面，缺少 Brainary 内部状态、记忆结构、评分变量或控制策略的具体实现。",
-      "missingEvidence": [
-        "名实 gap 如何进入 Brainary 置信向量或校准机制的具体数据结构",
-        "Target Understanding 中多层语义恢复的中间表示样例",
-        "Tool Orchestration 中静态模块与动态模块的调度规则",
-        "Brainary-guided agent 相比普通 agent 的实验对照"
-      ]
-    },
-    "monetaryValue": {
-      "score": 6,
-      "reason": "周报按模板给出了金额：Benchmark 数据集 1 万人民币，Agent 模块开发 4 万人民币，并说明了计算依据。问题是估值缺少外部参照和可交付物边界，例如一个 CVE 复现值多少钱、模块达到什么可复用程度才值 4 万、是否有节省人力或提升发现率的量化证据。因此金额意识存在，但商业/科研资产估值还不够可审计。",
-      "missingEvidence": [
-        "每个 CVE 复现的平均人工成本、时间成本或市场参考价格",
-        "Agent 模块可复用性的验收标准",
-        "与人工分析相比节省多少时间或提高多少检出率",
-        "潜在买单方的真实需求证据或访谈记录"
-      ]
-    },
-    "projectManagement": {
-      "score": 12,
-      "reason": "项目管理信息比较完整：说明当前阶段、原计划与实际完成、投入时间、下周投入、关键里程碑、资源、依赖、Token 成本、偏差和纠偏动作。也诚实记录了 Mutant Benchmark 尚未开始，并解释为何优先做多框架测试和模块开发。主要问题是里程碑缺少可量化验收标准，风险项较轻描淡写，且没有把 CVE 复现、模块验证、benchmark 标注之间的关键路径拆成可追踪任务。",
-      "missingEvidence": [
-        "每个里程碑的验收指标，例如准确率、覆盖框架数、标注字段完整度",
-        "Mutant Benchmark 延期对 6 月实验计划的影响评估",
-        "模块开发任务的 issue 列表、完成状态和剩余工作量",
-        "动态执行受 Codex 安全限制的替代方案风险评估"
-      ]
-    },
-    "nextAction": {
-      "score": 8,
-      "reason": "下周动作相对具体，包括在 5 个以上 CVE 上验证两个模块输出质量、迁移动态执行到本地沙盒、完成 Grafana/Directus 跨层语义模式适配、尝试主动挖掘未公开漏洞。这些动作基本可执行。主要不足是同时推进 CVE 挖掘、模块验证、沙盒迁移、数据标注，范围偏大；每项缺少成功/失败判据，尤其是主动挖洞不适合作为最小可验证动作的核心指标。",
-      "missingEvidence": [
-        "5 个 CVE 的选择标准和验证指标",
-        "代码分析模块与响应分析模块输出质量的评分 rubric",
-        "本地沙盒迁移的最小验收标准",
-        "Grafana/Directus 数据标注字段定义",
-        "如果 CVE 挖掘失败，如何仍然产出可评估结果"
-      ]
-    },
-    "evidenceQuality": {
-      "score": 2,
-      "reason": "证据质量是本周最大短板。报告中有大量具体进展声明，但几乎没有外部可核查材料：没有 CVE ID、没有 commit、没有复现日志、没有模块输出、没有 benchmark 样例、没有实验指标。证据等级自评为 A/B，但支撑材料没有随报告呈现，因此教授无法独立判断复现是否成功、模块是否可运行、模式归纳是否可靠。",
-      "missingEvidence": [
-        "CVE 复现日志、请求/响应样例、漏洞触发截图",
-        "Git commit hash 或代码链接",
-        "Benchmark 标注样例",
-        "模块运行 demo 和失败案例",
-        "跨框架模式分析的原始证据表"
-      ]
-    },
-    "totalScore": 74,
+    "totalScore": 77,
     "tier": "B",
-    "oneLineJudgment": "本周有实质推进，尤其是数据集扩展和双通道模块雏形，但证据包严重不足，当前更像可信的研究进展叙述，而不是可独立审计的科研产出。",
+    "oneLineJudgment": "本周是一个有实物推进的原型周：数据集和双通道 agent 模块都有进展，认知框架也在成型；主要短板是关键证据不可审计，且“名实 gap”尚未形式化为可计算机制。",
     "professorFollowUp": [
-      "要求下周先交一个最小证据包：10 个新增 CVE 的编号、复现环境、复现步骤、请求/响应证据和标注表。",
-      "要求展示代码分析模块与响应分析模块在至少 5 个 CVE 上的真实输入、输出、正确/错误案例，而不是只描述模块功能。",
-      "要求把“名实 gap”形式化为可计算指标：输入字段是什么、gap 如何评分、什么阈值触发漏洞判断。",
-      "建议暂缓把主动挖掘 zero-day 作为主目标，优先完成模块验证和 Grafana/Directus 标注，否则项目会从可控工程验证漂移到高不确定性挖洞。",
-      "教授本周最应该抓住的一点是：学生正在把越权检测从“检查有没有权限判断”推进到“比较静态权限声明与运行时访问效果是否一致”，但这个方向能否成立取决于下周能否拿出可审计证据和形式化 gap 定义。"
+      "要求学生下周提交 10 个新增 CVE 的清单、复现日志和标注样例，否则 benchmark 进展不能算完全落地。",
+      "要求学生展示代码分析模块和响应分析模块在至少 2 个 CVE 上的输入、输出和错误案例。",
+      "重点追问“名实 gap”如何计算：输入是什么、输出是什么、阈值如何设定、如何和真实漏洞标签对齐。",
+      "要求把 Grafana/Directus/Spring 的权限声明层、路由层、查询层统一成一个中间表示，否则跨框架通用性仍只是判断。",
+      "建议暂缓大范围 zero-day 挖掘，优先完成 5+ 已知 CVE 上的模块验证和失败分析。"
     ]
   }
 }

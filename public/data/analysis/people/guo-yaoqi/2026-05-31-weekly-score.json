@@ -1,60 +1,100 @@
 {
   "key": "person:guo-yaoqi:2026-05-31:weekly-score",
-  "generatedAt": "2026-06-05T21:01:47.527Z",
+  "generatedAt": "2026-06-05T22:01:52.116Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "721db8816513174a44011ff3fdb0bb2b20a2e3b38a0c34326049116f93f46773",
   "result": {
     "hardProgress": {
-      "score": 15,
-      "reason": "本周有三类硬进展：端到端 pipeline 合并、代码从 SWE-bench 绑定改为通用入口、ICSE motivation study 三段对照启动并形成立题逻辑。进展不是纯思考，确实包含工程 wiring、接口解耦、实验设计与初步结果。但硬度被两个问题限制：一是端到端 pipeline 尚未做大规模 sanity 或主实验；二是 motivation study 结果仍以“几乎没有提升”“显著正向”“难以稳定产出”等定性表述为主，缺少样本量、指标、统计检验和具体数字。",
-      "missingEvidence": "缺少 commit、模块接口说明、working memory schema 实例、端到端运行日志、非 SWE-bench 冒烟结果、motivation study 的样本量、成功率、增益数值、显著性检验和误差棒。"
+      "score": 16,
+      "reason": "本周有三类实质进展：端到端 pipeline 合并并接入 working memory；代码从 SWE-bench 绑定形态改为更通用入口；完成 ICSE motivation study 的三段对照设计并得到方向性结果。这些都属于硬推进。但报告中承认 pipeline 尚未大规模 sanity，非 SWE-bench issue 尚未真实冒烟，motivation study 目前仍是定性结果，尚未达到论文统计强度。",
+      "missingEvidence": [
+        "缺少端到端 pipeline 的运行日志、commit、接口文档或最小可复现实例。",
+        "缺少非 SWE-bench 输入跑通的真实 case 证据。",
+        "缺少 motivation study 的样本数、具体指标、提升幅度、显著性检验和误差棒。",
+        "缺少 working memory schema 的具体字段定义或示例条目。"
+      ]
     },
     "cognitiveIncrement": {
       "score": 13,
-      "reason": "认知增量较强，主要包括：把 RCA 定位为 BRT 与 Repair 之间的必要中介；把 motivation study 抽象成“直接路径弱 + oracle 中介强 + 中介稀缺”的三段模板；把 working memory 从 buffer 提升为多研究线协议层；把 benchmark 重新解释为假设层。这些都超出任务记录，形成了方法论层面的 CoT 增量。扣分点在于若干认知仍建立在单周、单领域、未量化的证据上，存在从一次工程经验外推为通用原则的风险。",
-      "missingEvidence": "缺少这些认知在第二个任务、第二个 benchmark 或第二条研究线上的复用验证；缺少对反例的讨论，例如何种情况下 BRT 直接路径可能有效、何种情况下 working memory schema 不是瓶颈。"
+      "reason": "认知增量较明确：把 RCA 的必要性从工程直觉推进到三段式 motivation 论证；把 working memory 理解为跨研究线协议层；把 benchmark 理解为假设层；把元认知扩展到立题级。这些不是任务复述，而是对研究结构的抽象。但其中多项仍来自单周单案例，外推性较强，尚未被第二场景验证。",
+      "missingEvidence": [
+        "缺少这些认知在其他研究线或其他 benchmark 上复用成功的证据。",
+        "缺少具体反例或失败案例来校准这些认知的边界。",
+        "缺少对这些认知如何改变实验设计或论文结构的可检查产物。"
+      ]
     },
     "cot2Depth": {
       "score": 13,
-      "reason": "CoT's CoT 写得比较完整，三条都包含内容、证据等级、老师可能不知道的点、信息差、自动化潜力和沉淀形式。尤其“中介式立题模板”和“working memory 是协议层”具有明确的元认知深度。缺点是三条证据等级都自定为 L2，但报告没有提供足够外部证据支撑 L2 的具体标准；同时“老师原本不知道”部分有一定断言性，缺少验证依据。",
-      "missingEvidence": "缺少证据等级定义、L2 判定标准、复用案例、失败案例，以及老师是否确实未知的独立依据。"
+      "reason": "CoT's CoT 部分有三条清晰的二阶抽象：中介式立题模板、working memory 作为协议层、去 benchmark 化作为假设审计。每条都写了证据等级、老师未知点、自动化潜力和沉淀形式，深度明显高于普通总结。但三条证据均主要是 L2、单案例实证加概念论证，部分表述如“老师原本不知道”证据不足，容易过度主张。",
+      "missingEvidence": [
+        "缺少第二个独立领域验证“中介式立题模板”的通用性。",
+        "缺少第二次研究线合并验证 working memory schema 的协议层作用。",
+        "缺少长期非 benchmark 运行来验证“假设审计”确实提升 generality。",
+        "缺少可执行的 checklist 或 evaluator 原型。"
+      ]
     },
     "brainaryMapping": {
       "score": 8,
-      "reason": "Brainary 映射较充分，覆盖 memory、cognitive control、calibration、workflow management、risk modeling、tool orchestration、benchmark/evaluation，并给出 working memory 五元组、schema-mediator agent、motivation-study agent、benchmark 假设依赖度评分等可沉淀方向。扣分在于这些映射大多仍是概念级，没有展示实际 schema、模块边界、调用协议或 agent 化原型。",
-      "missingEvidence": "缺少 working memory 字段定义文档、样例 memory 条目、schema 协商流程、Brainary 模块接口、自动化 agent 的输入输出样例和最小可运行 demo。"
+      "reason": "Brainary 映射覆盖 memory、cognitive control、calibration、workflow management、risk modeling、tool orchestration、evaluation 等多个能力，并能落到 schema-mediator agent、motivation-study agent、benchmark 假设依赖度评分等潜在模块。问题是映射仍主要是概念层和设计层，尚未体现 Brainary 内部已有模块被实际调用、接口对齐或评测闭环。",
+      "missingEvidence": [
+        "缺少 Brainary 现有模块与本周 pipeline 的实际接口对接证据。",
+        "缺少 working memory 五元组在 Brainary 中的真实 schema 或样例。",
+        "缺少 schema-mediator agent 或 motivation-study agent 的原型实现。",
+        "缺少 Brainary 评测指标如何采集的具体方案。"
+      ]
     },
     "monetaryValue": {
       "score": 6,
-      "reason": "报告给出 $100,000 的价值估算，并拆成 pipeline 产品形态、overall 通用化、ICSE motivation study 三部分，还列出保守和激进情景，结构完整。主要问题是估值依据高度假设化：$2M 年化商业价值、5% 权重、各部分 1%/2% 分配均没有市场、客户、节省成本、转化率或论文成功概率的数据支撑。因此可作为内部优先级表达，不能作为真实货币价值判断。",
-      "missingEvidence": "缺少商业场景、用户需求、可收费功能、节省人工时间、API 成本与收益比、潜在客户、竞品比较、论文中稿概率对价值的影响，以及 $2M 基准和 5% 权重的来源。"
+      "reason": "报告给出了 $100,000 的定价、拆分权重和保守/激进情景，具备基本商业价值意识。但估值主要基于假设的 $2M 年化价值和主观百分比分配，缺少客户、成本节省、转化概率、投稿成功概率、产品采用概率等外部约束。因此可作为方向性估值，不能作为可靠财务判断。",
+      "missingEvidence": [
+        "缺少 $2M 年化商业价值假设的来源。",
+        "缺少本周成果转化为收入或成本节省的路径概率。",
+        "缺少潜在用户、使用场景、付费意愿或竞品对比。",
+        "缺少 API 成本与未来收益之间的单位经济模型。"
+      ]
     },
     "projectManagement": {
-      "score": 12,
-      "reason": "项目管理信息比较完整：给出本周和下周工时、ICSE 7/1 截止、6/7、6/14、6/21、6/28 的里程碑、资源需求、token 成本、潜在瓶颈和老师介入点。对 4 周投稿窗口的串行依赖也有意识。扣分点是关键里程碑仍偏目标描述，缺少具体 case 数、实验矩阵、负责人、失败阈值和降级方案；当前三条主线并行推进，存在过载风险。",
-      "missingEvidence": "缺少实验排期表、每天/每阶段交付物、case 数量、baseline 列表、统计功效目标、写作页数目标、如果主实验失败时的投稿降级路线，以及每项任务的明确负责人。"
+      "score": 13,
+      "reason": "项目管理信息较完整：列出本周 55 小时投入、下周 55–60 小时计划、ICSE 7/1 截止倒排里程碑、资源需求、token 成本、潜在瓶颈和需要老师介入的判断点。风险意识较强，尤其识别了实验、写作、统计强度之间的串行依赖。扣分点是缺少更细的任务优先级、负责人、验收标准和如果下周失败的降级方案。",
+      "missingEvidence": [
+        "缺少每个下周任务的明确完成定义，例如样本数、图表数量、章节页数。",
+        "缺少主实验失败时的 fallback 方案。",
+        "缺少具体 backlog、issue tracker 或任务状态证据。",
+        "缺少资源瓶颈的量化阈值，例如 API 预算上限和 Claude Code 额度上限。"
+      ]
     },
     "nextAction": {
       "score": 8,
-      "reason": "下周动作清楚，包括端到端 pipeline 在 ICSE 实验线上跑通、procedure skill 接到 RCA 输出、非 SWE-bench 真实 issue 冒烟、motivation 数字补到论文强度、approach 初稿、SWE-bench Pro 主实验第一版。这些动作可执行，且与当前卡点对应。扣分在于部分动作缺少可判定标准，例如“paper 强度”如何定义、“完整端到端”跑多少例、“显著正向”需要达到什么阈值。",
-      "missingEvidence": "缺少下周每个动作的验收标准、样本量、指标阈值、预期图表、失败时的替代动作，以及优先级排序。"
+      "reason": "下周动作具体且与当前卡点对应：补 motivation 统计强度、起 approach 初稿、跑 SWE-bench Pro 端到端主实验、跑非 SWE-bench issue 冒烟、调整 working memory schema。这些动作能推动投稿和产品化。但部分动作仍偏大，缺少最小样本规模、验收指标和优先级排序，可能在 4 周窗口内互相挤压。",
+      "missingEvidence": [
+        "缺少 motivation study 下周要补到多少 case 才算达标。",
+        "缺少端到端主实验的 baseline、指标和成功阈值。",
+        "缺少非 SWE-bench 冒烟 case 的选择标准。",
+        "缺少 approach 初稿的具体交付格式和评审时间。"
+      ]
     },
     "evidenceQuality": {
       "score": 2,
-      "reason": "报告证据叙述丰富，但可核验证据弱。最关键的 motivation study 被称为“显著正向”“几乎没有提升甚至下降”，却没有任何数字、表格、样本量或统计检验。工程进展也没有日志、commit、接口样例或运行截图。当前证据质量足以支持“有方向性进展”，不足以支持“已达到可投稿实证强度”或“产品形态已稳定”。",
-      "missingEvidence": "缺少实验表格、原始指标、样本量、置信区间、p 值或配对检验、失败案例分类、代码提交记录、运行日志、benchmark 与非 benchmark 输入的对比结果。"
+      "reason": "证据质量是本周主要短板。报告中有清晰实验逻辑，但关键结果仍以“几乎没有提升”“显著正向”“难以稳定产出”等定性语言呈现，没有样本数、数值、统计检验、日志、代码链接或表格。许多工程进展也是自述级证据，尚未被可复现材料支撑。",
+      "missingEvidence": [
+        "缺少所有核心实验的原始数字。",
+        "缺少样本选择方式和样本量。",
+        "缺少统计显著性、置信区间或误差棒。",
+        "缺少运行日志、失败案例分类和可复现脚本。",
+        "缺少代码改造和 pipeline 合并的外部可检查证据。"
+      ]
     },
-    "totalScore": 77,
+    "totalScore": 79,
     "tier": "B",
-    "oneLineJudgment": "这是一个高认知密度、方向收敛明显的一周，但当前硬证据仍停在定性和 wiring 层，真正决定 ICSE 与产品价值的端到端数字尚未出现。",
+    "oneLineJudgment": "这是一个方向收敛和立题推进很强的一周，但当前主要价值仍卡在“有清晰结构、缺硬数字和可复现证据”，下周必须把 motivation study 和端到端实验从定性推进到可投稿统计强度。",
     "professorFollowUp": [
-      "要求学生下周首先交付 motivation study 的数字表：样本量、baseline、oracle BRT、naive BRT、repair 成功率、增益、显著性检验和误差棒。",
-      "让学生明确 ICSE 最小可投稿版本：如果端到端主实验不显著，论文是否还能以 motivation + RCA 中介方法成立。",
-      "检查 working memory schema 的实际样例，而不是只听协议层叙述；重点看 BRT、RCA、procedure skill、Repair 四阶段是否真的能共享字段。",
-      "要求非 SWE-bench 真实 issue 冒烟必须给出至少一个完整 trace：输入 issue、生成 BRT、RCA 归因、patch、验证信号。",
-      "提醒学生控制范围：4 周投稿窗口内，自动化沉淀可以先记录设计，不应挤占主实验和写作时间。"
+      "优先开一次短会判断：三段 motivation 是否足以支撑 ICSE 立题，尤其是 RCA 是否真的被实验锁定为必要中介。",
+      "要求学生下周提交一页数字表：A naive BRT、B oracle BRT、C BRT 稀缺度的样本数、指标、均值、方差、显著性和失败类型。",
+      "要求给出端到端 pipeline 的最小可复现实例，包括输入 issue、working memory 条目、RCA 输出、repair patch 和最终验证结果。",
+      "帮助做范围裁剪：若 6 月 7 日前 motivation 数字不够强，应优先保论文立题和主实验，暂缓泛化产品化和自动化沉淀。",
+      "重点追问一个问题：如果 oracle BRT 有效但当前 BRT 难生成，报告中的 RCA 机制到底怎样把低质量 BRT 转化为可用 repair 信号？这需要实验而不是概念回答。"
     ]
   }
 }

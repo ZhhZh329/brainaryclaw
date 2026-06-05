@@ -1,92 +1,60 @@
 {
   "key": "person:cao-yue:2026-03-22:weekly-score",
-  "generatedAt": "2026-06-05T21:00:48.212Z",
+  "generatedAt": "2026-06-05T22:00:43.643Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "9606fdcabfcf73897a6e4556482f0e02de7c68d46a3ee1a5f990df9a4c66e102",
   "result": {
     "hardProgress": {
-      "score": 16,
-      "reason": "本周有明确硬进展：Working Memory 加入上一轮 Adapt Strategy，跨 Color、Species、VQAV2 报告平均 ASR +4%；完成样本难度分组并得到约 +3% 的分层现象；还将实验结果映射到 Meta Layer/Object Layer。进展不是停留在想法层面，而是有方法改动、跨数据集验证和框架抽象。",
-      "missingEvidence": [
-        "缺少各数据集的绝对 ASR、baseline ASR、样本量和重复实验次数。",
-        "缺少统计显著性或置信区间，无法判断 +3%、+4% 是否稳健。",
-        "缺少具体 prompt/schema 改动示例，无法复现实验。"
-      ]
+      "score": 17,
+      "reason": "本周有明确硬进展：完成 Working Memory 动作记忆改动，并在 Color、Species、VQAV2 三个数据集上报告平均 ASR +4%；完成 Typo Base Color 样本难度三组划分并得到约 +3% 差异；还将实验结果映射到 Meta Layer 与 Object Layer 双层框架。进展不是停留在想法层，而是有代码实现、跨数据集验证和框架抽象。",
+      "missingEvidence": "缺少实验表格、样本量、baseline 定义、随机种子、显著性检验、每组失败/成功样本数量，以及 ASR 提升是否来自同一评测协议。"
     },
     "cognitiveIncrement": {
-      "score": 13,
-      "reason": "认知增量较清楚：把动作记忆从工程补丁上升为 Meta Layer 连贯诊断的必要条件；把不同数据集 ASR 差异解释为 victim model 对视觉语义和文字线索依赖权重差异；区分了自我修改与自我监控。增量与实验现象有对应关系。",
-      "missingEvidence": [
-        "关于 Color、VQAV2、Species 差异来源的解释仍是推断，缺少 victim model 行为分析证据。",
-        "缺少与 ReAct、Reflexion 的严格对照实验或机制对比。"
-      ]
+      "score": 14,
+      "reason": "认知增量较强。周报从实验现象提炼出两个有效认知：一是 Working Memory 不应只存外部反馈，还应存上一轮 Adapt Strategy；二是样本需要处于“有挑战但可解”的学习区间。还进一步区分了 victim model 对视觉语义与文字线索的依赖差异，并把 ASR 分层解释为 Target Understanding 的实例化依据。",
+      "missingEvidence": "关于 Color、VQAV2、Species 差异来自视觉语义与文字线索依赖权重的解释，目前更像机制假设，缺少消融实验或 victim model 行为分析支持。"
     },
     "cot2Depth": {
       "score": 13,
-      "reason": "CoT's CoT 写出了两条较有价值的二阶认知：输入端样本规划决定 Meta Layer 学习效率，以及 Working Memory 需同时存储外部反馈和自身动作历史。两条都包含现象、机制解释、老师原本不知道的理由、自动化沉淀路径和证据等级，符合模板要求。",
-      "missingEvidence": [
-        "“老师原本不知道吗”的判断主要是自述，缺少与老师讨论记录或明确对照。",
-        "样本难度分组的因果解释还不充分，可能存在样本分布、类别偏差或攻击文本差异等替代解释。",
-        "没有说明 CoT's CoT 如何改变下一轮实验设计。"
-      ]
+      "reason": "CoT's CoT 写得比较完整，包含现象、为什么老师可能不知道、新增认知、自动化潜力和证据等级。两个 CoT's CoT 都不是简单复述结果，而是上升到输入规划、记忆结构、Meta Layer 学习效率这些框架层原则。尤其是把动作记忆类比为 RL 中包含历史动作的状态空间，有一定抽象深度。",
+      "missingEvidence": "“老师原本不知道吗：是”的判断缺少依据；CoT's CoT 还缺少反例分析，例如动作记忆是否在所有任务中都有效、是否可能引入错误归因或过拟合上一轮策略。"
     },
     "brainaryMapping": {
       "score": 8,
-      "reason": "Brainary 关联较明确：把执行前输入规划映射为 Cognitive Control 的前置规划能力，把动作记忆映射为 Working Memory schema 的字段设计原则，并指出可沉淀为 workflow、memory schema 和 agent module。",
-      "missingEvidence": [
-        "缺少具体 Brainary schema 字段定义，例如字段名、输入输出、更新规则。",
-        "缺少该 mapping 如何接入现有 Brainary 系统的接口描述。",
-        "没有给出可复用 module 的最小实现或样例。"
-      ]
+      "reason": "Brainary 映射比较清楚：将执行前输入规划映射到 Cognitive Control 的前置规划能力扩展，将 Working Memory 双类字段映射到 Brainary Working Memory schema 设计原则。沉淀形式也明确到 agent module、workflow、memory schema。",
+      "missingEvidence": "缺少 Brainary 现有模块接口的具体对照表，也没有说明这些 schema 如何接入现有 Brainary 系统、字段名是什么、调用时机是什么、是否已经可复用。"
     },
     "monetaryValue": {
       "score": 6,
-      "reason": "报告识别了潜在买单方，包括 AI 安全、红队测试、VLM 部署安全企业和顶会 adversarial robustness 赛道，也给出约 100 万人民币估值。但估值依据偏粗，主要是类比顶会论文和红队工具商业化，尚未证明本周成果可直接转化为付费产品或服务。",
-      "missingEvidence": [
-        "缺少具体客户场景、采购路径或竞品对比。",
-        "缺少该框架相对现有红队工具的性能优势或成本优势。",
-        "缺少商业化里程碑，例如 demo、API、评测报告或试点用户。"
-      ]
+      "reason": "报告给出了题目价值、潜在买单方和约 100 万人民币估值，并说明可沉淀为论文、workflow、module，对 AI 安全红队和自动化科研 agent 有潜在价值。但商业价值论证仍偏概念，主要基于顶会论文折算和安全工具估值类比。",
+      "missingEvidence": "缺少具体客户画像、竞品对比、付费场景、交付形态、转化周期、论文命中概率、工具化成本，以及 100 万人民币估值的可验证计算依据。"
     },
     "projectManagement": {
       "score": 12,
-      "reason": "项目管理信息较完整：说明当前阶段是小规模实验完成与框架图细化；记录本周 25 小时、下周 30 小时；给出资源消耗、API 成本、讨论对象和下周 meeting。进度状态可判断。",
-      "missingEvidence": [
-        "缺少明确风险和阻塞项，例如实验稳定性、算力、数据集扩展、论文 deadline。",
-        "缺少里程碑验收标准，‘框架图初稿’需要达到什么质量不清楚。",
-        "缺少任务拆解和优先级，无法判断下周 30 小时如何分配。"
-      ]
+      "reason": "项目管理信息较完整：说明当前阶段、小规模实验完成、框架图构建中；给出本周 25 小时、下周 30 小时、API 成本、与老师讨论安排和下周里程碑。资源和节奏基本可控。",
+      "missingEvidence": "缺少任务拆解、风险列表、阻塞项、验收标准、代码/实验产物链接、下周 30 小时如何分配，以及如果框架图无法完成时的备选计划。"
     },
     "nextAction": {
-      "score": 7,
-      "reason": "下周行动包括完成框架图初稿、与刘老师 meeting、给出框架图和样例，并将 Evaluate → Diagnose → Adapt Strategy 封装为通用 meta-cognitive loop。方向明确，但行动颗粒度仍偏粗。",
-      "missingEvidence": [
-        "缺少下周具体 deliverables，例如图的版本、模块清单、实验表格、代码 demo。",
-        "缺少每个 next action 的完成标准和截止时间。",
-        "缺少如果框架图讨论不顺利时的备选路径。"
-      ]
+      "score": 8,
+      "reason": "下周动作明确：完成框架图初稿、与刘老师 meeting 讨论框架图，并把 Evaluate → Diagnose → Adapt Strategy 封装为通用 meta-cognitive loop。方向和产出物比较清楚。",
+      "missingEvidence": "缺少可验收定义，例如框架图包含哪些模块、每个模块需要哪些输入输出、是否要补实验表、是否要形成论文贡献段落，以及下周结束时教授应看到什么具体文件。"
     },
     "evidenceQuality": {
       "score": 3,
-      "reason": "报告提供了跨三数据集 ASR +4% 和三组样本对比 +3% 两类证据，且能对应核心论点。但证据质量不足以完全支撑 A 级判断，因为缺少样本量、绝对指标、实验设置、随机性控制、统计检验和失败案例。",
-      "missingEvidence": [
-        "缺少实验表格或原始结果。",
-        "缺少 sample size、模型版本、prompt 版本和随机种子。",
-        "缺少 ablation：只加外部反馈、只加动作记忆、两者都加的对照。",
-        "缺少失败样本分析。"
-      ]
+      "reason": "证据质量中上但未充分展开。报告提供了跨三数据集 ASR +4% 和三组样本对比 +3% 两条关键证据，且能将证据和结论对应起来。但证据仍是摘要式描述，无法独立复核。",
+      "missingEvidence": "缺少原始实验记录、评测协议、样本数、方差、显著性、失败案例、消融设置、对照方法、prompt 版本、模型版本和代码提交记录。"
     },
-    "totalScore": 78,
-    "tier": "B",
-    "oneLineJudgment": "本周是有实验证据支撑的有效推进，核心贡献在动作记忆和输入难度规划，但证据透明度、复现细节和商业价值论证还不足，尚未达到 A 档。",
+    "totalScore": 81,
+    "tier": "A",
+    "oneLineJudgment": "这是一个有真实实验增量和框架抽象价值的强周报，但证据可复核性、商业价值论证和下周验收标准仍不足。",
     "professorFollowUp": [
-      "要求学生下周提交一张实验结果表：每个数据集的 baseline ASR、改进后 ASR、样本量、重复次数、置信区间或显著性检验。",
-      "要求学生把 Working Memory schema 写成可复用规格，至少包括外部反馈字段、动作记忆字段、更新规则和一个真实样例。",
-      "追问样本难度分组的定义方法：如何自动识别“过易、可解但有挑战、过难”，以及是否存在类别或文本长度混杂因素。",
-      "要求框架图初稿必须明确 Meta Layer、Object Layer、Evaluate、Diagnose、Adapt Strategy、Working Memory 的输入输出关系。",
-      "教授本周最应该学到的一点是：Meta-cognition 的效率不只来自执行中的反思质量，还取决于执行前输入样本是否处在可学习区间，以及 Working Memory 是否记录了自身动作历史。"
+      "要求学生下周先补一张核心实验表：数据集、baseline ASR、新方法 ASR、提升幅度、样本数、随机种子和显著性。",
+      "追问 Working Memory 动作记忆的最小 schema：到底存什么字段、何时写入、何时读取、如何防止错误动作历史污染 Diagnose。",
+      "要求把“有挑战但可解”样本筛选变成可执行算法，而不是经验描述：筛选指标、阈值、分流策略和失败样本处理方式。",
+      "让学生在框架图中明确 Meta Layer 与 Object Layer 的边界，尤其是 Evaluate、Diagnose、Adapt Strategy、Target Understanding、Working Memory 的输入输出。",
+      "商业价值暂时不要按 100 万人民币估值推进，应先把论文贡献闭环和可复现实验补齐。教授本周最该学习的一点是：Meta-cognition 的效率上限可能由执行前输入规划和记忆 schema 决定，而不只是由执行中的反思算法决定。"
     ]
   }
 }

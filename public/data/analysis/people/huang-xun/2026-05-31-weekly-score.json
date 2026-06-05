@@ -1,6 +1,6 @@
 {
   "key": "person:huang-xun:2026-05-31:weekly-score",
-  "generatedAt": "2026-06-05T18:02:55.878Z",
+  "generatedAt": "2026-06-05T22:03:06.812Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
@@ -8,53 +8,47 @@
   "result": {
     "hardProgress": {
       "score": 18,
-      "reason": "本周有较强硬进展：SafeClaw 方向实现了 LLM Router、safe-universal、三场景评测 harness，并生成 2000 个 code-execution cosmetic mutation 变体；红队方向完成 50 objective × 10 variant 的全量动态评测，实现 early stop，并实现 Thompson Sampling 自适应策略选择系统；DARWIN 部署到 7×H100，跑通 seed → collect → attack → prune 端到端链路。进展不只是阅读或设想，而是包含可运行模块、实验数据和失败模式。但 SafeClaw 受 Anthropic API 阻塞，DARWIN evolve 阶段 ASR 为 0%，说明部分硬进展仍停留在工程跑通而非有效性达成。",
-      "missingEvidence": "缺少代码仓库链接、实验配置、完整评测日志、每个场景的样本量与明细结果；DARWIN 的 10/10 执行成功率缺少任务定义和日志证明。"
+      "reason": "本周有明确硬产出：SafeClaw 侧实现了 LLM Router、safe-universal、安全评测 harness，并生成 2000 个 code-execution mutation 变体；红队侧完成 50×10 全量动态评测、early stop、Thompson Sampling 自适应策略系统；DARWIN 侧部署到 7×H100，跑通 seed→collect→attack→prune 端到端链路。硬进展覆盖数据、工程模块、实验失败模式三类，质量较高。",
+      "missingEvidence": "缺少代码仓库链接、实验运行日志、评测 harness 的具体配置、2000 个变体的生成规则样例，以及 DARWIN 端到端链路的完整输出记录。"
     },
     "cognitiveIncrement": {
-      "score": 13,
-      "reason": "认知增量明确：一是发现 LLM 自由选择策略存在严重偏好偏差，不能等同于有效探索；二是发现统一安全技能相对领域特定技能准确率从 97% 降至 59%，说明 one-size-fits-all 安全护栏存在能力上限。这些认知均由本周实验数据支持，并能转化为系统设计原则：策略选择外置给统计机制，安全防御保留细粒度路由。扣分点在于部分表述上升到普遍架构原则较快，仍需要跨模型、跨任务复现实验支撑。",
-      "missingEvidence": "缺少不同攻击目标、不同模型、不同防御场景下的重复实验；缺少对 Thompson Sampling 改善效果的最终全量验证结果。"
+      "score": 14,
+      "reason": "认知增量清晰且由实验结果支撑：一是 LLM 自由策略选择存在严重偏好偏差，不能等同于有效探索；二是统一安全技能在当前模型能力下显著劣化，领域特定规则与精确路由仍不可替代。这些不是泛泛总结，而是直接来自 97.6% jailbreak rate、Role-play 被过度选择、safe-universal 59% vs safe-gog 97%、Router 23.8% 等结果。",
+      "missingEvidence": "缺少对这些认知是否可跨模型、跨任务泛化的验证；目前主要基于 GPT-3.5、DeepSeek v4-flash 和局部场景，外推到通用 Agent 安全仍需更多模型与任务。"
     },
     "cot2Depth": {
       "score": 13,
-      "reason": "CoT's CoT 写出了两层较深判断：第一层从 GPT-3.5 策略选择偏差推导出 LLM 不具备可靠 exploration-exploitation 能力；第二层从 Router 23.8% 与 universal 59% 推导出 Agent 安全面临路由坍塌和统一护栏失效的双重问题。每条都说明了是否是老师原本不知道、信息差在哪里、自动化科研如何沉淀，符合模板要求。扣分点是‘老师原本不知道’的判断缺少外部依据，且 CoT's CoT 2 虽标为老师已知，但对为何未转成 benchmark 的论证仍偏概念化。",
-      "missingEvidence": "缺少与已有论文或 benchmark 的对照；缺少证明这些发现不是已知工程常识的文献定位；缺少把 CoT's CoT 转成可执行 benchmark 的具体字段设计。"
+      "reason": "CoT's CoT 不只是复述结果，而是上升到系统设计原则：将策略探索从 LLM 黑盒中剥离，用 Thompson Sampling 和持久化状态矩阵托管；同时指出 Agent 安全中的路由坍塌与统一护栏失效。深度较强，并包含‘为什么老师原本不知道/为什么未被 workflow 吸收/自动化潜力/沉淀形式’等模板要点。",
+      "missingEvidence": "‘老师原本不知道’的判断没有外部依据；CoT's CoT 1 的 A 级证据主要支持 GPT-3.5 的偏好偏差，但尚未证明所有 Attacker LLM 都缺乏探索能力；CoT's CoT 2 尚缺对不同 Router prompt、不同模型、不同安全工具组合的系统消融。"
     },
     "brainaryMapping": {
       "score": 8,
-      "reason": "Brainary 映射较清楚：Thompson Sampling 对应 tool orchestration 与 memory，Router/universal 取舍对应 cognitive control，并提出可沉淀为 agent module 和跨 run 持久化分布矩阵。这不是简单贴标签，而是把外置统计记忆与工具调度联系起来。扣分点是还没有给出 Brainary 内部接口、状态结构、调用协议或最小集成 demo。",
-      "missingEvidence": "缺少 Brainary 模块 API 草图、状态矩阵 schema、与现有 Brainary workflow 的接入点、一次端到端 Brainary 调用样例。"
+      "reason": "Brainary 映射比较到位：Thompson Sampling 对应 tool orchestration 与 memory，Router/Universal 取舍对应 cognitive control，并提出可沉淀为 agent module 与跨 run 持久化分布矩阵。它把实验发现转成了 Brainary 的模块化能力方向，而不是只做概念关联。",
+      "missingEvidence": "缺少更具体的 Brainary 接口设计，例如模块输入输出 schema、memory 更新频率、如何接入现有工具编排链路、与现有 Brainary 控制器的替换或并行关系。"
     },
     "monetaryValue": {
-      "score": 6,
-      "reason": "周报给出了两个货币估值：SafeClaw 约 60 万人民币，动态无偏红队系统含 DARWIN 约 50 万人民币，并分别用企业级安全演练客单价和高级 AI 安全研究员年成本估算。这比完全没有商业判断要好，也能说明潜在买方。但估值依据仍粗糙，缺少真实客户访谈、竞品价格、交付范围、复购路径和可收费形态，因此只能算初步商业假设。",
-      "missingEvidence": "缺少具体报价来源、客户需求验证、竞品对比、成本结构、交付物清单、可销售版本定义和付费意愿证据。"
+      "score": 7,
+      "reason": "给出了两个明确估值：SafeClaw 评测体系约 60 万人民币，动态无偏红队系统约 50 万人民币，并说明了潜在买方和估算逻辑。价值判断方向合理，能对应企业 Agent 安全评测、红队自动化、人力替代和安全合规服务。",
+      "missingEvidence": "估值依据仍偏粗糙，缺少真实报价、客户访谈、竞品价格、采购场景、可交付边界和毛利结构。‘等价于一次深度渗透与红队演练’和‘替代一名高级研究员一年工作量’需要更强市场证据。"
     },
     "projectManagement": {
-      "score": 13,
-      "reason": "项目管理部分完整：写明当前阶段、原计划与实际完成、投入时间、下周投入、关键里程碑、资源依赖、关键路径、token/API 成本、进度是否符合预期、偏差原因和纠偏动作。尤其明确指出 Anthropic API 是关键阻塞，需要老师介入，这是对教授有用的信息。扣分点是三个任务并行，优先级和资源分配还不够硬；成本只写‘极高’，没有数值预算。",
-      "missingEvidence": "缺少具体 API 花费金额、token 数量、H100 使用时长、每个任务的优先级排序、风险矩阵和若 API 继续缺失时的替代计划。"
+      "score": 14,
+      "reason": "项目管理信息完整：写明当前阶段、原计划与实际完成、投入时间、下周投入、关键里程碑、外部资源依赖、关键路径、成本问题、进度是否符合预期、偏差原因与纠偏动作。尤其明确指出 Anthropic API 是关键阻塞，需要老师介入，这对教授决策有用。",
+      "missingEvidence": "缺少更细的任务优先级排序和风险缓冲方案；例如如果 Anthropic API 继续拿不到，是否有替代模型、替代指标或论文对齐的降级路径。Token/API 成本只写‘极高’，缺少实际金额或调用量。"
     },
     "nextAction": {
       "score": 8,
-      "reason": "下周动作基本可验证：优化 Router prompt、配置 Anthropic API 并重跑 Claude 评测、运行 Thompson Sampling 全量测试、测试本地 Qwen2.5-3B、扩大 DARWIN 策略池、给 sandbox 添加进度反馈并做批量攻击实验。项目管理部分还给出周三、周四、周五/周末的时间节点。扣分点是动作较多，最关键的单一优先级不够突出；Anthropic API 获取依赖外部，若无法获得，缺少明确 fallback。",
-      "missingEvidence": "缺少每个 next action 的成功判据阈值，例如 Router 准确率提升到多少、策略分布均匀性如何度量、Qwen 替代 GPT 的最低可接受质量、DARWIN 策略池扩到多少。"
+      "reason": "下周动作具体且可执行：优化 Router prompt、配置 Anthropic API、重跑 Claude 评测、全量测试 Thompson Sampling、测试本地 Qwen2.5-3B、扩充 DARWIN 策略池、增加 sandbox 进度反馈。也给出周三、周四、周五、周末的里程碑。",
+      "missingEvidence": "部分动作缺少明确验收标准，例如 Router prompt 优化后目标准确率是多少、Thompson Sampling 的‘分布均匀性’如何量化、DARWIN 策略池扩充到多大才算通过、Qwen2.5-3B 的最低可接受攻击质量指标是什么。"
     },
     "evidenceQuality": {
       "score": 4,
-      "reason": "证据质量较好，报告中有多个量化结果：safe-universal 59%、safe-gog 97%、Router 23.8%、google-workspace 1D 78%、动态多策略 jailbreak rate 97.6%、静态模板 42%、R1/R10 分布、Role-play 42 次与 Hypothetical 10 次、DARWIN attack 10/10。但证据仍以自述结果为主，缺少原始数据、统计显著性、置信区间、评测集说明和可复现脚本。",
-      "missingEvidence": "缺少 raw logs、样本划分、随机种子、prompt 版本、judge 标准、失败样例表、置信区间、消融实验和复现实验链接。"
+      "reason": "证据质量较好，有多组量化数据：97.6% jailbreak rate、42% 静态模板基线、R1/R10 分布、Role-play 42 次 vs Hypothetical 10 次、safe-universal 59%、safe-gog 97%、Router 23.8%、1D 78%、attack 10/10、sandbox ASR 0%。这些数据能支撑主要判断。",
+      "missingEvidence": "缺少原始实验表、样本构成、随机种子、统计显著性、置信区间、失败样例、judge 标准、模型版本细节和复现实验脚本。证据足以支持周报判断，但还不足以支撑论文级结论。"
     },
-    "totalScore": 83,
+    "totalScore": 86,
     "tier": "A",
-    "oneLineJudgment": "这是一份有实质工程产出和高价值认知增量的 A 级周报，最强贡献是把 LLM 策略偏好问题转化为外置统计调度问题，但商业估值和可复现证据仍不足。",
-    "professorFollowUp": [
-      "优先介入 Anthropic API 权限获取；这是当前 SafeClaw 对比评测和论文结论对齐的关键阻塞。",
-      "要求学生下周只用一个核心表格汇报 Thompson Sampling 前后对比：策略分布、ASR、成本、方差、失败样例。",
-      "要求补充 DARWIN evolve 阶段 ASR 为 0% 的根因分析：是父本质量、变异算子、sandbox judge，还是本地模型能力问题。",
-      "要求把 Brainary 模块化落地成最小接口：输入策略注册表、历史 alpha/beta、当前 objective，输出采样策略与更新规则。",
-      "要求所有关键指标附带原始日志位置、样本量、随机种子和 judge 规则，否则不要继续扩大实验规模。"
-    ]
+    "oneLineJudgment": "这是一份高质量研究推进型周报：硬实验、失败模式、认知增量和项目阻塞都写得清楚，但市场估值与泛化证据仍不足，且下一步需要把关键指标变成可验收的工程闭环。",
+    "professorFollowUp": "老师最应该跟进一件事：尽快解决 Anthropic API 权限，否则 SafeClaw 与论文数据对齐会继续阻塞；同时要求学生下周提交 Thompson Sampling 全量验证表、Router 优化前后对比表、DARWIN 策略池扩充后的 ASR 曲线，以及每个模块的最小可复现实验包。"
   }
 }

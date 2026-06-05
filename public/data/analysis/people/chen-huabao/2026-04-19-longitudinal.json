@@ -1,286 +1,248 @@
 {
   "key": "person:chen-huabao:2026-04-19:longitudinal",
-  "generatedAt": "2026-06-05T21:02:05.632Z",
+  "generatedAt": "2026-06-05T22:02:09.286Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "d31171b5fff221e716925f35c46fe28055da21626aa5d2c04186e89aac1ddb29",
   "result": {
     "overallTrajectory": {
-      "verdict": "这个学生在这4周里不只是变忙，而是在明显变得更有研究能力。证据是：每周都有可验证产物、失败模式、对照实验、验证协议或建模决策，而不是只堆工作量。",
-      "mainTrajectory": "题目从“肝胆Taxonomy前三层”推进到“多标签属性层 + 关系边关系层 + 9类关系类型 + 下游任务驱动的KG设计与校验”。这是一条从分类资产到可推理知识结构的轨迹。",
-      "researchCapabilitySignal": "最强信号是他开始把失败案例、VQA样本、临床报告三类证据源组合起来，用来修正知识结构设计；并且能区分结构缺陷、覆盖率缺陷、数据代表性缺陷。这比单纯整理医学知识更接近研究能力。",
-      "notJustBusyEvidence": [
-        "2026-03-29：用8个病例验证Taxonomy，发现树结构无法表达多父节点和复合表现，这是结构性失败，不是整理量不足。",
-        "2026-04-05：做跨维度链接与多标签对比，得出二者不是二选一，而是属性知识与关系知识分层。",
-        "2026-04-12：从指南/教科书抽取318条候选关系，归并为8种关系，并用120个VQA样本验证属性/关系覆盖比例。",
-        "2026-04-19：用回答路径长度比较时序建模方案，最终选择新增temporal_progression关系，并发现公开VQA低估临床关系推理需求。"
-      ],
-      "mainConcern": "目前研究能力提升主要体现在知识结构设计和验证协议上，还没有进入模型表征适配、性能提升、医生外部验证或论文级实验。Stage 1如果再拖，会有“方法论越来越精细但没有下游效果”的风险。",
-      "evidenceLevel": "总体证据等级为B。原因：每周有具体样本、关系实例、对照实验和失败模式；但样本规模仍小，临床报告来自单院，医生验证和模型结果缺失。"
+      "judgment": "这个学生在过去4周确实更有研究能力，不只是更忙。主要证据是：投入时间基本稳定在35–38小时，但产出从“搭Taxonomy”推进到“用失败案例暴露结构缺陷—提出混合KG方案—归纳关系类型—用下游任务和临床报告校验方案偏差”。这是研究能力的提升，而不是单纯任务堆叠。",
+      "mainProgression": "题目轨迹从肝胆Taxonomy构建，升级为知识驱动肝胆KG设计，再进一步变成一套可自动化的KG构建与评测方法论。学生逐步把问题从“怎么分类”转成“什么知识结构能服务下游VQA/临床推理，并且如何验证它没有系统性偏差”。",
+      "hardProgressSignal": "硬进展连续存在：完成前三层Taxonomy；用病例发现树结构硬伤；确定多标签+跨维度链接混合方案；拿到DeepTumorVQA并从20样本扩到120样本；从指南/教科书抽取318条候选关系并归并为8种关系；发现时序缺陷；对比temporal_scale属性与temporal_progression关系；最终定型为9种关系；取得部分临床脱敏报告并抽取27条临床问句做分布对照。",
+      "researchAbilitySignal": "能力提升体现在三个方面：第一，失败案例不再只是bug，而被用作结构诊断工具；第二，下游任务不再只是评测集，而被反向用作KG设计需求源；第三，到第4周开始意识到反向驱动本身会受数据代表性偏差影响，并主动用临床报告交叉校验。",
+      "mainCaveat": "仍未证明最终KG能提升模型性能，也没有完成前20个高频疾病实体的全量实例化；临床报告样本只有27条问句且来自单一医院；价值金额基本沿用早期估算，缺少真实采购、外包报价、用户访谈或节省工时证据。因此，研究能力在增强，但商业价值和工程闭环证据仍不足。",
+      "oneThingProfessorShouldLearn": "最值得老师吸收的一点是：完备性验证不能只有一种协议。对抗性边界案例适合暴露结构缺陷，随机样本适合暴露覆盖率缺陷，临床报告或目标场景数据适合暴露公开数据集的代表性偏差。三者应该成为KG/Brainary evaluation的不同守门步骤。"
     },
     "stageByWeek": [
       {
         "week": "2026-03-29",
-        "stage": "从Taxonomy原型到结构缺陷识别",
-        "topicTrajectory": "主题仍是肝胆Taxonomy，但开始从静态树结构转向Graph/多标签的必要性。",
-        "hardProgress": "完成前三层Taxonomy；用若干病例验证，6个正确、2个失败；定位到树结构无法表达同一实体多父节点的问题。",
-        "cognitiveTrend": "从“把分类补完整”升级到“用边界案例击穿结构假设”。这是研究能力的重要起点。",
-        "CoTsCotMaturity": "能把局部失败上升为通用验证原则：Taxonomy验证应优先使用对抗性边界案例，而不是随机确认性样本。成熟度中等偏高。",
-        "BrainaryMapping": "把边界案例验证映射到Brainary的benchmark/evaluation，把失败分析循环映射到cognitive control。映射有新意，但仍偏概念，还没有模块接口或数据格式。",
-        "valueReasoning": "价值函数首次拆成静态资产价值和方法复制价值，金额为15–30万静态资产、50–100万综合估计。比单一估值更好，但证据主要是类比知识图谱外包报价，缺少真实买方访谈。",
-        "projectManagement": "计划与实际一致；能说明关键路径、依赖人和下周最小验证动作。",
-        "nextActionQuality": "下周动作具体：用跨维度链接和多标签分别修复失败案例。质量高，因为直接针对本周失败模式。"
+        "stage": "Taxonomy原型与结构缺陷暴露期",
+        "topicTrajectory": "从肝胆Taxonomy前三层构建切入，目标是形成肝胆影像领域知识先验。",
+        "hardProgress": "完成前三层Taxonomy，并用若干病例验证，6个能归类，2个失败；明确发现占位性/弥漫性二分树结构无法表达复合表现。",
+        "cognitiveTrend": "从理论上认为医学分类需要Graph，变成用真实病例证明Tree有结构性硬伤。",
+        "cotCotMaturity": "开始能提出可迁移的元认知：边界案例比随机案例更适合暴露结构缺陷；证据等级自评为B，合理但仍限于少量病例。",
+        "brainaryMapping": "把对抗性边界案例验证映射到Brainary的benchmark/evaluation，把失败分析循环映射到cognitive control。映射有新意，但还停留在概念层。",
+        "valueReasoning": "价值函数第一次成形：区分静态资产价值15–30万和方法论复制价值，综合估计50–100万。价值依据是医学KG建设服务对标和跨领域复制假设，但复制证据缺失。",
+        "projectManagement": "周目标清楚，实际完成符合预期；能提出下周最小可验证动作：用跨维度链接和多标签两种方案修复失败案例。",
+        "nextActionQuality": "较好。下一步直接针对失败案例设计方案对比，不是泛泛继续完善。"
       },
       {
         "week": "2026-04-05",
-        "stage": "Graph化方案对比与VQA反向驱动出现",
-        "topicTrajectory": "题目从Taxonomy修补推进到KG结构设计：属性层用多标签，关系层用跨维度链接。",
-        "hardProgress": "完成跨维度链接与多标签对比；DeepTumorVQA数据获批并下载；检查20个样本，发现约70%映射到节点属性、约30%涉及实体关系。",
-        "cognitiveTrend": "从方案二选一转为知识类型分层，认知质量明显提升。新增认知是VQA不仅是评测集，也能反向驱动KG关系类型设计。",
-        "CoTsCotMaturity": "能抽象出“属性知识 vs 关系知识”的分层，并提出workflow沉淀；同时指出下游任务可以反向定义上游结构。成熟度高于上一周。",
-        "BrainaryMapping": "映射到Brainary memory：属性知识与关系知识应有不同存储和检索模式。相比上一周更接近系统设计，但仍没有具体schema。",
-        "valueReasoning": "新增DeepTumorVQA分析价值10–15万，理由是既能评测又能驱动设计。价值推理开始连接数据用途，但金额仍是外包成本类比，缺少基于用户愿付价格的估计。",
-        "projectManagement": "额外完成数据获取和初步映射，进度超出预期但没有表现为失控；下一步样本扩到100+，合理。",
-        "nextActionQuality": "下周动作是从5份指南/教科书抽不超过10种关系，并用100个VQA样本支撑。动作质量高，因为把两个任务互相喂数据。"
+        "stage": "Tree到KG的方案分层期",
+        "topicTrajectory": "题目从Taxonomy修补升级为属性层+关系层的KG设计，同时引入DeepTumorVQA作为数据源。",
+        "hardProgress": "完成跨维度链接与多标签方案对比；确定二者不是二选一，而是多标签做节点属性层、跨维度链接做关系层；DeepTumorVQA获批下载，并完成20个样本映射，发现约70%问题映射到节点属性，约30%涉及关系。",
+        "cognitiveTrend": "从方案竞争思维转向知识类型分层：属性知识和关系知识需要不同构建与验证方法。",
+        "cotCotMaturity": "明显提升。能够把具体实验上升为通用workflow：多标签建属性层，关系边建关系层；还提出VQA可以反向驱动KG关系类型设计。",
+        "brainaryMapping": "把属性知识/关系知识分层映射到Brainary memory结构，提出应区分查属性和查关系两种检索模式。仍缺少具体memory schema。",
+        "valueReasoning": "价值函数扩展到数据集：DeepTumorVQA不只是评测价值，还有反向设计价值，估计10–15万。相比上周，价值判断从单一产物扩展到数据在流程中的双重用途。",
+        "projectManagement": "在原计划外拿到并初步分析数据集，是有效推进；但20样本规模偏小，学生自己识别了证据不足并计划扩到100+。",
+        "nextActionQuality": "较好。下周动作同时服务两个目标：扩大VQA映射样本，并为关系类型归纳提供数据支撑。"
       },
       {
         "week": "2026-04-12",
-        "stage": "关系类型归纳与双协议验证形成",
-        "topicTrajectory": "主题进入关系层定型：从指南/教科书抽取关系，开始构建可管理的KG关系集合。",
-        "hardProgress": "抽取318条候选关系实例，聚类为8种核心关系；扩样到120个VQA样本；发现时序关系无法表达。",
-        "cognitiveTrend": "能区分从指南抽关系和从病例抽关系的效率差异；能把验证拆成结构验证和覆盖验证，认知更加工程化。",
-        "CoTsCotMaturity": "成熟度进一步提高。关键贡献是把完备性验证拆为两个正交协议：对抗性边界案例查结构缺陷，随机样本查覆盖缺陷。这是可复用方法论。",
-        "BrainaryMapping": "映射到Brainary calibration + benchmark/evaluation，提出双协议守门。比之前更有自动化形态。",
-        "valueReasoning": "价值总结基本沿用前两周，没有根据318条关系、120个样本、双协议验证重新估值。价值函数稳定但有停滞。",
-        "projectManagement": "能说明偏差是发现时序缺陷；提出GPT-4o-mini初筛、GPT-4细抽的成本路径，项目管理成熟度上升。",
-        "nextActionQuality": "下周动作是用边界案例比较时序作为边属性还是第9种关系，并用回答路径生成做对比。动作质量高，因为有明确取舍标准。"
+        "stage": "关系类型归纳与双协议验证期",
+        "topicTrajectory": "题目进入KG关系层工程化：从指南和教科书抽取关系类型，并用VQA分布验证覆盖。",
+        "hardProgress": "从临床指南和教科书抽取318条候选关系实例，归并为8种核心关系；120个VQA样本复验属性/关系分布约70%/30%；发现时序关系无法表达。",
+        "cognitiveTrend": "从“找到关系类型”进入“控制关系扩张”的建模治理问题，开始区分维度扩张与实例扩张。",
+        "cotCotMaturity": "成熟度继续上升。提出结构验证与覆盖验证不可替代：边界案例查结构缺陷，随机样本查覆盖缺陷。这是本窗口内最有方法论价值的认知增量之一。",
+        "brainaryMapping": "把双协议完备性验证映射到Brainary calibration + benchmark/evaluation，提出evaluation harness可内置双协议守门。映射比前两周更接近可产品化模块。",
+        "valueReasoning": "金额估计基本未更新，但价值函数开始隐含转向：方法论副产品如evaluation protocol和workflow checklist本身有自动化科研价值。不过报告没有给这些协议的独立金额或用户支付证据。",
+        "projectManagement": "计划与实际高度匹配；能说明偏差是发现时序缺陷，并提出一周内用两套方案收敛。成本管理开始细化到GPT-4o-mini初筛、GPT-4精抽。",
+        "nextActionQuality": "较好。下周动作明确围绕时序建模取舍，并以VQA回答路径生成作为评价场景。"
       },
       {
         "week": "2026-04-19",
-        "stage": "时序建模决策与数据代表性风险暴露",
-        "topicTrajectory": "Stage 1接近关系层定型：从8类关系扩展到9类关系，并开始准备全量实体实例化。",
-        "hardProgress": "完成时序方案A/B对比；用平均回答路径长度3.8步 vs 2.6步选择方案B；从脱敏临床报告提取27条临床问句，发现临床关系型问题高于DeepTumorVQA。",
-        "cognitiveTrend": "认知从“结构是否简洁”转向“下游回答路径是否可操作”；并识别下游数据集代表性不足会反向污染上游设计。",
-        "CoTsCotMaturity": "成熟度较高。能为新好主意设置反证和校验机制，开始形成对自己方法的风险建模。",
-        "BrainaryMapping": "映射到Brainary calibration + risk modeling，提出反向驱动模块必须内置代表性校验器。方向正确，但仍缺少实现规格。",
-        "valueReasoning": "价值函数没有实质更新，仍复用静态资产、方法复制和VQA双用途价值。新发现“VQA低估临床需求”本应触发价值重算，例如临床鉴别诊断和关系推理的用户价值，但报告没有完成。",
-        "projectManagement": "能说明临床报告延迟是外部脱敏流程问题，不影响主线；但仍依赖乾坤确认关系定义和放射科报告进度。",
-        "nextActionQuality": "下周动作是对前20个高频疾病实体做全量关系实例化，并用临床问句做应用层完备性测试。质量高，但需要明确Stage 1退出标准，否则可能继续扩关系。"
+        "stage": "关系层定型与代表性偏差校验期",
+        "topicTrajectory": "题目从KG内部结构优化，进一步转向目标场景校准：公开VQA数据是否代表真实临床需求。",
+        "hardProgress": "完成时序建模两方案对比：属性方案平均回答路径3.8步，新增temporal_progression关系方案平均2.6步；最终采用9种关系并区分progresses_to与temporal_progression。获取部分脱敏诊断报告，手工提取27条临床问句，发现临床关系型问题占比高于DeepTumorVQA，尤其鉴别诊断需求被公开VQA低估。",
+        "cognitiveTrend": "评价标准从建模美感转向下游可操作性，且开始对自己上周提出的“VQA反向驱动KG设计”做代表性风险校验。",
+        "cotCotMaturity": "达到本窗口最高水平。第一个CoT's CoT有量化指标支撑，证据等级自评A；第二个CoT's CoT指出新方法也需校验边界，显示元认知开始从产出新想法转向审查新想法。",
+        "brainaryMapping": "把反向驱动偏差检测映射到Brainary calibration + risk modeling，提出代表性校验器。这比单纯Brainary概念对齐更具体，但仍缺少实现接口、输入输出格式和自动化阈值。",
+        "valueReasoning": "价值函数进一步从“资产+方法复制”转向“下游临床可操作性+数据代表性风险”。这是价值观成熟的表现：不再只问结构是否漂亮，而问是否能服务真实临床问题。但金额仍沿用旧估计，没有根据临床报告发现重新调整。",
+        "projectManagement": "主线推进稳定；识别临床报告延迟是外部流程问题而非执行问题。下一步聚焦前20个高频疾病实体全量实例化，接近Stage 1收尾。",
+        "nextActionQuality": "中上。全量实例化是必要收尾动作，但还需要明确验收标准：多少无法编码实例可接受、是否必须医生复核、是否允许第10种关系。"
       }
     ],
     "trendScores": {
       "hardProgress": {
-        "scoreByWeek": {
-          "2026-03-29": 4,
-          "2026-04-05": 4,
-          "2026-04-12": 5,
-          "2026-04-19": 4
-        },
-        "trend": "稳定偏强。硬产物从Taxonomy、失败案例，推进到数据集映射、318条关系实例、120个VQA样本、9类关系决策和27条临床问句。",
-        "risk": "还没有全量KG实例化、医生确认、模型实验或论文级结果。硬进展仍主要停留在Stage 1知识结构层。"
+        "score": 4.3,
+        "trend": "持续上升",
+        "reason": "每周都有可检查产物：Taxonomy、失败案例、方案对比、数据集映射、318条候选关系、8到9种关系类型、临床问句对照。不是只写想法。但尚未进入模型实验或论文级结果。"
       },
-      "researchCapability": {
-        "scoreByWeek": {
-          "2026-03-29": 3,
-          "2026-04-05": 4,
-          "2026-04-12": 4,
-          "2026-04-19": 5
-        },
-        "trend": "明显上升。学生越来越能用失败驱动设计、用下游任务定义上游结构、用交叉数据源识别偏差。",
-        "judgment": "这是研究能力增强，不只是工作量增加。"
+      "researchCapabilityNotBusyness": {
+        "score": 4.2,
+        "trend": "明显上升",
+        "reason": "工作时长基本稳定，复杂度和证据链增强；学生能把失败转成实验设计，把下游数据转成上游需求，把新方法再放回代表性校验。"
       },
-      "CoTIncrement": {
-        "scoreByWeek": {
-          "2026-03-29": 4,
-          "2026-04-05": 4,
-          "2026-04-12": 3,
-          "2026-04-19": 4
-        },
-        "trend": "持续有增量，但2026-04-12的CoT增量只写了1条，数量偏少；质量仍可，因为和抽关系效率直接相关。"
+      "cotIncrement": {
+        "score": 4.1,
+        "trend": "从局部认知到方法论认知",
+        "reason": "CoT增量从“树结构有缺陷”发展到“属性知识/关系知识分层”“VQA可反向驱动KG”“评价指标应锚定下游可操作性”。"
       },
-      "CoTsCotMaturity": {
-        "scoreByWeek": {
-          "2026-03-29": 3,
-          "2026-04-05": 4,
-          "2026-04-12": 5,
-          "2026-04-19": 5
-        },
-        "trend": "从单个方法经验，上升到可沉淀的workflow、evaluation protocol、risk modeling规则。",
-        "bestEvidence": "2026-04-12的“双协议完备性验证”和2026-04-19的“反向驱动必须做代表性校验”是最高质量的CoT's CoT。"
+      "cotCotMaturity": {
+        "score": 4,
+        "trend": "持续成熟",
+        "reason": "能判断哪些认知可能是老师原本不知道的，能给出证据等级、自动化潜力和沉淀形式。第4周开始出现量化路径长度指标，是成熟信号。弱点是多数证据仍来自单一项目。"
       },
-      "BrainaryMappingMaturity": {
-        "scoreByWeek": {
-          "2026-03-29": 3,
-          "2026-04-05": 3,
-          "2026-04-12": 4,
-          "2026-04-19": 4
-        },
-        "trend": "从泛泛映射evaluation/cognitive control，逐步具体到memory分层、calibration、risk modeling和代表性校验器。",
-        "gap": "仍没有给出Brainary模块的输入输出、schema、触发条件或自动化执行路径。成熟度未到可工程实现。"
+      "brainaryMappingMaturity": {
+        "score": 3.6,
+        "trend": "从概念映射走向模块雏形",
+        "reason": "Brainary映射从evaluation、memory、cognitive control逐渐发展到calibration、risk modeling和代表性校验器。但仍缺少具体schema、API、自动化触发条件和验收指标。"
       },
-      "valueReasoning": {
-        "scoreByWeek": {
-          "2026-03-29": 4,
-          "2026-04-05": 4,
-          "2026-04-12": 3,
-          "2026-04-19": 3
-        },
-        "trend": "前两周明显进步，后两周停滞。价值观从资产价值扩展到方法复制价值和数据集双用途价值，但金额和买方逻辑没有随新证据重新校准。",
-        "mainDefect": "他能说谁可能买单、为什么通用、沉淀成什么，但还没有把临床关系推理、鉴别诊断、路径长度降低、自动化节省工时等新发现转成新的金额模型。"
+      "metaCognition": {
+        "score": 4.2,
+        "trend": "明显增强",
+        "reason": "学生能识别二选一陷阱、扩维度冲动、验证协议混淆、新思路未校验风险。这些是研究者能力而非执行忙碌。"
       },
-      "projectManagement": {
-        "scoreByWeek": {
-          "2026-03-29": 4,
-          "2026-04-05": 4,
-          "2026-04-12": 4,
-          "2026-04-19": 4
-        },
-        "trend": "稳定成熟。每周计划、实际、依赖、关键路径、下周最小动作都清楚。",
-        "gap": "Stage 1退出标准不够硬；“是否需要老师介入”多次写否，但实际依赖乾坤确认关键建模取舍。"
+      "topicValue": {
+        "score": 3.8,
+        "trend": "方向更清楚，但外部验证不足",
+        "reason": "题目从肝胆局部Taxonomy上升为知识驱动医学多模态推理和可迁移KG构建方法，潜在论文和benchmark价值明确。但没有真实用户访谈、竞品分析或模型性能增益证据。"
       },
-      "automationPath": {
-        "scoreByWeek": {
-          "2026-03-29": 3,
-          "2026-04-05": 3,
-          "2026-04-12": 4,
-          "2026-04-19": 4
-        },
-        "trend": "自动化意识增强，能把成果转成evaluation protocol、workflow checklist、memory schema约束、risk modeling模块。",
-        "gap": "自动化路径仍停留在“建议沉淀形式”，没有形成可运行prompt、模板、评测表或agent policy样例。"
+      "monetaryValueReasoning": {
+        "score": 3.2,
+        "trend": "早期进步后停滞",
+        "reason": "第1周形成资产价值/方法复制价值分层，第2周给DeepTumorVQA增加设计价值，这是进步；第3、4周金额基本复制，没有用新证据更新估值，也没有验证15–30万、50–100万、10–15万的市场依据。"
       },
       "evidenceLevel": {
-        "scoreByWeek": {
-          "2026-03-29": "B",
-          "2026-04-05": "B",
-          "2026-04-12": "B",
-          "2026-04-19": "B"
-        },
-        "trend": "证据一直处于B级：有小规模真实数据和对照实验，但还不是A级，因为缺少大样本、多机构、专家盲评和模型下游效果。"
+        "score": 3.5,
+        "trend": "样本和证据逐步增加",
+        "reason": "证据从少量病例扩到120个VQA样本、318条指南关系、27条临床问句。但临床问句样本小、单中心；没有医生系统复核；没有模型实验；多数结论为B级证据。"
+      },
+      "projectManagement": {
+        "score": 4,
+        "trend": "稳定可靠",
+        "reason": "每周有最小可验证动作、关键路径、依赖关系、资源需求和时间投入；能说明偏差来源。弱点是Stage 1收尾标准尚不够硬。"
+      },
+      "automationPath": {
+        "score": 3.7,
+        "trend": "有清晰候选，但尚未工程化",
+        "reason": "可沉淀为evaluation protocol、workflow checklist、memory schema约束、代表性校验器。缺少自动化输入输出、阈值、失败处理和跨项目验证。"
+      },
+      "nextStepQuality": {
+        "score": 3.9,
+        "trend": "大多是可验证动作",
+        "reason": "每周下一步基本针对当前卡点，有验证对象和对比方案。第4周下一步“前20个高频疾病实体全量实例化”正确，但需要补充验收阈值和医生复核机制。"
       }
     },
     "valueFunctionChange": {
-      "summary": "价值观的纵向变化是：从“一个Taxonomy值多少钱”，变成“静态资产 + 可复制方法论 + 下游任务驱动 + 临床代表性校验 + 自动化协议”的复合价值函数。但金额估计在后两周没有跟着新发现迭代，这是主要短板。",
-      "byWeek": [
+      "summary": "学生的价值函数从“做出一个肝胆Taxonomy资产值多少钱”，逐步变成“一个知识结构是否能服务下游任务、是否能被复用为方法论、是否能进入Brainary自动化流程、是否代表真实临床场景”。这是明显成熟。但金额估计没有随证据同步更新，是当前短板。",
+      "weekByWeek": [
         {
           "week": "2026-03-29",
-          "whatStudentThinksWorthDoing": "值得做的是肝胆Taxonomy和可复制的Taxonomy构建方法。",
-          "whyWorthDoing": "因为医学多模态大模型缺少结构化肝胆知识先验，且公开可用、符合LI-RADS标准的知识体系不足。",
-          "moneyConnection": "静态资产估15–30万；方法复制到5个医学子领域后估综合50–100万。",
-          "userConnection": "医学影像AI公司、肝胆外科/放射科辅助诊断系统需求方。",
-          "generalCapabilityConnection": "把肝胆作为切入点，构建可迁移到其他医学子领域的Taxonomy/KG方法。",
-          "artifactConnection": "论文、benchmark、evaluation protocol、prompt。",
-          "BrainaryConnection": "对抗性边界案例验证连接Brainary evaluation和cognitive control。",
-          "automationConnection": "提出可沉淀为评测协议和prompt，但尚未具体实现。"
+          "valueFunction": "价值被拆成静态资产价值和方法论复制价值。静态肝胆Taxonomy对标医学KG建设服务，估15–30万；方法论若复制到5个医学子领域，估75万；综合50–100万。",
+          "whatStudentThinksWorthDoing": "值得做的是肝胆Taxonomy和可复制构建方法，因为公开、符合LI-RADS标准、可用于AI训练的肝胆知识体系缺失。",
+          "missingEvidence": "缺少真实报价、客户访谈、复制到第二领域的实验证据。"
         },
         {
           "week": "2026-04-05",
-          "whatStudentThinksWorthDoing": "除了Taxonomy/KG本体，DeepTumorVQA也值得做，因为它不只是评测集，还是KG关系设计需求源。",
-          "whyWorthDoing": "VQA中无法由节点属性回答的问题，可以反向暴露KG需要哪些关系类型。",
-          "moneyConnection": "DeepTumorVQA肝脏子集分析估10–15万，按医学数据集清洗与分析外包成本类比。",
-          "userConnection": "用户仍是医学AI和临床辅助诊断系统，但用户需求开始通过VQA问题显性化。",
-          "generalCapabilityConnection": "下游任务反向驱动上游结构设计，是可泛化的KG构建方法。",
-          "artifactConnection": "workflow、prompt、memory结构。",
-          "BrainaryConnection": "属性知识/关系知识分层连接Brainary memory。",
-          "automationConnection": "可做成从VQA问题自动抽取关系需求的workflow。"
+          "valueFunction": "价值函数加入数据集角色：DeepTumorVQA不只是评测资产，也能反向驱动KG设计，因此估10–15万。",
+          "whatStudentThinksWorthDoing": "值得做的不只是建KG，还包括把下游VQA问题映射回上游结构设计，因为它能指示用户实际需要哪些关系。",
+          "missingEvidence": "20个样本太少，无法支撑数据集分布和价值上调。"
         },
         {
           "week": "2026-04-12",
-          "whatStudentThinksWorthDoing": "值得做的是双协议完备性验证和KG扩展前的维度/实例分类checklist。",
-          "whyWorthDoing": "因为对抗性案例和随机样本暴露不同类型缺陷，不能混用；维度扩张和实例扩张成本不同。",
-          "moneyConnection": "金额估计未更新，仍沿用前两周。缺少把验证协议节省返工成本、降低设计错误风险量化成金额。",
-          "userConnection": "用户表述没有新增，仍是医学影像AI公司和临床辅助诊断需求方。",
-          "generalCapabilityConnection": "双协议验证和维度/实例审批路径具有跨领域方法论价值。",
-          "artifactConnection": "evaluation protocol、workflow checklist、memory schema约束规则。",
-          "BrainaryConnection": "连接Brainary calibration和benchmark/evaluation双轨设计。",
-          "automationConnection": "提出agent policy中加入维度/实例分类器，但缺少具体触发规则。"
+          "valueFunction": "价值开始转向可自动化方法副产品：双协议完备性验证、维度/实例扩张checklist、memory schema约束规则。",
+          "whatStudentThinksWorthDoing": "值得做的是把结构验证和覆盖验证拆开，因为这可沉淀为Brainary evaluation protocol。",
+          "missingEvidence": "没有给这些协议本身的金额价值，也没有跨领域验证。"
         },
         {
           "week": "2026-04-19",
-          "whatStudentThinksWorthDoing": "值得做的是用下游回答路径简洁性评价KG建模方案，以及对下游数据源做代表性校验。",
-          "whyWorthDoing": "因为建模层的结构美感不如临床/任务层可操作性重要；公开VQA可能低估真实临床关系推理需求。",
-          "moneyConnection": "金额估计仍未更新。实际上这里应重新估值：临床鉴别诊断、侵袭判断、治疗相关关系的价值可能高于普通VQA清洗价值，但报告没有量化。",
-          "userConnection": "用户连接更接近真实临床，因为加入了脱敏报告问句；但样本只有27条且单院，证据不足。",
-          "generalCapabilityConnection": "代表性校验是所有“下游反向驱动上游设计”方法的通用安全阀。",
-          "artifactConnection": "workflow checklist、evaluation protocol、risk modeling模块、calibration子协议。",
-          "BrainaryConnection": "连接Brainary risk modeling和calibration，提出代表性校验器。",
-          "automationConnection": "可自动化为：在下游数据影响上游memory/KG设计前，先检查分布是否代表目标场景。"
+          "valueFunction": "价值函数进一步加入下游可操作性和代表性风险：建模方案好坏由回答路径长度决定；公开VQA若不代表临床场景，会误导KG设计。",
+          "whatStudentThinksWorthDoing": "值得做的是服务真实临床问句、降低关系推理缺口，并把代表性校验做进Brainary calibration/risk modeling。",
+          "missingEvidence": "临床报告只有部分到手，27条问句来自单一医院；金额估值仍未因临床需求差异而重新计算。"
         }
       ],
-      "valueFunctionMaturity": "中高。学生已经能连接金额、用户、通用能力、产物形态、Brainary和自动化，但金额模型不够动态，仍偏“写周报式估值”，没有用新增证据更新商业价值。",
-      "professorShouldNotice": "学生价值观正在从“做一个医学知识资产”转向“做一套可验证、可迁移、可自动化的知识结构构建方法”。这是真正的纵向变化。"
+      "maturityAssessment": "价值观有实质演化：从资产定价到方法复制，再到自动化协议和真实用户场景校准。学生越来越能连接金额、用户、通用能力、产物形式、Brainary和自动化。但商业金额仍是弱证据，当前更像研究价值判断，不是市场价值验证。",
+      "professorRisk": "如果不干预，学生可能继续产生高质量方法论洞察，但商业价值数字会停留在反复引用的估算，无法转化为可信的经费、产品或合作判断。"
     },
     "repeatedBlockers": [
       {
-        "blocker": "关系类型边界反复出现",
-        "evidence": "从跨维度链接、多标签，到8种关系，再到temporal_progression与progresses_to的语义重叠，核心卡点一直是知识结构边界如何定。",
-        "severity": "高",
-        "suggestedHandling": "需要一次正式schema freeze：定义每种关系的适用条件、反例、优先级和允许的边属性，避免Stage 1无限延长。"
+        "blocker": "关系类型/建模粒度反复成为卡点",
+        "weeks": [
+          "2026-04-05",
+          "2026-04-12",
+          "2026-04-19"
+        ],
+        "pattern": "从跨维度链接关系类型，到8种关系是否足够，再到时序关系是否作为属性或第9种关系，说明KG schema治理是主卡点。",
+        "neededResolution": "要求学生提交一页关系类型规范：定义、正例、反例、与相邻关系区别、VQA回答路径示例、是否允许扩展。"
       },
       {
-        "blocker": "样本量与代表性不足",
-        "evidence": "20个VQA样本、120个VQA样本、27条临床问句均能产生发现，但都不足以证明真实临床分布；临床报告来自单一医院。",
-        "severity": "高",
-        "suggestedHandling": "把代表性风险显式列入论文威胁项，同时设定最低补样标准，例如至少多批次报告、不同疾病类型、不同医生来源。"
+        "blocker": "证据代表性不足",
+        "weeks": [
+          "2026-04-05",
+          "2026-04-12",
+          "2026-04-19"
+        ],
+        "pattern": "20个VQA样本不足，120个VQA样本仍可能偏离临床，27条临床问句又存在单中心和样本量小问题。",
+        "neededResolution": "建立数据源分层：公开VQA用于benchmark，临床报告用于目标场景校准，专家复核用于医学合理性。每类证据不能互相替代。"
       },
       {
-        "blocker": "医生验证缺失",
-        "evidence": "多周都提到需要放射科医生验证临床合理性，但报告中没有看到医生实际确认结果。",
-        "severity": "高",
-        "suggestedHandling": "至少安排一次医生快速审阅9类关系和20个实体实例化样例，得到同意/修改/反对记录。"
+        "blocker": "跨领域泛化证据缺失",
+        "weeks": [
+          "2026-03-29",
+          "2026-04-12",
+          "2026-04-19"
+        ],
+        "pattern": "多次声称方法可复制到其他医学子领域，但所有证据来自肝胆KG单一项目。",
+        "neededResolution": "在Stage 1结束后选一个极小第二领域做1周dry run，只验证workflow是否迁移，不追求完整KG。"
       },
       {
-        "blocker": "下游模型效果缺失",
-        "evidence": "项目名是知识驱动可信MLLM，但4周进展全部在Taxonomy/KG和数据分布分析，尚无模型表征适配或性能实验。",
-        "severity": "中高",
-        "suggestedHandling": "Stage 1结束后必须进入一个最小模型实验，否则无法证明KG结构对MLLM任务有用。"
+        "blocker": "依赖乾坤和放射科资源",
+        "weeks": [
+          "2026-03-29",
+          "2026-04-05",
+          "2026-04-12",
+          "2026-04-19"
+        ],
+        "pattern": "关键schema判断依赖乾坤，临床报告依赖放射科脱敏流程。学生能识别依赖，但未给出等待期间的替代计划。",
+        "neededResolution": "要求为每个外部依赖设置fallback：例如乾坤未确认时采用临时冻结schema，放射科报告延迟时用已到手报告完成偏差分析初版。"
       },
       {
-        "blocker": "价值估算后两周停滞",
-        "evidence": "2026-04-12和2026-04-19基本复制前两周金额，没有根据关系层、临床报告、路径长度、代表性风险重新估值。",
-        "severity": "中",
-        "suggestedHandling": "要求学生下一周把价值函数改成可计算表：节省专家小时、提升问答覆盖率、减少错误路径、可复用领域数、潜在买方预算。"
+        "blocker": "Brainary映射尚未转成工程规格",
+        "weeks": [
+          "2026-03-29",
+          "2026-04-05",
+          "2026-04-12",
+          "2026-04-19"
+        ],
+        "pattern": "每周都有Brainary关联，但大多是模块名级别：evaluation、memory、calibration、risk modeling。缺少可执行接口。",
+        "neededResolution": "让学生把一个关联写成具体自动化规格：输入、输出、触发条件、失败类型、人工介入点。"
       },
       {
-        "blocker": "自动化沉淀还未落地",
-        "evidence": "多次说可沉淀为workflow、checklist、evaluation protocol、risk modeling模块，但没有看到具体模板、prompt、JSON schema或代码。",
-        "severity": "中",
-        "suggestedHandling": "要求交付一个最小自动化包：关系抽取prompt、边界案例生成prompt、双协议评测表、代表性校验checklist。"
-      },
-      {
-        "blocker": "关键依赖被低估",
-        "evidence": "多次写“是否需要老师介入：否”，但同时依赖乾坤确认关系设计、依赖放射科脱敏报告和医生验证。",
-        "severity": "中",
-        "suggestedHandling": "把依赖分成可等待、需催办、需老师背书三类；不要把关键设计确认伪装成普通依赖。"
+        "blocker": "货币价值估计未随证据更新",
+        "weeks": [
+          "2026-04-05",
+          "2026-04-12",
+          "2026-04-19"
+        ],
+        "pattern": "50–100万、15–30万、10–15万的估计反复出现，后续新发现没有改变估值模型。",
+        "neededResolution": "要求下一次价值部分必须写：本周证据让估值上调、下调还是不变，为什么。"
       }
     ],
     "professorShouldAsk": [
-      "你现在9种关系的正式定义、正例、反例、边界条件分别是什么？请给出一页schema freeze文档。",
-      "前20个高频疾病实体全量实例化后，什么条件下Stage 1可以结束？允许出现第10种关系的阈值是什么？",
-      "医生是否已经看过这9种关系和样例？如果没有，最小医生验证动作是什么，什么时候完成？",
-      "DeepTumorVQA低估临床关系型问题后，你的KG建设优先级如何改变？是否需要提高differentiated_from、treated_by、invades等关系的权重？",
-      "你说方案B路径长度2.6步优于方案A 3.8步，这个路径长度如何定义？是否可复现？是否有标注表？",
-      "价值估算为什么仍是50–100万？新发现的临床鉴别诊断需求、代表性校验协议、路径长度降低，分别如何改变金额？",
-      "你的自动化产物到底是什么？下周能否交付一个可复用的prompt/checklist/evaluation protocol，而不是继续停留在描述？",
-      "Stage 2表征适配的最小实验是什么？如果KG有用，最早在哪个指标上应该看到提升？",
-      "如果临床报告继续延迟，你有什么替代数据源或降级验证方案？",
-      "这4周最值得老师学习的一件事是什么？2026-04-19报告第11节缺失，需要补上。"
+      "请展示当前9种关系类型的完整schema表：每种关系的定义、正例、反例、与相邻关系的边界、对应的VQA问题类型。",
+      "前20个高频疾病实体全量实例化的验收标准是什么？如果出现无法编码关系，什么条件下允许第10种关系，什么条件下只允许作为属性或实例处理？",
+      "27条临床问句具体来自多少份报告？报告抽样是否覆盖HCC、ICC、转移瘤、良性病变和弥漫性病变？如果没有覆盖，哪些结论不能下？",
+      "DeepTumorVQA与临床报告分布差异会如何改变KG建设优先级？是否应该提高differentiated_from、treated_by、invades、temporal_progression的建设权重？",
+      "有没有放射科医生复核8/9种关系类型和临床问句分类？如果没有，目前医学正确性的证据等级应降到什么程度？",
+      "请给出一个最小自动化原型：输入5个VQA问题或5条临床问句，系统如何判断它们需要属性知识还是关系知识，并输出缺失关系类型。",
+      "价值估算中15–30万、50–100万、10–15万的来源是否有真实报价或访谈？如果没有，下一周能否至少找2个外部参照或1个潜在用户访谈来校准？",
+      "Stage 1结束的硬条件是什么？是关系类型冻结、前20实体实例化、临床问句覆盖率达到某个阈值，还是医生确认？请不要只说‘接近收尾’。",
+      "如果老师本周只看一个产物，应该看哪一个？建议是‘9种关系schema + 20实体实例化样例 + 三类验证协议’的合并文档。"
     ],
     "nextBestIntervention": {
-      "intervention": "让学生在下一周同时完成“Stage 1收口包”和“最小下游验证计划”，防止继续在KG结构层精修。",
-      "deliverables": [
-        "一页9类关系schema freeze：每类关系的定义、正例、反例、与其他关系的冲突解决规则。",
-        "前20个高频疾病实体的全量关系实例化表，并标记无法编码的实例。",
-        "双协议评测表：结构验证用边界案例，覆盖验证用随机样本，应用层验证用临床问句。",
-        "一个自动化最小包：边界案例生成prompt、VQA关系需求抽取prompt、代表性校验checklist。",
-        "Stage 2最小实验设计：选一个小任务，比较无KG、属性层KG、属性+关系层KG三种设置的表现。"
+      "intervention": "让学生用一周做Stage 1收尾包，而不是继续扩展新概念。",
+      "why": "学生已经证明能产生方法论洞察，现在主要风险不是不聪明，而是概念分支过多、金额估值悬空、Brainary映射未工程化。此时最优干预是强制产物化和验收。",
+      "requiredDeliverables": [
+        "一份9种关系类型schema冻结版，包括定义、正例、反例和边界规则。",
+        "前20个高频疾病实体的全量关系实例化表，并标注无法编码实例。",
+        "三轨验证结果：对抗性边界案例查结构、随机VQA样本查覆盖、临床问句查目标场景代表性。",
+        "一个最小Brainary自动化规格，只选一个模块，例如代表性校验器或双协议evaluation，不要泛泛写多个模块。",
+        "一页价值更新：本周新证据使静态资产价值、方法复制价值、数据集价值分别上调、下调或不变，并说明证据等级。"
       ],
-      "successCriteria": [
-        "如果前20个实体实例化中无法编码关系少于预设阈值，且医生快速审阅没有结构性反对，则冻结Stage 1。",
-        "如果新增关系需求继续出现，必须证明它是高频且下游不可替代，否则先作为边属性或实例处理。",
-        "如果无法在两周内启动最小模型实验，说明项目有陷入知识工程内循环的风险。"
-      ],
-      "oneThingProfessorShouldLearn": "这4周最有价值的新东西是：KG/Taxonomy的完备性验证不应是一个动作，而应拆成结构验证、覆盖验证和代表性校验。边界案例查结构缺陷，随机样本查覆盖缺陷，临床或目标场景数据查下游分布偏差。"
+      "successCriteria": "如果下周能提交上述收尾包，并明确Stage 2表征适配的入口条件，可以判断学生已从‘能推进课题’进入‘能管理研究系统’。如果仍主要输出新概念而没有冻结schema和验收标准，则说明研究能力增长开始被发散性消耗。"
     }
   }
 }

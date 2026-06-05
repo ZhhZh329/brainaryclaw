@@ -1,288 +1,219 @@
 {
   "key": "person:cao-zong:2026-05-24:longitudinal",
-  "generatedAt": "2026-06-05T18:01:58.842Z",
+  "generatedAt": "2026-06-05T22:02:31.466Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "76b73a539a65ed656ebb891a6121491a11de0edab9d66513006d01ec3b53c30d",
   "result": {
     "overallTrajectory": {
-      "verdict": "学生总体是在变得更有研究能力，不只是更忙；但能力增长主要体现在问题抽象、实验驱动的方向选择、自动化意识和价值推理上，仍存在验证闭环不足、去重/可利用性分析缺失、过早放大市场价值的问题。",
-      "trajectorySummary": "题目轨迹从“Claude Code 辅助漏洞挖掘”推进到“syscall × internet 联合变异攻击面”，再推进到“任意双输入通道 Venom 框架”，最后抽象到“month-level agent Goal Drift 与 Brainary 外部 goal anchoring”。这是从工具使用者到方法构造者、再到系统问题定义者的转变。",
-      "researchCapabilityJudgment": "研究能力有明显提升：早期主要是观察 Claude 使用差异和 root 权限 RCE 攻击面；中期能提出组合式攻击面并用 15 个 crash、27+ 漏洞/崩溃、跨 Linux/Ceph/OrangeOS 迁移来支撑；后期能从 50+ 小时失败 history 中抽象 Goal Drift，并提出 commit 复刻作为数据驱动路径。不是单纯工时增加，因为周报中出现了可迁移方法、benchmark 意识、证据等级、自动化模块、价值计算和阶段路线。",
-      "mainConcern": "硬证据在 2026-05-24 周出现断层：蓝牙场景完成接入但端到端 fuzzing loop、coverage 反馈、crash 产出均未完成；Goal Drift 的论证有强一线案例，但 commit 复刻尚未产生数据集。学生的抽象能力上升很快，教授需要防止其从“高质量抽象”滑向“未验证的大叙事”。",
-      "oneThingProfessorShouldLearn": "最值得教授学习的是：学生已经把漏洞挖掘中的组合式 fuzzing 问题，提升为“长任务 agent 需要外部 goal ground truth”的通用问题；Brainary 在他的最新理解里不再只是知识图谱或检索层，而是 month-level goal/attention 的外部权威源。"
+      "verdict": "总体判断：学生确实在变得更有研究能力，而不只是更忙。证据是题目从“发现一个攻击面/使用 Claude Code”推进到“定义可迁移的双输入通道联合变异框架 Venom”，再推进到“从开发失败中抽象出 Goal Drift 作为 agent 长任务可靠性研究问题”。这体现了从现象观察、工程验证、跨目标泛化、失败模式抽象到数据集路径设计的纵向能力提升。",
+      "mainTrajectory": "题目主线从漏洞挖掘中的 root 权限 RCE 与 Claude Code prompting，演化为 syscall × internet 联合变异 fuzzing，再演化为任意双输入通道联合变异 Venom；Brainary 主线从 working memory / long-term memory 的一般映射，演化为知识构建-检索闭环，再演化为 month-level goal 分解的外部 ground truth 注入层。",
+      "hardProgressJudgment": "硬进展有上升趋势，但证据质量不均。3月22日报告有 15 个 Linux 内核 crash、知识检索一致性 67% 到 95%+；3月29日报告扩展到 Ceph / OrangeOS 并声称 12+ 漏洞，总产出 27+；5月24日报告扩展到蓝牙芯片并声称核心双空间引擎零修改跨 4 类目标，但蓝牙端到端 fuzzing loop 尚未跑通，coverage 反馈机制缺失，也未报告 crash。因此硬进展不是线性增长，而是从漏洞产出转向框架泛化与研究问题抽象。",
+      "researchAbilityIncrement": "研究能力的主要增量在三个方面：第一，能把攻击面从单点发现抽象为“输入通道组合”方法论；第二，能把工程失败归纳为 Goal Drift，并提出 commit 复刻作为 ground-truth 数据路径；第三，能把 Brainary 从泛泛的记忆系统映射推进到长任务 goal anchoring 的外部控制层。这个增量比单纯投入 50+ 小时更重要。",
+      "mainRisks": "最大风险是证据等级和价值估算存在过度上推。报告中多次将有限一线数据标为 A 级或强实证，但部分关键证据缺失：crash 是否去重、是否可利用、漏洞是否已确认、蓝牙场景是否产出、commit 复刻是否已开始、Goal Drift 是否有多样本验证。价值估算从百万级工具价值跳到 5亿–50亿人民币/年，逻辑有方向感，但依据主要是 TAM 类推，缺少可购买用户访谈、付费意愿、竞品对比和可交付产品形态验证。",
+      "bottomLineForProfessor": "该学生正在从“会做项目的人”向“能定义研究问题并设计可验证路径的人”转变；但下一阶段必须强制把洞察落到可复现实验、去重漏洞清单、commit-to-goal 数据集、benchmark 和用户验证，否则容易变成高质量叙事而非高置信研究结果。"
     },
     "stageByWeek": [
       {
         "week": "2026-03-15",
-        "stage": "观察与方向重定位阶段",
-        "topicTrajectory": "从传统 LPE 关注转向 root 权限服务场景下的 RCE，并开始把 Claude Code 的效果差异归因于使用者的 meta-level prompting 能力。",
-        "hardProgress": "硬进展偏弱。报告有 DCMTK 和 Linux 内核漏洞调试观察、7 篇 LLM classification 文献阅读、memory consistency 67% 指标，但缺少新增漏洞数量、复现实验、代码产物或可复用模块。",
-        "cognitiveTrend": "开始形成“模型能力不是常数，使用者的元调控决定效果”的认知；能区分模型执行与人类长链条策略引导。",
-        "cotCotMaturity": "CoT's CoT 还未结构化成明确条目，主要是工具使用反思；成熟度较低但方向正确。",
-        "brainaryMapping": "将 Research/Engineering 映射到 long-term memory 与 working memory，提出 directed compression 和 effective retrieval；仍是概念映射，缺少 schema、workflow、benchmark。",
-        "valueReasoning": "价值判断主要来自 Claude Code 漏洞挖掘效果差异和 10 人小样本反馈；没有金额、用户、产品形态或市场计算。",
-        "projectManagement": "下周动作具体但偏局部：减少 subject tree 分支因子、predicate normalization。缺少里程碑、验收指标和时间分配。",
-        "nextStepQuality": "动作能对应卡点，但仍停留在知识表示清理，没有明确自动化 pipeline 或可量化成功标准。"
+        "stage": "方向发现与工具使用元认知阶段",
+        "topicTrajectory": "题目集中在漏洞挖掘，核心观察是 root 权限下运行的二进制服务存在被忽视的 RCE 攻击面，同时开始反思 Claude Code 在不同使用者手中的效果差异。",
+        "hardProgress": "硬进展偏弱。报告中有 DCMTK 和 Linux 内核漏洞调试背景、阅读 7 篇 LLM classification 论文、memory consistency 为 67%，但没有报告新漏洞数量、可复现实验、benchmark 或可交付工具。",
+        "cognitiveTrend": "认知增量主要是把 Claude Code 的效果差异归因于使用者的 meta-level control，即通过 prompting 决定何时坚持、何时转向。这是有效的元认知观察，但仍偏经验总结。",
+        "cotOfCotMaturity": "尚未形成新版模板下结构化 CoT's CoT。已有对工具使用反思和 meta-cognition 的解释，但缺少“老师原本不知道吗”、证据等级、自动化潜力和沉淀形式。",
+        "brainaryMapping": "Brainary 映射较抽象：将 engineering 映射为 working memory 的有指向性压缩，将 research 映射为 long-term memory 的高效检索。这是基础框架，但尚未连接到具体模块或数据结构。",
+        "valueReasoning": "价值观重点是冷静审视 Claude Code 的实际可用性。约 10 人推荐测试中 3 人正反馈，这是少量用户/使用者证据，但没有金额、市场、付费者或产品形态。",
+        "projectManagement": "有问题和下周计划，但粒度偏方法性：减少 subject tree 分支因子、predicate normalization。缺少里程碑、时间分配、验收指标。",
+        "nextActionQuality": "下一步动作可执行但偏局部，主要修知识表示一致性，没有明确说明如何用指标验证改进幅度。",
+        "evidenceLevel": "低到中等。主要是经验观察、小样本反馈和一个 67% 指标，缺少可复现实验链。"
       },
       {
         "week": "2026-03-22",
-        "stage": "方法发现与实证突破阶段",
-        "topicTrajectory": "题目从“输入渠道枚举”升级为“输入渠道组合”，提出 syscall × internet 联合变异 fuzzing；同时知识图谱从构建/检索分离转向构建反哺检索。",
-        "hardProgress": "硬进展显著增强：提出 creation 级新攻击面，Linux 内核即将产出 15 个 crash；知识检索一致性从 67% 提升到 95%+；与 Wenjing 检索模型对比暴露知识正交性假设问题。",
-        "cognitiveTrend": "认知从局部技巧上升到方法论：组合空间、构建约束检索、evolving 结果作为壁垒。",
-        "cotCotMaturity": "CoT's CoT 开始成熟：每条包含老师是否原本知道、信息差、自动化潜力、沉淀形式、证据等级。已接近研究管理可用格式。",
-        "brainaryMapping": "Brainary 映射从概念转为可落地资产：输入渠道组合生成器、memory schema、evaluation protocol、构建反哺检索 pipeline。",
-        "valueReasoning": "出现“token 消耗在正确方向上成为壁垒”的经济学判断，但市场金额尚不充分；价值函数从“工具好不好用”变为“可复用 evolving 结果和方法资产是否形成壁垒”。",
-        "projectManagement": "下周最小可验证动作明确：trace 数据格式逆向、15 个 crash 去重和可利用性分析、抽象原因到检索问题的自动化模块。",
-        "nextStepQuality": "动作质量高，直接服务 closed-loop evolving 和证据清洗。但后续报告没有明确回报“15 个 crash 去重和可利用性分析”的完成情况，这是管理断点。"
+        "stage": "攻击面 creation 与构建-检索闭环验证阶段",
+        "topicTrajectory": "题目从单一攻击面观察升级为 syscall × internet 联合变异 fuzzing；知识图谱方向从单独优化构建/检索升级为“构建反哺检索”。",
+        "hardProgress": "硬进展明显增强。报告声称 Linux 内核即将产出 15 个 crash，构建了基于 Claude Code 的全局 fuzzing Agent；知识检索 memory consistency 从 67% 提升到 95%+；与 Wenjing 检索模型做了对比。",
+        "cognitiveTrend": "认知从“枚举输入渠道”升级到“发现输入渠道组合”，这是研究问题空间维度的升级；同时认识到检索算法受知识图谱构建方式约束。",
+        "cotOfCotMaturity": "CoT's CoT 开始成熟：每条包含内容、老师是否原本不知道、信息差、自动化潜力、沉淀形式、证据等级。已经从普通周报转向研究资产管理。",
+        "brainaryMapping": "Brainary 映射开始具体化：实体组合空间、构建-检索闭环、memory schema、evaluation protocol 和 agent module 都被提出。",
+        "valueReasoning": "价值推理开始出现经济学逻辑：evolving 的累积结果是壁垒，token 消耗可转化为资产。但金额和用户仍不充分，竞争壁垒更多是推理而非实验证明。",
+        "projectManagement": "下周动作质量明显提升：trace 数据格式逆向、15 个 crash 去重和 exploitability triage、把抽象原因到检索问题固化为自动化模块。动作有验收对象。",
+        "nextActionQuality": "较高。动作围绕 closed-loop evolving 的必要瓶颈和漏洞有效性验证，属于能提高证据等级的最小步骤。",
+        "evidenceLevel": "中到中强。15 个 crash 和 67% 到 95%+ 是关键证据，但 crash 尚未去重和利用性分析；知识图谱指标泛化性待验证。"
       },
       {
         "week": "2026-03-29",
-        "stage": "工程泛化与系统化验证阶段",
-        "topicTrajectory": "联合变异从 Linux 内核拓展到 Ceph、OrangeOS；知识图谱从正交性问题推进到“相似知识连续谱”。",
-        "hardProgress": "硬进展继续增强：跨目标迁移后在 Ceph/OrangeOS 挖出 12+ 个漏洞，总产出 27+；形成“单一 fuzzing 框架到多目标快速迁移”模式；知识图谱提出相似知识合并/保留问题。",
-        "cognitiveTrend": "能够把“组合即 creation”降落成工程问题“组合即 synchronization”，说明不只会提出概念，也能识别落地瓶颈。",
-        "cotCotMaturity": "CoT's CoT 更成熟：不仅描述发现，还记录认知升级路径，如“直觉→假说→单次验证→持续验证→确信”。这是研究者能力增强的重要证据。",
-        "brainaryMapping": "Brainary 映射更加细：working memory 处理双空间状态压缩，long-term memory 处理相似度感知检索，meta-cognition 处理认知确信度管理。",
-        "valueReasoning": "开始连接金额：商业 fuzzing 市场 4–8 亿美元，RAG 市场 19–23 亿美元，并说明目标市场规模、垂直场景占比、渗透率假设。价值推理比前两周成熟，但具体引用和计算细节仍不足。",
-        "projectManagement": "首次明确时间分配、进度偏差、token 消耗；但“纠偏动作”未补充，说明项目管理模板执行还不完整。",
-        "nextStepQuality": "动作较好：同步策略量化、与无同步 baseline 对比、漏洞去重与可利用性分析、相似知识阈值验证。缺点是下一周没有连续报告，无法判断是否执行。"
+        "stage": "工程同步问题与跨目标泛化阶段",
+        "topicTrajectory": "题目从“联合变异攻击面发现”推进到“双变异空间同步优化”；知识图谱从“构建反哺检索”推进到“相似知识连续谱”。",
+        "hardProgress": "硬进展继续增强。报告声称 fuzzer 从 Linux 内核扩展到 Ceph、OrangeOS 等目标，并在新目标上挖出 12+ 个漏洞，总产出 27+；形成“单一 fuzzing 框架到多目标快速迁移”的模式。",
+        "cognitiveTrend": "认知有降落感：上周“组合即 creation”，本周识别到工程本质是 synchronization。知识图谱方向也从正交/冲突二元模型升级为连续相似谱。",
+        "cotOfCotMaturity": "CoT's CoT 更成熟，能描述认知升级路径本身，例如“直觉→假说→单次验证→持续验证→确信”。这说明学生开始管理自己的认知确信度，而不只是产出洞察。",
+        "brainaryMapping": "Brainary 映射更贴近机制：双空间协同变异对应 working memory 压缩；相似度感知检索对应 long-term memory；认知确信度管理对应 meta-cognition 模块。",
+        "valueReasoning": "价值函数从“工具有效性”上升为“市场与差异化定位”。报告给出 fuzzing 市场 4–8 亿美元、RAG 市场约 19–23 亿美元，并提出计算方法。但这些金额多数是外部市场类推，缺少本项目的可获得收入、客户验证和定价证据。",
+        "projectManagement": "项目管理明显改进：有时间分配、进度偏差、token 消耗和自动化科研转化路径。但“纠偏动作”处仍为空，说明管理闭环不完整。",
+        "nextActionQuality": "较高。下周计划要求量化同步策略对覆盖率增长速率的影响，并与无同步 baseline 对比；这比单纯继续优化更研究化。",
+        "evidenceLevel": "中强。跨目标漏洞产出是强信号，但报告未给出去重、CVE、复现脚本、覆盖率曲线或 exploitability triage 结果，因此还不能视为高置信结论。"
       },
       {
         "week": "2026-05-24",
-        "stage": "通用框架与长任务 agent 研究问题抽象阶段",
-        "topicTrajectory": "Venom 从 OS/存储/文件系统拓展到蓝牙芯片，抽象为“任意双输入通道联合变异”；同时从 fuzzing 工具问题跃迁到 Goal Drift、month-level goal decomposition、Brainary 作为外部 goal ground truth。",
-        "hardProgress": "硬进展混合：Venom 蓝牙场景完成接入，核心双空间引擎跨 4 类异质目标零修改，这是强泛化证据；但蓝牙端到端 loop 未跑通、coverage 反馈未打通、第一批 crash 未产出。Goal Drift 有 50+ 小时交互 history 和 7 小时 0 bug 案例，但 commit 复刻数据集尚未开始产出。",
-        "cognitiveTrend": "认知跃迁明显：把 long-task self-reflection 定性为 confabulation，把问题从 prompt/capability 转为数据采集和模式抽取。这个转向有研究价值。",
-        "cotCotMaturity": "CoT's CoT 从多条分散洞察收敛为两个核心命题：Goal-as-Attention 和 Venom 目标无关性。表达更集中，但证据等级 A 对 Goal Drift 可能偏激进，因为对策 commit 复刻尚未验证。",
-        "brainaryMapping": "Brainary 映射达到新的成熟度：从知识检索系统升级为 month-level goal 分解的外部权威源，提出 goal anchoring protocol、commit-to-goal pipeline、agent 自评 vs Brainary 外部信号 benchmark。",
-        "valueReasoning": "价值函数发生量级跳变：蓝牙 fuzzing 估值 300–600 万人民币/年，Goal Drift/超大型软件自动化构建估值 5–50 亿人民币/年。能连接用户、金额、品类、产物、Brainary、自动化，但后者金额主要基于市场类比和推理，缺少直接商业验证。",
-        "projectManagement": "项目管理最完整：阶段 1/2/3 路线、M1-M5 里程碑、实际投入 50+ 小时、偏差说明、两周/一月/两月目标均明确。",
-        "nextStepQuality": "下一步动作有较强可验证性：无 coverage 版本先跑通端到端 loop、两周内蓝牙 crash ≥3、两周内完成自己 commit 的 goal 反推第一版。质量高于早期，但风险是同时推进 Venom 场景和 Goal Drift 数据集，可能分散。"
+        "stage": "框架泛化与 agent 长任务可靠性研究阶段",
+        "topicTrajectory": "题目从文件系统/内核 fuzzing 泛化到蓝牙芯片，并将项目命名/抽象为 Venom；同时新增核心研究问题 Goal Drift，把漏洞挖掘工程中的 agent 失败抽象为 month-level goal 分解问题。",
+        "hardProgress": "硬进展发生转向。Venom 接入蓝牙芯片，声称核心双空间变异引擎跨 OS / 存储 / 嵌入式 / 无线 4 类异质目标零修改，这是框架目标无关性的证据；但蓝牙 coverage 反馈未打通，端到端 fuzzing loop 未跑通，也没有蓝牙 crash。Goal Drift 方向有 50+ 小时开发 history 和一个 7 小时失败轨迹，但 commit 复刻数据集尚未启动。",
+        "cognitiveTrend": "认知升级显著：将 agent 长任务失败从“meta-cognition 不够好”重新定义为“long-task self-reflection 暂时不可信任”；将 prompt/capability 问题转化为 commit 历史数据采集和 goal 分解模式抽取问题。",
+        "cotOfCotMaturity": "CoT's CoT 成熟度高，但证据标级偏激进。Goal-as-attention、CoT→memory→long-term memory→goals 的演化路径有解释力；但将证据等级标为 A 需要更多样本和对照，目前更合理是“强假说 + 一线案例支撑”。",
+        "brainaryMapping": "Brainary 映射达到当前最成熟状态：Brainary 被定位为 month-level goal 分解的外部 ground truth 注入层和 Goal-as-Attention 的外部权威源。相比早期 working memory/long-term memory 映射，这更接近可设计系统。",
+        "valueReasoning": "价值推理发生量级跳变：蓝牙 fuzzing 被估为 300–600 万人民币/年；Goal Drift 和 commit 复刻被估为 5亿–50亿人民币/年。逻辑从单一安全工具转向超大型软件自动化构建品类。但金额证据仍不足，IDC、Cursor、Devin 估值只能支持方向重要性，不能直接支持本项目收入区间。",
+        "projectManagement": "项目管理最完整：有三阶段路线、M1 到 M5 里程碑、时间投入、偏差说明和下周 45 小时计划。相比前几周，已经能把研究、工程和自动化路径放入同一项目节奏。",
+        "nextActionQuality": "下一步动作质量中高。蓝牙先跑无 coverage 反馈端到端 loop 是合理降维；commit 复刻从自己的 Venom commit 开始也合理。但两个方向都很大，存在分散风险，需设定硬验收：至少多少 commit、标注 schema、互标一致性、蓝牙 loop 的输入输出和 crash 判据。",
+        "evidenceLevel": "中等。Venom 跨 4 类目标零修改是重要证据，但蓝牙目标尚未完成闭环；Goal Drift 有高质量案例但样本量不足；commit 复刻仍是计划，不是结果。"
       }
     ],
     "trendScores": {
-      "scale": "1 表示弱，5 表示强；评分只基于周报证据。",
+      "scale": "1 表示弱或缺失，5 表示强且有可复验证据。",
       "hardProgress": {
-        "scoresByWeek": {
-          "2026-03-15": 2,
-          "2026-03-22": 4,
-          "2026-03-29": 5,
-          "2026-05-24": 4
-        },
-        "trend": "从观察性进展快速上升到实证产出和跨目标验证；5 月硬进展在框架泛化上强，但蓝牙场景缺少端到端产出，因此略低于 3 月 29 日。"
+        "score": 4,
+        "trend": "从 3月15日的低硬产出，提升到 3月22日和 3月29日的 crash / 漏洞 / 一致性指标，再到 5月24日的框架泛化。扣分原因是关键产出缺少去重、复现、利用性分析和蓝牙端到端闭环。"
       },
-      "researchAbstraction": {
-        "scoresByWeek": {
-          "2026-03-15": 3,
-          "2026-03-22": 4,
-          "2026-03-29": 5,
-          "2026-05-24": 5
-        },
-        "trend": "持续增强。学生越来越能把一线工程现象抽象成研究问题：组合攻击面、构建-检索绑定、相似知识连续谱、Goal Drift。"
+      "researchCapability": {
+        "score": 4,
+        "trend": "明显上升。学生能从工程现象抽象研究问题，并能设计数据驱动路径，例如从 Goal Drift 到 commit-to-goal 数据集。"
       },
-      "evidenceLevel": {
-        "scoresByWeek": {
-          "2026-03-15": 2,
-          "2026-03-22": 4,
-          "2026-03-29": 4,
-          "2026-05-24": 3
-        },
-        "trend": "中期证据最扎实，有 67%→95%+、15 crash、12+ 漏洞、跨目标验证。5 月对 Venom 泛化证据强，但 Goal Drift 对策尚未验证，且蓝牙无 crash。"
+      "cotIncrement": {
+        "score": 4,
+        "trend": "从工具使用反思，升级到组合攻击面、构建-检索绑定、相似知识连续谱、Goal-as-Attention。认知越来越结构化。"
       },
-      "cotCotMaturity": {
-        "scoresByWeek": {
-          "2026-03-15": 2,
-          "2026-03-22": 4,
-          "2026-03-29": 5,
-          "2026-05-24": 5
-        },
-        "trend": "从非结构化反思演进为包含信息差、自动化潜力、沉淀形式和证据等级的研究资产。5 月进一步收敛到核心命题，但需更谨慎区分已验证命题与待验证计划。"
+      "cotOfCotMaturity": {
+        "score": 4,
+        "trend": "从缺少结构到能写出信息差、证据等级、自动化潜力和沉淀形式。主要问题是证据等级自评偏高。"
       },
       "brainaryMappingMaturity": {
-        "scoresByWeek": {
-          "2026-03-15": 3,
-          "2026-03-22": 4,
-          "2026-03-29": 5,
-          "2026-05-24": 5
-        },
-        "trend": "从 working memory/long-term memory 的抽象类比，发展为 schema、evaluation protocol、agent module，再发展为 goal anchoring protocol 和外部 ground truth 注入层。"
+        "score": 4,
+        "trend": "从抽象的 working memory / long-term memory 映射，推进到构建-检索闭环、相似度 schema、认知确信度、外部 goal anchoring。成熟度明显提升，但实现证据仍缺。"
       },
       "valueReasoning": {
-        "scoresByWeek": {
-          "2026-03-15": 2,
-          "2026-03-22": 3,
-          "2026-03-29": 4,
-          "2026-05-24": 4
-        },
-        "trend": "从“Claude Code 有用但取决于人”转向“方法资产、市场规模、用户、产品形态、自动化能力”。5 月价值叙事更宏大，但金额可信度需要教授追问依据。"
+        "score": 3,
+        "trend": "价值推理越来越完整，开始连接金额、用户、市场、通用能力和产物形式。但从工具市场到 5亿–50亿人民币品类价值的跳跃过大，缺少客户访谈、付费意愿和最小产品验证。"
       },
       "projectManagement": {
-        "scoresByWeek": {
-          "2026-03-15": 2,
-          "2026-03-22": 3,
-          "2026-03-29": 4,
-          "2026-05-24": 5
-        },
-        "trend": "逐步成熟。早期只有下周计划，中期有最小可验证动作，后期有三阶段路线、里程碑、投入时间、偏差和验收指标。"
+        "score": 4,
+        "trend": "从简单下周计划，提升到里程碑、阶段路线、时间投入和偏差说明。仍需补上完成标准、风险优先级和对前序计划的追踪闭环。"
       },
       "automationPath": {
-        "scoresByWeek": {
-          "2026-03-15": 2,
-          "2026-03-22": 4,
-          "2026-03-29": 4,
-          "2026-05-24": 5
-        },
-        "trend": "自动化路径从 prompting 策略，发展为 fuzzing Agent、构建反哺检索 pipeline、双空间调度器、commit-to-goal pipeline 和 0 交互 reproduce benchmark。"
+        "score": 4,
+        "trend": "自动化路径持续增强：prompting 策略到 agent module、workflow、evaluation protocol，再到 commit-to-goal pipeline 和 goal anchoring protocol。问题是多个自动化模块仍停留在设计层。"
       },
-      "nextActionQuality": {
-        "scoresByWeek": {
-          "2026-03-15": 3,
-          "2026-03-22": 4,
-          "2026-03-29": 4,
-          "2026-05-24": 5
-        },
-        "trend": "下一步越来越可验证。最高质量动作是 5 月的 M1-M5，因为包含时间、产物、数量阈值和阶段关系。"
+      "evidenceDiscipline": {
+        "score": 3,
+        "trend": "有意识标注证据等级，但自评偏乐观。真正的证据纪律需要把 crash 去重、覆盖率曲线、commit 标注一致性、用户付费证据纳入报告。"
+      },
+      "busynessVsCapability": {
+        "score": 4,
+        "trend": "不是只变忙。50+ 小时投入中有 12 小时 agent 失控，但学生没有只记录辛苦，而是把失败抽象为 Goal Drift 并提出数据路径，这是研究能力信号。"
       }
     },
     "valueFunctionChange": {
-      "summary": "学生的价值函数从“某个工具是否能帮助挖洞”演化为“什么方向能产生可复用方法资产、自动化模块、外部数据壁垒和品类级商业价值”。这是明显的研究型价值观升级。",
+      "summary": "价值函数从“Claude Code 是否真的能帮人挖漏洞”逐步变化为“什么样的自动化能力能形成可复用资产、市场壁垒和通用软件构建能力”。这是本轮纵向分析中最重要的变化之一。",
       "byWeek": [
         {
           "week": "2026-03-15",
-          "whatIsWorthDoing": "值得做的是找到 Claude Code 在漏洞挖掘中真正有效的使用方式，以及识别 root 权限服务 RCE 这种低研究密度攻击场景。",
-          "whyWorthDoing": "因为同一个模型在不同使用者手中效果差异很大，关键可能是 meta-level control；root 权限 RCE 可能绕过 LPE 的传统路径，有未充分探索空间。",
-          "moneyUserProductConnection": "缺失。没有金额、明确买单用户或产品形态。",
-          "brainaryAutomationConnection": "有 Brainary 概念映射，但尚未连接到可自动化模块。"
+          "valueFunction": "值得做的事是能实际提高 Claude Code 漏洞挖掘效果的 meta-level control。判断依据主要是使用者效果差异和小样本反馈。价值还停留在能力有效性层面，没有金额和明确买方。"
         },
         {
           "week": "2026-03-22",
-          "whatIsWorthDoing": "值得做的是组合式攻击面、构建反哺检索、evolving 结果沉淀。",
-          "whyWorthDoing": "因为组合式攻击面能产生 15 个内核 crash；构建反哺检索使一致性从 67% 到 95%+；持续 evolving 的结果本身可能成为竞争壁垒。",
-          "moneyUserProductConnection": "开始出现经济学逻辑，但还不是市场金额；用户和产品形态主要隐含在 fuzzer workflow、agent module、memory schema 中。",
-          "brainaryAutomationConnection": "显著增强，提出输入渠道组合生成器、构建反哺检索 pipeline、evaluation protocol。"
+          "valueFunction": "值得做的事变成两类：一是高开发成本但低竞争密度的组合式 fuzzing 攻击面；二是能让知识构建反哺检索的闭环方法。价值开始连接到 token 消耗形成壁垒、agent module、workflow 和 benchmark。"
         },
         {
           "week": "2026-03-29",
-          "whatIsWorthDoing": "值得做的是跨目标可迁移的联合变异框架、相似知识处理、认知确信度管理。",
-          "whyWorthDoing": "因为跨目标迁移带来 27+ 总产出，说明不是单点技巧；相似知识是知识图谱质量瓶颈；确信度管理能决定资源投入。",
-          "moneyUserProductConnection": "开始明确连接市场：商业 fuzzing 市场 4–8 亿美元，RAG 市场 19–23 亿美元；但具体市场引用和占比计算仍不足。",
-          "brainaryAutomationConnection": "连接较完整：双空间调度器、相似知识合并/保留模块、认知确信度管理模块。"
+          "valueFunction": "价值函数进一步强调可迁移性和市场规模：如果双空间变异引擎能跨目标复用，就从单点漏洞挖掘变成可规模化框架；如果相似知识处理能解决 RAG 弱点，就能进入知识图谱/RAG 市场。开始给出市场金额和计算方法。"
         },
         {
           "week": "2026-05-24",
-          "whatIsWorthDoing": "值得做的是 Venom 任意双输入通道框架、Goal Drift 研究、commit 复刻数据集、Brainary 外部 goal anchoring。",
-          "whyWorthDoing": "因为 Venom 跨 4 类异质目标零修改，可能成为通用 fuzzing 框架；Goal Drift 被定位为 month-level agent 的根本问题；commit 历史可能提供后训练缺失的 goal 分解 ground truth。",
-          "moneyUserProductConnection": "连接最完整：蓝牙 fuzzing 300–600 万人民币/年；Goal Drift/超大型软件自动化构建 5–50 亿人民币/年；用户包括芯片厂商、嵌入式 OS 厂商、云存储厂商、安全研究机构、agent 化研发团队。",
-          "brainaryAutomationConnection": "最成熟：Brainary 被定义为 goal-as-attention 的外部权威源，产物包括 commit-to-goal pipeline、month-level goal schema、goal anchoring protocol、0 交互 reproduce benchmark。",
-          "risk": "价值推理有跳跃。蓝牙 fuzzing 的金额相对具体；5–50 亿人民币/年的品类级估值主要是类比和推理，缺少直接用户访谈、付费意愿、竞品价格或可运行产品证据。"
+          "valueFunction": "价值函数发生量级跃迁：Venom 蓝牙拓展对应安全工具收入；Goal Drift / commit 复刻对应超大型软件自动化构建这一品类级能力。值得做的理由从“能挖漏洞”升级为“能补 month-level goal 分解数据缺口，从而支持 0 交互复杂软件开发”。"
         }
       ],
-      "changePattern": "价值函数从“技术新颖性”转向“实证产出密度”再转向“可复用自动化能力和商业品类”。这是正向变化，但需要用更严格证据约束宏大叙事。"
+      "maturity": "价值函数成熟度提高，因为它逐渐连接了金额、用户、通用能力、产物形式、Brainary 和自动化路径。但当前最大缺口是用户证据和收入证据不足，金额估算更像战略叙事而不是商业验证。",
+      "whatStudentNowConsidersValuable": [
+        "低竞争密度、高自由度、高协同的攻击面，因为传统工程成本高，Claude Code / agent 降低了探索成本。",
+        "能跨目标泛化的框架，而不是单个漏洞或单个 fuzzer。",
+        "能沉淀为 Brainary schema、workflow、agent module、benchmark 的知识，而不是一次性经验。",
+        "能把 agent 长任务失败转化为外部数据和控制机制的问题，因为这可能通向 month-level 自动化软件构建。",
+        "能产生可复用数据资产的过程，例如 commit-to-goal 数据集。"
+      ],
+      "weaknessInValueReasoning": [
+        "金额估算缺少直接客户访谈和付费意愿。",
+        "市场规模到本项目收入的转化路径过长。",
+        "Venom 的商业价值需要建立在已确认漏洞、可复现 benchmark 和新目标接入成本数据上，目前证据不完整。",
+        "Goal Drift 的品类级价值很大，但目前只有案例和推理，缺少数据集、模型对照和可重复改进幅度。"
+      ]
     },
     "repeatedBlockers": [
       {
-        "blocker": "覆盖率反馈和 trace/coverage 数据闭环反复出现",
-        "evidence": "2026-03-22 卡在覆盖率行号 trace 数据获取与格式逆向；2026-03-29 卡在双空间 coverage-guided 调整的局部最优与饱和模式；2026-05-24 蓝牙场景 KCOV-style coverage 不能直接套用，需要新的覆盖率代理信号。",
-        "interpretation": "这是 Venom 能否从手工调试走向 closed-loop evolving 的核心瓶颈，不是一次性工程问题。教授应要求学生把 coverage abstraction 做成跨目标接口规范。"
+        "blocker": "coverage / trace 反馈机制反复成为闭环瓶颈",
+        "evidence": "3月22日卡在覆盖率行号 trace 数据获取与格式逆向；3月29日卡在覆盖率饱和后的同步策略；5月24日蓝牙场景 KCOV-style 反馈不能直接套用，需要覆盖率代理信号。",
+        "interpretation": "这说明真正瓶颈不是写 fuzzer，而是建立可泛化的反馈信号和 closed-loop evolving。教授应要求学生把 coverage feedback abstraction 单独列为研究/工程模块。"
       },
       {
-        "blocker": "漏洞/crash 去重与可利用性分析多次被列为计划，但后续完成证据缺失",
-        "evidence": "2026-03-22 计划对 15 个内核 crash 去重和 exploitability triage；2026-03-29 计划对 Ceph/OrangeOS 漏洞去重和可利用性分析；后续报告未给出明确完成结果。",
-        "interpretation": "这会影响硬进展可信度。crash 数量不能等同于漏洞数量，更不能等同于商业价值。"
+        "blocker": "漏洞产出缺少去重、复现和可利用性闭环",
+        "evidence": "3月22日计划对 15 个内核 crash 去重和 exploitability triage；3月29日再次计划对 Ceph / OrangeOS 漏洞去重和分析；5月24日未汇报这些 triage 的完成结果。",
+        "interpretation": "这是硬进展可信度的最大缺口。没有 triage，crash 数量不能等同于漏洞数量，更不能支撑商业价值。"
       },
       {
-        "blocker": "自动化 pipeline 多次提出，但部分仍停留在手动调优或计划",
-        "evidence": "构建反哺检索在 2026-03-22 仍是手动调优；相似知识合并/保留在 2026-03-29 缺少独立指标；commit 复刻在 2026-05-24 只是下周启动计划。",
-        "interpretation": "学生自动化意识强，但教授需要追踪哪些已经成为模块，哪些只是命名。"
+        "blocker": "自动化模块多次提出，但落地证据不足",
+        "evidence": "构建反哺检索 pipeline、相似知识合并/保留模块、双空间协同调度器、认知确信度管理、commit-to-goal pipeline 都被提出；报告中缺少已实现模块的接口、输入输出、benchmark 和使用结果。",
+        "interpretation": "学生有很强的模块化意识，但下一阶段要避免“模块命名多于模块交付”。"
       },
       {
-        "blocker": "从抽象命题到量化指标的落差",
-        "evidence": "认知确信度管理缺少升级阈值；知识正交性/相似性缺少独立量化指标；Goal Drift 需要客观量化、早期检测、硬阻断机制。",
-        "interpretation": "学生善于提出高价值抽象，但下一阶段必须把抽象变成指标、数据集和 benchmark。"
+        "blocker": "LLM / agent 的自评不可靠",
+        "evidence": "3月15日已观察到 Claude Code 效果高度依赖人类 meta-level control；5月24日明确提出 long-task self-reflection 是 confabulation，12 小时被 agent 长任务失控消耗。",
+        "interpretation": "这个 blocker 已被学生升级为研究问题 Goal Drift，是正向变化。下一步需要客观量化，不应只停留在叙事。"
       },
       {
-        "blocker": "长任务 agent 失控消耗大量时间",
-        "evidence": "2026-05-24 报告 50+ 小时投入，其中约 12 小时被 agent 长任务失控消耗，7 小时找 s132 bug 最终 0 bug，目标漂移为保持 v4 alive。",
-        "interpretation": "这是研究素材，也是生产力风险。需要外部 monitor 和强制停损规则。"
+        "blocker": "知识表示中的相似性、正交性和合并判据不稳定",
+        "evidence": "3月15日 predicate 过多且缺乏规范化，一致性 67%；3月22日通过构建反哺检索提升到 95%+；3月29日发现相似知识连续谱和缺少独立正交性指标。",
+        "interpretation": "学生已经识别到知识图谱的核心难点，但5月24日报告转向 Goal Drift 后没有追踪该线的后续结果，存在项目线索丢失风险。"
       },
       {
-        "blocker": "报告连续性缺口",
-        "evidence": "输入报告从 2026-03-29 跳到 2026-05-24，中间多周缺失。",
-        "interpretation": "无法判断 3 月计划是否按时完成、Venom 命名和框架形成过程、crash 去重结果、知识图谱模块是否持续推进。证据缺失必须显式补齐。"
+        "blocker": "证据等级自评偏高",
+        "evidence": "5月24日将 Goal-as-attention 与 month-level goal 分解数据缺口标为 A 级，但提供的是演化路径推理、后训练数据现状判断和 50+ 小时一线案例；commit 复刻尚未完成。",
+        "interpretation": "这不是小问题。研究能力提升的下一步是校准证据等级，区分“强假说”“初步实验”“跨场景复现”“可发表结论”。"
       }
     ],
     "professorShouldAsk": [
-      {
-        "question": "3 月 22 日的 15 个 Linux 内核 crash 和 3 月 29 日 Ceph/OrangeOS 的 12+ 漏洞，去重后分别是多少个唯一漏洞？有多少可复现、有多少可利用、有多少已确认安全影响？",
-        "whyAsk": "这是区分硬研究产出与 fuzzing 噪声的关键。"
-      },
-      {
-        "question": "Venom 跨 4 类目标“核心双空间变异引擎零修改”的证据是什么？请给出模块边界、目标适配层改动行数、接口定义和运行日志。",
-        "whyAsk": "这是判断 Venom 是否真是通用框架，而不是手工迁移集合的关键。"
-      },
-      {
-        "question": "蓝牙场景下无 coverage 版本的端到端 loop 最小成功标准是什么？如果两周内没有 ≥3 crash，如何判定是目标不适合、反馈信号不够、还是变异策略失效？",
-        "whyAsk": "防止目标拓展变成无约束探索。"
-      },
-      {
-        "question": "Goal Drift 的量化指标打算如何定义？能否用 commit 序列中 root goal 与实际 diff 的距离来度量，而不是依赖人工叙述？",
-        "whyAsk": "Goal Drift 是高价值抽象，但必须尽快指标化。"
-      },
-      {
-        "question": "commit 复刻第一版数据集的 schema 是什么？每个 commit 标注哪些字段：root goal、subgoal、文件改动、测试结果、失败类型、回滚关系、外部状态？",
-        "whyAsk": "这是 Brainary goal ground truth 能否真正落地的基础。"
-      },
-      {
-        "question": "Brainary 作为外部 goal 权威源时，agent 每一步必须反查的协议是什么？违反协议如何硬阻断？",
-        "whyAsk": "学生已经提出 goal anchoring protocol，但还需要操作层规范。"
-      },
-      {
-        "question": "5–50 亿人民币/年的估值中，有哪些是假设、哪些有证据？是否有潜在客户访谈、竞品价格、付费场景或最小产品定义？",
-        "whyAsk": "防止价值推理从战略判断变成过度市场叙事。"
-      },
-      {
-        "question": "知识图谱相似知识处理在 5 月报告中消失了，是暂停、并入 Brainary goal schema，还是已有结果未报告？",
-        "whyAsk": "避免早期 Brainary 检索线索被 Venom/Goal Drift 新叙事覆盖。"
-      }
+      "你在 3月22日和 3月29日提到的 15 个 Linux crash、12+ Ceph / OrangeOS 漏洞，现在去重后分别还剩多少？有多少能稳定复现？有多少具备安全影响？",
+      "Venom 跨 4 类目标零修改的“零修改”具体指哪些模块没有改？目标适配层改了多少代码？请给出模块边界和接入成本。",
+      "蓝牙场景下如果没有 KCOV-style coverage，你准备用什么代理信号？这个代理信号如何验证它与真实 bug 发现相关？",
+      "双空间同步策略目前有没有与无同步 baseline 的覆盖率增长曲线对比？如果没有，什么时候能给出第一张图？",
+      "Goal Drift 的 7 小时失败轨迹能否拆成时间线：每个关键 commit / 文件改动 / agent 决策 / root goal 偏离点是什么？",
+      "commit 复刻第一版数据集的 schema 是什么？一个 commit 标注哪些字段：root goal、subgoal、前置状态、验证信号、失败模式、注意力对象？",
+      "如何评估 commit-to-goal 标注质量？是否有人类互标一致性、回放成功率或 agent 使用该标注后的性能提升？",
+      "Brainary 作为 goal anchoring 外部权威源时，agent 每一步必须反查的协议是什么？如果 agent 不遵守，系统如何硬阻断？",
+      "你现在有两个大方向：Venom 漏洞框架和 Goal Drift 研究。未来两周哪个是主线？另一个方向的最小保活指标是什么？",
+      "价值估算里谁会在 6 个月内真实买单？你能否在下周前列出 5 个潜在用户、他们的痛点、现有替代方案和愿意付费的触发条件？"
     ],
     "nextBestIntervention": {
-      "intervention": "要求学生未来两周只围绕一个可审计闭环交付：Venom 蓝牙端到端 loop + commit-to-goal 最小数据集；所有抽象命题必须绑定日志、数据、指标和失败判据。",
-      "specificPlan": [
+      "intervention": "教授应把下一阶段干预从“鼓励继续探索”改为“强制证据闭环与范围收敛”。",
+      "recommendedFocus": "未来两周只设两个硬验收：第一，Venom 证据闭环；第二，Goal Drift 数据闭环。不要再新增大概念。",
+      "twoWeekDeliverables": [
         {
-          "action": "建立 Venom 证据表",
-          "deliverable": "按目标列出 Linux、Ceph、OrangeOS、蓝牙的输入通道、适配层改动、coverage 信号、运行时长、crash 数、去重后唯一漏洞数、可复现率、可利用性 triage。",
-          "deadline": "一周内",
-          "successCriterion": "至少补齐前三类目标的去重和复现证据；蓝牙至少跑通无 coverage 端到端 loop。"
+          "deliverable": "Venom 证据包",
+          "acceptanceCriteria": "提交去重后的 crash / 漏洞表，至少包含目标、输入通道组合、复现命令、触发日志、是否唯一、是否可利用、当前状态；同时给出一个目标上的同步策略 vs 无同步 baseline 覆盖率曲线。"
         },
         {
-          "action": "冻结 Goal Drift 第一版定义和指标",
-          "deliverable": "给出 root goal、local action、drift distance、drift detection signal、hard stop rule 的正式定义，并用 s132 失败案例回放标注。",
-          "deadline": "一周内",
-          "successCriterion": "不再只用自然语言说“漂移”，而能对一次 session 画出 goal 偏移曲线或事件表。"
+          "deliverable": "蓝牙最小闭环",
+          "acceptanceCriteria": "跑通无 coverage 反馈版本的端到端 loop，明确输入生成、执行、异常检测、日志采集和失败判据；如果没有 crash，也要报告执行次数、有效输入率、异常类型和下一步 coverage 代理信号设计。"
         },
         {
-          "action": "启动 commit 复刻最小数据集",
-          "deliverable": "从自己 Venom 开发历史中选 20 个 commit，标注 goal/subgoal、触发原因、diff 摘要、测试结果、是否纠偏、是否引入新失败。",
-          "deadline": "两周内",
-          "successCriterion": "形成可被另一个人复核的一版 schema 和样例数据，而不是只形成计划。"
+          "deliverable": "commit-to-goal 最小数据集",
+          "acceptanceCriteria": "从自己的 Venom 历史中标注至少 30 个 commit，每个 commit 标注 root goal、subgoal、实际行为、验证信号、是否发生 goal drift、漂移类型；给出 3 个完整轨迹案例。"
         },
         {
-          "action": "设置项目停损规则",
-          "deliverable": "agent 单次长任务如果连续 60–90 分钟无端到端指标改善，必须触发外部 review；不允许继续通过堆 watchdog、keepalive、重写脚本来伪推进。",
-          "deadline": "立即执行",
-          "successCriterion": "减少 Goal Drift 对研发时间的吞噬，同时把每次触发都记录为研究数据。"
-        },
-        {
-          "action": "把价值估算降级为假设表",
-          "deliverable": "将 300–600 万和 5–50 亿两个估值拆成假设、证据、缺口、下一步验证；至少补一个用户访谈或竞品价格依据。",
-          "deadline": "两周内",
-          "successCriterion": "价值推理从宏观叙事变成可验证商业假设。"
+          "deliverable": "Goal Drift 客观指标草案",
+          "acceptanceCriteria": "提出至少 2 个不依赖 agent 自评的漂移指标，例如文件改动方向与 root goal 的相关性、验证信号缺失时长、非目标维护代码比例、重复修复循环次数，并在 7 小时失败轨迹上回放。"
         }
       ],
-      "professorRole": "教授不应主要给新方向，而应强制学生把已有高质量抽象压回证据链：唯一漏洞数、端到端 loop、goal drift 指标、commit 数据集、Brainary 协议。当前最危险的不是学生不努力，而是抽象速度超过验证速度。"
+      "managementRule": "每周报告必须新增一个“上周承诺完成情况”表格，逐条标注完成、未完成、证据链接和原因。否则无法判断是研究推进还是叙事漂移。",
+      "evidenceCalibrationRule": "以后证据等级建议改为四档：假说、单案例验证、多场景验证、可复现 benchmark。除非有公开脚本、数据、对照和复现实验，否则不要标 A 级。",
+      "oneThingProfessorShouldLearn": "这个学生最有价值的新判断不是“Venom 又接了一个场景”，而是“agent 长任务失败可能不是 prompting 问题，而是 month-level goal 分解数据缺口问题”。如果这个判断能被 commit-to-goal 数据集和 goal anchoring benchmark 验证，它会从漏洞挖掘工程经验上升为 agent 长任务可靠性的研究题。"
     }
   }
 }

@@ -1,6 +1,6 @@
 {
   "key": "person:guo-wenbo:2026-05-31:weekly-score",
-  "generatedAt": "2026-06-05T21:01:28.528Z",
+  "generatedAt": "2026-06-05T22:01:30.927Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
@@ -8,100 +8,57 @@
   "result": {
     "week": "2026-05-31",
     "name": "郭文博",
-    "totalScore": 78,
-    "tier": "B",
-    "dimensions": {
+    "scores": {
       "hardProgress": {
-        "score": 15,
-        "reason": "本周有可验证的工程推进：Skill DB 第一部分已在小规模数据上跑通并部署到 UCloud Dev 环境，收集到 clawhub 的 65000 个 skill，并开始向规模化平台灌入；taxonomy 复用 junyi 框架。Brainary 接入 Malware Detector 虽未跑通，但明确了接口缺失、无文档、需要逆向协议的失败模式。扣分点是两个核心目标中 Malware Detector 端到端链路未完成，Skill2Agent 的 65000 全量灌入和 Skill→Agent demo 也尚未完成。",
-        "missingEvidence": [
-          "缺少 UCloud Dev 环境部署地址、服务截图、接口调用日志或提交记录",
-          "缺少小规模 Skill DB 跑通的具体测试样本、查询结果和成功率",
-          "65000 个 skill 目前只说明已收集，缺少数据来源清单、去重情况、入库比例",
-          "Brainary 接 Malware Detector 未提供具体失败日志、缺失接口列表或代码位置"
-        ]
+        "score": 13,
+        "reason": "本周有两类实质进展：Skill2Agent 第一部分已在小规模数据上跑通并部署到 UCloud Dev 环境，且收集到 65000 个 clawhub skill；Brainary 接 Malware Detector 完成了接口梳理和失败模式定位。但 Brainary 端到端链路未跑通，65000 skill 也还未完成全量灌入和规模验证，因此硬进展主要停留在平台雏形和集成诊断阶段，尚未形成可演示的完整闭环。",
+        "missingEvidence": "缺少 UCloud 部署地址或截图、接口调用日志、Skill DB 小规模跑通的测试结果、65000 skill 数据清单、Brainary 接 detector 的失败日志或最小复现实例。"
       },
       "cognitiveIncrement": {
-        "score": 13,
-        "reason": "认知增量比较清楚：从具体失败中抽象出 capability contract 是集成主要瓶颈；从 Skill DB 小规模跑通推进到 65000 数据，意识到 repository 单点价值下降，真正价值在平台加 agent 化；还识别出小规模跑通与规模化可用之间存在相变。这些判断和本周工作直接相关，不是泛泛而谈。扣分点是部分认知仍停留在判断层，下周才验证，例如 taxonomy 在 65000 规模下是否退化。",
-        "missingEvidence": [
-          "缺少对接口契约缺失导致失败的具体案例链路",
-          "缺少 Skill repository 价值下降的外部对比或用户需求证据",
-          "缺少规模化相变的初步指标，例如检索延迟、召回率、类目冲突率"
-        ]
+        "score": 12,
+        "reason": "认知增量较明确：把 Brainary 集成失败归因到 capability contract 缺失，而不是算法问题；把 Skill repository 的价值判断推进到“平台 + agent 化”链路；提出“小规模跑通不等于规模化可用”。这些判断来自本周实际卡点和数据规模变化，和任务推进有关。但部分认知仍是合理推断，缺少量化验证，例如 taxonomy 在 65000 规模下是否退化尚未测出。",
+        "missingEvidence": "缺少接口缺失导致失败的具体案例、taxonomy 或检索退化的初步数据、Skill repository 单独价值下降的外部或内部证据。"
       },
       "cot2Depth": {
-        "score": 12,
-        "reason": "CoT's CoT 有二阶抽象：把单次接入失败上升为可度量的 capability contract 完整度问题，并提出 checklist、schema、evaluator、agent module；把小规模 demo 与规模化可用之间的差异上升为压力测试协议和退化曲线问题。深度较好。扣分点是两个 CoT's CoT 都明确写了“老师原本不知道的吗：否”，说明新颖性有限；第二个 CoT's CoT 的证据等级为 B，本周尚未完成规模化验证。",
-        "missingEvidence": [
-          "缺少 capability contract schema 的初版字段或样例",
-          "缺少接口完整度 evaluator 的可执行定义",
-          "缺少规模化压力测试协议的指标设计",
-          "缺少 65000 skill 下的真实退化数据"
-        ]
+        "score": 11,
+        "reason": "CoT’s CoT 部分有较好的二阶抽象：从单次集成失败抽象出 capability contract，从小规模 demo 抽象出规模化相变点，并进一步提出 checklist、schema、evaluator、benchmark、workflow 等可沉淀形态。问题是深度还停留在概念层，尚未转化为可执行的研究假设、指标定义或实验协议；证据等级自评为 A/B，但 A 级证据没有附带可检查材料。",
+        "missingEvidence": "缺少 capability contract 的字段草案、接口完整度 evaluator 的判定标准、规模化压力测试协议、taxonomy 退化曲线的指标定义。"
       },
       "brainaryMapping": {
         "score": 8,
-        "reason": "Brainary 映射明确：Malware Detector 对应 tool orchestration、workflow management、risk modeling；Skill2Agent 对应 memory、tool orchestration、workflow management、benchmark/evaluation。也指出 Brainary 需要 adapter 层和 capability contract 层。扣分点是映射仍偏架构层，尚未说明 Brainary 当前模块如何改、接口边界在哪里、数据如何在 Brainary 内部流转。",
-        "missingEvidence": [
-          "缺少 Brainary 调用 Malware Detector 的具体接口草图",
-          "缺少 Brainary 中 adapter 层的位置和模块边界",
-          "缺少 Skill registry 与 Brainary memory/tool orchestration 的实际调用链",
-          "缺少 Brainary 端的运行日志或失败 trace"
-        ]
+        "reason": "Brainary 映射较清楚：Malware Detector 对应 tool orchestration、workflow management、risk modeling；Skill2Agent 对应 memory、tool orchestration、workflow management、benchmark/evaluation。也能指出 Brainary 缺 adapter 层、capability contract schema 和接口自检 evaluator。扣分点在于映射仍偏架构判断，缺少 Brainary 当前模块如何改、接口如何接、数据如何流动的具体设计。",
+        "missingEvidence": "缺少 Brainary 到 detector 的具体调用链图、adapter 模块设计草图、输入输出 schema、Skill2Agent 与 Brainary memory/workflow 模块的实际对接方案。"
       },
       "monetaryValue": {
         "score": 5,
-        "reason": "周报给出了 Skill2Agent 500万–1500万人民币、Brainary 接 Malware Detector 100万–400万人民币的估值，并说明了对标方向，如企业 workflow automation、数字员工 SaaS、AI 安全检测、Agent 集成中间件。但估值主要是主观类比，缺少真实客户、采购场景、定价模型、替代成本计算、竞品价格或付费意愿证据。因此只能认为有商业方向意识，不能认为货币价值已被证明。",
-        "missingEvidence": [
-          "缺少潜在客户访谈或需求确认",
-          "缺少具体定价模型，例如按 seat、按调用量、按任务量或按企业部署收费",
-          "缺少竞品价格、市场规模或采购预算数据",
-          "缺少 65000 skill 数据资产的合法性、稀缺性和可商业化证明",
-          "缺少 Malware Detector 集成能带来的安全收益或降本量化"
-        ]
+        "reason": "报告给出了 Skill2Agent 500万–1500万人民币、Brainary 接 Malware Detector 100万–400万人民币的估值，并说明了潜在买单方和对标方向。但估值主要是主观类比，没有明确计算模型、客户数量假设、客单价、转化路径、竞争替代品分析或可验证商业证据。因此货币价值部分有方向感，但商业可信度中等偏弱。",
+        "missingEvidence": "缺少市场规模数据、竞品价格、目标客户访谈、付费意愿证据、成本收益模型、65000 skill 数据资产的稀缺性证明。"
       },
       "projectManagement": {
-        "score": 13,
-        "reason": "项目管理信息较完整：区分 Skill2Agent 和 Brainary 接入两个项目，说明阶段、原计划、实际进展、投入时间、下周时间、人员分工、资源依赖、关键路径、成本风险、偏差原因和纠偏动作。尤其明确了 Skill2Agent 依赖卓满平台侧和 junyi taxonomy，Brainary 依赖 detector 接口文档/实现。扣分点是缺少具体日期级里程碑、验收标准和风险升级阈值；Brainary 侧如果接口缺失持续存在，何时需要老师介入还不够明确。",
-        "missingEvidence": [
-          "缺少每个里程碑的明确验收指标",
-          "缺少代码仓库、issue、PR 或任务看板链接",
-          "缺少 UCloud 资源成本预估",
-          "缺少 detector 负责人、接口缺口 owner 和协调截止时间",
-          "缺少 rebuttal 占用时间对计划影响的具体量化"
-        ]
+        "score": 12,
+        "reason": "项目管理信息较完整：区分两个项目阶段，写明原计划与实际进展、投入时间、下周预计时间、人员分工、依赖关系、资源缺口、偏差原因和纠偏动作。Skill2Agent 的关键路径较清楚，Brainary 也明确指出可能需要老师协调 detector 负责人。扣分点是里程碑缺少验收标准和风险优先级，Brainary 的协作升级机制还不够具体。",
+        "missingEvidence": "缺少每个里程碑的验收指标、任务拆分到日期的计划、风险优先级、detector 负责人信息、如果接口仍缺失时的备选方案。"
       },
       "nextAction": {
-        "score": 9,
-        "reason": "下周动作具体且可验证：Brainary 侧跑通一条最小端到端链路并反向补接口文档/schema；Skill2Agent 侧完成 65000 skill 全量灌入，验证 taxonomy 和检索在规模下不崩，并跑通最小 Skill→Agent demo。动作都能产生明确产物。扣分点是还缺少成功/失败判定指标，例如端到端链路的输入输出标准、检索质量阈值、demo 任务定义。",
-        "missingEvidence": [
-          "缺少 Malware Detector 最小样本的具体定义",
-          "缺少 Skill→Agent demo 的真实任务描述",
-          "缺少 taxonomy 稳定性的评估指标",
-          "缺少检索/推荐质量的最低可接受阈值",
-          "缺少如果下周未跑通时的备选路线"
-        ]
+        "score": 8,
+        "reason": "下周动作较具体且符合最小可验证原则：Brainary 跑通一个检测样本的最小端到端链路并反向补接口文档；Skill2Agent 完成 65000 skill 全量灌入并验证 taxonomy/检索不崩，跑通 Skill → Agent demo。动作和本周卡点直接对应。扣分点是缺少明确验收指标，例如什么叫“不崩”、demo 的真实任务是什么、接口文档需要覆盖哪些字段。",
+        "missingEvidence": "缺少下周任务的量化验收标准、demo 任务定义、检索质量指标、taxonomy 稳定性指标、接口文档最小字段列表。"
       },
       "evidenceQuality": {
         "score": 3,
-        "reason": "证据层级中等：报告提供了直接失败观察、部署状态、数据量、人员分工和下周验证计划，也自标 CoT 证据等级 A/B。但大部分证据仍是文字陈述，没有附带日志、链接、截图、指标、样本或复现实验步骤。对已完成事项的可审计性不足。",
-        "missingEvidence": [
-          "缺少运行日志",
-          "缺少部署访问证据",
-          "缺少数据入库统计",
-          "缺少实验指标",
-          "缺少代码提交或版本记录"
-        ]
+        "reason": "报告提供了较多过程性证据，例如部署到 UCloud、收集 65000 skill、detector 接口缺失、未跑通链路、投入约 22 小时等。但这些证据大多是自述，没有附日志、截图、commit、部署链接、数据统计或实验输出。证据等级判断有一定合理性，但可审计性不足。",
+        "missingEvidence": "缺少代码提交记录、部署截图、运行日志、数据导入统计、接口错误日志、测试样本结果、成本记录。"
       }
     },
-    "oneLineJudgment": "本周不是结果型突破，而是一次有效的工程集成暴露周：Skill2Agent 有平台化硬进展，Brainary 接入失败转化出了重要的接口契约问题，但关键端到端链路和规模化验证都还没有完成。",
+    "totalScore": 72,
+    "tier": "B",
+    "oneLineJudgment": "本周报告的价值在于把两个工程推进都抽象成可沉淀的 Brainary 基础设施问题，但硬闭环尚未跑通，关键证据和量化验收标准不足。",
     "professorFollowUp": [
-      "要求他下周必须交付两个可验收物：一条 Brainary→Malware Detector 最小端到端运行记录，以及一个 Skill→Agent demo 的运行记录。",
-      "让他把 detector 缺失接口整理成表格：接口名、期望输入、期望输出、当前实现状态、阻塞负责人、是否需要老师协调。",
-      "要求 Skill2Agent 的 65000 skill 规模化验证给出量化指标：入库成功率、embedding 成本、检索延迟、top-k 相关性、taxonomy 冲突率。",
-      "商业价值部分暂不要接受估值数字，应要求补客户场景、竞品价格和可收费模块。",
-      "教授本周最应该学到的一点是：Brainary 要稳定接真实外部系统，不能只增强推理能力，必须建设 capability contract、adapter 和接口完整度 evaluator。"
+      "要求他下周必须交付一个可审计的最小闭环：Brainary 调 detector 至少跑通 1 个样本，附输入、输出、日志和失败/成功截图。",
+      "要求他把 capability contract 写成最小 schema 草案，不要只停留在概念；至少包括输入、输出、错误码、权限、依赖、日志、版本字段。",
+      "要求他定义 Skill2Agent 的规模化验证指标：65000 skill 导入成功率、检索延迟、召回/相关性评估、taxonomy 冲突率或人工抽检方案。",
+      "如果 detector 侧接口确实缺失，老师需要决定是否协调 detector 负责人，否则这条线会继续消耗逆向成本。",
+      "要求他把货币价值从主观估值改成可检验假设：目标客户、付费场景、客单价、替代成本、最小商业验证路径。"
     ]
   }
 }

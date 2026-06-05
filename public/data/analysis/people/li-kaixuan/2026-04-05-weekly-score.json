@@ -1,6 +1,6 @@
 {
   "key": "person:li-kaixuan:2026-04-05:weekly-score",
-  "generatedAt": "2026-06-05T18:04:23.414Z",
+  "generatedAt": "2026-06-05T22:04:52.454Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
@@ -10,49 +10,55 @@
     "name": "李凯旋",
     "scores": {
       "hardProgress": {
-        "score": 10,
-        "reason": "本周有明确的研究推进表述：PoC Migration 给出了约束满足形式化、pipeline 组件；Fuzz Driver 识别了 type dependency graph 过连、semantic pruning 和 lifecycle 约束；IMO 给出 M-O / I-M mismatch 的分类例子。但这些主要是方案设计、问题重述和洞察归纳，缺少已完成实验、代码实现、数据集规模、benchmark 结果、消融实验或论文具体产物。因此硬进展中等偏低。",
-        "missingEvidence": "缺少实验结果、实现链接、数据集统计、已完成模块清单、precision/recall/coverage 等指标、论文草稿进度、ASE 提交物状态。"
+        "score": 11,
+        "reason": "本周有明确的技术推进：PoC Migration 形成了约束可满足性 formulation 和 pipeline；Fuzz Driver Generation 对类型依赖图、semantic pruning、driver 有效性做了结构化反思；IMO 归纳了部分 FP root cause mapping。但这些主要仍是概念、框架和洞察层面的进展，缺少代码、实验结果、数据集规模、案例复现、baseline 对比或可交付物证明。硬产出不足以支撑高分。",
+        "missingEvidence": "缺少 PoC migration 的实验补充结果、SMT validation 原型状态、具体漏洞案例数量、迁移成功率；缺少 fuzz driver dependency explosion 的数据来源和 pruning 前后对比；缺少 IMO 中 FP 样本规模、标注方法、分类一致性和具体分析日志。"
       },
       "cognitiveIncrement": {
-        "score": 11,
-        "reason": "认知增量较明显：将 PoC migration 和 IMO 统一到“验证”问题，将 fuzzing 瓶颈从 coverage 转向 semantic reachability，并指出 LLM 需要结构约束。这些判断能帮助重新排序选题。但增量主要停留在概念层，缺少从具体失败案例或实验观察推导出结论的链条。",
-        "missingEvidence": "缺少本周新增样例、失败案例数量、实验观察记录、与原有假设的差异、哪些认知被证伪或修正。"
+        "score": 12,
+        "reason": "认知增量较强。周报把三个方向统一到“程序语义理解与验证”这一核心问题，并提出从检测到验证、从 coverage 到 semantic reachability、从 heuristic prompt 到 symbolic feedback 的转变。这些不是简单进度描述，而是对研究问题本质的重构。",
+        "missingEvidence": "缺少这些认知如何改变具体实验设计、论文结构或系统架构的证据；也缺少对旧假设被推翻或修正的具体说明。"
       },
       "cot2Depth": {
-        "score": 11,
-        "reason": "报告不仅给结论，也有对推理过程的二阶反思，例如 type matching 不等于 semantic dependency、静态 AFG 存在 setup-heavy API bias、纯 LLM 容易 hallucinated paths、heuristic prompt 需要转向 symbolic feedback。这体现了对方法局限性的分析。但还没有形成可检验的反事实设计、失败边界、判定准则或优先级决策树。",
-        "missingEvidence": "缺少为什么某条技术路径应被放弃或保留的具体证据，缺少替代方案比较，缺少失败样例驱动的推理链，缺少可验证假设。"
+        "score": 12,
+        "reason": "有较好的二阶思考：不仅描述做什么，还解释为什么 PoC Migration 优先级最高、为什么纯 LLM 不可靠、为什么结构约束优于自由 agent 探索、为什么 fuzzing 瓶颈不是 coverage 而是语义可达性。体现出对研究路线和方法论的反思。",
+        "missingEvidence": "缺少对反方假设的系统比较，例如为什么 constraint-based migration 一定优于 dynamic replay 或 differential analysis；缺少失败案例、边界条件和不可行路径的总结。"
       },
       "brainaryMapping": {
-        "score": 7,
-        "reason": "报告较系统地把三个研究方向映射到 AI-driven AppSec、DevSecOps、Agentic Testing、Autonomous QA、AI-assisted code auditing 等产业方向，也说明了从检测到验证、从随机测试到语义驱动测试的 Brainary 映射。但映射仍偏宏观，缺少目标用户、工作流嵌入点、产品形态、竞品差异和可落地数据闭环。",
-        "missingEvidence": "缺少具体客户画像、典型使用场景、产品 MVP 形态、与 GitHub Advanced Security/Snyk/OSS-Fuzz 等现有系统的差异化证据。"
+        "score": 8,
+        "reason": "Brainary 映射较清楚：PoC 对应自动漏洞验证和 DevSecOps，Fuzz Driver 对应 Agentic Testing 和 Autonomous QA，IMO 对应 AI-assisted code auditing。报告也将三者映射到企业安全验证、测试平台、代码扫描工具等产业场景。",
+        "missingEvidence": "缺少更具体的 Brainary 图谱层级，例如用户、任务、输入输出、替代的人类工作流、系统模块边界；也缺少对竞品或现有工具链位置的精确映射。"
       },
       "monetaryValue": {
-        "score": 6,
-        "reason": "报告主动评估了替代人工程度，并判断 PoC Migration 商业价值最高，这符合货币价值导向。其价值逻辑是替代安全工程师进行漏洞验证、patch validation 和自动漏洞复现。但目前没有量化商业价值，缺少市场规模、付费方、节省人力成本、单位经济模型和产品化路径，因此只能给中等分。",
-        "missingEvidence": "缺少 TAM/SAM/SOM、客户愿付费场景、节省工时估算、部署成本、竞品价格、商业闭环指标。"
+        "score": 7,
+        "reason": "报告明确讨论了替代人工程度和产业价值，判断 PoC Migration 商业价值最高，因为它替代安全工程师进行漏洞验证。这是有用的估值逻辑。但商业价值仍停留在定性判断，缺少客户画像、付费场景、单位经济价值、市场规模或集成路径。",
+        "missingEvidence": "缺少具体企业痛点证据、潜在客户、现有产品价格、验证一个漏洞可节省多少人工时间、PoC migration 与现有 DevSecOps 平台的商业差异。"
       },
       "projectManagement": {
-        "score": 8,
-        "reason": "报告有优先级排序、风险列举和下周计划，并明确 PoC Migration 是最高优先级，ASE deadline 是近期目标。但项目管理粒度不够：没有本周计划与实际完成的对照，没有里程碑、时间预算、阻塞项责任人、交付物定义，也没有说明三条线如何避免分散注意力。",
-        "missingEvidence": "缺少本周计划完成率、具体 milestone、每个方向的交付物、时间分配、风险缓解方案、截止日期倒排表。"
+        "score": 9,
+        "reason": "有优先级排序、风险识别和下周计划，且明确 PoC Migration 是最高优先级。不过同时推进三个方向，项目焦点仍然偏分散；缺少里程碑、完成定义、时间预算、依赖关系、阻塞项和本周承诺完成情况。",
+        "missingEvidence": "缺少本周计划与实际完成的对照；缺少 ASE deadline 前的倒排计划；缺少每个方向的最小可交付物、验收标准、实验排期和风险缓解措施。"
       },
       "nextAction": {
-        "score": 6,
-        "reason": "下周行动有方向：PoC 补实验和论文收敛，Fuzzing 设计 ASG 初版，IMO 探索 SMT consistency checking 和形式化 I-M-O relation。但多数动作不可验收，例如“完成实验补充”没有说明补哪些实验、成功标准是什么；“设计 ASG 初版”没有 schema、样例库或评价指标。",
-        "missingEvidence": "缺少可验收任务清单、具体实验名称、预期输出文件、完成标准、优先级内的取舍规则。"
+        "score": 7,
+        "reason": "下周行动基本明确：PoC 完成实验补充和论文收敛，Fuzzing 设计 ASG 初版并做 dependency validation，IMO 探索 SMT consistency checking 和 formalization。方向合理，优先级也清楚。",
+        "missingEvidence": "动作还不够可验收，例如没有说明实验补充要完成哪些表、多少案例、哪个 baseline；ASG 初版的结构产物是什么；SMT consistency checking 的最小 demo 或成功标准是什么。"
       },
       "evidenceQuality": {
         "score": 2,
-        "reason": "报告有少量具体例子，如 CodeQL #21066、vpx_calloc、ZipSlip、dependency explosion 最高可达 79，但没有展示数据来源、样本规模、复现实验、截图、表格或链接。整体证据质量偏弱，更多是判断和总结。",
-        "missingEvidence": "缺少原始数据、实验日志、代码仓库、issue 链接、统计表、benchmark 设置、可复现材料。"
+        "reason": "证据质量偏弱。报告主要是判断、洞察和框架设计，只有少量例子如 CodeQL #21066、vpx_calloc、ZipSlip 和 dependency explosion 最高 79，但没有原始数据、实验表、链接、commit、截图、日志或可复现实验。",
+        "missingEvidence": "缺少代码仓库链接、实验记录、数据表、案例列表、benchmark、baseline、失败样例和论文草稿进度证明。"
       }
     },
-    "totalScore": 61,
-    "tier": "C",
-    "oneLineJudgment": "本周认知框架和产业映射较强，但硬证据、实验产物和可验收项目管理不足，当前更像研究方向梳理而不是可交付进展周报。",
-    "professorFollowUp": "建议追问一件事：PoC Migration 作为最高优先级，下周必须交付哪一个可验证结果？请要求学生给出具体实验表格、数据集、baseline、指标和论文段落，而不是继续扩展三个方向的概念框架。"
+    "totalScore": 68,
+    "tier": "B",
+    "oneLineJudgment": "本周认知和选题收敛质量较高，但硬进展和证据链不足，当前更像研究路线重构周，而不是实验证明周。",
+    "professorFollowUp": [
+      "要求学生下周只把 PoC Migration 作为第一交付物，给出实验表、案例列表和 ASE 论文剩余任务倒排。",
+      "追问 constraint-based PoC migration 相比 diff-based 或 replay-based 方法的可验证优势是什么，必须用至少 3 个具体漏洞案例说明。",
+      "要求 Fuzz Driver 的 ASG 不只画概念图，要给出节点、边、约束、验证规则和一个库上的最小运行样例。",
+      "要求 IMO 的 FP mapping 给出样本规模、分类标准和每类代表案例，否则不能支撑 80% M-O mismatch 的判断。",
+      "教授本周最应该学习的一点是：学生正在把三个方向统一到‘AI 对程序语义的结构化验证’上，这个统一框架有战略价值，但必须尽快落到实验和可交付物，否则会变成高质量空转。"
+    ]
   }
 }

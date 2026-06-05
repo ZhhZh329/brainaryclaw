@@ -1,54 +1,54 @@
 {
   "key": "person:huang-xun:2026-05-24:weekly-score",
-  "generatedAt": "2026-06-05T18:02:47.329Z",
+  "generatedAt": "2026-06-05T22:03:13.023Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "4b44e10a420a556d767e1c9d748559f42eaed688aedcc0d7332ae941be7d625f",
   "result": {
     "hardProgress": {
-      "score": 18,
-      "reason": "本周有明确硬进展：完成18种 jailbreak 攻击方法、每种50条样本的全量评测；将 judge 从 deepseek-chat 切换到 GPT-4o；实现动态红队测试框架并本地打通 DARWIN“收集-评估-进化”链路；SafeClaw 完成 malicious-skills 42个样本与 code-execution 33个脚本的三轨平行评测，并给出检测率、触发率、漏检类型等结果。硬产出密度高，且包含新数据、新模块和新失败模式。",
-      "missingEvidence": "缺少原始结果表、代码提交链接、实验配置、每类攻击的完整成功率明细、Judge 一致性验证、DARWIN 链路日志；“所有17种攻击手法均优于 plain”与前文“18种方法”存在口径不一致。"
+      "score": 17,
+      "reason": "本周有明确硬进展：完成构造符号语言方向 18 种 jailbreak 方法全量评测，每种 50 条样本；完成 GPT-4o judge 替换；实现动态红队测试框架；本地打通 DARWIN“收集—评估—进化”链路但在进化节点暴露失败；SafeClaw 侧完成 malicious-skills 与 code-execution 双场景 harness，并对 42 个恶意 skills、33 个恶意脚本做三轨对比。硬进展密度较高，且包含新数据、新模块、新失败模式。但报告中存在“18 种攻击方法”和“17 种攻击手法均优于 plain”的表述不一致，且没有附完整实验表。",
+      "missingEvidence": "缺少完整结果表、每类攻击的明细越狱率、失败样例、代码提交记录、运行日志、judge prompt 与评分一致性验证。"
     },
     "cognitiveIncrement": {
       "score": 13,
-      "reason": "认知增量较清楚：一是区分了 SafeClaw 失败来自 harness 不完整、底层模型能力不足和 Prompt Injection 鉴别能力差异；二是证伪了3B小模型本地端到端红队进化的可行性；三是发现动态学术/角色扮演语境比静态模板更有效。不是简单汇报实验，而是从实验中更新了对安全下限、模型能力门槛和自动化路径的判断。",
-      "missingEvidence": "缺少更严格的对照设计说明，例如 GPT-4o Judge 是否改变了历史结论、动态模板与静态模板是否在同一目标模型和同一数据集上比较、3B失败是否可归因于模型能力而非提示词或解析器设计。"
+      "reason": "认知增量明确：从“端到端复杂性导致 SafeClaw 崩溃”更新为“正确 harness 能恢复 L0 路由效果，但底层模型能力仍限制 Prompt Injection 识别”；从“本地小模型可跑自动红队闭环”更新为“3B 模型在失败反思和策略重构上不可用”。这不是单纯描述结果，而是对假设进行了证实和证伪。扣分点是部分结论仍依赖单周实验，模型能力门槛尚未通过 7B/Claude 对照闭环确认。",
+      "missingEvidence": "缺少上周假设的原始定义、对照组设计细节、3B 失败的具体输出样例、不同模型在同一任务上的横向比较。"
     },
     "cot2Depth": {
-      "score": 13,
-      "reason": "CoT's CoT 有较高价值，尤其是“意图分类能力”和“执行克制力”割裂这一点，直接把 Agent 安全问题从分类准确率推进到执行轨迹安全；第二个关于攻击生成能力与失败反思能力不对称衰减，也能转化为非对称模型调度策略。报告不仅给出现象，还解释了为什么尚未被 workflow、benchmark、module 吸收。",
-      "missingEvidence": "CoT's CoT 1 的5个执行抢跑案例没有给出具体轨迹样例；CoT's CoT 2 缺少与7B或更强模型的对照，因此当前只能支持中等强度结论。"
+      "score": 12,
+      "reason": "CoT’s CoT 有两条较有价值的二阶结论：一是 Agent 的意图分类能力和执行克制力分离，二是红队自动化中攻击生成能力与失败反思能力不对称衰减。两条都能导向 workflow/module 设计，而不是停留在观察层。但第一条从 5 个执行抢跑失败模式外推到 Agent 安全通用机制，证据仍偏少；第二条作者自己标为 B，且尚未完成 7B 对照，因此深度足够但稳健性未满。",
+      "missingEvidence": "缺少执行抢跑案例的 trajectory 逐步记录、失败模式分类标准、反事实测试、不同 Agent 框架是否复现、3B/7B/更大模型在反思任务上的能力曲线。"
     },
     "brainaryMapping": {
       "score": 8,
-      "reason": "Brainary 映射较具体：DARWIN 反思崩溃对应 calibration 和 tool orchestration，SafeClaw 越权执行对应 cognitive control 和 risk modeling，并提出 execution restraint 作为新的安全编排维度。这不是泛泛关联，而是指向了可沉淀的 agent module 和 workflow。",
-      "missingEvidence": "缺少 Brainary 内部现有模块接口、输入输出协议、如何加入强制解析器或 cognitive control lock 的设计草图；还没有说明该映射如何进入具体 benchmark 或 memory。"
+      "reason": "报告把 DARWIN 反思崩溃映射到 calibration 和 tool orchestration，把 SafeClaw 越权执行映射到 cognitive control 和 risk modeling，并提出 execution restraint 作为 Brainary 安全编排的新维度。这一映射有方向性价值，尤其是把自然语言输出扰动与强类型执行控制联系起来。扣分点是还没有转成 Brainary 内部可执行的接口、状态机、记忆结构或评估指标。",
+      "missingEvidence": "缺少 Brainary 现有模块的具体接口映射、execution restraint 的形式化定义、需要新增哪些节点/锁/解析器、如何评估 cognitive control 改善。"
     },
     "monetaryValue": {
       "score": 7,
-      "reason": "给出了60万元人民币的估值，并尝试用外部安全服务报价和替代高级安全研究员工时来估算，方向上合理；也说明了潜在买单方，包括大模型厂商、Agent 应用开发商和安全审计机构。",
-      "missingEvidence": "估值依据仍偏主观，缺少真实报价截图、客户访谈、竞品价格、可交付形态和采购路径；没有区分当前已完成资产的价值与未来完整系统的价值。"
+      "reason": "报告给出 60 万人民币估值，并说明由一次 Agent 渗透测试服务约 20 万加上替代 2 名高级安全研究员 6 个月约 42 万构成，也列出潜在买单方：模型厂商、企业 Agent 开发商、安全合规审计机构。商业逻辑成立，但估值仍偏假设，缺少真实报价、客户访谈、竞品价格证据和当前成果可交付程度评估。",
+      "missingEvidence": "缺少真实市场报价链接或合同依据、潜在客户需求证据、当前 harness 能否产品化交付的范围说明、与 Lakera/安全公司服务的功能对比表。"
     },
     "projectManagement": {
       "score": 13,
-      "reason": "项目管理信息完整：写明原计划、实际完成、投入时间、下周时间、关键里程碑、资源依赖、关键路径、API成本问题、偏差原因和纠偏动作。尤其明确提出 Anthropic API 和GPU服务器是阻塞项，便于老师决策介入。",
-      "missingEvidence": "缺少任务拆分到具体 issue 或实验编号；没有列出当前代码/数据是否可复现、哪些实验已经冻结、哪些仍需重跑；成本只说“较高”，没有给出实际金额或 token 数。"
+      "reason": "项目管理信息较完整：写明当前阶段、原计划与实际完成差异、投入时间、下周时间、关键里程碑、资源需求、依赖关系、成本问题、偏差原因和纠偏动作。尤其明确指出 Anthropic API 与 GPU 服务器是关键路径阻塞。扣分点是里程碑验收标准还不够硬，例如“输出对比报告”“跑通闭环”需要定义成功指标和最低实验规模。",
+      "missingEvidence": "缺少任务拆分到具体 deliverable 的验收标准、服务器资源排期确认、API 预算上限、失败时的备选方案、代码/数据管理位置。"
     },
     "nextAction": {
       "score": 8,
-      "reason": "下周动作具有可验证性：服务器部署7B、实现 PAIR 风格迭代优化、用 Qwen2.5-3B 做 Attacker、配置 Claude 重跑三轨评测、完成 google-workspace 场景评测并输出对比报告。动作基本都能在一周内形成可检查结果。",
-      "missingEvidence": "下周任务较多，存在并行过载风险；没有明确优先级排序。如果 Anthropic API 或服务器资源不到位，备用方案不够清晰。"
+      "reason": "下周动作具体：迁移 DARWIN 到服务器、部署 7B、实现 PAIR 风格迭代优化、用 Qwen2.5-3B 作为 Attacker、配置 Claude 重跑 SafeClaw、完成 google-workspace 场景评测。这些动作与本周卡点直接对应。扣分点是动作数量偏多，优先级需要进一步压缩；每个动作的最小验证标准不够量化。",
+      "missingEvidence": "缺少每个 next action 的成功判据，例如 7B 反思任务通过率、PAIR 迭代轮数、Claude 复现实验样本数、google-workspace 的完成定义。"
     },
     "evidenceQuality": {
-      "score": 4,
-      "reason": "报告提供了多个关键数字：18种攻击方法、每种50条样本、jailbreak rate 22.4%、hypothetical 42%、malicious-skills 42个、code-execution 33个、L0检测率69%、路由触发率85%和81%、路由抛锚率14%。证据意识较强，也给出了A/B证据等级。",
-      "missingEvidence": "缺少原始数据、统计置信区间、失败样例、完整表格、复现实验脚本、模型版本、温度参数、prompt、判分标准和人工核验比例；因此证据质量尚未达到可直接论文级引用。"
+      "score": 3,
+      "reason": "报告提供了若干关键数字：18 种攻击、每种 50 样本、hypothetical 42%、泛化失败平均 22.4%、malicious-skills 69.0% vs 38.1%、路由触发率 85%/81%、14% 路由抛锚率、75 个 SafeClaw 样本、5 个执行抢跑失败。但证据主要以摘要形式出现，未给原始表格、置信区间、样本构成、prompt、judge 标准、模型版本和错误案例，因此可读性强但可复验性不足。",
+      "missingEvidence": "缺少原始实验结果表、样本 ID、prompt 模板、judge rubric、模型版本、运行日志、随机种子、统计显著性、失败案例原文。"
     },
-    "totalScore": 84,
+    "totalScore": 81,
     "tier": "A",
-    "oneLineJudgment": "这是高质量的一周：硬实验推进充分，最有价值的新发现是 Agent 安全不能只看路由触发和分类准确率，还必须检查执行轨迹中的越权抢跑；主要短板是证据包和可复现材料还不完整。",
-    "professorFollowUp": "老师最该追问三件事：第一，要求学生提交 SafeClaw 三轨评测的原始表格和5个执行抢跑轨迹样例；第二，优先协助解决 Anthropic API 与7B服务器资源，因为它们是当前关键路径；第三，要求下周产出一个最小可复现的强类型拦截 harness，而不仅是继续扩大实验。"
+    "oneLineJudgment": "这一周的硬进展和认知增量达到 A 档，核心价值在于发现 Agent 安全路由的“执行抢跑”失败模式，但证据可复验性和下周验收标准仍需补强。",
+    "professorFollowUp": "老师最应该追问三件事：第一，要求提交 SafeClaw 三轨评测的完整表格、5 个执行抢跑 trajectory 和 14% 路由抛锚样例；第二，尽快决定是否提供 Anthropic API 和 7B 服务器资源，因为这是当前关键路径；第三，要求下周把“强类型阻塞执行流”做成最小原型，用 JSON Schema 或强制解析器证明能否消除自然语言导致的越权执行。"
   }
 }
