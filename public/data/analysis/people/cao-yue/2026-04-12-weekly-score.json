@@ -1,54 +1,60 @@
 {
   "key": "person:cao-yue:2026-04-12:weekly-score",
-  "generatedAt": "2026-06-05T18:00:40.707Z",
+  "generatedAt": "2026-06-05T20:00:41.753Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "24c94c73e9453d45d6852510f0e5aeef386ccf3856811d6cf0a3b11d5d1cbb7d",
   "result": {
     "hardProgress": {
-      "score": 15,
-      "reason": "本周有明确的硬进展：识别了单样本训练的两个结构性问题，并设计且初步实现了五阶段 batch 训练流程，包括 Collect、Diagnose、Modify、Validate、Accept/Reject；同时补充调研了两篇与 distributional semantics 框架相关的文献。进展不是停留在想法层面，已有流程设计和实现动作。但缺少 batch 机制运行后的量化结果，例如成功率、收敛速度、退化率、与单样本训练的对照指标，因此硬进展还不能判定为已验证有效。",
-      "missingEvidence": "缺少 batch 训练机制的实际运行日志、前后对比实验、accept/reject 次数、性能提升幅度、失败样本案例，以及新增两篇文献如何具体支撑 P1/P2/P3 的详细映射表。"
+      "score": 14,
+      "reason": "本周有明确的结构性产出：识别单样本训练的两个根本问题，并提出五阶段 batch 训练流程，包括 collect、diagnose、modify、validate、accept/reject；同时补充了两篇 distributional semantics 相关文献并建立到 P1/P2/P3 的映射。但硬进展主要停留在框架设计和初步实现层面，尚未提供 batch 机制运行结果、训练曲线、失败案例对比或 accept gate 的实测效果。",
+      "missingEvidence": "缺少 batch 训练前后性能对比；缺少 batch size、accept 阈值、崩坏阈值的具体定义；缺少运行日志、样本数、成功率、退化率；缺少两篇新增文献如何具体支撑不可能性分析的摘要表或论证链。"
     },
     "cognitiveIncrement": {
       "score": 13,
-      "reason": "认知增量较强。核心增量是把单样本训练不稳定性从“调参问题”重新定位为“归因单元选错”的信号问题，并提出 batch 级聚合作为结构性解法；同时明确 accept gate 需要同时约束平均收益和最差样本，避免整体优化牺牲局部样本。这些不是普通执行总结，而是对框架失败机制的抽象提升。Distributional semantics 部分也有文献收敛性的判断，但仍偏概括。",
-      "missingEvidence": "缺少能够证明“归因单元选错”优于其他解释的对照证据，例如 agent 能力不足、prompt 表达不足、样本分布过窄等替代假设的排除过程。"
+      "reason": "认知增量较清晰：将单样本训练不稳定性从调参问题重新定义为信号归因问题，并提出 batch 级聚合作为结构性解法；同时指出 accept gate 需要同时约束平均收益和最差样本，避免整体提升下的局部崩坏。这些不是简单执行记录，而是对训练机制和 meta-cognition 粒度的抽象提升。",
+      "missingEvidence": "缺少该认知增量是否被实验反证或验证的证据；缺少不同归因粒度下 diagnosis 准确率或 prompt 收敛性的对比。"
     },
     "cot2Depth": {
       "score": 12,
-      "reason": "CoT's CoT 有两条，均指出老师可能原本不知道的机制性认识，并说明自动化潜力、沉淀形式和证据等级。第一条“归因单元选错”有较好的二阶深度，能从失败现象上升到框架设计层。第二条“双指标 accept gate”合理，但相对更接近工程经验总结，且作者自己也承认阈值定义和校准未标准化。整体深度较好，但证据等级主要自评为 B，尚未形成强验证。",
-      "missingEvidence": "缺少 CoT's CoT 对应的失败案例、跨样本 issue 聚合样例、单指标 gate 失败案例、双指标 gate 改善案例，以及可复用的崩坏阈值定义。"
+      "reason": "CoT's CoT 有两条，均能解释为什么这是老师可能原本不知道的新机制，并进一步提出自动化潜力和沉淀形式。第一条关于归因单元选错的判断较有深度，能上升到框架设计层。第二条关于双指标 accept gate 的判断合理，但相对更接近工程常识，新增性弱于第一条。",
+      "missingEvidence": "CoT's CoT 的证据等级均为 B，但没有说明 B 的判定标准；缺少实际案例证明单样本 diagnosis 将样本特例误判为 prompt 缺陷；缺少双指标 gate 相比单指标 gate 的消融结果。"
     },
     "brainaryMapping": {
       "score": 8,
-      "reason": "Brainary 映射比较清晰：batch 归因聚合映射到 Cognitive Control，accept gate 双指标映射到 Risk Modeling，并且说明了新意和可沉淀模块。优点是没有只做标签式关联，而是指出“归因单元选择是一种 meta-level 控制决策”和“局部样本崩坏是一类独立风险”。不足是映射仍停留在概念层，缺少 Brainary 模块接口、输入输出、触发条件和评估指标。",
-      "missingEvidence": "缺少 Brainary cognitive control 与 risk modeling 的模块化规格，例如状态变量、控制动作、风险函数、触发条件、与现有 Brainary 架构的接口关系。"
+      "reason": "Brainary 映射较具体：batch 归因聚合映射到 Cognitive Control，双指标 accept gate 映射到 Risk Modeling，并提出模块扩展方向。映射不是泛泛贴标签，而是能指出 cognitive control 中的噪声过滤和 risk modeling 中的局部崩坏保护。",
+      "missingEvidence": "缺少 Brainary 现有模块定义与本周新增机制之间的接口说明；缺少这些映射如何进入 Brainary 系统结构、数据结构或调度逻辑的具体方案。"
     },
     "monetaryValue": {
       "score": 5,
-      "reason": "报告尝试给出两个任务的人民币估值，并说明潜在买单方，包括 AI 安全红队企业、顶会学术赛道和 benchmark 工具市场。但估值依据偏粗，主要是类比顶会论文、红队工具授权和 SaaS benchmark，并未给出具体客户、竞品价格、采购场景、转化路径或收入假设。因此 monetary value 有意识但证据弱，商业价值判断仍偏推测。",
-      "missingEvidence": "缺少明确市场验证，例如潜在客户访谈、竞品定价链接、benchmark SaaS 的真实采购案例、红队工具授权案例、转化周期、成本结构和收入概率。"
+      "reason": "报告给出了两个任务的人民币估值、潜在买单方和参考依据，但估值仍偏假设性。顶会论文折算、红队工具授权、benchmark SaaS 授权这些价值路径可能成立，但本周证据不足以支撑 80 万和 120 万的具体金额。当前更像市场想象，而非已被客户、用户或可交付产品验证的价值。",
+      "missingEvidence": "缺少真实客户访谈、竞品价格、授权案例、潜在用户需求证据；缺少从当前技术成熟度到工具授权或 benchmark SaaS 的转化路径和时间表；缺少估值区间的敏感性分析。"
     },
     "projectManagement": {
-      "score": 11,
-      "reason": "项目管理信息较完整，分别列出两个项目的阶段、时间投入、资源消耗、关键路径、进度状态和纠偏方案。Meta-Cognition Attack Framework 被标为关键路径，Distributional Semantics 为非关键路径，优先级区分合理。但管理仍偏描述性，缺少可检验里程碑、验收标准、风险登记和下周具体实验排期。所谓“持续观察运行效果”和“继续补充文献”不足以支撑强项目控制。",
-      "missingEvidence": "缺少下周明确里程碑，例如要跑多少个 batch、batch size 备选范围、accept 阈值候选、评价指标、文献调研完成标准、理论框架输出物形式和截止时间。"
+      "score": 10,
+      "reason": "项目管理信息较完整，包含两个项目的阶段、时间投入、API 成本、关键路径判断和下周预计投入。主线 A 被识别为关键路径，主线 B 为非关键路径，这有助于资源分配。但管理粒度仍偏粗，缺少明确里程碑、验收指标、风险优先级和下周可检查交付物。",
+      "missingEvidence": "缺少下周具体完成标准，例如跑多少个 batch、比较几种阈值、输出什么表格；缺少风险登记表；缺少当前实现完成度百分比；缺少文献调研结束条件。"
     },
     "nextAction": {
       "score": 5,
-      "reason": "下周方向存在，但行动颗粒度不足。Meta-Cognition 主线写的是“持续观察框架运行效果”，Distributional Semantics 写的是“继续完善理论框架覆盖面”，自动化转化也只是指出门槛。这些方向正确，但不是可执行任务清单。缺少具体实验、具体文献、具体产物和明确完成标准。",
-      "missingEvidence": "缺少下一步行动的数量化定义，例如下周运行几轮 batch、比较哪些 gate 策略、记录哪些指标、补充哪些论文、输出什么表格或实验设计文档。"
+      "reason": "下周方向写了继续观察框架运行效果、继续完善理论框架覆盖面，但行动项不够可执行。对于 batch 训练机制，最需要的是明确实验计划、评价指标和阈值搜索方案；对于 distributional semantics，最需要的是从文献映射进入实验设计，而报告只说继续推进。",
+      "missingEvidence": "缺少下周的具体实验清单；缺少 batch size 和 accept 阈值的候选范围；缺少至少一个可交付产物，例如消融表、失败案例库、文献矩阵或 P1/P2/P3 实验草案。"
     },
     "evidenceQuality": {
       "score": 3,
-      "reason": "证据质量中等偏弱。报告提供了机制设计、文献名称、证据等级自评和资源投入，但缺少实验数据、对照结果、日志、引用细节和案例。最核心的 batch 训练机制目前只能证明“设计并实现”，不能证明“有效”。Distributional Semantics 部分有新增文献，但没有展开文献论证链。",
-      "missingEvidence": "缺少实验表格、失败案例、成功案例、模型输出样例、文献具体论点摘录、与 P1/P2/P3 的逐条对应证据，以及可复现代码或流程记录。"
+      "reason": "证据质量中等偏弱。报告有文献名称、机制设计和自评证据等级，但硬证据不足。最核心的 batch 机制尚未展示运行结果，distributional semantics 也主要是文献覆盖而非理论证明或实验验证。",
+      "missingEvidence": "缺少实验数据、代码提交记录、运行截图、定量指标、样本案例、文献论证表；缺少 evidence level B 的评定依据。"
     },
-    "totalScore": 72,
+    "totalScore": 70,
     "tier": "B",
-    "oneLineJudgment": "本周最有价值的进展是把单样本 diagnosis 失败重新定义为“归因单元选错”的结构性问题，并形成 batch 训练机制；但当前主要停留在设计与初步实现，缺少量化验证和可执行的下周实验计划。",
-    "professorFollowUp": "老师最应该追问：下周能否用最小实验验证 batch 归因是否真的优于单样本归因？建议要求学生提交一个对照表：单样本训练 vs batch 训练，在相同样本集上的成功率、平均收益、最差样本退化、accept/reject 次数、diagnosis issue 聚合结果，以及至少两个失败案例分析。"
+    "oneLineJudgment": "本周最有价值的进展是把单样本 diagnosis 的失败重新定义为归因粒度错误，并设计 batch 级训练机制；但目前仍缺少验证数据和可检查的下周实验计划。",
+    "professorFollowUp": [
+      "要求下周提交 batch 训练机制的最小实验结果：至少包括基线 prompt、候选 prompt、batch size、accept 阈值、平均指标、最差样本指标、退化样本数。",
+      "追问 accept gate 的量化定义：什么叫整体不退化，什么叫单样本大幅崩坏，阈值如何设定，是否有消融方案。",
+      "要求把新增两篇文献放入 P1/P2/P3 文献矩阵，明确每篇论文支持哪一个命题、证据强度是什么、还缺哪类文献。",
+      "让学生把下周目标从“持续观察”改成可验收交付物，例如完成三组 gate 策略对比或输出一版 benchmark 设计草案。",
+      "重点学习的一件事：meta-cognition 的反思单元本身是设计变量，单样本反思与 batch 级反思的信噪比差异可能决定框架是否可收敛。"
+    ]
   }
 }

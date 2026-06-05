@@ -1,54 +1,103 @@
 {
   "key": "person:ge-mengmeng:2026-03-29:weekly-score",
-  "generatedAt": "2026-06-05T18:00:42.436Z",
+  "generatedAt": "2026-06-05T20:00:44.446Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "fe9a98aaf8ec88b0a106c0ff801b0acd3f6376dbea3fd0016176faa39ec6d164",
   "result": {
     "hardProgress": {
-      "score": 16,
-      "reason": "本周有可识别的硬进展：APT groundtruth 与 pipeline 完成、在指定数据集上得到 81% 准确率、完成漏报模式分析；Auto Research Survey 初稿达到 milestone；APT 威胁信息格式化与 skill taxonomy 初稿完成。这些都不是纯思考进展，具备模块、数据、结果和失败模式。但硬进展的可验证性不足，尤其缺少数据集规模、样例、代码或文档链接。",
-      "missingEvidence": "缺少 groundtruth 构建规则、测试集规模、81% 准确率的计算口径、baseline 对比、错误案例样例、survey 初稿链接、taxonomy 初稿样例。"
+      "score": 15,
+      "reason": "本周有明确硬进展：APT groundtruth 与 pipeline 已搭建，并在指定数据集上得到 81% 准确率；Auto Research Survey 完成初稿；APT 威胁信息格式化与 skill taxonomy 完成初稿。这些属于真实产出，不只是思考。但关键实验仍停留在小规模验证，81% 准确率缺少数据规模、任务定义、baseline 和误差分布，漏报改进也尚未实现。",
+      "missingEvidence": [
+        "APT 数据集规模、样本数量、攻击链数量、groundtruth 标注方式",
+        "81% 准确率的计算口径、baseline 对比、置信区间或重复实验结果",
+        "pipeline、survey 初稿、taxonomy 初稿的可访问链接或版本号",
+        "漏报案例的具体数量、类型和代表性样例"
+      ]
     },
     "cognitiveIncrement": {
       "score": 10,
-      "reason": "CoT 增量明确指出 alert-level 表示质量、跨源时序信息、survey taxonomy、skill taxonomy 对系统能力的影响，和本周任务有关。但多数表述仍停留在方向性判断，缺少从实验失败中抽象出的机制性结论。例如“时序信息影响漏报”是有价值的，但还没有说明哪些时序特征、在哪类攻击链阶段、对哪些漏报有效。",
-      "missingEvidence": "缺少漏报案例到认知结论的映射表，缺少不同漏报类型的占比，缺少 alert 表示质量与准确率之间的实验或消融证据。"
+      "reason": "认知增量集中在 alert-level 表示质量、跨源时序信息、capability taxonomy、skill taxonomy 对威胁智能效率的影响。这些判断与任务进展有对应关系，能指导后续研究。但多数仍是概念性总结，缺少由实验结果直接推出的新机制、新变量或反直觉发现。",
+      "missingEvidence": [
+        "alert-level 表示质量如何影响准确率的实验证据",
+        "时序信息缺失导致漏报的具体案例链路",
+        "survey 中 capability taxonomy 相比已有 taxonomy 的新增维度",
+        "skill taxonomy 如何提升威胁智能效率的验证方式"
+      ]
     },
     "cot2Depth": {
-      "score": 11,
-      "reason": "CoT’s CoT 部分覆盖了老师是否原本知道、信息差、自动化潜力和沉淀形式，结构符合模板。第一个 CoT’s CoT 能把漏报归因到跨阶段、跨源时序依赖缺失，具有一定深度。第二个 CoT’s CoT 将 Auto Research Survey 上升到 capability taxonomy、benchmark、agent 分工和 evaluation protocol，也有体系化潜力。但部分判断证据不足，例如“引入时序信息可显著提升漏报检测能力”尚未通过实验验证；第二个点也承认老师原本知道，因此新增性较弱。",
-      "missingEvidence": "缺少时序特征加入前后的对比实验；缺少 capability taxonomy 与已有 survey、benchmark 的差异表；缺少支持证据等级 A/B 的外部或内部证据说明。"
+      "score": 10,
+      "reason": "CoT’s CoT 按模板回答了老师是否原本不知道、信息差、自动化潜力、沉淀形式和证据等级。第一个 CoT’s CoT 把漏报根源从模型复杂度转向时序信息缺失，方向较清晰；第二个 CoT’s CoT 将 survey 价值上升到 capability taxonomy 和 benchmark 接口，也有一定抽象深度。但证据等级主要是自评，缺少支撑材料；“引入时序信息可显著提升漏报检测能力”尚未被本周实验验证。",
+      "missingEvidence": [
+        "证明漏报根源主要是时序信息缺失而非模型复杂度的消融实验",
+        "多源时序融合机制的具体设计草图",
+        "capability taxonomy 与现有自动化科研框架的系统对比",
+        "证据等级 A/B 的判定标准"
+      ]
     },
     "brainaryMapping": {
       "score": 8,
-      "reason": "报告将三个任务分别映射到 Brainary 的 memory、reasoning、workflow management、benchmark/evaluation、tool orchestration 等模块，并列出了可沉淀物，如 threat reconstruction module、temporal reasoning workflow、capability map、threat-driven router。映射比较完整，能看到从具体任务到系统模块的转化路径。但仍偏概念层，缺少接口定义、输入输出 schema、模块调用边界和优先级。",
-      "missingEvidence": "缺少 alert/technique/chain/tactic schema 样例；缺少 temporal reasoning workflow 的步骤图或伪代码；缺少 threat-driven router 的输入输出定义；缺少 Brainary 中现有模块如何复用或改造的说明。"
+      "reason": "Brainary 映射比较完整，分别把 APT 重建、Auto Research Survey、Threat Intelligence Formatting 映射到 memory、reasoning、workflow management、benchmark/evaluation、tool orchestration 等模块，并指出了 alert-level 表示、多源时序对齐、capability abstraction、routing policy 等缺口。扣分点是映射仍偏架构描述，缺少实际 schema、接口、模块输入输出和优先级。",
+      "missingEvidence": [
+        "alert / technique / chain / tactic schema 的字段定义",
+        "temporal reasoning workflow 的输入、输出和调用流程",
+        "research automation capability benchmark 的初始指标集",
+        "threat-driven router 或 skill invocation 的接口设计"
+      ]
     },
     "monetaryValue": {
       "score": 5,
-      "reason": "报告识别了潜在买单方，包括 SOC 平台厂商、安全运维团队、自动化安全系统，并给出三个任务的估值：120 万、30 万、80 万人民币。价值方向合理，APT 漏报降低、人工排查减少、routing 自动化都有商业意义。但估值没有计算依据，没有说明是年化价值、项目合同价值、成本节省还是产品增收，也没有客户场景、采购路径或竞品对比。",
-      "missingEvidence": "缺少估值模型、客户数量假设、单客户付费能力、SOC 人工成本基线、漏报降低带来的经济收益测算、竞品价格或市场证据。"
+      "reason": "周报给出了买单方，包括 SOC 平台厂商、安全运维团队、自动化安全系统，并估算 APT 重建 120 万、Auto Research Survey 30 万、Threat Intelligence Formatting 80 万人民币。问题是金额缺少计算依据，没有说明是年化收入、成本节省、项目合同额还是内部研发价值，也没有给出客户场景、付费触发点或竞品替代关系。",
+      "missingEvidence": [
+        "120 万、30 万、80 万人民币估值的计算公式",
+        "具体客户画像、采购场景和预算来源",
+        "减少漏报或人工排查成本的量化假设",
+        "与现有 SOC、SIEM、威胁情报平台的差异化价值"
+      ]
     },
     "projectManagement": {
       "score": 12,
-      "reason": "项目管理部分较完整，三个项目分别给出阶段、原计划、实际完成、本周投入、下周预计、里程碑、资源、依赖和 token 成本。Auto Research Survey 还明确了协作分工和纠偏动作，APT 重建也说明当前符合预期。问题是风险控制和验收标准不足，第三个项目部分内容在资源处截断；多个任务之间的优先级、关键路径冲突和交付物验收方式不够清楚。",
-      "missingEvidence": "缺少每个项目的明确验收标准；缺少风险列表和对应预案；缺少甘特式关键路径或优先级排序；缺少第三个项目完整资源与依赖信息；缺少协作者交付验收方式。"
+      "reason": "项目管理部分较完整，包含三个项目的阶段、原计划、实际完成、投入小时、下周预计、里程碑、资源、依赖、关键路径和 token 成本。APT 重建与 Survey 的计划闭环较好，也有纠偏动作。但第三个项目的资源部分在报告中不完整；整体缺少风险登记、验收标准、优先级排序、责任人确认和下周交付物定义。",
+      "missingEvidence": [
+        "第三个项目资源与依赖信息不完整",
+        "每个项目下周交付物的验收标准",
+        "主要风险、风险概率和应对策略",
+        "三个项目之间的优先级和资源冲突判断",
+        "协作者的具体交付边界和完成状态"
+      ]
     },
     "nextAction": {
       "score": 7,
-      "reason": "下周动作基本符合“最小可验证动作”：在漏报案例中加入时序特征并测试效果、完成 survey 最终版并提交审阅、完善 taxonomy 覆盖更多 APT 变种、完成 skill selection baseline。这些动作与当前卡点直接对应。但动作的可验证性还不够强，缺少明确指标、样本范围、成功阈值和截止产物。",
-      "missingEvidence": "缺少时序特征实验的目标提升幅度；缺少 survey 提交对象和审阅标准；缺少 taxonomy 覆盖多少 APT 变种才算完成；缺少 skill selection baseline 的评价指标和对照方法。"
+      "reason": "每个任务都有下周最小可验证动作：APT 漏报案例加入时序特征并测试；Survey 完成最终版并提交审阅；taxonomy 覆盖更多 APT 变种。这些动作方向明确，尤其 APT 时序特征测试具备可验证性。但部分动作仍偏泛化，例如“完善 taxonomy”“覆盖更多 APT 变种”缺少数量、样例、指标和截止验收标准。",
+      "missingEvidence": [
+        "时序特征加入后的目标指标，例如准确率、召回率或漏报率变化",
+        "需要测试的漏报案例数量和选择标准",
+        "Survey 最终版的审阅人、提交位置和完成定义",
+        "taxonomy 需要新增覆盖的 APT 变种清单",
+        "skill selection baseline 的具体评价指标"
+      ]
     },
     "evidenceQuality": {
       "score": 2,
-      "reason": "报告中有一个核心量化结果：APT 重建准确率 81%，也有自评证据等级 A/B。但证据质量整体偏弱，因为没有提供数据规模、实验设置、baseline、消融、错误样例、文档链接或可复现实验记录。survey 与 taxonomy 的完成度也缺少可查看交付物。",
-      "missingEvidence": "缺少实验日志、代码或文档链接；缺少数据集统计；缺少评测指标定义；缺少 baseline；缺少样例输出；缺少证据等级判定依据。"
+      "reason": "报告提供了一个关键数字：APT 重建准确率 81%，并有漏报原因分析。但整体证据质量偏弱，缺少实验设置、数据规模、baseline、消融、样例、链接和版本记录。CoT’s CoT 的证据等级 A/B 是自标注，无法独立验证。",
+      "missingEvidence": [
+        "实验日志或结果表",
+        "数据集说明与 groundtruth 构建说明",
+        "baseline 和 ablation 结果",
+        "Survey 初稿与 taxonomy 初稿的文档链接",
+        "漏报分析的原始案例证据"
+      ]
     },
-    "totalScore": 71,
-    "tier": "B",
-    "oneLineJudgment": "本周有真实硬进展和较好的 Brainary 映射，但证据链、可复现实验和商业估值依据不足，当前更像完成了原型与框架，而不是形成了可判断价值的稳定结果。",
-    "professorFollowUp": "老师最应该追问一件事：81% 准确率和漏报归因到底来自什么数据、什么评测口径、什么失败案例；要求下周必须提交一张“漏报类型 × 时序特征 × 改进前后指标”的对比表，以验证时序信息是否真是核心增量。"
+    "totalScore": 69,
+    "tier": "C",
+    "oneLineJudgment": "本周有真实产出和较好的 Brainary 映射，但核心实验证据不足、价值估算无依据，尚未把 81% 准确率转化为可复现、可比较、可决策的研究进展。",
+    "professorFollowUp": [
+      "请她下周优先提交 APT 实验表：数据规模、baseline、81% 准确率口径、漏报数量、三类漏报案例和加入时序特征后的变化。",
+      "要求把 threat reconstruction module 的 schema 画出来，至少包括 alert、technique、tactic、chain、timestamp、source 六类字段及输入输出。",
+      "Survey 不要继续扩文献范围，先交付 capability taxonomy 的一页结构图，并说明它如何转成 benchmark 维度。",
+      "货币价值部分需要重写：每个价值数字必须对应客户、付费场景、成本节省假设或产品功能。",
+      "下周最关键的一件事是验证“时序信息能降低漏报”这个判断，而不是继续增加模块名称。"
+    ]
   }
 }

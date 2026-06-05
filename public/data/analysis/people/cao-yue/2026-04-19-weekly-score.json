@@ -1,6 +1,6 @@
 {
   "key": "person:cao-yue:2026-04-19:weekly-score",
-  "generatedAt": "2026-06-05T18:00:48.787Z",
+  "generatedAt": "2026-06-05T20:00:42.691Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
@@ -11,93 +11,54 @@
     "scores": {
       "hardProgress": {
         "score": 15,
-        "reason": "本周有明确硬进展：完成了 LLaVA 与 GPT-5 作为 evaluator 的对比实验，并从攻击策略长度、OCR 能力、语义绑定三个角度提炼出新观察；Distributional Semantics 主线新增两篇相关论文，形成理论与实证补充。但实验缺少样本规模、任务设置、成功率、对照组和原始输出案例，因此硬进展更像阶段性发现，尚未达到可复现实验结论。",
-        "missingEvidence": [
-          "缺少 LLaVA-eval 与 GPT-5-eval 的具体实验配置",
-          "缺少攻击成功率、迁移成功率、样本数量、方差等量化结果",
-          "缺少具体 prompt、图像样例、策略输出样例和失败案例",
-          "缺少两篇新增论文如何进入自身理论框架的结构化笔记"
-        ]
+        "reason": "本周有实质进展：完成了 LLaVA 与 GPT-5 作为 evaluator 的对比实验，并提炼出攻击策略从极简单词到“实体-属性”绑定表达的差异；同时新增调研两篇与 jailbreak 不可能性和对抗对齐失效相关的论文。进展不是停留在阅读或想法层面，而是产生了一个可用于框架优化的实验观察。",
+        "missingEvidence": "缺少实验规模、样本数、攻击成功率、收敛曲线、具体 prompt/图像样例、评价指标定义，以及 LLaVA-eval 与 GPT-5-eval 策略跨模型迁移的量化结果。"
       },
       "cognitiveIncrement": {
         "score": 13,
-        "reason": "认知增量较强。报告提出 evaluator 不只是判分器，而是通过训练信号塑造攻击策略的收敛方向；同时指出匹配 OCR 下限不等于最优攻击，过度压缩文本会破坏实体-属性绑定。这不是简单工作记录，而是对框架机制的理解推进。",
-        "missingEvidence": [
-          "缺少证明“语义绑定丢失导致攻击力下降”的直接消融实验",
-          "缺少 evaluator 能力边界与策略形态之间的系统性映射",
-          "缺少该认知是否适用于非 OCR 型 VLM 任务的证据"
-        ]
+        "reason": "认知增量明确：evaluator 不只是判分器，而会通过训练信号塑造攻击策略的收敛方向；同时指出“匹配 OCR 下限”不等于最优攻击，因为过度压缩文本会破坏语义绑定。这比一般的实验结果更有解释力，能改变后续框架设计。",
+        "missingEvidence": "缺少对该认知是否普遍成立的边界分析，例如不同 VLM、不同 OCR 能力层级、不同视觉任务上的复现情况。"
       },
       "cot2Depth": {
         "score": 12,
-        "reason": "CoT's CoT 部分能上升到“evaluator 选择即隐式模型建模”的元层判断，并区分了已较强支持的结论与待系统化观察，具备一定深度。问题是证据等级 A/B 的判定主要由作者自述支撑，没有看到判定标准、反例检查或替代解释排除。",
-        "missingEvidence": [
-          "缺少证据等级 A/B 的判定规则",
-          "缺少对替代解释的排除，例如超参、prompt、训练轮数是否导致策略差异",
-          "缺少跨更多 evaluator 的验证，当前主要基于 LLaVA 与 GPT-5 两点比较",
-          "缺少失败样本对 CoT's CoT 结论的约束"
-        ]
+        "reason": "CoT's CoT 写出了两层反思：一是 evaluator 选择等价于隐式模型建模，二是不同 evaluator 训出的策略结构可能反映模型感知边界。它不仅总结现象，也提出了 workflow 和 evaluation protocol 的沉淀方向。扣分点是证据等级 A/B 的判定主要来自作者自述，缺少可核验标准。",
+        "missingEvidence": "缺少证据等级 A/B 的判定规则、实验复现实例、失败案例、替代解释排除，以及“不是超参问题”的对照实验。"
       },
       "brainaryMapping": {
         "score": 8,
-        "reason": "Brainary 关联比较清楚，能把 evaluator 感知能力映射到 cognitive control，把 evaluator 与目标模型错配映射到 risk modeling，并提出模块扩展方向。扣分点在于映射仍停留在概念层，尚未形成 Brainary 中可调用的规则、指标或流程节点。",
-        "missingEvidence": [
-          "缺少 Brainary 模块中具体新增字段或决策规则",
-          "缺少 evaluator 能力评估如何前置进入 cognitive control 的流程图",
-          "缺少 risk modeling 中 evaluator mismatch 的风险分级标准"
-        ]
+        "reason": "Brainary 关联比较清楚：将 evaluator 感知能力映射到 cognitive control，将 evaluator 与目标模型能力错配映射到 risk modeling。这种映射不是简单贴标签，而是提出了“信号来源能力评估前置”的模块扩展方向。",
+        "missingEvidence": "缺少 Brainary 现有模块的具体接口、变量定义、如何把 evaluator 能力匹配度转成可执行决策规则，以及该映射如何进入产品或研究流程。"
       },
       "monetaryValue": {
         "score": 5,
-        "reason": "报告给出了买单方、估值和计算口径，但商业价值论证较粗。80 万和 120 万人民币的估值主要来自类比顶会论文、红队工具授权和 benchmark SaaS，没有当前项目可销售形态、客户需求验证、竞品对比或落地路径证据。因此只能算初步价值假设。",
-        "missingEvidence": [
-          "缺少潜在客户访谈或真实需求验证",
-          "缺少与现有红队工具、benchmark 工具的竞品差异",
-          "缺少当前框架距离可授权工具的功能缺口",
-          "缺少估值中汇率、授权范围、交付形式和复购假设"
-        ]
+        "reason": "报告给出了两个任务的估值、买单方和粗略计算依据，但商业价值论证偏乐观。顶会论文折算、红队工具授权、benchmark SaaS 化等估算没有与当前产物成熟度直接挂钩，也没有给出潜在客户、可交付物形态、竞品差异或销售路径。",
+        "missingEvidence": "缺少客户访谈、竞品对比、授权价格来源、工具可部署程度、benchmark 原型、实际节省成本或提升安全评测效率的数据。"
       },
       "projectManagement": {
         "score": 11,
-        "reason": "项目管理信息较完整，包含两个项目的阶段、投入时间、资源消耗、关键路径和偏差判断。主要问题是关键路径虽然标注了，但没有转化为明确里程碑；主线一的下周计划是“持续观察框架运行效果”，不可验收；主线二也只是“继续补充文献”，缺少收敛标准。",
-        "missingEvidence": [
-          "缺少下周可验收里程碑",
-          "缺少实验完成定义，例如需要多少 evaluator、多少样本、哪些指标",
-          "缺少风险清单和触发条件",
-          "缺少文献调研何时停止、如何沉淀为理论框架的标准"
-        ]
+        "reason": "项目管理信息较完整：列出了两个项目的阶段、投入时间、资源消耗、关键路径状态和进度偏差。主线 A 约 20 小时、主线 B 约 10 小时，资源瓶颈也有说明。主要问题是下周计划过于笼统，缺少里程碑、验收标准和风险触发条件。",
+        "missingEvidence": "缺少下周具体实验清单、每个实验的成功标准、时间排期、优先级、风险清单，以及如果 evaluator 匹配度无法量化时的备选路线。"
       },
       "nextAction": {
-        "score": 4,
-        "reason": "下一步行动是本周最弱部分。报告指出要观察框架运行、继续补充文献、未来做 workflow 和 evaluation protocol，但没有给出下周具体实验、表格、指标、交付物或截止点。教授很难据此判断下周是否推进成功。",
-        "missingEvidence": [
-          "缺少下周要跑的具体实验列表",
-          "缺少 evaluator 能力匹配度的初版量化指标",
-          "缺少跨 evaluator 迁移性评估表的模板",
-          "缺少文献综述下一版的产出形式，例如大纲、命题表或引用矩阵"
-        ]
+        "score": 5,
+        "reason": "报告提出了继续观察框架运行效果、继续补充文献、转化为 workflow 和 evaluation protocol，但行动颗粒度不足。最关键的下一步应是把“evaluator 能力匹配度”量化，并设计跨 evaluator 迁移性实验；目前只说持续观察，无法直接指导执行。",
+        "missingEvidence": "缺少明确的下一周任务列表，例如要跑哪些 evaluator、多少样本、记录哪些策略特征、如何衡量语义绑定、如何判断迁移成功。"
       },
       "evidenceQuality": {
         "score": 3,
-        "reason": "证据质量中等偏弱。报告有实验观察和论文来源，但主要是结论性描述，缺少可复核材料。对于“GPT-5-eval 训出的中长度文本对 LLaVA 更有效”这样的关键结论，需要定量结果和原始案例，否则教授只能相信叙述，不能判断强度。",
-        "missingEvidence": [
-          "缺少实验数据表",
-          "缺少原始输出样例",
-          "缺少统计显著性或至少重复次数",
-          "缺少文献阅读摘录和与自身框架的对应关系"
-        ]
+        "reason": "证据质量中等偏弱。报告提供了具体观察，如 BLACK/YELLOW 与 YELLOW FRAME 的差异，也列出了两篇新增论文，因此不是纯空想。但核心结论主要依赖文字描述，没有表格、数值、截图、日志、代码版本或可复现实验设置。",
+        "missingEvidence": "缺少原始实验记录、定量结果、论文完整引用、消融实验、统计显著性、失败样例和复现路径。"
       }
     },
-    "totalScore": 71,
+    "totalScore": 72,
     "tier": "B",
-    "oneLineJudgment": "这一周有真实机制发现，尤其是 evaluator 通过反馈信号塑造攻击策略这一点有价值；但当前仍停留在强观察阶段，缺少可复现实验数据和明确下周交付物。",
+    "oneLineJudgment": "本周有真实认知增量和实验观察，最有价值的是把 evaluator 选择提升为 meta-cognition 的结构性控制变量，但证据量化和下周执行计划还不够硬。",
     "professorFollowUp": [
-      "要求学生下周提交一张 evaluator 对比实验表：evaluator、目标模型、样本数、平均文本长度、实体-属性保留率、攻击成功率、迁移成功率。",
-      "要求学生给出至少 5 个原始案例，展示 BLACK、YELLOW、YELLOW FRAME 等策略在不同模型上的具体效果。",
-      "追问“GPT-5-eval 训出的策略对 LLaVA 更有效”是否经过重复实验，还是单次观察。",
-      "要求学生把 evaluator mismatch 写成 Brainary risk modeling 的一个明确风险节点，包括输入、判断标准、输出和应对策略。",
-      "要求学生下周不要只写“持续观察”，而是交付一个 evaluation protocol 草案。"
-    ],
-    "oneThingProfessorShouldLearn": "本周最值得教授吸收的一点是：在这个 meta-cognition attack framework 中，evaluator 不是中性的判分工具，它的感知能力会通过奖励信号反向塑造攻击策略；因此 evaluator 的选择本身就是一种隐式目标模型建模，也会成为迁移性风险来源。"
+      "要求学生下周必须提交一张表：不同 evaluator、生成策略长度、是否包含实体-属性绑定、目标模型攻击成功率、跨 evaluator 迁移成功率。",
+      "要求明确“evaluator 能力匹配度”的最小量化定义，例如 OCR 准确率、属性绑定准确率、文本识别阈值与攻击成功率之间的关系。",
+      "要求补一个消融实验：固定攻击搜索算法和超参，只替换 evaluator，证明策略差异主要来自 evaluator 感知能力，而不是随机性或超参。",
+      "要求把“持续观察框架运行效果”改成可验收任务：样本数、模型组合、指标、预期输出和失败判定标准。",
+      "教授本周最应该学到的一点：evaluator 不是中立判分器，它会通过反馈信号隐式决定攻击策略的收敛形态，因此 evaluator 选择本身就是 meta-level cognitive control 决策。"
+    ]
   }
 }
