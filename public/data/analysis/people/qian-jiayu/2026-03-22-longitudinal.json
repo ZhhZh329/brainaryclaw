@@ -1,43 +1,209 @@
 {
   "key": "person:qian-jiayu:2026-03-22:longitudinal",
-  "generatedAt": "2026-05-24T11:51:15.534Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "8fef547048991d41a9bb63cc7a70bf3efdd5c4faea51ee7b93f0d996b1b080bf",
+  "generatedAt": "2026-06-05T18:07:37.182Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "41ffa7da1a8757a286bdf607a0d46b99e32f74d529c23fe1415e0e4ca174c93c",
   "result": {
-    "overallTrajectory": "学生从探索多方向的大规模实验转向对核心缺陷的深入诊断与解法设计，研究能力呈现‘认知收敛’特征：从初步观察现象到定量复盘，发现SFT导致临床保守偏置的根因，并提出系统性解耦范式（SFT+GRPO）。同时，价值认知从学术趣味升级为可量化的商业与临床安全价值，具备从问题定义到经济回报的完整推理。整体而言，研究能力大幅增强，而非仅增加工作量。",
+    "overallTrajectory": {
+      "judgment": "学生在这两周内显示出研究能力的实质提升，不只是变忙。关键证据不是投入 40+ 小时，而是从“发现层级一致性现象并扩展 benchmark”推进到“用定量失败复盘识别目标函数错配，并提出 SFT 与 GRPO 解耦的技术路线”。",
+      "mainShift": "题目从医疗 VLM 的层级一致性评测，转向临床安全感知的多层级逻辑对齐框架；认知从 accuracy/consistency 指标分析，升级到对 false negative、reward design、目标函数、自动化指南编译器的系统性思考。",
+      "hardProgress": "有硬进展。2026-03-15 已完成 EyePACS 500 例四层结构实验，报告了 consistency rate、L1-L4 accuracy、L2 precision/recall/F1/specificity、L3 macro-F1 和各类 recall，并测试 Qwen 3.5 在多个 medical VQA benchmark 上的表现。2026-03-22 完成 benchmark、LLaMA-Factory 数据格式转换、SFT 核心实验和失败复盘，报告 Case-SFT 将 case_consistency_rate 从 0.701 提升到 0.928，但 l2_recall 从 0.559 暴跌到 0.207。",
+      "researchCapabilityChange": "研究能力增强主要体现在三点：第一，能用负结果推进问题定义，而不是只报告成功；第二，能把实验异常上升为目标函数错配的问题；第三，能把研究题目连接到 benchmark、workflow、agent module、商业价值和监管场景。弱点是部分下游主张仍未被实验验证，例如 GRPO 路线、指南自动编译 Agent、Faithfulness evaluator 还处于推演阶段。",
+      "risk": "存在从一个实验失败快速扩展到过大系统愿景的风险。当前已有证据支持“SFT 一致性可能诱发漏诊偏置”，但还不足以支持“唯一技术路径是 GRPO”或“可形成通用临床指南编译器”的强结论。下一步必须用最小实验闭环验证 reward 规则是否真正同时改善 recall、consistency 和 macro-F1。"
+    },
     "stageByWeek": [
       {
         "week": "2026-03-15",
-        "hardProgress": "在EyePACS数据集上实现四层诊断结构，统计出一致性率81.2%，发现L3分级困难（准确率36.4%）；搭建Pathology benchmark zero-shot pipeline；初步测试Qwen 3.5在多个医学VQA基准上的表现。",
-        "cognition": "意识到诊断任务中层级一致性的重要性，第一次将准确率与逻辑自洽性分离思考，但尚未深入分析一致性问题的根源。",
-        "cotscotMaturity": "萌芽阶段，提出‘用层级推理可靠性重新评估医疗VLM’（CoT's CoT），但缺乏实证证据和系统论述。",
-        "brainaryMapping": "仅提到层级一致性思路可迁移到病理VLM，未关联Brainary具体能力。",
-        "projectManagement": "有基础的下周计划，但未体现时间预估、里程碑和风险管理，项目管理较粗放。",
-        "valueReasoning": "未涉及经济价值讨论，题目价值停留在学术新颖性层面。",
-        "nextSteps": "扩展HC实验到多数据集benchmark，并完成ECCV基准的zero-shot代码与模型测试。"
+        "stage": "现象发现与评测框架搭建阶段",
+        "topicTrajectory": "主题集中在 Medical Hierarchical Consistency、VLM for Pathology、Auto Memory/KG Agent 和 Qwen 3.5 医疗能力测试。题目仍有多线并行特征，主线尚未完全收束。",
+        "hardProgress": "完成 EyePACS 500 例四层诊断结构实验，构建 L1 感知、L2 筛查、L3 分级、L4 一致性审计；报告 case-level consistency rate 为 81.2%，L1 accuracy 68.4%，L2 accuracy 67.8%，L3 accuracy 36.4%，L4 accuracy 83.8%；发现所有不一致来自 L2 与 L3 冲突。另完成 Qwen 3.5 在 VQA-RAD、SLAKE、PathVQA、PMC-VQA、OmniMedVQA 上的初步结果。",
+        "cognition": "认知重点是：医疗任务不只是 accuracy，还要看不同诊断层级之间的逻辑一致性。已经意识到 hierarchical reasoning reliability 可能比单任务指标更接近真实诊断流程。",
+        "cotIncrement": "CoT 增量清楚但偏一阶：从实验中认识到诊断层级之间会出现自相矛盾，未来应评估 hierarchical reasoning reliability。",
+        "cotOfCotMaturity": "CoT's CoT 还处于萌芽阶段。报告提出层级一致性可迁移到 pathology，但尚未系统回答为什么该能力未被自动化科研吸收，也未明确沉淀形式、证据等级和自动化路径。",
+        "brainaryMapping": "Brainary 关联较浅，主要是将层级一致性泛化到眼科与 pathology VLM。还没有明确映射到 risk modeling、cognitive control、workflow 或 agent module。",
+        "valueReasoning": "价值推理较弱。没有明确回答谁付费、为什么付费、金额、产物形态、自动化收益。价值判断主要停留在学术题目可能迁移。",
+        "projectManagement": "计划包括继续 Hierarchical Consistency、扩展多数据集 benchmark、完成 ECCV benchmark zero-shot pipeline。问题是任务多线并行，缺少关键路径和里程碑管理。",
+        "nextActionQuality": "下一步动作具体但偏横向扩展：多数据集 benchmark、zero-shot 代码、模型测试。质量中等，因为还未针对 L3 分级瓶颈和一致性规则过简单提出机制级干预。"
       },
       {
         "week": "2026-03-22",
-        "hardProgress": "完成SFT实验的定量复盘：Case-SFT将一致性率拉至92.8%，但筛查召回率从55.9%暴跌至20.7%；提出‘混合SFT打底+GRPO规则强化’的两阶段解法，并开始设计基于ICDR指南的Reward函数。",
-        "cognition": "突破性认知：明确一致性≠临床安全性，交叉熵损失对高危漏诊盲目；必须将格式对齐与硬逻辑约束解耦；SFT只负责语义连贯，RL负责逻辑规则；长CoT文本的连贯性会掩盖视觉忠实度。",
-        "cotscotMaturity": "高度成熟，形成两个有证据等级的CoT's CoT（目标函数错配与规则内化，连贯性掩盖忠实度），并提出了自动化沉淀的具体形式（Agent/Workflow）和当前工程壁垒分析。",
-        "brainaryMapping": "精准对应到Brainary的‘risk modeling’和‘cognitive control’能力，并规划出‘临床指南编译器Agent’和‘安全对齐流水线Workflow’，分析了技术栈断代原因。",
-        "projectManagement": "项目管理精细化：明确当前阶段、原计划与实际偏差、投入时间（40h+）、关键里程碑（3月30日验证GRPO修复效果）、资源依赖（算力自足，需API权限）、偏差归因（认知问题）和纠偏措施（转向GRPO）。",
-        "valueReasoning": "以金钱量化题目价值：任务A（临床风险对齐框架）价值150万/管线，基于NMPA审批沉没成本与医生复核成本；任务B（自动化数据编译Agent）价值40万/万条数据，基于专家标注替代率。明确买单方为需过审AI医疗企业和医院。",
-        "nextSteps": "停止SFT调参，完成基于ICDR的Reward规则引擎开发，在单一数据集上跑通GRPO逻辑惩罚，验证召回修复效果。"
+        "stage": "失败复盘与机制重构阶段",
+        "topicTrajectory": "主题明显收束到 Hierarchical Consistency 缺陷诊断与临床风险感知重构。Auto Memory/KG Agent 仍在背景中，但主线变成 SFT 失败、临床风险、GRPO reward、指南编译 Agent。",
+        "hardProgress": "完成 benchmark、LLaMA-Factory 数据格式转换和 SFT 核心实验。关键硬证据是 Case-SFT 将 case_consistency_rate 从 0.701 提升到 0.928，但 l2_recall 从 0.559 降到 0.207，说明形式一致性提升伴随严重漏诊。扩展 9 个数据集未完成。",
+        "cognition": "认知显著升级。学生区分了 consistency 与 clinical safety，认识到交叉熵对临床严重程度盲目，CoT 连贯性不等于 Faithfulness，并提出 SFT 做 flow alignment、GRPO 做 hard-constraint alignment。",
+        "cotIncrement": "CoT 增量质量高于上周，因为它不是一般性概念，而是由反常实验结果驱动的机制判断：单纯 SFT 可能通过保守偏置获得一致性，导致高危漏诊。",
+        "cotOfCotMaturity": "CoT's CoT 明显成熟。报告包含两个高阶命题：目标函数错配与规则内化、coherence 对 faithfulness 的掩盖；并给出证据等级、为什么未自动化、自动化潜力和建议沉淀形式。第一条证据等级 A，有定量支撑；第二条证据等级 B，仍需系统验证。",
+        "brainaryMapping": "Brainary 映射成熟度明显提高。学生将工作映射到 risk modeling 和 cognitive control，并提出 Guideline Compiler Agent、Safety-Aligned VLM Workflow、Introspection Validator、cognitive control module 等可沉淀形式。",
+        "valueReasoning": "价值推理显著增强。学生明确提出 SaMD 企业和医院为能力买单，估算单个医疗器械软件管线约 150 万人民币价值，以及每万条医疗 CoT 数据约 40 万人民币节省价值。推理开始连接金额、用户、监管、医生复核成本、数据生产成本和自动化产物。",
+        "projectManagement": "项目管理比上周更透明。报告了原计划、实际完成、偏差、原因、40+ 小时投入、3 月 30 日里程碑、算力/API 需求和纠偏动作。缺点是“暂不需要老师介入”的判断可能过早，因为 GRPO reward 设计和安全指标权衡需要导师把关。",
+        "nextActionQuality": "下一步动作质量提高：停止盲目 SFT 调参，转向基于 ICDR 的 Reward 规则引擎，在单数据集验证能否修复漏诊。但仍需补充可判定成功/失败的指标门槛，例如 recall 至少恢复到多少、consistency 不低于多少、macro-F1 是否提升。"
       }
     ],
     "trendScores": {
-      "researchAbilityGrowth": "显著增长（从初步实验统计到机制诊断和系统解法设计，具备独立破局能力）",
-      "valueCognitionGrowth": "剧变增长（从无经济考量到精确的金钱价值估算和商业闭环论证）",
-      "metaCognitionGrowth": "质变增长（从简单现象观察到对元认知控制的理论缺陷分析和监控机制构想）",
-      "automationPathGrowth": "从零到明晰（第一周无自动化意识，第二周设计出‘指南编译器Agent’的详细转化路径）"
+      "scale": "1 表示很弱，5 表示很强；评分只基于已提供的两周报告。",
+      "hardProgress": {
+        "score": 4,
+        "trend": "上升",
+        "evidence": "两周都有实验数字。第二周不仅有 benchmark 和 SFT，还能用关键失败数据反推问题。但 9 个数据集扩展未完成，GRPO 尚未跑通。"
+      },
+      "researchQuestionFocus": {
+        "score": 4,
+        "trend": "上升",
+        "evidence": "从多线并行的 Hierarchical Consistency、Pathology、Auto Memory、Qwen 3.5 测试，收束到临床风险感知与硬逻辑对齐。"
+      },
+      "cotIncrement": {
+        "score": 4,
+        "trend": "上升",
+        "evidence": "第一周是发现层级一致性问题；第二周能区分一致性、安全性、召回率、目标函数和训练范式之间的关系。"
+      },
+      "cotOfCotMaturity": {
+        "score": 4,
+        "trend": "显著上升",
+        "evidence": "第二周开始用证据等级、自动化缺口、沉淀形式和 workflow 来组织高阶认知。第一周基本缺少完整 CoT's CoT。"
+      },
+      "brainaryMapping": {
+        "score": 4,
+        "trend": "显著上升",
+        "evidence": "第二周明确映射到 risk modeling、cognitive control、Guideline Compiler Agent、Introspection Validator。第一周只有迁移到 pathology 的浅关联。"
+      },
+      "metaCognition": {
+        "score": 4,
+        "trend": "上升",
+        "evidence": "第二周能把模型失败解释为缺少 state-tracking、look-back、introspection 和跨层级审计，而不是简单归因于数据或调参。"
+      },
+      "valueReasoning": {
+        "score": 4,
+        "trend": "显著上升",
+        "evidence": "第二周出现用户、金额、监管、医院复核、数据生产成本、技术授权费和自动化 agent 的价值链。第一周基本缺失。"
+      },
+      "evidenceLevel": {
+        "score": 3,
+        "trend": "上升但不充分",
+        "evidence": "SFT 失败和 recall 暴跌有 A 级证据；faithfulness、GRPO 有效性、指南自动编译 Agent、商业定价仍主要是推演或待验证。"
+      },
+      "projectManagement": {
+        "score": 3,
+        "trend": "上升",
+        "evidence": "第二周有里程碑、偏差、纠偏和资源规划；但成功标准仍不够量化，且任务愿景过大。"
+      },
+      "automationPath": {
+        "score": 4,
+        "trend": "显著上升",
+        "evidence": "从无明确自动化路径，升级为临床指南自动化编译 Agent：一端生成 SFT 数据，一端生成 GRPO reward 函数。当前卡点是 reward 仍需人工 hardcode。"
+      },
+      "nextStepQuality": {
+        "score": 3,
+        "trend": "上升",
+        "evidence": "从横向扩数据集转为单数据集验证 reward 机制，方向更聚焦。但还缺少实验矩阵、消融设计和停损标准。"
+      }
     },
-    "valueFunctionChange": "学生的价值函数发生根本转变：初期（第一周）将‘层级一致性’视为可发表的学术问题，价值隐含于新颖性；末期（第二周）将一致性缺陷与医疗事故风险、监管审批、数据生产成本直接挂钩，并计算出具体金钱价值（数百万级）。‘值得做’的理由从‘学术上合理’进化到‘商业上刚需、合规上必备’，并能连接到金额、用户（AI医疗企业、医院）、通用能力（跨病理、放射）、产物形式（论文、Benchmark、Agent）、Brainary（风险建模与认知控制模块）和自动化（数据编译Pipeline）。这种价值推理链条的完整性和可执行性表明学生的研究价值观已从实验室视角升级为产业影响视角。",
-    "repeatedBlockers": "第一周报告的‘DR grading细粒度区分困难’在第二周通过定量复盘被识别为SFT方法论的根因性缺陷，而非孤立卡点，因此未演变成重复阻塞。当前最大的卡点转变为‘如何将自然语言指南自动化编译为RL Reward规则’，这属于新生的高价值瓶颈。",
-    "professorShouldAsk": "在你正在构建的GRPO奖励函数中，除了漏诊惩罚，是否考虑了‘过诊’（假阳性）带来的不必要的侵入性检查成本？你将如何平衡敏感度与特异度，避免从保守偏置跳向另一个极端？另外，针对自动化指南编译Agent，你预计如何验证其抽取的规则库的临床完备性与正确性？",
-    "nextBestIntervention": "1. 敦促学生在本周末前完成最小可行的GRPO实验，验证召回率是否回升至安全水平（>80%），这是项目的关键置信点。2. 建议与李乾坤老师或UCL合作者确认ICDR指南条款的互斥关系的完整性，避免规则遗漏。3. 鼓励学生同时启动指南编译Agent的原型设计，哪怕只是基于prompt的文本解析，以便在论文story中展示‘从知识到训练’的自动化闭环。"
+    "valueFunctionChange": {
+      "week20260315": {
+        "whatStudentValued": "学生认为值得做的是层级一致性、medical VLM benchmark、Pathology 迁移和强模型测试。",
+        "whyValuable": "理由主要是医疗诊断流程有层级结构，单任务 accuracy 不足以评价真实推理可靠性。",
+        "missing": "缺少金额、用户、购买方、产品形式、自动化路径、Brainary 能力映射和明确商业场景。"
+      },
+      "week20260322": {
+        "whatStudentValued": "学生开始把“临床安全”和“硬逻辑约束”置于形式一致性之上，认为值得做的是风险感知对齐、漏诊惩罚、指南转 reward、自动化数据编译。",
+        "whyValuable": "理由从学术指标转向真实临床后果：漏诊、监管审批、医院复核、医疗事故风险、SaMD 合规、数据生产成本。",
+        "moneyConnection": "报告给出两个金额模型：医疗大模型临床风险感知框架约 150 万人民币/单个 SaMD 管线；临床指南 VLM 自动化数据编译 Agent 约节省 40 万人民币/每万条医疗 CoT 数据。",
+        "userConnection": "购买方被定义为医疗 AI 企业、面临 NMPA/FDA 审批的 SaMD 管线、需要降低误诊漏诊法律风险的医院采购方。",
+        "capabilityConnection": "学生将局部 DR 任务提升为通用能力：适用于眼底、病理、放射、工业缺陷等高风险、重逻辑依赖的视觉场景。",
+        "artifactConnection": "产物形式从论文和 benchmark 扩展到 workflow、agent module、evaluator、Guideline Compiler Agent、Safety-Aligned VLM Workflow。",
+        "brainaryConnection": "明确连接到 Brainary 的 risk modeling 和 cognitive control，且提出能作为 Brainary 插件的指南编译器。",
+        "automationConnection": "自动化路径清晰化：输入医学指南 Markdown/PDF，输出 SFT 用层级 CoT 数据和 GRPO 用 Python reward 约束函数。"
+      },
+      "changeAssessment": "价值函数发生了实质变化：从“研究现象值得做”变成“谁会因什么风险付费、产物如何自动化、能力如何通用化”。这是研究能力提升的重要证据。但当前价值估算的证据水平仍有限，150 万和 40 万的计算虽然有逻辑链，但未提供真实客户访谈、报价单、采购案例或监管反馈。"
+    },
+    "repeatedBlockers": [
+      {
+        "blocker": "L3 DR grading 细粒度分级困难",
+        "appearsInWeeks": [
+          "2026-03-15",
+          "2026-03-22"
+        ],
+        "evidence": "第一周 L3 accuracy 36.4%、macro-F1 0.338，Mild/Moderate recall 很低；第二周继续关注 l3_macro_f1 修复。",
+        "interpretation": "这是核心模型能力瓶颈，不是简单工程问题。若 L1/L3 视觉识别弱，单靠逻辑约束可能只会改变输出分布，不能真正提升诊断能力。"
+      },
+      {
+        "blocker": "一致性规则过简单，容易被模型投机利用",
+        "appearsInWeeks": [
+          "2026-03-15",
+          "2026-03-22"
+        ],
+        "evidence": "第一周所有不一致都来自 R1：L2 与 L3 冲突。第二周发现 Case-SFT 通过保守偏置把一致性拉高，却让 recall 暴跌。",
+        "interpretation": "学生已经识别出 consistency metric 可被 gaming。下一步必须把 safety、recall、severity-weighted error 和 consistency 联合评价。"
+      },
+      {
+        "blocker": "实验计划横向扩展与机制验证之间冲突",
+        "appearsInWeeks": [
+          "2026-03-15",
+          "2026-03-22"
+        ],
+        "evidence": "第一周计划扩展到 9 个数据集、4 种疾病；第二周承认扩展未完成，因为 SFT 失败复盘导致转向机制重构。",
+        "interpretation": "这是合理延期，但需要导师帮助确认先机制闭环还是先扩大数据集，否则容易在 benchmark 扩展和 reward 设计之间来回切换。"
+      },
+      {
+        "blocker": "自动化 Agent 愿景与当前 hardcode 状态之间差距较大",
+        "appearsInWeeks": [
+          "2026-03-22"
+        ],
+        "evidence": "学生明确说当前 Reward 规则仍需人工 hardcode，尚未实现从指南自动抽取。",
+        "interpretation": "这是新出现的系统化卡点。当前应先证明人工规则 reward 有效，再谈自动指南编译。"
+      },
+      {
+        "blocker": "Faithfulness 评估还缺少系统证据",
+        "appearsInWeeks": [
+          "2026-03-22"
+        ],
+        "evidence": "学生将 coherence 掩盖 faithfulness 标为 B 级证据，说明只有现象和案例，还没有 FUR、Attention mask 或反事实实验。",
+        "interpretation": "这是论文可信度的潜在短板。如果要讲医疗 CoT 安全，必须证明解释文本与视觉证据绑定。"
+      }
+    ],
+    "professorShouldAsk": [
+      {
+        "question": "你下周 GRPO 原型的最小成功标准是什么？",
+        "whyAsk": "目前只说要修复漏诊，但没有阈值。需要明确例如 l2_recall 至少恢复到多少、case_consistency_rate 允许下降到多少、l3_macro_f1 是否必须提升。"
+      },
+      {
+        "question": "Case-SFT 的 recall 暴跌是否来自数据分布、prompt 格式、label 解析、class imbalance，还是确实来自目标函数错配？",
+        "whyAsk": "学生的机制解释很强，但必须排除工程和数据伪因。否则 GRPO 可能是在修复错误诊断。"
+      },
+      {
+        "question": "Flat-SFT、Case-SFT、混合 SFT、重采样、规则后处理、GRPO 的实验矩阵如何设计？",
+        "whyAsk": "需要把“技术路线判断”变成可比较实验，而不是直接跳到复杂 RL。"
+      },
+      {
+        "question": "Reward 中 false negative 惩罚和逻辑冲突惩罚的权重如何定？是否会造成另一种偏置，例如过度阳性？",
+        "whyAsk": "学生已发现一致性会诱发保守偏置，但风险敏感 reward 也可能诱发高召回低特异性的防御性诊断。"
+      },
+      {
+        "question": "Brainary 的 Guideline Compiler Agent 当前最小可演示版本是什么？",
+        "whyAsk": "自动化愿景很大，应要求最小原型：输入一小段 ICDR 规则，输出可执行 reward 函数，并通过单元测试。"
+      },
+      {
+        "question": "这项工作到底优先产出论文、benchmark、workflow，还是 agent module？本阶段主产物是什么？",
+        "whyAsk": "第二周的产物想象很多，容易稀释执行。需要确定 3 月 30 日前的唯一主线产物。"
+      },
+      {
+        "question": "商业价值估算有没有外部证据？",
+        "whyAsk": "150 万/管线和 40 万/万条数据的计算有逻辑，但报告中没有真实报价、客户访谈或监管案例支撑。需要降低表述强度或补证据。"
+      }
+    ],
+    "nextBestIntervention": {
+      "intervention": "要求学生在 3 月 30 日前完成一个“单数据集、三指标、六模型/策略”的最小闭环，而不是继续扩展愿景。",
+      "specificPlan": [
+        "固定 EyePACS 或当前最稳定数据集，不扩 9 个数据集。",
+        "比较 zero-shot、Flat-SFT、Case-SFT、混合 SFT、重采样 SFT、SFT+GRPO reward 六种策略；如果算力不够，至少比较 zero-shot、Case-SFT、混合 SFT、SFT+GRPO。",
+        "同时报告 case_consistency_rate、l2_recall、l3_macro_f1、specificity、false negative rate 和 severity-weighted error，不能只报一致性。",
+        "把 ICDR 的 R1 逻辑冲突和高危漏诊 reward 写成可读的 Python 规则，并附 10 个单元测试样例。",
+        "设置成功标准：例如相对 Case-SFT 明显恢复 l2_recall，同时 case_consistency_rate 不回落到 zero-shot 以下；具体阈值需由学生和老师共同定。",
+        "暂缓 Guideline Compiler Agent 的完整自动化，只做一个 prompt 级原型：输入 3 条指南规则，输出候选 reward 代码，再由人工审核。"
+      ],
+      "professorRole": "导师应介入一次技术路线审查，重点不是替学生调代码，而是审查 reward 目标是否会制造新偏置、实验矩阵是否能证明机制、以及论文 story 是否被过大的 agent 愿景稀释。",
+      "oneThingProfessorShouldLearn": "本周最值得老师带走的一点是：在多层级医疗诊断中，形式一致性可能与临床安全性冲突；单靠 SFT 提升逻辑一致性会诱发保守偏置和高危漏诊，因此下一步必须用风险加权指标和可执行 reward 机制同时约束一致性与漏诊代价。"
+    }
   }
 }

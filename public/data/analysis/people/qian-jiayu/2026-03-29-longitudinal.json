@@ -1,70 +1,258 @@
 {
   "key": "person:qian-jiayu:2026-03-29:longitudinal",
-  "generatedAt": "2026-05-24T11:50:43.957Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "7d6d103a8e04570fcb8341c07a3247a24eca7c78df1a1e38c5c7356b96ee63ff",
+  "generatedAt": "2026-06-05T18:07:35.303Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "94cbe76c3bbd7b18f4820f641740c7c3ec30723b2b3bfb831ac7e9d077fd23ec",
   "result": {
-    "overallTrajectory": "学生从初步探索层级一致性实验，到深入分析SFT导致的临床安全缺陷并构建解耦式GRPO对齐框架，再到本周将研究细化至临床转诊基准、GPT辅助伪病灶生成与双阶段工作流原型，整体轨迹呈现认知深度递增、硬产出持续积累、研究问题更聚焦真实临床价值的趋势。研究能力显著提升，已非单纯‘更忙’，而是系统性思维、元认知水平、价值推理和项目管理能力均有质的飞跃。",
+    "overallTrajectory": {
+      "judgment": "学生不是单纯变忙，而是在研究能力上有明显纵向提升；提升主要体现在：从跑实验和发现一致性问题，进化到能识别目标函数错配、重新定义安全指标、构造可复用 benchmark/evaluator/workflow，并把题目价值连接到用户、金额、Brainary 能力和自动化路径。",
+      "coreEvidence": [
+        "2026-03-15 主要是基于 EyePACS 做 Hierarchical Consistency 统计，已有硬指标，但方法层还停留在发现问题和扩展 benchmark。",
+        "2026-03-22 通过 Case-SFT 定量复盘发现一致性提升会导致 l2_recall 从 0.559 暴跌到 0.207，认知从“提升一致性”升级为“安全性和目标函数错配”。",
+        "2026-03-29 进一步把 L2 任务从 DR presence 改为 referable / non-referable，并完成 referral-aware benchmark、evaluator、direct-only baseline、pseudo-lesion workflow、two-stage 接口原型，说明开始把认知转成可复用研究资产。"
+      ],
+      "notJustBusyReason": "周报中的工作量很大，但更关键的是每周的失败模式被转化成下一周的方法接口：一致性规则简单 -> SFT 保守偏置 -> referral risk metrics -> two-stage visual inventory/protocol audit。这是研究能力增强的证据。",
+      "mainRisk": "实证验证仍落后于方法抽象。2026-03-29 的 two-stage workflow 已有接口和 schema，但真实 API 输出尚未跑，clinician-checked 验证缺失；如果继续增加结构而不验证，可能变成架构先行。"
+    },
     "stageByWeek": [
       {
         "week": "2026-03-15",
-        "stage": "浅层实验与初步认知",
-        "analysis": "本周完成层级一致性初步实验，获取基础数据，发现分级难和一致性规则简单等表层问题。CoT停留在‘一致性重要’的认知层面，未形成深层CoT's CoT。价值未量化，项目管理意识薄弱。"
+        "stage": "问题发现与初始 benchmark 阶段",
+        "topicTrajectory": "题目围绕 Medical Hierarchical Consistency、Pathology VLM、Auto Memory/KG Agent 展开，主线还较分散，但核心问题已指向医疗 VLM 的层级诊断一致性。",
+        "hardProgress": [
+          "在 EyePACS 上构建四层诊断结构：L1 感知、L2 筛查、L3 分级、L4 审计。",
+          "评估 500 个病例，得到 case-level consistency rate 81.2%。",
+          "报告 L1 accuracy 68.4%、L2 accuracy 67.8%、L3 accuracy 36.4%、L4 accuracy 83.8%。",
+          "初步测试 Qwen 3.5 在多个 medical VQA benchmark 上的结果。"
+        ],
+        "cognition": "已经意识到医疗任务不是单点 accuracy，而是层级间逻辑一致性；但仍主要停留在‘一致性问题客观存在’和‘可迁移到 pathology’的层面。",
+        "cotCotMaturity": "低到中。已有 CoT's CoT 雏形：医疗 VLM 需要从 hierarchical reasoning reliability 评估，但尚未形成目标函数、自动化、证据等级和系统沉淀形式。",
+        "brainaryMapping": "初级。只说明层级一致性可迁移到 pathology，没有明确映射到 Brainary 的 risk modeling、cognitive control、memory、workflow 等能力。",
+        "valueReasoning": "较弱。没有金额估算、买单方、产物形式和商业价值论证；题目价值主要由学术直觉支撑。",
+        "projectManagement": "有下周计划和阻碍，但缺少时间、里程碑、关键路径、资源、成本、纠偏动作。",
+        "nextActionQuality": "中等。计划继续扩展多数据集和完成 zero-shot pipeline，但还没有最小可验证动作和明确的验证标准。"
       },
       {
         "week": "2026-03-22",
-        "stage": "深度诊断与范式重构",
-        "analysis": "通过SFT实验复盘，发现致命保守偏置，提出‘SFT做语义对齐，GRPO做硬逻辑约束’的系统解耦方案。CoT's CoT触及目标函数错配与连贯性掩盖忠实度等根本性问题，证据等级A/B，并给出自动化转化建议。价值观首次货币化，详细计算两款资产价值150万和40万。项目管理规范化，自我纠偏能力强。"
+        "stage": "失败复盘与方法范式重构阶段",
+        "topicTrajectory": "题目从‘层级一致性’升级为‘临床风险感知与硬逻辑约束对齐’，主线明显收敛到医疗 VLM 安全性。",
+        "hardProgress": [
+          "完成 benchmark、LLaMA-Factory 数据格式转换和 SFT 核心实验。",
+          "发现 Case-SFT 将 case_consistency_rate 从 0.701 提升到 0.928，但 l2_recall 从 0.559 暴跌到 0.207。",
+          "提出混合 SFT 打底 + GRPO 规则强化的两阶段路径。",
+          "明确 Reward_logic 和 Reward_FN 的初始设计。"
+        ],
+        "cognition": "重大提升。学生不再把一致性等同于安全性，而是识别出 SFT 交叉熵目标对临床严重程度盲目，会诱发保守偏置和漏诊灾难。",
+        "cotCotMaturity": "高。能提出两个抽象判断：目标函数错配与规则内化、Coherence 掩盖 Faithfulness；并分别给出证据等级、自动化潜力、沉淀形式。",
+        "brainaryMapping": "明显成熟。将工作映射到 risk modeling 和 cognitive control，并提出临床指南编译器、Reward 引擎、workflow、agent module。",
+        "valueReasoning": "大幅增强。明确买单方为医疗 AI 企业和医院采购方；给出 150 万/单个 SaMD 管线和 40 万/万条医疗 CoT 数据的金额估算；能连接监管、人工复核成本、数据生产成本和自动化 Agent。",
+        "projectManagement": "成熟度大幅提升。给出原计划、实际完成、投入时间、关键里程碑、资源、依赖、成本、偏差原因和纠偏动作。",
+        "nextActionQuality": "较高。下周动作从‘多尝试’收敛为‘停止盲目 SFT 调参，先写 ICDR Reward 规则引擎并在单数据集验证召回修复’。"
       },
       {
         "week": "2026-03-29",
-        "stage": "工程化落地与资产沉淀",
-        "analysis": "将研究推进到临床转诊基准与结构化生成控制，产出referral benchmark、evaluator、双阶段workflow等多个具体资产。CoT's CoT新增视觉-审计分层、prompt作为认知控制面、中间层资产设计等实证认知，自动化潜力高。价值推理延伸至子任务级别，进一步巩固货币化习惯。项目管理多线并行，资源与里程碑清晰，已具备独立推进能力。"
+        "stage": "研究资产工程化与接口化阶段",
+        "topicTrajectory": "题目进一步从‘GRPO 规则强化’前移到‘结构化中间资产’，即 referability-aware benchmark、pseudo-lesion schema、two-stage visual inventory -> protocol audit workflow。",
+        "hardProgress": [
+          "完成 referral_v1 train/val/test benchmark、referral-aware evaluator、formal baseline row。",
+          "完成 Qwen3-VL-8B direct-only referral 正式训练和测试评估。",
+          "新增 referral benchmark patcher、consistency evaluator、model summary 脚本。",
+          "搭建 GPT-assisted pseudo-lesion 10-case MVP，完成 ordered sampling、三模型对照、统一分析脚本。",
+          "完成 two-stage prompt、schema、runner 和 analyzer 原型，但真实 two-stage API 输出尚未完成。"
+        ],
+        "cognition": "进一步成熟。学生把问题从‘模型是否一致’改写为‘referable_recall、undercall_severe_or_pdr_rate 是否安全’，并认识到视觉事实层和协议审计层不能强耦合。",
+        "cotCotMaturity": "高但需防止过度宣称。CoT's CoT 能提出 prompt 是 cognitive control surface、RL 前应先有中间资产；但部分 A 级证据依赖 10-case prompt/model 对照和报告内总结，外部可复核细节不足。",
+        "brainaryMapping": "成熟。已经映射到 benchmark/evaluation、risk modeling、calibration、cognitive control、tool orchestration、memory schema、workflow management。",
+        "valueReasoning": "更务实但金额变小。由上一周的宏大商业估值转为按本周资产估算：benchmark/evaluator 17 万、Protocol CoT MVP 12 万、two-stage/GRPO 前置结构 9 万。价值函数更偏向可交付资产和复用价值。",
+        "projectManagement": "较成熟。分项目列出阶段、原计划、实际、投入、里程碑、关键路径、偏差、纠偏和是否需老师介入；并明确 Protocol CoT 从 MVP 到可训练资产还缺 clinician-checked 验证。",
+        "nextActionQuality": "高。动作具体到 4/1 固定 baseline row、跑 gpt-4o two-stage 10 cases、4/5 决定是否进 10% pilot、4/6 形成 200-case filtering rule。缺点是 two-stage 效果尚未验证。"
       }
     ],
     "trendScores": {
-      "认知深度": {
-        "第1周": 2,
-        "第2周": 5,
-        "第3周": 5,
-        "趋势": "大幅提升后保持高位，从表层现象深入到目标函数、认知控制等底层机理。"
+      "scale": "1 到 5 分，5 分代表成熟且有证据闭环。",
+      "hardProgress": {
+        "score": 4.5,
+        "trend": "持续上升",
+        "reason": "从 500 例一致性统计，到 SFT 失败复盘，再到 referral benchmark、evaluator、baseline、pseudo-lesion harness 和 two-stage workflow，硬产物数量与复用性都在增强。"
       },
-      "硬进展": {
-        "第1周": 3,
-        "第2周": 4,
-        "第3周": 5,
-        "趋势": "持续递增，从单数据集实验到多基准、多模型pipeline和workflow原型。"
+      "researchQuestionClarity": {
+        "score": 4.5,
+        "trend": "明显上升",
+        "reason": "题目从多方向探索收敛为医疗 VLM 高风险筛查安全性，核心指标从 accuracy/consistency 转为 referable_recall 和 severe/PDR undercall。"
       },
-      "CoTsCoT成熟度": {
-        "第1周": 1,
-        "第2周": 4,
-        "第3周": 5,
-        "趋势": "从无到有，且证据等级与自动化建议越加充实、可操作。"
+      "cognitionIncrement": {
+        "score": 4.5,
+        "trend": "明显上升",
+        "reason": "每周都有实质认知更新：一致性重要 -> 一致性不等于安全 -> 视觉事实层和协议审计层必须拆分。"
       },
-      "Brainary映射": {
-        "第1周": 1,
-        "第2周": 4,
-        "第3周": 5,
-        "趋势": "从简单迁移到明确对应风险建模、认知控制、记忆等能力，并给出未系统化原因。"
+      "cotCotMaturity": {
+        "score": 4,
+        "trend": "上升后趋稳",
+        "reason": "2026-03-22 已能形成目标函数错配、faithfulness 等抽象；2026-03-29 进一步将 prompt 视作 cognitive control surface。但部分证据等级 A 的支撑仍需更系统样本和可复核实验。"
       },
-      "价值推理": {
-        "第1周": 1,
-        "第2周": 5,
-        "第3周": 5,
-        "趋势": "从无到有，第二周即建立强货币化思维，第三周细化到子任务，价值观内化。"
+      "brainaryMappingMaturity": {
+        "score": 4,
+        "trend": "显著上升",
+        "reason": "从泛泛说可迁移到 pathology，发展为具体映射到 risk modeling、cognitive control、memory schema、workflow、evaluator 和 agent module。"
       },
-      "项目管理": {
-        "第1周": 1,
-        "第2周": 4,
-        "第3周": 5,
-        "趋势": "从无到规范化，逐步多项目并行管理，资源、里程碑、偏差纠偏均清晰。"
+      "valueReasoning": {
+        "score": 4,
+        "trend": "从缺失到较成熟",
+        "reason": "2026-03-15 基本缺失；2026-03-22 能连接监管、医院、企业、数据成本和百万级金额；2026-03-29 更接近实际资产估值，但金额依据仍主要来自学生估算，缺外部报价证据。"
+      },
+      "evidenceLevel": {
+        "score": 3.5,
+        "trend": "上升但不均衡",
+        "reason": "SFT recall collapse 有定量证据；referral baseline 已有正式结果但周报没有列具体数值；two-stage workflow 目前只有接口验证，无真实效果证据。"
+      },
+      "projectManagement": {
+        "score": 4,
+        "trend": "显著上升",
+        "reason": "后两周能写清楚时间、里程碑、投入、资源、关键路径、偏差和纠偏。仍需更严格的验收阈值，例如 two-stage 多少 recall/undercall 改善才进入 pilot。"
+      },
+      "automationPath": {
+        "score": 4,
+        "trend": "显著上升",
+        "reason": "自动化路径从模糊的 Auto Memory/KG Agent，发展为临床指南编译器、Reward 规则引擎、pseudo-lesion workflow、memory schema、monitoring/gating rule。"
+      },
+      "nextStepQuality": {
+        "score": 4,
+        "trend": "上升",
+        "reason": "下一步越来越像最小可验证实验，而不是泛泛推进。2026-03-29 的动作尤其具体，但需要补上效果阈值和停止条件。"
       }
     },
-    "valueFunctionChange": "价值观从无到有，且发生质变：第1周未涉及价值判断；第2周开始将研究问题映射为可货币化资产，明确连接金额（150万/管线、40万/万条数据）、用户（AI医疗企业、医院）、通用能力（跨疾病、跨视觉领域）、产物形式（论文、benchmark、workflow、agent）和Brainary自动化路径；第3周进一步将价值函数拆解至子任务级别，延续金额计算，表明学生已将‘能否创造可量化、可沉淀的资产’内化为选题与推进的核心决策依据，价值观趋于成熟和稳定。",
-    "repeatedBlockers": "三周内未出现完全重复的卡点，但存在一个渐进式挑战：从第2周发现SFT局限性、提出GRPO解耦方案，到第3周仍处于GRPO前置结构搭建阶段，尚未跑通完整的规则强化训练并获得新模型产出。即‘从原型概念到可运行的RL对齐产出’这一跨越尚未完成，后续可能需要重点突破。",
-    "professorShouldAsk": "你如何确保GRPO的reward函数不会像强约束prompt一样引发新的保守偏置？什么时候能拿出第一版GRPO训练的定量结果（哪怕在小数据集上）？",
-    "nextBestIntervention": "协助协调医学专家对双阶段中间产出（如伪病灶清单）进行小样本快速审核，以验证中间层schema的临床合理性；同时明确GRPO实验的算力与数据就绪情况，推动下一周进入实际RL训练环节。"
+    "valueFunctionChange": {
+      "summary": "学生的价值函数从‘学术上有意思、可迁移’逐步变化为‘能否降低高风险医疗场景中的漏诊、合规失败、医生复核成本，并沉淀为 benchmark、evaluator、workflow、agent module 和 memory schema’。",
+      "byWeek": [
+        {
+          "week": "2026-03-15",
+          "whatStudentThinksWorthDoing": "值得做层级一致性和医疗 VLM benchmark，因为真实诊断有层级结构，不能只看 accuracy。",
+          "whyWorthDoing": "理由主要是医学推理可靠性和从眼科迁移到 pathology 的学术价值。",
+          "moneyConnection": "缺失。",
+          "userConnection": "缺失明确买单方；只隐含医疗任务用户。",
+          "generalCapabilityConnection": "初步认为 hierarchical reasoning reliability 可跨眼科和 pathology。",
+          "artifactConnection": "有 benchmark 扩展计划，但没有明确产品化资产。",
+          "brainaryConnection": "弱，仅有迁移性，没有明确 Brainary 能力映射。",
+          "automationConnection": "弱，Auto Memory/KG Agent 方向还在讨论和 coding。"
+        },
+        {
+          "week": "2026-03-22",
+          "whatStudentThinksWorthDoing": "值得做临床风险感知与多层级逻辑对齐，尤其是用 GRPO/RL 把医学指南变成硬约束 Reward。",
+          "whyWorthDoing": "因为单纯一致性会造成漏诊，真实临床价值在于安全性、召回兜底、规则服从和监管可过审。",
+          "moneyConnection": "强。估算 SaMD 管线价值 150 万人民币，数据编译 Agent 价值约 40 万人民币/万条医疗 CoT。",
+          "userConnection": "明确用户为医疗 AI 企业、医院采购方、需要通过 NMPA/FDA 的 SaMD 团队。",
+          "generalCapabilityConnection": "强。认为可从 DR 迁移到 pathology、放射、工业缺陷等高风险视觉场景。",
+          "artifactConnection": "明确为论文、benchmark、workflow、AI Agent、临床指南编译器。",
+          "brainaryConnection": "强。映射到 risk modeling、cognitive control、agent module、workflow。",
+          "automationConnection": "强。提出从医学指南 Markdown/PDF 自动转成 SFT 数据生成器和 GRPO Reward 函数。"
+        },
+        {
+          "week": "2026-03-29",
+          "whatStudentThinksWorthDoing": "值得做 structured fact extraction + protocol audit + risk-aware evaluation，而不是直接追求更强模型或更长 CoT。",
+          "whyWorthDoing": "因为高 accuracy 仍可能 severe/PDR undercall；必须让视觉事实、负证据、协议一致性和风险警告成为中间资产。",
+          "moneyConnection": "中到强。估算本周资产价值：benchmark/evaluator 17 万、Protocol CoT MVP 12 万、two-stage 前置结构 9 万。",
+          "userConnection": "明确为医疗 AI 公司、眼底 screening 厂商、医院 AI/信息化团队、高风险 multimodal agent 团队。",
+          "generalCapabilityConnection": "强。把 DR 切入抽象为通用的结构化事实抽取、协议审计、风险评估。",
+          "artifactConnection": "非常明确：benchmark、workflow、evaluator、memory schema、agent module、论文。",
+          "brainaryConnection": "非常明确：benchmark/evaluation、risk modeling、calibration、cognitive control、tool orchestration、memory。",
+          "automationConnection": "强且更具体：先 workflow，再 evaluator + benchmark，再 agent module / memory schema。"
+        }
+      ],
+      "mainChange": "价值判断从‘做出一个医学一致性实验’升级为‘构建能减少漏诊和合规风险的自动化研究基础设施’。",
+      "concern": "金额估算仍主要来自学生内部推理，缺少外部报价、真实企业访谈或医生审核成本发票级证据；教授应要求其区分‘研究资产估值’和‘真实可销售价格’。"
+    },
+    "repeatedBlockers": [
+      {
+        "blocker": "一致性与安全性之间的冲突",
+        "weeksAppeared": [
+          "2026-03-15",
+          "2026-03-22",
+          "2026-03-29"
+        ],
+        "evidence": "03-15 发现 L2/L3 逻辑冲突；03-22 发现 Case-SFT 提升一致性但 l2_recall 暴跌；03-29 发现 direct-only baseline 整体 accuracy 高但 severe/PDR undercall。",
+        "currentStatus": "仍未解决，但已经从问题现象转为风险指标和两阶段 workflow 设计。"
+      },
+      {
+        "blocker": "细粒度病灶感知和高危分级能力不足",
+        "weeksAppeared": [
+          "2026-03-15",
+          "2026-03-22",
+          "2026-03-29"
+        ],
+        "evidence": "03-15 L3 DR Grading accuracy 36.4%，Mild/Moderate recall 很低；03-22 长 CoT 可能掩盖视觉锚定断裂；03-29 HE/CW 容易成为伪主证据，severe/PDR undercall。",
+        "currentStatus": "仍是核心瓶颈；two-stage visual inventory 可能是正确方向，但尚无真实效果证据。"
+      },
+      {
+        "blocker": "方法抽象快于实证验证",
+        "weeksAppeared": [
+          "2026-03-22",
+          "2026-03-29"
+        ],
+        "evidence": "03-22 提出 GRPO Reward、Guideline Compiler Agent；03-29 two-stage workflow 已完成接口但真实输出尚未跑，clinician-checked 验证缺失。",
+        "currentStatus": "需要用小样本真实输出和医生抽查压实。"
+      },
+      {
+        "blocker": "自动化规则仍依赖人工 hardcode",
+        "weeksAppeared": [
+          "2026-03-22",
+          "2026-03-29"
+        ],
+        "evidence": "03-22 明确 Reward 规则仍需人工 hardcode，尚未从指南自动抽取；03-29 卡在 pseudo-lesion candidate 如何可靠变成可训练 Protocol CoT facts。",
+        "currentStatus": "尚未突破。"
+      },
+      {
+        "blocker": "缺少临床专家验证",
+        "weeksAppeared": [
+          "2026-03-29"
+        ],
+        "evidence": "03-29 明确 Protocol CoT 从 MVP 到可训练资产还差 clinician-checked 验证，若进入 10% pilot 需要医生抽样审核。",
+        "currentStatus": "新出现但关键；下一阶段必须解决。"
+      }
+    ],
+    "professorShouldAsk": [
+      {
+        "question": "你在 2026-03-29 提到 Qwen3-VL-8B direct-only referral 已有正式结果，请给出具体 referable_recall、undercall_severe_or_pdr_rate、case_consistency_rate、overall accuracy，并和 03-22 的 SFT 结果放在同一张表里。",
+        "why": "判断研究是否真的从一致性转向安全性，不能只听结论，必须看风险指标。"
+      },
+      {
+        "question": "two-stage workflow 的成功阈值是什么？例如在 10-case、200-case、10% pilot 上，referable recall 至少提升多少、hallucination 不能超过多少、severe/PDR undercall 降到多少才继续？",
+        "why": "防止继续堆 workflow，而没有可证伪标准。"
+      },
+      {
+        "question": "CoT's CoT 里哪些是 A 级证据，哪些只是 10-case prompt 现象？请把证据等级重新按样本量、对照变量、可复现脚本、统计显著性拆分。",
+        "why": "学生的抽象能力强，但有把小样本现象过快上升为理论判断的风险。"
+      },
+      {
+        "question": "Protocol CoT 中哪些字段必须由图像直接支持，哪些字段可以由 ICDR 协议推导？请给出 schema 中每个字段的证据来源和 gating rule。",
+        "why": "这是把 visual fact layer 和 protocol audit layer 真正拆开的关键。"
+      },
+      {
+        "question": "临床医生抽样审核怎么设计？抽多少例、按什么分层抽样、医生看什么界面、如何记录 disagree、如何反哺 evaluator？",
+        "why": "没有 clinician-checked，小样本 workflow 不能升级为可训练资产。"
+      },
+      {
+        "question": "你估算的 17 万、12 万、9 万和上一周 150 万、40 万分别代表什么价值口径？是内部研发节省、可授权价格、论文资产价值，还是商业售价？",
+        "why": "训练学生把价值推理从‘听起来值钱’变成可决策的商业假设。"
+      },
+      {
+        "question": "Brainary 里最先沉淀的最小模块到底是哪一个：risk-aware evaluator、memory schema、two-stage workflow，还是 guideline-to-reward compiler？请只选一个两周内可交付的。",
+        "why": "当前自动化路径很多，必须收敛成最小可交付资产。"
+      }
+    ],
+    "nextBestIntervention": {
+      "intervention": "要求学生在下一周只做一个闭环：固定 referral benchmark 和 10-case ordered sample，跑通 gpt-4o two-stage 真实输出，人工或医生抽查，生成一张包含 direct-only、single-stage、two-stage 的风险指标对照表，并明确是否进入 200-case。",
+      "deliverables": [
+        "一张统一表：overall accuracy、referable_recall、severe/PDR undercall、case_consistency_rate、hallucination/fake-lesion rate。",
+        "10 个 case 的可审计样例：原图、stage1 visual facts、stage2 protocol audit、最终结论、错误类型。",
+        "第一版 gating rule：哪些 pseudo-lesion fact 可以进入 Protocol CoT，哪些必须被过滤。",
+        "一个进入 200-case 的 go/no-go 标准。",
+        "一段不超过 300 字的结论：two-stage 是否真的优于 single-stage；如果没有，失败原因是什么。"
+      ],
+      "whatProfessorShouldLearn": "这个学生本阶段最有价值的新结论不是‘医疗 VLM 要写更长 CoT’，而是：高风险医疗视觉任务必须先把视觉事实层、协议审计层和风险评估层结构化，否则一致性、CoT 和更强模型都可能掩盖漏诊风险。",
+      "managementAdvice": "教授应压缩其发散方向，暂时不要让其同时推进 Pathology、KG Agent、Guideline Compiler 和 GRPO。先用 DR referral benchmark 证明 two-stage 中间层能降低 undercall，再决定是否扩展到 GRPO 和 Brainary module。",
+      "successCriterion": "如果 two-stage 在小样本和 200-case 上不能改善 referable recall 或 severe/PDR undercall，且 hallucination 没有下降，就应暂停 Protocol CoT 扩展，回到视觉事实抽取和数据质量问题。"
+    }
   }
 }

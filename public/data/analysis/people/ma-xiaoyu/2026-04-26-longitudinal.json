@@ -1,59 +1,414 @@
 {
   "key": "person:ma-xiaoyu:2026-04-26:longitudinal",
-  "generatedAt": "2026-05-24T11:50:30.290Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "674af404fc52f54862e3898e640bdeda1079c84010521f1e345f03e6b35372c6",
+  "generatedAt": "2026-06-05T18:07:44.135Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "71083de83574af1c01c398f317dac7f715c2dda42a533124d568739a437a6e82",
   "result": {
-    "overallTrajectory": "学生展现出从具体模块设计到系统架构建模的纵向深化路径，认知层级明显提升，但硬进展中实验验证持续滞后，重复卡点未有效突破。他正在变得更会思考，而不仅仅是更忙；研究能力有所增强，尤其体现在将工程问题上升为生物约束下的系统科学问题，但落地执行力仍需加强。",
+    "overallTrajectory": {
+      "summary": "学生不是单纯变忙；前 3 周确实从概念设计推进到可运行模块，显示出一定研究能力增长。但第 4 周从已实现的 episodic memory 又扩展到脑区映射与 video agent 实验准备，硬证据没有同步增加，存在“概念上升快于实验验证”的风险。",
+      "researchAbilityJudgment": "研究能力有增长，主要体现在：能把 episodic memory 抽象成 importance scoring、decay、reinforcement、working→episodic→semantic pipeline，并能连接到 Brainary 和自动化模块。但增长尚不稳固，因为核心假设长期停留在 value function、权重标定、抽象触发条件，没有给出 benchmark 结果、消融实验、指标定义或用户验证。",
+      "busyVsCapability": "不是只是在堆任务，但任务扩张速度已经超过验证速度。机器人、video agent、生物脑区映射都围绕 memory 主题，但目前更像横向挂接应用场景，而不是通过实验逐步提高论证强度。",
+      "mainRisk": "学生容易把一个尚未验证的核心命题不断升维包装：从“重要性函数+遗忘函数”到“价值驱动筛选”，再到“海马体-皮层-杏仁核协同系统”。如果下周没有实验表和失败分析，这条线会从研究推进变成概念复述。",
+      "evidenceLevel": "中等。硬证据包括 2026-04-19 报告称已完成 episodic memory 核心模块；但缺少代码链接、实验结果、benchmark 数字、消融对比和真实 demo 证据。2026-04-26 周报开头残留“帮你写成模板”的文字，降低该周文本作为真实研究记录的可信度。"
+    },
     "stageByWeek": [
       {
         "week": "2026-03-29",
-        "stage": "概念设计与可计算模型初构",
-        "keyProgress": "提出 episodic memory 的动态记忆分数机制（重要性打分+遗忘曲线），完成初步数学建模，开始对接现有 memory 代码。",
-        "mainBlockers": "评分函数权重标定、遗忘函数具体形式未定。"
+        "stage": "概念建模与接口理解阶段",
+        "topicTrajectory": "主线是 Brainary episodic memory：从事件记录转为动态价值筛选；同时开始考虑 3D 表示如何进入 memory/world model。",
+        "hardProgress": "形成完整流程：特征提取、重要性打分、streaming 存储、遗忘、抽象到 semantic/procedural；提出动态记忆分数机制；获取 working memory 与 semantic memory 代码并分析接口。",
+        "cognitiveTrend": "核心认知是 memory 不是存储，而是信息选择与遗忘。这个认知清晰，但主要是设计层。",
+        "CoTsCoTMaturity": "能够指出为什么现有 vector DB/KV cache 没解决“为什么存”。成熟度中等偏高，但证据等级自评 A 偏乐观，因为还没有最小模块验证。",
+        "BrainaryMapping": "映射到 memory、cognitive control、workflow management；能看到 working、episodic、semantic 的连续转化。",
+        "valueReasoning": "价值判断停留在通用能力、agent 公司、机器人公司、多模态平台会买单；没有金额、具体用户场景、采购理由或产品形态细分。",
+        "projectManagement": "下周动作是实现最小 episodic memory 模块并验证高价值记忆保留，动作方向正确，但未定义指标、数据集和验收标准。",
+        "nextActionQuality": "中等。能提出最小可验证动作，但验证设计不够具体。"
       },
       {
         "week": "2026-04-05",
-        "stage": "价值驱动重构与方法深化",
-        "keyProgress": "将重要性打分与“三观/vision/愿力”映射，重构为多尺度价值函数；遗忘机制基本确定并进入代码实现。",
-        "mainBlockers": "高层价值因素数值化、streaming 下记忆分数高效更新。"
+        "stage": "价值函数重构与工程实现初期",
+        "topicTrajectory": "主线仍是 episodic memory，但从 task/reward 打分扩展为 task、vision、value、愿力的多尺度价值函数。",
+        "hardProgress": "遗忘函数基本确定为 time decay + usage reinforcement；完成接口理解与数据流设计，开始实现 episodic memory 模块。",
+        "cognitiveTrend": "认知从“信息筛选”升级到“价值对齐后的信息选择”。这是纵向增量，但也引入了更难数值化的高层概念。",
+        "CoTsCoTMaturity": "CoT's CoT 更会解释自动化科研为什么缺 value-aware memory scoring 和 benchmark；成熟度提高。但仍未给出如何把三观、vision、愿力稳定转成数值信号。",
+        "BrainaryMapping": "更明确将 scoring 与 forgetting 放入 cognitive control，把 episodic memory 放入 memory architecture 中间层。",
+        "valueReasoning": "价值函数开始解释“什么值得记住”：短期任务相关、中期目标一致、长期价值导向。但商业价值仍只是泛称买单方，没有金额和可售产品拆分。",
+        "projectManagement": "重复承诺下周完成最小可运行版本；卡点仍是权重标定。说明开始意识到应通过实验反向调参，但尚未执行。",
+        "nextActionQuality": "中等。动作聚焦在最小 scoring function，但缺少对比基线和成功阈值。"
       },
       {
         "week": "2026-04-19",
-        "stage": "原型完成与多场景扩展",
-        "keyProgress": "Episodic memory 核心模块代码实现完毕，形成 working→episodic→semantic 流程；机器人 demo 设计完成，video agent 框架搭建完成。",
-        "mainBlockers": "实验验证因硬件/API token 未到位而延期；scoring 权重仍待实验反向调参。"
+        "stage": "原型完成与应用场景扩展阶段",
+        "topicTrajectory": "episodic memory 从设计进入代码实现；新增机器人 demo 和 video agent，试图证明 memory 机制在 embodied 与 video 中统一适用。",
+        "hardProgress": "报告称已完成 episodic memory 核心模块，包括 value-aware scoring、time decay、usage reinforcement；搭建长视频理解 agent pipeline；设计机器人 demo。",
+        "cognitiveTrend": "认知开始从单模块走向跨任务统一结构：连续信息流中的高价值筛选。但这个跨场景统一目前仍是框架判断，不是实验结论。",
+        "CoTsCoTMaturity": "成熟度达到本窗口最高点，因为有可运行模块作为支撑，自评证据 A 相对更合理。但 benchmark 仍缺失，不能证明有效性。",
+        "BrainaryMapping": "Brainary 映射较稳定：memory architecture + cognitive control + memory evaluation benchmark。开始有自动化科研沉淀方向。",
+        "valueReasoning": "首次给出金额：episodic memory 模块估值 800 万人民币，video agent 估值 300 万人民币。但估值依据很粗，只说参考 agent/机器人软件系统定价，没有用户数量、节省成本、竞品价格或交付形态。",
+        "projectManagement": "识别 video agent 的 API token 依赖，机器人 demo 等硬件。主要偏差变成实验未展开。项目管理有进步，但仍没有实验排期和结果表。",
+        "nextActionQuality": "中等偏高。下周动作是 benchmark 实验和机器人 demo，方向正确；但仍缺数据集、指标、baseline、ablation。"
       },
       {
         "week": "2026-04-26",
-        "stage": "生物机制映射与系统架构升级",
-        "keyProgress": "调研海马体/皮层/杏仁核对应 memory 子系统，提出类杏仁核的 saliency/value modulation 机制，将 memory 设计上升到生物约束下的系统架构，提出 1000 万价值评估。",
-        "mainBlockers": "脑区耦合解耦与价值信号稳定转化难度大；video agent 规模化实验尚未完成。"
+        "stage": "架构升维与实验准备阶段",
+        "topicTrajectory": "从工程 memory 模块扩展到生物机制映射：海马体对应 episodic，皮层对应 semantic，杏仁核对应 saliency/value；video agent 进入 benchmark 准备。",
+        "hardProgress": "硬进展较弱。主要是调研与架构映射，API token 到位，benchmark 实验设计完成但未给出实验结果。",
+        "cognitiveTrend": "认知继续升维：memory 是由价值信号调制的动态系统，saliency 决定写入、强化、遗忘。概念有潜力，但实验支撑回落。",
+        "CoTsCoTMaturity": "CoT's CoT 概念更完整，但证据等级降为 B 是合理的。风险是用脑科学类比替代工程验证。",
+        "BrainaryMapping": "Brainary 映射范围扩大到 memory、cognitive control、reasoning。但 reasoning 关联主要来自 video agent pipeline，尚未证明 memory 对 reasoning 的贡献。",
+        "valueReasoning": "估值上升到 memory architecture 1000 万人民币，video agent 300 万人民币。价值函数从模块价值变成架构价值，但金额仍缺证据。开始连接 Brainary、自动化、产品形态和买单方，但未连接真实用户痛点和付费路径。",
+        "projectManagement": "仍称每周 40 小时、进度符合预期。主要偏差仍是实验未完成。周报开头有模板生成痕迹，说明报告质量控制存在问题。",
+        "nextActionQuality": "中等。提出实现 value-modulated memory system 和跑大规模 benchmark，但两个动作并行会稀释注意力；更需要先验证已实现模块。"
       }
     ],
     "trendScores": {
-      "硬进展趋势": "由概念设计推进到代码实现，再进入实验准备阶段，但真实实验数据始终缺失，导致进展仍在纸面/原型层面。",
-      "认知深度趋势": "从“动态价值筛选”到“多尺度价值函数”到“价值函数定义是核心”再到“生物约束下的 saliency 调度系统”，认知逐周深化，科学问题意识增强。",
-      "CoT's CoT成熟度": "每周均产出 CoT's CoT，核心思想（记忆的本质是价值驱动筛选与遗忘）各周保持一致，但表述角度不断升级，证据等级由 A/B 混合到 A/A 再到 B/B，因最后一周引入生物映射而降低了可计算性证据，但概念性提升。",
-      "Brainary映射成熟度": "关联模块从 memory+cognitive control+workflow 逐步扩展到 reasoning，但映射始终停留于功能对应，未进入联合实验验证。",
-      "价值推理趋势": "从定性描述通用能力，到第三周首次给出金额（800万/300万），第四周提升至 1000 万，价值量化意识增强，但未提供商业论证细节。",
-      "项目管理趋势": "每周 40 小时投入稳定，始终处于关键路径，但实验验证持续成为下一周纠偏重点，反映出执行瓶颈。",
-      "自动化路径趋势": "沉淀形式从模块到 benchmark，再到架构级产出，自动化意识始终强烈，但落地进度慢于概念扩展。"
+      "scale": "1 表示很弱，5 表示很强。评分只基于周报文本，不代表代码真实质量。",
+      "hardProgress": {
+        "scores": [
+          {
+            "week": "2026-03-29",
+            "score": 3,
+            "reason": "完成机制设计和接口获取，但没有运行结果。"
+          },
+          {
+            "week": "2026-04-05",
+            "score": 3,
+            "reason": "遗忘函数基本确定并开始实现，但最小模块仍未完成。"
+          },
+          {
+            "week": "2026-04-19",
+            "score": 4,
+            "reason": "报告称核心模块已实现，并搭建 video agent 框架。"
+          },
+          {
+            "week": "2026-04-26",
+            "score": 2,
+            "reason": "主要是调研、映射和实验准备，没有新增结果。"
+          }
+        ],
+        "trend": "先升后降。真正的硬进展集中在 2026-04-19；2026-04-26 的概念扩展没有带来同等硬证据。"
+      },
+      "researchCapability": {
+        "scores": [
+          {
+            "week": "2026-03-29",
+            "score": 3,
+            "reason": "能形成可计算机制，但验证意识刚开始。"
+          },
+          {
+            "week": "2026-04-05",
+            "score": 3,
+            "reason": "能重构价值函数，但数值化困难没有解决。"
+          },
+          {
+            "week": "2026-04-19",
+            "score": 4,
+            "reason": "从设计推进到模块实现，并开始考虑跨任务应用。"
+          },
+          {
+            "week": "2026-04-26",
+            "score": 3,
+            "reason": "理论映射更大，但实验证据缺失，研究能力表现不如上一周扎实。"
+          }
+        ],
+        "trend": "有增长，但不稳定。能力增长主要来自模块化建模和 Brainary 对齐，不来自实验闭环。"
+      },
+      "cognitiveTrend": {
+        "scores": [
+          {
+            "week": "2026-03-29",
+            "score": 3,
+            "reason": "从存储转向筛选与遗忘。"
+          },
+          {
+            "week": "2026-04-05",
+            "score": 4,
+            "reason": "从 reward 转向多尺度价值函数。"
+          },
+          {
+            "week": "2026-04-19",
+            "score": 4,
+            "reason": "把 embodied 和 video 统一为连续流筛选问题。"
+          },
+          {
+            "week": "2026-04-26",
+            "score": 4,
+            "reason": "引入 saliency/value system 和脑区映射，但需要防止类比过度。"
+          }
+        ],
+        "trend": "认知持续深化，但重复表达较多。核心句式一直是“memory 不是存储，而是价值筛选”。"
+      },
+      "CoTsCoTMaturity": {
+        "scores": [
+          {
+            "week": "2026-03-29",
+            "score": 3,
+            "reason": "能说出自动化缺信息价值函数和 forgetting benchmark。"
+          },
+          {
+            "week": "2026-04-05",
+            "score": 4,
+            "reason": "能把 value-aware scoring 和 forgetting module 拆成自动化沉淀物。"
+          },
+          {
+            "week": "2026-04-19",
+            "score": 4,
+            "reason": "有实现支撑，CoT's CoT 与模块产物更贴近。"
+          },
+          {
+            "week": "2026-04-26",
+            "score": 3,
+            "reason": "概念更大但证据降级，且缺少对前一周实现结果的反思。"
+          }
+        ],
+        "trend": "从中等到较成熟，但第 4 周有概念膨胀风险。"
+      },
+      "BrainaryMappingMaturity": {
+        "scores": [
+          {
+            "week": "2026-03-29",
+            "score": 3,
+            "reason": "完成 working、episodic、semantic 的初始映射。"
+          },
+          {
+            "week": "2026-04-05",
+            "score": 4,
+            "reason": "把信息筛选明确归入 cognitive control。"
+          },
+          {
+            "week": "2026-04-19",
+            "score": 4,
+            "reason": "模块实现后，Brainary 映射更可落地。"
+          },
+          {
+            "week": "2026-04-26",
+            "score": 4,
+            "reason": "加入 saliency、reasoning 和 video agent，但部分映射仍是架构宣称。"
+          }
+        ],
+        "trend": "成熟度提高，已经从单点模块映射到系统架构映射；但缺 evaluation benchmark 来闭环。"
+      },
+      "valueReasoning": {
+        "scores": [
+          {
+            "week": "2026-03-29",
+            "score": 2,
+            "reason": "只说明通用能力和潜在买单方。"
+          },
+          {
+            "week": "2026-04-05",
+            "score": 3,
+            "reason": "开始讨论 task、goal、value 的内在价值函数，但商业价值仍弱。"
+          },
+          {
+            "week": "2026-04-19",
+            "score": 3,
+            "reason": "首次给出金额估计，但缺估值依据。"
+          },
+          {
+            "week": "2026-04-26",
+            "score": 3,
+            "reason": "金额和产品形态更明确，但仍未连接真实用户和可付费指标。"
+          }
+        ],
+        "trend": "从抽象价值到金额估值有进步，但金额目前像主观标价，不是商业论证。"
+      },
+      "projectManagement": {
+        "scores": [
+          {
+            "week": "2026-03-29",
+            "score": 3,
+            "reason": "知道要做最小验证，但验收标准缺失。"
+          },
+          {
+            "week": "2026-04-05",
+            "score": 3,
+            "reason": "仍在权重卡点和最小模块承诺中循环。"
+          },
+          {
+            "week": "2026-04-19",
+            "score": 3,
+            "reason": "开始管理 token 和硬件依赖，但实验仍未跑。"
+          },
+          {
+            "week": "2026-04-26",
+            "score": 2,
+            "reason": "token 到位后仍没有结果；并行推进新架构和 video 实验，范围控制变差。"
+          }
+        ],
+        "trend": "项目管理没有明显变强。每周都写 40 小时和符合预期，但缺少里程碑、失败标准、结果表和优先级取舍。"
+      },
+      "automationPath": {
+        "scores": [
+          {
+            "week": "2026-03-29",
+            "score": 3,
+            "reason": "提出 memory scoring module、forgetting mechanism、benchmark。"
+          },
+          {
+            "week": "2026-04-05",
+            "score": 4,
+            "reason": "明确 value-aware scoring function 和 forgetting module。"
+          },
+          {
+            "week": "2026-04-19",
+            "score": 4,
+            "reason": "有实现基础，可转为 module 和 benchmark。"
+          },
+          {
+            "week": "2026-04-26",
+            "score": 4,
+            "reason": "扩展到 memory architecture 和 value-modulated module，但自动化门槛仍未降。"
+          }
+        ],
+        "trend": "自动化产物意识稳定增强，但需要从“可沉淀”变成“已沉淀、可复用、可评测”。"
+      }
     },
     "valueFunctionChange": {
-      "早期价值取向": "认为 episodic memory 值得做是因为它能解决长时序任务中信息筛选的通用瓶颈，可让 Agent 更智能，价值体现为通用能力提升。",
-      "中期转变": "开始将价值与商业金额、买单方（AI Agent 公司、机器人公司）挂钩，提出 800 万价值评估，但未说明计算依据。",
-      "当前状态": "价值函数进一步量化至 1000 万，并关联到“Agent 核心系统模块”定义，同时将生物机制引入以追求更高的科学护城河。其认为“值得做”的原因升级为：1）直接决定 Agent 智能上限；2）可作为标准架构沉淀；3）可能带来高额商业回报。",
-      "变化趋势": "价值观从内部能力视角转向外部价值量化与商业化视角，且开始用金额直接锚定，但用户、具体产品形式等维度尚未展开。连接 Brainary 与自动化的意识始终存在，始终把“可沉淀模块”作为产出形式。"
+      "weekToWeek": [
+        {
+          "week": "2026-03-29",
+          "whatStudentThinksWorthDoing": "值得做的是 agent 长时序任务中的历史信息筛选与利用。",
+          "whyWorthDoing": "因为 memory 是 agent intelligence 的核心瓶颈，属于通用能力。",
+          "connections": {
+            "money": "缺失。",
+            "users": "提到 AI agent 公司、机器人公司、多模态应用平台。",
+            "generalCapability": "明确连接到长时序 agent 的通用能力。",
+            "artifact": "memory module、agent architecture、benchmark。",
+            "Brainary": "memory、cognitive control、workflow management。",
+            "automation": "memory scoring module、forgetting mechanism、information selection benchmark。"
+          }
+        },
+        {
+          "week": "2026-04-05",
+          "whatStudentThinksWorthDoing": "值得做的是让 memory 由多尺度价值函数驱动，而不是只看 reward。",
+          "whyWorthDoing": "因为什么被记住应由 task、goal、value 共同决定。",
+          "connections": {
+            "money": "缺失。",
+            "users": "AI agent 公司与机器人公司。",
+            "generalCapability": "长时序任务的信息筛选与保留。",
+            "artifact": "value-aware memory scoring module、forgetting module、memory evaluation benchmark。",
+            "Brainary": "memory architecture 与 cognitive control。",
+            "automation": "将 scoring function 和 forgetting function 变成可复用模块。"
+          }
+        },
+        {
+          "week": "2026-04-19",
+          "whatStudentThinksWorthDoing": "值得做的是把 episodic memory 做成可运行模块，并在机器人和 video agent 中验证通用性。",
+          "whyWorthDoing": "因为 embodied 和 video 都面临连续流中的信息遗忘与冗余问题。",
+          "connections": {
+            "money": "episodic memory 模块估值 800 万人民币，video agent 框架估值 300 万人民币；依据不足。",
+            "users": "AI agent 公司、机器人公司。",
+            "generalCapability": "跨场景的连续流信息筛选。",
+            "artifact": "episodic memory module、memory evaluation benchmark、video agent pipeline。",
+            "Brainary": "memory 与 cognitive control。",
+            "automation": "value-aware memory module 和 benchmark。"
+          }
+        },
+        {
+          "week": "2026-04-26",
+          "whatStudentThinksWorthDoing": "值得做的是基于海马体、皮层、杏仁核构建 episodic-abstract-value 协同 memory architecture。",
+          "whyWorthDoing": "因为学生认为结构化筛选能力决定 agent intelligence 上限，saliency/value system 是核心调度机制。",
+          "connections": {
+            "money": "memory architecture 估值 1000 万人民币，video agent 300 万人民币；仍缺用户付费证据和定价模型。",
+            "users": "AI agent 公司、机器人公司、视频理解平台。",
+            "generalCapability": "长时序与复杂环境中的信息筛选、压缩、利用。",
+            "artifact": "memory architecture、value-modulated memory module、agent module、benchmark。",
+            "Brainary": "memory、cognitive control、reasoning。",
+            "automation": "value-modulated memory module、saliency benchmark、agent system design。"
+          }
+        }
+      ],
+      "longitudinalAssessment": "价值函数从“做 memory 因为它是 agent 瓶颈”发展为“用价值信号调制 memory，因为记忆选择本质取决于价值函数”，再发展到“用脑区结构作为 Brainary 架构先验”。这是价值观上的真实演化：学生越来越认为值得做的不是单个功能，而是能控制信息流选择的通用架构。但商业价值论证没有同步成熟，金额估计缺少市场、用户、ROI、竞品和交付边界。",
+      "risk": "价值判断越来越宏大，但没有用实验结果或用户需求校准。若继续这样发展，学生会倾向于追求“大一统架构”，而不是交付一个可测、可复用、可出售的小模块。"
     },
     "repeatedBlockers": [
-      "评分函数中多维度权重的标定与数值化方法（尤其是高层价值因素）未能闭环。",
-      "实验验证持续滞后——无论是 episodic memory 的简单任务验证、机器人真实环境测试，还是 video agent 的大规模 benchmark，均因资源或接口未到位而未能提供硬数据。",
-      "模块间（working/episodic/semantic、脑区映射）接口与耦合设计反复被提及，但缺乏验证性解耦方案。"
+      {
+        "blocker": "scoring function 权重标定反复出现",
+        "weeks": [
+          "2026-03-29",
+          "2026-04-05",
+          "2026-04-19"
+        ],
+        "whyItMatters": "这是整个 value-aware memory 的核心。如果权重无法标定，模块就只是启发式规则，不能证明优于 baseline。",
+        "evidenceMissing": "缺少权重搜索方案、指标、数据集、消融实验和失败案例。"
+      },
+      {
+        "blocker": "episodic 到 semantic 的抽象触发条件没有解决",
+        "weeks": [
+          "2026-03-29",
+          "2026-04-19"
+        ],
+        "whyItMatters": "Brainary memory pipeline 的关键不是存 episodic，而是何时抽象成 semantic。如果触发条件不明，working→episodic→semantic 只是流程图。",
+        "evidenceMissing": "缺少 abstraction trigger 的规则、学习机制或评测指标。"
+      },
+      {
+        "blocker": "实验验证持续后置",
+        "weeks": [
+          "2026-03-29",
+          "2026-04-05",
+          "2026-04-19",
+          "2026-04-26"
+        ],
+        "whyItMatters": "每周都承诺最小验证或 benchmark，但报告窗口内没有给出任何定量结果。",
+        "evidenceMissing": "缺少准确率、召回率、记忆保留率、token 成本、推理质量提升、长视频 benchmark 分数或机器人 demo 成功率。"
+      },
+      {
+        "blocker": "价值信号数值化困难",
+        "weeks": [
+          "2026-04-05",
+          "2026-04-26"
+        ],
+        "whyItMatters": "vision、三观、愿力、saliency、情绪价值都被纳入模型，但没有说明如何变成可优化信号。",
+        "evidenceMissing": "缺少 feature 定义、标注方案、学习目标、reward proxy 或人类偏好数据。"
+      },
+      {
+        "blocker": "项目范围持续扩张",
+        "weeks": [
+          "2026-04-19",
+          "2026-04-26"
+        ],
+        "whyItMatters": "从 episodic memory 扩到机器人、video agent、生物脑区映射，可能分散验证主线。",
+        "evidenceMissing": "缺少优先级矩阵和主线验收标准。"
+      },
+      {
+        "blocker": "周报证据质量不足",
+        "weeks": [
+          "2026-04-26"
+        ],
+        "whyItMatters": "报告开头出现代写模板痕迹，会影响教授判断真实进展。",
+        "evidenceMissing": "缺少原始实验记录、代码提交、运行截图或结果表来抵消文本可信度问题。"
+      }
     ],
-    "professorShouldAsk": "你的价值函数中“三观”和“vision”如何量化成数值，你有没有设计一个最小实验去验证它的有效性？你每周都在说下一周做实验，为什么实验一直被延迟，是资源问题还是你回避了某些设计上的不确定性？",
-    "nextBestIntervention": "要求学生在下周内完成一个极为简单的、端到端的定量实验：哪怕是一个 toy task，也要展示高价值记忆比低价值记忆有更高的保留概率，并给出遗忘曲线数据。同时，冻结新的概念扩展，直到此次实验数据出来并经过讨论。"
+    "professorShouldAsk": [
+      "你 2026-04-19 说 episodic memory 核心模块已完成，请现场展示代码入口、输入输出格式、一次完整 streaming update 的运行结果。",
+      "你的 value-aware scoring function 具体公式是什么？task、vision、value、saliency 各自如何归一化？权重是手调、网格搜索、学习得到，还是人工设定？",
+      "请给出一个最小 benchmark：不用 memory、普通 vector memory、你的 value-aware memory 三者在同一任务上的对比结果是什么？",
+      "高价值记忆保留和低价值记忆淘汰的成功标准是什么？是 recall、precision、下游任务分数、token 成本，还是 semantic abstraction 的质量？",
+      "episodic→semantic 的 abstraction trigger 到底是什么？达到分数阈值、重复出现、被调用次数、与目标相关，还是人工规则？",
+      "你给 episodic memory 估值 800 万、memory architecture 估值 1000 万的依据是什么？对应的付费用户是谁，买的是代码模块、平台能力、benchmark，还是完整 agent 系统？",
+      "海马体、皮层、杏仁核映射中，哪些是工程上已经实现的模块，哪些只是类比？请分成已实现、可实现、纯假设三类。",
+      "video agent 的 token 已到位，为什么本周还没有实验结果？下周最晚哪一天能给出第一张结果表？",
+      "机器人 demo 和 video agent 哪一个是验证 memory 假设的最短路径？如果只能保留一个，下周你选哪个，为什么？",
+      "请解释过去四周反复出现的权重标定卡点：你准备通过什么实验让它不再成为卡点？"
+    ],
+    "nextBestIntervention": {
+      "intervention": "冻结概念扩展一周，只做一个可复现实验闭环。",
+      "specificAssignment": "要求学生下周提交一页实验表和一个可运行 demo，验证已实现的 episodic memory 模块是否真的提升长时序任务表现。",
+      "minimumDeliverables": [
+        "一个固定任务或数据集，优先选择 video agent benchmark，因为 token 已到位且不依赖机器人硬件。",
+        "三个 baseline：无 memory、普通 retrieval/vector memory、value-aware memory。",
+        "至少四个指标：下游任务分数、关键事件召回率、无用记忆淘汰率、token 或计算成本。",
+        "一次 ablation：去掉 decay、去掉 usage reinforcement、去掉 value/saliency 中至少两个条件。",
+        "一张失败案例表：列出 value function 错误保留或错误遗忘的样例。",
+        "一份模块接口说明：输入事件格式、scoring 输出、decay update、memory retrieval、semantic abstraction trigger。",
+        "一个商业假设表：目标用户、痛点、愿意付费的原因、替代方案、估值依据。"
+      ],
+      "successCriterion": "如果 value-aware memory 相比普通 retrieval memory 在至少一个核心指标上有明确提升，同时成本没有明显上升，才允许继续扩展到 saliency brain mapping 或机器人 demo。",
+      "ifFails": "如果实验没有提升，下一步不是继续扩大架构，而是分析 scoring function 的错误类型，并把题目缩小为 memory evaluation benchmark 或 forgetting policy 对比。",
+      "oneThingProfessorShouldLearn": "这个学生的真实增量不是“又做了机器人和 video agent”，而是试图把 memory 重新定义为由价值函数调制的信息筛选系统；教授现在最该做的是把这个概念压到一个可测 benchmark 上，否则它会持续概念升维而缺少研究证据。"
+    }
   }
 }

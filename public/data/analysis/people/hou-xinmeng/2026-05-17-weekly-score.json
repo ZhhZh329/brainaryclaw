@@ -1,6 +1,6 @@
 {
   "key": "person:hou-xinmeng:2026-05-17:weekly-score",
-  "generatedAt": "2026-06-05T17:02:16.240Z",
+  "generatedAt": "2026-06-05T18:01:58.941Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
@@ -8,86 +8,53 @@
   "result": {
     "hardProgress": {
       "score": 19,
-      "reason": "本周有明确硬产出：完成 Phase 1 scoring artifact 回溯审计，重写 item-anchored scorer；清洗并重建泄露学科标签的 prompt 模板；搭建 Phase 2 的 sample/eval/judge/aggregate 五文件 pipeline；完成 3 个 tier、5 个 paradigm、3 个 context level 共 1062 items 的实验，并给出核心结果表。产出包含脚本、数据、文档和可复跑流程。扣分点是 T1 cantab_ied HIGH 仍有模板泄露/隐性 scaffolding，说明 Phase 2 数据尚有一个关键 cell 未稳定。",
-      "missingEvidence": [
-        "没有提供完整 aggregate 文件内容或可核验链接，只在周报中给出摘要表。",
-        "没有提供每个 cell 的样本量明细，只说明每个 cell n ≥ 18。",
-        "T1 cantab_ied 的反向结果尚未修复，部分结论仍需重跑确认。"
-      ]
+      "reason": "本周有明确硬产出：完成 Phase 1 scoring audit，发现同一批 374 个响应因评分词典变化导致关键指标从 0.20 到 0.96 的大幅摆动；清洗并重建 prompt 模板，修改 407/750 个 items；搭建 5 文件 Phase 2 pipeline；完成 3 个 tier、1062 items 的生成、judge、聚合，并给出跨 tier × paradigm × context level 的结果表。硬进展不仅是实验运行，还包括方法修复、代码资产、数据资产和文档沉淀。",
+      "missingEvidence": "缺少完整结果文件的外部可核验链接；缺少每个 cell 的精确样本量、置信区间、显著性检验和错误样例摘要。"
     },
     "cognitiveIncrement": {
       "score": 14,
-      "reason": "认知增量明确且有证伪：原先认为 minimum-context 对所有 paradigm 有效，本周更新为只对 spontaneous flexibility / bistable 稳定有效；原先依赖 keyword scoring，本周发现 headline 数字可由 scoring 词典造成大幅摆动；提出 spontaneous flexibility 与 cued flexibility 的区分，并把 prompt verbosity 与 cue quality 分别对应到不同机制。这些不是任务描述，而是对假设、方法和概念边界的实质更新。",
-      "missingEvidence": [
-        "spontaneous vs cued 的区分目前主要来自本项目内部数据，缺少外部文献对照或替代解释排除。",
-        "关于 LOW prompt 加 instruction verb 会削弱信号的结果提到来自上周 ablation，本周报告没有展开本周独立证据。",
-        "没有报告统计显著性检验、置信区间或效应量不确定性。"
-      ]
+      "reason": "认知增量明确：原假设“minimum-context 对所有 paradigm 有效”被证伪，更新为“主要对 spontaneous flexibility / bistable 有效”；原 keyword scoring 方法被证伪；提出 spontaneous flexibility 与 cued flexibility 的区分；把 minimum-context 的机制从“少信息”修正为“强迫模型 infer”。这些都是可改变后续实验设计的实质性更新。",
+      "missingEvidence": "关于 spontaneous/cued 二分是否稳定，缺少更多模型、更多任务类型和统计检验支持；报告中声称“统计上显著”，但未提供检验方法、p 值、效应量或置信区间。"
     },
     "cot2Depth": {
       "score": 14,
-      "reason": "CoT's CoT 达到方法论层面：把 scoring sensitivity 从 implementation detail 提升为 benchmark release 前的 validation step；把 cognitive flexibility 从单一能力拆为 spontaneous/cued 两类；把 minimum-context 的机制重述为 forced inference 而非单纯减少信息。这些都能改变后续 benchmark 设计原则，并有自动化沉淀方向。扣分点是部分论断如“老师原本不知道”和“主流 benchmark 多数可能有 ±0.3 浮动”属于外推，当前周报未给出系统证据。",
-      "missingEvidence": [
-        "没有提供对主流 LLM benchmark 的系统调查来支撑“普遍缺少 scoring-sensitivity audit”。",
-        "没有给出 multi-judge agreement 或 human validation，因此 LLM-as-judge 的可靠性仍未充分证明。",
-        "没有将 infer/follow classifier 的判定标准形式化到可执行 schema。"
-      ]
+      "reason": "CoT's CoT 达到了方法论层：从单个实验结果上升到 scoring-sensitivity audit、flexibility taxonomy、infer-vs-follow prompt design rule，并说明这些发现为何不是普通实现细节。三条 CoT's CoT 都包含新增认知、信息差、自动化潜力、沉淀形式和证据等级，符合模板要求。",
+      "missingEvidence": "对“老师原本不知道”的判断属于学生自述，缺少外部依据；对主流 benchmark 是否普遍缺少 scoring-sensitivity ablation 的判断没有系统文献扫描证据。"
     },
     "brainaryMapping": {
-      "score": 9,
-      "reason": "Brainary 映射清楚：对应 benchmark/evaluation、cognitive control、meta-cognition；提出 scoring_sensitivity_audit、llm_judge_protocol、cognitive flexibility benchmark、evaluation protocol 等可沉淀资产，并指出现有 Brainary 缺口。映射不只是口号，而是从本周代码和方法论产物直接推导到模块。扣分点是还没有给出 Brainary 内部接口、数据 schema、集成优先级和工程验收标准。",
-      "missingEvidence": [
-        "缺少 Brainary 当前系统架构或接口约束，无法判断模块接入成本。",
-        "缺少每个模块的最小 API 定义、输入输出 JSON schema 和验收测试。",
-        "没有说明 Brainary 工程团队是否已确认需求或排期。"
-      ]
+      "score": 8,
+      "reason": "Brainary 映射比较清楚：把本周成果映射到 benchmark / evaluation、cognitive control、meta-cognition，并提出 `scoring_sensitivity_audit`、`llm_judge_protocol`、cognitive flexibility benchmark、evaluation protocol 等可沉淀模块。也指出当前 Brainary 流程缺少 scoring-sensitivity audit 和 taxonomy。但还停留在模块概念层，尚未给出接口 schema、输入输出字段规范、集成优先级和工程验收标准。",
+      "missingEvidence": "缺少 Brainary 现有系统接口、模块边界、调用链、数据格式、工程负责人和集成排期；缺少 multi-judge agreement 作为 Brainary 标准模块的验证结果。"
     },
     "monetaryValue": {
-      "score": 6,
-      "reason": "报告给出了买单方、价值来源、学术/商业/内部节省三类估算，并尝试把 scoring audit、benchmark、pipeline 分开估值，这是符合模板要求的。但金额部分存在明显不严谨：人民币与美元换算错误，例如 80–150 万人民币不等于 USD 11K–21K；商业渗透率和月费推导与最终人民币估值不一致；引用、下载量、收入与本项目可变现收入之间缺少转化链条。因此方向有价值，但金额不能作为可靠决策依据。",
-      "missingEvidence": [
-        "缺少真实客户访谈、LOI、付费意愿或 Brainary 内部商业化路径。",
-        "人民币/美元换算存在错误。",
-        "缺少从 benchmark 影响力到现金收入的可验证转化模型。",
-        "没有说明这部分价值中哪些能在 3 个月、6 个月、12 个月内兑现。"
-      ]
+      "score": 5,
+      "reason": "报告尝试用金额评估任务价值，并区分 scoring audit、benchmark、pipeline 三类资产，这是符合模板的。但金额估计证据较弱，商业转化假设较跳跃，且存在明显单位/汇率不一致：例如“80–150 万人民币”对应“USD 11K–21K”不匹配，11K–21K 美元约为 8–15 万人民币而非 80–150 万人民币。引用影响、服务月费、渗透率和内部节省都缺少可验证来源或计算链。",
+      "missingEvidence": "缺少真实客户访谈、Brainary 付费场景、竞品定价、可销售功能定义、转化率依据、收入归因模型；金额计算需要修正汇率和量级。"
     },
     "projectManagement": {
       "score": 14,
-      "reason": "项目管理信息完整：当前阶段、原计划与实际完成对比、投入小时、下周预计投入、里程碑、资源、依赖、成本、风险和纠偏动作都有交代。尤其是明确指出 T1 cantab_ied HIGH 反向是方法问题，并给出 1 天修复与 60 items 重跑计划。扣分点是论文计划较乐观，缺少投稿前质量门槛，例如需要哪些统计、图表、baseline、human validation 才能进入 draft/review。",
-      "missingEvidence": [
-        "缺少论文投稿前的 go/no-go 标准。",
-        "缺少风险清单的优先级排序，例如 judge bias、模板泄露、统计功效哪个最先处理。",
-        "缺少版本管理或复现实验 checklist。"
-      ]
+      "reason": "项目管理信息完整：给出当前阶段、原计划与实际完成对比、工时拆分、下周投入、里程碑、资源、依赖、成本、瓶颈、偏差原因和纠偏动作。明确指出 T1 cantab_ied HIGH 反向是方法问题，并给出 1 天修复计划。整体已经可供教授判断是否继续推进、是否调整 framing、是否安排 Brainary 集成。",
+      "missingEvidence": "缺少论文写作的具体大纲、投稿 venue 的截止日期约束、风险矩阵、验收指标；对“无 staff 缺口”的判断未说明如果进入 Brainary module 集成是否仍成立。"
     },
     "nextAction": {
-      "score": 10,
-      "reason": "下周最小可验证动作非常清楚：修改 IED HIGH 的 4 个 turn，去掉 discourse markers，重跑 60 个 T1 IED items，预计成本约 0.50 美元、30 分钟，并验证 Δ 是否翻转。该动作具有明确文件位置、实验规模、成本、时间和判定目标，适合作为教授追踪的下一步。",
-      "missingEvidence": [
-        "缺少预先定义的成功阈值，例如 Δ 需要达到多少才算修复成功。",
-        "缺少如果 Δ 不翻转时的备选诊断路径。"
-      ]
+      "score": 9,
+      "reason": "下周最小可验证动作非常具体：修改 IED HIGH 模板中的 discourse markers，重跑 60 个 T1 IED items，成本约 0.50 美元、30 分钟，验证 Δ 是否翻转。同时还有 figure preparation、methodology section、judge agreement ablation 等后续动作。行动具有低成本、可证伪、直接对应当前风险的特点。",
+      "missingEvidence": "缺少成功/失败判定阈值，例如 Δ 翻转到多少才算修复；缺少如果仍不翻转时的第二步备选方案。"
     },
     "evidenceQuality": {
       "score": 4,
-      "reason": "证据质量较高：有样本规模、对照数字、artifact 路径、parse fail rate、成本和实验表格；scoring artifact 的 0.20 到 0.96 是强证据。但仍有关键缺口：没有置信区间、显著性检验、judge 一致性、人类标注校验、完整数据链接。报告中称“统计上显著”，但没有展示统计方法。",
-      "missingEvidence": [
-        "没有置信区间、p 值、bootstrap 或 Bayesian interval。",
-        "没有 human judge 或第二 judge model 的 agreement。",
-        "没有展示 LLM-as-judge prompt 的完整内容和误判案例。",
-        "没有提供可直接核验的原始数据样例或链接。"
-      ]
+      "reason": "证据质量总体较高：报告给出样本规模、指标变化、pipeline 文件、数据文件、文档索引，并区分 evidence level A/B/C。关键结论有直接实验数据支撑，例如 374 items 的 scoring 对比和 1062 items 的 Phase 2 grid。但 evidence 仍主要来自单模型 gpt-4o、单 judge 方案，且 judge 与被评模型同为 gpt-4o，可能存在评估偏差。",
+      "missingEvidence": "缺少人工标注校验、跨 judge 一致性、跨模型复现、置信区间、显著性检验、错误分析样例、数据和代码的可复现实验命令。"
     },
-    "totalScore": 90,
+    "totalScore": 87,
     "tier": "A",
-    "oneLineJudgment": "这是一个高质量单周进展：完成了实质实验、发现了可发表的方法论问题，并把认知更新映射到 Brainary 模块；主要短板是金额估算不可靠、judge 可靠性未验证、T1 IED 模板仍需修复。",
+    "oneLineJudgment": "这一周是高质量实验推进周：硬进展、认知更新和方法论抽象都强，最主要短板是货币价值估算不可靠，以及关键 judge 结论还缺少人工/多 judge/统计验证。",
     "professorFollowUp": [
-      "请先确认论文 framing：是否接受从“minimum-context 普遍有效”收窄为“minimum-context 只对 spontaneous flexibility 有效，cued flexibility 需要 cue-quality manipulation”。",
-      "要求下周必须补一个 judge reliability 检查：至少用第二模型或人工小样本标注，报告 agreement 和典型分歧案例。",
-      "要求修正 monetary value 部分的人民币/美元换算，并把商业价值拆成短期 Brainary 内部价值与长期外部商业价值。",
-      "要求为 T1 IED 修复设定成功阈值：例如重跑后 HIGH 不再显著高于 LOW，或 Δ 从 -0.39 回到接近 0/正向。",
-      "教授本周最该学到的一点：LLM benchmark 的 headline 数字可能被 scoring 方法大幅改写，因此 Brainary 应把 scoring-sensitivity audit 作为评测基础设施的默认模块。"
+      "优先确认论文 framing：是否接受从“minimum-context 普遍有效”收窄为“minimum-context 主要诊断 spontaneous flexibility，而 cued flexibility 需要 cue-quality manipulation”。",
+      "要求下周补上 T1 IED 修复后的结果，并给出修复成功阈值、置信区间和失败备选方案。",
+      "要求做一个小规模人工标注或多 judge agreement ablation，验证 LLM-as-judge 的 verdict 是否可靠，尤其避免 gpt-4o 评 gpt-4o 的自洽偏差。",
+      "要求修正 monetary value 部分的汇率和量级错误，并把商业价值从“估计金额”改成“可验证付费场景 + 功能定义 + 目标用户”。",
+      "教授本周最该学到的一点是：LLM benchmark 的 headline 数字可能被 scoring 方法大幅左右，因此 Brainary 应把 scoring-sensitivity audit 作为评测基础设施的必备模块，而不是项目附属分析。"
     ]
   }
 }

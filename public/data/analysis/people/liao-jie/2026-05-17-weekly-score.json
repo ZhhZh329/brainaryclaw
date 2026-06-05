@@ -1,60 +1,54 @@
 {
   "key": "person:liao-jie:2026-05-17:weekly-score",
-  "generatedAt": "2026-06-05T17:05:47.325Z",
+  "generatedAt": "2026-06-05T18:05:24.991Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "16afac66e93ae66ca68c5d27b3ef2b0faa503dd4ad136cda7b44ec63925927b9",
   "result": {
     "hardProgress": {
-      "score": 14,
-      "reason": "本周有三条明确硬进展：自然语言到代码重建再到恶意 skill 隐藏的小规模验证、编译产物嵌入 payload 的小规模验证、KG 辅助 scanner 的原型验证。也形成了样例、初步流程、失败模式和方法资产。但这些进展仍主要停留在小规模 case-level，没有系统 benchmark、批量脚本、消融实验、稳定指标或可复现实验矩阵，因此不能按论文级硬进展计满分。",
-      "missingEvidence": "缺少样本数量、scanner 基线成功率、KG 增强前后提升幅度、具体失败案例、实验配置、代码或脚本产物、可复现数据目录、消融设计。"
+      "score": 15,
+      "reason": "本周有三个明确硬进展：自然语言到代码重建再到恶意 skill 隐藏的小规模验证、编译产物嵌入 payload 的小规模验证、KG 辅助 scanner 的初步增强验证。也沉淀了样例、流程和失败模式。但所有进展都停留在小规模实验，缺少样本数量、成功率、对照组、scanner 版本、实验日志和可复现实验脚本，因此还不能算论文级硬结果。",
+      "missingEvidence": "缺少每条路径的样本规模、scanner 检测率变化、攻击成功率、失败案例截图或日志、代码仓库/脚本、实验配置、对照基线和可复现结果表。"
     },
     "cognitiveIncrement": {
       "score": 12,
-      "reason": "认知增量比较清楚：研究目标从单次绕过 scanner 转向识别系统性盲区，并进一步收缩为构建 scanner 鲁棒性评测与增强框架。对风险载体的理解也从源码文本扩展到生成链路、编译产物、附件和行为语义。该增量对后续选题 framing 有帮助。但目前多数判断仍来自小规模观察，缺少量化证据支撑其普遍性。",
-      "missingEvidence": "缺少哪些观察直接推翻了原假设、哪些失败模式最关键、不同攻击路径之间的相对重要性、从 case 到框架的必要性证明。"
+      "reason": "认知增量比较明确：从单次绕过转向 scanner 系统性盲区，从源码文本风险扩展到生成链路、编译产物和行为语义风险，并提出用 KG 作为检测先验。这个增量对研究 framing 有帮助。但部分判断仍是概念性总结，缺少由数据直接推出的定量证据。",
+      "missingEvidence": "缺少能证明这些认知变化的数据表，例如不同攻击路径分别暴露哪些 scanner 盲区、各盲区出现频次、KG 增强前后的具体差异。"
     },
     "cot2Depth": {
-      "score": 12,
-      "reason": "CoT’s CoT 有较好的二阶反思：不只说明做了什么，还分析为什么没有自动化、为什么未沉淀为 workflow、benchmark、memory schema 或 agent module，并指出 taxonomy、benchmark、KG schema 是关键瓶颈。KG 作为 scanner 中间记忆层是本周较有价值的二阶洞察。但其中“老师原本不知道吗”的判断偏主观，证据等级标为 A 偏高，因为报告中没有给出具体提升数据。",
-      "missingEvidence": "缺少 KG 字段示例、scanner 如何使用 KG、增强机制细节、提升来源拆解、失败模式 taxonomy 初稿、自动化 workflow 的具体接口和状态转移规则。"
+      "score": 11,
+      "reason": "CoT’s CoT 不只是描述实验，而是追问为什么还没有自动化成 workflow、benchmark、module 和 memory，并指出缺少失败模式 taxonomy、benchmark、schema 和验证集。这符合模板要求。问题是对“老师原本不知道吗”的判断有推测成分，证据等级标为 A 偏乐观，因为目前只有小规模观察，尚无系统消融。",
+      "missingEvidence": "缺少自动化 workflow 的具体结构图、失败模式 taxonomy 草案、KG 字段列表、字段级消融计划、以及证明 KG 作为 memory 层有效的定量结果。"
     },
     "brainaryMapping": {
       "score": 8,
-      "reason": "Brainary 映射覆盖了 risk modeling、benchmark/evaluation、memory、reasoning、calibration、cognitive control，并能把恶意 skill 生成、scanner 失败模式和 KG 辅助检测分别映射到可沉淀模块。映射方向合理，尤其 KG 作为结构化风险记忆较贴近 Brainary 的 memory 能力。但映射仍停留在概念层，尚未说明 Brainary 中具体会新增什么 schema、module、policy 或 evaluator。",
-      "missingEvidence": "缺少具体 Brainary 数据结构、输入输出格式、模块调用链、memory 更新规则、评测协议样例、与现有 Brainary 能力的接口关系。"
+      "reason": "Brainary 映射比较到位，明确关联到 risk modeling、benchmark/evaluation、cognitive control、memory、reasoning 和 calibration，并说明可能沉淀为 benchmark、workflow、evaluation protocol、memory schema 和 agent module。不足是映射还停留在概念层，没有说明这些能力如何被接口化、模块化或进入现有 Brainary 系统。",
+      "missingEvidence": "缺少 Brainary 模块接口定义、输入输出格式、memory schema 草案、evaluation protocol 草案，以及和现有 Brainary 能力的具体连接方式。"
     },
     "monetaryValue": {
-      "score": 7,
-      "reason": "报告给出了三个任务的估值、计算逻辑和潜在买单方，能把研究价值连接到企业安全、插件审核、agent 工具市场和供应链风险建模。估值方式以人力替代成本为主，方向可用。但金额缺乏外部市场证据，也没有说明如果做成 benchmark、scanner module 或安全评测服务后的真实商业化路径和付费规模。",
-      "missingEvidence": "缺少客户访谈、竞品或市场参考、现有安全审核成本、平台真实痛点证据、benchmark 或 scanner module 的定价方式、从论文资产到产品资产的转化路径。"
+      "score": 6,
+      "reason": "报告给出了三个任务的人民币估值，并用安全工程师月成本进行了粗略换算，能体现商业价值意识。问题是估值主要是人力成本替代法，没有市场需求证据、客户场景验证、竞品对比、采购预算、风险损失量化或产品化路径，因此货币价值可信度中等偏低。",
+      "missingEvidence": "缺少潜在买方访谈、平台/企业安全团队需求证据、竞品或替代方案价格、插件审核市场规模、真实安全事件成本、以及从研究原型到可售模块的路径。"
     },
     "projectManagement": {
-      "score": 13,
-      "reason": "项目管理信息较完整：每个项目都有当前阶段、原计划与实际完成、投入时间、下周时间、关键路径、资源需求、依赖关系、延期影响、token 成本和纠偏动作。能看出三个项目之间的依赖关系：前两个攻击样本项目支撑第三个 KG scanner 增强项目。主要不足是下周计划仍偏大，多个项目都要求同时完成完整实验、消融和深度分析，存在范围过宽风险。",
-      "missingEvidence": "缺少具体排期表、每日里程碑、实验矩阵、优先级取舍、失败时的降级方案、完成标准、代码仓库或数据管理规范。"
+      "score": 12,
+      "reason": "项目管理部分完整覆盖了阶段、计划、实际进度、投入时间、下周时间、资源、依赖、延期影响、token 成本、纠偏动作和是否需要老师介入。关键路径也比较清楚。主要不足是计划仍偏自然语言，没有转成实验矩阵、验收标准、风险优先级和里程碑量化指标。",
+      "missingEvidence": "缺少具体甘特式里程碑、每个实验的样本目标数、成功/失败判定标准、消融变量表、风险登记表、代码完成标准和下周交付物验收条件。"
     },
     "nextAction": {
       "score": 8,
-      "reason": "下周动作基本可执行：补 coding plan、批量实验、消融、失败模式分析、固定 KG schema、字段级消融。动作和当前卡点对应较好。扣分点在于动作还没有被压缩成最小可验证闭环，例如每条路径到底先跑多少样本、比较哪些 scanner 设置、用什么指标判定成功，仍不够具体。",
-      "missingEvidence": "缺少下周最小样本量、实验矩阵、评价指标、消融变量、完成阈值、预期输出物清单。"
+      "reason": "下周动作明确：补 coding plan、批量实验、消融、失败模式分析、固定 KG schema、字段级消融。这些动作能直接推进从 case-level 到系统实验。扣分点是动作还不够最小化和可验收，例如没有规定下周必须产出多少样本、多少组对照、什么指标达到什么阈值。",
+      "missingEvidence": "缺少下周最小交付清单，例如实验脚本文件、样本数量、对照组数量、scanner 指标表、KG 字段消融表、失败模式 taxonomy v1。"
     },
     "evidenceQuality": {
-      "score": 3,
-      "reason": "证据质量中等偏弱。报告反复提到小规模实验、初步观察、扫描成功率提升、scanner 失败模式，但没有给出任何定量结果、案例截图、样本编号、对照组、基线、统计口径或复现实验条件。因此证据足以支持“值得继续探索”，但不足以支持强结论或 A 级证据等级。",
-      "missingEvidence": "缺少所有关键实验的量化结果、样本规模、成功率、误报率、漏报率、对照设置、KG 前后对比、消融结果、失败案例原文或日志。"
+      "score": 2,
+      "reason": "证据质量是本周最大短板。报告多次声称“小规模验证”“观察到提升”“积累了一批样例”，但没有任何数字、表格、日志、配置、案例编号或复现链接。当前证据足以支持探索性方向判断，但不足以支持强结论。",
+      "missingEvidence": "缺少原始实验记录、样本列表、scanner 输出、检测率、误报率、漏报率、KG 增强前后对比、消融结果、运行环境和复现实验说明。"
     },
-    "totalScore": 77,
+    "totalScore": 74,
     "tier": "B",
-    "oneLineJudgment": "本周方向判断和项目框架较强，已经从攻击 case 走向 scanner 鲁棒性评测与 KG 增强框架，但硬证据仍停留在小规模、非量化、不可复现阶段，下一周必须把样本、指标、消融和代码化流程补齐。",
-    "professorFollowUp": [
-      "要求学生下周先交一页 coding plan 和实验矩阵，再继续扩展样例，避免继续堆 case。",
-      "重点追问 KG 辅助 scanner 的真实增益：基线是多少、增强后是多少、哪些 KG 字段贡献提升、是否存在数据泄漏或 prompt 泄漏。",
-      "要求定义 scanner 鲁棒性 benchmark 的最小版本：攻击类型、样本数、评测指标、失败模式 taxonomy、复现实验脚本。",
-      "建议老师判断论文主线是否应收缩为“恶意 skill scanner 的鲁棒性评测与 KG 记忆增强”，而不是泛泛地做 scanner 攻击。",
-      "下周最应学习的一件事是：该题的价值不在单次绕过，而在把攻击生成方式、scanner 失败模式和 KG 反馈闭环化为可复用安全评测系统。"
-    ]
+    "oneLineJudgment": "本周方向判断和研究闭环意识较强，已经从单点攻击推进到 scanner 鲁棒性评测与 KG 增强框架，但硬证据仍停留在小规模、无量化、不可复现阶段。",
+    "professorFollowUp": "老师最应该追问一件事：下周能否交付一个可复现的最小实验矩阵，包括三类攻击路径的样本数、scanner 基线结果、KG 增强结果、字段级消融和失败模式 taxonomy v1；否则当前工作会继续停留在有想法但无论文级证据的状态。"
   }
 }

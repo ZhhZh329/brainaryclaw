@@ -1,248 +1,242 @@
 {
   "key": "person:guo-yaoqi:2026-04-12:longitudinal",
-  "generatedAt": "2026-06-05T17:02:51.473Z",
+  "generatedAt": "2026-06-05T18:02:38.737Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "aed131578dfe94399e3eb4c27580558d8f3ef2f5a03cb9c0b28d42a0b2ad5a6a",
   "result": {
     "overallTrajectory": {
-      "judgment": "总体看，学生不只是变忙，而是在变得更有研究能力；证据是每周都从工程推进中抽象出更高一层的失败归因、边界条件和模块接口原则。但第4周硬结果停在打平 baseline，说明能力增长主要体现在诊断和系统理解，尚未转化为端到端性能优势。",
-      "researchCapabilityChange": "研究能力呈上升趋势：第1周能搭建执行链路，第2周能用 SWE-bench Pro 给出 47/50 的硬指标并识别结构性失败边界，第3周能把 30% reproduction test 成功率拆成检索、理解、生成的级联失败，第4周能发现 RCA-to-Repair 的信息粒度陷阱。这个轨迹显示他在从“做模块”转向“理解模块之间的因果接口”。",
-      "notJustBusyEvidence": [
-        "每周都有新模块或新实验：执行引擎、RCA Agent、Reproduction Test Agent、RCA-to-Repair 消融实验。",
-        "有明确 benchmark 数字：第2周 47/50 行级定位，第3周约 15/50 fail-to-pass，第4周打平 baseline。",
-        "每周认知不是重复口号，而是瓶颈迁移：动态探针 → test case 质量 → 检索级联失败 → 信息粒度陷阱。"
+      "judgment": "这个学生总体是在变得更有研究能力，而不只是更忙，但增长是不均匀的：前两周硬进展和证据强，第三周能面对低成功率并做失败归因，第四周开始进入更高阶的多智能体接口问题，但硬指标变弱，存在用概念解释替代结果提升的风险。",
+      "researchAbilitySignal": [
+        "正向信号：每周都能把失败转化为新的系统性假设，例如从“动态+静态结合”到“可观测状态边界”，再到“瀑布式失败传播”和“信息粒度陷阱”。这不是单纯堆工作量，而是在形成可迁移的研究判断。",
+        "正向信号：能使用 SWE-bench Pro 50 case 建立基线，且能报告 47/50、30%、打平 baseline 等结果，说明开始用外部 benchmark 约束自己的叙事。",
+        "正向信号：价值函数开始随证据质量调整，金额从 100000 美元降到 60000、40000，说明不是一味自我放大；但估值框架仍主要是内部里程碑比例法，缺少用户、付费、竞品性能差距和可部署性证据。",
+        "风险信号：第四周没有给出 reproduction test 横向对比的具体方法、样本、成功率变化，也没有说明第三周计划中的“改进版 reproduction test agent 接入 RCA”是否完成。研究叙事有推进，但硬证据增量不足。",
+        "风险信号：多次说“方向明确，不需要老师介入”，但连续几周都卡在 test generation、检索、baseline 反超、Claude Code 权限等问题上，说明项目管理上可能低估了外部校准和资源依赖。"
       ],
-      "mainCaveat": "第4周的证据粒度下降：只说“打平 baseline”，没有说明 baseline 是什么、修复成功率是多少、横向对比方法有哪些、消融实验表格如何。因此第4周的 CoT's CoT 有价值，但证据等级从第2、3周的 L4 降到 L3 是合理的。",
-      "currentStage": "处于从单模块有效性验证转向端到端系统优化的阶段。最大风险不再是能否写出 Agent，而是能否把各 Agent 的接口、信任权重、信息粒度和评测协议稳定化。"
+      "busyVsCapability": "不是单纯变忙。投入时间基本稳定在每周约 40 小时，能力提升主要体现在实验化、失败归因、模块边界识别和自动化沉淀意识。但如果下周仍不能把“信息粒度策略”转化为超过 baseline 的定量结果，研究能力增长会从“实证驱动”滑向“概念驱动”。",
+      "currentStage": "从模块构建阶段进入系统集成与接口优化阶段。这个阶段的研究难度更高，因为问题从“能否跑通单模块”变成“模块间传递什么信息、信任多少、何时自主探索”。"
     },
     "stageByWeek": [
       {
         "week": "2026-03-22",
-        "topicTrajectory": "题目从 Code Repair 的 Root Cause 定位切入，核心假设是动态 test cases 可以作为物理探针，配合静态分析收敛 root cause。",
-        "hardProgress": "从零搭建基于测试用例驱动的 Root Cause 动态探索执行引擎，实现代码输入到测试执行反馈的基础链路。但没有提供 benchmark 结果或成功率。",
-        "cognition": "认知增量是确认“动态+静态分析结合”优于纯静态或纯动态；开始把代码修复理解为状态机式工作流，而非单次 prompt。",
-        "cotsCotMaturity": "中等偏高。能抽象出“基于物理反馈的动态状态机流转”，并指出工程摩擦在日志清洗、压缩、接口衔接。但证据主要是系统搭建与架构推演，缺少外部评测。",
-        "brainaryMapping": "映射到 Coding、tool orchestration、reasoning 和 self-evolution，方向正确但仍偏概念化，尚未形成明确 Brainary 子模块 schema。",
-        "valueReasoning": "价值判断较乐观，估值 $50,000，使用成熟 Coding Agent 年化 $2M 增益和 2.5% 里程碑权重推算。金额逻辑有框架，但对用户、实际采用场景和性能基线缺乏证据。",
-        "projectManagement": "计划清楚：下周接入 test case 自动生成。资源诉求明确：Claude Code 权限和 API 支持。风险低估在于把自动 test generation 视为可直接接入。",
-        "nextActionQuality": "动作具体但过于线性：接上 test case 生成模块跑闭环。没有设置如果 test case 质量不足时的备选诊断计划。",
-        "evidenceLevel": "工程实操证据为主，缺少 benchmark 数字。证据等级约 L3-L4 之间，更接近 L3.5。",
-        "assessment": "这是建立系统骨架的一周，研究能力体现在提出了动态反馈架构，但还未被硬数据充分约束。"
+        "topicTrajectory": "题目从代码修复中的 Root Cause 动态探索切入，核心对象是基于 test cases 的执行引擎。",
+        "hardProgress": "从 0 到 1 搭建测试用例驱动的 Root Cause 动态探索执行引擎，实现代码输入到测试执行反馈的基础链路。尚未接入 test case 自动生成。",
+        "cognitiveTrend": "认知从纯静态或纯动态的二分，转向“动态 test case 作为探针 + 静态分析精细溯源”的混合范式。",
+        "cotOfCotMaturity": "成熟度中等偏高。提出“代码修复是基于物理反馈的动态状态机流转”，但证据主要来自系统实操和架构推演，尚无 benchmark 结果。",
+        "brainaryMapping": "映射到 Coding、tool orchestration、reasoning 和 Self-evolution，但还偏宏观，尚未细分到可实现的子模块接口。",
+        "valueReasoning": "认为值得做，因为能支撑 Code Repair 和 Brainary Self-evolution。金额估值为 50000 美元，使用“成熟模块年化增益 200 万美元 × 2.5% 里程碑权重”的算法。问题是缺少用户、部署场景和准确率提升的实证基础。",
+        "projectManagement": "下周动作是接入 test case 生成模块跑完整闭环，动作明确但可能过于乐观。资源诉求是 Claude Code 权限和 API 支持。",
+        "automationPath": "计划沉淀为 Agent workflow 或 Repair module，路径合理但门槛是 test case 自动生成和日志压缩接口。"
       },
       {
         "week": "2026-03-29",
-        "topicTrajectory": "从执行引擎升级为 Root Cause Analysis Agent，题目从“能跑动态探索”推进到“能在 benchmark 上做 line-level localization”。",
-        "hardProgress": "完成 RCA Agent，在已有准确 test case 条件下，于 SWE-bench Pro 50 case 上达到 47/50 行级定位，准确率 94%。识别 3 个失败 case 均涉及新文件创建。",
-        "cognition": "关键认知是性能瓶颈从 Agent 推理能力转移到 test case 质量；同时发现动态 RCA 的结构边界是可观测状态空间，不能覆盖需要创造新文件或新抽象的 bug。",
-        "cotsCotMaturity": "高。能够用实验失败归因抽象出“可观测状态空间决定推理上限”，并提出新文件类 bug 需要独立分支。这是从经验结果到系统边界的有效提升。",
-        "brainaryMapping": "映射更成熟，覆盖 reasoning、tool orchestration、calibration、cognitive control、benchmark/evaluation，并指出 calibration 和 cognitive control 缺少显式模块。",
-        "valueReasoning": "估值升到 $100,000，原因是有了 94% benchmark 数字和可展示证据。价值函数从“模块未来潜力”转向“硬指标带来的沟通与融资杠杆”。但仍未连接到真实用户付费或部署场景。",
-        "projectManagement": "承认上周目标偏差，并解释为先夯实 RCA 而非表面闭环。这个纠偏合理，显示研究债务意识增强。",
-        "nextActionQuality": "下周动作是 reproduction test 自动生成第一版并在 50 case 上测试，质量较高，因为有明确输入、评测集和目标瓶颈。",
-        "evidenceLevel": "有 benchmark 数据和失败归因，证据等级 L4。",
-        "assessment": "这是四周中硬进展最强的一周，也是研究能力跃迁最明显的一周。"
+        "topicTrajectory": "题目从执行引擎升级为 Root Cause Analysis Agent，开始形成完整 Agent loop。",
+        "hardProgress": "实现 RCA Agent，在 SWE-bench Pro 50 case 上，在已有准确 test case 条件下达到 47/50 的函数行级精准定位，即 94%。识别 3 个失败案例均涉及新文件创建。",
+        "cognitiveTrend": "重大进步是把瓶颈从“Agent 推理能力”重新定位为“test case 质量”。同时识别动态 RCA 的结构性边界：只能探测已有代码结构，不能创造新抽象。",
+        "cotOfCotMaturity": "成熟度高于第一周。CoT's CoT 从架构主张变成基于 benchmark 的边界判断：“可观测状态空间决定推理上限”。证据等级 L4 更可信。",
+        "brainaryMapping": "映射更细，覆盖 reasoning、tool orchestration、calibration、cognitive control、benchmark/evaluation，并指出 calibration 和 cognitive control 缺少显式模块。",
+        "valueReasoning": "估值升至 100000 美元，理由是 94% benchmark 数字带来可展示证据和融资沟通杠杆。比第一周更有证据，但仍是内部研发权重法，没有证明这个 94% 在无人工 test case 时能转化为用户价值。",
+        "projectManagement": "承认上周目标未完成，但给出合理偏差解释：先夯实 RCA 再接 test generation。下周目标转为 reproduction test 自动生成第一个版本，动作质量较好。",
+        "automationPath": "RCA Agent 可沉淀为独立 Agent module；新文件 case 可沉淀为 benchmark 分类标注和专用处理分支。"
       },
       {
         "week": "2026-04-05",
-        "topicTrajectory": "题目推进到全自动闭环入口：从 issue description 自动生成 reproduction test，再服务 RCA 和 Repair。",
-        "hardProgress": "实现 Reproduction Test Agent 第一版，在 SWE-bench Pro 50 case 上约 15/50 fail-to-pass，成功率约 30%。识别失败原因包括检索定位、issue 理解、test 生成质量，其中检索是最上游瓶颈。",
-        "cognition": "关键认知是 reproduction test 生成不是单点生成问题，而是多环节串联任务；优化策略不能平均用力，应优先处理最上游、最有级联影响的检索/定位。",
-        "cotsCotMaturity": "高但略低于第2周的硬度。能够提出“瀑布式失败传播”和“working memory 从单次推理到累积式探索”的架构判断。检索瓶颈有 50 case 支撑，working memory 证据部分依赖架构推演和他人经验。",
-        "brainaryMapping": "映射到 memory、tool orchestration、reasoning、cognitive control，并开始提出 task-specific memory schema，这比前两周更接近可沉淀的 Brainary 基础设施。",
-        "valueReasoning": "估值降到 $60,000，反映他开始按实验结果下调价值判断。价值函数更健康：承认 30% 低于预期，但认为基线和失败归因本身有研发资产价值。",
-        "projectManagement": "计划包含混合检索、working memory、接入 RCA。风险是下一步同时做检索、memory、端到端接入，范围略宽，可能导致每个环节证据不够干净。",
-        "nextActionQuality": "动作方向正确，但“下周接入 RCA 跑端到端”可能早于检索改进验证。更好的动作应先定义检索准确率指标，再决定是否接入端到端。",
-        "evidenceLevel": "Reproduction test 成功率有 L4 证据；working memory 的必要性为 L3。",
-        "assessment": "这是从成功结果进入困难瓶颈的一周。研究能力体现在没有回避低成功率，而是做了失败归因。"
+        "topicTrajectory": "题目进入 Unified Repair Agent 的入口环节：Reproduction Test 自动生成。",
+        "hardProgress": "实现 Reproduction Test Agent 第一版，在 SWE-bench Pro 50 case 上约 15 个 fail-to-pass，即约 30% 成功率。明确失败混合来自检索定位、issue 理解、test 生成质量，其中检索/定位最突出。",
+        "cognitiveTrend": "认知从“test case 是瓶颈”进一步细化为“检索是 test generation 的上游瓶颈”。提出瀑布式失败传播：检索失败会级联污染理解和生成。",
+        "cotOfCotMaturity": "成熟度继续提高。能从低于预期的结果中提炼优化策略：不要平均用力，要先攻克最上游瓶颈。第二个 CoT's CoT 关于 working memory 证据等级为 L3，更多是架构推演和外部经验借鉴。",
+        "brainaryMapping": "映射到 memory、tool orchestration、reasoning、cognitive control。开始从能力名词转向 schema 设计问题，提出 task-specific working memory 的“存什么、怎么更新、怎么检索”。",
+        "valueReasoning": "估值降至 60000 美元，理由是虽然成功率低，但建立了 baseline 和失败归因。这里价值函数比前两周更成熟：开始把负结果也作为研发资产，但金额仍然依赖 200 万美元年化增益假设，缺少端到端性能提升证明。",
+        "projectManagement": "下周计划是混合检索 + working memory，并接入 RCA 跑端到端。动作合理，但同时推进检索、memory、RCA 接入，范围偏大。",
+        "automationPath": "准备沉淀为代码仓库检索模块和 reproduction test working memory schema。自动化路径清楚，但稳定性还未验证，目标阈值设为成功率超过 50%。"
       },
       {
         "week": "2026-04-12",
-        "topicTrajectory": "题目从 reproduction test 入口转向 RCA-to-Repair 的接口优化，关注多 Agent 流水线中诊断信息如何传给生成型 Repair Agent。",
-        "hardProgress": "完成不同粒度 RCA 诊断信息对 Repair 成功率影响的消融实验，发现过细粒度信息可能降低修复效果。端到端修复效果打平 baseline，但未超越。",
-        "cognition": "关键认知是 RCA 的本质应是 Localization Pointer，而不是 Solution Provider；模块间接口不是无损传输，而是注意力塑造和粒度控制。",
-        "cotsCotMaturity": "较高但证据不充分。信息粒度陷阱是有价值的系统层判断，能推广到多智能体协作；但报告缺少具体成功率、baseline 定义、样本数、对照组结果，因此成熟度受限。",
-        "brainaryMapping": "映射集中到 cognitive control 和 workflow management，并提出 RCA-to-Repair Context Filter 与 workflow 协议。相比前几周，Brainary 映射更具体到接口层，但尚未形成可执行参数或协议规范。",
-        "valueReasoning": "估值降到 $40,000，原因是打平 baseline 但识别关键失败模式。价值函数继续从“性能突破”转向“排雷和接口认知资产”。这是更保守的变化，但还需证明该认知能带来性能提升。",
-        "projectManagement": "能承认不符合预期，偏差归因为认知问题和方法问题。下周计划做 Coarse-to-Fine 消融寻找最佳粒度，方向对，但目标“实质性超越 baseline”缺少量化阈值。",
-        "nextActionQuality": "中等。动作聚焦于 RCA output 到 Repair input 的 prompt/context 组合，足够具体；但缺少预注册实验矩阵、成功指标、停止条件和分层 case 分析。",
-        "evidenceLevel": "报告自称 L3，合理。关键信息缺失导致不能判为 L4。",
-        "assessment": "这一周显示学生开始理解多 Agent 接口的非线性效应，这是研究能力增长；但硬结果没有突破，教授应要求他用表格化证据验证该发现。"
+        "topicTrajectory": "题目从 reproduction test 入口转向 RCA-to-Repair 信息传导，以及全链路修复成功率。",
+        "hardProgress": "完成不同粒度 RCA 诊断信息对 Repair Agent 成功率影响的消融实验，发现过细粒度信息可能降低修复效果。端到端修复效果打平 baseline，但未反超。缺少具体 baseline 数字、成功 case 数、消融矩阵和 reproduction test 横向对比结果。",
+        "cognitiveTrend": "认知转向多智能体协作：RCA 的角色不是 Solution Provider，而是 Localization Pointer。提出信息粒度陷阱，即上游信息过细会束缚下游生成空间。",
+        "cotOfCotMaturity": "成熟度有概念进步，但证据强度下降到 L3。这个发现有价值，但目前只说“打平 baseline”和“过细会修不好”，没有量化不同粒度的成功率差异，因此尚未成为强结论。",
+        "brainaryMapping": "映射到 cognitive control 和 workflow management，并提出 RCA-to-Repair Context Filter 模块。相比前三周，Brainary 映射更聚焦于模块间通信协议，但缺少可执行规范。",
+        "valueReasoning": "估值降至 40000 美元，承认未超 baseline 扣减价值。价值函数更现实，但仍没有连接到实际用户、节省金额、可交付产品形态或市场对比结果。所谓“最后一块拼图”可能过早，因为 reproduction test 仍只有 30% 基线，且未报告本周是否改善。",
+        "projectManagement": "当前进度判断为不符合预期，偏差原因是认知和方法问题。下周动作是 Coarse-to-Fine 消融实验，寻找最佳 prompt/context 组合。动作方向正确，但需要更严格的实验表格和成功阈值。",
+        "automationPath": "计划沉淀为 RCA 与 Repair 的上下文组装协议、Context Filter 模块和 Workflow。门槛是找到稳定超过 baseline 的粒度参数。"
       }
     ],
     "trendScores": {
-      "hardProgress": {
-        "score": 7,
-        "trend": "先升后降：第2周达到高点，第3周建立低成功率基线，第4周只打平 baseline。硬进展仍连续，但最近一周没有性能突破。",
-        "evidence": "执行引擎、RCA Agent 94%、Reproduction Test Agent 30%、RCA-to-Repair 打平 baseline。"
+      "scale": "1 表示很弱，5 表示很强。评分只基于四周周报中的证据。",
+      "hardProgressTrend": {
+        "score": 3.5,
+        "trajectory": "第一周引擎、第二周 94% RCA、第三周 30% reproduction test，硬进展强；第四周只有打平 baseline 和粒度发现，硬进展放缓。",
+        "evidenceGap": "第四周缺少具体成功率、baseline 数字、横向对比表和 case-level 结果。"
       },
-      "cognition": {
-        "score": 8,
-        "trend": "持续上升：从动态反馈，到可观测边界，到级联失败，到信息粒度陷阱。认知越来越像系统研究者，而不是单纯工程实现者。",
-        "evidence": "每周都能把实验结果转化成更一般的系统判断。"
+      "researchCapabilityTrend": {
+        "score": 4,
+        "trajectory": "从搭建模块进化到使用 benchmark、失败归因、边界识别和接口假设检验，显示研究能力增强。",
+        "risk": "如果后续不能把概念发现转化为性能提升，可能变成“高质量解释失败”而不是“解决失败”。"
       },
-      "cotsCotMaturity": {
-        "score": 8,
-        "trend": "第2周最成熟，第3周稳定，第4周概念有价值但证据不足。总体成熟度高于起点。",
-        "evidence": "有 L4 的 benchmark 失败归因，也有 L3 的接口消融推断。"
+      "cotIncrementTrend": {
+        "score": 4,
+        "trajectory": "每周都有清晰认知增量：动态探针、test quality 瓶颈、检索级联、信息粒度陷阱。",
+        "risk": "认知增量越来越抽象，必须用更细实验支撑。"
+      },
+      "cotOfCotMaturity": {
+        "score": 4,
+        "trajectory": "从系统架构判断升级到基于 benchmark 的失败边界，再到多环节优化原则和多智能体通信原则。",
+        "evidencePattern": "第二、三周最强，第四周概念有潜力但证据等级下降。"
       },
       "brainaryMappingMaturity": {
-        "score": 7,
-        "trend": "从宽泛映射到 Coding 能力，逐步细化到 calibration、cognitive control、memory schema、workflow management 和 context filter。",
-        "evidence": "第3、4周开始提出可沉淀形态：代码检索模块、memory schema、RCA-to-Repair Context Filter。"
+        "score": 3.8,
+        "trajectory": "从泛泛映射 Coding 能力，发展到 calibration、cognitive control、memory schema、workflow protocol 和 context filter。",
+        "gap": "还缺少明确接口定义、输入输出 schema、监控指标和可复用模块 API。"
       },
-      "metaCognition": {
-        "score": 8,
-        "trend": "明显增强：从工具切换阈值，到研究债务管理，到失败归因优先级，到多 Agent 通信中应该隐藏什么。",
-        "evidence": "学生能解释为什么偏离原计划，以及偏离是否有研究价值。"
-      },
-      "valueReasoning": {
-        "score": 6,
-        "trend": "有改善但仍偏内部估值。金额从 $50,000 到 $100,000 再降到 $60,000 和 $40,000，说明他会根据证据调节价值；但金额仍主要来自假设年化 $2M 和里程碑百分比，缺少真实用户、成本节省实测或竞品对照。",
-        "evidence": "每周都有估值公式，但缺少用户画像、部署场景、采购方、愿付价格和实际节省时间数据。"
+      "valueReasoningMaturity": {
+        "score": 3.2,
+        "trajectory": "金额随证据和结果下降，说明价值判断在校准；但计算仍依赖假设年化增益和里程碑百分比。",
+        "gap": "缺少真实用户、部署场景、竞品性能差距、愿付价格、节省工时、端到端成功率提升带来的经济换算。"
       },
       "projectManagement": {
-        "score": 7,
-        "trend": "稳定但有范围膨胀风险。能报告时间、资源、偏差和纠偏；但下一步常设为同时接入多个模块，容易导致因果归因不干净。",
-        "evidence": "每周约 40 小时，资源需求稳定，能承认偏差；但第3周到第4周没有完整展示 reproduction test 检索改进是否完成。"
+        "score": 3.3,
+        "trajectory": "每周都有下周最小动作和偏差解释，能承认不符合预期。",
+        "gap": "连续计划较满，且第四周未闭环说明第三周计划的 reproduction test 改进是否达标。资源依赖 Claude Code 权限反复出现但没有替代计划细化。"
       },
       "automationPath": {
-        "score": 7,
-        "trend": "逐渐从 Agent module 走向 workflow、schema、context protocol。自动化路径清楚，但缺少稳定 API、输入输出格式和验收标准。",
-        "evidence": "提出 Repair module、RCA Agent module、benchmark 标注、memory schema、Context Filter、workflow 协议。"
+        "score": 4,
+        "trajectory": "持续把发现映射为 Agent module、workflow、benchmark 标注、memory schema、context filter 和 prompt protocol。",
+        "gap": "转化路径清楚，但多个模块仍停留在研究原型，没有稳定指标证明可固化。"
       },
       "nextStepQuality": {
-        "score": 6,
-        "trend": "第2、3周较好，第4周略变成目标口号。下一步越来越接近关键瓶颈，但实验设计需要更可检验。",
-        "evidence": "“找到最佳信息粒度阈值并超越 baseline”方向正确，但缺少具体实验矩阵和量化门槛。"
-      },
-      "busynessRisk": {
-        "score": 4,
-        "trend": "忙碌风险中等偏低。学生投入时间稳定，不是靠堆时长制造进展；风险在于多模块并行时可能用大量实验掩盖核心指标没有上升。",
-        "evidence": "每周 40 小时左右，硬产出连续；第4周需警惕只做横向对比但不报告完整数据。"
+        "score": 3.4,
+        "trajectory": "下一步通常可验证，但有时目标过大，例如同时做混合检索、working memory、RCA 接入；第四周目标“实质性超越 baseline”需要具体阈值。",
+        "neededImprovement": "下一步应从“找到最佳组合”改成“给出固定消融矩阵、样本规模、成功率阈值和停止条件”。"
       }
     },
     "valueFunctionChange": {
-      "summary": "学生的价值函数从“做出核心模块就有高商业价值”，逐步转向“有 benchmark 证据、失败归因、接口协议和可自动化沉淀才有价值”。这是正向变化。但他对金额的计算仍偏自洽假设，尚未真正连接到用户支付、实际节省成本、部署可用性和竞品差异。",
+      "summary": "学生的价值函数从“做出核心模块就有高长期价值”，逐渐转向“有 benchmark 数字、失败归因和可沉淀模块才有价值”。这是正向变化。但价值推理仍偏技术内部视角，尚未真正连接用户、付费、产品形态和部署收益。",
       "byWeek": [
         {
           "week": "2026-03-22",
-          "whatIsWorthDoing": "值得做的是动态探索执行引擎，因为它可能成为 Code Repair 和 Brainary self-evolution 的基础设施。",
-          "whyWorthDoing": "认为静态分析触顶，动态 test cases 作为物理探针能提高 root cause 定位置信度。",
-          "moneyConnection": "用成熟 Coding Agent 年化 $2M 增益的 2.5% 估算 $50,000。金额推理有商业对标，但没有真实用户证据。",
-          "userConnection": "用户连接缺失，只隐含企业开发者或使用 Coding Agent 的企业。",
-          "productFormConnection": "产物形式是 Agent workflow 或 Repair module。",
-          "brainaryConnection": "连接到 Coding、tool orchestration 和 self-evolution，但还偏宏观。",
-          "automationConnection": "希望沉淀为 Agent module，自动化路径清楚但接口未定。"
+          "whatStudentValued": "从 0 到 1 的动态 RCA 执行引擎，以及支撑 Brainary Self-evolution 的基础设施。",
+          "whyValuable": "认为动态反馈能突破静态代码分析天花板，并成为自动化 Code Repair 的基础。",
+          "moneyConnection": "估值 50000 美元，来自成熟模块年化增益 200 万美元乘以 2.5% 研发权重。",
+          "userConnection": "只泛化提到企业节省开发成本，没有具体用户画像或使用场景证据。",
+          "productArtifactConnection": "Agent workflow、Repair module。",
+          "brainaryAutomationConnection": "连接 Coding、tool orchestration、Self-evolution。"
         },
         {
           "week": "2026-03-29",
-          "whatIsWorthDoing": "值得做的是 RCA Agent 和 benchmark 定位精度，因为 94% line-level localization 可成为对外展示的核心证据。",
-          "whyWorthDoing": "RCA 环节已足够强，瓶颈转移到 test case 质量；这使后续路线可分解。",
-          "moneyConnection": "估值升至 $100,000，基于 5% 里程碑权重和 benchmark 证据溢价。比第1周更有证据支撑。",
-          "userConnection": "仍缺少明确用户，但开始具备对外沟通和融资价值。",
-          "productFormConnection": "产物形式变为 RCA Agent module 和 benchmark 分类标注。",
-          "brainaryConnection": "明确连接 calibration、cognitive control、benchmark/evaluation。",
-          "automationConnection": "提出 readiness gate 和失败类别分支，自动化转化更具体。"
+          "whatStudentValued": "RCA Agent 的 benchmark 证据，尤其是 94% 行级定位准确率和失败模式分类。",
+          "whyValuable": "因为硬数字可对外展示，并证明 RCA 环节在有准确 test case 时足够强。",
+          "moneyConnection": "估值 100000 美元，权重升至 5%，并额外声称有沟通与融资杠杆。",
+          "userConnection": "仍未提供用户或采购方证据。",
+          "productArtifactConnection": "RCA Agent module、benchmark 分类标注、新文件类 bug 专用分支。",
+          "brainaryAutomationConnection": "连接 calibration、cognitive control、benchmark/evaluation。"
         },
         {
           "week": "2026-04-05",
-          "whatIsWorthDoing": "值得做的是建立 reproduction test 自动生成基线和定位检索瓶颈，即使成功率只有 30%。",
-          "whyWorthDoing": "因为 reproduction test 是全自动闭环入口，且失败归因能指导高杠杆优化。",
-          "moneyConnection": "估值降至 $60,000，体现他开始根据实验低于预期下调价值。金额仍基于里程碑百分比，而非性能提升实际价值。",
-          "userConnection": "用户连接仍缺失，未说明 30% test generation 对开发者或企业有什么可用价值。",
-          "productFormConnection": "产物形式是代码检索模块和 memory schema。",
-          "brainaryConnection": "连接到 memory 子系统和 task-specific schema 迭代。",
-          "automationConnection": "自动化路径更成熟：从实验中提炼 schema，再固化为共享检索模块。"
+          "whatStudentValued": "低成功率 baseline、失败归因、检索瓶颈和 working memory schema。",
+          "whyValuable": "认为不可跳过的负结果和瓶颈定位本身是研发资产。",
+          "moneyConnection": "估值降至 60000 美元，因 30% 成功率低于预期但有 baseline 和归因价值。",
+          "userConnection": "仍缺少终端用户或开发者工作流证据。",
+          "productArtifactConnection": "代码仓库检索模块、reproduction test working memory schema。",
+          "brainaryAutomationConnection": "连接 memory、tool orchestration、cognitive control，并提出从实验中提炼 task-specific schema。"
         },
         {
           "week": "2026-04-12",
-          "whatIsWorthDoing": "值得做的是 RCA-to-Repair 信息粒度控制，因为它决定多 Agent 间是否能有效协作。",
-          "whyWorthDoing": "发现过细诊断会束缚 Repair Agent，说明接口设计本身是系统性能瓶颈。",
-          "moneyConnection": "估值降至 $40,000，承认打平 baseline 降低价值，但认为排雷有研发资产价值。这个价值判断更保守。",
-          "userConnection": "仍缺失真实用户价值说明。没有说明超越 baseline 后能为谁节省多少调试/修复成本。",
-          "productFormConnection": "产物形式转为 Prompt、Context Filter、Workflow 协议。",
-          "brainaryConnection": "连接到 cognitive control 和 workflow management，尤其是模块间通信协议。",
-          "automationConnection": "提出信息压缩与粒度控制策略，可自动化为 Agent policy。"
+          "whatStudentValued": "多智能体接口中的信息粒度控制，以及避免 RCA 过度束缚 Repair。",
+          "whyValuable": "认为这是全自动修复闭环的关键拼图，能把诊断结果转化为更好的修复输入。",
+          "moneyConnection": "估值降至 40000 美元，因为未超 baseline，只按 2% 研发权重计算。",
+          "userConnection": "仍缺少真实用户和部署收益；目前价值仍由内部技术风险排雷定义。",
+          "productArtifactConnection": "RCA-to-Repair Context Filter、上下文组装 prompt、workflow 协议。",
+          "brainaryAutomationConnection": "连接 cognitive control、workflow management 和多 Agent 通信策略。"
         }
       ],
-      "mainChange": "价值观从“高准确率模块本身值钱”转向“能被沉淀成可复用模块、schema、workflow 协议并改善端到端指标才值钱”。这是研究价值函数成熟的迹象。",
-      "mainWeakness": "金额计算仍没有闭环到真实市场：缺少用户是谁、当前 baseline 成本是多少、每个 bug 修复可节省多少时间、成功率提升多少才会产生付费意愿、与 Cursor/Claude Code 的差异化在哪里。"
+      "maturityAssessment": [
+        "价值观变得更实证：学生会因为低成功率和未超 baseline 而下调估值。",
+        "价值观变得更系统：从单模块价值转向接口、schema、workflow、benchmark 分层等可沉淀资产。",
+        "仍不够商业化：金额计算没有由真实客户、竞品替代成本、部署成本、成功率提升对应工时节省来校准。",
+        "仍不够产品化：报告没有说明最终产物是论文、开源工具、内部 Brainary 模块、SaaS 功能还是 benchmark 数据集中的哪一个优先。"
+      ]
     },
     "repeatedBlockers": [
       {
-        "blocker": "Test case 自动生成始终是核心瓶颈",
-        "weeks": [
+        "blocker": "Reproduction test 自动生成质量",
+        "weeksAppeared": [
           "2026-03-22",
           "2026-03-29",
           "2026-04-05"
         ],
-        "pattern": "第1周说未接入，第2周确认 RCA 依赖准确 test case，第3周实际跑出 30% 成功率。这个卡点不是执行延迟，而是任务本身难度被逐步揭示。",
-        "risk": "如果 reproduction test 成功率不能超过 50% 或不能分层提升，RCA 94% 的价值会被入口质量吞掉。"
+        "pattern": "第一周未接入，第二周确认是唯一瓶颈，第三周第一版只有约 30% 成功率。第四周没有清楚报告是否已改善。",
+        "whyItMatters": "RCA 的 94% 准确率依赖准确 test case；如果入口 test 生成弱，后续 RCA 和 Repair 的端到端价值会大幅衰减。"
       },
       {
-        "blocker": "端到端闭环指标尚未超过 baseline",
-        "weeks": [
+        "blocker": "检索与代码定位",
+        "weeksAppeared": [
+          "2026-04-05"
+        ],
+        "pattern": "第三周明确为 reproduction test 的最上游瓶颈，但第四周没有提供混合检索或 working memory 改进后的具体结果。",
+        "whyItMatters": "检索失败会级联影响 issue 理解、test 生成、RCA 和 Repair。"
+      },
+      {
+        "blocker": "端到端性能未超过 baseline",
+        "weeksAppeared": [
           "2026-04-12"
         ],
-        "pattern": "第4周全链路已打通但未反超 baseline。说明模块强不等于系统强，接口和信任权重会吞噬单模块收益。",
-        "risk": "若持续打平 baseline，项目价值会从“性能突破”退化为“负结果和方法洞察”，论文和系统价值都需重新定位。"
+        "pattern": "第四周报告全链路打平 baseline，未实现反超。",
+        "whyItMatters": "如果不能超过 baseline，模块化链路的复杂性可能无法证明其必要性。"
       },
       {
-        "blocker": "评测报告缺少可复核细节",
-        "weeks": [
-          "2026-04-05",
+        "blocker": "新文件创建类 bug",
+        "weeksAppeared": [
+          "2026-03-29"
+        ],
+        "pattern": "RCA 失败的 3/50 case 均涉及新文件创建，被归因为动态探索方法的结构性边界。",
+        "whyItMatters": "这类 bug 需要独立路径，不能期待现有动态 RCA 解决。后续报告没有继续说明该分支是否被纳入统一方案。"
+      },
+      {
+        "blocker": "实验报告颗粒度不足",
+        "weeksAppeared": [
           "2026-04-12"
         ],
-        "pattern": "第3周有 30% 成功率但没有详细失败分类比例；第4周说横向对比和消融实验，但没有列出方法、指标、baseline、样本数和结果表。",
-        "risk": "没有表格化证据，教授无法判断发现是稳定规律、prompt 偶然性还是样本偏差。"
+        "pattern": "第四周提到横向对比、消融实验和打平 baseline，但没有给出每组设置、样本数、成功率、置信区间或失败类型分布。",
+        "whyItMatters": "缺少这些数据，教授无法判断“信息粒度陷阱”是稳健结论还是个别 prompt 现象。"
       },
       {
-        "blocker": "资源诉求重复出现但影响未量化",
-        "weeks": [
+        "blocker": "Claude Code 权限和大规模实验资源",
+        "weeksAppeared": [
           "2026-03-22",
           "2026-03-29",
           "2026-04-05",
           "2026-04-12"
         ],
-        "pattern": "Claude Code 权限持续等待，但学生没有量化它对实验规模、成本或速度的影响。",
-        "risk": "资源问题可能变成模糊借口；需要明确如果没有 Claude Code，哪些实验不能做、替代方案是什么。"
-      },
-      {
-        "blocker": "下一步动作常带有结果承诺但缺少实验门槛",
-        "weeks": [
-          "2026-04-05",
-          "2026-04-12"
-        ],
-        "pattern": "例如“接入 RCA 跑端到端”“实现修复成功率实质性超越 baseline”，方向正确但缺少量化阈值、对照组和停止条件。",
-        "risk": "容易陷入不断调 prompt 的局部搜索，而不是产生可发表、可复用的规律。"
+        "pattern": "持续提到需要或跟进 Claude Code 权限，但当前实验主要靠 OpenAI API 小规模推进。",
+        "whyItMatters": "如果资源是限制因素，需要明确哪些实验受限、替代方案是什么；否则它只是重复背景噪声。"
       }
     ],
     "professorShouldAsk": [
-      "第4周所说的 baseline 是什么？修复成功率具体是多少？样本数是否仍为 SWE-bench Pro 50 cases？打平 baseline 的置信区间或方差是多少？",
-      "RCA 信息粒度消融实验的完整表格在哪里？至少需要列出输入粒度、上下文长度、是否包含 issue、是否包含 line-level、是否包含伪代码、成功数、失败类型。",
-      "第3周 reproduction test 30% 的 35 个失败 case，检索失败、issue 理解失败、test 生成失败分别占多少？是否有多标签归因？归因标准是什么？",
-      "混合检索方案是否已经比纯 agentic search 或纯 SE-knowledge-driven 有提升？提升指标是 top-k file recall、line recall、还是最终 fail-to-pass？",
-      "RCA 94% 的行级定位在自动生成 reproduction test 条件下会衰减到多少？请给出“人工 test case RCA”和“自动 test case RCA”的对照。",
-      "信息粒度陷阱是否只发生在错误 RCA 或过长 RCA 情况下？如果 RCA 完全正确但摘要过细，是否仍然伤害 Repair？",
-      "哪些 case 属于新文件创建、全局重构、局部 bug、配置问题？不同类别是否需要不同的 RCA-to-Repair 粒度策略？",
-      "现在最可能沉淀到 Brainary 的最小产物是什么：检索模块、memory schema、RCA Agent、Context Filter，还是 workflow 协议？它的输入输出接口是什么？",
-      "如果下周仍然不能超过 baseline，项目决策是什么：继续调粒度、回到 reproduction test、拆分 case 类型，还是改论文定位为多 Agent 接口负结果？",
-      "价值金额如何从真实用户角度重算？例如每修复一个 SWE-bench 类 bug 节省多少工程师小时，成功率提升 10% 对企业或产品意味着多少钱？"
+      "第四周所谓“Reproduction Test Generation 横向对比”具体比较了哪些方法？每种方法在 50 case 上的 fail-to-pass 数字是多少？相比第三周 30% 是否提升？",
+      "第三周计划的“混合检索 + working memory + 接入 RCA 跑端到端”是否完成？如果没有，为什么第四周转向 RCA-to-Repair 粒度问题？这是战略转向还是临时绕开 test generation 卡点？",
+      "当前 baseline 是什么系统、什么设置、多少成功率？“打平 baseline”具体是几例成功、失败分布如何？",
+      "RCA 信息粒度消融实验的矩阵是什么？至少应包括 no RCA、file-level、block-level、line-level、line-level with rationale、line-level with pseudo-code 等条件，并报告每组成功率。",
+      "“过细粒度导致修不好”的证据有多少 case？是否控制了 prompt 长度、上下文污染、RCA 错误率和 Repair model 随机性？",
+      "RCA 的 94% 定位准确率是在人工准确 test case 条件下得到的；在自动生成 reproduction test 条件下，RCA 定位准确率下降到多少？",
+      "端到端 pipeline 中每个阶段的转化率是多少：issue 到正确 reproduction test、test 到正确 RCA、RCA 到成功 patch？",
+      "如果下周无法超过 baseline，项目决策是什么：继续调 prompt、回到检索、引入 repair 沙盒试错、还是缩小任务范围？",
+      "估值中的 200 万美元年化增益假设来自哪里？有没有用开发者节省时间、企业 bug 修复成本、竞品价格或可部署准确率来重新计算？",
+      "最终产物优先级是什么：论文、Brainary 内部模块、开源 benchmark 标注、Repair Agent demo，还是可复用 workflow 协议？"
     ],
     "nextBestIntervention": {
-      "intervention": "要求学生下周不要只追求“超过 baseline”，而是提交一份可复核的端到端诊断矩阵，把 reproduction test、RCA、Repair 和接口粒度的因果关系拆开。",
-      "why": "当前最大问题不是没有想法，而是多模块耦合后证据会混在一起。只有把每个环节的输入质量、输出质量和失败类型表格化，才能知道该优化检索、test generation、RCA 粒度，还是 Repair 自主探索。",
-      "minimumDeliverables": [
-        "一张 50 case 表：每个 case 标注 bug 类型、是否涉及新文件、reproduction test 是否成功、RCA 是否定位正确、Repair 是否成功、失败主因。",
-        "一张 RCA-to-Repair 粒度消融表：至少比较 issue only、block-level pointer、line-level pointer、line-level plus reasoning、line-level plus pseudo-code、compressed summary 六组。",
-        "一个明确 baseline 定义：baseline 方法、成功率、同样样本、同样预算、同样模型。",
-        "一个接口策略候选：给出 Context Filter 的输入、输出、保留字段、删除字段、token 预算和动态调节规则。",
-        "一个决策门槛：如果最佳粒度策略比 baseline 提升不足 5 个百分点，则转向按 case 类型分支；如果超过 5 个百分点，则扩大 benchmark。"
+      "intervention": "让学生从“继续优化”切换为“建立端到端漏斗仪表盘 + 固定消融矩阵 + 决策门槛”。教授不需要直接改代码，但需要强制实验报告标准，否则下一周可能继续产生有趣概念但没有可决策结果。",
+      "requiredDeliverableNextWeek": [
+        "一张 50 case 的端到端漏斗表：reproduction test 是否成功、RCA 是否定位正确、Repair 是否成功、失败主因分类。",
+        "一张 RCA-to-Repair 信息粒度消融表：至少 5 个粒度条件，每个条件报告成功数、失败数、平均 token、典型失败类型。",
+        "一张 reproduction test 方法横向对比表：第三周 baseline、混合检索、working memory、二者结合的成功率变化。",
+        "明确 baseline 名称和设置，说明是否同模型、同预算、同样本、同评价脚本。",
+        "定义下周成功阈值：例如端到端修复率至少超过 baseline 多少个百分点，或者 reproduction test 成功率从 30% 提升到多少。"
       ],
-      "professorAction": "教授最应该介入的是实验设计和证据标准，而不是具体代码实现。要求他把“信息粒度陷阱”从有趣观察变成可复核规律。",
-      "oneThingProfessorShouldLearn": "这个学生目前最有价值的发现不是某个 Agent 模块，而是：在自动化代码修复的多 Agent 流水线中，上游信息不是越多越好，接口会塑造下游注意力；因此 Brainary 需要的不只是模块能力，还需要模块间的信任权重、信息粒度和上下文压缩协议。"
+      "recommendedProjectGate": "如果下周端到端仍未超过 baseline，优先不要继续扩展新模块，而应回到最上游 reproduction test 和检索瓶颈；只有当入口 test 质量达到可接受阈值后，再投入 RCA-to-Repair 的细粒度调参。",
+      "oneThingProfessorShouldLearn": "这个学生真正的新增洞察不是“RCA 越准越好”，而是相反：在多 Agent 修复流水线中，上游模块的输出不是越多越好，接口设计本质上是在塑造下游注意力；但这个洞察目前还需要严格消融数据证明。"
     }
   }
 }

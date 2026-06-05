@@ -1,67 +1,54 @@
 {
   "key": "person:liao-jie:2026-04-19:weekly-score",
-  "generatedAt": "2026-06-05T17:05:46.930Z",
+  "generatedAt": "2026-06-05T18:05:20.074Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "f869af187c9b14473d90385500f476e388f56645766396cd9fd2d3842a28e397",
   "result": {
-    "week": "2026-04-19",
-    "name": "Liao Jie",
     "hardProgress": {
-      "score": 13,
-      "reason": "本周的硬进展主要是研究对象和系统架构的重定义：把任务从“生成法律问答/标签”改为“生成可评估法律 agent 行为合理性的结构化行为样本”，并提出了最小样本结构、semantic memory、working memory、operator、consistency evaluator 等模块边界。这是有实质设计产出的进展。但当前仍停留在架构冻结前，尚未产出 20–50 条样本、未完成 evaluator、未跑 v1/v2 对照，也没有展示具体 schema 文件或样例。因此硬进展不是实验型进展，而是设计型进展。",
-      "missingEvidence": "缺少冻结版 schema、样本实例、代码或 pipeline、最小 evaluator、对照实验结果、任何可复查的数据文件。"
+      "score": 12,
+      "reason": "本周的硬进展主要是完成了研究对象和系统架构的重定义：从“生成法律问答/标签”转为“生成可评估法律 agent 行为质量的结构化行为样本”，并提出了最小样本结构、memory/operator 分层、模块边界和失败模式。这是有价值的设计进展，但尚未产出可运行 pipeline、样本集、evaluator 或实验结果，因此硬进展不能给高分。",
+      "missingEvidence": "缺少冻结版 schema 文件、样例样本、代码仓库、模块接口、实际生成记录、人工审核结果或任何可复现 artifact。"
     },
     "cognitiveIncrement": {
-      "score": 13,
-      "reason": "认知增量较清楚：明确高风险法律 agent benchmark 的关键不是 final answer，而是中间表示、tool chain、missing fields、风险判定和轨迹一致性；同时把“从模型蒸馏 KG”重新解释为蒸馏 working memory schema 与 operator policy，而不是静态知识图谱或最终答案。这一增量直接改变了项目路径，从 prompt 直出转向 memory/operator 驱动，属于有效的研究判断更新。",
-      "missingEvidence": "缺少该认知更新如何在具体样本质量上产生提升的实验验证；缺少与原 prompt 直出方案的失败样本对比。"
+      "score": 12,
+      "reason": "认知增量较明确：把 benchmark 的评估对象从 final answer 推进到 agent 行为轨迹，把“从模型蒸馏 KG”重新解释为蒸馏 working memory schema 与 operator policy，并意识到纯 prompt 直出会导致轨迹漂移和不可诊断。这些判断与项目方向高度相关。",
+      "missingEvidence": "缺少与旧方案的具体对比样例，尚未证明这种认知更新能实际提升样本一致性、工具链合理性或违法分类稳定性。"
     },
     "cot2Depth": {
-      "score": 12,
-      "reason": "CoT’s CoT 部分有三条较完整的二阶反思：蒸馏对象应是 procedure knowledge，benchmark 最小样本应包含 working memory snapshot + tool chain + risk judgment，高风险任务应先保证中间表示可检验性再扩规模。每条都写了老师是否原本知道、为何未进入自动化科研、沉淀形态和证据等级。深度较好，但多数仍是概念推演，证据等级自评为 B，尚未通过实际系统或实验闭环证明。",
-      "missingEvidence": "缺少能证明这些二阶认知优于旧方法的实验数据；缺少自动化 workflow 原型；缺少 benchmark 样本对模型区分度的验证。"
+      "score": 11,
+      "reason": "CoT’s CoT 写到了三层：蒸馏对象应是 procedure knowledge、benchmark 最小样本应包含 working memory snapshot 与 expected tool chain、中间表示可检验性优先于扩规模。也尝试回答为什么这些想法还没有进入 workflow/module/benchmark。深度不错，但仍主要停留在概念推演，尚未形成经过实验反证或系统验证的二阶洞察。",
+      "missingEvidence": "缺少实际失败案例、样本对照、evaluator 输出、模型比较结果；“老师原本是否知道”的判断也缺少外部依据。"
     },
     "brainaryMapping": {
       "score": 8,
-      "reason": "Brainary 映射覆盖 memory、reasoning、calibration、cognitive control、tool orchestration、risk modeling、benchmark/evaluation，并能分别说明如何落到法律 agent 行为数据集上。映射不是泛泛对应，而是和 schema、operator、tool chain、risk label 等具体设计有关。扣分点在于这些映射仍未转化为可运行模块，尚未说明各能力之间的接口、输入输出和评价指标。",
-      "missingEvidence": "缺少 Brainary 模块级接口定义、数据流图、operator 输入输出规范、实际调用链样例和模块测试结果。"
+      "reason": "Brainary 映射较完整，覆盖 memory、reasoning、calibration、cognitive control、tool orchestration、risk modeling、benchmark/evaluation，并能说明每一项如何落到法律行为数据集生成中。优点是把抽象能力映射到样本结构和系统模块；不足是还没有真正转成 Brainary 可复用组件。",
+      "missingEvidence": "缺少 Brainary 内部接口映射、模块输入输出定义、与现有 Brainary 能力栈的兼容性说明，以及实际集成路径。"
     },
     "monetaryValue": {
       "score": 7,
-      "reason": "报告明确给出 80 万人民币估值，并提供了计算逻辑：1 万条结构化法律行为样本，每条 30–50 元，人工成本 30–50 万，加上 2 倍复用价值后估计 60–100 万，取中间值 80 万。估值框架符合模板要求，也能说明谁可能买单。但该金额主要基于假设，没有市场报价、历史标注成本、客户需求或竞品价格支撑；并且当前项目还没有产出可复用资产，因此货币价值是潜在价值，不是已实现价值。",
-      "missingEvidence": "缺少真实标注报价、法律专家审核成本依据、潜在客户访谈、竞品 benchmark 价格、实际节省成本测算、复用次数依据。"
+      "reason": "报告给出了明确金额：80 万人民币，并基于 1 万条法律行为样本、每条 30–50 元、2 倍复用价值进行估算。这个估算方法比单纯喊价值更好，也能说明该资产的潜在替代成本和复用价值。但关键假设未经验证，且没有市场报价、真实采购方或实际节省成本证据。",
+      "missingEvidence": "缺少法律标注市场价格依据、目标客户访谈、真实 benchmark 需求证明、样本审核工时数据、复用次数或产品化收入假设。"
     },
     "projectManagement": {
       "score": 12,
-      "reason": "项目管理部分较完整：写了项目名称、阶段、原计划与实际偏差、投入时间、下周投入、里程碑、资源需求、依赖关系、关键路径、token 成本、瓶颈和纠偏动作。尤其明确了当前偏差是样本产出少于预期，但架构清晰度高于预期。扣分点是验收标准仍不够量化，例如“schema 冻结”如何判定、“consistency evaluator”达到什么准确率可用、20–50 条样本如何抽查；另外报告称暂时不需要老师介入，但又多处依赖老师校准违法 taxonomy 和 benchmark 成功标准，存在管理判断不一致。",
-      "missingEvidence": "缺少明确交付物清单、schema 冻结标准、evaluator 验收指标、风险缓冲计划、每个里程碑的具体完成定义。"
+      "reason": "项目管理部分较完整：写明当前阶段、原计划与实际偏差、投入时间、下周投入、里程碑、资源需求、依赖关系、关键路径、成本瓶颈和纠偏动作。能看出项目从“先跑数据”纠偏为“先冻结 schema”。不足是本周实际交付物不够硬，风险缓解和验收标准仍偏粗。",
+      "missingEvidence": "缺少具体甘特图或任务板、每个模块的负责人和截止日期、schema 冻结标准、evaluator 验收标准、延期风险预案。"
     },
     "nextAction": {
       "score": 8,
-      "reason": "下周动作具体且可验证：冻结最小 schema，生成 20–50 条样本，做 prompt 直出 v1 与 working memory/operator 驱动 v2 的小对比，并验证逻辑一致性、tool chain 可解释性、违法分类稳定性。这些动作能直接补齐本周最大短板。扣分点是还未定义三项指标的具体度量方法、人工审核流程、样本选择范围和失败阈值。",
-      "missingEvidence": "缺少下周实验协议、指标计算方式、通过/失败标准、样本来源、人工审阅规则、v1/v2 控制变量。"
+      "reason": "下周动作具体且可验证：冻结最小 schema，生成 20–50 条样本，做 prompt 直出与 working memory/operator 驱动生成的对比，并验证逻辑一致性、工具链可解释性和违法分类稳定性。这是合理的最小实验闭环。",
+      "missingEvidence": "缺少每个指标的量化定义、人工评审标准、样本来源、对比实验表格格式、成功/失败阈值。"
     },
     "evidenceQuality": {
       "score": 2,
-      "reason": "证据质量偏弱。报告提供了较多结构化设计和失败模式分析，但证据主要来自自述和概念设计，没有展示实际样本、代码、实验日志、对比结果、评审记录或外部材料。报告自评 CoT’s CoT 证据等级为 B 是合理的，但从周报评分看，目前证据更接近“设计论证充分、实证证据不足”。",
-      "missingEvidence": "缺少样本文件、schema 文件、运行截图、实验结果表、失败案例、evaluator 输出、法律规则来源、人工审核记录。"
+      "reason": "证据质量偏弱。报告有清楚的设计逻辑和自我标注的证据等级 B，但主要证据仍是个人设计总结、概念拆解和预期失败模式，没有实际样本、实验数据、系统输出、代码或第三方验证。",
+      "missingEvidence": "缺少可检查的样本、实验日志、代码、截图、schema 文档、evaluator 结果、人工审核记录、对照实验数据。"
     },
-    "totalScore": 75,
+    "totalScore": 72,
     "tier": "B",
-    "oneLineJudgment": "本周完成了有价值的架构纠偏和 benchmark 设计重定义，但还没有进入可复查的样本、代码和实验闭环，属于高质量设计周，不是高质量实证周。",
-    "professorFollowUp": {
-      "shouldIntervene": true,
-      "reason": "报告中虽然写“暂时不需要老师介入”，但实际关键路径依赖老师校准违法 taxonomy、benchmark 成功标准和最值得区分的错误类型；如果这些不早定，下周 schema 冻结和 20–50 条样本可能会反复返工。",
-      "questionsToAsk": [
-        "请让学生下周先交一版最小 schema，包括每个字段的定义、取值范围、必填条件和示例。",
-        "要求学生给出至少 5 条完整样本，必须包含 context、instruction、missing fields、candidate rules、expected tool chain、violation class、final judgment。",
-        "要求学生明确 consistency evaluator 的三条最小规则：tool chain 是否自洽、rule 与 violation class 是否匹配、final judgment 是否被证据支持。",
-        "请老师重点校准：OpenClaw 法律行为 benchmark 最应该放大的 3 类错误是什么，例如缺失信息时过度自信、工具调用编造、违法分类边界错误。",
-        "下周不要只听概念汇报，应要求学生展示 v1 prompt 直出与 v2 operator 驱动的并排样本对比。"
-      ],
-      "oneThingProfessorShouldLearn": "把“从模型蒸馏 KG”用于法律 agent 时，最有价值的蒸馏对象不是最终答案，而是可执行的 working memory schema 和 operator policy；benchmark 样本本身应成为一次可检查的行为轨迹快照。"
-    }
+    "oneLineJudgment": "这一周是一次有价值的架构纠偏和 benchmark 设计周，但还不是实证推进周；核心风险是概念框架已经清楚，最小可运行证据仍缺位。",
+    "professorFollowUp": "老师最应该追问三件事：第一，要求下周提交一版冻结 schema 和 20–50 条真实样本；第二，要求定义 consistency evaluator 的最小判定规则和量化指标；第三，要求用同一批场景对比 prompt 直出与 working memory/operator 方案，证明结构化中间表示确实提升一致性和可诊断性。"
   }
 }

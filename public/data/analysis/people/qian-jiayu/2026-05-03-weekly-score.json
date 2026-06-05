@@ -1,99 +1,60 @@
 {
   "key": "person:qian-jiayu:2026-05-03:weekly-score",
-  "generatedAt": "2026-06-05T17:07:16.210Z",
+  "generatedAt": "2026-06-05T18:06:53.712Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "7552c5e6704cc6732270b988ad99bb457945c3d82d812cfc9ba4da5e1b42e752",
   "result": {
     "hardProgress": {
-      "score": 17,
-      "reason": "本周有明确硬进展：主实验表、baseline 补齐、closed/open/task-level breakdown、base→SFT→CoVT→RL 阶段增益、anchor internalization、reward ablation、SSBB joint table 都给出了具体数值。尤其是 MedVIGOR overall 87.54、SSBB binding error rate 降到 16.55，属于可写入论文的实质性资产。扣分点是 closed-source baseline 仍缺，VDA perturbation 表还没有闭环，部分数据规模消融口径存在风险。",
-      "missingEvidence": [
-        "closed-source baseline 结果缺失。",
-        "VDA perturbation 中 shuffled-image、target-region masked、non-target masked 未补齐。",
-        "数据规模消融中 50% 到 100% 跃迁过大的原始解释和控制变量缺失。",
-        "没有提供表格文件、实验日志或复现实验链接。"
-      ]
+      "score": 18,
+      "reason": "本周有明确硬进展：主实验表已形成统一对比框架，报告了 MedVIGOR overall 87.54、closed-ended 91.86、open-ended 78.04、visual grounding 89.20，并补齐 HuatuoGPT-Vision、Hulu-Med、MedAgent-Pro 等 baseline；方法侧给出 base、SFT、CoVT、CoVT+RL 的阶段增益链条；诊断侧形成 SSBB joint table，并给出 binding error rate 从多个 baseline 的高错误率降到 16.55 的结果。这些都属于论文实验资产级进展，不是泛泛描述。",
+      "missingEvidence": "缺少主结果表、ablation 表、SSBB joint table 的实际表格或链接；closed-source baseline 仍为空白；VDA perturbation 中 shuffled-image、target-region masked、non-target masked 结果未补齐；数据规模消融中 50% 到 100% 跃迁异常但尚未解释。"
     },
     "cognitiveIncrement": {
       "score": 13,
-      "reason": "认知增量比较清楚：从“堆实验结果”转为“每张表服务一个论文 claim”；把 SSBB 从概念转为 answer accuracy、grounding accuracy、joint accuracy、binding error rate 四联指标；把方法贡献拆成 base→SFT→CoVT→RL 的阶段链条。这些都直接改变论文实验组织方式。扣分点是部分认知如主实验回答是否强、ablation 回答为什么强，属于成熟科研常识，不完全是高新认知。",
-      "missingEvidence": [
-        "没有展示这些认知如何具体改写了论文结构或段落。",
-        "没有给出 claim-table 映射的完整清单。",
-        "没有说明哪些旧实验叙事因此被删除、合并或降级到 appendix。"
-      ]
+      "reason": "认知增量比较清楚：从“整理实验结果”升级为“把每张表映射到论文 claim”；将 SSBB 从概念转为 answer accuracy、grounding accuracy、joint accuracy、binding error rate 四联指标；将方法贡献拆成 base -> SFT -> CoVT -> RL 的可验证阶段链条。这些增量直接影响实验写作和论文防守方式。",
+      "missingEvidence": "尚缺对这些认知如何改变具体论文结构的版本证据，例如实验 section 前后大纲对比；也缺少对 reviewer 攻击面的系统枚举，当前更多是作者判断。"
     },
     "cot2Depth": {
       "score": 12,
-      "reason": "CoT’s CoT 有较好深度：不仅总结实验，还反思为什么现有科研 agent 不能自动完成 claim→table→metric→risk 映射，也指出 failure mode 转 joint metric 的自动化潜力。第二个 CoT’s CoT 关于 SSBB 的新信息差较强。扣分点是第一个 CoT’s CoT 明确写了“老师原本不知道的吗：否”，因此对教授的新知价值有限；两个 CoT’s CoT 的证据等级均标 A，但证据来源仍主要是本周自述，没有外部验证。",
-      "missingEvidence": [
-        "缺少 claim→table→metric→risk 的实际 schema 样例。",
-        "缺少自动化模块的输入输出定义。",
-        "缺少证明当前科研 agent 确实不能完成该任务的对照案例。",
-        "证据等级 A 的判定标准没有展开。"
-      ]
+      "reason": "CoT’s CoT 不只是复述进展，而是讨论了实验表如何成为 claim 的证据节点、failure mode 如何转化为 joint metric，以及为什么现有科研 agent 尚未吸收这些能力。它触及了 workflow、evaluation protocol、memory schema、agent module 等可沉淀方向，深度较好。",
+      "missingEvidence": "缺少更具体的结构化表示样例，例如 claim -> table -> metric -> risk 的实际 schema；也缺少一个可执行的 agent workflow 或 evaluator 原型，因此自动化层面的深度仍停留在设计判断。"
     },
     "brainaryMapping": {
       "score": 8,
-      "reason": "Brainary 映射较具体，提出了 claim-table mapper、experiment risk evaluator、paper-readiness workflow、failure-mode-to-metric generator 等可沉淀模块，且与 reasoning、calibration、risk modeling、benchmark/evaluation、workflow management 对应。扣分点是仍停留在概念映射层，尚未形成可执行接口、数据结构或最小 demo。",
-      "missingEvidence": [
-        "没有给出 Brainary 模块的最小输入输出格式。",
-        "没有说明如何把本周实验表自动解析进 claim-table mapper。",
-        "没有提供 Main-vs-Appendix Table Selector 的规则样例。",
-        "没有自动化评估结果或人工-自动对比。"
-      ]
+      "reason": "Brainary 关联比较具体，提出了 claim-table mapper、experiment risk evaluator、paper-readiness workflow、failure-mode-to-metric generator 等模块，并指出系统价值不只是写作，而是判断实验表是否在论文关键路径上。这与 Brainary 的 reasoning、calibration、risk modeling、benchmark/evaluation、workflow management 有直接关系。",
+      "missingEvidence": "缺少 Brainary 中这些模块的输入输出定义、调用场景和最小可用版本；也没有说明这些模块如何接入现有 Brainary memory 或 agent pipeline。"
     },
     "monetaryValue": {
-      "score": 6,
-      "reason": "价值估算覆盖三个任务，并能说明主实验、ablation、VDA/SSBB 诊断分别对应论文可信度、method defense 和可复用 evaluator 资产。估值逻辑有一定项目管理意义。扣分点是 30 万、50 万、80 万人民币主要来自主观折算，没有客户、市场、替代成本、外包报价、商业落地路径或真实付费证据支撑。",
-      "missingEvidence": [
-        "没有真实客户或潜在买方访谈证据。",
-        "没有同类 benchmark、evaluator 或医学 VLM 评测资产的市场价格参考。",
-        "没有把论文价值和商业价值分开估算。",
-        "没有说明估值是否包含算力、人工、数据标注、API 成本。"
-      ]
+      "score": 7,
+      "reason": "报告给出了三个任务的估值：主实验表 30 万、ablation 50 万、VDA/SSBB 诊断 80 万，并解释为论文核心资产、method defense、可复用 evaluator/benchmark 资产。估值逻辑与科研资产价值有关，不是完全随意。",
+      "missingEvidence": "估值仍主要基于主观类比，缺少外部市场参照、真实替代成本、API/GPU 成本明细、可售卖对象或潜在客户验证；没有区分论文内部价值与可商业化价值。"
     },
     "projectManagement": {
       "score": 13,
-      "reason": "项目管理信息完整：列出了当前阶段、原计划、实际进展、投入时间、下周投入、关键里程碑、资源需求、依赖关系、关键路径、token/API 消耗、瓶颈、偏差原因和纠偏动作。两个项目都能判断关键路径。扣分点是缺少更细的任务拆解、负责人分配、验收标准和风险优先级；部分时间与成本仍是估计值。",
-      "missingEvidence": [
-        "没有具体到日期级别的下周排期。",
-        "没有每个缺失实验的预计运行时长和失败备选方案。",
-        "没有明确 closed-source baseline 是否影响投稿门槛的决策标准。",
-        "没有实验完成的验收 checklist。"
-      ]
+      "reason": "项目管理信息完整：列出两个关键项目的当前阶段、原计划、实际完成、投入时间、下周时间、关键里程碑、依赖关系、瓶颈、纠偏动作和是否需要老师介入。关键路径判断明确，知道 experiment section 和 VDA/SSBB 证据闭环会影响投稿和 novelty。",
+      "missingEvidence": "缺少具体日期级排期和验收标准；没有风险优先级矩阵；没有列出每个缺失实验的预计运行时间、负责人和完成判据；closed-source baseline 是否进入主文尚未决策。"
     },
     "nextAction": {
       "score": 9,
-      "reason": "下周动作非常具体：完成主实验段落最终版本；把 ablation 重排为 visual-necessity supervision、dual-pathway internalization、evidence-consistent RL 三类 claim；补齐 MedVIGOR 和两个 strong baseline 的 target-region masked / non-target masked 结果；确认 SSBB joint metric 是否足够作为主文核心分析。这些都是最小可验证动作。扣分点是没有明确每项动作的完成标准、截止时间和优先级排序。",
-      "missingEvidence": [
-        "没有说明 VDA perturbation 补齐后什么结果算支持 claim，什么结果算失败。",
-        "没有给出下周每天的执行顺序。",
-        "没有明确如果 closed-source baseline 跑不完，论文主文如何处理。",
-        "没有定义 Experiment section 初稿的验收标准。"
-      ]
+      "reason": "下周动作足够具体且可验证：完成主实验段落最终版本；将 ablation 按 visual-necessity supervision、dual-pathway internalization、evidence-consistent RL 三类 claim 重排；补齐 VDA perturbation table，至少包含 MedVIGOR 和两个 strong baseline 的 target-region masked / non-target masked 结果。这些动作能直接关闭当前最大证据缺口。",
+      "missingEvidence": "缺少每个 next action 的完成标准，例如表格编号、最小样本量、baseline 名单、是否需要统计显著性；也缺少如果 VDA 结果不支持预期时的备选叙事方案。"
     },
     "evidenceQuality": {
       "score": 4,
-      "reason": "证据质量较好，周报给出了大量具体指标、baseline 名称、ablation 数值和诊断指标，说明不是泛泛汇报。但证据仍是文本自述，没有实验表附件、代码版本、数据切分、随机种子、统计显著性、评测协议细节或日志链接，因此只能判断为强内部证据，不能视为完全可审计证据。",
-      "missingEvidence": [
-        "没有原始实验表格或截图。",
-        "没有评测协议、数据集版本和样本量。",
-        "没有随机种子、置信区间或重复实验结果。",
-        "没有代码提交、实验日志或 artifact 链接。"
-      ]
+      "reason": "报告包含大量定量结果，且结果之间能互相支撑：主实验、阶段增益、anchor ablation、reward ablation、SSBB joint metric 都有数值。这比纯文字周报证据质量高。",
+      "missingEvidence": "证据仍是周报内陈述，缺少原始实验日志、代码版本、数据切分、随机种子、评估脚本、置信区间、显著性检验和表格附件；部分关键实验尚未补齐，因此不能视为完全可复核。"
     },
-    "totalScore": 82,
+    "totalScore": 84,
     "tier": "A",
-    "oneLineJudgment": "这是高质量的一周：硬实验资产、论文 claim 闭环和 SSBB 定量化都有实质进展，但 VDA perturbation、closed-source baseline 和证据可审计性仍是主要风险。",
+    "oneLineJudgment": "本周是高质量实验资产推进周：主实验、ablation 和 SSBB 诊断已形成论文核心证据链，但 VDA perturbation、closed-source baseline 决策和可复核实验材料仍是主要缺口。",
     "professorFollowUp": [
-      "优先确认：SSBB joint metric 是否足够作为主文核心贡献，而不是只放 appendix。",
-      "要求学生下周提交 claim→table→metric→risk 的一页结构化表，避免实验 section 变成 leaderboard。",
-      "决策 closed-source baseline 是否必须补；如果必须补，需要现在分配 API 预算和截止时间。",
-      "要求 VDA perturbation 明确失败判据：target-mask、non-target-mask、shuffled-image 分别要证明什么。",
-      "让学生把数据规模消融中 50% 到 100% 跃迁过大的原因写成 reviewer risk note，提前防守。"
+      "老师最应该确认的一件事：SSBB 是否可以作为主文核心 novelty，而不仅是 appendix 诊断分析。",
+      "请直接追问：SSBB joint table 的四个指标是否已覆盖所有关键 baseline，是否有原始表格和评估脚本可复核。",
+      "请决策：closed-source baseline 是否必须进入主文；如果必须，需要立即分配 API 预算和截止时间。",
+      "请要求下周交付一个最小闭环包：主实验段落初稿、三类 ablation claim-table 映射、VDA perturbation 完整表格、SSBB 主文图或表。",
+      "请提醒作者：不要把主结果写成 leaderboard，要把提升解释回 VDA、SSBB 和 evidence internalization，否则论文贡献会被 reviewer 读成普通涨点。"
     ]
   }
 }

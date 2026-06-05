@@ -1,60 +1,63 @@
 {
   "key": "person:feng-yebo:2026-05-31:weekly-score",
-  "generatedAt": "2026-06-05T17:00:52.181Z",
+  "generatedAt": "2026-06-05T18:00:45.799Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "eeadd375b1825ae8c0a94296a1147e4d53c8201969de32a4fae8d1435a681142",
   "result": {
-    "hardProgress": {
-      "score": 18,
-      "reason": "本周有明确硬交付：quant-agent 被合入 Brainary application 层，完成 morning 全链路、五类会话、季度 meta-reflection 接通，22 个 mock 集成测试全绿；独立 quant-agent 仓库完成 17 个 commit 的钱路径审计，测试从 1117 增至 1172 并全过，修复了一个会导致拒单被误认为 accepted 的 P1 bug；MIR 大修主体约 80%。扣分点是最关键的真实 paper trading 尚未跑，Brainary app 仍停留在 mock 冒烟测试，论文也尚未提交。",
-      "missingEvidence": "缺少真实 morning session 日志、Alpaca paper broker 对账结果、22 个测试的具体 CI 链接或 commit hash、MIR 当前稿件 diff 或提交包状态。"
+    "week": "2026-05-31",
+    "name": "冯业博",
+    "scores": {
+      "hardProgress": {
+        "score": 18,
+        "reason": "本周硬进展很集中：quant-agent 已进入 Brainary application 层，覆盖 morning 全链路、盘中/收盘/盘后/财报五个会话和季度 meta-reflection；22 个 app 集成测试全绿；独立 quant-agent 仓库完成 17 个提交、测试数从 1117 增至 1172 且全过，并修复 P1 拒单误放行、P&L 口径、止损覆盖等真实钱路径问题。论文线 MIR 大修主体约 80%，但尚未提交，安全论文也多为改稿状态，因此硬进展主要来自工程线。",
+        "missingEvidence": "缺少 commit hash、CI 链接、测试日志、GitHub issue 链接、实际 merge 记录、MIR diff 或 response letter 链接；Brainary app 仍未跑真实 paper session。"
+      },
+      "cognitiveIncrement": {
+        "score": 13,
+        "reason": "CoT 增量不是泛泛总结，而是由实现逼出的策略修正：从“重写合并”改为“vendor + 薄适配层”，把合并定义为接口问题；把接 Brainary 的成本具体化为文档实现与 stub/gap 的盘点；确认多 agent 重扫审计是有效 bug 发现方法。这些都能改变后续执行路径。",
+        "missingEvidence": "缺少对 vendor 方案相对于重写方案的系统性风险比较；多 agent 审计的召回率、误报率、成本与人工审计对照数据缺失。"
+      },
+      "cot2Depth": {
+        "score": 13,
+        "reason": "CoT's CoT 有两条较有价值的抽象：一是把长上下文问题拆成 intra-context 渐进披露与 inter-context 动态流程分治两个正交维度；二是把 model provenance、security provenance、broker truth 对账统一为“真实记录层”。两条都给出 Brainary 接入点和证据等级，也有升级路径。深度较好，但仍停留在概念与单案例验证阶段。",
+        "missingEvidence": "第一条缺少同任务下单上下文、分治、多策略叠加的对照实验；第二条缺少领域无关 provenance schema 和跨三个领域的实际验证。"
+      },
+      "brainaryMapping": {
+        "score": 9,
+        "reason": "Brainary 映射非常具体：quant-agent 被放入 apps/quant_agent，9 个 primitive、memory 三层、4 个 metacognition monitor、LOCKED 风控角色、tracing/provenance、workflow routing 都有对应关系；还把 11 个 framework gap 归档为 issue，能回灌主框架。映射不只是概念对应，已有 application 级实现。",
+        "missingEvidence": "缺少 issue #16–#26 的具体内容和优先级；缺少哪些 gap 应抽象为主框架能力、哪些只保留在 app 层的决策标准；尚未经过实盘 paper 验证。"
+      },
+      "monetaryValue": {
+        "score": 7,
+        "reason": "报告给出了人民币价值估算、重置成本和期望值法，且区分了本周新增价值与沿用上周价值。比较有用的是把本周新增价值主要归因于 Brainary high-stakes app 融合和钱路径硬化。但金额仍高度主观，部分估算引用了上周框架和历史项目价值，不完全是当前周可验证新增。",
+        "missingEvidence": "缺少实际避免损失金额、真实交易资金规模、工程人月市场基准、论文录用概率依据；部分“已录/在投/上周已估”的金额不应计入本周独立评价。"
+      },
+      "projectManagement": {
+        "score": 13,
+        "reason": "项目管理信息完整度较高：三条主线分别说明阶段、计划与实际、投入小时、token/成本、资源、关键路径、偏差原因、是否需要老师介入。关键路径识别清楚：下周 Brainary app 上 paper key 和 MIR 6/8 截止。也明确 quant-agent 独立仓库要收口，不再扩功能。",
+        "missingEvidence": "缺少下周逐日排期、风险矩阵、验收标准、回滚方案；MIR 剩余 20% 的具体任务拆分还不够细；framework gap 回灌没有 owner/优先级/版本目标。"
+      },
+      "nextAction": {
+        "score": 9,
+        "reason": "下一步明确且可验证：和老师确认后上 key 跑第一个真实 morning session；Brainary app 账本与 broker 真值对账；quant-agent 独立仓库只做对账不加功能；MIR 下周必须完成提交。这些动作直接对应关键路径。",
+        "missingEvidence": "缺少精确执行日期、成功判据，例如 morning session 通过标准、账本与 broker 差异阈值、paper run 失败后的停止条件；MIR 提交前的内部 review 节点不清楚。"
+      },
+      "evidenceQuality": {
+        "score": 4,
+        "reason": "证据密度较高，包含提交数、测试数、目录、测试用例、bug 类型、P1 机制、代码行数、token 成本、小时数、论文改动章节等具体信息。证据比一般周报强，但仍主要是自述，没有外部可核验材料。",
+        "missingEvidence": "缺少可点击或可审计的工件：测试输出、CI 截图、PR/merge 链接、issue 链接、论文版本 diff、实际 paper trading 日志。"
+      }
     },
-    "cognitiveIncrement": {
-      "score": 14,
-      "reason": "认知增量清楚：把“合并主线”从重写纠正为 vendor + 薄适配层；把接 Brainary 的真实成本定位为框架 gap 盘点；把多 Agent 重扫审计作为 bug 发现方法形成经验。这些都来自本周工程实践，不是抽象感想。扣 1 分是因为部分判断仍需实盘验证，尤其 vendor 方案是否长期可维护、framework gap 是否应该回灌主框架尚未定型。",
-      "missingEvidence": "缺少 vendor 方案和重写方案的系统性比较，例如缺陷率、维护成本、接口漂移风险、后续升级成本。"
-    },
-    "cot2Depth": {
-      "score": 13,
-      "reason": "CoT's CoT 有两条较高质量抽象：一是把长上下文问题拆成 intra-context 渐进式披露与 inter-context 动态流程分治两个正交维度；二是把 model provenance、security provenance、broker truth 对账统一为“真实记录层”。第一条有本周多 Agent 审计扫出 P1 的案例支撑，第二条有跨项目抽象价值。扣分原因是第二条仍偏概念化，尚未形成 schema 或系统验证；第一条也还没有对照实验。",
-      "missingEvidence": "缺少动态流程与单上下文方法的对照实验数据；缺少 provenance-as-truthful-record 的统一 schema、实例化样例和 Brainary Monitoring 接入结果。"
-    },
-    "brainaryMapping": {
-      "score": 9,
-      "reason": "Brainary 映射非常具体，覆盖 primitive、memory、metacognition monitor、workflow、risk modeling、tracing/provenance，并指出 11 个 framework gap。报告还明确哪些内容可回灌为 app 模板、monitor 库、cognitive control 约束。扣 1 分是因为目前多数能力仍在 app 本地绕过，尚未证明可以抽象为主框架通用能力。",
-      "missingEvidence": "缺少 GitHub issue #16–#26 的具体列表、优先级和回灌设计；缺少 app 本地实现与 Brainary 主框架抽象边界的设计文档。"
-    },
-    "monetaryValue": {
-      "score": 7,
-      "reason": "报告给出了金额估算和算法框架，能区分本周新增直接价值与沿用估值，并把主要价值放在 Brainary high-stakes app 落地和钱路径避损上。扣分较多是因为金额主要是重置成本和主观期望值推算，缺少市场、用户、实际资金规模、损失概率、论文录用概率更新等独立证据；部分价值沿用前一估计，不完全是本周可验证新增价值。",
-      "missingEvidence": "缺少真实交易资金规模、P1 bug 若发生的期望损失估算、外部用户或项目方支付意愿、Brainary app 被复用的实际需求证据、论文录用概率的客观依据。"
-    },
-    "projectManagement": {
-      "score": 14,
-      "reason": "项目管理信息完整：三条主线阶段、投入小时、下周预计投入、资源、token、关键路径、偏差、纠偏、老师介入点都写清楚。关键路径判断也合理：主线 B 上 paper trading 和主线 C MIR 6/8 截止。扣 1 分是因为同时推进实盘验证和 MIR 截止存在资源冲突，虽然识别了风险，但缺少具体日程切分和失败预案。",
-      "missingEvidence": "缺少下周每日排程、MIR 若延误的兜底方案、实盘 paper session 失败时的回滚标准、framework gap 回灌的优先级排序。"
-    },
-    "nextAction": {
-      "score": 9,
-      "reason": "下一步非常具体：和老师确认后上 Key，跑第一个真实 morning session；Brainary app 账本与 broker 真值对账；quant-agent 独立仓库停止加功能，只做对账；MIR 下周必须提交。扣 1 分是因为关键下一步的验收标准还可以更硬，例如 morning session 成功的判据、允许误差、触发回滚的条件。",
-      "missingEvidence": "缺少 paper trading 的验收指标，例如账本与 broker 真值允许误差、监控项、失败重试策略、是否允许真实下单、MIR 提交前 checklist。"
-    },
-    "evidenceQuality": {
-      "score": 4,
-      "reason": "证据质量较好，有 commit 数、测试数、目录路径、具体 bug、具体模块、测试断言、issue 编号、论文修改章节和截止日期。但大部分证据仍是自报告，缺少可点击或可复验材料；最关键的真实 broker 运行证据尚未产生。",
-      "missingEvidence": "缺少仓库链接、commit hash、CI 截图、测试报告、issue 链接、实盘 paper 日志、broker 对账输出、论文稿件或 response letter 文件。"
-    },
-    "totalScore": 88,
+    "totalScore": 86,
     "tier": "A",
-    "oneLineJudgment": "这是一个强 A 周报：本周硬进展集中且对 Brainary 主线有实质推动，但尚未越过真实 paper trading 和论文提交两个关键验证点，因此不能给 S。",
-    "professorFollowUp": [
-      "优先确认是否允许下周给 Brainary quant app 配 ANTHROPIC、ALPACA、FRED key 并跑第一个 Alpaca paper morning session。",
-      "要求学生下周提交一份最小实盘验证包：运行日志、LLM cost、账本记录、broker truth 对账表、失败或异常清单。",
-      "要求学生把 GitHub issue #16–#26 汇总成一页：哪些是主框架必须修，哪些只留在 app 层，哪些可以抽象成 monitor 或 memory 能力。",
-      "要求学生给 MIR 6/8 截止倒排计划，明确哪一天完成 response letter、PDF 编译、作者确认和 ScholarOne 上传。",
-      "本周教授最应该学习的一点是：动态流程不是简单多开 agent，而是面向超长任务的“规划—分治—子上下文执行—聚合”范式，它与渐进式披露正交，值得作为 Brainary Project Management / Solving 的候选能力。"
-    ]
+    "oneLineJudgment": "本周是高质量工程落地周：Brainary high-stakes application 从概念进入可测试实现，但还差真实 paper run、主框架回灌决策和论文 deadline 收口，尚未达到 S 级闭环。",
+    "professorFollowUp": {
+      "primaryQuestion": "下周是否批准配置 ANTHROPIC、ALPACA、FRED key 跑第一个 Brainary quant_agent paper morning session？批准前需要学生给出成功标准、失败停止条件和账本-broker 对账阈值。",
+      "secondQuestion": "11 个 Brainary framework gap 中，哪些应优先回灌主框架？建议先让学生按“安全关键/通用性/实现成本/是否已有 app 验证”四列排优先级。",
+      "thirdQuestion": "MIR 6/8 截止是硬约束，应要求学生给出提交前剩余任务清单和具体日期，防止 Brainary 实盘任务继续挤占论文收尾。",
+      "oneThingToLearn": "老师本周最应该吸收的是“动态流程”作为长上下文分治范式：它不是更长上下文，而是 planner 将任务拆给多个干净子上下文，再聚合结果；这可成为 Brainary Project Management/Solving 的关键能力。"
+    }
   }
 }

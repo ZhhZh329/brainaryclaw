@@ -1,54 +1,60 @@
 {
   "key": "person:li-yanzhou:2026-04-12:weekly-score",
-  "generatedAt": "2026-06-05T17:05:12.072Z",
+  "generatedAt": "2026-06-05T18:04:59.593Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "c5df3f88b7d9199a0938e296414eb754ab73980a3425d7579b2086a880d6bb0a",
   "result": {
     "hardProgress": {
-      "score": 14,
-      "reason": "本周有明确硬进展：完成跨 EnvBench、TerminalBench、SWE-bench 的 SWE trajectories 收集，完成 skill extractor cold start，设计了 LLM judge 与环境 utility 两类 reward，并开始 baseline rollout。进展已经从 schema 讨论推进到训练信号与 RL 准备阶段。但周报没有给出数据规模、模型版本、cold start 结果样例、baseline 已完成比例或任何可复现实验产物，因此硬进展可信但强度未被充分证明。",
-      "missingEvidence": "缺少 trajectories 数量与覆盖分布、数据清洗标准、skill extractor cold start 的训练配置与输出样例、baseline rollout 数量、当前 reward 打分结果、代码或实验日志链接。"
+      "score": 15,
+      "reason": "本周有实质推进：完成 SWE 相关 trajectories 收集，覆盖 EnvBench、TerminalBench、SWE-bench；完成 skill extractor cold start；设计了 LLM judge 结构性/generalization reward 与环境 utility reward；并已开始 baseline rollout。进展已经从 schema 讨论进入训练与优化准备阶段。但报告没有给出数据规模、cold start 训练配置、样例 skill、baseline 初步结果或失败案例，因此硬进展可确认但不可充分验收。",
+      "missingEvidence": "缺少 trajectories 数量与分布、cold start 模型版本和训练指标、抽取 skill 样例、baseline rollout 数量、without skill 对照结果、reward 初步区分能力。"
     },
     "cognitiveIncrement": {
-      "score": 11,
-      "reason": "认知增量集中在一个有效判断：skill extraction 的关键不是能否抽取，而是 granularity 是否同时服务 reusability 和 utility；并进一步提出用 RL 在 generalization 与 utility 之间逼近 preference。这个增量和当前实验路线有直接关系。但该认知仍主要是问题重述和路线假设，尚未包含反例、失败模式分类、可验证预测或对已有 memory 方法的具体区别。",
-      "missingEvidence": "缺少具体观察到的过粗或过细 skill 例子、不同 granularity 对下游任务影响的初步对比、为什么人工 schema 不够的实验或案例依据。"
+      "score": 12,
+      "reason": "认知增量明确：把问题从“是否能抽出 skill”推进到“抽出的 skill 是否处在可复用且有用的 granularity”。同时提出 granularity 不应由人工规则预设，而应通过 rollout、utility feedback 和 generalization constraint 共同逼近。这是对研究对象的重构，有助于决定后续实验设计。",
+      "missingEvidence": "缺少具体观察证据说明为什么已有 skill 过粗或过细，例如真实抽取样例、失败任务、utility 下降案例，以及不同粒度 skill 的对比。"
     },
     "cot2Depth": {
-      "score": 10,
-      "reason": "CoT's CoT 能把 granularity 问题上升为 workflow、benchmark、memory schema、evaluation protocol，并指出 reward-driven preference optimization 是自动化科研可吸收的形式。深度好于一般任务汇报。但两个 CoT's CoT 都承认老师原本已知道，真正新增部分主要是工程化吸收路径；同时证据等级只是 B，且没有形成可执行的 benchmark 定义、reward 公式或收敛判据。",
-      "missingEvidence": "缺少明确的 granularity 维度定义、可操作的评价协议、reward 权重候选、RL 目标函数、失败样例、与现有 memory benchmark 的差异表。"
+      "score": 11,
+      "reason": "CoT’s CoT 抓住了两个可沉淀命题：granularity 是 long-term memory skill 的核心变量；granularity preference 可以被转化为 reward-driven optimization problem。两条都连接到 benchmark、workflow、memory schema、evaluation protocol，具备自动化科研转化意识。但深度仍主要停留在方向判断，尚未给出可操作定义、变量分解、实验判别标准或反例边界。",
+      "missingEvidence": "缺少 granularity 的形式化定义、如何量化 generalization 与 utility 的具体指标、reward 权重搜索方案、什么结果会证伪该路线。"
     },
     "brainaryMapping": {
       "score": 7,
-      "reason": "周报把工作映射到 Brainary 的 memory、reasoning、cognitive control、benchmark/evaluation，并指出可能沉淀为 memory 结构、workflow 和评测协议。映射方向合理。但仍停留在能力标签层，没有说明 Brainary 中具体哪个模块会消费 skill、如何调用、输入输出接口是什么、与现有 memory/reasoning pipeline 的连接方式是什么。",
-      "missingEvidence": "缺少 Brainary 模块级接口图、memory schema 草案、skill 调用协议、evaluation protocol 在 Brainary 中的落点、与 cognitive control module 的控制变量定义。"
+      "reason": "报告将工作映射到 Brainary 的 memory、reasoning、cognitive control、benchmark/evaluation，且指出缺口是 knowledge granularity schema 与同时衡量 generalization 和 utility 的验证协议。映射方向正确，但仍偏概念级，没有说明该模块在 Brainary 系统中的输入、输出、调用时机和与其他模块的接口。",
+      "missingEvidence": "缺少 Brainary 中 memory schema 的字段草案、agent 调用流程图、evaluation protocol 的输入输出定义、与 cognitive control module 的具体连接方式。"
     },
     "monetaryValue": {
       "score": 5,
-      "reason": "报告给出了两个价值估算：trajectories 与 cold start 价值 60 万至 150 万，reward 与 RL 搭建价值 50 万至 120 万，并说明买单方可能是 coding agent、SWE agent 和 agent infrastructure 团队。问题在于估值依据非常粗，没有拆分为数据成本、训练成本、人力替代价值、产品收入或论文/平台资产价值，也没有说明这些金额如何被验证或兑现。",
-      "missingEvidence": "缺少市场对标、数据采集成本核算、训练与推理成本、潜在客户需求证据、可售卖资产形态、价值计算公式、与现有 SWE agent 基础设施的商业差异。"
+      "reason": "报告尝试给出金额估值，并区分了 trajectories/cold start 数据资产与 reward/RL 基础设施两类价值。但金额区间主要是主观估算，缺少买单场景、替代成本、节省成本、客户类型、复用次数或产品化路径支撑，因此目前只能作为价值假设，不能作为商业判断依据。",
+      "missingEvidence": "缺少估值计算细节、人工替代成本、GPU/LLM 成本、潜在客户数量、对 coding agent 或 SWE agent 指标提升的量化预期、同类数据或系统资产的市场参照。"
     },
     "projectManagement": {
-      "score": 11,
-      "reason": "项目管理信息较完整：有项目名称、阶段、原计划与实际完成情况、资源需求、关键路径、成本风险、进度判断和纠偏动作。尤其明确了下周关键路径是 baseline 收集与 RL pipeline 接入。但管理粒度仍不足：没有里程碑日期、验收标准、风险阈值、实验优先级、资源预算上限，也没有说明如果 reward 不稳定时的备选方案。",
-      "missingEvidence": "缺少具体时间表、baseline 完成数量目标、RL pipeline 验收条件、reward 稳定性的判定指标、预算上限、失败后的 fallback plan、是否需要老师决策的触发条件。"
+      "score": 12,
+      "reason": "项目管理信息较完整：有项目名、阶段判断、计划与实际对齐、资源需求、关键路径、成本风险和纠偏动作。下周关键路径也明确为 baseline 收集、RL pipeline 接入和小规模实验。主要不足是缺少可验收里程碑和风险阈值，例如何时认为 reward 稳定、何时扩大 rollout、何时暂停路线。",
+      "missingEvidence": "缺少具体时间表、实验规模、负责人/资源分配、预算上限、baseline 完成标准、reward 稳定性的验收指标、RL 失败后的备选方案。"
     },
     "nextAction": {
       "score": 8,
-      "reason": "下周动作具体：完成 baseline 收集，接入 RL pipeline，开始 rollout 和小规模 RL 实验，并优先验证 reward 是否能区分好坏 granularity。这些动作与当前卡点直接相连，具有推进性。但仍缺少最小实验设计，例如样本量、对照组、reward 权重网格、成功/失败判据和截止时间。",
-      "missingEvidence": "缺少下周实验清单、每个实验的输入输出、最小样本量、baseline 定义、reward 权重搜索范围、成功阈值、何时停止扩大 rollout。"
+      "reason": "下一步动作清楚且可执行：完成 baseline 收集、接入 RL pipeline、开始 rollout、小规模 RL 实验，并优先验证 reward 是否能稳定区分好坏 granularity。这些动作与当前卡点直接相关。扣分点在于没有给出最小实验配置和成功/失败判据。",
+      "missingEvidence": "缺少下周最小实验的样本数、reward 权重组合、rollout 次数、对照组设置、验收指标，以及如果 reward 不稳定时的调整策略。"
     },
     "evidenceQuality": {
-      "score": 2,
-      "reason": "周报自评证据等级为 B，并提到已有 trajectories、cold start、reward 设计和 baseline rollout，但所有证据基本是叙述性声明。没有量化指标、实验截图、日志、样例、表格或链接，因此证据质量偏弱。当前更像是可信的项目进展口头汇报，而不是可审计的科研周报。",
-      "missingEvidence": "缺少数据规模表、skill 样例、reward judge prompt、baseline 结果、环境测试结果、实验日志、代码提交、模型 checkpoint、失败案例。"
+      "score": 3,
+      "reason": "证据等级自评为 B 是合理的：已有数据收集、cold start、reward 设计和 baseline rollout 作为过程证据，但尚无结果证据。报告没有提供表格、日志、样例、指标或实验截图，因此证据足以说明工作在推进，但不足以证明方法有效。",
+      "missingEvidence": "缺少可复核实验记录、数据统计、skill 抽取样例、LLM judge prompt 与评分一致性、env utility 对照结果、RL 初步曲线。"
     },
-    "totalScore": 68,
-    "tier": "C",
-    "oneLineJudgment": "本周方向判断和工程推进都成立，但关键证据不足，granularity-aware skill extraction 仍处在“路线清楚、实验未证实”的阶段。",
-    "professorFollowUp": "老师最该追问一件事：下周的小规模 RL 实验中，如何用最小样本证明 reward 真的能区分“过粗、适中、过细”的 skill，并且这种区分能带来相对 without-skill baseline 的任务收益。"
+    "totalScore": 73,
+    "tier": "B",
+    "oneLineJudgment": "本周从概念问题推进到可训练系统准备，核心方向清楚，但缺少量化证据和可验收实验结果，当前仍是有潜力的原型阶段而非已验证进展。",
+    "professorFollowUp": [
+      "要求下周必须提交一个最小实验表：样本数、baseline without skill、skill 条件、reward 分项、utility 提升或下降。",
+      "要求给出 5 个过粗 skill、5 个过细 skill、5 个合适 granularity skill 的真实样例，用来验证问题定义是否成立。",
+      "追问 granularity 的可操作定义：是长度、抽象层级、适用任务集合、前置条件数量，还是环境 utility 曲线？",
+      "要求明确 reward 权重搜索计划，以及什么结果说明 RL 路线有效、什么结果说明需要改成监督偏好学习或规则约束。",
+      "教授本周最应关注的一点：这个项目的关键不是再设计一个 memory schema，而是把 knowledge granularity selection 变成可测、可优化、可复用的训练问题。"
+    ]
   }
 }

@@ -1,54 +1,102 @@
 {
   "key": "person:sun-manqi:2026-03-29:weekly-score",
-  "generatedAt": "2026-05-24T11:35:42.131Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "ecb13bc88b4e64e4ac5902f617f2b39c5cb02fd9092a9b76ea940f72f9adac2f",
+  "generatedAt": "2026-06-05T18:07:59.686Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "4703ada6c28f18c8d1240e4ab5e699d1cfa8e7a0a975ca9c917da9c7a5ec4eb6",
   "result": {
-    "hardProgress": {
-      "score": 17,
-      "reason": "本周完成了 Domain × Function 双维度分类协议 Schema v1.0 的工程化设计，包括三层分类结构、边缘规则和冲突解决机制，并手动验证了 3 个代表性 Skill。同步编写了支持动态 JSON 读取、智能截断、并发和断点续跑的高并发打标脚本，已联调通过。硬进展扎实，但受 API 额度限制尚未启动批量运行，缺失大规模自动分类结果。",
-      "missingEvidence": "缺少大批量自动分类的输出结果和准确率数据"
+    "week": "2026-03-29",
+    "name": "Sun Manqi",
+    "scores": {
+      "hardProgress": {
+        "score": 15,
+        "reason": "本周有明确硬产出：Domain × Function 二维 Schema v1.0、边界规则、primary/secondary、L3:null、confidence 字段，以及高并发打标脚本 run_1200_classification.py。也完成了 3 个 Golden Examples 的手动验证和 API 网关联调。但关键的 1200 条批量 Mapping 尚未启动，主结果仍停留在协议和脚本准备层面。",
+        "missingEvidence": [
+          "缺少 Schema v1.0 文档样例或字段定义片段",
+          "缺少 3 个 Golden Examples 的输入、输出和判定结果",
+          "缺少脚本运行日志或联调成功截图",
+          "缺少 1200 条数据的实际批量结果"
+        ]
+      },
+      "cognitiveIncrement": {
+        "score": 13,
+        "reason": "认知增量较明确：从“分类体系”转向“Agent 数据通信协议”；意识到通用技能不必设单独类别，而应通过浅层 Domain 与 Secondary Domain 表达泛化；认识到动态读取 JSON 分类树优于 Prompt 硬编码。这些增量直接回应了工程可用性和大模型幻觉问题。",
+        "missingEvidence": [
+          "缺少对比实验，证明动态读取 JSON 分类树确实提升准确率",
+          "缺少通用技能浅层 Domain 方案在更多样本上的验证",
+          "缺少失败案例来说明原方案为何会产生格式灾难"
+        ]
+      },
+      "cot2Depth": {
+        "score": 11,
+        "reason": "CoT’s CoT 有一定深度，能从 O*NET 字典上升到数据库 Schema、字段约束和中间件逻辑，并解释为什么直接把大树扔给大模型会产生幻觉。但目前主要是设计推理，尚未通过大规模数据证明哪些规则真正降低错误率。",
+        "missingEvidence": [
+          "缺少大模型在有无 Schema 约束下的错误率对比",
+          "缺少 700 多个交叉节点中高风险节点的分析",
+          "缺少对 L1-L3 兜底策略的系统性误差评估"
+        ]
+      },
+      "brainaryMapping": {
+        "score": 8,
+        "reason": "Brainary 映射较清晰：定位为 memory 层的 Agent Skill 结构化基座字典和二维检索元数据规范。它能解释该周工作如何沉淀为 Brainary 的记忆表结构。但还没有说明与 Brainary 其他模块，如 reasoning、routing、evaluation 的接口关系。",
+        "missingEvidence": [
+          "缺少 Brainary memory schema 的实际字段映射表",
+          "缺少该 Schema 如何被检索、路由或调用的流程图",
+          "缺少与现有 Brainary 系统接口的兼容性说明"
+        ]
+      },
+      "monetaryValue": {
+        "score": 6,
+        "reason": "报告给出了两个 1000 元人民币的估值，并说明来自 Schema 设计节省返工成本、流水线节省 Token 和运行时间。方向合理，但金额依据较弱，缺少实际 API 成本、运行耗时、人工节省时长和错误返工概率的量化证据。",
+        "missingEvidence": [
+          "缺少截断前后 Token 成本的实际测算",
+          "缺少并发脚本相对单线程的耗时对比",
+          "缺少 58 万数据规模下的成本外推表",
+          "缺少 1000 元估值对应的可验证工时或市场价格依据"
+        ]
+      },
+      "projectManagement": {
+        "score": 12,
+        "reason": "项目管理信息较完整：给出了阶段、投入时间、下周预计时间、关键路径、依赖、Token 成本规划、卡点和纠偏动作。主要问题是关键路径完全依赖师兄 Review 和 API Key，缺少备用方案，例如替代 Key、离线 mock、少量人工评估或本地小模型测试。",
+        "missingEvidence": [
+          "缺少明确里程碑日期",
+          "缺少 Review 延迟或 Key 继续不可用时的备选计划",
+          "缺少风险清单和优先级",
+          "缺少本周 35 小时的任务分布"
+        ]
+      },
+      "nextAction": {
+        "score": 8,
+        "reason": "下周动作具体：拿到 Key 后跑完 1200 条测试数据，输出第一批 Matrix 结果，并在效果良好后进入恶意 Skill 构造与防御识别微型闭环。动作可验证，但高度依赖外部条件，且没有定义 1200 条跑完后如何判定成功。",
+        "missingEvidence": [
+          "缺少 1200 条测试的验收指标，例如准确率、一致性、人工抽检比例",
+          "缺少失败时的调参流程",
+          "缺少输出 Matrix 结果的格式要求",
+          "缺少若师兄未及时反馈时的替代行动"
+        ]
+      },
+      "evidenceQuality": {
+        "score": 3,
+        "reason": "证据等级自评为 B，报告中确实有具体工件名称、字段规则、样本数量、脚本名称和 API 401 卡点，可信度高于纯叙述。但缺少附件、日志、样例输出、代码片段、评估表和可复现实验结果，因此证据质量只能算中等偏低。",
+        "missingEvidence": [
+          "缺少代码仓库或关键代码片段",
+          "缺少运行日志",
+          "缺少样本输入输出",
+          "缺少人工评估记录",
+          "缺少成本测算表"
+        ]
+      }
     },
-    "cognitiveIncrement": {
-      "score": 12,
-      "reason": "提出了三个实质性认知增量：1) Taxonomy 本质是严苛的数据通信协议，早期工程规则至关重要；2) 通过浅层 Domain 标签与辅修标签可解决通用技能推荐模糊问题，无需单独创建通用类别；3) 动态读取分类树 JSON 能提升模型准确率和系统可维护性。认知具体且有工程指导意义。",
-      "missingEvidence": "这些认知在大规模数据上的有效性尚待验证"
-    },
-    "cot2Depth": {
-      "score": 13,
-      "reason": "深入挖掘了从分类概念到 API 数据约束转化的元认知，明确指出了必须用数据库视角为模型制定严格输出规范，并分析了此前研究者未能解决该问题是因为缺乏裁剪和中间件约束逻辑。自动化潜力评估为高，建议沉淀为 memory schema，证据等级 B。这一认知层次较深，触及行业通用痛点。",
-      "missingEvidence": "该转化策略在大规模分类任务中的实际有效性及跨任务泛化能力未经验证"
-    },
-    "brainaryMapping": {
-      "score": 8,
-      "reason": "清晰地将本周工作与 Brainary 的 memory 能力关联，指出二维分类协议可直接作为 Agent Skill 的结构化基座字典和底层表结构，为 Brainary 记忆系统提供了数据容器基础。",
-      "missingEvidence": "缺少该表结构在 Brainary 系统上实际集成和检索的验证"
-    },
-    "monetaryValue": {
-      "score": 9,
-      "reason": "任务 A 和任务 B 的估值合计约 2000 元人民币，计算依据合理（任务 A 为预防 API 沉没成本的架构工时，任务 B 为节省未来 Token 费用的脚本工效），估算方式具体可信。",
-      "missingEvidence": "未量化未来实际节省的 API 成本或工时"
-    },
-    "projectManagement": {
-      "score": 14,
-      "reason": "明确了项目处于原型阶段，本周投入 35 小时，关键路径依赖（文博师兄的协议审核和 API Key）识别清晰，进度判断准确，纠偏动作聚焦于依赖解除后立即执行批量验证，无需老师介入，项目管理整体成熟。",
-      "missingEvidence": "若外部依赖延迟，缺乏应急预案"
-    },
-    "nextAction": {
-      "score": 10,
-      "reason": "下周行动具体可验证：拿到确认和 Key 后立即对 1200 条微型数据集进行全量 Mapping，输出第一批机器分类结果，动作明确、条件清晰。",
-      "missingEvidence": "无"
-    },
-    "evidenceQuality": {
-      "score": 4,
-      "reason": "CoT's CoT 的证据等级自我报告为 B 级，有架构设计和 Golden Examples 手动验证，推理合理，但尚未经过大规模机器批量测试。",
-      "missingEvidence": "大规模批量自动分类的实证数据"
-    },
-    "totalScore": 87,
-    "tier": "A",
-    "oneLineJudgment": "本周在分类协议工程化和自动化流水线上取得扎实硬进展，认知增量具有工程先见性，但批量验证因外部依赖暂未启动，后续仍需大规模数据跑通。",
-    "professorFollowUp": "请确认文博师兄的协议 Review 进度以及 API Key 的分配时间，确保下周 1200 条批量 Mapping 按计划完成，并关注初次机器分类结果中的准确率和易错节点。"
+    "totalScore": 76,
+    "tier": "B",
+    "oneLineJudgment": "本周完成了从理论分类到工程 Schema 和批量打标流水线的关键准备，但核心验证仍未发生，当前价值主要是协议资产和工程铺路，而不是已验证的数据结果。",
+    "professorFollowUp": [
+      "要求学生下周必须提交 1200 条 Mapping 的样例输出、抽检准确率和错误类型统计。",
+      "追问 Schema v1.0 中 primary、secondary、L3:null、confidence 四个字段的实际 JSON 示例。",
+      "要求给出通用 Skill 的 10 个边界案例，验证“一深一浅”的分类策略是否稳定。",
+      "要求补充成本表：截断前后 Token、单条成本、1200 条成本、58 万条外推成本。",
+      "如果 API Key 继续卡住，要求学生用 30 条样本做本地 mock 或人工闭环，不能让项目停在等待状态。"
+    ]
   }
 }
