@@ -1,6 +1,6 @@
 {
   "key": "person:guo-yaoqi:2026-05-10:weekly-score",
-  "generatedAt": "2026-06-05T20:01:22.573Z",
+  "generatedAt": "2026-06-05T21:01:52.265Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
@@ -8,47 +8,89 @@
   "result": {
     "hardProgress": {
       "score": 17,
-      "reason": "本周有明确硬交付：PDB 持续在线探针、6 个原子化 enricher pass、Differential SBFL 三件套、Stage 2 到 Stage 3 新接口、5 路 ablation、定位指标拆分。进展不是描述性工作，而是代码、接口、评测和工程决策共同推进。主要扣分点是最关键的 49 实例 regression on/off paired 评测尚未完成，因此“差分链路是否真正提升 solve rate / 函数级 Hit”仍未被验证。",
-      "missingEvidence": "缺少 paired 评测结果；缺少代码提交链接、运行日志、失败样例明细；ablation 数字未给出完整实验配置和置信区间。"
+      "reason": "本周有明确硬交付：PDB 持续在线探针、6 个原子化 enricher pass、Differential SBFL 三件套、Stage 2 到 Stage 3 接口扩展、5 路 ablation、定位准确性指标。进展不是停留在想法层，而是落到了模块、接口、评测和工程决策。但最核心的差分链路增益尚未完成 49 实例 paired 评测，目前只有 1-instance smoke，因此差分价值仍未被端到端证实。",
+      "missingEvidence": [
+        "缺少 49 实例 × regression on/off 的 paired 评测结果。",
+        "缺少代码提交哈希、运行日志、实验配置文件或可复现实验入口。",
+        "差分三件套目前只证明链路可运行，未证明能提升 solve rate 或函数级 Hit。"
+      ]
     },
     "cognitiveIncrement": {
       "score": 13,
-      "reason": "认知增量清楚：从“嫌疑词”到“差分证据”、PDB 从一次性工具到持续证据通道、结论必须可回溯到 PDB 字节、信息越多不等于越好。这些都直接来自本周实验和工程过程，不是泛泛反思。扣分点是部分认知仍依赖架构判断，尤其“差分证据改变 LLM 消费模式”尚未有下游行为分析或 paired 数据支撑。",
-      "missingEvidence": "缺少差分字段进入 repair agent 后的行为对照；缺少 LLM 是否真的从 pattern matching 转向 evidence-based deduction 的可观测指标。"
+      "reason": "认知增量较强，核心是把定位信号从“嫌疑词”推进到“差分证据”，并把 PDB 从一次性工具重构为持续证据通道；同时用 ablation 得出“信息越多不一定越好”的工程认知。这些都不是简单执行总结，而是对 agent 接口、证据消费模式和信息筛选原则的更新。扣分点在于部分认知仍主要由架构推理支撑，缺少 paired 实验证明。",
+      "missingEvidence": [
+        "缺少差分证据是否改变 repair agent 行为的直接对照。",
+        "缺少 LLM 在拿到差分字段后是否真的从 pattern matching 转向 evidence-based deduction 的行为分析。",
+        "缺少 regression_test_agent 的 K 候选质量统计。"
+      ]
     },
     "cot2Depth": {
-      "score": 12,
-      "reason": "CoT's CoT 有三类较深抽象：接口层消费模式切换、工具侵入性递进、K 候选加 critic 加极性校验。每条都给了证据等级、自动化潜力和沉淀形式，符合模板要求。扣分点是证据等级多为 L2/L3 且直接证据不足；第三部分结构有些混乱，夹杂自查清单和另一个 CoT's CoT 内容，降低了判断清晰度；“老师原本不知道”部分有一定主观推断。",
-      "missingEvidence": "缺少两阶段探针 vs 一阶段全程探针的对照实验；缺少 K=1 vs K>1、critic on/off 的实验；缺少差分证据对 repair 推理路径的直接观测。"
+      "score": 13,
+      "reason": "二阶认知写得比较完整：每条都包含内容、证据等级、老师是否可能已知、自动化潜力和沉淀形式；能把具体工程动作上升到接口范式、侵入性递进采集、K 候选加 critic 等可迁移原则。主要问题是证据等级偏自定义，L2/L3 的实验支撑不足；其中一段格式混乱，把自查清单和真正内容混在一起，降低了结构清晰度。",
+      "missingEvidence": [
+        "缺少两阶段探针注入与一阶段全程注探针的对照实验。",
+        "缺少 K=1 与 K=多候选、critic on/off 的 ablation。",
+        "缺少差分字段消费模式变化的独立 evaluator。"
+      ]
     },
     "brainaryMapping": {
       "score": 9,
-      "reason": "Brainary 映射较完整，覆盖 memory、reasoning、cognitive control、calibration、benchmark/evaluation，并且有一个清楚的新主张：memory 不只是存内容，而是存对照关系。映射和本周工作有对应关系，不是硬套概念。扣 1 分是因为这些映射尚未转化为 Brainary 可复用模块或 schema 的实际接口定义。",
-      "missingEvidence": "缺少正式 schema 示例、模块边界、输入输出规范，以及跨任务复用验证。"
+      "reason": "Brainary 映射具体且覆盖面好，分别落到 memory、reasoning、cognitive control、calibration、benchmark/evaluation。最有价值的是把 memory 从“单源存储”推进到“双源对照对象”，这与本周差分证据主线一致。扣分点是 schema、模块边界和复用接口仍偏概念化，还没有给出可直接纳入 Brainary 的最小数据结构或 API 草案。",
+      "missingEvidence": [
+        "缺少双源对照 memory schema 的正式字段定义样例。",
+        "缺少 Brainary 中各能力模块如何调用这些差分证据的接口说明。",
+        "缺少跨任务复用验证。"
+      ]
     },
     "monetaryValue": {
       "score": 7,
-      "reason": "价值判断有金额、计算方法、权重拆分和保守/激进情景，优于只给主观估价。其核心价值来自差分三件套、可评估定位指标、ablation 驱动工程决策。扣分点是 $2M 年化商业价值和 5% 权重是假设，缺少市场、成本节省、性能提升到收入转化的证据；且最关键的差分增益尚未量化，当前 $100K 估值偏前置。",
-      "missingEvidence": "缺少商业基准、用户/客户价值链、单位 solve rate 提升的货币化模型；缺少 paired 评测来证明 A 项的 3% 权重合理。"
+      "reason": "价值部分有金额、权重、计算方法和保守/激进情景，优于只报一个数字。它把本周价值拆成差分三件套、定位可评估、ablation 决策三项，逻辑上可读。但 $2M 年化商业价值和 5% 权重主要是主观假设，缺少市场、客户、成本节约或 benchmark 收益到商业价值的换算证据；在 paired 评测未跑之前，$100K 估值偏提前。",
+      "missingEvidence": [
+        "缺少 $2M 年化价值的来源依据。",
+        "缺少 solve rate 提升与商业价值之间的量化转换。",
+        "缺少差分链路实际增益，因此 A 项 $60K 仍是预期价值而非已实现价值。"
+      ]
     },
     "projectManagement": {
       "score": 13,
-      "reason": "项目管理信息充分：本周投入、下周投入、资源/API、token 成本、进度偏差、偏差原因、纠偏动作、是否需要老师介入都写清楚。尤其明确承认 paired 评测未完成，并把下周第一优先级设为不加新 feature、先回答核心问题。扣分点是里程碑仍偏乐观，例如 solve rate 突破 30/49、函数级 Hit 65% 缺少风险缓冲和失败后的分支计划。",
-      "missingEvidence": "缺少具体排期表、评测完成标准、失败分支决策树、成本上限和运行资源约束的硬边界。"
+      "reason": "项目管理信息充分：有本周投入时间、下周预计时间、API/费用、quota 风险、进度偏差、偏差原因和纠偏动作。能够明确承认 paired 评测未完成，并把下周优先级收敛为不加新 feature、先跑核心验证。扣分点是验收标准还不够硬，除函数级 Hit >5pp 或 solve rate >30/49 外，缺少完整的 go/no-go 决策表。",
+      "missingEvidence": [
+        "缺少 paired 评测的具体实验配置、随机性控制和失败重跑规则。",
+        "缺少下周每个任务的截止时间与产物格式。",
+        "缺少如果 paired 评测为负时的明确停止/转向标准。"
+      ]
     },
     "nextAction": {
       "score": 9,
-      "reason": "下周动作非常具体且可验证：49 实例 regression on/off paired 评测、22 条 both-fail 结构化归因、差分字段使用权降级协议。动作顺序合理，直接针对本周最大不确定性。扣 1 分是因为没有给出 paired 评测的判定阈值之外的完整决策树，例如增益为 0、负增益或只提升定位不提升 solve rate 时分别怎么处理。",
-      "missingEvidence": "缺少评测成功/失败阈值的完整分支方案；缺少每个 next action 的产出格式和截止时间。"
+      "reason": "下周动作清楚且可验证：跑 49 实例 paired 评测、对 22 条 both-fail 做结构化归因、若有效则补差分字段降级协议。动作与当前最大不确定性直接对应，没有发散到新功能。扣分点是 paired 评测的成功阈值、失败阈值和诊断分支还可以更形式化。",
+      "missingEvidence": [
+        "缺少 paired 评测的完整指标表，例如 solve rate、文件级 Hit、函数级 Hit、token 成本、失败类别。",
+        "缺少 22 条 both-fail 归因 taxonomy 的预注册版本。",
+        "缺少每个 next action 的最小可交付文件或报告格式。"
+      ]
     },
     "evidenceQuality": {
-      "score": 4,
-      "reason": "证据质量较好，有具体数字：28/49、24/49 baseline、+8.16pp、文件级 Hit 100%、函数级 Hit 59.2%、5 路 ablation、1-instance smoke。也主动标注哪些结论尚未证实。扣分点是证据多为报告内摘要，缺少原始日志、commit、配置、样例列表、统计显著性；核心差分增益目前只有 smoke，没有全量 paired 证据。",
-      "missingEvidence": "缺少实验原始数据、运行命令、commit hash、失败实例清单、ablation 配置、paired 评测结果和统计检验。"
+      "score": 3,
+      "reason": "证据质量中等偏上但未到强证据。报告提供了多个数字：28/49、24/49 baseline、文件级 Hit 100%、函数级 Hit 59.2%、5 路 ablation，以及 1-instance smoke；这些比纯叙述可靠。但核心主张“差分证据提升 repair”尚无 paired 对照，且缺少原始日志、统计显著性、样本明细和可复现链接。因此证据足以支持“工程链路已落地”，不足以支持“差分方案已被验证有效”。",
+      "missingEvidence": [
+        "缺少原始实验表、实例列表和每例结果。",
+        "缺少 paired on/off 对照。",
+        "缺少统计置信区间或显著性分析。",
+        "缺少失败样例的具体轨迹证据。"
+      ]
     },
     "totalScore": 84,
     "tier": "A",
-    "oneLineJudgment": "本周是高质量工程推进周：代码、指标、ablation 和认知抽象都有实质增量，但核心科学结论“差分证据能否提升修复效果”尚未被 paired 评测证明。",
-    "professorFollowUp": "老师下周最应该追问一件事：49 实例 regression on/off paired 评测是否显示差分链路带来可复现增益；如果 solve rate 没有超过 28/49，应要求学生立刻拆分原因——是 regression_test_agent 候选覆盖不足、SBFL 排序无效、state divergence 未被 repair agent 正确消费，还是差分字段增加了噪声。"
+    "oneLineJudgment": "本周是强工程推进周：代码、接口、ablation 和中间指标都有实质产出，但核心差分增益尚未被 paired 评测验证，因此不能给 S。",
+    "professorFollowUp": {
+      "oneThingToLearn": "最值得老师吸收的一点是：对 repair agent 来说，关键不只是给更多上下文，而是把上游输出从“嫌疑词”改造成可验证的“双源差分证据”，从而改变下游 LLM 的信息消费模式。",
+      "questionsToAsk": [
+        "49 实例 paired 评测什么时候能出完整表？请同时报告 solve rate、文件级 Hit、函数级 Hit、token 成本和失败类别。",
+        "差分字段进入 prompt 后，repair agent 是否真的引用并使用了 state_divergence？能否抽样 5 个成功和 5 个失败案例做行为审计？",
+        "regression_test_agent 的 K 候选中，有多少比例真正覆盖根因附近路径？当前 critic 是否需要加入契约覆盖质量指标？",
+        "如果 paired 评测只提升 0 到 1 个实例，项目下一步是强化 critic、重做定位器，还是暂停差分主线？"
+      ],
+      "managementGate": "下周的决策门槛应设为：若 paired 评测带来明确增益，例如 solve rate 达到 30/49 或函数级 Hit 提升超过 5pp，则继续抽象差分证据模块；若增益不明显，则优先诊断 regression_test_agent 候选质量，而不是继续堆新功能。"
+    }
   }
 }

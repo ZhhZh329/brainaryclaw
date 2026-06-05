@@ -1,60 +1,62 @@
 {
   "key": "person:cao-yue:2026-05-17:weekly-score",
-  "generatedAt": "2026-06-05T20:00:41.040Z",
+  "generatedAt": "2026-06-05T21:00:46.358Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "27d6f923a1136d66666b9d5346c414b6ccc966b22ec26ff7489a2de988faccb2",
   "result": {
+    "week": "2026-05-17",
+    "name": "Cao Yue",
     "hardProgress": {
       "score": 14,
-      "reason": "本周有明确的结构性产出：为 self-modifying prompt 框架加入 fixed anchor，即锁定 Shared Global Objective 和 Planner Execution Constraints；同时提出 current state 与 candidate state 解耦、只在 accept gate 通过后提升为工作状态。这是框架层面的硬进展，不只是想法描述。Distributional Semantics 方向也有实质性重审：发现 P1/P2/P3 在文献映射中高度重叠，开始质疑原有三分法的独立性。但两条主线都缺少实验结果、消融、失败案例、具体样例 prompt、状态机定义或文献映射表，因此硬进展停留在设计完成与概念重组阶段。",
-      "missingEvidence": "缺少 fixed anchor 前后对比实验；缺少目标漂移的具体案例；缺少 accept gate 状态解耦的运行日志；缺少 P1/P2/P3 文献映射矩阵；缺少新切分方案的初版表格。"
+      "reason": "本周有两个较明确的结构性产出：一是把 self-modifying prompt 中的 Global Objective 和 Execution Constraints 设为不可修改区域，二是把 current state 与 candidate state 解耦，只在 accept gate 后提升为工作状态。这属于框架机制层面的实质推进。Distributional Semantics 部分也从三性质并列推进到“可能是同一结构事实不同投影”的重新切分问题。但目前主要仍是设计和概念重组，缺少实现、实验、失败案例、对比结果或文献表格更新，因此硬进展不能给满。",
+      "missingEvidence": "缺少具体 prompt 模板变更前后版本、accept gate 状态流图、运行样例、失败案例、是否真的减少目标漂移的实验记录；Distributional Semantics 缺少文献映射表和重叠统计。"
     },
     "cognitiveIncrement": {
       "score": 13,
-      "reason": "CoT 增量清楚指出三个新增认知：self-modifying 系统必须区分可改与不可改区域；探索状态与承诺状态需要分离；P1/P2/P3 可能不是独立维度而是同一结构事实的不同投影。这些不是简单复述任务，而是对框架稳定性、状态污染、理论切分方式的抽象提升。扣分点在于这些认知增量尚未被验证为普遍规律，尤其 P1/P2/P3 的耦合仍处于观察和猜想阶段。",
-      "missingEvidence": "缺少这些认知增量相对于上周版本的具体 diff；缺少触发这些认知的失败样例；缺少独立验证或反例检查。"
+      "reason": "认知增量比较清楚：self-modifying 系统需要显式划定可改与不可改边界；探索状态与承诺状态需要分离；P1/P2/P3 可能不是独立维度而是同一非函数性结构的不同投影。这些都不是简单复述任务，而是对框架稳定性和理论切分方式的抽象提升。",
+      "missingEvidence": "缺少这些认知增量如何改变原有设计决策的具体例子，例如某一轮 Modifier 如何因 anchor 被阻止漂移，或某篇文献如何导致 P1/P2/P3 独立性被质疑。"
     },
     "cot2Depth": {
       "score": 12,
-      "reason": "CoT's CoT 有较好的二阶深度：第一条把 Modifier 的自由修改、utility 上升、目标漂移、fixed anchor 之间建立因果链，并进一步和 threshold、format 组成三层约束面；第二条把 P1/P2/P3 的重叠上升到 framework 设计变量，指出概念重叠会削弱统一视角的贡献。问题是两条都主要是理论推理，第一条证据等级自评为 B，第二条为 C；尚未展示足够多的实验或文献案例来支撑“必须”与“几乎所有案例”的强表述。",
-      "missingEvidence": "缺少 Modifier 修改约束导致退化的具体轨迹；缺少三层约束面如何操作化的定义；缺少 P1/P2/P3 重叠比例统计；缺少不同切分方式的比较标准。"
+      "reason": "CoT's CoT 有二阶反思：不仅讨论 prompt 怎么改，还讨论修改边界本身；不仅讨论 P1/P2/P3 内容，还讨论切分方式是否是 framework design variable。fixed anchor、threshold、format 三层约束面的关系有一定深度。但深度主要来自理论推理，缺少可检验定义和反例边界。",
+      "missingEvidence": "缺少 fixed anchor 的形式化定义、哪些字段可改或不可改的判定准则、目标漂移的度量方式；P1/P2/P3 不独立的判断缺少系统性文献编码和重叠矩阵。"
     },
     "brainaryMapping": {
       "score": 8,
-      "reason": "Brainary 映射比较明确：fixed anchor 映射到 Cognitive Control，双轨状态解耦映射到 Memory，并提出可沉淀为不动点声明、修改边界检查、双轨状态 schema。这符合模板要求，也能支持后续模块化。但映射仍偏概念层，没有给出 Brainary 现有模块接口、字段变化、调用流程或可复用 schema，因此还不是可直接工程化的 mapping。",
-      "missingEvidence": "缺少 cognitive control 模块的新增字段定义；缺少 memory schema 的 accepted/candidate 状态格式；缺少 Brainary 中现有模块与本周新增机制的接口图。"
+      "reason": "Brainary 映射较具体：fixed anchor 对应 Cognitive Control，双轨状态解耦对应 Memory，并提出了 cognitive control 模块扩展和 memory schema 扩展。这比泛泛关联更可沉淀。但映射仍偏概念，没有说明与 Brainary 现有模块接口、数据结构、调用时机和评估指标如何对接。",
+      "missingEvidence": "缺少 Brainary 模块级接口草图、memory schema 字段定义、cognitive control 边界检查流程，以及这些映射如何被自动化系统调用的示例。"
     },
     "monetaryValue": {
-      "score": 5,
-      "reason": "周报给出了两个项目的估值和潜在买单方：AI 安全红队企业、顶会学术赛道、benchmark 工具市场。但金额推导较粗，主要是按顶会论文折算、工具授权或 SaaS 年费区间估算，缺少客户访谈、竞品价格、采购路径、转化周期、可交付产品形态和概率加权。因此 monetary value 有方向判断，但商业证据不足。",
-      "missingEvidence": "缺少潜在客户名单和需求证据；缺少竞品/替代方案价格；缺少从论文到授权或 SaaS 的转化路径；缺少概率加权后的期望价值；缺少谁会为 fixed anchor 或 benchmark 具体付费的证据。"
+      "score": 4,
+      "reason": "报告列出了潜在买单方和人民币估值，但估值依据较弱。Meta-Cognition Attack Framework 的 85 万和 Distributional Semantics 的 120 万主要来自顶会论文、工具授权、SaaS 授权的主观折算，没有市场验证、客户需求证据、竞品比较、交付物定义或转化路径成本。",
+      "missingEvidence": "缺少潜在客户访谈、红队工具采购场景、benchmark SaaS 的具体用户画像、竞品价格、可交付功能清单、授权模式、商业化时间线和风险折扣。"
     },
     "projectManagement": {
       "score": 10,
-      "reason": "项目管理部分提供了两个项目的阶段、投入时间、API 成本、关键路径状态和下周预计时间，基本满足模板要求。问题是进度判断偏主观，两个项目都写“符合预期”“暂无卡点”，但没有里程碑、验收标准、风险项、具体 deliverable 或是否阻塞下一步的判定标准。对于主线一，既然已承认自动化判定标准尚未建立，就不应简单写无瓶颈。",
-      "missingEvidence": "缺少本周完成物链接或版本号；缺少下周验收标准；缺少风险登记表；缺少关键路径上的最小可测试里程碑；缺少 fixed anchor 和状态解耦机制的实现进度。"
+      "reason": "项目管理信息包含阶段、时间投入、资源消耗、关键路径和下周预计投入，基本符合模板。但两个项目都写“暂无明显卡点”“继续观察/继续梳理”，缺少里程碑、验收标准、风险清单、决策点和优先级排序。项目 A 是关键路径，但没有说明下周观察什么信号、何时判定机制有效。",
+      "missingEvidence": "缺少每个项目的下周可验收产物、明确截止时间、成功/失败标准、依赖项、风险触发条件、是否需要老师决策的具体问题。"
     },
     "nextAction": {
-      "score": 6,
-      "reason": "下周方向写得偏泛：主线一是“继续观察”，主线二是“继续梳理切分方案”。自动化路径中有更具体的方向，即 workflow、agent module、Modifier 边界检查、accept gate 状态解耦，但没有拆成可执行任务、截止时间和验收指标。下一步应从观察转为测试：构造目标漂移样例、实现边界检查器、跑有无 fixed anchor 的对照实验。",
-      "missingEvidence": "缺少下周具体任务清单；缺少每项任务的完成标准；缺少实验设计；缺少预期输出物，如表格、代码模块、prompt diff、状态机图。"
+      "score": 5,
+      "reason": "下周方向有写，但可执行性不足。项目 A 的“继续观察”过于模糊；项目 B 的“继续梳理切分方案”也没有说明要产出几种切分、如何比较、用哪些文献验证。自动化路径提到可改/不可改区域判定标准尚未建立，这是一个好卡点，但没有拆成下一步任务。",
+      "missingEvidence": "缺少下周具体动作，例如完成 anchor 标注规范 v1、跑若干轮 self-modifying 实验、记录目标漂移率、建立 P1/P2/P3 文献重叠矩阵、提出至少两套替代切分并比较。"
     },
     "evidenceQuality": {
-      "score": 3,
-      "reason": "证据质量中等偏弱。报告有清晰的自评证据等级，且承认 CoT's CoT 1 为 B、CoT's CoT 2 为 C，这是优点。但整体证据主要来自作者推理和文献映射印象，没有展示原始数据、样例、日志、统计表或引用清单。尤其是“几乎所有案例都能被三条同时解释”“Modifier 会自然倾向修改难满足约束”等关键判断需要更强证据。",
-      "missingEvidence": "缺少实验日志；缺少文献引用表；缺少案例数量统计；缺少失败样例；缺少可复现 prompt 或代码；缺少第三方验证。"
+      "score": 2,
+      "reason": "证据主要是作者的理论判断和自评证据等级。虽然 CoT's CoT 1 标为 B、CoT's CoT 2 标为 C，但报告没有提供实验数据、日志、文献清单、表格、案例或失败样本。因此证据质量偏低。",
+      "missingEvidence": "缺少原始实验记录、prompt 版本 diff、accept/reject 历史、目标漂移案例、文献映射表、引用论文列表、重叠统计和对照分析。"
     },
-    "totalScore": 71,
-    "tier": "B",
-    "oneLineJudgment": "本周的核心价值是把 self-modifying meta-cognition 的稳定性问题推进到 fixed anchor 与双轨状态管理两个可模块化机制，但证据仍以理论推理为主，下一步必须转成可测试实验和可复用接口。",
+    "totalScore": 68,
+    "tier": "C",
+    "oneLineJudgment": "本周的框架反思有实质认知增量，尤其是 fixed anchor 和双轨状态，但仍停留在机制设计与概念推理层，缺少实验验证、文献证据和可验收的下周行动。",
     "professorFollowUp": [
-      "要求学生下周提交一个最小对照实验：同一任务下比较有 fixed anchor 与无 fixed anchor 的目标漂移率、攻击成功率和可执行性。",
-      "要求给出 current state / candidate state / history / accept gate 的状态机图或 JSON schema，避免只停留在概念层。",
-      "要求把 P1/P2/P3 的文献映射做成表格，至少列出每篇论文对应哪些性质，并统计重叠比例。",
-      "要求 monetary value 改为概率加权：论文价值、工具授权、SaaS 收入分别给出转化概率、周期和关键假设。",
-      "老师本周最应该学到的一点：self-modifying 系统如果不预先声明不可修改的 fixed anchor，优化器会倾向于修改难满足的约束本身，从而把目标漂移成更容易满足但已偏离原意的退化解。"
+      "要求学生下周交付一个 fixed anchor 标注规范 v1，明确哪些 prompt 区域不可修改、为什么不可修改、如何自动检查。",
+      "要求学生提供至少一次 self-modifying 迭代的前后 prompt diff 和 accept/reject 记录，用来证明双轨状态解耦确实避免污染工作状态。",
+      "要求学生把 P1/P2/P3 的文献映射做成表格，统计每篇论文对应哪些性质，以验证“三条不独立”的判断是否成立。",
+      "要求学生把“继续观察”改成可验收任务，例如目标漂移率、执行约束违反率、候选 prompt 拒绝率或人工判定一致性。",
+      "要求学生重做 monetary value：先定义可交付产品和潜在客户场景，再估值；没有市场证据时不要用高额人民币数字作为主要结论。"
     ]
   }
 }
