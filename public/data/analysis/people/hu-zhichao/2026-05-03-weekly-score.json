@@ -1,6 +1,6 @@
 {
   "key": "person:hu-zhichao:2026-05-03:weekly-score",
-  "generatedAt": "2026-06-05T22:02:51.854Z",
+  "generatedAt": "2026-06-05T23:03:00.393Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
@@ -8,53 +8,94 @@
   "result": {
     "hardProgress": {
       "score": 12,
-      "reason": "本周有明确的架构性硬进展：APT 数据集构建方向完成了 Agent 边界重构，形成“1 个总控 Agent + 7 个核心 Agent”的设计；明确了 Long-term Memory、Working Memory、KG、Vector Index、Metadata Index、Object Store 的职责分工；项目管理部分也说明已完成各 Agent 的 Memory 类型和 Schema 设计。但主要进展仍停留在方案、Schema 和叙事统一层面，实验、代码、样例链路和可运行原型不足。可解释日志异常检测和 ProvBreak 两个方向本周实验推进有限。",
-      "missingEvidence": "缺少实际 Schema 文件、Agent 架构图、KG schema 示例、MemoryObject 样例、最小链路运行结果、实验表格、代码提交或可复现产物。"
+      "reason": "本周有明确的结构性产出：APT 数据集构建方向完成了 Agent 方案重构，收敛为 1 个总控 Agent 和 7 个核心 Agent；形成了 Long-term Memory / Working Memory 架构；明确了 KG、Vector Index、Metadata Index、Object Store 的职责边界；也把 ProvBreak、日志异常检测与数据集构建的关系重新串联起来。但硬进展主要是架构和概念设计，缺少可运行原型、实验结果、Schema 文件、KG 样例或自动构建链路的实际输出。",
+      "missingEvidence": [
+        "缺少 1 个总控 Agent 和 7 个核心 Agent 的具体架构图或接口定义。",
+        "缺少 MemoryObject Schema、KG Schema、Working Memory 示例等可检查产物。",
+        "缺少最小链路运行结果，例如从 APT 报告到 attack_chain_spec 的实际样例。",
+        "日志异常检测和 ProvBreak 均明确写到实验推进有限，缺少实验数据支撑。"
+      ]
     },
     "cognitiveIncrement": {
       "score": 12,
-      "reason": "认知增量较清楚：从“按流程切 Agent”推进到“按 Memory 边界、决策边界、handoff 边界切 Agent”；从“KG 是知识库”修正为“KG 是关系索引层，Artifact/Object Store 管大对象，Vector 管相似性，Metadata 管过滤和版本”。这些认知直接改变了 APT 数据集构建方案，也影响日志异常检测和对抗策略的统一叙事。",
-      "missingEvidence": "缺少认知变化前后的具体设计对照图或表格，例如旧 Agent 列表、新 Agent 列表、被删除的结果型 Agent、保留 Agent 的 Memory 边界说明。"
+      "reason": "认知增量比较清楚：从按流程拆 Agent，推进到按 Memory 边界、决策边界、handoff 边界来定义 Agent；从把 KG 当知识库，推进到把 KG 定位为关系索引层，并区分 Artifact Memory、Object Store、Vector Index、Metadata Index 和 Working Memory。这是对 Agent + Memory 系统设计有实际影响的认知升级。但该增量主要是对老师已有框架的吸收和落地，原创性和反直觉发现不足。",
+      "missingEvidence": [
+        "缺少新旧 Agent 设计的对照表，无法判断重构带来的具体减少、合并或边界变化。",
+        "缺少该认知增量如何降低系统复杂度、减少 token、提高可复用性或提升数据质量的验证。",
+        "缺少对失败方案的具体反例分析。"
+      ]
     },
     "cot2Depth": {
       "score": 11,
-      "reason": "CoT’s CoT 部分能抽象出 Agent 是否必要的判断标准，并提出 Memory 顶层分类应采用 Semantic、Procedural、Episodic、Artifact、Evaluative、Policy，而业务名称作为 Agent-specific category 或 functional tags。这说明有二阶反思，不只是复述工作。但报告明确承认这些不是老师原本不知道的内容，主要是把老师讲过的 Memory 和 Agent 思想落到 APT 数据集场景中，因此原创性和对老师的新增信息有限。",
-      "missingEvidence": "缺少具体的二阶判断实例：例如某个候选 Agent 为什么被合并、某类 MemoryObject 为什么归入 Artifact 而不是 Semantic、某个错误设计如何被 meta-cognition 纠正。"
+      "reason": "CoT's CoT 部分能抽象出两个关键判断：Agent 是否必要取决于 Memory、决策和 handoff 边界；Memory 顶层应按认知结构分为 Semantic、Procedural、Episodic、Artifact、Evaluative、Policy，而业务名称作为 Agent-specific category 或 tag。这比普通任务总结更深，已经进入系统设计原则层。但两条都明确说明不是老师原本不知道的内容，因此对教授的信息增量有限；此外仍偏设计哲学，缺少失败案例、边界判定规则和可验证指标。",
+      "missingEvidence": [
+        "缺少判断一个模块是否应该成为 Agent 的操作性 checklist。",
+        "缺少具体例子说明哪些原本设计成 Agent 的模块被降级为产物或任务。",
+        "缺少 Memory 类型划分对后续自动化构建的实际收益证据。",
+        "缺少可复用的 CoT's CoT 模板或沉淀文档。"
+      ]
     },
     "brainaryMapping": {
       "score": 8,
-      "reason": "与 Brainary 的映射较完整，明确对应 Long-term Memory、Working Memory、KG-based Memory Index、Meta-Cognition、Workflow/Agent Orchestration、Benchmark/Evaluation，并能说明各类 Agent 长期保留什么、当前任务激活什么。映射不是泛泛而谈，而是落到了 APT 数据集构建场景。",
-      "missingEvidence": "缺少 Brainary 组件到本项目模块的一一对应表、接口定义、数据流图，以及哪些部分已实现、哪些只是设计。"
+      "reason": "Brainary 映射较强，明确把本周工作对应到 Long-term Memory、Working Memory、KG-based Memory Index、Meta-Cognition、Workflow / Agent Orchestration、Benchmark / Evaluation，并给出了不同 Agent 应长期保留什么、当前任务中临时激活什么。映射不是泛泛而谈，而是落到了 APT 数据集构建场景。但仍缺少 Brainary 架构中的模块接口、数据流和运行闭环证据。",
+      "missingEvidence": [
+        "缺少 Brainary 组件到 APT 数据集 Agent 的一一映射表。",
+        "缺少 Long-term Memory 到 Working Memory 的投影样例。",
+        "缺少 KG 子图如何被当前任务激活的具体例子。",
+        "缺少 Brainary 运行闭环中的输入、状态、输出和反馈写回机制。"
+      ]
     },
     "monetaryValue": {
-      "score": 6,
-      "reason": "报告按模板给出了金额，估计为“3000 万人民币 + 500 万人民币”，并指出可能买单方包括国家安全机构、网络安全厂商、科研院所、高校实验室和攻防评测平台建设单位。价值判断方向合理，能把数据集、Benchmark、Agent workflow、Memory schema、安全评测平台与项目系统联系起来。但估值依据较粗，只写“国家重大科技专项项目预算”和“2 个项目估价”，没有拆分产品形态、客户预算、交付边界、采购路径或收入模型。",
-      "missingEvidence": "缺少金额拆分逻辑、可对标项目、潜在客户名称、采购场景、交付物清单、单项目价格依据、维护费用或平台化收入假设。"
+      "score": 5,
+      "reason": "报告按模板给出了金额：3000 万人民币 + 500 万人民币，并指出潜在买单方包括国家安全机构、网络安全厂商、科研院所、高校实验室和评测平台建设单位。但估值依据过粗，仅写参考国家重大科技专项预算，没有拆分产品形态、采购场景、单客价格、交付范围、竞品替代成本或商业化路径。因此金额存在，但决策可信度一般。",
+      "missingEvidence": [
+        "缺少 3000 万和 500 万分别对应什么项目、系统或交付物。",
+        "缺少估值拆分，例如数据集、平台、Agent 系统、Benchmark、服务各自价值。",
+        "缺少潜在客户的真实需求、预算来源或采购流程证据。",
+        "缺少竞品、替代方案或市场价格对比。"
+      ]
     },
     "projectManagement": {
-      "score": 13,
-      "reason": "项目管理信息比较完整，覆盖了三个项目的阶段、原计划、实际完成、投入时间、下周投入、里程碑、资源需求、依赖关系、关键路径、成本、进度偏差和纠偏动作。能够看出当前关键路径是 APT 数据集构建 Agent 与 Memory 系统，且已识别 Long-term Memory 自动构建尚未开始、日志异常检测和 ProvBreak 实验推进略慢。",
-      "missingEvidence": "缺少更细的责任人分工、任务拆解到具体 deliverable、每个里程碑的验收标准、风险优先级、延期缓冲方案和实际产物链接。"
+      "score": 12,
+      "reason": "项目管理部分完整度较高，分别列出了三个项目的阶段、原计划、实际完成、投入人天、下周投入、里程碑、资源、依赖、关键路径、成本、进度判断和纠偏动作。报告能承认日志异常检测和 ProvBreak 推进略慢，并解释资源转移原因。主要问题是任务拆解仍偏粗，责任人没有完全落到个人，里程碑验收标准不够量化，且关键路径项目较多，存在并行过载风险。",
+      "missingEvidence": [
+        "缺少每个里程碑的验收标准，例如什么算完成最小链路验证。",
+        "缺少任务分解到具体人的列表和交付日期。",
+        "缺少风险矩阵，例如数据不可用、KG 设计返工、实验不提升时的备选路线。",
+        "缺少本周已完成产物的链接或版本号。",
+        "缺少对 3 人 * 5 天投入产出的量化核算。"
+      ]
     },
     "nextAction": {
-      "score": 8,
-      "reason": "下周动作总体可执行，尤其是 APT 数据集方向提出了最小链路验证：APT 报告到 attack_chain_spec、日志窗口到 Working Memory、MemoryObject 到 KG Index 的映射；自动化路径也列出了 7 步从报告抽取到 label、manifest、lineage 的流程。日志异常检测和 ProvBreak 也有补实验与写 Strategy Memory 实例的动作。但部分动作仍偏宽，如“继续跑完实验”“观察是否稳定提升”，缺少具体数据集、指标、样本数和验收阈值。",
-      "missingEvidence": "缺少下周每项任务的完成定义，例如跑哪些数据集、比较哪些 baseline、提升多少算有效、1 到 2 个意图扰动策略具体是什么、Memory 实例格式是什么。"
+      "score": 7,
+      "reason": "下周动作总体明确：优先做最小可验证链路，用少量真实样例验证 Schema；跑完日志异常检测重构实验；将 1 到 2 个意图扰动策略写成 Adversarial Strategy Memory 实例并验证影响。自动化路径也列出了从 APT 报告抽取到生成 label、manifest、lineage 的 7 步链路。但动作仍有一些抽象，缺少具体样例数量、数据集名称、成功判据、截止时间和负责人。",
+      "missingEvidence": [
+        "缺少下周最小验证链路的输入样例数量，例如几篇 APT 报告、几段日志窗口。",
+        "缺少成功标准，例如 Schema 覆盖率、抽取准确率、KG 映射完整率、实验提升幅度。",
+        "缺少每个 next action 的负责人。",
+        "缺少如果实验结果不提升时的备选动作。"
+      ]
     },
     "evidenceQuality": {
       "score": 2,
-      "reason": "证据等级部分能主动标注当前多为方案设计、方法现象、理论和案例支撑，并承认需要最小实现和完整实验验证。但本周报告中没有提供外部可核验材料，实验结果缺失，Schema 和架构也没有附样例。因此证据质量偏弱，主要依赖自述。",
-      "missingEvidence": "缺少实验结果、日志、截图、代码提交、文档链接、数据样例、Schema 样例、KG 节点边样例、失败案例分析和可复现实验记录。"
+      "reason": "报告有专门的证据等级 section，并能区分方案设计支撑、方法现象支撑、理论和案例支撑，以及仍需实验验证的部分。这说明作者知道当前证据不足。但实际证据质量偏低：没有实验表格、日志样例、Schema 文件、KG 样例、代码提交、运行截图、baseline 结果或失败案例。多数判断仍停留在设计和自我陈述层。",
+      "missingEvidence": [
+        "缺少实验结果和指标。",
+        "缺少代码、文档、Schema、KG、MemoryObject 等实际产物。",
+        "缺少数据样例和处理结果。",
+        "缺少对比实验或 ablation。",
+        "缺少外部验证或他人审校反馈。"
+      ]
     },
-    "totalScore": 72,
-    "tier": "B",
-    "oneLineJudgment": "本周的主要价值是把 APT 数据集构建从流程型 Agent 设计推进到 Memory-driven Agent 架构，但硬产物和实验验证不足，仍处于高质量方案设计而非工程或论文证据阶段。",
+    "totalScore": 69,
+    "tier": "C",
+    "oneLineJudgment": "这一周的主要价值是把 APT 数据集构建从流程型 Agent 设计推进到 Memory-driven Agent 架构设计，但硬证据和最小运行链路尚未出现，仍属于高质量方案整理而非工程或实验突破。",
     "professorFollowUp": [
-      "要求学生下周只做一个最小可验证链路：用 1 篇 APT 报告、1 个日志窗口、1 个 attack_chain_spec、若干 MemoryObject 和一个 KG 子图跑通，不再继续扩展概念设计。",
-      "让学生提交新旧 Agent 设计对照表，说明为什么从更多流程 Agent 收敛到 1 个总控 Agent 和 7 个核心 Agent，每个 Agent 的 Memory 边界、决策边界和 handoff 边界是什么。",
-      "要求给出一个真实 MemoryObject JSON 样例、一个 Working Memory 投影样例、一个 KG 节点边样例，以及它们如何支持 Dataset Construction Agent 的 label、manifest 和 lineage 输出。",
-      "对日志异常检测方向，要求下周给出完整实验表，而不是继续停留在 Findings、Evidence、Hypothesis 的方法叙事。",
-      "对 ProvBreak 方向，要求至少验证 1 个意图扰动策略是否改变 Frequency baseline 或溯源检测判断，否则不要把它提前包装成 Adversarial Strategy Agent 的长期能力。"
+      "老师最应该追问：1 个总控 Agent 和 7 个核心 Agent 的边界是否真的合理，请学生下周交一张 Agent-Memory-Handoff 对照表。",
+      "要求下周必须拿出一个最小样例：至少从一篇 APT 报告抽取 Attack Case Memory，生成 attack_chain_spec，并映射到 KG Index 或 Working Memory。",
+      "要求日志异常检测方向给出完整实验表，而不是继续停留在 Findings 和 Evidence 叙事上。",
+      "要求 ProvBreak 方向至少验证一个意图扰动策略是否改变 Frequency baseline 或溯源检测判断。",
+      "要求金额估值拆成可交付物和客户场景，否则 3500 万人民币估值暂时只能作为愿景，不能作为项目论证依据。"
     ]
   }
 }

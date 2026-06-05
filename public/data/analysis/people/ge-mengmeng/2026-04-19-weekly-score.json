@@ -1,6 +1,6 @@
 {
   "key": "person:ge-mengmeng:2026-04-19:weekly-score",
-  "generatedAt": "2026-06-05T22:00:52.532Z",
+  "generatedAt": "2026-06-05T23:00:46.751Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
@@ -8,101 +8,53 @@
   "result": {
     "hardProgress": {
       "score": 14,
-      "reason": "本周有多条实际推进：APT Reconstruction 跑通现有样本 end-to-end，并新增 WS-2012 数据集评测；提出了“alert-driven reconstruction + ATT&CK-oriented semantic grounding”框架；同步推进 ground truth refinement 和评测框架；Skills Taxonomy 形成 taxonomy、case construction、hallucination diagnosis 的设计骨架；Auto Research survey 已扩展到 evaluation data/task 并声称完成 60 页。但多数进展仍停留在“框架、设计、开始撰写”层面，缺少可核验产物和量化结果。",
-      "missingEvidence": [
-        "APT end-to-end 测试的具体结果、指标、样本数量和错误案例缺失",
-        "WS-2012 数据集评测的准确率、召回率、阶段重建指标、ATT&CK mapping 指标缺失",
-        "ground truth refinement 的样例、标注规则和人工确认比例缺失",
-        "Skills Taxonomy 的实际层级表、代表性 skill 列表和 case 示例缺失",
-        "Profile 流量论文的目录、已完成页数、核心方法图或实验状态缺失",
-        "Auto Research survey 的 60 页文档链接、章节结构或新增内容样例缺失"
-      ]
+      "reason": "本周有可识别的硬进展：APT reconstruction 跑通了现有样本的 end-to-end 测试，并增加 WS-2012 数据集评测；提出了“alert-driven reconstruction + ATT&CK-oriented semantic grounding”框架；开始设计攻击阶段重建与 ATT&CK 映射两层评测；skills hallucination 方向形成 taxonomy、case construction、扰动策略、benchmark evaluation 等模块；Auto Research survey 已扩展到 evaluation data/task 并声称完成 60 页；Profile 流量论文已启动并进入问题定义、方法描述撰写。但多数进展仍停留在框架、设计、撰写层面，缺少结果数字、实验表、样例输出、代码或文档链接，因此硬度不足。",
+      "missingEvidence": "缺少 APT end-to-end 测试的具体样本数、准确率、召回率、baseline 对比、WS-2012 评测结果；缺少 ATT&CK mapping 的评测指标和错误案例；缺少 skills taxonomy 的实际层级表、case 样例和 gold specification；缺少 survey 60 页目录或新增内容样例；缺少 Profile 论文当前稿件页数、章节完成度和核心实验状态。"
     },
     "cognitiveIncrement": {
-      "score": 11,
-      "reason": "本周 CoT 增量比较明确：APT Reconstruction 不应只依赖事件链 KG，而应显式引入攻击模式知识和 ATT&CK 技战术知识，分别约束攻击过程展开和语义标准化。这是一个有效的认知增量，能解释当前复杂场景下 LLM 分析不足的原因。但增量主要集中在 APT 一条线，对 Skills Taxonomy、Auto Research survey、Profile 流量论文的认知增量没有展开。",
-      "missingEvidence": [
-        "没有展示该认知增量来自哪些具体错误 case",
-        "没有说明补充攻击模式 KG 前后的失败模式差异",
-        "没有把该认知增量转化为明确的系统改动清单或实验假设",
-        "其他三个任务缺少对应的 CoT 增量"
-      ]
+      "score": 12,
+      "reason": "CoT 增量比较明确：作者认识到 APT reconstruction 的知识图谱不能只包含事件链，还必须显式纳入攻击模式知识和 ATT&CK 技战术知识，分别用于约束攻击展开逻辑和标准化语义映射。这是从“日志理解”推进到“知识约束的攻击语义推理”的有效认知增量，也直接解释了当前卡点为何是 LLM 攻击模式知识欠缺。",
+      "missingEvidence": "缺少具体错误 case 如何暴露该认知增量；缺少补充攻击模式 KG 前后推理路径差异；缺少该认知如何改变系统架构、prompt、检索或评测设计的具体说明。"
     },
     "cot2Depth": {
-      "score": 10,
-      "reason": "CoT’s CoT 能够上升到方法论层面：APT 的难点不是单次看懂日志，而是在不完整证据下维持稳定、可约束、可校验、可复核的攻击语义推理路径。这比普通任务描述更深，触及了推理可靠性和知识约束问题。但仍偏概念化，缺少对“推理路径如何被表示、如何被校验、如何被复核”的机制拆解。",
-      "missingEvidence": [
-        "缺少具体错误 case 来证明该 CoT’s CoT 的来源",
-        "缺少一条完整攻击推理路径的示例",
-        "缺少知识约束、证据校验、人类复核分别如何实现的设计细节",
-        "没有说明哪些推理步骤最容易漂移或幻觉"
-      ]
+      "score": 11,
+      "reason": "CoT’s CoT 指向了更深一层的问题：关键不是单次预测，而是在不完整证据下维持稳定、可知识约束、可证据校验、可人复核的推理框架。这比一般的任务总结更接近方法论层面的反思，也与 meta-cognition 中的“识别隐含前提和知识缺口”一致。但目前仍偏概念表达，没有展开推理失败类型、证据校验机制、人复核接口或可靠性边界。",
+      "missingEvidence": "缺少错误案例链条、失败模式分类、证据校验规则、人工复核流程、推理置信度设计，以及 CoT’s CoT 如何落到系统模块的说明。"
     },
     "brainaryMapping": {
       "score": 7,
-      "reason": "报告将 APT Reconstruction 映射为专家安全分析能力的结构化、知识化和 agent workflow 化，指出可沉淀为知识模块、评测基准和工作流，这与 Brainary 的能力资产化方向有关。但映射仍较宏观，没有明确 Brainary 中应新增哪些模块、接口、数据资产、评测任务或复用路径。",
-      "missingEvidence": [
-        "缺少 Brainary 现有能力与本周 APT 模块之间的接口说明",
-        "缺少可复用 agent workflow 的步骤图或模块清单",
-        "缺少知识模块和评测基准如何进入 Brainary 的落地计划",
-        "缺少 Brainary 在 APT 场景下能力提升的衡量指标"
-      ]
+      "reason": "报告能把 APT Reconstruction 映射到 Brainary：将专家安全分析能力拆成可迁移认知单元，并沉淀为 agent workflow、知识模块和评测基准。这与 Brainary 的能力资产化方向相关。但映射仍较抽象，没有说明具体会形成哪些 Brainary primitive、workflow 节点、知识资产格式、接口或复用场景。",
+      "missingEvidence": "缺少 Brainary 中对应模块名称、输入输出 schema、agent workflow 草图、知识模块结构、评测基准格式，以及如何从当前实验迁移到 Brainary 平台的实施路径。"
     },
     "monetaryValue": {
-      "score": 2,
-      "reason": "报告几乎没有本周独立的货币价值分析。虽然 APT 安全分析、Profile 流量识别、Auto Research agent 都可能有潜在商业价值，但本周只写了“值得做，先前周报已经报告”，这不符合单周周报中对 topic value 和 monetary value 的独立判断要求。",
-      "missingEvidence": [
-        "缺少本周对 APT Reconstruction 商业场景的判断，例如 SOC、威胁狩猎、告警溯源、合规审计等",
-        "缺少潜在客户、付费方或使用者画像",
-        "缺少替代方案和竞争优势分析",
-        "缺少成本节省、效率提升或收入可能性的量化估计",
-        "缺少 Profile 流量论文和 Auto Research survey 的价值转化路径"
-      ]
+      "score": 5,
+      "reason": "APT reconstruction、TDSC 安全论文、profile 流量识别、Auto Research survey 都有潜在研究和应用价值，尤其 APT 场景可能对应安全运营、告警溯源、攻击链重建等高价值需求。但本周没有明确商业对象、付费场景、成本节省、产品化路径或论文价值转化，因此货币价值只能判为中低。",
+      "missingEvidence": "缺少目标用户或客户画像，例如 SOC、安全厂商、企业蓝队；缺少节省分析师时间、提升告警处置效率、减少误报漏报的量化估计；缺少可交付产品形态、benchmark 变现路径、项目申请或合作机会。"
     },
     "projectManagement": {
-      "score": 8,
-      "reason": "报告覆盖四条任务线，并识别了 APT 的主卡点、Skills Taxonomy 的跨 domain 统一规则难点，也给出了一些下周动作。项目管理意识上提到要识别主瓶颈。但实际管理信息不足：没有优先级、里程碑、完成标准、资源分配、风险等级，也没有说明四条线之间如何取舍，容易形成多线并行但收敛不足的问题。",
-      "missingEvidence": [
-        "缺少四个任务的优先级排序",
-        "缺少每条任务的本周计划完成度对比",
-        "缺少明确里程碑和截止时间",
-        "缺少风险列表和风险应对策略",
-        "缺少下周时间分配或资源投入计划",
-        "缺少 Profile 论文和 survey 的投稿/交付倒排计划"
-      ]
+      "score": 9,
+      "reason": "周报覆盖四条任务线，并能列出每条任务的当前卡点和下周动作，说明有一定项目管理意识；也认识到管理重点是识别主瓶颈并集中突破。但本周任务线过多，APT、skills taxonomy、Profile 论文、Auto Research survey 同时推进，缺少优先级排序、时间分配、里程碑、验收标准和风险控制。项目管理表达更多是感悟，不是可执行管理方案。",
+      "missingEvidence": "缺少本周计划与实际完成对照；缺少各项目优先级、投入时间、负责人、交付物链接、截止日期；缺少关键风险列表和缓解方案；缺少下周哪个任务是第一优先级以及为什么。"
     },
     "nextAction": {
       "score": 7,
-      "reason": "下周动作中，APT 的“补充外部攻击模式 KG 并观察准确性提升”是相对可验证的；Skills Taxonomy 的补全层级、hallucination 类型定义、跨 domain 模板和 gold specification 也有可交付方向；survey 的人工质量确认和 case record 可用于反哺自动 survey agent。但多数动作仍缺少验收标准和量化指标，Profile 流量论文没有明确下周最小动作。",
-      "missingEvidence": [
-        "APT 没有说明补充哪个外部攻击模式 KG、覆盖多少 technique、用什么指标衡量提升",
-        "Skills Taxonomy 没有说明下周要完成多少个 domain、多少个 skill、多少个 case",
-        "survey 没有说明人工确认的抽样比例、质量标准和 case record 格式",
-        "Profile 流量论文缺少下周写作或实验目标",
-        "所有下周动作缺少明确完成标准"
-      ]
+      "reason": "下周动作有一定可验证性：APT 计划补充外部攻击模式 KG 并观察准确性提升；skills 方向计划补全 taxonomy、代表性 skill、hallucination 类型定义、跨 domain 模板和 gold specification；Auto Research survey 计划人工确认质量并形成 case record。这些动作方向明确，但多数缺少量化验收条件，尤其“准确性提升度”“补全”“更明确”没有定义成功阈值。",
+      "missingEvidence": "缺少 APT 下周要补充多少攻击模式、在哪个数据集验证、指标提升多少算有效；缺少 skills taxonomy 需要完成多少层级、多少代表性 skill、多少跨 domain case；缺少 survey 人工质检标准、抽样比例、case record 格式。"
     },
     "evidenceQuality": {
       "score": 2,
-      "reason": "报告中有较多进展陈述，但证据等级整体偏低。虽然声称 CoT’s CoT 来自错误 case 分析且证据等级高，但没有提供错误 case、指标、表格、文档链接、实验截图、样例输出或人工标注记录。当前证据主要是自述，难以复核。",
-      "missingEvidence": [
-        "缺少实验结果表",
-        "缺少错误 case 分析样例",
-        "缺少文档或代码链接",
-        "缺少 benchmark 样例和 gold 标注样例",
-        "缺少 survey 文档证据",
-        "缺少论文草稿证据"
-      ]
+      "reason": "证据质量偏弱。报告多次使用“跑通”“明显提升”“较完整”“已经结构化”“完成 60 页”等表述，但没有附带任何量化结果、样例、链接、图表、实验记录或错误 case。虽然作者声称 CoT’s CoT 来自错误 case 分析且证据等级高，但周报中没有展示 case，因此无法独立判断。",
+      "missingEvidence": "缺少实验日志、评测表、样例输出、错误 case、文档链接、论文草稿链接、survey 目录、taxonomy 表格、case construction 示例和人工确认记录。"
     },
-    "totalScore": 61,
-    "tier": "C",
-    "oneLineJudgment": "本周有真实推进和较好的方法意识，但证据链、量化结果、货币价值和项目收敛性不足，仍属于“方向正确但不可充分复核”的周报。",
+    "totalScore": 67,
+    "tier": "B",
+    "oneLineJudgment": "本周有多线推进和较好的方法意识，尤其 APT reconstruction 的知识约束推理方向清晰，但证据、指标、交付物和项目优先级不足，仍未达到强硬进展周报标准。",
     "professorFollowUp": [
-      "请要求她下周提交 APT Reconstruction 的一张实验结果表：至少包括数据集、样本数、阶段重建指标、ATT&CK mapping 指标、补充 KG 前后对比。",
-      "请让她给出 2 个具体错误 case，说明为什么 LLM 缺少攻击模式知识会导致错误，以及攻击模式 KG 如何修正。",
-      "请要求 Skills Taxonomy 至少交付一个可读表格：包含 skill 层级、定义、边界、接口、典型 hallucination 类型和对应 case。",
-      "请追问 Auto Research survey 的 60 页是否有结构化目录、质量问题清单和人工修改 case record，而不只看页数。",
-      "请要求她为四条任务线排序：本周最应该保证产出的主线是哪一条，其他线的最低交付物是什么。"
+      "请她下周只选一个主线作为最高优先级，建议优先锁定 APT reconstruction，并给出数据集、指标、baseline、当前结果和错误案例。",
+      "要求提交一页表格：补充攻击模式 KG 前后，在 WS-2012 上 attack stage reconstruction 与 ATT&CK mapping 的具体变化。",
+      "要求展示 2 到 3 个失败案例，说明 LLM 缺了什么攻击模式知识、KG 如何补上、推理链如何改变。",
+      "对于 Brainary 映射，要求画出 agent workflow：输入是什么、调用哪些知识模块、输出什么 kill chain 和 technique mapping、如何被人复核。",
+      "对于 skills hallucination 方向，要求下周给出至少 5 个跨 domain case 的 gold skill-use specification，而不只是 taxonomy 名称。"
     ]
   }
 }

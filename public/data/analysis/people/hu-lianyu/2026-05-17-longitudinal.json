@@ -1,289 +1,431 @@
 {
   "key": "person:hu-lianyu:2026-05-17:longitudinal",
-  "generatedAt": "2026-06-05T22:03:46.998Z",
+  "generatedAt": "2026-06-05T23:03:46.551Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "a4f03574b4e84b61bb7f32d1c128547624602dc67a8fd9c5a5d1a7a056651ede",
   "result": {
     "overallTrajectory": {
-      "verdict": "学生显示出一定研究能力提升，但不是线性变强；更准确地说，是从“做出性能结果”转向“诊断失败机制”，研究能力的增量主要体现在 failure case 分层归因、问题结构化和自动化沉淀意识上，而不是单纯工作时长增加。",
-      "isBecomingMoreResearchCapable": "部分是。证据包括：从 2026-05-03 的结构实现与方案规划，推进到 2026-05-10 的 failure case 排查，再到 2026-05-17 的四层失败归因和时空多视角建模假设，说明其开始围绕模型失效机制提出可检验的问题。但仍缺少严格量化、消融结果、具体数据集名称、基线细节和可复现指标，因此还不能判断其已经具备成熟研究闭环能力。",
-      "notJustBusierBecause": "每周投入时间基本稳定在 40-45 小时，硬进展形态发生变化：不是简单增加任务量，而是从实验验证、代码实现、失败案例收集，逐步转向错误类型归因、模块接口、benchmark 子集和 memory schema。这是研究问题抽象层级的变化。",
-      "mainConcern": "题目轨迹存在跳跃：2026-04-26 是 dynamic attention + memory 视觉模型验证，2026-05-03 起转为 graph-to-graph 多维度协同推理，报告没有解释两者是否是同一主线、替代关系还是新项目。若主线不清，学生可能是在多个看似相关的方向上忙碌，而不是围绕一个核心假设形成累积证据。",
-      "evidenceLevelOverall": "中等。报告内有多数据集、8.2% 精度提升、failure case 分类、样本库等说法，但缺少数据集名称、表格、baseline、统计口径、消融设置、代码链接或可复现实验编号。2026-05-10 还出现 failure case 数量“200+”与项目管理部分“20+”不一致。"
+      "judgment": "学生在这4周不是单纯变忙，而是从“证明模型有效”逐步转向“定位模型为什么失败、如何分层治理、如何沉淀为模块/workflow/benchmark”。研究能力有提升，但提升主要体现在问题分解、failure case意识和鲁棒性路径设计；还没有充分体现为严格实验闭环和可复现实证增量。",
+      "mainTrajectory": "题目轨迹从dynamic attention+memory视觉模型实验验证，转向graph-to-graph多维度协同推理，再转向failure case归因与时空多视角鲁棒建模。表面上像换题，但内在线索是：小模型高效架构 → 多维度特征融合 → 失败模式分层 → 时空记忆/多视角鲁棒性。这个轨迹有研究深化趋势，不只是任务堆叠。",
+      "researchAbilityChange": "有变强。第1周主要是性能结果驱动，第2周偏结构实现和概念学习，第3周开始主动做failure case排查，第4周能把失败原因分成特征层、知识层、感知层、关系层，并提出时空多视角建模。能力提升点是从“跑出好结果”转向“解释失败机制并设计下一轮实验”。",
+      "mainRisk": "最大风险是报告中的证据细节不足：数据集名称、baseline、指标、消融设置、统计方法、失败类型占比、样本数量前后一致性都缺失或不稳定。比如2026-05-10一处写200+ failure case，项目管理处又写20+失败案例。若没有实验表格和代码/日志支撑，很多结论仍可能是概念性归纳。",
+      "professorOneThingToLearn": "这个学生当前最值得保留的研究增量不是“做了很多视觉实验”，而是已经把多维度协同推理的失败从笼统精度问题拆成可治理的分层失效问题；下一步必须逼他把四类失败转成可量化benchmark、消融实验和模块接口。"
     },
     "stageByWeek": [
       {
         "week": "2026-04-26",
         "stage": "性能验证阶段",
-        "topicTrajectory": "主题是 dynamic attention + memory 架构在视觉数据集上的实验验证，核心命题是“小参数量高效架构能否对标大模型”。",
-        "hardProgress": "声称完成 3 个主流视觉数据集、多组对比实验，同等规模平均精度提升 8.2%，与几十倍规模模型持平或部分超越；新增动态检索和 memory 调用优化、评测 benchmark、实验流程资产。",
-        "cognitiveProgress": "认知从“规模决定性能”转向“知识检索与利用效率决定性价比”。这是明确的研究判断，但需要基线和任务细节支撑。",
-        "cotCotMaturity": "较强但可能过度外推。CoT's CoT 1 有量化结果支撑；CoT's CoT 2 将工程价值推广到小参数量高效架构，逻辑合理但商业和通用性证据不足。",
-        "brainaryMapping": "映射到 memory、reasoning、cognitive control、tool orchestration，连接较完整，但仍停留在概念对应，缺少 Brainary 内部可复用接口或 schema。",
-        "valueReasoning": "价值函数偏向性能提升、部署成本降低和论文潜力，估值 98 万人民币。金额推理有尝试，但参考依据像自拟行业规则，缺少真实客户、采购场景或成本测算证据。",
-        "projectManagement": "计划与实际对比清楚，声称超预期完成；但没有列出数据集名称、模型规模、算力消耗细节和复现路径。下一步是复杂场景优化、速度优化、可视化，动作合理但验收指标不够具体。",
-        "nextActionQuality": "中等偏上。动作围绕已发现问题，但缺少明确成功标准，例如复杂场景精度提升多少、batch 推理速度提升多少。"
+        "topicFocus": "dynamic attention+memory小参数视觉模型，与同等规模和大规模模型对比。",
+        "hardProgress": "声称完成3个主流视觉数据集实验，同等规模平均精度提升8.2%，并与几十倍规模模型持平或部分超越；形成实验流程、评测标准和模型优化方案。",
+        "evidenceLevel": "中高，但缺少数据集名称、baseline名称、模型参数量、具体精度表、推理速度表和显著性检验。报告给出8.2%这一硬数字，但可复核材料缺失。",
+        "cognition": "认知从“规模决定性能”转向“知识检索与memory利用效率决定性价比”。这是有价值的研究判断，但仍偏宏观。",
+        "CoTsCoTMaturity": "较高。能区分老师原本不知道的信息差，并给出量化结果作为CoT's CoT支撑。但CoT's CoT 2更像工程常识，新增性弱。",
+        "BrainaryMapping": "把memory、reasoning、cognitive control、tool orchestration映射到模型架构，方向合理，但仍是能力标签级映射，未到schema或接口级。",
+        "valueReasoning": "价值函数以精度提升、部署成本降低、架构创新估值为核心，估值98万人民币。优点是尝试连接金额和商业场景；问题是估值依据未经验证，‘每1%精度值8-10万’缺少来源。",
+        "projectManagement": "计划、实际、里程碑、成本都有，但过于自洽；没有风险缓冲、验收标准和老师介入点。",
+        "nextActionQuality": "动作包括复杂场景优化、推理速度优化、可视化报告，方向合理；但缺少最小实验定义，例如针对哪类复杂场景、优化什么模块、用什么指标判定成功。"
       },
       {
         "week": "2026-05-03",
-        "stage": "新结构实现与方案规划阶段",
-        "topicTrajectory": "主题切换为 graph-to-graph 结构和多维度协同感知推理。报告未解释其与上一周 dynamic attention + memory 的继承关系。",
-        "hardProgress": "完成 graph-to-graph 全流程代码和多维度特征输入接口，梳理 3 个数据集和验证方案；但没有实质实验结果。",
-        "cognitiveProgress": "认知从单模型性能转向“结构载体 + 七维特征协同”。这是题目抽象能力提升，但还主要来自学习和逻辑推导。",
-        "cotCotMaturity": "中等。学生能提出“性能上限取决于多维特征协同效率而非结构复杂度”，但证据等级自评为 B，确实尚未验证。",
-        "brainaryMapping": "映射到 reasoning、tool orchestration、cognitive control，较贴合多模块协同问题；但 Brainary 映射仍是能力标签，没有形成可执行的模块规格。",
-        "valueReasoning": "价值函数转为代码结构、多维方法学习、验证方案的潜在价值，估值 78 万人民币。相比上周，从实测性能价值退回到研发资产价值，金额依据更弱。",
-        "projectManagement": "本周推进有产物，但项目管理风险识别不足。最大风险是多维权重分配和数据集验证尚未落地，却判断“不需要老师介入”。",
-        "nextActionQuality": "中等。下一步是融合多维协同逻辑、预处理数据、启动实验，方向正确；但没有定义最小实验、baseline 和失败判据。"
+        "stage": "结构实现与新方向搭建阶段",
+        "topicFocus": "graph-to-graph结构、多维度协同感知推理，强调物体、透视、形状、直线、曲线、颜色、3D深度七维协同。",
+        "hardProgress": "完成graph-to-graph全流程代码和模块联调，完成3个数据集梳理与验证方案，但暂未开展实质性实验。",
+        "evidenceLevel": "中低。代码实现是硬进展，但没有运行结果、单元测试、接口说明、复杂度分析或样例输出。关于多维度协同有效性的判断尚未被实验验证。",
+        "cognition": "从单个架构性能转向‘结构载体+多维度协同’。这是题目扩展，但也带来范围膨胀风险。",
+        "CoTsCoTMaturity": "中等。能提出graph-to-graph承载多维度融合，但证据等级自评为B，说明学生知道尚未实证。这比硬装成A更成熟。",
+        "BrainaryMapping": "reasoning、tool orchestration、cognitive control映射合理，但仍未说明每个维度如何对应Brainary内部对象、memory条目或调度策略。",
+        "valueReasoning": "估值78万人民币，价值依据从实验性能转为结构开发和方案设计。价值函数开始重视‘可沉淀代码模块和workflow’，但金额仍像主观报价，缺少用户购买路径。",
+        "projectManagement": "报告显示完成超预期，但没有说明为何从上一周dynamic attention+memory切换到graph-to-graph，项目连续性解释不足。",
+        "nextActionQuality": "下周动作是把多维度逻辑融入结构并启动初步验证，质量中等。需要明确消融：无多维度、静态权重、动态权重、单维度对照。"
       },
       {
         "week": "2026-05-10",
-        "stage": "failure case 诊断阶段",
-        "topicTrajectory": "主题延续 graph-to-graph 多维协同推理，进入测试和失败案例分析，主线比 2026-05-03 更清晰。",
-        "hardProgress": "在 3 个数据集上进行 failure case 排查，声称收集 200+ 失败样本，形成失败案例数据集、自动捕捉与分类模块、新增失败率和类型分布指标。但项目管理部分又写 20+ 失败案例，数量证据不一致。",
-        "cognitiveProgress": "明显提升。学生从“实现模型”转向“定位为什么失败”，提出失败集中在权重分配、复杂场景协同失效、3D 深度与纹理/颜色融合脱节。",
-        "cotCotMaturity": "较强。CoT's CoT 1 把失败归因为动态协同与场景适配不足，有多数据集和日志支撑的说法；CoT's CoT 2 认识到 failure case 分析比只看精度更有用，是成熟研究习惯。但证据细节缺失，且数量冲突降低可信度。",
-        "brainaryMapping": "开始把 failure case 存储、复盘和动态权重调整连接到 memory 与 cognitive control，比前两周更接近 Brainary 可沉淀路径。",
-        "valueReasoning": "价值函数从“性能和部署成本”转向“故障分析和优化方向”，估值 82 万人民币。价值判断更贴近研究迭代，但商业金额仍没有真实客户或成本节省数据。",
-        "projectManagement": "阶段定义合理，下一步进入优化方案设计和首轮验证。但仍反复写“不需要老师介入”，这与其核心卡点“复杂 failure case 深层原因未完全定位”存在矛盾。",
-        "nextActionQuality": "中等偏上。提出针对核心失败模式制定优化方案并做验证，比前一周更可检验；但仍缺少每类 failure 的具体干预、指标和 ablation 设计。"
+        "stage": "failure case排查阶段",
+        "topicFocus": "多维度协同推理在多个视觉数据集上的失败案例、失败模式和优化方向。",
+        "hardProgress": "报告称收集200+ failure case并分类归档，新增自动捕捉与分类模块，补充失败率和失败类型分布指标；但项目管理处又写20+失败案例，存在数量不一致。",
+        "evidenceLevel": "中。failure case方向明显更研究化，但缺少失败样本统计表、类别占比、自动捕捉模块准确率、人工标注一致性和日志样例。数量矛盾降低可信度。",
+        "cognition": "明显进步：从追求总体精度转向定位权重分配、特征融合、3D深度与纹理/颜色脱节等机制性失败。",
+        "CoTsCoTMaturity": "较高。CoT's CoT 1把失败归因为动态协同与场景适配不足，证据等级标为A；但由于样本数冲突，实际应降为B+或待复核A。",
+        "BrainaryMapping": "开始把failure case存储与复盘映射到memory，把动态权重调整映射到cognitive control，比前两周更接近可沉淀工作流。",
+        "valueReasoning": "估值82万人民币，价值函数从‘性能提升’转为‘故障分析和优化方向’。这是价值观变成熟的信号：学生开始认为失败分析本身值得做，而不是只有正向SOTA结果有价值。",
+        "projectManagement": "仍然声称无需老师介入，但实际上优化方案设计阶段很需要老师介入定义优先级和消融矩阵。项目管理过于独立化，可能掩盖关键决策点。",
+        "nextActionQuality": "下周动作是定位复杂failure case深层原因、制定优化方案并首轮验证。方向好，但仍需把‘深层原因’变成可测假设。"
       },
       {
         "week": "2026-05-17",
-        "stage": "分层归因与新假设形成阶段",
-        "topicTrajectory": "主题继续围绕多维协同推理 failure case，并扩展到时空多视角鲁棒建模。主线开始从静态多维特征转向时空记忆和多视角表征。",
-        "hardProgress": "归纳四类失败模式：错误特征选择、知识图谱构建/补全错误、低分辨率细小目标丢失、目标关系推理错误；新增专项评测子集和潜在模块接口；提出时空多视角建模路线。实际优化实验尚未完成。",
-        "cognitiveProgress": "进一步提升。学生将失败从局部模块问题提升为“特征层—知识层—感知层—关系层”的链路失效，并识别视角变化和细小目标是共性鲁棒性短板。",
-        "cotCotMaturity": "较成熟但处于假设阶段。四层失败归因有样本统计支撑的说法，属于较好的 CoT's CoT；时空多视角建模仍是 B 级证据，尚未实验验证。",
-        "brainaryMapping": "映射增加 risk modeling、workflow management、memory schema，成熟度高于前几周，因为开始说明 failure 分类、特征校验、时空视角记忆如何沉淀为 schema 和 evaluation protocol。",
-        "valueReasoning": "价值函数转向真实场景鲁棒性、复杂关系和多视角感知，估值 86 万人民币。比 2026-05-03 更接近用户痛点，但仍缺少金额计算细节和付费场景量化。",
-        "projectManagement": "下周动作是时空模块设计和四类失败修正策略的消融验证，研究闭环意识较好。但任务量偏大：同时做时空模块和四类 failure 修正，可能导致每个实验都不够深。",
-        "nextActionQuality": "中等偏上。动作已经包含消融验证，是研究能力提升信号；但还需要压缩为一个最小闭环，例如先选最高频 failure 类型做单一修正和对照实验。"
+        "stage": "分层归因与鲁棒性建模阶段",
+        "topicFocus": "四类失败模式：特征选择错误、知识图谱构建/补全错误、低分辨率细小目标丢失、目标关系推理错误；提出时空多视角建模。",
+        "hardProgress": "完成四类失败模式归纳、样本库和占比统计，新增视角变化、低分辨率、复杂关系专项评测子集，提出潜在模块接口和时空多视角技术路线。",
+        "evidenceLevel": "中。分层框架比上一周更清晰，但报告仍没有给出各类错误占比、样本数量、专项评测子集规模、代表案例或消融设计。时空多视角建模目前只是方案，不是实验证实。",
+        "cognition": "继续进步：从‘权重分配与融合失败’进一步细化为特征层、知识层、感知层、关系层的全链路失效，并认识到不同失败类型耦合。",
+        "CoTsCoTMaturity": "较高但未完成闭环。CoT's CoT 1有结构化新增认知；CoT's CoT 2关于时空建模还停留在逻辑推导，学生自评B合理。",
+        "BrainaryMapping": "映射成熟度提升：新增risk modeling、workflow management，并提出memory schema、evaluation protocol。已经从标签映射进到产物形态，但还没有具体schema字段。",
+        "valueReasoning": "估值86万人民币，价值函数进一步转向真实场景鲁棒性、自动驾驶/机器人/工业视觉用户和可落地模块。相比第1周更重视复杂真实场景和系统性失效，这是价值观成熟。",
+        "projectManagement": "计划聚焦时空模块与四类失败优化，但范围过大。下周同时做时空模块设计、四类修正策略、消融验证，可能不够最小化。",
+        "nextActionQuality": "动作质量中上：有模块设计和消融验证意识。但需要压缩到一个最小闭环，例如先选一类失败和一个数据集验证，而不是四类同时推进。"
       }
     ],
     "trendScores": {
-      "scale": "1 表示弱，5 表示强；分数只基于周报文本证据，不代表真实能力。",
       "hardProgress": {
-        "scoresByWeek": {
-          "2026-04-26": 4,
-          "2026-05-03": 3,
-          "2026-05-10": 4,
-          "2026-05-17": 3
-        },
-        "trend": "波动。第一周有性能实验结果，第二周退回实现和方案，第三周有 failure case 数据资产，第四周偏归因和方案设计，缺少新优化结果。"
+        "scoresByWeek": [
+          {
+            "week": "2026-04-26",
+            "score": 4,
+            "reason": "有量化性能提升和多数据集实验，但复核材料缺失。"
+          },
+          {
+            "week": "2026-05-03",
+            "score": 3,
+            "reason": "代码和方案是进展，但没有实质实验结果。"
+          },
+          {
+            "week": "2026-05-10",
+            "score": 4,
+            "reason": "failure case数据集、分类模块和分析报告是硬资产，但样本数量自相矛盾。"
+          },
+          {
+            "week": "2026-05-17",
+            "score": 4,
+            "reason": "四类失败归因和专项评测子集有研究价值，但缺少具体统计表。"
+          }
+        ],
+        "trend": "硬进展不是线性增加，而是从性能结果转为诊断资产。第2周有短暂回落，第3-4周恢复并更研究化。"
       },
-      "researchQuestionClarity": {
-        "scoresByWeek": {
-          "2026-04-26": 4,
-          "2026-05-03": 3,
-          "2026-05-10": 4,
-          "2026-05-17": 4
-        },
-        "trend": "先清晰、后跳题、再重新收敛。若 dynamic attention + memory 与 graph-to-graph 是同一主线，需补充连接；否则题目轨迹存在断裂。"
+      "cognitiveProgress": {
+        "scoresByWeek": [
+          {
+            "week": "2026-04-26",
+            "score": 4,
+            "reason": "形成架构效率优于参数堆砌的判断。"
+          },
+          {
+            "week": "2026-05-03",
+            "score": 3,
+            "reason": "多维度协同思路清楚，但证据少，概念扩展较多。"
+          },
+          {
+            "week": "2026-05-10",
+            "score": 4,
+            "reason": "开始用失败案例反推机制问题，认知更像研究者。"
+          },
+          {
+            "week": "2026-05-17",
+            "score": 5,
+            "reason": "能把失败分层并连接到时空建模，系统性增强。"
+          }
+        ],
+        "trend": "认知趋势向好，关键转折在第3周：从验证成功转向解释失败。"
       },
-      "cognitiveIncrement": {
-        "scoresByWeek": {
-          "2026-04-26": 4,
-          "2026-05-03": 3,
-          "2026-05-10": 4,
-          "2026-05-17": 5
-        },
-        "trend": "逐步增强。认知从架构效率，发展到多维协同，再到 failure case 分层归因和时空建模。"
+      "CoTsCoTMaturity": {
+        "scoresByWeek": [
+          {
+            "week": "2026-04-26",
+            "score": 4,
+            "reason": "能给老师带来量化信息差，但部分判断像常识包装。"
+          },
+          {
+            "week": "2026-05-03",
+            "score": 3,
+            "reason": "自知缺少实验验证，成熟但不够硬。"
+          },
+          {
+            "week": "2026-05-10",
+            "score": 4,
+            "reason": "失败机制的CoT's CoT更有新知，但证据数量矛盾。"
+          },
+          {
+            "week": "2026-05-17",
+            "score": 4,
+            "reason": "分层失效框架有新增性；时空建模仍待实证。"
+          }
+        ],
+        "trend": "从‘结果型CoT's CoT’转向‘机制型CoT's CoT’，成熟度提高。"
       },
-      "cotCotMaturity": {
-        "scoresByWeek": {
-          "2026-04-26": 4,
-          "2026-05-03": 3,
-          "2026-05-10": 4,
-          "2026-05-17": 4
-        },
-        "trend": "总体提升但证据不稳定。成熟之处是能说清老师不知道的信息差；不足是经常把未验证假设包装成可沉淀范式。"
-      },
-      "brainaryMappingMaturity": {
-        "scoresByWeek": {
-          "2026-04-26": 3,
-          "2026-05-03": 3,
-          "2026-05-10": 4,
-          "2026-05-17": 4
-        },
-        "trend": "从能力标签映射，逐步走向 workflow、failure memory、memory schema 和 evaluation protocol，成熟度上升。"
-      },
-      "metaCognition": {
-        "scoresByWeek": {
-          "2026-04-26": 4,
-          "2026-05-03": 3,
-          "2026-05-10": 4,
-          "2026-05-17": 5
-        },
-        "trend": "增强。最重要变化是从“架构优先”转向“失败复盘优先”再到“分层归因 + 时空建模”。"
+      "BrainaryMappingMaturity": {
+        "scoresByWeek": [
+          {
+            "week": "2026-04-26",
+            "score": 3,
+            "reason": "主要是能力标签映射。"
+          },
+          {
+            "week": "2026-05-03",
+            "score": 3,
+            "reason": "仍以reasoning、tool orchestration、cognitive control标签为主。"
+          },
+          {
+            "week": "2026-05-10",
+            "score": 4,
+            "reason": "开始把failure case memory和优化规则workflow联系起来。"
+          },
+          {
+            "week": "2026-05-17",
+            "score": 4,
+            "reason": "提出memory schema、evaluation protocol和risk modeling，接近可沉淀产物。"
+          }
+        ],
+        "trend": "Brainary映射从抽象能力标签向schema、workflow、evaluation protocol演进，但仍缺少具体字段和接口。"
       },
       "valueReasoning": {
-        "scoresByWeek": {
-          "2026-04-26": 3,
-          "2026-05-03": 2,
-          "2026-05-10": 3,
-          "2026-05-17": 3
-        },
-        "trend": "概念上有进步，金额证据仍弱。能连接用户、通用能力、产物形式和自动化，但金额计算多为泛化估算，没有真实市场证据。"
+        "scoresByWeek": [
+          {
+            "week": "2026-04-26",
+            "score": 3,
+            "reason": "能连接金额、部署成本和用户，但估值依据不可靠。"
+          },
+          {
+            "week": "2026-05-03",
+            "score": 2,
+            "reason": "代码开发和方案设计估值偏主观，缺少买单场景。"
+          },
+          {
+            "week": "2026-05-10",
+            "score": 4,
+            "reason": "开始认可failure case分析的价值，并连接稳定性、适配性和企业需求。"
+          },
+          {
+            "week": "2026-05-17",
+            "score": 4,
+            "reason": "价值函数转向真实场景鲁棒性、专项benchmark和模块化沉淀。"
+          }
+        ],
+        "trend": "价值推理明显从‘结果值钱’变成‘诊断能力和鲁棒性闭环值钱’，这是纵向成熟点；但金额估算仍缺乏市场证据。"
       },
       "projectManagement": {
-        "scoresByWeek": {
-          "2026-04-26": 3,
-          "2026-05-03": 3,
-          "2026-05-10": 3,
-          "2026-05-17": 3
-        },
-        "trend": "稳定但未成熟。每周都有计划、投入、资源、里程碑，但风险管理和验收标准不足，且反复声称无需老师介入。"
+        "scoresByWeek": [
+          {
+            "week": "2026-04-26",
+            "score": 3,
+            "reason": "计划完整，但验收标准和风险管理弱。"
+          },
+          {
+            "week": "2026-05-03",
+            "score": 3,
+            "reason": "任务推进清楚，但方向切换解释不足。"
+          },
+          {
+            "week": "2026-05-10",
+            "score": 3,
+            "reason": "有里程碑和成本，但关键数据不一致。"
+          },
+          {
+            "week": "2026-05-17",
+            "score": 3,
+            "reason": "知道关键路径，但下周任务范围过大。"
+          }
+        ],
+        "trend": "项目管理形式稳定，但没有明显成熟：一直说不需要老师介入、无外部依赖、无纠偏需求，这可能是不成熟信号。"
       },
       "automationPath": {
-        "scoresByWeek": {
-          "2026-04-26": 3,
-          "2026-05-03": 3,
-          "2026-05-10": 4,
-          "2026-05-17": 4
-        },
-        "trend": "变好。自动化对象从模型 module 和 benchmark，进化到 failure 分类 workflow、优化规则、特征选择校验 module、时空视角 memory schema。"
+        "scoresByWeek": [
+          {
+            "week": "2026-04-26",
+            "score": 3,
+            "reason": "提出agent module、workflow、benchmark，但门槛描述偏泛。"
+          },
+          {
+            "week": "2026-05-03",
+            "score": 3,
+            "reason": "提出结构module和协同workflow，但规则未落地。"
+          },
+          {
+            "week": "2026-05-10",
+            "score": 4,
+            "reason": "failure case分类、排查脚本、分析模板更适合自动化。"
+          },
+          {
+            "week": "2026-05-17",
+            "score": 4,
+            "reason": "提出failure分类workflow、特征校验module、时空视角memory schema，方向更具体。"
+          }
+        ],
+        "trend": "自动化路径逐周变具体，最有潜力的不是模型本身，而是failure case排查、分类、归因和评测协议。"
       },
-      "nextStepQuality": {
-        "scoresByWeek": {
-          "2026-04-26": 3,
-          "2026-05-03": 3,
-          "2026-05-10": 4,
-          "2026-05-17": 4
-        },
-        "trend": "逐步更可验证，但仍过宽。最近两周开始提出消融验证，这是好信号；需要进一步限定单一假设、单一指标、单一对照。"
+      "nextActionQuality": {
+        "scoresByWeek": [
+          {
+            "week": "2026-04-26",
+            "score": 3,
+            "reason": "动作方向正确但不可检验性不足。"
+          },
+          {
+            "week": "2026-05-03",
+            "score": 3,
+            "reason": "启动验证合理，但缺少消融矩阵。"
+          },
+          {
+            "week": "2026-05-10",
+            "score": 4,
+            "reason": "围绕失败模式做优化验证，比泛调参更好。"
+          },
+          {
+            "week": "2026-05-17",
+            "score": 3,
+            "reason": "提出消融验证，但四类失败和时空模块同时推进，范围过大。"
+          }
+        ],
+        "trend": "下一步动作从泛优化变为机制验证，但仍需要收敛成最小可验证闭环。"
       }
     },
     "valueFunctionChange": {
-      "summary": "学生的价值函数从“模型性能提升和部署成本下降”逐步转向“真实复杂场景鲁棒性、failure case 归因、可复用自动化资产”。这是研究价值观的正向变化：不再只看平均精度，而开始重视失败模式、用户场景和可沉淀 workflow。",
+      "summary": "学生的价值观从‘模型精度提升和小参数部署成本值钱’，逐渐转向‘failure case归因、鲁棒性、真实复杂场景可用性、可沉淀workflow和memory schema值钱’。这是研究价值函数的正向变化。",
       "byWeek": [
         {
           "week": "2026-04-26",
-          "whatStudentThinksWorthDoing": "值得做的是小参数量高性能视觉模型，因为能降低部署成本、对标大模型、提升精度。",
-          "whyWorthDoing": "理由是同等规模平均精度提升 8.2%，部署成本可能下降，智能视觉、自动驾驶、机器人等企业可能买单。",
-          "moneyConnection": "估值 98 万人民币，有按精度提升、部署节省和架构创新估算的尝试；但这些单价依据未被报告证实。",
-          "userConnection": "用户指向智能视觉企业、自动驾驶厂商、机器人公司、AI 部署服务商。",
-          "artifactConnection": "论文、code module、benchmark、部署方案、科研方法论。",
-          "brainaryAutomationConnection": "连接到 memory、reasoning、cognitive control 和 agent module、workflow、benchmark。"
+          "whatStudentThinksValuable": "高精度、小参数、对标大模型、降低部署成本。",
+          "whyValuable": "可以用更低成本达到大模型性能，服务视觉企业、自动驾驶、机器人、AI部署服务商。",
+          "moneyConnection": "估值98万人民币，按精度提升、部署成本节省和架构创新估算。",
+          "userConnection": "用户画像清楚，但没有具体采购场景或合同金额证据。",
+          "productForm": "论文、code module、benchmark、部署方案、科研方法论。",
+          "BrainaryAutomationConnection": "连接memory、reasoning、cognitive control，并提出agent module、workflow、benchmark。",
+          "weakness": "价值主要依赖性能数字，若8.2%无法复核，价值判断会坍塌。"
         },
         {
           "week": "2026-05-03",
-          "whatStudentThinksWorthDoing": "值得做的是 graph-to-graph 结构和七维协同推理，因为它更像人类多维感知。",
-          "whyWorthDoing": "理由从实测性能转为结构潜力和方法创新，实际价值还未由实验验证。",
-          "moneyConnection": "估值 78 万人民币，主要按代码开发、方法学习和验证方案估算。这个价值函数偏研发投入定价，而不是结果价值或客户价值。",
-          "userConnection": "用户仍是智能视觉、机器人、自动驾驶、多模态交互团队，但缺少具体使用场景。",
-          "artifactConnection": "论文、code module、workflow、多维特征协同规则。",
-          "brainaryAutomationConnection": "连接 reasoning、tool orchestration、cognitive control，但自动化沉淀仍停留在 workflow 和权重规则设想。"
+          "whatStudentThinksValuable": "graph-to-graph结构、多维度协同推理、模拟人类思考。",
+          "whyValuable": "认为结构载体和七维协同能提升感知推理合理性。",
+          "moneyConnection": "估值78万人民币，按代码开发、方法学习、验证方案估算。",
+          "userConnection": "仍指向智能视觉、机器人、自动驾驶、多模态产品。",
+          "productForm": "论文、code module、workflow、多维度特征协同规则。",
+          "BrainaryAutomationConnection": "连接reasoning、tool orchestration、cognitive control，但自动化对象还不够具体。",
+          "weakness": "这一周价值函数最弱，容易把‘完成代码和学习方法’直接等同于商业价值。"
         },
         {
           "week": "2026-05-10",
-          "whatStudentThinksWorthDoing": "值得做的是 failure case 排查和失败原因分析，因为能避免盲目优化。",
-          "whyWorthDoing": "理由更像成熟研究：平均指标不足以指导迭代，必须找到模型在哪里、为什么失败。",
-          "moneyConnection": "估值 82 万人民币，按故障分析、优化咨询、失败案例数据集和模板估算。仍缺少真实客户支付证据，但比 2026-05-03 更接近工程痛点。",
-          "userConnection": "用户是需要高稳定性模型的视觉企业、机器人、自动驾驶和多模态产品团队。",
-          "artifactConnection": "failure case 分析 workflow、模型优化规则、code module、失败案例数据集。",
-          "brainaryAutomationConnection": "开始连接 failure memory、认知控制优化规则和自动排查脚本，自动化价值更清晰。"
+          "whatStudentThinksValuable": "failure case排查、失败原因分类、优化方向。",
+          "whyValuable": "认为只看精度无法定位模型短板，失败复盘能提升稳定性和实用性。",
+          "moneyConnection": "估值82万人民币，按故障分析、优化咨询、失败案例数据集和模板估算。",
+          "userConnection": "用户从需要高性能模型，转向需要高稳定性、高适配性的真实部署方。",
+          "productForm": "failure case分析workflow、模型优化规则、code module。",
+          "BrainaryAutomationConnection": "更明确连接memory中的失败案例库、cognitive control中的动态权重调整、workflow中的排查流程。",
+          "weakness": "价值判断依赖失败分析是否可自动化、可复用；目前证据不足。"
         },
         {
           "week": "2026-05-17",
-          "whatStudentThinksWorthDoing": "值得做的是分层治理鲁棒性问题，并用时空多视角建模解决视角变化和单帧信息不足。",
-          "whyWorthDoing": "理由是四类失败模式覆盖特征层、知识层、感知层、关系层，真实场景可用性取决于这些失败能否被治理。",
-          "moneyConnection": "估值 86 万人民币，按工业视觉鲁棒性优化、多视角模块授权、故障分析科研成果估算。但金额仍是笼统估计，没有报价、合同、成本节省或用户访谈。",
-          "userConnection": "用户更聚焦到自动驾驶、机器人感知、工业视觉、智能监控，比前几周更贴近复杂视觉场景。",
-          "artifactConnection": "论文、benchmark、module、workflow、memory schema、evaluation protocol。",
-          "brainaryAutomationConnection": "连接到 risk modeling、workflow management、时空视角 memory schema，说明其开始把价值理解为可复用认知基础设施。"
+          "whatStudentThinksValuable": "分层失败归因、时空多视角鲁棒建模、专项评测子集。",
+          "whyValuable": "认为真实场景失败来自特征、知识、感知、关系全链路，必须系统治理。",
+          "moneyConnection": "估值86万人民币，按工业视觉鲁棒性优化、多视角感知模块授权、故障分析成果估算。",
+          "userConnection": "付费方更聚焦于自动驾驶、机器人感知、工业视觉、智能监控，应用场景更真实。",
+          "productForm": "论文、benchmark、module、workflow、memory schema、evaluation protocol。",
+          "BrainaryAutomationConnection": "开始连接risk modeling、workflow management、memory schema和evaluation protocol，是4周里最成熟的一次。",
+          "weakness": "金额仍缺少外部参考来源；时空多视角价值尚未被实验验证。"
         }
       ],
-      "diagnosis": "价值观在变成熟：从追求高精度结果，转向重视失败案例、鲁棒性、通用评测和可自动化沉淀。但金额估值能力没有同步成熟，仍像事后给任务贴价格，而不是从用户付费、节省成本、产物授权或部署规模反推。"
+      "changeAssessment": "价值函数在变成熟：从单点性能价值，到结构开发价值，再到失败诊断价值，最后到真实场景鲁棒性和自动化沉淀价值。问题是金额估算始终像自定价格，缺少市场证据、用户访谈、部署成本明细或竞品报价。"
     },
     "repeatedBlockers": [
       {
-        "blocker": "复杂场景鲁棒性不足",
-        "appearsInWeeks": [
-          "2026-04-26",
-          "2026-05-10",
-          "2026-05-17"
-        ],
-        "pattern": "低光照、多目标重叠、细小目标、视角变化、复杂关系反复出现。学生逐渐从笼统描述转为分层归因，这是进步；但尚未有优化后复测结果。"
-      },
-      {
-        "blocker": "多维特征权重分配或动态选择不稳定",
-        "appearsInWeeks": [
-          "2026-05-03",
-          "2026-05-10",
-          "2026-05-17"
-        ],
-        "pattern": "从“权重分配不明确”发展为“动态选择错误会导致推理崩溃”。这是核心科学问题之一，应被压缩成下周最小实验。"
-      },
-      {
-        "blocker": "graph-to-graph、多维特征、知识图谱、时空建模之间的集成关系不清",
-        "appearsInWeeks": [
-          "2026-05-03",
-          "2026-05-17"
-        ],
-        "pattern": "学生不断增加模块，但缺少统一架构图和信息流定义。存在复杂化风险。"
-      },
-      {
-        "blocker": "自动化转化缺少标准化接口和 benchmark",
+        "blocker": "证据表格缺失",
         "appearsInWeeks": [
           "2026-04-26",
           "2026-05-03",
           "2026-05-10",
           "2026-05-17"
         ],
-        "pattern": "每周都说要转成 module、workflow、benchmark 或 memory schema，但没有报告任何已封装接口、输入输出协议、自动评测脚本或复用案例。"
+        "description": "每周都有数据集、benchmark、失败案例或评测指标，但没有贴出具体表格、数据集名称、baseline、参数量、指标定义、占比和样例。",
+        "impact": "教授难以判断结论是真实实验结果还是概念性总结。"
       },
       {
-        "blocker": "证据报告不够可审计",
+        "blocker": "任务范围持续膨胀",
+        "appearsInWeeks": [
+          "2026-05-03",
+          "2026-05-10",
+          "2026-05-17"
+        ],
+        "description": "从dynamic attention+memory扩展到graph-to-graph、七维协同、failure case、知识图谱、时空多视角。方向有连续性，但范围很大。",
+        "impact": "如果不收敛到一个主假设和一组消融，容易变成很多模块都提到、没有一个模块被证明。"
+      },
+      {
+        "blocker": "权重分配和动态特征选择反复成为核心问题",
+        "appearsInWeeks": [
+          "2026-05-03",
+          "2026-05-10",
+          "2026-05-17"
+        ],
+        "description": "第2周说维度权重分配不明确，第3周说失败集中在权重分配和融合，第4周说错误选择多维度特征会导致推理崩溃。",
+        "impact": "这是主线卡点，应优先变成一个可测模块：特征选择器/权重控制器的诊断、校验和修正。"
+      },
+      {
+        "blocker": "复杂场景鲁棒性反复未闭环",
         "appearsInWeeks": [
           "2026-04-26",
           "2026-05-10",
           "2026-05-17"
         ],
-        "pattern": "缺少数据集名称、baseline、表格和指标口径；2026-05-10 的 failure case 数量前后不一致；2026-05-17 提到占比和高频场景但未给出具体数字。"
+        "description": "多目标重叠、低光照、低分辨率细小目标、视角变化、关系复杂场景不断出现，但尚未看到针对某一类场景的优化前后对比。",
+        "impact": "研究问题越来越清楚，但没有完成从失败归因到性能修复的闭环。"
       },
       {
-        "blocker": "项目管理低估外部反馈价值",
+        "blocker": "项目管理过于乐观",
         "appearsInWeeks": [
           "2026-04-26",
           "2026-05-03",
           "2026-05-10",
           "2026-05-17"
         ],
-        "pattern": "每周都写不需要老师介入，但每周都有关键建模、权重、归因或集成问题。这可能导致学生在错误假设上独立推进过久。"
+        "description": "每周都写无需老师介入、无依赖、无纠偏需求、符合或超出预期。",
+        "impact": "这不符合复杂研究项目常态。可能说明学生还没有把关键决策、失败风险和验收标准显性化。"
+      },
+      {
+        "blocker": "自动化转化停留在命名层到半具体层之间",
+        "appearsInWeeks": [
+          "2026-04-26",
+          "2026-05-03",
+          "2026-05-10",
+          "2026-05-17"
+        ],
+        "description": "每周都能说module、workflow、benchmark、schema，但缺少输入输出定义、数据结构、触发条件、评估指标。",
+        "impact": "若不补接口定义，自动化科研路径无法真正落地。"
       }
     ],
     "professorShouldAsk": [
-      "请你解释 2026-04-26 的 dynamic attention + memory 与 2026-05-03 之后的 graph-to-graph 多维协同推理是什么关系：同一模型的不同模块、方向切换，还是两个项目？如果是同一主线，请画出统一架构图。",
-      "8.2% 平均精度提升来自哪 3 个数据集、哪些 baseline、什么模型规模、什么评价指标？请给出表格和实验编号。",
-      "2026-05-10 里 failure case 到底是 200+ 还是 20+？每类失败数量、占比、代表样例和判定标准是什么？",
-      "四类失败模式中，哪一类对总体错误贡献最大？下周只能优化一类的话，你选哪一类，为什么？",
-      "所谓时空多视角建模需要什么数据？现有 3 个视觉数据集是否包含时序或多视角信息？如果没有，如何验证这个假设？",
-      "多维特征动态选择错误如何被检测？有没有一个特征选择校验 module 的输入、输出、触发条件和成功指标？",
-      "知识图谱构建错误与底层视觉感知错误如何区分？有没有因果判别或消融方法？",
-      "下周的消融实验具体怎么做：控制组、实验组、指标、预期提升、失败判据分别是什么？",
-      "价值估算中的 78 万、82 万、86 万、98 万人民币分别对应什么真实付费主体和交付物？有没有客户、部署成本或授权价格证据？",
-      "如果把本项目转成 Brainary 资产，最小可复用产物到底是 benchmark、failure memory schema、特征选择校验 module，还是时空视角 memory？请只选一个优先级最高的。"
+      {
+        "question": "请把4周内所有实验结果整理成一张表：数据集、模型、参数量、baseline、指标、精度、推理速度、失败率、样本数、代码版本。",
+        "whyAsk": "这是判断学生是否真的有硬进展的最低证据。"
+      },
+      {
+        "question": "2026-05-10的failure case到底是200+还是20+？请给出样本库路径、分类标准和每类占比。",
+        "whyAsk": "报告中存在关键数量矛盾，必须先校正证据层。"
+      },
+      {
+        "question": "四类失败模式中，哪一类占比最高、最影响最终指标、最容易修复？下周只能选一类，你选哪一类？",
+        "whyAsk": "迫使学生从宽泛归因进入优先级决策。"
+      },
+      {
+        "question": "所谓‘错误选择多维度特征’如何被检测？有没有一个特征选择正确性的proxy label或自动校验规则？",
+        "whyAsk": "这是反复出现的核心卡点，必须转成可测问题。"
+      },
+      {
+        "question": "时空多视角建模需要什么数据？现有3个数据集是否包含时序、多视角或同物体跨视角标注？如果没有，如何验证？",
+        "whyAsk": "防止时空建模成为无法实验支撑的新概念。"
+      },
+      {
+        "question": "请给出一个最小消融矩阵：原模型、加特征选择校验、加知识图谱关系校验、加细小目标增强、加时空建模，分别测什么指标？",
+        "whyAsk": "把下一步从想法变成实验闭环。"
+      },
+      {
+        "question": "Brainary mapping请不要再只写能力名，请写memory schema字段、workflow步骤、module输入输出和evaluation protocol。",
+        "whyAsk": "检验Brainary关联是否真正可沉淀。"
+      },
+      {
+        "question": "价值估算中的98万、78万、82万、86万分别有没有外部报价、用户访谈、节省成本计算或竞品参考？没有就标为假设。",
+        "whyAsk": "训练学生区分价值假设和价值证据。"
+      }
     ],
     "nextBestIntervention": {
-      "intervention": "要求学生下周不要同时做四类失败修正和时空模块大设计，而是完成一个最小研究闭环：选择最高频的一类 failure，做一个可复现消融实验，并把结果沉淀为 Brainary 可复用资产。",
-      "specificAssignment": {
-        "step1": "提交统一主线图：dynamic attention + memory、graph-to-graph、多维特征、知识图谱、时空 memory 之间的数据流和模块边界。",
-        "step2": "提交 failure case 审计表：每类失败的数量、占比、样例编号、判定规则、对应模块、可疑原因。",
-        "step3": "只选一个 failure 类型做干预，例如“错误特征选择”或“低分辨率细小目标丢失”。",
-        "step4": "设计 1 个 ablation：原模型、加入修正模块、去掉相关特征或校验逻辑的对照组，报告总体精度、该 failure 类型错误率、推理成本变化。",
-        "step5": "把实验封装成一个最小自动化资产：输入样本、自动判定 failure 类型、输出错误归因和建议修正，形成 workflow 或 memory schema 草案。"
-      },
-      "successCriteria": [
-        "能解释题目主线是否连续，而不是换题。",
-        "至少一个 failure 类型的错误率有量化前后对比。",
-        "至少一个模块有明确输入、输出、调用条件和失败判据。",
-        "所有关键数字可追溯到数据集、样本编号或实验日志。",
-        "价值判断从泛泛估值转为具体交付物和用户场景。"
+      "intervention": "让学生暂停扩展新模块一周，只做一个‘失败模式到修复效果’的最小闭环。",
+      "specificPlan": [
+        "选择四类失败中占比最高的一类，优先建议选择‘错误特征选择/动态权重分配错误’，因为它连续3周出现，是主线卡点。",
+        "固定一个数据集和一个baseline版本，建立50到100个失败样本的验证集，明确每个样本的失败标签和判定标准。",
+        "实现一个最小修正模块，例如特征选择校验器或权重重分配规则，不要同时做知识图谱、细小目标和时空建模。",
+        "做消融对比：原模型、规则修正、学习式修正，如果资源不足至少做原模型与规则修正。",
+        "输出一页结果：失败率下降多少、总体精度是否变化、推理速度代价、修复了哪些案例、引入了哪些新失败。",
+        "把这个流程封装成failure case workflow草案：输入、输出、分类标准、日志格式、可视化样例、自动化潜力。"
       ],
-      "professorOneThingToLearn": "这名学生本阶段最有价值的增量不是又跑了更多实验，而是开始把视觉协同推理的失败拆成可治理的层级；教授应重点帮助他把这种分层归因压缩成一个可验证、可复现、可自动化沉淀的最小闭环。"
+      "successCriterion": "如果下周能证明某一类失败的失败率显著下降，并给出可复核样本、指标和代码版本，就说明学生的研究能力从‘归因’进入‘干预验证’；如果只是继续提出时空建模和更多模块，则说明仍停留在概念扩展和忙碌推进。",
+      "professorRole": "教授应介入一次，帮他砍掉下周任务范围，要求只交付一个最小闭环，而不是四类失败同时优化。"
     }
   }
 }

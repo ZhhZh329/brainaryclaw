@@ -1,6 +1,6 @@
 {
   "key": "person:ge-mengmeng:2026-04-05:weekly-score",
-  "generatedAt": "2026-06-05T22:00:46.546Z",
+  "generatedAt": "2026-06-05T23:00:48.888Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
@@ -8,53 +8,96 @@
   "result": {
     "hardProgress": {
       "score": 16,
-      "reason": "本周有三个明确硬进展：APT reconstruction pipeline 加入多源时序对齐并报告准确率提升至 90%；Auto Research Survey 的文本结构与主体内容基本收敛，并识别出图像范围过大的新瓶颈；Skill Taxonomy Analysis Pipeline 从静态 taxonomy 推进到可执行 pipeline。进展覆盖算法机制、科研自动化表达、agent 基础模块三个方向，符合周报模板对硬进展的要求。但 APT 的 90% 缺少实验设置，Skill pipeline 缺少真实 case 跑通结果，Survey 的“可接受水平”也缺少验收标准，因此不能给满分。",
-      "missingEvidence": "缺少 APT 准确率 90% 的测试集规模、baseline、提升幅度、评价指标定义、失败样例；缺少 pipeline 代码、接口、运行截图或真实 case 结果；缺少 survey 结构收敛的评审标准或老师反馈。"
+      "reason": "本周有三类明确产出：APT pipeline 加入多源时序对齐并报告准确率达到 90%；Auto Research Survey 确认文本结构基本收敛并识别图像范围过大的新瓶颈；Skill Taxonomy 从结构设计推进到 pipeline 原型实现。硬进展覆盖实验、系统实现和问题定位，但 APT 的 90% 缺少基线、数据规模和评测协议，Skill pipeline 也未展示真实 case 运行结果，因此不能给满分。",
+      "missingEvidence": [
+        "APT 准确率 90% 的原始基线、提升幅度、样本数、数据来源和评价指标定义缺失。",
+        "多源时序对齐机制的具体算法、输入输出格式和对比实验缺失。",
+        "Skill Taxonomy Analysis Pipeline 的代码、流程图、运行截图或真实 case 输出缺失。",
+        "Auto Research Survey 的收敛标准和老师或协作者确认记录缺失。"
+      ]
     },
     "cognitiveIncrement": {
       "score": 13,
-      "reason": "认知增量较清楚：APT 的瓶颈从“模型推理复杂度”转向“跨源时序关系显式建模”；Auto Research 的瓶颈从文本结构转向多模态表达粒度控制；Skill taxonomy 的价值从静态分类转向 pipeline 化后的 routing、evaluation 和 hallucination risk 支撑。这些不是简单工作记录，而是对问题结构的重新定位。扣分点是这些认知仍主要是结论式表达，缺少反例、对照实验或边界条件。",
-      "missingEvidence": "缺少说明为什么复杂推理模型不是主要瓶颈的对照结果；缺少图像范围过大如何影响论证质量的具体例子；缺少 taxonomy pipeline 对 routing 或 evaluation 有效性的初步验证。"
+      "reason": "认知增量较清楚：把 APT reconstruction 的瓶颈从“模型复杂度不足”转向“跨源时序关系未显式建模”；把 Auto Research 的瓶颈从文本结构转向多模态表达粒度控制；把 taxonomy 从静态分类转向可执行 pipeline。这些判断有一定抽象价值，也能迁移到自动化科研系统设计。但部分认知仍停留在概念层，尚未形成可检验假设或可复用判断准则。",
+      "missingEvidence": [
+        "没有给出证明“复杂推理模型不是主要瓶颈”的消融实验。",
+        "没有说明图像表达粒度如何影响 survey 论证质量的具体失败案例。",
+        "taxonomy pipeline 对 routing、evaluation 或 hallucination risk 的实际支撑效果尚未验证。"
+      ]
     },
     "cot2Depth": {
       "score": 12,
-      "reason": "CoT’s CoT 部分包含“老师原本是否知道”“为什么”“新增认知”“自动化潜力”“沉淀形式”“证据等级”，结构完整。第一条关于 APT 时序建模的洞察较强，能上升到 temporal reasoning module；第二条关于多模态生成粒度控制也能连接到自动化科研能力边界。但深度仍有限：证据等级 A/B 是自评，没有对应证据链；对认知如何改变后续实验设计、系统架构或论文贡献点的推导还不够充分。",
-      "missingEvidence": "缺少 CoT’s CoT 证据等级的判定依据；缺少从认知结论到具体模块设计、实验协议、论文论点的推导链；缺少失败案例或替代解释。"
+      "reason": "CoT’s CoT 能区分一阶发现和背后的机制性认知，尤其是把时序对齐定位为核心建模环节，而非普通预处理；也能把自动化科研的瓶颈上升到生成约束与表达粒度控制。但深度仍不够：没有进一步追问为什么跨源时序表示会成为上限、哪些 attack stage 最敏感、什么样的约束接口能控制图像范围。因此是较好的二阶反思，但还未到可直接指导系统设计的深层理论。",
+      "missingEvidence": [
+        "缺少 attack stage 级别的机制分析。",
+        "缺少对不同时间窗口、事件源、对齐误差的敏感性分析。",
+        "缺少图像范围控制的具体维度定义，例如对象、场景、层级、论证功能、视觉元素约束。",
+        "证据等级 A/B 的判定依据没有展开。"
+      ]
     },
     "brainaryMapping": {
       "score": 8,
-      "reason": "Brainary 映射覆盖 memory、reasoning、workflow management、benchmark/evaluation、cognitive control、tool orchestration 等模块，并提出 temporal reconstruction module、cross-source alignment workflow、multimodal generation control module、taxonomy-driven router 等可沉淀对象。共同缺口也写得比较明确，包括统一跨源时序表示、内容具体性评测接口、taxonomy 与调用之间的中间层。扣分点是映射仍偏概念层，缺少模块输入输出、接口边界、数据结构和优先级。",
-      "missingEvidence": "缺少每个 Brainary 模块的输入、输出、调用关系和落地路径；缺少哪些映射已经实现、哪些只是设想；缺少与现有 Brainary 架构的具体兼容性说明。"
+      "reason": "Brainary 映射较完整，能把三个任务分别对应到 memory、reasoning、workflow management、benchmark/evaluation、tool orchestration、cognitive control 等模块，并提出可沉淀形态，如 temporal reconstruction module、multimodal generation control module、taxonomy-driven router。缺点是映射仍偏命名式，缺少模块之间的数据流、接口定义和优先级。",
+      "missingEvidence": [
+        "没有说明 temporal reconstruction module 与 memory、reasoning 的具体接口。",
+        "没有说明 multimodal generation control module 如何进入现有 Auto Research workflow。",
+        "没有说明 taxonomy-driven router 的输入、输出、调用策略和评价指标。",
+        "缺少 Brainary 中哪些部分已经实现、哪些只是规划。"
+      ]
     },
     "monetaryValue": {
       "score": 5,
-      "reason": "报告列出了潜在买单方，包括 SOC 平台厂商、安全分析与自动化运维团队、自动化科研平台和安全智能体平台研发团队，也给出了三个任务的人民币估值。价值方向是合理的：APT 降低漏报和人工关联成本，Skill taxonomy 可成为智能体基础模块，图像控制提升自动化科研质量。但估值基本是主观判断，没有市场规模、客户痛点强度、替代成本、转化路径或付费场景证据，因此只能给中等偏低分。",
-      "missingEvidence": "缺少估值计算方法；缺少客户访谈、竞品价格、人工成本节省测算、部署场景、采购主体和商业闭环；缺少为什么 APT 为 150 万、Survey 为 40 万、Skill Taxonomy 为 90 万的量化依据。"
+      "reason": "报告给出了三个方向的估值：APT 150 万、Auto Research 40 万、Skill Taxonomy 90 万，并列出了潜在买单方，包括 SOC 厂商、安全分析团队、自动化科研平台和安全智能体平台。但估值主要是主观判断，没有市场规模、替代成本、客户痛点强度、采购路径、竞品价格或落地周期支撑，因此商业价值意识存在，但证据不足。",
+      "missingEvidence": [
+        "缺少每个估值的计算方法。",
+        "缺少目标客户的具体场景和付费触发点。",
+        "缺少与现有 SOC、自动化科研或 agent 平台产品的竞品对比。",
+        "缺少从 research prototype 到可售卖模块的工程成本和时间估计。"
+      ]
     },
     "projectManagement": {
       "score": 12,
-      "reason": "项目管理部分记录了三个项目所处阶段、本周投入时间、下周计划时间和关键里程碑，任务状态比较清楚。APT 已进入机制优化阶段，Survey 进入细化表达阶段，Skill Taxonomy 进入原型实现阶段，符合周报模板对项目推进的基本要求。扣分点是里程碑没有明确验收标准，风险没有分级，依赖关系和优先级不够清楚，也没有说明本周计划与实际完成是否偏差。",
-      "missingEvidence": "缺少每个项目的可验收 deliverable；缺少风险等级、截止时间、依赖人、阻塞项处理方案；缺少时间投入与产出效率的对应关系；缺少是否偏离原计划的说明。"
+      "reason": "项目管理信息较完整，列出了三个项目的阶段、本周投入时间、下周计划和关键里程碑。APT、Auto Research、Skill Taxonomy 都有明确推进状态。但仍缺少优先级排序、风险登记、验收标准、依赖关系和是否按计划完成的判断。时间投入有记录，但没有产出效率评估。",
+      "missingEvidence": [
+        "缺少每个项目的可验收交付物定义。",
+        "缺少优先级和资源分配理由。",
+        "缺少本周计划完成率或偏差分析。",
+        "缺少与协作者张绿野的具体分工和交付边界。",
+        "缺少风险项的 owner、截止时间和缓解方案。"
+      ]
     },
     "nextAction": {
       "score": 8,
-      "reason": "下周动作比较明确：APT 要在更多漏报样本和不同攻击场景上验证稳定性，并分析时序对齐对不同 attack stage 的贡献；Survey 要给出图片生成范围收敛方案并与老师对齐；Skill Taxonomy 要在已有 skill case 上跑通完整流程，并检查是否支持 routing/evaluation。这些动作具有连续性，也针对当前卡点。扣分点是动作还不够量化，没有样本数量、成功标准、交付物格式和具体完成日期。",
-      "missingEvidence": "缺少 APT 泛化验证的数据规模和指标阈值；缺少图像范围收敛方案的具体形式；缺少 Skill case 数量、case 类型和跑通标准；缺少每项下周动作的验收条件。"
+      "reason": "下周动作比较具体，包括在更多漏报样本和不同攻击场景验证 APT 稳定性、分析时序对齐对不同 attack stage 的贡献、给出图片生成范围收敛方案并与老师对齐、在已有 skill case 上跑通完整流程。这些动作与当前卡点对应较好。扣分点是缺少量化验收标准，例如多少样本、哪些场景、什么指标算稳定、图片范围方案如何评估。",
+      "missingEvidence": [
+        "APT 泛化验证的数据集规模和场景列表缺失。",
+        "attack stage 贡献分析的方法缺失。",
+        "图片生成范围收敛方案的评价指标缺失。",
+        "Skill case 跑通的成功标准缺失。",
+        "没有标明每个 next action 的截止时间和预期输出物。"
+      ]
     },
     "evidenceQuality": {
-      "score": 2,
-      "reason": "报告提供了关键结果和证据等级，但大部分证据停留在自述层面。APT 的 90% 是最重要的量化证据，但没有 baseline、数据集、样本量、评测协议和误差分析。Survey 和 Skill Taxonomy 也缺少外部反馈、运行结果或案例证据。因此证据质量是本周主要短板。",
-      "missingEvidence": "缺少实验表格、日志、代码链接、样例输出、评审反馈、失败案例、统计显著性和可复现实验设置。"
+      "score": 3,
+      "reason": "报告有结果数字、阶段描述和证据等级标注，但证据链偏弱。最关键的 90% 准确率没有上下文，pipeline 实现没有展示物，survey 收敛没有审阅依据，商业估值没有计算逻辑。因此证据质量只能算中低。当前更像高质量工作日志，而不是可复核实验报告。",
+      "missingEvidence": [
+        "缺少实验表格、消融结果和误差分析。",
+        "缺少代码链接、commit、demo 或运行日志。",
+        "缺少样本规模、数据分布和评价协议。",
+        "缺少老师、协作者或用户反馈证据。",
+        "缺少证据等级 A/B 的判定标准。"
+      ]
     },
-    "totalScore": 76,
+    "totalScore": 77,
     "tier": "B",
-    "oneLineJudgment": "本周有实质机制推进和清楚认知增量，尤其是 APT 跨源时序对齐的方向有价值；但证据链、验收标准和商业估值依据不足，使报告仍停留在“有进展但未充分可验证”的水平。",
+    "oneLineJudgment": "这一周有实质推进和较好的机制性认知，尤其是 APT 时序对齐与 Skill pipeline，但关键结果缺少可复核证据，商业价值和模块化落地仍偏主观。",
     "professorFollowUp": [
-      "要求学生补交 APT 90% 准确率的完整实验说明：baseline、数据规模、攻击场景、指标定义、提升前后对比和失败样例。",
-      "让学生把“跨源时序对齐”具体化为可复用模块：输入是什么、输出是什么、时间窗口如何定义、冲突事件如何处理。",
-      "要求 Auto Research Survey 的图像范围控制给出一个可评审方案，包括约束模板、正反例和评价维度。",
-      "要求 Skill Taxonomy Pipeline 下周必须用真实 skill case 跑通，并报告 taxonomy 分类错误、routing 错误和 hallucination risk 识别能力。",
-      "提醒学生所有人民币估值必须给出计算依据，否则只能作为假设，不能作为项目价值证据。"
+      "请她下周必须补一张 APT 评测表：baseline、加入时序对齐后、样本数、攻击场景、准确率、召回率、漏报变化和消融结果。",
+      "要求她把“跨源时序对齐机制”画成明确 workflow，包括事件源、时间窗口、对齐规则、冲突处理和输出表示。",
+      "让她给 Auto Research 图像范围控制提出一个可执行 schema，而不是只说范围过大；至少要定义图像对象、粒度、论证功能和负面约束。",
+      "要求 Skill Taxonomy Pipeline 下周用 3 到 5 个真实 skill case 跑通，并提交输入、分类结果、routing 建议和失败案例。",
+      "需要追问 150 万、40 万、90 万估值的计算依据，否则这些金额暂时只能视为主观价值判断。",
+      "教授本周最该关注的一点是：她已经意识到系统能力上限往往不来自生成模型本身，而来自关键约束能否被显式建模并转化为可执行流程。"
     ]
   }
 }

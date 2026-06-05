@@ -1,6 +1,6 @@
 {
   "key": "person:huang-yitan:2026-05-03:weekly-score",
-  "generatedAt": "2026-06-05T22:03:33.787Z",
+  "generatedAt": "2026-06-05T23:03:27.590Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
@@ -8,47 +8,100 @@
   "result": {
     "hardProgress": {
       "score": 16,
-      "reason": "本周有明确硬产出：Brainary-guided agent Demo 端到端可执行，LangGraph 状态机节点跑通，四维置信向量在真实 CVE 输入上产生决策信号；同时完成 11 个可用 CVE benchmark 的测试、约 50 个 Java project 初筛，并在 Spring/Struts2 上产生跨层漏洞候选清单。进展不是停留在想法层，而是有代码、测试、数据资产和候选结果。但报告没有给出仓库链接、测试日志摘要、具体运行截图、候选漏洞数量和确认标准，因此硬进展的可审计性不足。",
-      "missingEvidence": "缺少 Demo 代码链接、LangGraph 节点运行日志、四维置信向量具体输出样例、11 个 CVE 的完整测试结果表、50 个 project list、Spring/Struts2 扫描候选清单及确认标准。"
+      "reason": "本周有明确硬进展：Brainary-guided agent Demo 端到端可执行，LangGraph 状态机节点跑通，四维置信向量在真实 CVE 输入上产生决策分化；同时完成约 50 个 Java 项目初筛，并在 Spring、Struts2 等框架上做规则化扫描，形成候选清单。扣分点是：没有给出代码仓库、测试日志样例、CVE 覆盖表、候选漏洞数量，也尚未产生 confirmed finding。",
+      "missingEvidence": [
+        "Demo 的代码链接或关键提交记录缺失",
+        "端到端执行日志缺失",
+        "四维置信向量在不同 CVE 上的具体数值和决策路径缺失",
+        "50 个 project list 的项目名、筛选标准和淘汰标准缺失",
+        "Spring/Struts2 扫描出的候选数量、样例和误报率缺失",
+        "尚无 1-2 个 confirmed finding"
+      ]
     },
     "cognitiveIncrement": {
       "score": 12,
-      "reason": "CoT 增量集中在两个有效认知：一是四维置信向量应采用短板驱动而非均值打分，二是 agent 不应退化为刚性 workflow executor。这些认知直接反馈到架构设计，有助于把 Brainary 的 meta-cognition 落到状态转移机制上。不足是认知增量仍偏架构经验总结，缺少与失败案例、对照实验或具体 CVE 决策路径的绑定，因此还不能证明这些认知是稳定规律。",
-      "missingEvidence": "缺少至少 2-3 个 CVE 上置信向量如何改变决策路径的具体案例；缺少刚性 workflow 与 confidence-driven routing 的对比结果；缺少失败样例说明哪些设计被推翻。"
+      "reason": "CoT 增量较清楚：从实践中提炼出“短板驱动决策”优于均值置信度，以及 LangGraph 条件分支应由认知指标驱动而不是硬编码 workflow。这些认知直接反馈到 agent 架构设计。扣分点是：增量主要停留在架构原则层面，缺少对失败案例、阈值选择、不同 CVE 类型下置信向量表现的细粒度分析。",
+      "missingEvidence": [
+        "低理解度触发探索、高理解度进入 hypothesis 的具体案例对比缺失",
+        "四维置信向量各维度如何计算、阈值如何设定缺失",
+        "均值打分与短板驱动的实验对照缺失",
+        "哪些 CVE 导致决策错误或不稳定缺失"
+      ]
     },
     "cot2Depth": {
       "score": 12,
-      "reason": "CoT's CoT 写了三条，覆盖 agent 过度 workflow 化、benchmark ground truth 瓶颈、Codex 安全限制阻断动态验证流，并尝试回答为什么没有被自动化科研吸收、应沉淀成什么模块或 workflow。深度较好，尤其是把问题映射到 agent module、memory schema、benchmark 和 sandboxed execution wrapper。扣分点在于三条都声明‘老师原本不知道吗：否’，真正的新知识密度受限；部分判断是领域推断，缺少系统证据支撑。",
-      "missingEvidence": "缺少 CoT's CoT 1 的系统性架构对比实验；缺少 ground truth 标注耗时、错误率、可用率等统计；缺少 Codex 拒绝执行的具体日志、触发条件和可复现实验。"
+      "reason": "CoT's CoT 有三条，分别覆盖 agent 过度 workflow 化、ground truth 瓶颈、LLM API 安全限制阻断动态验证，且都尝试回答为什么尚未被自动化科研吸收，以及可沉淀为 workflow、agent module、benchmark 或 memory。深度较好。扣分点是：三条都标注“老师原本不知道的吗：否”，说明新颖性有限；部分论断仍偏经验判断，缺少系统性对照实验或社区文献定位。",
+      "missingEvidence": [
+        "过度 workflow 化与 confidence-driven routing 的系统性对比实验缺失",
+        "ground truth 标注成本的具体人时、错误率、标注一致性缺失",
+        "Codex 拒绝执行操作的原始报错、触发条件和可复现实验缺失",
+        "与 LangChain、AutoGen、MOCGuard、BACScan 等工作的具体差异表缺失"
+      ]
     },
     "brainaryMapping": {
       "score": 8,
-      "reason": "报告清楚映射了 Calibration、Meta-cognition/Self-ability Understanding、Reasoning、Tool Orchestration、Memory，并指出四维置信向量是 Calibration 的核心实现，self_assess 节点对应自我能力理解，MCP 对应工具编排。这说明工作不是普通安全扫描，而是在尝试落到 Brainary 能力结构。扣分点是 mapping 仍偏概念对应，缺少每个 Brainary 能力的输入、输出、评价指标和失败条件。",
-      "missingEvidence": "缺少 Brainary 各模块的接口定义；缺少 Calibration 准确性指标；缺少 Memory 如何影响后续节点决策的例子；缺少 Tool Orchestration 的工具调用轨迹。"
+      "reason": "Brainary 映射较完整，覆盖 Calibration、Meta-cognition、Reasoning、Tool Orchestration、Memory，并能对应到四维置信向量、self_assess、target_understanding、hypothesis、MCP 工具总线和 LangGraph 状态历史。扣分点是：映射还偏概念说明，没有给出每个 Brainary 能力的输入、输出、状态变量、失败模式和评测指标。",
+      "missingEvidence": [
+        "Calibration 模块的输入输出定义缺失",
+        "self_assess 节点的具体 prompt、schema 或状态字段缺失",
+        "Memory 如何跨节点保留和更新的机制缺失",
+        "Tool Orchestration 的 MCP 工具接口清单缺失",
+        "Brainary 各能力与实验指标之间的对应关系缺失"
+      ]
     },
     "monetaryValue": {
       "score": 6,
-      "reason": "报告按模板给出了金额：Demo 估值 4 万人民币，Benchmark 与 project 筛选估值 3 万人民币，并解释了其论文贡献、数据资产和重构节省价值。优点是没有只写高低分，而是明确金额。主要问题是估值依据仍较主观，没有用市场替代成本、人工工时成本、复用次数、论文风险降低、企业购买场景等方式量化，因此只能视为内部估算，不是强商业价值证据。",
-      "missingEvidence": "缺少估值公式中的人工单价、节省工时、后续复用概率、外部用户需求、同类 benchmark 或 agent module 的市场参照；缺少为什么是 4 万和 3 万而不是其他金额的可验证依据。"
+      "reason": "报告按模板给出了金额：任务一估值 4 万人民币，任务二估值 3 万人民币，并说明价值来自论文贡献、Demo 基准实现、benchmark 数据资产和筛选成本。扣分点是：金额基本是主观估计，没有用替代成本、人力成本、数据集市场价值、潜在论文收益、企业安全场景付费意愿等方式校准；也没有说明这 7 万价值中哪些已经实现，哪些只是期权价值。",
+      "missingEvidence": [
+        "估值的工时成本换算缺失",
+        "同类安全 benchmark 或 agent module 的参考价值缺失",
+        "企业安全团队或 DevSecOps 的真实付费证据缺失",
+        "Demo 当前可复用程度与节省重构成本的量化依据缺失",
+        "已实现价值与未来期权价值未拆分"
+      ]
     },
     "projectManagement": {
       "score": 12,
-      "reason": "项目管理部分较完整：写明当前阶段、原计划与实际完成、投入时间、下周投入、关键里程碑、资源需求、依赖关系、token 成本、进度判断和纠偏动作。对教授判断项目是否在关键路径上有帮助。主要扣分点是存在轻微信息不一致：原计划 benchmark 可用集扩大到 15+，但实际仍描述为 11 个可用 CVE 测试通过，却又判断所有里程碑达成；此外，下周计划任务较多，但没有拆成优先级和风险缓冲。",
-      "missingEvidence": "缺少实际 benchmark 数量是否从 11 扩到 15+ 的明确说明；缺少每个里程碑的验收标准；缺少任务优先级、风险项和备用方案；缺少 20 小时投入的时间分布。"
+      "reason": "项目管理信息较全：给出当前阶段、原计划与实际完成、本周和下周投入时间、关键里程碑、资源、依赖、token 成本、进度判断和纠偏动作。扣分点是：存在表述不够严谨之处，例如原计划 benchmark 可用集扩大到 15+，实际仍提到 11 个可用，但又判断目标达成；风险管理也偏弱，对 ground truth、动态执行限制、confirmed finding 不确定性没有形成明确风险-应对表。",
+      "missingEvidence": [
+        "原计划 15+ benchmark 与实际 11 个可用之间的偏差解释缺失",
+        "每个里程碑的验收标准缺失",
+        "下周 30 小时如何分配到任务的计划缺失",
+        "关键风险的概率、影响和应对方案缺失",
+        "当前 Demo 完成度百分比或模块完成矩阵缺失"
+      ]
     },
     "nextAction": {
-      "score": 8,
-      "reason": "下周动作基本可执行，包括在更多 CVE 上验证决策稳定性、深化 target understanding、完成首批跨层漏洞检查并产生 1-2 个 confirmed finding、扩大 benchmark 可用集、搭建 Mutant Benchmark。这些动作与当前卡点直接相关，且部分有明确产出。扣分点是‘更多 CVE’没有具体数量，‘决策稳定性’没有指标，‘confirmed finding’的确认标准不清楚。",
-      "missingEvidence": "缺少下周 CVE 验证数量目标；缺少 confirmed finding 的验证流程；缺少 Mutant Benchmark 的最小版本定义；缺少 target understanding 模块的具体改动清单。"
+      "score": 7,
+      "reason": "下周动作包括更多 CVE 验证、深化 target understanding、完成首批跨层漏洞检查并产生 1-2 个 confirmed finding、扩大 benchmark、搭建 Mutant Benchmark。这些方向正确，也有最小可验证动作。扣分点是：动作还不够工程化，没有列出具体 CVE、具体项目、验收指标、截止时间和失败后的替代路径。",
+      "missingEvidence": [
+        "下周要验证的 CVE 清单缺失",
+        "首批要检查的 project 名称缺失",
+        "confirmed finding 的判定标准缺失",
+        "target understanding 模块要强化哪些能力缺失",
+        "Mutant Benchmark 的最小版本范围和验收标准缺失"
+      ]
     },
     "evidenceQuality": {
       "score": 3,
-      "reason": "报告有一定证据意识，给出了 CVE 数量、project 数量、具体框架名称、证据等级 A/B，并提到测试日志和实测拒绝执行。但证据多数停留在自述，没有附具体数据、表格、日志、样例或可复现链接。作为单周周报足够说明方向，但不足以让教授独立验证结论。",
-      "missingEvidence": "缺少原始测试日志、实验表格、CVE 输入输出样例、Codex 拒绝执行记录、扫描结果样例、project list 和代码提交记录。"
+      "reason": "报告有一定证据意识，给出 11/25 CVE 可用、50 个 project 筛选、CVE-2026-40575 测试、Codex 拒绝执行等事实，并为 CoT's CoT 标注 A/B 证据等级。但整体证据仍以自述为主，缺少原始日志、表格、截图、代码、测试矩阵、候选样例和可复现步骤，因此只能算中等偏弱证据。",
+      "missingEvidence": [
+        "11/25 CVE 可用性的完整统计表缺失",
+        "CVE-2026-40575 的端到端发现和修复过程证据缺失",
+        "Demo 测试日志未实际附上",
+        "规则化扫描结果未附样例",
+        "Codex 拒绝执行的原始记录缺失"
+      ]
     },
-    "totalScore": 77,
+    "totalScore": 76,
     "tier": "B",
-    "oneLineJudgment": "这一周有实质性原型和数据资产进展，Brainary/meta-cognition 映射也较清楚，但关键结论仍主要依赖自述，缺少可复现实验表和硬证据，因此属于中高质量但尚未达到 A 档的周报。",
-    "professorFollowUp": "建议老师追问三件事：第一，让学生提交 3 个 CVE 的完整决策轨迹，展示四维置信向量如何改变 LangGraph 路由；第二，澄清 benchmark 是否真的从 11 个扩展到 15+，如果没有，不应写‘所有里程碑达成’；第三，要求下周的 1-2 个 confirmed finding 给出确认标准、复现步骤和修复建议，否则漏洞候选清单不能算有效研究产出。"
+    "oneLineJudgment": "本周有实质原型和数据资产推进，认知框架也比较清楚，但证据链、量化指标和 confirmed finding 仍不足，当前更像“可行性原型周”而不是“结果闭环周”。",
+    "professorFollowUp": [
+      "要求学生下周提交一张 CVE 测试矩阵：每个 CVE 的输入、四维置信向量、状态转移路径、是否发现、是否修复、失败原因。",
+      "要求澄清 benchmark 进度口径：到底是 11 个可用、15+ 目标未达成，还是已有其他可用样本但未写清。",
+      "要求展示 Demo 的最小可复现版本，包括 LangGraph 节点图、状态 schema、MCP 工具接口和一条完整运行日志。",
+      "要求把“过度 workflow 化”转成可检验实验：同一批 CVE 上比较硬编码 workflow 与 confidence-driven routing 的成功率、步数、token 成本和错误类型。",
+      "要求下周必须交付至少一个 confirmed finding 或明确说明为什么首批项目无法产生 confirmed finding。"
+    ]
   }
 }

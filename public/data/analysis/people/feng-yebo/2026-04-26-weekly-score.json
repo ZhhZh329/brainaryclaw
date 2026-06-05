@@ -1,6 +1,6 @@
 {
   "key": "person:feng-yebo:2026-04-26:weekly-score",
-  "generatedAt": "2026-06-05T22:00:56.725Z",
+  "generatedAt": "2026-06-05T23:00:59.481Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
@@ -11,54 +11,91 @@
     "scores": {
       "hardProgress": {
         "score": 18,
-        "reason": "本周硬进展非常密集且覆盖多个可交付物：Quant-Agent 有 46 次提交、双层反思闭环上线、测试 2775 行、实盘一周正收益；Skills-Security 从 85% 初稿推进到 CCS 投稿前冻结阶段，威胁模型、数字一致性、图表和方法框架均完成；DynaHive 完成 19 页初稿和核心实验；TBProv 给出完整实验结果并进入收口；Trading Survey 完成局部 clarity pass 和主轴对齐。扣分点是多个结果仍为自述，Quant-Agent 的反思收益尚无 A/B 因果评估，TBProv 和 Trading Survey 仍有明显收尾缺口。",
-        "missingEvidence": "缺少 git diff 链接、CI/test 通过记录、实盘交易流水或 Alpaca 对账截图、论文 PDF 快照、实验脚本运行日志、DynaHive/TBProv 原始实验表。"
+        "reason": "本周硬进展非常密集：Quant-Agent 完成双层反思闭环并进入实盘运行；Skills-Security 从论文一致性、威胁模型、数字对齐推进到投稿前状态；DynaHive、TBProv、Trading Survey 均有成稿或收尾进展。进展不是泛泛描述，包含提交次数、文件、测试行数、论文页数、实验指标、deadline 和系统模块。扣分点是部分成果仍停留在自述层面，且多个项目同时推进，存在关键收口风险。",
+        "missingEvidence": [
+          "缺少 git 仓库链接、commit diff 或 CI/test 运行截图。",
+          "Quant-Agent 的约 2000 美元实盘收益缺少券商流水或账户截图。",
+          "Skills-Security、DynaHive、TBProv 的 PDF、artifact、实验脚本未在周报中给出可核查入口。",
+          "部分实验指标和论文完成度来自自述，缺少外部验证。"
+        ]
       },
       "cognitiveIncrement": {
         "score": 14,
-        "reason": "CoT 增量不是简单总结，而是形成了几个可迁移认知更新：反思需拆成事实层、推理层、应用层；部署前自审比运行时反思更早介入；长期反思与短期 regime shift 存在稳定性/适应性 trade-off；威胁模型分类是系统安全论文骨架；概率抽样验证可以替代完全重算。这些增量和本周项目进展有直接对应关系。扣分点是部分跨域推广仍停留在概念层，尚未被统一实验验证。",
-        "missingEvidence": "缺少这些认知更新前后导致设计变化的具体对照，例如旧架构失败案例、新架构减少错误的量化数据、跨项目复用后的效果指标。"
+        "reason": "CoT 增量质量高，核心增量集中在“反思系统必须拆成事实层、推理层、应用层”“部署前自审比运行时反思更早一拍”“高频总结、低频改变”“分类框架是系统安全论文骨架”“完整验证可转为随机采样统计验证”。这些不是任务复述，而是从工程实践中抽象出的可迁移认知。扣 1 分是因为部分认知仍需要更强的对照实验支撑，尤其是反思机制对 alpha 的因果贡献。",
+        "missingEvidence": [
+          "缺少反思机制上线前后的对照实验。",
+          "缺少 DynaHive Anti-Recon 对最终指标贡献的直接 ablation 细节。",
+          "缺少 TBProv 抽样验证原则迁移到其他 agent 场景的实验证据。"
+        ]
       },
       "cot2Depth": {
         "score": 13,
-        "reason": "CoT's CoT 有三条较深的二阶原则：简单 agent 不应默认加长期记忆、主动防御要做对手视角预判、高频总结与低频改变要分离。每条都给出自动化潜力、沉淀形式和证据等级，已经超出普通周报的经验总结。扣分点是证据等级偏乐观，尤其第三条标 A 主要依赖 Quant-Agent 一周实测和理论推断，尚不足以证明长期稳定性；第一、二条也缺少系统 ablation。",
-        "missingEvidence": "缺少 with/without memory 对照实验、pre-action adversary simulation 的跨场景收益量化、不同反思频率对 agent drift 和收益影响的长期曲线。"
+        "reason": "CoT's CoT 部分有明显二阶抽象：从具体项目上升到 agent 记忆层选择、主动防御预判、反思频率治理等原则，并为每条给出自动化潜力、沉淀形式和证据等级。最强的是“经常总结、谨慎改变”，已经能对应到系统架构。扣分点是证据等级主要由作者自评，且 CoT's CoT 1、2 仍偏原则化，缺少系统 ablation 或跨场景量化。",
+        "missingEvidence": [
+          "缺少 with/without memory 的 CoT 质量对比实验。",
+          "缺少 pre-action adversary simulation 对指标提升的跨场景实验证据。",
+          "缺少反思频率不同配置下的 drift、stability、adaptivity 指标。"
+        ]
       },
       "brainaryMapping": {
         "score": 8,
-        "reason": "Brainary 映射覆盖 reflection、online learning、long-term memory、monitoring、trust modeling、evaluation、calibration、tool orchestration 等模块，并且能把 Quant-Agent、DynaHive、Skills-Security、TBProv 分别映射到可沉淀的 module、workflow、benchmark、evaluator。扣分点是多数条目明确写“老师原本不知道的吗：否”，说明新知识主要是实例化而非框架增量；同时缺少 Brainary 内部接口、优先级、最小集成路径和谁来落地的更细拆解。",
-        "missingEvidence": "缺少 Brainary 现有模块与本周产物的一一接口定义、模块输入输出 schema、集成 PR/issue、最小可运行 demo、优先级排序。"
+        "reason": "Brainary 映射覆盖面完整，能把 Quant-Agent、DynaHive、Skills-Security、TBProv 分别映射到 reflection、online learning、cognitive control、tool orchestration、evaluation、trust modeling、long-term memory 等能力，并指出可沉淀为 module、workflow、evaluator、benchmark。问题是大多数条目都标注“老师原本不知道的吗：否”，说明本周新增主要是实例化而非框架级新知识；此外映射尚未形成具体 Brainary API、模块接口或评估协议。",
+        "missingEvidence": [
+          "缺少 Brainary 中对应模块的接口草图或实现计划。",
+          "缺少从项目代码抽取为 Brainary module 的最小可运行样例。",
+          "缺少 Brainary 能力图谱中新增节点、边或 benchmark 的具体定义。"
+        ]
       },
       "monetaryValue": {
         "score": 6,
-        "reason": "价值评估覆盖五个项目，并尝试用资金规模、超额收益、顶会论文、企业安全中间件、AI provenance 基础设施等逻辑估值，说明学生在主动做价值判断。扣分点是估值高度主观，1300 万人民币合计价值缺少市场验证；Quant-Agent 的 600 万估值建立在短周期收益和假设资金规模上，风险未充分折现；论文估值也主要按顶会潜在价值而非真实现金流。",
-        "missingEvidence": "缺少真实客户访谈、付费意向、授权报价、资金托管规模证明、长期回测/实盘收益曲线、竞品价格、论文接收概率折现模型。"
+        "reason": "价值观总结覆盖了每个项目的真实问题、买单方、局部/通用性、沉淀形式和估值逻辑，比单纯喊价值更好。Quant-Agent、Skills-Security、TBProv 等确实有潜在商业或学术价值。但估值金额整体证据不足，尤其是把论文潜在价值、策略估值、产品授权价值直接货币化，缺少市场对标、成交证据、客户访谈或真实资金规模确认。1300 万人民币合计更像内部主观估计，不应作为决策事实。",
+        "missingEvidence": [
+          "缺少真实客户、潜在买方或合作方反馈。",
+          "缺少可比产品价格、授权价格或投资条款依据。",
+          "缺少 Quant-Agent 管理资金规模、回撤周期、夏普、容量、交易成本后的可审计业绩。",
+          "缺少论文命中率、投稿状态与货币估值之间的明确换算依据。"
+        ]
       },
       "projectManagement": {
         "score": 13,
-        "reason": "项目管理信息完整：每个项目都有当前阶段、时间投入、下周预计投入、关键里程碑、资源、依赖、成本、进度判断和纠偏动作。优先级也基本明确，Skills-Security 是下周最高优先级，DynaHive 需要老师判断投稿目标。扣分点是同时推进五个高强度项目，带宽风险较高；TBProv references 和 conclusion 仍为空、Trading Survey 未完成原计划通读，说明优先级挤压已经发生。",
-        "missingEvidence": "缺少统一甘特图或看板、每个 deadline 的硬日期、风险缓冲、合作方责任分工、如果 CCS/TBProv/DynaHive 时间冲突时的取舍规则。"
+        "reason": "项目管理部分清楚列出每个项目的阶段、时间投入、下周预计投入、资源、依赖、成本、进度判断和纠偏动作。对 CCS、TBProv、Trading Survey 的收口风险有识别，对 DynaHive 需要老师判断投稿目标也有明确提出。扣分点是项目过多且 deadline 密集，优先级冲突明显；部分关键路径仍依赖作者个人，缺少更细的风险缓冲和放弃/延后标准。",
+        "missingEvidence": [
+          "缺少统一的优先级排序和本周实际时间日志。",
+          "缺少 CCS、TBProv、DynaHive 的具体提交倒排表。",
+          "缺少如果 CCS 冲刺超时，其他项目如何降级的计划。",
+          "缺少合作团队责任分工和交付确认。"
+        ]
       },
       "nextAction": {
         "score": 9,
-        "reason": "下周动作普遍具体且可验证：Quant-Agent 做 shadow execution 和 position size confounder；Skills-Security 4/29 冻结、4/30 通读、5/1 提交和 artifact 包；DynaHive 重写 Introduction 并确定投稿窗口；TBProv 补 references 和 conclusion；Trading Survey 做 reviewer-style 通读和 forex/derivatives subsection。扣分点是部分动作仍较大，例如 reviewer-style 全文通读、artifact 打包和 references 全补齐，没有进一步拆到每日 checklist。",
-        "missingEvidence": "缺少每个 next action 的完成判据、负责人、预计耗时、失败后备方案，以及哪些任务必须放弃以保证 CCS 投稿。"
+        "reason": "每个项目都有下周最小可验证动作，且多数动作可检查：Quant-Agent 做 shadow execution 和 position-size confounder 分析；Skills-Security 冻结正文、通读、提交、artifact 打包；DynaHive 重写 Introduction 并确定投稿目标；TBProv 补 References 和 Conclusion；Trading Survey 加 forex/derivatives subsection。动作粒度较好。扣 1 分是因为部分动作仍没有明确验收指标，例如 shadow run 需要定义样本数、指标和停止条件。",
+        "missingEvidence": [
+          "Quant-Agent shadow run 缺少具体对照指标和样本规模。",
+          "DynaHive 投稿目标选择缺少决策标准。",
+          "Trading Survey reviewer-style 通读缺少检查清单。",
+          "TBProv references 修补缺少数量统计和责任人。"
+        ]
       },
       "evidenceQuality": {
-        "score": 4,
-        "reason": "周报提供了较多硬证据类型：commit 数、commit hash、代码行数、测试行数、PDF 页数、实验指标、成本、时间投入、具体日期和已知卡点。证据质量高于普通自述周报。扣分点是所有证据仍来自报告文本本身，缺少可核验附件；实盘收益、论文实验结果、LLM 后端横评和估值均未给原始数据或复现实验入口。",
-        "missingEvidence": "缺少仓库链接、commit 页面、测试报告、实验结果 CSV、论文 PDF、交易记录、链上地址、artifact 包、匿名仓库 README 截图或可访问性确认。"
+        "score": 3,
+        "reason": "周报提供了较多可疑似核查的证据线索，包括 commit hash、文件名、代码行数、测试行数、论文页数、实验指标、收益数字和时间点。但证据主要仍是自报告，没有附链接、截图、日志、PDF、实验表、账户流水或 artifact hash。证据等级足以支持“本周做了很多事”的判断，不足以完全支持“收益有效、论文实验可靠、估值成立、反思机制产生因果收益”的判断。",
+        "missingEvidence": [
+          "缺少代码仓库、PDF、实验日志、CI 结果、artifact 包入口。",
+          "缺少实盘交易流水和收益归因。",
+          "缺少论文实验复现说明或原始数据摘要。",
+          "缺少外部 reviewer 或合作者确认。"
+        ]
       }
     },
-    "totalScore": 85,
+    "totalScore": 84,
     "tier": "A",
-    "oneLineJudgment": "这是一个高产且结构化很强的单周报告，硬进展和认知抽象都明显，但最大风险是证据多为自述、项目过载，以及 Quant-Agent 反思机制尚未被因果评估证明有效。",
+    "oneLineJudgment": "这是一个高产且认知增量明显的 A 档周报，核心价值在于把“部署前自审/受控反思”跨交易、防御、验证三个场景抽象出来；主要短板是证据可核查性、反思因果评估和货币估值依据不足。",
     "professorFollowUp": [
-      "优先用 30 分钟看 Skills-Security 的 abstract、intro、threat model 三节，因为它距离 CCS 投稿最近，边际影响最大。",
-      "要求 Quant-Agent 下周必须补 shadow A/B run，否则“反思带来收益”只能算相关性，不能算因果进展。",
-      "给 DynaHive 一个投稿目标判断：NDSS Fall、CCS 还是 S&P；否则改稿没有明确审稿人画像。",
-      "要求 TBProv 在下周前两天先清空 references 和 conclusion 占位符，这属于投稿完整性红灯，不应继续拖。",
-      "提醒学生下周不要同时扩大五条线的新设计，必须以 CCS 提交和关键收口为主。"
+      "优先用 30 分钟看 Skills-Security 的 abstract、introduction、threat model 三节，因为这是最近可兑现的投稿节点。",
+      "给 DynaHive 一个明确投稿目标判断：NDSS Fall、CCS 还是 S&P，否则改稿没有 anchor。",
+      "要求 Quant-Agent 下周必须补 shadow A/B run，否则“反思机制有效”仍只是机制上线，不是因果证明。",
+      "要求所有投稿项目在下周周报中附最小可核查证据：PDF 编译时间、artifact hash、关键实验表、仓库或匿名链接。",
+      "对 1300 万人民币估值暂不采信为事实，只把它当作项目优先级假设；后续需要客户、市场、业绩或论文录用证据校准。"
     ]
   }
 }

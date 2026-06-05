@@ -1,6 +1,6 @@
 {
   "key": "person:li-kaixuan:2026-03-22:weekly-score",
-  "generatedAt": "2026-06-05T22:04:57.167Z",
+  "generatedAt": "2026-06-05T23:04:53.880Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
@@ -8,54 +8,53 @@
   "result": {
     "hardProgress": {
       "score": 17,
-      "reason": "本周有明确硬产出：Driver Generation 完成可运行的 TDG-based driver skeleton generator、引入 LLM API pruning，并报告编译成功率从 32% 到 61%；SCoPE 完成 905 个任务实验，报告 accuracy 94.3%、precision 97.9%，并形成 slicing + abstraction + SMT 的方法框架。硬进展较强，但 Driver 部分仍停留在编译成功率，尚未证明覆盖率、crash discovery 或真实漏洞发现提升。",
-      "missingEvidence": "缺少代码提交、实验项目列表、OSS-Fuzz 具体目标、baseline 设置、编译成功率定义、失败样例、SCoPE 数据集构成、统计显著性和可复现实验链接。"
+      "reason": "本周有明确硬产出：TDG 到 driver skeleton 的可运行生成器、LLM-based API pruning、pruning/no-pruning 对比实验、编译成功率从 32% 到 61%；SCoPE 侧完成 905 个任务实验，报告 accuracy 94.3%、precision 97.9%，并形成 slicing + abstraction + SMT 的方法资产。硬进展真实且贴近主线，但 driver generation 仍停留在编译成功率，尚未证明 coverage 或 crash discovery 提升。",
+      "missingEvidence": "缺少代码提交链接、实验配置、OSS-Fuzz 项目名称与数量、样本规模、baseline 定义、失败用例示例、SCoPE 数据集来源、统计显著性、复现实验脚本。"
     },
     "cognitiveIncrement": {
-      "score": 12,
-      "reason": "认知增量明确：将 fuzz driver generation 与 PoC migration 统一为“约束满足 + 状态可达性”问题，并区分“构造 execution path”和“恢复 execution path”。这比单纯报告工程结果更有抽象价值。扣分点是该统一框架目前主要是概念层表达，尚未展示它如何反过来改变具体算法设计、实验指标或系统接口。",
-      "missingEvidence": "缺少统一建模的形式化定义、两个任务共享的中间表示、约束语言示例，以及该认知增量带来的实测收益。"
+      "score": 13,
+      "reason": "认知增量比较清楚：将 fuzz driver generation 和 PoC migration 统一为“约束满足 + 状态可达性”问题，并把 PoC migration 从代码适配提升为 semantic feasibility 判定。这不是简单总结，而是改变了问题建模方式，有助于后续形成验证优先的科研框架。",
+      "missingEvidence": "缺少对该统一建模相对已有 program analysis、symbolic execution、exploitability analysis 工作的差异说明；也缺少反例边界，即哪些安全任务不能被自然归约为该框架。"
     },
     "cot2Depth": {
-      "score": 11,
-      "reason": "CoT's CoT 有两层：一是从 generation 转向 decision problem，二是从生成候选转向表达约束与不变量。两者都包含信息差、自动化潜力和沉淀形式，方向有深度。主要问题是“老师原本不知道”和“证据等级 A”都是自述，没有外部证据或反例分析；此外，对 decision problem 的可判定性、近似边界、不可解场景讨论不足。",
-      "missingEvidence": "缺少为什么该观点相对现有程序分析、SMT、symbolic execution、fuzzing literature 有新增性的证据；缺少失败案例、边界条件、与已有方法的差异表。"
+      "score": 12,
+      "reason": "CoT's CoT 能够从具体技术上升到“generation 到 decision problem”和“候选生成到约束/不变量表达能力”的二阶抽象，并给出自动化沉淀形式，如 evaluator、decision workflow、constraint-driven pipeline。深度较好，但部分表述偏宏观，证据等级 A 是自评，缺少外部证据支撑。",
+      "missingEvidence": "缺少证明“老师原本不知道”的依据；缺少与现有 SMT-based verification、concolic testing、fuzzing feedback loop 等方法的明确比较；缺少具体案例说明该二阶认知如何改变实验设计并带来收益。"
     },
     "brainaryMapping": {
       "score": 8,
-      "reason": "Brainary 映射较完整，覆盖 memory、reasoning、calibration、cognitive control、tool orchestration、risk modeling，并能对应到 TDG、Trigger Specification、SMT、fuzzing 等具体对象。扣分点是映射仍偏概念，没有说明 Brainary 中各模块的输入输出、数据结构、调用顺序和自动化接口。",
-      "missingEvidence": "缺少 memory schema、evaluator API、constraint builder 的接口定义、Brainary workflow 图，以及一个端到端样例如何从 PoC 或 TDG 流入系统。"
+      "reason": "Brainary 映射较完整：memory 对应 TDG、Trigger Specification、program evolution graph；reasoning 对应 SMT；calibration 对应 SAT/UNSAT；cognitive control 对应 constraint enforcement；tool orchestration 对应 static + LLM + SMT + fuzzing。映射能转化为 evaluator、benchmark、agent、workflow，具备系统沉淀价值。",
+      "missingEvidence": "缺少每个 Brainary 模块的输入输出接口定义、数据结构、调用顺序、失败恢复机制；也缺少说明 SMT 裁决器如何与 LLM pruning、coverage feedback 形成闭环。"
     },
     "monetaryValue": {
-      "score": 6,
-      "reason": "报告给出了潜在买单方、对标公司、企业年费假设和早期能力折算，说明作者尝试把科研能力映射到产品价值。Driver Generation 和 SCoPE 都有较清晰的产品化方向。扣分点是估值高度假设化，缺少客户访谈、竞品功能差异、采购场景、付费意愿、部署成本和合规约束；￥800万和￥1500万缺少可验证依据。",
-      "missingEvidence": "缺少真实用户需求证据、企业安全团队访谈、竞品价格、转化漏斗、市场规模来源、产品 MVP 定义和收入模型敏感性分析。"
+      "score": 5,
+      "reason": "报告尝试用 AI testing、AI vulnerability validation 公司对标，并给出企业年费、客户数和早期折算估值。方向有商业想象力，尤其 SCoPE 可对应 patch validation 和 affected version analysis。但估值主要是假设推导，缺少客户验证、采购场景、竞品价格、部署成本和销售周期证据。",
+      "missingEvidence": "缺少真实客户访谈、企业安全团队痛点证据、竞品报价、付费意愿、目标用户画像、单位经济模型、产品形态、从论文原型到可售系统的工程成本。"
     },
     "projectManagement": {
-      "score": 12,
-      "reason": "项目管理信息较全：列出阶段、原计划与实际完成、投入时间、人员、资源、依赖、成本、关键路径和进度判断。两个项目均能说明当前状态和下周方向。扣分点是缺少里程碑日期、验收标准、风险优先级、任务拆分粒度、负责人交付物，以及如果 semantic correctness 或 SMT 规模问题无法解决时的备选路径。",
-      "missingEvidence": "缺少甘特式里程碑、每个下周任务的完成判据、风险矩阵、实验资源预算、投稿截止时间、论文写作剩余清单和阻塞升级机制。"
+      "score": 13,
+      "reason": "项目管理信息较完整：两个项目都有阶段、原计划与实际完成情况、投入时间、人员、资源、依赖、成本、关键路径和进度判断。Driver Generation 明确处于原型 + 小规模实验，SCoPE 明确处于写作 + 投稿准备，管理状态可读。",
+      "missingEvidence": "缺少具体里程碑日期、论文投稿目标会议和截止时间、风险优先级、owner 到任务级的拆解、验收标准、如果 coverage-guided refinement 失败的备选方案。"
     },
     "nextAction": {
       "score": 8,
-      "reason": "下周动作基本可验证：Driver Generation 要引入 coverage-guided refinement，并在 3 个项目上验证 crash discovery rate；SCoPE 要自动化 Trigger Spec 提取并优化 constraint encoding。动作方向与当前卡点一致。扣分点是指标阈值不够明确，例如 coverage 提升多少算有效、crash discovery 如何定义、自动化提取准确率目标是多少。",
-      "missingEvidence": "缺少具体项目名称、实验规模、成功阈值、负责人、截止时间、对照组、失败后调整策略，以及每项 next action 的最小 demo 形式。"
+      "reason": "下周动作较具体：Driver Generation 要引入 coverage-guided refinement，并在 3 个项目上验证 crash discovery rate；SCoPE 要自动化 Trigger Spec 提取并优化 constraint encoding。动作与当前卡点对齐，且 driver 侧有可验证指标。",
+      "missingEvidence": "SCoPE 的下周动作缺少量化验收标准，例如 Trigger Spec 自动提取准确率、人工减少比例、SMT 编码规模下降多少；Driver 侧也缺少 3 个项目的选择标准和最小成功阈值。"
     },
     "evidenceQuality": {
       "score": 3,
-      "reason": "报告提供了一些量化结果，如编译成功率 32% 到 61%、905 个任务、accuracy 94.3%、precision 97.9%、本周投入和成本。但证据质量只能算中等偏低，因为关键数据没有来源、实验设计、样本说明、可复现链接或误差分析。证据等级 A 是作者自评，当前周报本身不足以支撑。",
-      "missingEvidence": "缺少实验日志、表格、代码链接、数据集链接、baseline 说明、统计方法、失败案例、人工标注协议、混淆矩阵和复现实验说明。"
+      "reason": "报告给出了若干关键数字，包括编译成功率 32% 到 61%、905 个任务、accuracy 94.3%、precision 97.9%、token 成本等，优于纯叙述型周报。但证据多为结论性数字，没有实验细节、日志、链接、表格或可复现材料，因此证据质量中等偏弱。",
+      "missingEvidence": "缺少原始实验表、失败案例、baseline 说明、数据集划分、评估脚本、置信区间、消融实验、人工标注协议、错误分析样例。"
     },
-    "totalScore": 77,
+    "totalScore": 79,
     "tier": "B",
-    "oneLineJudgment": "这一周有实质工程和实验进展，并形成了有价值的“约束满足/可达性判定”统一框架，但证据链、可复现性和产品价值验证不足，尚不能按高置信成果处理。",
+    "oneLineJudgment": "这一周有实质技术进展和较强的统一建模增量，但证据链与商业估值仍明显不足，当前最值得教授抓住的是“生成优先”转向“约束判定优先”的系统设计方向。",
     "professorFollowUp": [
-      "要求学生提交 Driver Generation 的实验表：OSS-Fuzz 项目名称、API 数量、pruning 前后搜索空间、编译成功率、覆盖率、crash 数、失败分类。",
-      "追问 SCoPE 的 905 个任务来源、标注方式、baseline、混淆矩阵，以及 accuracy 94.3% 和 precision 97.9% 的计算方式。",
-      "要求把“PoC → Trigger Specification”的抽象过程给出 2 到 3 个完整例子，区分人工部分和可自动化部分。",
-      "要求定义 Brainary 中 evaluator、constraint builder、memory schema 的输入输出接口，而不是只做概念映射。",
-      "要求下周把 Driver 的成功指标从“编译成功”推进到“有效执行路径覆盖”和“crash discovery rate”。",
-      "要求货币价值部分补一页真实买方验证：谁会用、在什么流程中用、替代什么现有工具、为什么愿意付费。"
+      "要求学生下周提交 driver generation 的最小复现实验包：项目列表、baseline、编译成功率、coverage、crash discovery rate、失败样例。",
+      "追问 SCoPE 的 905 个任务来自哪里、如何标注、accuracy 和 precision 的计算口径是什么，以及人工 Trigger Specification 占比是多少。",
+      "要求把 Brainary 映射落成接口图：memory、constraint constructor、SMT evaluator、coverage feedback、LLM pruning 之间的数据流如何闭环。",
+      "不要立即接受 800 万和 1500 万估值；先让学生补 3 个企业安全团队或测试平台的真实付费场景和竞品对比。",
+      "教授本周应重点学习的一个东西是：未来自动化科研系统的核心能力可能不是生成更多候选，而是定义正确性的约束与不变量，并用 evaluator 做可判定验证。"
     ]
   }
 }

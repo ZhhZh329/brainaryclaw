@@ -1,6 +1,6 @@
 {
   "key": "person:cao-yue:2026-03-22:weekly-score",
-  "generatedAt": "2026-06-05T22:00:43.643Z",
+  "generatedAt": "2026-06-05T23:00:43.381Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
@@ -8,53 +8,53 @@
   "result": {
     "hardProgress": {
       "score": 17,
-      "reason": "本周有明确硬进展：完成 Working Memory 动作记忆改动，并在 Color、Species、VQAV2 三个数据集上报告平均 ASR +4%；完成 Typo Base Color 样本难度三组划分并得到约 +3% 差异；还将实验结果映射到 Meta Layer 与 Object Layer 双层框架。进展不是停留在想法层，而是有代码实现、跨数据集验证和框架抽象。",
-      "missingEvidence": "缺少实验表格、样本量、baseline 定义、随机种子、显著性检验、每组失败/成功样本数量，以及 ASR 提升是否来自同一评测协议。"
+      "reason": "本周有明确硬进展：完成 Working Memory 加入上一轮 Adapt Strategy 的改动，并在 Color、Species、VQAV2 三个数据集上报告平均 ASR +4%；完成 Typo Base Color 样本难度三分组，并观察到“首次失败后续成功”组 ASR 高约 3%；还将实验结果映射到 Meta Layer / Object Layer 双层框架。进展不是停留在想法层面，而是有代码改动、实验验证和框架抽象。",
+      "missingEvidence": "缺少每个数据集的样本量、实验轮数、baseline 定义、方差或置信区间、显著性检验、完整表格、失败案例分析，以及 Working Memory 改动前后的具体 prompt/schema 对照。"
     },
     "cognitiveIncrement": {
-      "score": 14,
-      "reason": "认知增量较强。周报从实验现象提炼出两个有效认知：一是 Working Memory 不应只存外部反馈，还应存上一轮 Adapt Strategy；二是样本需要处于“有挑战但可解”的学习区间。还进一步区分了 victim model 对视觉语义与文字线索的依赖差异，并把 ASR 分层解释为 Target Understanding 的实例化依据。",
-      "missingEvidence": "关于 Color、VQAV2、Species 差异来自视觉语义与文字线索依赖权重的解释，目前更像机制假设，缺少消融实验或 victim model 行为分析支持。"
+      "score": 13,
+      "reason": "认知增量较强。报告从实验结果中提出了三个有效增量：动作记忆让 Diagnose 能区分新问题与上轮修改引入的问题；不同数据集 ASR 分层可能反映 victim model 对视觉语义与文字线索的依赖差异；Adapt Strategy 修改 Object Layer system prompt，使框架区别于只做自我监控的 ReAct / Reflexion。这些不是简单实验总结，而是对 meta-cognition 机制的解释。",
+      "missingEvidence": "关于 Color > VQAV2 > Species 的解释仍是机制假设，缺少 victim model 注意力、错误类型、视觉/文字依赖度的验证；与 ReAct / Reflexion 的区别缺少直接对照实验。"
     },
     "cot2Depth": {
       "score": 13,
-      "reason": "CoT's CoT 写得比较完整，包含现象、为什么老师可能不知道、新增认知、自动化潜力和证据等级。两个 CoT's CoT 都不是简单复述结果，而是上升到输入规划、记忆结构、Meta Layer 学习效率这些框架层原则。尤其是把动作记忆类比为 RL 中包含历史动作的状态空间，有一定抽象深度。",
-      "missingEvidence": "“老师原本不知道吗：是”的判断缺少依据；CoT's CoT 还缺少反例分析，例如动作记忆是否在所有任务中都有效、是否可能引入错误归因或过拟合上一轮策略。"
+      "reason": "CoT's CoT 写得比较完整：每条都包含现象、设计原则、老师是否原本知道、为什么不知道、新增认知、自动化潜力和证据等级。两条核心结论——输入端难度规划、Working Memory 同时存外部反馈与动作历史——都能从局部实验上升到框架设计原则，具备较好的二阶抽象。",
+      "missingEvidence": "“老师原本不知道”的判断主要是作者自述，缺少对已有讨论或已有 Brainary 设计文档的引用；CoT's CoT 1 的 +3% 证据较弱，尚不足以单独支撑通用设计原则。"
     },
     "brainaryMapping": {
       "score": 8,
-      "reason": "Brainary 映射比较清楚：将执行前输入规划映射到 Cognitive Control 的前置规划能力扩展，将 Working Memory 双类字段映射到 Brainary Working Memory schema 设计原则。沉淀形式也明确到 agent module、workflow、memory schema。",
-      "missingEvidence": "缺少 Brainary 现有模块接口的具体对照表，也没有说明这些 schema 如何接入现有 Brainary 系统、字段名是什么、调用时机是什么、是否已经可复用。"
+      "reason": "Brainary 映射较具体，能对应到 Cognitive Control 前置规划能力、Working Memory schema、agent module、workflow 和 memory schema。尤其是将样本筛选作为 Meta Layer 前置步骤、将外部反馈与动作记忆区分为两个字段，具有可沉淀性。",
+      "missingEvidence": "缺少 Brainary 当前 schema 的原始版本、拟修改后的字段定义、接口样例、调用流程图，以及这些映射如何进入现有 Brainary 系统的工程路径。"
     },
     "monetaryValue": {
-      "score": 6,
-      "reason": "报告给出了题目价值、潜在买单方和约 100 万人民币估值，并说明可沉淀为论文、workflow、module，对 AI 安全红队和自动化科研 agent 有潜在价值。但商业价值论证仍偏概念，主要基于顶会论文折算和安全工具估值类比。",
-      "missingEvidence": "缺少具体客户画像、竞品对比、付费场景、交付形态、转化周期、论文命中概率、工具化成本，以及 100 万人民币估值的可验证计算依据。"
+      "score": 5,
+      "reason": "报告给出了潜在买单方，包括 AI 安全、红队测试、VLM 部署安全企业和顶会 adversarial robustness 赛道，也给出了约 100 万人民币的估值。但估值主要来自类比和主观折算，商业路径还不够硬。",
+      "missingEvidence": "缺少真实客户需求、竞品对比、可交付产品形态、付费场景、采购预算、商业化周期、论文录用概率估计，以及为什么该框架能从 Typo Attack 扩展到红队工具的证据。"
     },
     "projectManagement": {
-      "score": 12,
-      "reason": "项目管理信息较完整：说明当前阶段、小规模实验完成、框架图构建中；给出本周 25 小时、下周 30 小时、API 成本、与老师讨论安排和下周里程碑。资源和节奏基本可控。",
-      "missingEvidence": "缺少任务拆解、风险列表、阻塞项、验收标准、代码/实验产物链接、下周 30 小时如何分配，以及如果框架图无法完成时的备选计划。"
+      "score": 11,
+      "reason": "项目管理信息较完整：说明当前阶段是小规模实验完成、框架图构建细化；本周 25 小时、下周计划 30 小时；资源消耗约 GPT-5 API 30–50 美元/周；有与郭老师讨论、下周与刘老师 meeting；里程碑是下周框架图初稿。基本能判断项目处于可推进状态。",
+      "missingEvidence": "缺少明确任务拆解、验收标准、风险列表、阻塞项、代码仓库或实验记录链接、下周每项任务的优先级，以及如果框架图初稿未完成的备选计划。"
     },
     "nextAction": {
-      "score": 8,
-      "reason": "下周动作明确：完成框架图初稿、与刘老师 meeting 讨论框架图，并把 Evaluate → Diagnose → Adapt Strategy 封装为通用 meta-cognitive loop。方向和产出物比较清楚。",
-      "missingEvidence": "缺少可验收定义，例如框架图包含哪些模块、每个模块需要哪些输入输出、是否要补实验表、是否要形成论文贡献段落，以及下周结束时教授应看到什么具体文件。"
+      "score": 7,
+      "reason": "下周行动方向明确：完成框架图初稿、与刘老师 meeting、将 Evaluate → Diagnose → Adapt Strategy 封装为通用 meta-cognitive loop，并给出样例。方向与本周结果衔接较好。",
+      "missingEvidence": "下一步还不够可验收。缺少框架图应包含哪些模块、样例应覆盖哪些数据集、是否继续跑实验、是否做 ablation、是否补充统计显著性、何时交付代码或文档。"
     },
     "evidenceQuality": {
       "score": 3,
-      "reason": "证据质量中上但未充分展开。报告提供了跨三数据集 ASR +4% 和三组样本对比 +3% 两条关键证据，且能将证据和结论对应起来。但证据仍是摘要式描述，无法独立复核。",
-      "missingEvidence": "缺少原始实验记录、评测协议、样本数、方差、显著性、失败案例、消融设置、对照方法、prompt 版本、模型版本和代码提交记录。"
+      "reason": "证据质量中等偏上。报告提供了量化结果：跨三数据集平均 ASR +4%，其中 Color +7%、VQAV2 +3%、Species +2%；样本难度分组中目标组 ASR 高约 3%。这些结果能支撑本周核心判断，但目前仍是摘要级证据。",
+      "missingEvidence": "缺少原始实验表格、样本量、随机种子、重复次数、置信区间、显著性检验、消融设置、失败样本、prompt 版本、代码提交记录和可复现实验配置。"
     },
-    "totalScore": 81,
-    "tier": "A",
-    "oneLineJudgment": "这是一个有真实实验增量和框架抽象价值的强周报，但证据可复核性、商业价值论证和下周验收标准仍不足。",
+    "totalScore": 77,
+    "tier": "B",
+    "oneLineJudgment": "本周有真实实验进展和较好的二阶框架抽象，但证据链仍停留在摘要级，商业价值和工程落地路径还不够硬。",
     "professorFollowUp": [
-      "要求学生下周先补一张核心实验表：数据集、baseline ASR、新方法 ASR、提升幅度、样本数、随机种子和显著性。",
-      "追问 Working Memory 动作记忆的最小 schema：到底存什么字段、何时写入、何时读取、如何防止错误动作历史污染 Diagnose。",
-      "要求把“有挑战但可解”样本筛选变成可执行算法，而不是经验描述：筛选指标、阈值、分流策略和失败样本处理方式。",
-      "让学生在框架图中明确 Meta Layer 与 Object Layer 的边界，尤其是 Evaluate、Diagnose、Adapt Strategy、Target Understanding、Working Memory 的输入输出。",
-      "商业价值暂时不要按 100 万人民币估值推进，应先把论文贡献闭环和可复现实验补齐。教授本周最该学习的一点是：Meta-cognition 的效率上限可能由执行前输入规划和记忆 schema 决定，而不只是由执行中的反思算法决定。"
+      "请要求学生下周提交完整实验表：每个数据集的样本量、baseline、ASR、方差或置信区间、重复次数和显著性检验。",
+      "请重点追问 Working Memory 改动的具体 schema：外部反馈字段、动作记忆字段分别是什么，如何进入 Diagnose 输入。",
+      "请要求学生做至少一个 ablation：只存外部反馈、只存动作历史、两者都存、两者都不存，对比 ASR 和失败类型。",
+      "请追问样本难度分组的定义：什么叫“首次失败后续成功”，分组是否依赖模型后验结果，是否会引入选择偏差。",
+      "请要求框架图不仅画 Meta Layer / Object Layer，还要标出数据流、记忆写入/读取点、Adapt Strategy 修改 system prompt 的位置和自动化接口。"
     ]
   }
 }

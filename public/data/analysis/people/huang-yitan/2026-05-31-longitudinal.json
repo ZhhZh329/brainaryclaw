@@ -1,66 +1,70 @@
 {
   "key": "person:huang-yitan:2026-05-31:longitudinal",
-  "generatedAt": "2026-06-05T22:05:05.967Z",
+  "generatedAt": "2026-06-05T23:04:40.764Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "f03a86ddc15530f911d1be93923ac30146fa9bf17d15218dfb9a0b72336248d5",
   "result": {
     "overallTrajectory": {
-      "judgment": "这个学生在 4 周内总体上是在变得更有研究能力，而不只是更忙。证据是：题目从“复现 CVE + 做 agent 模块”逐步上升到“用 empirical study 反推 agent 能力、benchmark、memory 和 evaluation protocol”；每周的 CoT 增量都改变了下一周的系统设计；对证据等级、未执行样本、oracle 确认权、运行时前置条件的理解明显成熟。",
-      "mainPositiveSignal": "最强信号不是投入时间稳定在 20-30 小时，而是研究对象被连续重定义：5/10 是跨层名实失配，5/17 是问题定义与前置条件自证，5/24 是 evidence authority 和实证研究转向，5/31 是 429 样本 taxonomy 推导 agent 能力边界。这说明他在用数据和失败模式重构研究问题。",
-      "mainRisk": "硬实验闭环在 5/17 之后有放缓迹象。5/17 有 1 个已提交 0day 和 40+ 应用挖掘；5/24 有 2 个候选但未确认；5/31 主要是 empirical study 和抽象，缺少 v4 pipeline 在真实样本上的 confirmed / not_executed / not_confirmed 统计结果。需要防止从研究能力提升滑向概念化堆叠。",
-      "topicTrajectory": "题目轨迹从 ConformAgent 跨层语义不一致诊断，转向 BAC empirical study + agentic validation。这个转向是合理的：单点 agent 系统如果没有真实 BAC 分布和验证需求支撑，论文动机会弱；但转向后必须尽快把 taxonomy 变成可执行 evaluation，而不是停留在叙事。",
-      "researchAbilityVerdict": "研究能力明显增强，尤其体现在问题定义、证据分层、失败样本建模、Brainary 映射和价值推理上；但工程验证和统计实验需要重新追上抽象速度。当前阶段应判定为“研究判断力上升，实验兑现压力上升”。"
+      "judgement": "学生总体不是只是变忙，而是在变得更有研究能力；但最近两周出现从工程验证转向抽象叙事的风险，需要用可执行评测把抽象重新压回证据。",
+      "mainTrajectory": "四周轨迹从“复现 CVE + 搭 agent 模块”推进到“真实 0day 命中 + 前置条件自证”，再推进到“v4 证据权力分层 + 大规模实证研究设计”，最后形成“429 个样本的 BAC empirical study + agent 能力边界”。这不是简单工作量增加，而是研究问题的粒度、证据标准、benchmark 意识和自动化转化意识都在升级。",
+      "researchAbilityChange": "研究能力有明显提升：学生逐步学会把单点漏洞、agent 模块、失败模式、证据等级、样本分布和论文叙事连接起来。尤其是从 2026-05-17 开始，他不再只问 agent 能不能报漏洞，而是问“测试条件是否成立”“finding 是否可提交”“not executed 是否应独立统计”。这是研究能力的关键增长。",
+      "risk": "主要风险是 2026-05-24 和 2026-05-31 的抽象速度超过了实验闭环速度：v4 pipeline、429 样本、taxonomy、memory、oracle template 都提出了，但还缺少按样本跑出的 confirmed / not_confirmed / not_executed 分布。因此当前最需要防止的是把研究叙事写得过满，而 evaluation 证据跟不上。",
+      "oneThingProfessorShouldLearn": "这个学生真正形成的主线是：BAC 自动化不是“找更多越权名字”，而是把授权边界恢复、运行时验证条件、oracle 判断和证据晋升做成一个可审计的 agentic validation 系统。教授应重点检查这条主线是否能被少量高质量案例和可统计样本同时支撑。"
     },
     "stageByWeek": [
       {
         "week": "2026-05-10",
-        "stage": "原型扩展与概念定型期",
-        "hardProgress": "复现 10 个越权 CVE，累计从 11 个到 21 个；覆盖 Directus、Grafana、Spring；新增代码分析模块和响应分析模块；agent 从纯置信向量驱动扩展为静态 + 动态双通道。",
-        "topicMovement": "题目核心被定义为“跨层名实一致性审计”，重点是权限声明与运行时效果之间的 gap。",
-        "cognitiveIncrement": "从“越权是代码 bug”转向“越权是多层授权语义的名实失配”。这不是简单总结，而是直接推动了双通道架构。",
-        "cotOfCotMaturity": "中等偏强。提出“名实失配”“礼制秩序”“跨框架结构性问题”“双通道认知架构”，其中跨框架共性给出 A 级证据，其余多为 B 级。弱点是形式化定义和评分方法尚未建立。",
-        "brainaryMappingMaturity": "初步成熟。能把双通道分析映射到 Calibration、Reasoning、Target Understanding、Tool Orchestration、Benchmark，但还是偏解释性映射，尚未形成可执行 Brainary-BAC 节点表。",
-        "valueReasoning": "价值函数主要按数据集规模和模块稀缺性估值：Benchmark 1 万，Agent 模块 4 万。能连接论文、benchmark、agent module，但金额依据偏主观，缺少外部支付或节省成本的直接证据。",
-        "projectManagement": "能记录原计划与实际偏差，并解释为什么推迟 Mutant Benchmark。动作质量较好，但下周计划仍偏多：CVE 挖掘、框架适配、模块验证、本地沙盒。",
-        "nextActionQuality": "较具体，有 5+ CVE 验证和本地沙盒迁移；但“主动挖掘未公开漏洞”过大，缺少候选优先级和成功判据。"
+        "stage": "原型扩展与概念成型期",
+        "hardProgress": "硬进展较实：CVE 数据从 11 个扩到 21 个；覆盖 Spring、Directus、Grafana；开发代码分析模块和响应分析模块；提出静态 + 动态双通道架构。",
+        "topicTrajectory": "题目仍是 ConformAgent 跨层语义不一致诊断系统，核心焦点是“名实失配”和“跨层语义不一致”。题目还偏系统原型和 benchmark 构建。",
+        "cognitiveIncrement": "认知增量是把越权从“代码 bug”重解释为“名义权限声明与运行时实际效果的失配”，并据此推出静态分析和动态验证必须并存。",
+        "CoTsCoTMaturity": "CoT's CoT 有结构但仍偏哲学类比，如“正名”“礼制秩序”。其中跨框架共性有 3 框架和 10 个 CVE 支撑，证据较强；但“礼制秩序”的形式化尚缺。",
+        "BrainaryMapping": "Brainary 映射开始出现，能对应 Calibration、Reasoning、Target Understanding、Tool Orchestration、Benchmark，但仍主要是事后映射，还没有完全落实为模块接口和评测指标。",
+        "metaCognition": "元认知从置信向量扩展到“知道自己看到的是名还是实”。这是有效增量，但还没有形成可执行的状态机约束。",
+        "valueFunction": "价值函数主要基于数据集规模、模块可复用性、顶会潜力和 agent 架构稀缺性。金额估值为 Benchmark 1 万人民币、Agent 模块 4 万人民币，总计 5 万人民币。用户和产品连接存在，但金额依据偏粗。",
+        "projectManagement": "项目管理有里程碑和成本记录；能解释 Mutant Benchmark 未做是因为前置理解不足。下周动作较具体：5+ CVE 验证模块、本地沙盒迁移、Grafana / Directus 适配。",
+        "nextActionsQuality": "下一步动作质量中等偏好，动作可验证，但还偏模块验证和适配，没有明确统计指标。"
       },
       {
         "week": "2026-05-17",
-        "stage": "真实命中与 agent 认知架构跃迁期",
-        "hardProgress": "新增 Problem Definition Node、Test Precondition Prover、Self-Evaluating Harness 输出协议；在 40+ 应用上跑挖掘，得到 20+ 候选路径；完成并提交 1 个真实 0day。",
-        "topicMovement": "从“检测跨层不一致”升级为“先定义问题、证明测试有效性、再输出可提交级 finding”。题目不再只是 detector，而是实验设计与自评一体的安全 agent。",
-        "cognitiveIncrement": "关键认知是：安全 agent 的失败大量来自测试条件未成立，而不是漏洞不存在；“找一堆可疑”不如“把一个候选证清楚”。这是强研究增量，并由 0day 命中支撑。",
-        "cotOfCotMaturity": "明显成熟。CoT's CoT 从哲学类比转向可模块化设计：Problem Definition、Precondition Prover、Self-Evaluating Harness。证据等级出现两个 A，且直接对应 40+ 应用、7 类失败模式、1 个 0day。",
-        "brainaryMappingMaturity": "显著提升。Target Understanding、Self-ability Understanding、Cognitive Control、Project Management、Long-Term Memory 都被映射到具体 agent 子模块。开始从“解释 Brainary”转向“实例化 Brainary”。",
-        "valueReasoning": "价值函数从论文/模块价值扩展到真实 0day、厂商报告、Bug Bounty、DevSecOps 的可信未发现。金额为架构 4 万、0day 与候选路径 5 万，开始连接用户和付费场景，但 0day 实际奖金、厂商反馈、漏洞严重性证据缺失。",
-        "projectManagement": "能主动放弃上周的 5+ CVE 验证，转向真实应用挖掘，并解释这是为了暴露真实失败模式。项目管理判断优于机械执行原计划。",
-        "nextActionQuality": "较强：统一 pre_check 7 维布尔向量、回放 21 个 CVE、再确认 2-3 个漏洞、封装 sandbox profile。动作可验证，但任务量对单人 30 小时偏重。"
+        "stage": "真实场景验证与方法论跃迁期",
+        "hardProgress": "硬进展最强：新增 Problem Definition、Test Precondition Prover、Self-Evaluating Harness；在 40+ 真实应用上运行；得到 20+ 候选路径；端到端提交 1 个真实 0day。",
+        "topicTrajectory": "题目从“检测跨层语义不一致”上升为“安全 agent 如何把模糊问题变成可执行、可验证、可回滚实验，并自证测试条件”。这是题目质量的明显升级。",
+        "cognitiveIncrement": "关键认知增量是发现安全 agent 的失败常常不是漏报，而是测试条件未成立；同时认识到“找到漏洞”和“证明漏洞”必须合并为 solve-and-justify。",
+        "CoTsCoTMaturity": "CoT's CoT 成熟度明显提高。三条 CoT's CoT 都有模块、workflow、benchmark、evaluation protocol 的落地路径。证据等级从 B/A 组合，尤其前置条件自证和三段式 finding 有 40+ 应用、20+ 候选、1 个 0day 支撑。",
+        "BrainaryMapping": "Brainary 映射从抽象能力变成可运行模块：Target Understanding 对应 Problem Definition，Self-ability / Calibration 对应 Precondition Prover，Cognitive Control 对应禁止前置未证就下结论。这是映射成熟度的一次跃迁。",
+        "metaCognition": "元认知从“理解名实”推进到“双层 meta-cognition”：一层是问题理解，一层是测试有效性证明。该理解可直接转成 agent policy。",
+        "valueFunction": "价值函数从“做模块和 benchmark 有价值”转向“能产生可提交 0day、能降低假阴、能修正 benchmark 评测口径”。金额估值为架构 4 万人民币、真实应用挖掘 5 万人民币，总计 9 万人民币。开始更清楚连接用户：安全研究团队、厂商安全团队、DevSecOps、Bug Bounty 平台。",
+        "projectManagement": "项目管理中能主动偏离原计划：从 5+ CVE 模块验证转向真实应用挖掘，并给出理由“受控环境刷分不能暴露真实失败模式”。这是研究判断力提升的证据。",
+        "nextActionsQuality": "下一步动作质量较高：统一 pre_check 接口、回放 21 个 CVE、确认 2-3 个漏洞、封装 sandbox profile。动作可验证且直击瓶颈。"
       },
       {
         "week": "2026-05-24",
-        "stage": "从单点漏洞到实证研究的重规划期",
-        "hardProgress": "新增 2 个现实 BAC 漏洞候选并拿到利用链；v4 pipeline 初步跑通；提出 AuthzIntent、BACHypothesis、DynamicValidationPlan、OracleResult 等中间表示；报告结构开始保留 runtime profile、seed plan、probe results、oracle results、errors。",
-        "topicMovement": "从“agent 能否发现漏洞”转向“agent 在真实项目总体中能解释多少 BAC 风险”。这是论文级转向，但会增加样本筛选和实验设计负担。",
-        "cognitiveIncrement": "关键认知是静态分析只能生成可执行授权假设，不能 confirmed；确认权必须交给 oracle。另一个认知是失败也要成为数据，not_executed 不能被误算成安全。",
-        "cotOfCotMaturity": "成熟度分化。Evidence authority 和实验痕迹两个 CoT's CoT 为 B，有明确系统设计支撑；“阿赖耶识/第六识/末那识”是 C，更多是元认知类比，尚未实验验证。需要防止宗教/哲学类比超过工程可操作性。",
-        "brainaryMappingMaturity": "很强但偏长。几乎完整映射到 Target Understanding、Self-ability、Confidence、Architecture Modeling、Working Memory、Long-Term Memory、Monitoring、Project Management。成熟点是 typed PipelineState 和 honesty constraints；不足是还没有证明这些映射提升了 confirmed finding 质量。",
-        "valueReasoning": "价值函数开始承认“单个 0day 是案例价值，大规模样本和失败分布才是论文价值”。这是纵向上重要升级。金额仍沿用 4 万和 5 万，没有因未确认候选上调，说明估值更克制。",
-        "projectManagement": "能识别大规模样本筛选成为关键路径，并请求老师确认样本筛选标准和披露节奏。项目管理从执行型转向实验口径管理型。",
-        "nextActionQuality": "动作质量高：样本清单字段、漏洞复核字段、CVE 可复现分类、not_executed 原因统计、反向整理真实漏洞为 v4 测试样例。弱点是还没有给出样本数量目标和 v4 成功阈值。"
+        "stage": "实证研究重构与 v4 pipeline 证据分层期",
+        "hardProgress": "硬进展中等偏强：新增 2 个现实 BAC 漏洞候选并拿到利用链；v4 pipeline 初步跑通；提出 AuthzIntent、BACHypothesis、DynamicValidationPlan、OracleResult 等中间表示；明确 static 不能 confirmed，确认权交给 oracle。",
+        "topicTrajectory": "题目从“agent 能否发现漏洞”转向“真实项目 BAC 风险的分布、触发模式、可自动化程度和失败原因”。这是从系统 demo 到实证研究的转向。",
+        "cognitiveIncrement": "认知增量是把静态分析重新定位为假设生成，而非漏洞确认；把失败也纳入数据；把长期 memory 和 project management 视为 agent 自主性的组成部分。",
+        "CoTsCoTMaturity": "CoT's CoT 更系统，但有一条“阿赖耶识 / 第六识 / 末那识”证据等级为 C，偏概念化。更有价值的是“相信、执行过、被 oracle 确认必须分开”和“失败痕迹可统计”，证据等级 B。",
+        "BrainaryMapping": "Brainary 映射达到四周中最全面的一次，覆盖 Target Understanding、Self-ability、Confidence、Architecture Modeling、Working Memory、Long-Term Memory、Monitoring、Project Management。优点是体系完整，风险是映射过宽，仍需评测证明每一层确实改善结果。",
+        "metaCognition": "元认知推进为三层：基模能力、当前推理、长期统一取向核心。对长期科研 agent 有启发，但实验验证不足。",
+        "valueFunction": "价值函数从单个 0day 的实战价值转向“实证研究数据集 + 证据分层协议 + 论文 evaluation 可信度”。金额仍是架构 4 万人民币、数据资产 5 万人民币，总计 9 万人民币。估值保持克制，没有因新增候选漏洞上调，这是正向信号。",
+        "projectManagement": "项目管理能识别大规模样本筛选成为关键路径，并意识到单点 polish 会延后样本级统计。需要老师介入确认样本筛选标准和披露节奏。",
+        "nextActionsQuality": "下一步动作清楚：样本表、2 个漏洞复核、CVE 可复现分类、少量项目跑 v4 pipeline、统计 not_executed 原因。质量高，但工作量大，存在分散风险。"
       },
       {
         "week": "2026-05-31",
-        "stage": "empirical study 到 agent capability 闭环形成期",
-        "hardProgress": "整理 429 个 BAC empirical sample，其中 228 个 positive / likely BAC cases、198 个 uncertain / negative control cases，保留 12 类 pattern family；提出四维 taxonomy：Authorization Boundary Location、Failure Mechanism、Patch Pattern、Detection / Validation Requirement；将 BAC pattern 映射到 agent 能力需求。",
-        "topicMovement": "题目正式变为“BAC empirical study + agentic validation”。核心不再是一个工具 demo，而是用实证研究建立授权边界地图，再让 agent 基于地图做问题定义、能力自评、验证计划和证据晋升。",
-        "cognitiveIncrement": "认知进一步收敛：BAC 难点不是漏洞名字多，而是验证条件异质；高质量 benchmark 的核心不是收集更多 CVE，而是每个案例能讲清楚授权边界、实际行为、断裂位置和修复逻辑。",
-        "cotOfCotMaturity": "较成熟。三个 CoT's CoT 都围绕 empirical taxonomy 如何转成 long-term memory、runtime competence、evidence promotion control，证据等级均为 B。比 5/24 的哲学类比更贴近系统与论文。",
-        "brainaryMappingMaturity": "成熟。Brainary 映射已从泛能力对齐转为具体模块：BAC Landscape Reader、Runtime Competence Estimator、Evidence Promotion Controller、Validation Requirement Planner、pattern memory、oracle memory、failure-reason memory。",
-        "valueReasoning": "价值函数最成熟的一周。价值不再只来自“发现漏洞”或“写模块”，而来自 empirical study 对 taxonomy、benchmark、agent requirement、evaluation 分层的支撑。金额为两个 5 万，但依据仍主要是研究工作量和潜在复用价值，缺少样本来源、标注协议、标注一致性和外部用户验证。",
-        "projectManagement": "本周没有新增大量代码或实验运行，是有意识地把 empirical study 变成论文主线。管理上能识别偏差原因，但下一阶段必须恢复实验兑现。",
-        "nextActionQuality": "动作非常具体：写 empirical study section、压缩 12 类到 3-5 类、为三类代表能力选 2-3 个案例、写 pattern -> capability 映射表、整理 oracle template 和 failure reason 字段。缺点是仍偏写作和设计，缺少“下周至少跑多少个案例”的硬执行指标。"
+        "stage": "empirical study 与 agent 能力边界形式化期",
+        "hardProgress": "硬进展主要是研究整理而非工程运行：整理 429 个 BAC empirical sample，其中 228 个 positive / likely BAC cases、198 个 uncertain / negative control cases，形成 12 类 pattern family 和四个 taxonomy 维度；抽象出 subject / object / action / context / expected policy / observed behavior 统一表示。",
+        "topicTrajectory": "题目进一步聚焦为“BAC empirical study + agentic validation”。这是更像论文的题目：先用 empirical study 说明真实 BAC 分布和验证需求，再推出 agent 架构。",
+        "cognitiveIncrement": "认知增量是明确 BAC 的关键困难不在漏洞名称多，而在验证条件异质；benchmark 质量不取决于 CVE 数量，而取决于每个案例能否说清授权边界、实际行为、断裂点和修复逻辑。",
+        "CoTsCoTMaturity": "CoT's CoT 比 05-24 更贴近研究对象，减少了玄学类比，转向“授权秩序地图”“runtime competence”“evidence promotion control”。三条均为 B，说明有 taxonomy 和样本支持，但大规模 agent 实验仍缺。",
+        "BrainaryMapping": "Brainary 映射从通用层级转为 BAC 专用能力：BAC Landscape Reader、Runtime Competence Estimator、Evidence Promotion Controller、Validation Requirement Planner、pattern memory、oracle memory、failure-reason memory。映射成熟度提高，因为它开始变成 memory schema 和模块清单。",
+        "metaCognition": "元认知成熟为三层：目标理解匹配哪类授权失序；能力自评是否具备运行时条件；置信与监控限制当前结论能说到哪一层。这是四周中最可工程化的元认知表述。",
+        "valueFunction": "价值函数从“漏洞命中”和“系统模块”进一步转向“empirical study 决定 agent architecture”。金额估值为 empirical study 5 万人民币、agent 能力边界 5 万人民币，总计 10 万人民币。能连接金额、用户、benchmark、memory、agent module 和 product feature，但金额依据仍主要是人工替代成本和论文价值，缺少真实市场付费或 bounty 回款证据。",
+        "projectManagement": "项目管理承认本周没有新增大量代码或实验运行，而是完成抽象；能提出下周写 empirical study section、压缩 taxonomy、选择代表案例、写 oracle template。需要老师确认长期叙事。",
+        "nextActionsQuality": "下一步动作质量较高但必须收敛：写论文段落、3-5 类主类压缩、三类代表能力各 2-3 案例、pattern 到 agent capability 映射表、oracle template。若不设截止和验收标准，容易继续扩展 taxonomy 而不进入 evaluation。"
       }
     ],
     "trendScores": {
@@ -68,257 +72,183 @@
         "scoreByWeek": {
           "2026-05-10": 4,
           "2026-05-17": 5,
-          "2026-05-24": 3.5,
-          "2026-05-31": 4
-        },
-        "trend": "先上升，随后从漏洞确认和代码运行转向样本整理与研究设计。5/17 是硬进展峰值，因为有 1 个已提交 0day 和真实应用挖掘。5/31 的 429 样本是硬资产，但缺少 v4 pipeline 的运行统计。",
-        "risk": "如果 6 月第一周不能把 429 样本或三类代表案例转成 executable evaluation，硬进展会被概念进展掩盖。"
-      },
-      "cognitiveTrend": {
-        "scoreByWeek": {
-          "2026-05-10": 4,
-          "2026-05-17": 4.5,
-          "2026-05-24": 4.5,
-          "2026-05-31": 5
-        },
-        "trend": "持续上升。认知从名实失配，到前置条件自证，到 evidence authority，再到 empirical taxonomy 推导 agent 能力边界。每次认知更新都能改变系统设计或实验计划。",
-        "risk": "认知抽象速度快于实验验证速度，需要用统计表和代表案例约束。"
-      },
-      "cotOfCotMaturity": {
-        "scoreByWeek": {
-          "2026-05-10": 3.5,
-          "2026-05-17": 4.5,
           "2026-05-24": 4,
-          "2026-05-31": 4.5
+          "2026-05-31": 3
         },
-        "trend": "从哲学启发型逐步变成模块、workflow、benchmark、memory 的转化型。5/24 有一个 C 级元认知类比，成熟度略被拉低；5/31 回到 empirical memory 和 evidence promotion，质量更稳。",
-        "evidenceLevel": "报告中最高证据为 A：40+ 应用、7 类前置失败模式、1 个 0day。多数新框架主张仍为 B，因为大规模实验未完成。"
+        "trend": "先升后转向抽象。05-17 的真实 0day 和 40+ 应用最硬；05-31 的 429 样本是重要资产，但缺少本周新增运行实验和 agent evaluation，因此硬工程进展下降。"
       },
-      "brainaryMapping": {
+      "researchCognition": {
         "scoreByWeek": {
-          "2026-05-10": 3.5,
-          "2026-05-17": 4.5,
-          "2026-05-24": 4.5,
+          "2026-05-10": 3,
+          "2026-05-17": 5,
+          "2026-05-24": 5,
           "2026-05-31": 5
         },
-        "trend": "Brainary 映射越来越具体。早期是能力名对应，后期是节点、状态、中间表示、memory schema、evaluator 和 cognitive control 的系统映射。",
-        "remainingGap": "缺少一张最终的 Brainary -> BAC agent module -> evaluation metric 对照表，也缺少各模块带来的 ablation 证据。"
+        "trend": "持续上升并保持高位。学生从概念洞察走向证据标准、失败分类、样本统计和 evaluation 口径。"
       },
-      "metaCognition": {
+      "CoTsCoTMaturity": {
         "scoreByWeek": {
-          "2026-05-10": 4,
+          "2026-05-10": 3,
           "2026-05-17": 5,
           "2026-05-24": 4,
-          "2026-05-31": 4.5
+          "2026-05-31": 4
         },
-        "trend": "从区分名与实，推进到测试有效性自证，再推进到证据状态和长期任务世界模型。5/17 最强，因为元认知直接产生了前置条件自证模块和 0day 证据链。",
-        "risk": "5/24 的意识层类比证据较弱；后续应把所有 meta-cognition 落成字段、状态机和阈值。"
+        "trend": "05-17 最成熟，因为每条都有模块和真实 0day 支撑；05-24 出现过度类比；05-31 重新回到 BAC taxonomy 和 evidence promotion，成熟但仍待实验验证。"
+      },
+      "BrainaryMappingMaturity": {
+        "scoreByWeek": {
+          "2026-05-10": 3,
+          "2026-05-17": 4,
+          "2026-05-24": 5,
+          "2026-05-31": 5
+        },
+        "trend": "从事后关联逐步变成模块、状态、中间表示、memory schema 和 evaluator。成熟度明显提高。"
+      },
+      "valueReasoning": {
+        "scoreByWeek": {
+          "2026-05-10": 3,
+          "2026-05-17": 4,
+          "2026-05-24": 4,
+          "2026-05-31": 4
+        },
+        "trend": "价值推理越来越能连接用户、产物形式、benchmark、agent module 和论文贡献；但金额仍缺少外部市场证据或真实 bounty 结果支撑。"
       },
       "projectManagement": {
         "scoreByWeek": {
-          "2026-05-10": 3.5,
-          "2026-05-17": 4.5,
-          "2026-05-24": 4.5,
+          "2026-05-10": 3,
+          "2026-05-17": 4,
+          "2026-05-24": 4,
           "2026-05-31": 4
         },
-        "trend": "能解释偏差、主动重排关键路径、识别样本筛选和披露节奏需要老师介入。5/31 需要加强实验兑现节奏管理。",
-        "concern": "多次下周计划都包含较多并行目标；需要冻结优先级，避免 30 小时内目标过载。"
+        "trend": "从记录计划进度进化到能主动重排关键路径。反复能解释偏差原因，这是好现象。但仍缺少明确的每周 evaluation 指标表和停损线。"
       },
       "automationPath": {
         "scoreByWeek": {
-          "2026-05-10": 4,
-          "2026-05-17": 4.5,
-          "2026-05-24": 4.5,
+          "2026-05-10": 3,
+          "2026-05-17": 5,
+          "2026-05-24": 5,
           "2026-05-31": 5
         },
-        "trend": "自动化路径越来越清楚：双通道分析 -> 三件套 agent -> v4 evidence authority pipeline -> empirical memory / oracle memory / runtime competence estimator。",
-        "remainingGap": "对象 seeding、session material、tenant context、route mismatch oracle 仍是自动化瓶颈。"
+        "trend": "自动化路径从双通道模块扩展到 Problem Definition、Precondition Prover、Self-Evaluating Harness、v4 pipeline、Runtime Competence Estimator、Evidence Promotion Controller 和 memory schema。路径清晰，但工程完成度需重新量化。"
       },
-      "nextStepQuality": {
+      "nextActionQuality": {
         "scoreByWeek": {
-          "2026-05-10": 3.5,
+          "2026-05-10": 3,
           "2026-05-17": 4,
-          "2026-05-24": 4.5,
+          "2026-05-24": 4,
           "2026-05-31": 4
         },
-        "trend": "越来越具体，字段化和模板化程度提高。5/31 的下一步偏论文和模板，缺少明确运行样本数和成功标准。",
-        "professorInterpretation": "学生已经知道该做什么，但需要老师帮他把“写作、taxonomy、oracle、实验运行”压成一个最小闭环。"
+        "trend": "下一步动作越来越研究化和可验证，但 05-31 的动作偏多，需教授帮助压缩为最小闭环。"
       }
     },
     "valueFunctionChange": {
-      "summary": "价值观发生了实质性变化：从按“做了多少数据和模块”估值，转向按“能否支撑论文主张、用户可用报告、benchmark、长期 memory、自动化评测协议”估值。这是研究能力提升的重要证据。",
-      "byWeek": [
+      "summary": "学生的价值函数发生了明显升级：从“复现更多 CVE、做出模块、支撑顶会论文”转向“真实用户能采信的 verified finding、可统计失败原因、empirical study 驱动的 agent 架构、可复用 memory 和评测协议”。这说明他开始理解研究价值不只是忙出产物，而是建立可解释、可复现、可评测的知识系统。",
+      "monetaryTrace": [
         {
           "week": "2026-05-10",
-          "whatIsWorthDoing": "值得做的是扩展 CVE benchmark、做双通道 agent 模块、形成名实一致性审计。",
-          "whyWorthDoing": "因为能支撑 Security Top-4 论文、benchmark、多框架通用性和 agent module。",
-          "moneyConnection": "Benchmark 估 1 万，Agent 模块估 4 万。金额主要来自构造成本和论文潜在贡献，外部支付证据缺失。",
-          "usersConnection": "提到安全研究团队、企业安全团队、DevSecOps。",
-          "artifactConnection": "论文、CLSIC Benchmark、双通道 agent module、evaluation protocol。",
-          "brainaryAndAutomationConnection": "能连接 Calibration、Reasoning、Target Understanding，但还偏概念映射。"
+          "amount": "总计约 5 万人民币：Benchmark 1 万人民币，Agent 模块 4 万人民币。",
+          "valueBasis": "价值依据是 CVE 数量、多框架覆盖、双通道模块和顶会潜力。用户包括安全研究团队、企业安全团队和 DevSecOps。"
         },
         {
           "week": "2026-05-17",
-          "whatIsWorthDoing": "值得做的是让 agent 从告警生成变成可提交级 finding 生成，即问题定义、前置条件自证、解决与自评一体。",
-          "whyWorthDoing": "因为真实 0day 命中说明端到端可行，且失败模式归类能解释假阴来源。",
-          "moneyConnection": "Agent 架构估 4 万，真实挖掘与 0day 估 5 万。开始引用 bug bounty 单个高危越权数千至数万美元，但具体漏洞等级和奖金证据缺失。",
-          "usersConnection": "扩展到厂商安全团队、Bug Bounty 平台、DevSecOps 可信未发现。",
-          "artifactConnection": "Problem Definition Node、Precondition Prover、Self-Evaluating Harness、finding-grade 评分卡。",
-          "brainaryAndAutomationConnection": "Brainary 顶层能力开始落成安全 agent 三件套。"
+          "amount": "总计约 9 万人民币：Agent 架构 4 万人民币，真实应用挖掘与 0day 5 万人民币。",
+          "valueBasis": "价值依据从数据和模块升级为真实 0day、可提交证据链、假阴拆分、Bug Bounty / 厂商 SRC / DevSecOps 的实际需求。"
         },
         {
           "week": "2026-05-24",
-          "whatIsWorthDoing": "值得做的不只是继续挖 0day，而是转向大规模实证研究，统计 BAC 分布、失败原因和自动化边界。",
-          "whyWorthDoing": "因为少数 0day 不足以支撑完整论文，样本空间和失败痕迹决定结论可信度。",
-          "moneyConnection": "继续保守沿用架构 4 万、数据资产 5 万，没有因 2 个候选漏洞直接上调，说明估值更谨慎。",
-          "usersConnection": "企业安全、厂商 SRC、安全工具厂商，重点是 verified finding 和未执行原因。",
-          "artifactConnection": "v4 pipeline、中间表示、实证 benchmark、runtime profile、oracle result、not_executed 统计。",
-          "brainaryAndAutomationConnection": "把 Brainary 映射到完整 workflow 和 memory，自动化路径更清楚。"
+          "amount": "总计约 9 万人民币：v4 pipeline 4 万人民币，现实漏洞与实证数据资产 5 万人民币。",
+          "valueBasis": "价值依据转向实证研究数据资产、证据分层协议和大规模 evaluation 可信度。没有因新增 2 个候选漏洞上调估值，说明价值判断相对克制。"
         },
         {
           "week": "2026-05-31",
-          "whatIsWorthDoing": "值得做的是 empirical study、taxonomy、agent 能力边界、oracle template、failure memory。",
-          "whyWorthDoing": "因为 BAC 自动化的核心不是识别更多漏洞名，而是为不同授权边界建立可验证条件。",
-          "moneyConnection": "Empirical study 估 5 万，能力边界界定估 5 万。金额依据是样本整理、taxonomy 复用和返工成本避免，仍缺少外部市场支付验证。",
-          "usersConnection": "企业安全团队、安全工具厂商、开源项目维护者、厂商 SRC、安全研究人员。",
-          "artifactConnection": "BAC benchmark、pattern memory、oracle memory、case-quality checklist、Runtime Competence Estimator、Evidence Promotion Controller。",
-          "brainaryAndAutomationConnection": "价值函数已能稳定连接 Brainary、长期 memory、自动化 workflow 和 evaluation protocol。"
+          "amount": "总计约 10 万人民币：BAC empirical study 与 taxonomy 5 万人民币，agent 能力边界界定 5 万人民币。",
+          "valueBasis": "价值依据是 429 样本、taxonomy、agent requirement、benchmark、memory schema 和 product feature。价值函数开始强调长期复用，而非单个漏洞。"
         }
       ],
-      "maturityAssessment": "价值函数从“多做数据/多做模块”升级到“数据如何改变研究叙事、模块如何降低验证成本、memory 如何让 agent 长期复用、oracle 如何决定证据等级”。这是明显成熟。",
-      "remainingWeakness": "金额估值仍主要是内部研究价值和人工替代成本，没有足够连接真实付费、漏洞奖金、工具采购预算或企业审计成本；429 个样本的来源、标注质量和可公开性也未说明，会影响价值可信度。"
+      "whatStudentNowThinksWorthDoing": [
+        "值得做真实项目而不是只做受控 CVE，因为真实项目暴露测试条件、部署、session、对象 seeding 和 oracle 的真实瓶颈。",
+        "值得记录 not_executed 和失败原因，因为这决定 empirical study 是否诚实，也决定 agent 是否知道自己没有资格下结论。",
+        "值得做 empirical study，因为 taxonomy 能反推 agent 架构、benchmark 准入标准和 oracle template。",
+        "值得做长期 memory，因为 BAC pattern、runtime prerequisite、oracle 和 failure reason 不应每个项目重新发现。"
+      ],
+      "connectionQuality": {
+        "money": "金额每周都有，但多为估算，缺少真实 bounty、厂商节省成本或工具销售价格证据。价值金额可以作为内部优先级，不应直接作为论文或商业价值证明。",
+        "users": "用户画像逐步清晰：安全研究团队、企业安全团队、DevSecOps、Bug Bounty 平台、厂商 SRC、安全工具厂商。05-17 后用户连接明显增强。",
+        "generalCapability": "通用能力从“跨层名实一致性审计”扩展到“问题定义 + 前置自证 + evidence promotion + long-term memory”。这是可迁移的 agent 能力。",
+        "artifactForm": "产物形式越来越明确：agent module、workflow、benchmark、evaluation protocol、memory schema、oracle template、paper section、product feature。",
+        "Brainary": "Brainary 连接从能力标签变成具体模块和 memory：Target Understanding、Self-ability Understanding、Confidence、Monitoring、Project Management 都有 BAC 实例化。",
+        "automation": "自动化路径清晰，但仍有缺口：对象 fixture、session material、tenant oracle、route oracle、workflow/state oracle 和跨层 inconsistency oracle 尚未稳定。"
+      },
+      "critique": "价值函数变得更研究化，这是好事；但还缺少反证意识：哪些样本不适合做 benchmark，哪些 pattern 暂时不应进入主线，哪些模块只是假设还没有工程收益。教授需要逼他把价值函数转成选择规则和排除规则。"
     },
     "repeatedBlockers": [
       {
-        "blocker": "运行时前置条件不稳定",
-        "appearsInWeeks": [
-          "2026-05-10",
-          "2026-05-17",
-          "2026-05-24",
-          "2026-05-31"
-        ],
-        "evidence": "动态执行环境、登录态、DB 初始化、tenant header、对象 seeding、session material、服务启动反复出现。",
-        "interpretation": "这是项目真实关键瓶颈，不是偶发工程问题。学生已经把它从卡点提升为研究对象，这是好信号；但还没有报告自动化解决率。"
+        "blocker": "动态验证前置条件反复成为瓶颈",
+        "evidence": "05-10 提到响应分析依赖动态执行环境；05-17 发现登录态、DB 初始化、tenant header、角色错配等 7 类前置失败；05-24 继续卡在 runtime 启动、对象 seeding、session material；05-31 仍卡在对象 fixture、登录状态和运行环境。",
+        "interpretation": "这是核心研究问题的一部分，不只是工程麻烦。必须被纳入 evaluation，而不是作为附录工程问题。"
       },
       {
-        "blocker": "oracle 不稳定或未模板化",
-        "appearsInWeeks": [
-          "2026-05-17",
-          "2026-05-24",
-          "2026-05-31"
-        ],
-        "evidence": "对照矩阵、oracle_judge、不同 BAC pattern 需要不同 oracle、workflow/state 和 cross-layer 缺少稳定 oracle。",
-        "interpretation": "oracle 是 confirmed finding 的核心。下周必须至少产出 owner vs non-owner、same-tenant vs cross-tenant、canonical route vs variant route 三个模板。"
+        "blocker": "oracle 尚未稳定",
+        "evidence": "05-24 提到 oracle 对异步任务、延迟副作用、复杂业务状态较弱；05-31 明确 tenant isolation 和 route mismatch 需要更具体 oracle template，workflow/state 和 cross-layer inconsistency 缺少稳定 oracle。",
+        "interpretation": "如果 oracle 不稳定，confirmed finding 的可信度和 benchmark 质量都会受影响。"
       },
       {
-        "blocker": "候选漏洞确认速度慢",
-        "appearsInWeeks": [
-          "2026-05-17",
-          "2026-05-24"
-        ],
-        "evidence": "20+ 候选路径人工验证每个需 1-2 小时；2 个新增现实漏洞候选处于进一步核查阶段。",
-        "interpretation": "这是从候选到 confirmed 的吞吐瓶颈。需要用 finding-grade 和 evidence promotion 降低人工核查成本。"
+        "blocker": "样本筛选和 benchmark 准入标准反复未闭环",
+        "evidence": "05-24 把大规模样本筛选列为关键路径；05-31 仍需要区分 empirical finding 和 agent evaluation benchmark，并压缩 12 类 pattern family。",
+        "interpretation": "学生已经意识到高 star 不等于好样本，但还缺一套可执行的筛选打分表和排除标准。"
       },
       {
-        "blocker": "样本筛选和代表性",
-        "appearsInWeeks": [
-          "2026-05-24",
-          "2026-05-31"
-        ],
-        "evidence": "高 star 不等于权限复杂；CVE 不等于可复现；429 样本还需区分 empirical finding 和 agent evaluation benchmark。",
-        "interpretation": "这是论文可信度关键路径。缺少样本准入规则会导致 evaluation 被质疑。"
+        "blocker": "抽象扩张快于实验统计",
+        "evidence": "05-24 提出 v4 pipeline、Self-Orientation Core、Evidence Authority Controller；05-31 提出 BAC Landscape Reader、Runtime Competence Estimator、Evidence Promotion Controller、pattern memory、oracle memory，但报告中尚未给出这些模块在样本上的系统运行结果。",
+        "interpretation": "这是当前最大管理风险。概念增长说明研究能力强，但如果不尽快用 6-9 个代表案例或一批样本统计压实，会变成叙事堆叠。"
       },
       {
-        "blocker": "抽象与实验兑现之间的张力",
-        "appearsInWeeks": [
-          "2026-05-24",
-          "2026-05-31"
-        ],
-        "evidence": "5/24 和 5/31 大量推进 taxonomy、memory、agent capability、paper narrative，但缺少新的 confirmed pipeline 统计。",
-        "interpretation": "抽象是必要的，但必须通过代表案例和统计表兑现，否则会被审稿人看成概念堆叠。"
-      },
-      {
-        "blocker": "证据公开性和披露周期",
-        "appearsInWeeks": [
-          "2026-05-17",
-          "2026-05-24"
-        ],
-        "evidence": "0day 厂商响应周期不可控，新增漏洞披露节奏和风险边界需要老师把关。",
-        "interpretation": "真实漏洞是强证据，但如果不能公开或匿名化，论文支撑力会下降。需要提前准备可公开替代材料。"
-      },
-      {
-        "blocker": "金额估值证据不足",
-        "appearsInWeeks": [
-          "2026-05-10",
-          "2026-05-17",
-          "2026-05-24",
-          "2026-05-31"
-        ],
-        "evidence": "每周都有人民币估值，但多基于研究稀缺性、人工成本、潜在论文价值；缺少实际奖金、客户预算、工具采购或节省工时的验证。",
-        "interpretation": "价值推理方向正确，但 monetary value 还不是强证据。"
+        "blocker": "人工验证速度和部署成本",
+        "evidence": "05-17 提到一个候选从可疑到确认需 1-2 小时人工核对，部分应用 Compose 复杂、多服务依赖；05-24 和 05-31 仍在提 runtime profile、sandbox、session、object seeding。",
+        "interpretation": "需要将人工成本拆成可自动化脚本、可复用 profile、不可自动化人工判断三类，否则大规模 evaluation 会失控。"
       }
     ],
     "professorShouldAsk": [
       {
-        "question": "429 个 BAC empirical sample 的来源、去重规则、positive / likely / uncertain / negative 的判定标准是什么？有没有标注一致性或抽样复核？",
-        "why": "这是 5/31 最大硬资产，但报告没有给出标注协议。没有这个，empirical study 的可信度不足。"
+        "question": "429 个 BAC empirical sample 的来源、去重规则、positive / likely / uncertain / negative control 的标注标准是什么？",
+        "why": "这是 05-31 最大的新硬资产，但报告没有给出采样方法和标注一致性。没有这个，empirical study 的证据等级只能停在 B。"
       },
       {
-        "question": "从 12 类 pattern family 压缩到主文 3-5 类时，准入标准是什么：频率最高、最能代表 agent 能力、还是最容易运行验证？",
-        "why": "这决定论文叙事和 evaluation benchmark 的口径，不能只按直觉挑案例。"
+        "question": "请用一个表列出 12 类 pattern family，并标出哪些进入主文 3-5 类、哪些进入 appendix、哪些暂时排除出 agent evaluation。",
+        "why": "防止 taxonomy 继续扩张，迫使学生做研究取舍。"
       },
       {
-        "question": "v4 pipeline 目前在多少真实项目上完整跑过？分别有多少 static_likely、not_executed、not_confirmed、confirmed？",
-        "why": "学生已经提出 evidence promotion，但缺少统计兑现。教授需要逼出第一张核心实验表。"
+        "question": "三类核心能力 ownership、tenant isolation、route mismatch 各选 2-3 个案例后，agent 当前能自动完成哪些步骤？哪些仍需人工？",
+        "why": "这是判断他是否真的从抽象回到可执行 evaluation 的关键问题。"
       },
       {
-        "question": "5/17 的 1 个 0day 和 5/24 的 2 个候选，当前状态分别是什么：厂商确认、CVE、可公开 PoC、匿名化案例、还是仍未确认？",
-        "why": "真实漏洞是最强证据，但披露状态决定能否写入论文或只作为内部信号。"
+        "question": "v4 pipeline 在真实样本上目前的 confirmed、likely、not_confirmed、not_executed 数量分别是多少？如果还没有，请给出下周最小统计计划。",
+        "why": "学生一直强调 evidence promotion 和诚实统计，教授应要求他用数字兑现。"
       },
       {
-        "question": "object ownership、tenant isolation、route mismatch 三类能力中，哪一类最适合作为第一版 evaluation？为什么？",
-        "why": "学生现在目标很多，需要冻结最小闭环。"
+        "question": "0day 和新增 2 个候选漏洞现在的披露、确认、CVE 或厂商响应状态是什么？哪些材料可以写进论文？",
+        "why": "真实漏洞是强证据，但披露不确定会影响论文叙事和风险管理。"
       },
       {
-        "question": "每个 BAC hypothesis 必须绑定哪些字段才允许进入 benchmark：subject、object、action、context、expected policy、observed behavior、patch pattern、oracle type 是否都必须有？",
-        "why": "这能把“高质量 benchmark”从口号变成准入规则。"
+        "question": "金额估值中的 5 万、9 万、10 万分别对应什么可交付成果？哪些已经交付，哪些只是预期价值？",
+        "why": "学生价值推理在进步，但金额仍偏内部估算。需要把金额和产物验收绑定。"
       },
       {
-        "question": "当前最大成本到底是 token、部署、对象 seeding、session、人工核查，还是 oracle 设计？分别有什么自动化替代方案？",
-        "why": "报告多次提到成本，但还没有量化瓶颈分布。"
-      },
-      {
-        "question": "金额估值中 5 万的依据能否转成更可验证的指标，例如节省多少人工小时、减少多少误报核查、提高多少 confirmed finding 转化率？",
-        "why": "价值函数已经成熟，但 monetary value 仍偏主观。"
+        "question": "Brainary 映射中哪些模块已经在代码或数据 schema 中存在，哪些只是报告概念？",
+        "why": "防止 Brainary 映射变成漂亮标签，要求它落成接口、状态字段、memory 或 evaluator。"
       }
     ],
     "nextBestIntervention": {
-      "intervention": "教授下一步不应泛泛鼓励继续做，而应要求学生在一周内交付一个“最小论文闭环包”：1 个 empirical study section 初稿，1 张 pattern -> agent capability 映射表，3 个 oracle template，6-9 个代表案例，以及 v4 pipeline 在这些案例上的 evidence promotion 统计表。",
-      "concreteDeliverables": [
-        {
-          "deliverable": "一页论文主线图",
-          "content": "BAC empirical study -> taxonomy -> agent requirement -> validation workflow -> evaluation protocol。要求明确论文贡献不是单纯 agent demo，而是 empirical study 推导出的 agentic validation。"
-        },
-        {
-          "deliverable": "pattern -> capability 映射表",
-          "content": "至少包含 ownership、tenant isolation、route mismatch 三类；字段为授权边界、所需身份、所需对象、runtime prerequisite、oracle type、常见 failure reason、可自动化程度。"
-        },
-        {
-          "deliverable": "三类 oracle template",
-          "content": "owner vs non-owner、same-tenant vs cross-tenant、canonical route vs variant route。每个模板必须写清楚允许/拒绝预期、对照组、证据字段和 not_executed 条件。"
-        },
-        {
-          "deliverable": "代表案例小 benchmark",
-          "content": "每类选 2-3 个案例，共 6-9 个。每个案例必须有 subject、object、action、context、expected policy、observed behavior、root cause、patch pattern、oracle。"
-        },
-        {
-          "deliverable": "v4 pipeline 统计表",
-          "content": "对 6-9 个代表案例跑一次，统计 static_likely、not_executed、not_confirmed、confirmed，并记录 not_executed 原因。即使结果不好也要交，因为失败分布本身是论文证据。"
-        }
+      "intervention": "要求学生下周停止新增大概念，交付一个“最小实证闭环包”。",
+      "deliverables": [
+        "一页 paper-ready empirical study 初稿：说明样本来源、429 样本构成、3-5 个主 pattern、为什么静态检测不够。",
+        "一个 BAC pattern -> agent capability 映射表：每行包含授权边界、所需身份、所需对象、runtime prerequisite、oracle 类型、常见失败原因、是否进入 evaluation。",
+        "三类核心能力各 2 个案例，共 6 个案例的运行记录：每个案例必须给出 static hypothesis、validation plan、precondition status、probe result、oracle verdict、最终状态。",
+        "一个统计表：6 个案例中 confirmed、likely、not_confirmed、not_executed 的数量和原因。",
+        "一个排除清单：workflow/state、cross-layer inconsistency、frontend-only enforcement 等高阶类别本轮为什么不进入主 evaluation，未来需要什么 oracle 或 memory。"
       ],
-      "successCriterion": "下周成功不应定义为“又想清楚了很多”，而应定义为“taxonomy 中至少三类能力被转成可运行评测，并产生第一张 evidence promotion 结果表”。",
-      "professorRole": "教授最该介入的是定位和口径：确认论文主线是否采用“BAC empirical study + agentic validation”；确认三类代表能力是否足够；确认 benchmark 准入规则和披露风险。工程实现暂时不需要教授介入。",
-      "oneThingProfessorShouldLearn": "这个学生现在最有价值的增量是：他已经把 BAC 自动化从“找漏洞”重构成“用 empirical memory 管理授权边界、用 runtime competence 判断能否验证、用 evidence promotion 控制结论晋升”的研究问题。教授需要学到的是，这个方向的成败不取决于再多报几个候选，而取决于能否把 429 样本 taxonomy 兑现成可执行、可统计、可审计的 agent evaluation。"
+      "successCriterion": "如果下周能交付上述闭环，说明学生已经把抽象研究能力转成实验组织能力；如果只继续扩写 taxonomy、Brainary 映射和新模块名，则说明正在从研究能力增长滑向概念堆叠。",
+      "professorRole": "教授不需要帮他写代码，最需要做的是压缩研究主线、确认样本准入标准、要求 evidence promotion 用数字兑现，并决定论文定位是否采用“BAC empirical study + agentic validation”。"
     }
   }
 }

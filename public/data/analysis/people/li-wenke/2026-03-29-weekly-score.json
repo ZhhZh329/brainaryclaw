@@ -1,54 +1,107 @@
 {
   "key": "person:li-wenke:2026-03-29:weekly-score",
-  "generatedAt": "2026-06-05T22:05:23.782Z",
+  "generatedAt": "2026-06-05T23:05:29.199Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "f65840756e2349dc6cacf9d0c8c2416bcc0a71ad566600c18302d6054aa2f001",
   "result": {
-    "hardProgress": {
-      "score": 13,
-      "reason": "本周产出主要是方法设计资产：三层Score Function、变更影响半径R、Decision Function映射表、合成benchmark设想，以及相关文献定位。硬进展有明确结构，但仍停留在设计层，没有代码实现、实验结果、指标区分度验证或真实数据闭环。",
-      "missingEvidence": "缺少S_struct/S_data/S_task的可运行代码；缺少在现有KG原型上的指标输出；缺少好scheme与坏scheme的对比实验；缺少R阈值或概率调度函数的实证依据。"
+    "week": "2026-03-29",
+    "name": "Li Wenke",
+    "scores": {
+      "hardProgress": {
+        "score": 14,
+        "reason": "本周产出主要是方法设计资产：三层 Score Function、变更影响半径 R、Decision Function 分层映射、合成 benchmark 设想，以及与 AutoSchemaKG/DIAL-KG 的路线差异定位。这些属于可复用的研究框架进展，不只是阅读总结。但当前仍停留在设计层，没有代码、实验、数据集、指标计算结果或真实 pipeline，因此硬进展不能给到高分。",
+        "missingEvidence": [
+          "缺少 S_struct、S_data、S_task 的完整数学公式或伪代码。",
+          "缺少任何实际 KG 原型上的运行结果。",
+          "缺少合成缺陷 benchmark 的样例、规模、生成规则。",
+          "缺少 Decision Function 映射逻辑的可执行实现或测试输出。",
+          "缺少与 AutoSchemaKG/DIAL-KG 的逐项对比表或原文证据摘录。"
+        ]
+      },
+      "cognitiveIncrement": {
+        "score": 13,
+        "reason": "认知增量比较明确：从“需要 score function”推进到“三层评分 + 变更影响半径 + 分层评价调度”的框架，并识别出 construction-first 与 evaluation-driven 的方法论差异。尤其把本体评估、auto schema generation、cost-aware evaluation 三条线连接起来，形成了新的研究定位。但其中部分判断仍是设计假设，例如 evaluation-driven 是否优于 construction-first 尚未被本周证据验证。",
+        "missingEvidence": [
+          "缺少证明 evaluation-driven 路线实际优于 construction-first 路线的实验或案例。",
+          "缺少说明三层指标为何足够覆盖 schema quality 的论证。",
+          "缺少对 OQuaRE/OntoQA 指标如何具体迁移到当前 KG 场景的细化映射。"
+        ]
+      },
+      "cot2Depth": {
+        "score": 12,
+        "reason": "CoT's CoT 有较好的抽象层提升：第一层把文献差异上升为两种知识结构自动化路线；第二层把 R 抽象为通用的评价成本调度器，并联想到代码 review、论文审稿、agent 决策等场景。它不只是重复任务内容，而是在提炼可迁移模式。但“老师原本不知道”的判断缺少外部依据，且两个 CoT's CoT 仍主要基于类比和理论同构，尚未形成可验证命题。",
+        "missingEvidence": [
+          "缺少对 AutoSchemaKG/DIAL-KG 是否真的完全缺失显式 quality model 的系统证据。",
+          "缺少 R 与 Cost-Optimal Active Evaluation 中条件误差之间的严格形式化对应。",
+          "缺少可证伪的研究假设，例如 R 是否能预测 S_task 调用必要性。",
+          "缺少失败案例：哪些情况下 R 不能作为评价成本调度器。"
+        ]
+      },
+      "brainaryMapping": {
+        "score": 8,
+        "reason": "Brainary 映射比较具体：Score Function 对应 calibration，Decision Function 对应 cognitive control，并形成感知、决策、执行、再感知的 metacognitive loop。这比抽象地说“有关联”更可操作，也指出了可能沉淀为 calibration module 和 cognitive control module。但当前映射仍是概念到模块的映射，缺少 Brainary 现有架构接口、输入输出协议、状态变量或集成路径。",
+        "missingEvidence": [
+          "缺少 Brainary 当前系统中 calibration/cognitive control 的具体接口定义。",
+          "缺少 Score Function 如何被 Brainary 调用的输入输出格式。",
+          "缺少闭环执行后的 delta score 如何影响下一次决策的机制。",
+          "缺少与 Brainary 其他模块的依赖关系或冲突分析。"
+        ]
+      },
+      "monetaryValue": {
+        "score": 6,
+        "reason": "商业价值部分给出了市场、客户类型、模块定价和收入估算，具备初步 monetary framing。它明确把价值定位在企业知识库、数据治理、RAG/Agent 基础设施中的 schema 自动维护。但估值仍高度假设化：80 家企业、每月 1200 美元、500–1200 万人民币收入区间都缺少客户访谈、竞品价格、采购路径或付费意愿证据。市场规模数据不能直接推出该模块的可捕获收入。",
+        "missingEvidence": [
+          "缺少客户访谈或真实需求验证。",
+          "缺少竞品功能与定价对比。",
+          "缺少企业为何会单独为 schema quality evaluator 付费的证据。",
+          "缺少从总市场规模到可服务市场、可获得市场的分解。",
+          "缺少产品交付形态、部署成本、销售周期和维护成本估计。"
+        ]
+      },
+      "projectManagement": {
+        "score": 12,
+        "reason": "项目管理信息较完整：说明了当前阶段、原计划与实际完成、投入时间、下周时间、关键里程碑、资源、依赖、成本、关键路径和纠偏动作。下周转向实现的判断也合理。但对风险的管理还不够硬，例如 S_task ground truth、权重确定、阈值学习都被列为卡点，却没有对应的备选方案、截止时间或验收标准。",
+        "missingEvidence": [
+          "缺少每个里程碑的验收标准。",
+          "缺少 S_task ground truth 缺失时的 fallback 方案。",
+          "缺少 AHP 权重无法获得专家输入时的替代策略。",
+          "缺少如果 S_struct/S_data 无法区分好坏 scheme 时的纠偏方案。",
+          "缺少本周 32 小时投入的具体产物链接或文件清单。"
+        ]
+      },
+      "nextAction": {
+        "score": 9,
+        "reason": "下周动作清晰且可验证：实现 S_struct 和 S_data，在现有 KG 原型上运行，用注入缺陷的合成数据测试区分度，并初步实现 Decision Function 的 When→Where/How/Score 层级映射。这个 next action 足够小，能把本周的设计推进到可运行验证。扣分点是验收指标还不够量化，例如什么程度的区分度算成功。",
+        "missingEvidence": [
+          "缺少合成数据规模和缺陷类型比例。",
+          "缺少好 scheme 与坏 scheme 的判定标准。",
+          "缺少指标区分度的量化验收线，例如 AUC、排序一致性或显著性检验。",
+          "缺少下周代码实现的具体模块边界和输出格式。"
+        ]
+      },
+      "evidenceQuality": {
+        "score": 3,
+        "reason": "证据质量中等偏低。周报引用了 OQuaRE、OntoQA、OntoClean、AutoSchemaKG、DIAL-KG、Cost-Optimal Active Evaluation 和多个市场报告，并主动给 CoT's CoT 标为 B 级证据，说明知道哪些判断尚未系统验证。但本周没有提供原文摘录、公式复现、实验数据、链接、表格或可复核材料。主要证据仍是作者的归纳判断。",
+        "missingEvidence": [
+          "缺少论文链接、页码、关键表格或原文摘录。",
+          "缺少市场数据来源的可核验引用。",
+          "缺少实验结果或任何定量输出。",
+          "缺少文献对比矩阵。",
+          "缺少对关键 claim 的反例搜索。"
+        ]
+      }
     },
-    "cognitiveIncrement": {
-      "score": 13,
-      "reason": "认知增量较清楚：从“需要score function”推进到“三层评价函数+变更影响半径+分层评价调度”；并将AutoSchemaKG/DIAL-KG定位为construction-first，把自己的路线定义为evaluation-driven。这个增量有助于形成论文贡献点和工程架构。",
-      "missingEvidence": "缺少对AutoSchemaKG/DIAL-KG具体机制的逐项对照表；缺少证明它们确实没有显式schema quality score function的引用段落；缺少说明evaluation-driven路线优于construction-first的实验假设。"
-    },
-    "cot2Depth": {
-      "score": 12,
-      "reason": "CoT's CoT不只是复述任务，而是抽象出两层可迁移模式：一是construction-first与evaluation-driven的认识论差异，二是变更影响半径作为评价成本调度器。第二点还能迁移到代码review、agent验证等场景，具备较好的泛化深度。但部分判断仍是概念推断，尚未被本周实验验证。",
-      "missingEvidence": "缺少Cost-Optimal Active Evaluation如何形式化映射到R与S_task调用概率的具体公式；缺少本场景下条件误差、评价成本、strong rater的定义；缺少任何实验或模拟结果支撑“最优调度”说法。"
-    },
-    "brainaryMapping": {
-      "score": 8,
-      "reason": "Brainary映射较具体：将Score Function对应calibration，将Decision Function对应cognitive control，并形成“感知—决策—执行—再感知”的metacognitive loop。这比抽象关联更有工程落点。",
-      "missingEvidence": "缺少Brainary现有能力框架中的正式接口或模块边界；缺少说明该loop如何接入现有Brainary系统；缺少输入输出格式、状态变量和触发条件。"
-    },
-    "monetaryValue": {
-      "score": 6,
-      "reason": "报告给出了市场规模、潜在客户类别、模块定价假设和年收入估算，商业价值框架完整。但估值主要来自TAM和类比定价，尚未证明目标客户愿意为“evaluation-driven schema maintenance”单独付费，也没有竞争产品价格或采购场景证据。",
-      "missingEvidence": "缺少客户访谈、付费意愿、竞品价格、采购预算归属、真实使用痛点强度；缺少从市场规模到80家企业客户的转化率依据；缺少该模块相比现有数据目录或知识治理工具的不可替代性证据。"
-    },
-    "projectManagement": {
-      "score": 12,
-      "reason": "项目管理信息较完整：有阶段、投入时间、下周投入、关键里程碑、资源、依赖、成本、阻塞与纠偏动作。下周目标也从设计转向实现，路径合理。但本周没有形成可验收产物，且“进度符合预期”的判断主要由本人自评支撑，风险拆解不够。",
-      "missingEvidence": "缺少明确验收标准，例如指标区分度达到多少才算成功；缺少实现任务拆分、时间盒和失败预案；缺少S_task数据集构造计划；缺少如果S_struct/S_data无法区分好坏scheme时的备选方案。"
-    },
-    "nextAction": {
-      "score": 9,
-      "reason": "下周最小可验证动作明确：实现S_struct和S_data，在现有KG原型上运行，用注入缺陷的合成数据测试区分度，并跑通Decision Function的硬阈值pipeline。这些动作可执行、可验证，并直接承接本周卡点。",
-      "missingEvidence": "缺少具体数据规模、缺陷注入类型数量、评价指标、成功阈值；缺少代码交付形式和实验记录格式；缺少谁来确认“好scheme/坏scheme”的ground truth。"
-    },
-    "evidenceQuality": {
-      "score": 3,
-      "reason": "证据质量中等偏弱。报告引用了OQuaRE、OntoQA、OntoClean、AutoSchemaKG、DIAL-KG、Cost-Optimal Active Evaluation和市场报告，并主动标注CoT's CoT证据等级为B。但核心主张仍主要依赖文献阅读后的归纳，没有实验、代码、数据表、截图或引用原文支撑。",
-      "missingEvidence": "缺少论文链接、关键段落摘录、对比表、实验日志、市场报告出处页码或链接；缺少任何本周实际运行结果；缺少对R、三层score和benchmark设计的可复现实证材料。"
-    },
-    "totalScore": 76,
+    "totalScore": 77,
     "tier": "B",
-    "oneLineJudgment": "本周完成了有价值的方法框架设计和学术定位，但硬产物尚未落地，当前仍是“设计可信、证据不足、待代码验证”的阶段。",
-    "professorFollowUp": "老师最应该追问三件事：第一，AutoSchemaKG和DIAL-KG是否真的缺少显式schema quality score function，请学生给出逐项对照表和论文原文证据；第二，下周S_struct/S_data实验的成功标准是什么，例如在注入缺陷benchmark上需要达到怎样的区分度；第三，Cost-Optimal Active Evaluation如何从概念迁移为R到S_task调用概率的具体数学公式。"
+    "oneLineJudgment": "本周是高质量的方法设计周，形成了 Score Function 与 Decision Function 的研究框架，但尚未进入可验证实现阶段，核心风险是概念框架能否被实验结果支撑。",
+    "professorFollowUp": [
+      "请先判断 evaluation-driven vs construction-first 是否足以构成论文主贡献；如果不足，应要求学生把贡献改写为“schema quality evaluator + benchmark”。",
+      "要求下周必须交付 S_struct/S_data 的代码、合成缺陷数据样例和至少一张区分好坏 scheme 的结果表。",
+      "要求学生把 R 从启发式阈值改为可学习调度函数之前，先验证 R 是否与实际评估收益或错误风险相关。",
+      "要求补一张文献对比表：AutoSchemaKG、DIAL-KG、OQuaRE、OntoQA、本文方法分别是否包含显式 score function、任务指标、结构指标、成本调度、闭环修改。",
+      "当前最应该学到的一点是：学生已经找到一个可能有论文定位的断层——auto schema generation 缺少显式 schema quality model；但这个断层只有在下周被实验和 benchmark 固化后，才会从观点变成贡献。"
+    ]
   }
 }
