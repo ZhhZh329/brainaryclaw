@@ -1,54 +1,107 @@
 {
   "key": "person:li-chunhan:2026-05-17:weekly-score",
-  "generatedAt": "2026-06-06T00:04:51.118Z",
+  "generatedAt": "2026-06-06T01:04:18.074Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "f6ec0024badc1b1e7ece4219b2cc68a56d03205fd4c9105bc3577b34b53aae9e",
   "result": {
-    "hardProgress": {
-      "score": 12,
-      "reason": "本周有明确的技术推进：从单一全局表征转向多通道特征分解，初步跑了 DINOv3 不同 layer/token 的 probe，设计了 query-aware 与 frame-aware Router，并提出前后帧差分作为第三类输入。但硬进展主要停留在“初步 probe”和“方案设计”，缺少可复现结果、指标、样例、消融表或代码完成度说明。",
-      "missingEvidence": "缺少 DINOv3 probe 的具体实验设置、样本规模、LMEE-Bench 各 failure 类别上的准确率/可分性指标、Router 是否实际实现、差分特征是否跑通的定量结果。"
+    "week": "2026-05-17",
+    "name": "李春晗",
+    "scores": {
+      "hardProgress": {
+        "score": 11,
+        "reason": "本周声称完成了三类硬进展：DINOv3 多层/多 token 初步 probe、Feature Router 架构草案、前后帧差分轻量特征方案或初步跑通。进展方向与 LMEE-Bench 的 Counting、Location、Relationship、Attribute failure 类直接相关，属于有效推进。但周报没有给出任何实验表格、样本数、baseline、指标、对照组或可复现实验链接，因此“跑通”和“可分性”仍停留在陈述层，硬证据不足。",
+        "missingEvidence": [
+          "缺少 DINOv3 不同 layer/token 在各 failure 类上的定量 probe 结果",
+          "缺少 LMEE-Bench 子集规模、样本选择方法和评价指标",
+          "缺少 Router 雏形的代码、训练日志或消融结果",
+          "缺少前后帧差分方法的实际输出案例和失败/成功样例",
+          "缺少与单一全局 embedding baseline 的对比"
+        ]
+      },
+      "cognitiveIncrement": {
+        "score": 12,
+        "reason": "CoT 增量明确：把视觉 embedding 从单一全局表征改写为轮廓、颜色、材质、物体、空间布局、运动等子能力通道，并进一步把 DINOv3 内部 layer/token 差异映射到这些通道。这比一般的“换 encoder”更有结构化认知增量。meta-cognition 的理解也从事后 failure 归因推进到事前特征选路，形成了 query+frame 到通道置信度向量的建模想法。扣分点是这些认知增量主要来自合理推演，尚未由实验结果反向修正或验证。",
+        "missingEvidence": [
+          "缺少不同通道与不同 failure 类之间的实证关联矩阵",
+          "缺少 meta-cognition 作为特征通道置信度向量时的训练目标定义和效果验证",
+          "缺少哪些原有假设被本周实验推翻或修正的记录"
+        ]
+      },
+      "cot2Depth": {
+        "score": 12,
+        "reason": "CoT's CoT 有两条较清楚的二阶判断：第一，不急于外挂多 encoder，而是先挖掘单 encoder 内部多源特征；第二，Router 应同时 query-aware 与 frame-aware，而不是 query-only。每条都写了自动化科研未吸收的原因、沉淀形式、证据等级，符合模板要求。缺点是二阶判断目前仍是设计原则，尚未形成可判定的实验命题，例如什么时候内部特征不够、什么时候必须外挂 encoder。",
+        "missingEvidence": [
+          "缺少 intra-encoder 与 multi-encoder 的等价对照实验",
+          "缺少 query-only Router、frame-only Router、query+frame Router 的对比",
+          "缺少证明这些二阶判断能提升 LMEE-Bench 指标的结果",
+          "缺少边界条件：哪些 failure 类内部 DINOv3 特征可能不足"
+        ]
+      },
+      "brainaryMapping": {
+        "score": 7,
+        "reason": "周报把本周工作映射到 Brainary 的 perception、workflow，并预接 memory：特征通道分解对应 perception，Router 决策对应 workflow，时序差分作为 short-term memory 节点边。映射方向清楚，也有潜在统一 schema。但目前仍是概念映射，没有给出 Brainary 内部数据结构、节点/边定义、接口字段或系统接入路径。",
+        "missingEvidence": [
+          "缺少 Brainary schema 的具体字段定义",
+          "缺少 perception、workflow、memory 三者之间的数据流图或接口说明",
+          "缺少时序差分作为 STM 边的存储和检索机制",
+          "缺少与现有 Brainary 模块的兼容性说明"
+        ]
+      },
+      "monetaryValue": {
+        "score": 4,
+        "reason": "周报给出了 60 万和 80 万人民币估值，但估值主要按人月成本和假设性替代成本计算，没有对应可交付资产、性能提升、商业场景、复用次数或节省成本的证据。当前更像研究设计价值，而不是已实现的货币价值。可以保留为潜在价值判断，但不能按已创造价值计高分。",
+        "missingEvidence": [
+          "缺少可交付资产清单，例如代码模块、数据集、评测接口、训练标签表",
+          "缺少性能收益或成本节省的量化证据",
+          "缺少与业界动态 routing 模块成本的可比案例",
+          "缺少潜在用户、部署场景或复用路径",
+          "缺少本周成果能独立产生经济价值的证据"
+        ]
+      },
+      "projectManagement": {
+        "score": 10,
+        "reason": "项目管理部分说明了当前阶段、已完成事项、下周计划和投入时间，任务链条从 probe 到 Router 小规模训练再到 Counting/Attribute 验证，具备基本项目推进结构。问题是计划还不够工程化：没有明确验收标准、里程碑指标、风险项、优先级、代码交付物和失败预案。",
+        "missingEvidence": [
+          "缺少下周任务的验收指标，例如准确率提升、召回率、路由稀疏度或计算开销",
+          "缺少实验优先级和如果 SigLIP/RADIO 结果不一致时的决策规则",
+          "缺少代码仓库、实验配置、数据版本和可复现记录",
+          "缺少风险管理，例如 DINOv3 token 分解不稳定、弱监督标签噪声、Router 过拟合",
+          "缺少每项任务预计耗时和负责人/依赖关系"
+        ]
+      },
+      "nextAction": {
+        "score": 8,
+        "reason": "下周行动较具体：把 DINOv3 多层 probe 扩展到 SigLIP/RADIO，形成通道-failure 关联矩阵；实现 query-aware × frame-aware Router，并在 LMEE-Bench Counting/Attribute 上做针对性消融。这些动作能直接验证本周核心假设。扣分点是没有写清楚具体实验设置、成功阈值和最小可交付结果。",
+        "missingEvidence": [
+          "缺少每个 probe 的指标、样本量和统计方法",
+          "缺少 Router 消融实验的 baseline 列表",
+          "缺少成功/失败判定阈值",
+          "缺少下周最小可交付物，例如一张矩阵、一组消融表、一个可运行脚本"
+        ]
+      },
+      "evidenceQuality": {
+        "score": 2,
+        "reason": "周报主动标注多个结论为证据等级 C，这是诚实的，但也说明当前证据质量偏低。多数内容是架构方案、小规模 probe 或设计判断，没有展示原始结果、图表、样例、日志或可复现材料。证据能够支持“方向值得继续试”，但不足以支持“方法有效”。",
+        "missingEvidence": [
+          "缺少原始实验数据和统计结果",
+          "缺少可复现配置",
+          "缺少定量图表",
+          "缺少失败案例和成功案例对照",
+          "缺少跨 encoder 验证"
+        ]
+      }
     },
-    "cognitiveIncrement": {
-      "score": 12,
-      "reason": "认知增量较清楚：把视觉 embedding 从统一表征拆成轮廓、颜色、材质、物体、空间布局、运动等子能力通道，并将这些通道与 Counting、Location、Relationship、Attribute 等 failure 类型建立对应关系；同时提出 Router 不应调用全部通道，而应按 query 和 frame 动态选路。该增量对后续实验设计有直接指导意义。",
-      "missingEvidence": "缺少这些通道划分是否真的对应不同 failure 类的定量验证；目前更多是合理假设，而不是已被实验证实的认知结论。"
-    },
-    "cot2Depth": {
-      "score": 11,
-      "reason": "CoT's CoT 覆盖了较完整的二阶反思：为什么不急着外挂多 encoder、为什么 Router 应同时 query-aware 和 frame-aware、为什么这些思路尚未被自动化科研吸收、可沉淀成什么模块和 schema。报告也主动给出证据等级 C，说明作者知道当前结论不稳。但深度仍受限于证据薄弱，且多处写明“老师原本不知道的吗：否”，说明对教授的新信息价值有限。",
-      "missingEvidence": "缺少 intra-encoder decomposition 与 multi-encoder fusion 的直接对照；缺少 query-only、frame-only、query+frame Router 的对比；缺少自动化科研为什么尚未吸收该能力的文献或系统证据。"
-    },
-    "brainaryMapping": {
-      "score": 8,
-      "reason": "Brainary 映射较明确：perception 对应特征通道分解，workflow 对应 Router 决策，memory 对应前后帧差分和 short-term memory 节点边。该映射不是泛泛贴标签，而是提出了 feature-source decomposition、双条件 Router、时序差分作为 STM 边的统一 schema。",
-      "missingEvidence": "缺少 Brainary 内部 schema 的具体字段、节点/边定义、模块接口、输入输出格式，以及该映射如何进入现有 Brainary 系统的实现路径。"
-    },
-    "monetaryValue": {
-      "score": 3,
-      "reason": "报告给出了 60 万和 80 万人民币的估值，但依据主要是人月成本类比，缺少可交付物成熟度、市场需求、替代成本、客户场景、可复用程度、部署约束等证据。目前本周产出仍是初步 probe 和架构方案，直接货币价值被明显高估。",
-      "missingEvidence": "缺少真实工业需求、同类模块采购/研发成本、可复用代码或 benchmark 结果、能节省多少实验成本的量化记录、以及该模块是否能独立交付。"
-    },
-    "projectManagement": {
-      "score": 11,
-      "reason": "项目管理信息较完整：说明当前阶段为实验到模块化重构，列出本周完成事项、下周计划、投入时间 28h 和下周预计 30h。任务之间有连续性，下一步指向 SigLIP/RADIO 交叉验证和 Router 小规模训练。但计划仍缺少验收标准、风险管理、优先级排序和失败时的备选路径。",
-      "missingEvidence": "缺少每个任务的完成标准，例如多少样本、哪些指标、什么结果算验证成功；缺少代码仓库/实验日志；缺少风险点，如 Router 训练信号噪声、LMEE failure 标签是否足够可靠。"
-    },
-    "nextAction": {
-      "score": 8,
-      "reason": "下周行动清楚且与本周结论对齐：扩展到 SigLIP/RADIO，形成通道-failure 关联矩阵；实现 query-aware × frame-aware Router，并在 LMEE-Bench Counting/Attribute 上做消融。这些动作能够直接检验本周核心假设。",
-      "missingEvidence": "缺少具体执行粒度，例如优先跑哪个 encoder、每类多少样本、Router baseline 是什么、消融表包含哪些列、预期最低改进阈值是多少。"
-    },
-    "evidenceQuality": {
-      "score": 2,
-      "reason": "作者主动将关键结论标为 C 级证据，这是诚实的；但从周报本身看，几乎没有定量数据、图表、样例、失败案例、实验日志或代码状态。证据主要是概念推理和初步 probe 的口头描述，因此证据质量偏低。",
-      "missingEvidence": "缺少任何可检查的实验结果：准确率、AUC、聚类可分性、probe 设置、样本量、可视化、消融结果、代码链接、失败案例截图或表格。"
-    },
-    "totalScore": 67,
-    "tier": "C",
-    "oneLineJudgment": "本周方向收敛且概念架构有价值，但硬证据不足，仍处于从想法到可验证模块的早期阶段。",
-    "professorFollowUp": "教授应重点追问三件事：第一，DINOv3 不同 layer/token 对 Counting、Location、Relationship、Attribute 的可分性到底有什么定量结果；第二，query-only、frame-only、query+frame Router 的最小对照实验如何设计；第三，下周必须交付一张 feature-source × failure-type 关联矩阵和一张 Router 消融表，否则该方向仍只是合理架构而非研究进展。"
+    "totalScore": 66,
+    "tier": "B",
+    "oneLineJudgment": "本周的概念收敛和模块设计较强，但硬实验和证据链不足，当前应视为有潜力的研究假设生成周，而不是结果验证周。",
+    "professorFollowUp": [
+      "要求学生下周必须提交一张 feature-source × failure-type 定量关联矩阵，至少包含 DINOv3、SigLIP、RADIO 三个 encoder 或说明未完成原因。",
+      "要求给出 Router 的最小消融表：无 Router、query-only、frame-only、query+frame、query+frame+diff 五组对比。",
+      "要求明确 LMEE-Bench Counting/Attribute 子集样本量、指标、baseline 和成功阈值。",
+      "要求把“前后帧差分作为 STM 节点边”写成具体 schema，而不是只保留概念描述。",
+      "教授本周最该学到的一点：动态特征路由的关键不是继续堆 encoder，而是先把单一 encoder 内部的 layer/token 多源特征结构化拆出，再用 query 与 frame 的双条件决定按需调用哪些视觉子能力。"
+    ]
   }
 }

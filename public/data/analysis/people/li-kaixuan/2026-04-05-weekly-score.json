@@ -1,101 +1,96 @@
 {
   "key": "person:li-kaixuan:2026-04-05:weekly-score",
-  "generatedAt": "2026-06-06T00:05:12.722Z",
+  "generatedAt": "2026-06-06T01:04:22.667Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "4c069e45e7bb615fd5e7c184ca70f48a1200421b7f2b1583d675f7236c9e8c81",
   "result": {
-    "week": "2026-04-05",
-    "name": "Li Kaixuan",
     "hardProgress": {
       "score": 11,
-      "reason": "本周有明确的技术推进表述：PoC Migration 给出了约束可满足性 formulation 和 pipeline；Fuzz Driver 识别了 type dependency graph 过连、semantic pruning、lifecycle 约束；IMO 给出了 FP root cause mapping。但这些主要是框架化、归纳和设计层面的进展，缺少代码实现、实验结果、数据集规模、案例验证、论文段落完成度等硬产出证据。",
+      "reason": "本周有明确的技术推进，尤其是 PoC Migration 的形式化定义、pipeline 拆解，以及 Fuzz Driver 中对 Type Dependency Graph、semantic pruning、lifecycle 约束的重新设计。但大部分进展仍停留在 formulation、pipeline、insight 和设计层面，缺少可验证的硬产物，例如代码提交、实验结果、benchmark、case study、消融实验或论文段落完成情况。",
       "missingEvidence": [
-        "PoC Migration 是否已有可运行原型、完成了哪些模块、通过了多少案例验证缺失。",
-        "所谓 dependency explosion 最高 79 的来源、样本项目、统计方法缺失。",
-        "IMO 中 80% FP 属于 M-O mismatch 的样本量、标注标准、案例列表缺失。",
-        "ASE paper 当前完成度、实验补充具体缺口缺失。"
+        "没有给出 PoC Migration 的实验数据、成功迁移案例、失败案例或 precision/recall 对比。",
+        "没有说明 pipeline 中哪些模块已经实现，哪些只是设计。",
+        "Fuzz Driver Generation 没有提供生成 driver 的数量、有效率、coverage 或 bug finding 结果。",
+        "IMO Framework 没有给出系统性样本规模、标注标准或分析结果表。"
       ]
     },
     "cognitiveIncrement": {
       "score": 12,
-      "reason": "认知增量较明显：将 PoC migration 和 FP validation 统一到“验证”问题，将 fuzzing 的瓶颈从 coverage 转向 semantic reachability，并提出 LLM 需要结构约束而非自由探索。这些是有价值的研究抽象。但部分判断仍停留在高层概念，缺少由具体失败案例或实验反推出来的证据链。",
+      "reason": "认知增量较强。报告把三个方向统一到“程序语义理解”和“从检测转向验证”的框架下，并明确指出 fuzzing 的瓶颈不是 coverage，而是 semantic reachability。这些是有研究判断价值的抽象提升。缺点是部分判断仍是概念性总结，缺少由具体实验或失败案例推出结论的链条。",
       "missingEvidence": [
-        "这些 insight 是从哪些实验、样本、错误案例中归纳出来的缺失。",
-        "与现有工作相比，认知增量的边界和新颖性论证缺失。",
-        "不同方向之间为何应统一到程序语义理解，缺少反例和排除性分析。"
+        "缺少说明这些认知是由哪些具体实验、案例或反例推导出来的。",
+        "“AI安全研究从检测转向验证”这一判断缺少外部证据或产业需求验证。",
+        "“coverage-based 方法接近上限”缺少数据支持。"
       ]
     },
     "cot2Depth": {
-      "score": 10,
-      "reason": "报告有一定元认知：反思 type matching 不等于 semantic dependency、LLM 缺乏结构约束、coverage 不是主要瓶颈，并对三个方向做了优先级排序。但 CoT 的 CoT 深度仍不足：没有充分展示自己如何从观察到判断、如何否定旧假设、如何选择下一步验证路径，也没有明确关键不确定性和判别实验。",
+      "score": 11,
+      "reason": "具备一定 CoT 的 CoT 深度：不仅描述做了什么，还反思了为什么现有路径不够，如 type matching 不等于 semantic dependency、纯 LLM 缺乏结构约束、heuristic prompt 应转向 symbolic feedback。报告也能比较三个方向的战略优先级。但深度还不够，主要缺少对关键假设的反证、替代路线比较、失败条件和决策阈值。",
       "missingEvidence": [
-        "从旧假设到新假设的推理链条缺失。",
-        "每个核心判断对应的可证伪实验设计缺失。",
-        "优先级排序背后的约束条件、机会成本、失败阈值缺失。",
-        "哪些判断只是直觉、哪些已被证据支持没有区分。"
+        "没有明确哪些假设如果被证伪，项目方向需要调整。",
+        "没有比较 constraint-based、diff-based、dynamic replay 等路线的成本与风险。",
+        "没有给出为什么 PoC Migration 当前应高于 Fuzz Driver 的具体资源配置依据。"
       ]
     },
     "brainaryMapping": {
       "score": 8,
-      "reason": "Brainary mapping 表现较好：报告把 PoC、Fuzz Driver、IMO 分别映射到自动漏洞验证、Agentic Testing、AI-assisted code auditing，并进一步连接到 DevSecOps、AI 测试平台、代码扫描工具等产业场景。问题是映射仍偏概念层，缺少“研究能力—系统模块—用户工作流—商业闭环”的逐层拆解。",
+      "reason": "Brainary mapping 较清楚。报告把 PoC Migration 映射到 AI-driven AppSec / DevSecOps，把 Fuzz Driver 映射到 Agentic Testing / Autonomous QA，把 IMO 映射到 AI-assisted code auditing，并说明了各自替代人工的环节。问题是映射仍偏宏观，没有进一步落到具体用户、工作流入口、可集成产品形态和可衡量价值指标。",
       "missingEvidence": [
-        "每个研究方向对应的具体产品形态、用户角色、使用流程缺失。",
-        "与 GitHub Advanced Security、Snyk、OSS-Fuzz 等现有系统的差异化缺失。",
-        "Brainary mapping 中各节点之间的依赖关系和优先级缺失。"
+        "缺少具体目标用户画像，例如安全工程师、DevSecOps 平台、SAST 厂商或测试团队的实际工作流。",
+        "缺少产品化路径，例如 IDE 插件、CI/CD bot、漏洞验证服务或测试生成平台。",
+        "缺少与现有工具的差异化比较，例如 Snyk、GitHub Advanced Security、OSS-Fuzz、CodeQL。"
       ]
     },
     "monetaryValue": {
       "score": 6,
-      "reason": "报告主动讨论了产业映射和估值逻辑，尤其指出 PoC Migration 替代安全工程师验证、Fuzz Driver 替代测试工程，商业意识较强。但 monetary value 仍缺少可量化依据：没有目标客户、付费场景、节省人力、单次验证成本、市场规模、集成路径或竞品价格，因此只能算方向判断，不能算商业论证。",
+      "reason": "报告有货币价值意识，尤其强调“可替代人工程度”比论文影响力更接近 AI 估值逻辑，并判断 PoC Migration 商业价值最高。但还没有进入真正的商业价值分析：没有估算节省的人力时间、客户付费场景、部署成本、市场规模、定价方式或转化路径。",
       "missingEvidence": [
-        "PoC Migration 能为企业节省多少漏洞验证时间或人力成本缺失。",
-        "潜在客户类型、购买方、部署场景缺失。",
-        "与现有 DevSecOps 或 AppSec 工具的价格、能力、缺口对比缺失。",
-        "商业价值排序的量化依据缺失。"
+        "没有量化 PoC Migration 可替代多少安全验证人力。",
+        "没有说明企业为什么愿意付费，以及付费对象是谁。",
+        "没有给出 ROI、TAM/SAM/SOM、定价模式或竞品成本对比。",
+        "没有说明研究成果到产品功能之间还缺哪些工程环节。"
       ]
     },
     "projectManagement": {
       "score": 9,
-      "reason": "报告有优先级排序、风险识别和下周计划，说明项目管理意识存在。PoC 被明确设为最高优先级，并关联 ASE deadline。但管理颗粒度不足：没有里程碑、完成标准、时间预算、阻塞项、依赖关系、实验排期，也没有说明三个方向如何避免并行分散。",
+      "reason": "项目管理有基本结构：三个方向有优先级排序，风险也有列出，下周计划也按方向排列。尤其 PoC Migration 被明确为最高优先级，有助于资源聚焦。但管理颗粒度不足，没有里程碑、交付物、验收标准、时间预算、阻塞项状态，也没有说明本周计划完成率。",
       "missingEvidence": [
-        "每个方向本周计划与实际完成情况的对照缺失。",
-        "ASE deadline 前的倒排计划缺失。",
-        "下周每项任务的完成标准和验收指标缺失。",
-        "三个方向之间的时间分配和取舍规则缺失。",
-        "当前最大 blocker 及需要导师介入的事项缺失。"
+        "没有列出本周原定目标与实际完成情况的对照。",
+        "没有说明每个项目当前处于设计、实现、实验、写作还是投稿阶段。",
+        "没有明确 ASE deadline 前的倒排计划。",
+        "没有给出风险的缓解方案和优先级。"
       ]
     },
     "nextAction": {
       "score": 7,
-      "reason": "下周行动有明确方向：PoC 完成实验补充和论文收敛，Fuzz Driver 设计 ASG 与 dependency validation，IMO 探索 SMT consistency checking 和形式化 I-M-O relation。问题是动作仍是任务名级别，没有可执行验收标准，例如完成几个 benchmark、写完哪几个 section、ASG 包含哪些节点边、SMT 检查验证哪些案例。",
+      "reason": "下周行动方向明确，包括 PoC 实验补充与论文收敛、ASG 初版设计、dependency validation、SMT-based consistency checking 和 I-M-O formalization。但这些 action 仍偏任务标题，缺少可验收标准。例如“完成实验补充”没有说明补哪些实验、多少 case、什么指标达标；“ASG 初版结构”也没有说明输出形式。",
       "missingEvidence": [
-        "PoC 实验补充的具体实验表、数据集、baseline 缺失。",
-        "论文写作要完成的章节和提交前检查项缺失。",
-        "ASG 初版结构的最小可交付定义缺失。",
-        "SMT-based consistency checking 的最小 demo 或案例目标缺失。"
+        "缺少每个 next action 的具体交付物。",
+        "缺少量化验收标准，例如完成多少个 CVE、多少个 API、多少条 FP case。",
+        "缺少优先级内的时间分配，例如 PoC 占多少时间，Fuzzing 是否只做设计。",
+        "缺少如果 PoC 实验失败时的备选计划。"
       ]
     },
     "evidenceQuality": {
       "score": 2,
-      "reason": "证据质量偏弱。报告包含一些看似具体的数字和案例，如 dependency 最高 79、80% FP、CodeQL #21066、vpx_calloc、ZipSlip，但没有样本量、实验过程、截图、代码链接、表格、commit、benchmark 或复现实验说明。大量结论目前更像研究判断，而不是已被证据支撑的结果。",
+      "reason": "证据质量偏弱。报告有少量具体例子，如 CodeQL #21066、vpx_calloc、ZipSlip、dependency explosion 最高 79，以及 80% FP 属于 M-O mismatch。但这些数字和案例没有上下文、样本量、数据来源、复现方式或分析表，因此更像观察结论而不是可审计证据。",
       "missingEvidence": [
-        "实验日志、代码提交、数据表、案例列表缺失。",
-        "关键数字的来源和计算方法缺失。",
-        "对比 baseline 和失败案例缺失。",
-        "可复现证据缺失。"
+        "缺少实验表格、case list、代码链接、commit、日志或 benchmark。",
+        "“80% FP 属于 M-O mismatch”没有样本量和统计口径。",
+        "“dependency explosion 最高可达 79”没有说明项目、图构建方法和影响。",
+        "没有失败案例或负结果，难以判断结论稳健性。"
       ]
     },
-    "totalScore": 65,
+    "totalScore": 66,
     "tier": "C",
-    "oneLineJudgment": "这是一份认知和选题映射较强、但硬证据和项目闭环不足的周报；当前更像研究战略备忘录，而不是可验收的周进展报告。",
+    "oneLineJudgment": "这一周的战略抽象和选题映射较强，但硬证据和可验收产出不足，当前更像研究路线重构周，而不是实验或工程突破周。",
     "professorFollowUp": [
-      "请学生下周只把 PoC Migration 作为第一优先级，给出可运行原型、实验表、baseline、失败案例和 ASE 论文完成度。",
-      "要求学生把“验证”这个总洞察落到一个最小可证伪实验：例如给定若干 PoC，证明 constraint-based validation 比 diff-based migration 更准确。",
-      "追问 80% M-O mismatch 和 dependency explosion 79 的数据来源；如果没有系统统计，需要标注为观察而非结论。",
-      "要求下周计划改成可验收格式：任务、输入、输出、完成标准、风险、需要导师决策的问题。",
-      "教授本周最应该关注的一点：学生已经找到较有价值的统一母题——从检测走向语义验证，但必须尽快用实验和论文产出证明它不是高层叙事。"
+      "要求学生下周只保一个最高优先级交付：PoC Migration 至少给出一张实验表，包含案例数、迁移成功率、失败原因和与 baseline 的对比。",
+      "追问 PoC Migration 的 pipeline 哪些模块已经实现，哪些仍是概念设计，并要求用模块状态表回答。",
+      "要求把“检测到验证”的大判断落到一个最小可发表 claim：具体解决什么验证问题、优于什么方法、证据是什么。",
+      "要求 Fuzz Driver 和 IMO 暂时降为 supporting track，除非能提供可量化实验，否则不要分散 ASE 前的写作与实验资源。"
     ]
   }
 }

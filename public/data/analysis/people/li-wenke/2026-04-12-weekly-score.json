@@ -1,97 +1,60 @@
 {
   "key": "person:li-wenke:2026-04-12:weekly-score",
-  "generatedAt": "2026-06-06T00:05:40.354Z",
+  "generatedAt": "2026-06-06T01:04:47.773Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "1f560b72d0907eafcb8194fbf77b4b3a6bf9dda5748fa1081762798d3ebc55ac",
   "result": {
     "hardProgress": {
-      "score": 18,
-      "reason": "本周有明确硬产出：实现了S_struct和S_data共6个子指标，构建了5类合成缺陷注入benchmark，并在现有KG原型上完成首轮验证，报告了不同缺陷类型下的分数变化和维度非正交发现。进展从数学设计推进到代码、benchmark和实验闭环，属于高质量硬进展。",
-      "missingEvidence": [
-        "缺少代码仓库、提交记录或模块接口说明。",
-        "缺少完整实验表格、样本规模、schema数量和重复实验次数。",
-        "缺少clean schema与defective schema pair的具体示例。"
-      ]
+      "score": 17,
+      "reason": "本周有明确硬进展：完成了S_struct与S_data共6个子指标的Python实现，构建了5类合成缺陷注入benchmark，并在现有KG原型上完成首轮验证，报告了不同缺陷对S_struct/S_data的响应差异和非正交性发现。进展从“数学设计”推进到“代码实现+实验验证”，符合模板中硬进展要求。扣分点在于没有提供代码仓库、实验表格、样本规模、schema规模、重复次数、随机种子或原始score矩阵，因此硬进展可信但不可复核。",
+      "missingEvidence": "缺少代码链接、benchmark生成样例、clean/defective schema pair数量、每类缺陷的具体score表、实验重复次数、随机种子、统计显著性或误差范围。"
     },
     "cognitiveIncrement": {
-      "score": 14,
-      "reason": "认知增量明确且由实验触发：S_struct和S_data并非正交，导致加权求和聚合假设被推翻；KL散度比原始熵更适合作为偏离均匀分布的度量；将问题定位到evaluation-driven范式和Test-Driven Schema Evolution。认知不是泛泛总结，而是直接改变了方法设计。",
-      "missingEvidence": [
-        "维度相关性r≈0.6的计算过程和数据矩阵未展示。",
-        "VIKOR优于其他MCDM方法的比较仍主要是理论判断，缺少实验对比。",
-        "跨领域类比尚未转化为论文结构或可检验假设。"
-      ]
+      "score": 13,
+      "reason": "认知增量集中且有效：最重要的是从实验中发现S_struct与S_data并非正交，进而否定简单加权求和，并转向VIKOR等MCDM聚合方法；同时将工作定位为evaluation-driven范式在KG schema management中的实例化，并提出Test-Driven Schema Evolution类比。这些不是泛泛总结，而是由实现和实验触发的方法修正。扣分点是部分认知仍停留在类比和定位层面，尚未通过与construction-first或其他方法的实证比较证明。",
+      "missingEvidence": "缺少S_struct与S_data相关性矩阵、加权求和失败案例、VIKOR相对加权求和的排序改进证据、与现有schema generation/maintenance方法的对比实验。"
     },
     "cot2Depth": {
-      "score": 13,
-      "reason": "CoT's CoT部分能解释为什么老师原本不知道、信息差来自哪里、认知如何由实现和实验产生，并进一步抽象为评价体系自检和方法论自修正。深度较好，尤其是把“设计假设→实验验证→方法修正”作为evaluation-driven的元层实例。不过部分判断如“VIKOR是最佳候选”证据还不足。",
-      "missingEvidence": [
-        "缺少VIKOR、Choquet Integral、PROMETHEE、ELECTRE等候选聚合方法的系统比较。",
-        "缺少证明VIKOR在当前schema排序任务中实际优于加权求和的排序结果。",
-        "部分“老师原本不知道”的判断仍是推测。"
-      ]
+      "score": 12,
+      "reason": "CoT's CoT部分能从具体实验上升到方法论层：把“设计假设→实验验证→聚合方法修正”解释为evaluation-driven的元层闭环，并能区分实验支撑与文献类比支撑。这个层次有价值。主要扣分点是对VIKOR的适用性判断略提前：报告声称VIKOR不假设维度独立性、能避免双重计数，但尚未证明它在当前指标相关结构下确实优于加权求和；此外“老师原本不知道”部分有较多推测，证据不足。",
+      "missingEvidence": "缺少VIKOR与加权求和、TOPSIS、Choquet Integral等聚合方法在同一benchmark上的排序稳定性、缺陷检测准确率或决策质量对比；缺少说明VIKOR如何处理指标相关性的理论或实验依据。"
     },
     "brainaryMapping": {
-      "score": 8,
-      "reason": "Brainary映射比较具体：将维度正交性检验、聚合方法切换和评价体系自检映射到self-diagnosis能力，并提出可沉淀为self-diagnosis module。不是只做概念贴标签，而是给出了操作路径。但Brainary本身的能力框架、接口边界和与现有模块的关系仍不够明确。",
-      "missingEvidence": [
-        "缺少Brainary现有模块或能力图谱中的具体节点对应关系。",
-        "缺少self-diagnosis module的输入、输出、触发条件和接口定义。",
-        "缺少该映射如何进入Brainary系统实现的路线图。"
-      ]
+      "score": 7,
+      "reason": "报告将本周发现映射到Brainary中的self-diagnosis能力：评价体系发现自身维度非正交、诊断根因、切换聚合方法。这一映射比普通能力标签更具体，并提出了“评价体系自检协议”的模块化可能。扣分点是Brainary关联仍偏概念化，尚未定义该self-diagnosis module的输入、触发条件、输出、失败处理或与现有Brainary架构的接口。",
+      "missingEvidence": "缺少Brainary能力图中的具体节点映射、模块接口草案、触发阈值定义、示例运行日志，以及该self-diagnosis loop在自动系统中闭环执行的证据。"
     },
     "monetaryValue": {
-      "score": 7,
-      "reason": "商业价值部分给出了潜在买单方、市场规模、图数据库和数据目录市场依据、模块定价假设，并能说明本周实验如何提升估值可信度。缺点是估值仍偏宏观推算，尚无客户访谈、竞品定价验证、采购场景验证或产品形态闭环。",
-      "missingEvidence": [
-        "缺少真实客户访谈或需求验证。",
-        "缺少竞品功能和定价的直接对照。",
-        "缺少从技术模块到可销售产品的最小商业闭环。",
-        "估值中的80家企业、1500美元/月等假设缺少来源。"
-      ]
+      "score": 6,
+      "reason": "报告给出了市场方向、潜在客户、模块定价和估值逻辑，覆盖数据目录、RAG/Agent基础设施、图数据库厂商等场景，说明题目不是纯学术问题。但估值主要是自上而下推算，缺少客户访谈、竞品价格、购买预算、落地场景优先级和可销售产品形态验证；500万到1500万人民币的估值区间仍偏主观。",
+      "missingEvidence": "缺少潜在客户访谈、明确付费用户画像、竞品报价、采购路径、集成成本、实际痛点案例、最小可售产品定义，以及该技术相对现有数据治理/schema工具的不可替代性证据。"
     },
     "projectManagement": {
-      "score": 14,
-      "reason": "项目管理信息完整：有原计划与实际完成对比、投入时间拆分、下周投入预测、关键里程碑、资源、依赖、关键路径、老师需要确认的问题和纠偏动作。尤其明确指出VIKOR是Decision Function pipeline前置依赖，S_task依赖PQL ground truth。管理质量高。",
-      "missingEvidence": [
-        "缺少每个里程碑的验收标准。",
-        "缺少S_task标注数据的获取计划和负责人。",
-        "缺少如果VIKOR实验不优于加权求和时的备选方案。",
-        "缺少代码封装和论文产出的具体排期拆分。"
-      ]
+      "score": 13,
+      "reason": "项目管理信息较完整：列出了原计划、实际完成、投入时间拆分、下周预计投入、关键里程碑、依赖关系、资源规划、成本规划、关键路径和纠偏动作。尤其明确了VIKOR实现、S_task依赖PQL ground truth、Decision Function pipeline闭环等关键路径。扣分点是里程碑仍以任务完成为主，缺少可验收指标，例如什么结果算VIKOR替换成功、什么条件算pipeline闭环跑通。",
+      "missingEvidence": "缺少每个里程碑的验收标准、风险优先级、失败预案、实验结果归档方式、代码封装计划的具体接口，以及S_task ground truth构造的时间和数据来源。"
     },
     "nextAction": {
-      "score": 9,
-      "reason": "下周动作具体且可验证：替换VIKOR聚合、比较排序一致性、做v参数敏感性分析、跑通Decision Function pipeline闭环，并强调避免过度调研。行动方向聚焦，和本周发现直接衔接。",
-      "missingEvidence": [
-        "排序一致性的评价指标未指定，例如Kendall tau、Spearman相关或top-k一致率。",
-        "v参数最优的判定标准未定义。",
-        "Decision Function pipeline闭环的最小通过标准未写清。",
-        "没有明确下周可交付物形式，例如代码模块、实验表格或demo。"
-      ]
+      "score": 8,
+      "reason": "下周动作具体且可执行：替换VIKOR聚合、做v参数敏感性分析、跑通Decision Function完整pipeline，并明确避免过度调研MCDM。这些动作与本周发现直接相连，符合最小可验证动作要求。扣分点是缺少量化成功标准，例如排序一致性如何衡量、v的最优性按什么指标判断、pipeline闭环需要处理多少案例才算通过。",
+      "missingEvidence": "缺少下周实验的评价指标，例如Kendall tau/Spearman排序相关、缺陷识别准确率、决策收益函数、阈值设定、测试schema数量、通过/失败标准。"
     },
     "evidenceQuality": {
-      "score": 4,
-      "reason": "报告提供了公式、指标定义、缺陷注入类型、实验现象、分数变化量、相关系数和若干文献依据，证据质量高于一般周报。但关键证据仍停留在摘要层面，缺少原始数据、实验配置、代码链接和可复现实验记录，因此不能满分。",
-      "missingEvidence": [
-        "缺少原始实验结果表。",
-        "缺少样本数量、随机种子和实验重复次数。",
-        "缺少代码链接或commit hash。",
-        "缺少benchmark生成规则的精确定义和示例输出。",
-        "缺少VIKOR相关文献的完整引用信息。"
-      ]
+      "score": 3,
+      "reason": "报告有一定证据意识：给出了Delta S_struct、Delta S_data、相关系数r≈0.6、文献名称和市场数据来源，并区分了A/B证据等级。但证据主要以叙述形式出现，缺少可复核材料。对于一个以score function和benchmark为核心的周报，应该至少提供结果表、指标计算样例和实验设置。",
+      "missingEvidence": "缺少原始实验数据表、可视化图、代码链接、运行日志、指标公式实现细节、数据规模、统计检验、文献完整引用和市场数据链接。"
     },
-    "totalScore": 87,
-    "tier": "A",
-    "oneLineJudgment": "这是一次从设计进入实现与首轮验证的高质量周报，最大价值是用实验发现了score维度非正交并推动聚合方法从加权求和转向VIKOR，但仍需要补齐可复现实验证据和VIKOR有效性的直接对比。",
+    "totalScore": 79,
+    "tier": "B",
+    "oneLineJudgment": "本周从设计进入代码和实验验证，发现了关键的指标非正交问题并形成方法修正方向，但核心证据尚未可复核，VIKOR优越性仍未被实验验证。",
     "professorFollowUp": [
-      "要求学生下周提交一张完整实验表：每种缺陷、每个子指标、S_struct、S_data、聚合分数、相关系数和排序结果。",
-      "确认是否接受VIKOR作为下一阶段默认聚合方法，但要求至少与加权求和做排序一致性和错误排序案例对比。",
-      "要求明确Decision Function pipeline的最小验收标准：输入是什么、输出是什么、成功条件是什么。",
-      "提醒学生不要继续扩展MCDM调研范围，优先完成VIKOR实现、敏感性分析和闭环demo。",
-      "要求补一个S_task ground truth构造计划，否则4月中旬里程碑存在依赖风险。"
+      "要求学生下周提交一张完整实验表：5类缺陷、每类注入强度、S_struct各子指标、S_data各子指标、聚合分数、Delta、重复次数和随机种子。",
+      "追问VIKOR是否真的解决指标相关和双重计数问题：需要学生给出理论依据或至少做VIKOR、加权求和、TOPSIS的同benchmark对比。",
+      "要求明确Decision Function pipeline的验收标准：输入是什么、输出是什么、多少个schema修改候选、排序质量如何评价。",
+      "要求把self-diagnosis module具体化为协议：何时计算相关矩阵，r超过多少触发聚合方法切换，切换后如何验证决策质量改善。",
+      "提醒学生暂时不要继续扩展跨领域类比，优先把当前score function、benchmark和VIKOR pipeline做成可复现实验资产。"
     ]
   }
 }

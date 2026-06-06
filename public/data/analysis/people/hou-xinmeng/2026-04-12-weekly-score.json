@@ -1,99 +1,64 @@
 {
   "key": "person:hou-xinmeng:2026-04-12:weekly-score",
-  "generatedAt": "2026-06-06T00:02:17.960Z",
+  "generatedAt": "2026-06-06T01:01:58.977Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "1e79030842ef1dad583673c4c940639d7529d2083aa8c749b79ce54d1182e0f6",
   "result": {
-    "hardProgress": {
-      "score": 17,
-      "reason": "本周有明确的硬产出叙述：从 v3 迁移到 v6/v7/v7.1/v8，拆分 3.A 到 3.K，建立 pipeline_state.json 状态协议，新增 T 类故事主线工作流，给 tricks 增加适用性标签，拆分 3.I，并设计 timing_log 与 trick_signals.log。进展属于架构级，而不是普通任务记录。扣分点在于：v8 尚未完成真实数据端到端测试，因此目前主要证明的是设计与局部实现，不是完整生产能力。",
-      "missingEvidence": [
-        "缺少 v8 端到端运行结果。",
-        "缺少 pipeline_state.json、default-tricks.md、timing_log.json、trick_signals.log 的样例或链接。",
-        "缺少至少一篇论文从 3.A 到 3.I-c 的完整输出证据。",
-        "缺少新旧架构在失败率、质量、耗时上的对比数据。"
-      ]
+    "week": "2026-04-12",
+    "name": "侯欣萌",
+    "scores": {
+      "hardProgress": {
+        "score": 16,
+        "reason": "本周报告呈现了明确的硬进展：从 v3 迁移到 v6/v7/v8，拆分 11–15 个可独立触发的 prompt，引入 pipeline_state.json、T 类 story spine workflow、applicability tags、venue_type、timing_log.json、trick_signals.log，并拆分 3.I 为图、表、Word 排版三个步骤。这些都是可沉淀为系统结构的工程进展。但当前仍停留在架构完成与自述实现阶段，报告明确说明 v8 尚未在完整真实数据上端到端测试，因此硬进展的可靠性还没有被集成运行验证。",
+        "missingEvidence": "缺少代码仓库、关键文件样例、pipeline_state.json 实例、default-tricks.md 标注前后对比、一次完整运行日志、失败恢复案例、端到端产出的论文样本。"
+      },
+      "cognitiveIncrement": {
+        "score": 13,
+        "reason": "CoT 增量清晰：从“长 prompt 更好”转向“短 prompt + 外部状态更稳”；区分质量 trick 与覆盖 trick；认识到跨章节 coherence 不能靠独立生成，而要靠共享 story spine。这些认知不是泛泛总结，而是直接反映到 v6/v7/v8 的架构设计中，具有可操作性。",
+        "missingEvidence": "缺少 v3 与 v6/v8 在质量、失败率、上下文耗尽、返工次数上的对比数据，因此认知增量主要由设计经验支持，而非实验结果支持。"
+      },
+      "cot2Depth": {
+        "score": 12,
+        "reason": "CoT’s CoT 有较强二阶抽象：把 pipeline_state.json 抽象为状态机，把 story spine 抽象为 compile-time check，把 applicability tags 抽象为 trick type system，并且说明了导师是否可能已知、为什么过去没有自动化、可沉淀形态和证据等级。这符合模板要求。扣分点在于若干结论存在过度外推，例如“可形式化验证 pipeline correctness”“出版标准具有 type system”等，目前更多是有启发性的架构类比，还不是经过验证的理论结果。",
+        "missingEvidence": "缺少形式化状态转移定义、precondition/postcondition 列表、实际 invariant 检查结果、v7 相比 v6 减少 revision loop 的数据、tag filtering 防止错误应用 trick 的案例。"
+      },
+      "brainaryMapping": {
+        "score": 8,
+        "reason": "报告把具体工作映射到 Brainary 能力：memory、workflow management、reasoning、cognitive control、calibration、tool orchestration、benchmark/evaluation，并给出沉淀形式，如 memory schema、agent module、evaluation protocol、monitoring module。最有价值的映射是把 pipeline_state.json 视为 Brainary memory system 的原型。不过部分映射仍偏概念化，没有说明 Brainary 中已有模块如何复用、接口如何对接、何时从项目内工具变成通用模块。",
+        "missingEvidence": "缺少 Brainary 现有能力清单的对照、模块接口定义、输入输出 schema、可复用边界说明、从 LS pipeline 迁移到其他领域的验证计划。"
+      },
+      "monetaryValue": {
+        "score": 6,
+        "reason": "报告提供了人民币估值、美元估值和三段式计算：劳动力节省、类似产品定价、基础设施价值。比空泛估值更好。但估值依据较弱：将 RA 160 小时、80% 自动化、20 篇/年、500 名付费用户、相对 Grammarly/Writefull 的 10–100 倍价值等作为假设，缺少真实用户、付费意愿、质量达标率、市场转化率验证。Overleaf 收购类比与当前原型阶段距离较远。",
+        "missingEvidence": "缺少实际节省工时测量、用户访谈、付费意愿证据、竞品功能对照、真实论文产出质量评估、单位 token 成本与人工成本的净收益计算。"
+      },
+      "projectManagement": {
+        "score": 12,
+        "reason": "项目管理部分较完整：说明原计划、实际完成、投入 35 小时、下周 20 小时、里程碑、人员、API/token、依赖、关键路径、偏差原因和纠正策略。也明确下一阶段应从架构转向集成测试。扣分点是里程碑的验收标准还不够量化，风险管理偏乐观，且没有给出如果首次集成测试失败时的 fallback 计划。",
+        "missingEvidence": "缺少端到端测试验收指标、质量阈值、失败分支计划、具体数据集选择、token 成本上限、每个里程碑的可交付物定义、导师审批所需材料。"
+      },
+      "nextAction": {
+        "score": 9,
+        "reason": "下一步非常具体：用 JOURNAL venue_type 跑一篇完整论文，从 3.A 到 3.I-c，验证 applicability tags 在每个 gate 正确过滤，并确认 timing_log.json 的 session 估计准确。这是最小可验证行动，能直接检验本周核心架构。但还可以进一步定义通过标准，例如允许多少 filtering error、产出哪些日志、由谁 review、什么算 timing accurate。",
+        "missingEvidence": "缺少测试论文来源、预期输出清单、验收阈值、人工评审标准、失败后修复优先级。"
+      },
+      "evidenceQuality": {
+        "score": 3,
+        "reason": "报告内部证据结构较好，标注了 Evidence Level A/B，并具体列出实现项。但证据主要是自述，没有外部可检查材料或运行结果。尤其是“v8 functional”“339 lines tagged tricks implemented”“architecture stable”等关键判断，没有附带文件、日志、截图、commit 或测试输出。证据质量足以支持‘本周做了系统设计与初步实现’，不足以支持‘系统已经可靠可用’。",
+        "missingEvidence": "缺少可审查 artifact、commit 记录、运行日志、真实数据测试、质量评估表、错误案例、前后版本对比结果。"
+      }
     },
-    "cognitiveIncrement": {
-      "score": 13,
-      "reason": "认知增量比较清楚：将长提示词视为 LLM 研究流水线反模式；区分 quality tricks 与 coverage tricks；将跨章节一致性前置到 story spine。三点都不是泛泛感想，而是直接改变了系统结构。扣分点在于部分判断仍是基于设计经验，尚未由运行数据验证，例如“10 个短 prompt 严格优于 1 个长 prompt”目前没有量化实验支持。",
-      "missingEvidence": [
-        "缺少 v3 与 v6/v8 的输出质量对比。",
-        "缺少 context exhaustion 发生频率与质量坠崖案例。",
-        "缺少 story spine 前置后减少 revision loop 的统计。"
-      ]
-    },
-    "cot2Depth": {
-      "score": 13,
-      "reason": "CoT’s CoT 有较深抽象：把状态外置理解为 FSM，把 story spine 理解为 compile-time check，把 applicability tags 理解为 type system。每个点都说明了 advisor 是否已知、为什么未知或为什么未自动化，并给出证据等级。扣分点在于若干推论推进较快，例如“可形式化验证 pipeline correctness”目前只是潜力，不是已完成事实。",
-      "missingEvidence": [
-        "缺少 FSM 的正式状态定义、transition table 或 invariant 列表。",
-        "缺少 compile-time check 相比 runtime review 的成本数据。",
-        "缺少 trick type checker 的实际运行结果。",
-        "缺少 advisor 是否已知的外部验证，只是学生自判。"
-      ]
-    },
-    "brainaryMapping": {
-      "score": 8,
-      "reason": "Brainary mapping 覆盖了 memory、workflow management、reasoning、cognitive control、calibration、tool orchestration、benchmark/evaluation 等能力，并给出 sedimentation 形式。最有价值的是把 pipeline_state.json 映射为 Brainary memory protocol 的原型。扣分点在于映射仍偏概念表述，缺少 Brainary 侧已有模块接口、数据结构兼容性或具体沉淀优先级。",
-      "missingEvidence": [
-        "缺少 Brainary 现有能力框架与本周产物的一一接口对照。",
-        "缺少哪个模块可以直接复用、哪个需要重写的判断。",
-        "缺少沉淀为 memory schema、agent module、evaluator 的最小规格。"
-      ]
-    },
-    "monetaryValue": {
-      "score": 6,
-      "reason": "报告给出了人民币 80 万元的估值，并尝试从劳动力替代、SaaS 定价、研究基础设施价值三条线计算。优点是没有只给空泛价值判断。主要问题是关键假设未经验证：80% 自动化率、20 篇/年使用规模、500 名目标用户、比 Grammarly/Writefull 高 10–100 倍价值等都缺少实证依据。Overleaf 收购类比也过远，不能直接支撑当前原型估值。",
-      "missingEvidence": [
-        "缺少真实用户愿付费证据。",
-        "缺少一篇论文实际节省小时数。",
-        "缺少自动化率测量方法。",
-        "缺少与现有学术写作工具的功能对比表。",
-        "缺少市场规模或目标客户访谈。"
-      ]
-    },
-    "projectManagement": {
-      "score": 13,
-      "reason": "项目管理信息完整：说明原计划、实际完成、投入 35 小时、下周计划 20 小时、里程碑、资源、依赖、token 消耗、风险和 advisor 介入需求。也明确当前阶段是 prototype，第一轮 integration test pending。扣分点在于项目状态偏自报，缺少可检查的 milestone artifact；风险部分低估了未端到端测试带来的集成风险。",
-      "missingEvidence": [
-        "缺少每个版本 v6/v7/v8 的提交记录或变更清单。",
-        "缺少本周 35 小时的任务分解。",
-        "缺少 token 消耗日志或成本账单。",
-        "缺少集成测试计划的验收标准。"
-      ]
-    },
-    "nextAction": {
-      "score": 9,
-      "reason": "下周最小可验证行动明确：用 JOURNAL venue_type 跑完整一篇论文，从 3.A 到 3.I-c，验证 applicability tags 过滤与 timing_log 准确性。这个行动可执行、可验收，也正好针对当前最大风险：v8 没有端到端测试。扣 1 分是因为成功标准还不够量化，例如通过多少 gate、允许多少人工干预、timing estimate 误差范围是多少。",
-      "missingEvidence": [
-        "缺少端到端测试的具体输入论文或数据集。",
-        "缺少通过/失败标准。",
-        "缺少人工干预次数、输出质量、耗时、token 成本的记录模板。"
-      ]
-    },
-    "evidenceQuality": {
-      "score": 3,
-      "reason": "证据质量中等偏弱。报告对实现内容、证据等级和待验证事项有自觉区分，承认 v8 尚未端到端测试，这是加分项。但绝大多数证据仍是文字自述，没有附带运行日志、文件样例、测试输出、版本提交或质量评估。当前证据足以判断其做了架构工作，不足以判断系统已经可靠有效。",
-      "missingEvidence": [
-        "缺少可复核代码或 prompt 文件。",
-        "缺少运行日志。",
-        "缺少输出样稿。",
-        "缺少第三方或 advisor review。",
-        "缺少量化评价数据。"
-      ]
-    },
-    "totalScore": 82,
-    "tier": "A",
-    "oneLineJudgment": "这是一个高质量的架构推进周，认知抽象和项目拆解都强，但核心风险是 v8 仍停留在未端到端验证的原型阶段，价值与质量主张尚未被真实运行数据支撑。",
+    "totalScore": 79,
+    "tier": "B",
+    "oneLineJudgment": "这是一次架构推进和二阶抽象都很强的周报，但核心短板是 v8 尚未经过完整真实数据端到端验证，当前价值主要是设计可信，而不是系统效果已被证明。",
     "professorFollowUp": [
-      "要求学生下周只做一件事：完成一篇 JOURNAL 论文从 3.A 到 3.I-c 的端到端运行，并提交 pipeline_state.json、timing_log.json、trick_signals.log、最终草稿和失败记录。",
-      "让学生定义 v8 集成测试的验收标准：通过哪些 gates、允许多少人工修复、token 成本上限、耗时上限、输出质量最低标准。",
-      "重点检查 applicability tags 是否真的过滤了不适用 tricks，而不是只在文档中标注。",
-      "要求学生用一个小表比较 v3 与 v8：context failure、revision loop 次数、token 成本、输出完整度、章节一致性。",
-      "暂时不要认可 80 万元估值，先要求用一篇真实论文计算实际节省时间与可替代劳动比例。"
+      "要求学生下周只做一件事：提交一篇 JOURNAL 类型论文从 3.A 到 3.I-c 的完整运行包，包括 pipeline_state.json、timing_log.json、trick filtering 记录、最终 draft 和失败/修复日志。",
+      "让学生定义 v8 集成测试的通过标准：例如每一步 state 是否完整、venue tag 是否零误用、是否触发所有必要 gate、timing 估计误差范围、人工 review 最低质量线。",
+      "重点追问：story spine compile-time check 是否真的减少 3.H-major revision loop？需要设计 v6 对 v8 的小规模对照，而不是只停留在架构类比。",
+      "要求把 TypeScript schema、read/write contract、precondition/postcondition 作为下周自动化沉淀的第一交付物。",
+      "教授本周最应该学到的一点是：质量标准与覆盖标准应被拆成两类自动化机制，前者跨 venue 通用，后者必须按 venue typed filtering。"
     ]
   }
 }

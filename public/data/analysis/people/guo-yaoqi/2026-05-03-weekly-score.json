@@ -1,58 +1,111 @@
 {
   "key": "person:guo-yaoqi:2026-05-03:weekly-score",
-  "generatedAt": "2026-06-06T00:01:42.350Z",
+  "generatedAt": "2026-06-06T01:01:38.384Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "70c377b76ae3d11c92bde5beb61b8d18cb74ec1754de3e64e660af9b27736135",
   "result": {
     "week": "2026-05-03",
-    "name": "Guo Yaoqi",
+    "name": "郭耀祺",
     "scores": {
       "hardProgress": {
         "score": 16,
-        "reason": "本周声称在 SWE-bench Pro 49-python 全量测试上将相对 baseline 提升推进到 8-10%，solve rate 接近 60%，并新增了 PDB-augmented Working Memory、Harness Controller、Task-aware Plan-then-Act Router。这些属于明确的系统级硬进展，不只是读论文或构想。但周报没有给出精确实验表、baseline 数值、成功/失败 case 列表、ablation、重复运行稳定性，因此不能按满分处理。",
-        "missingEvidence": "缺少完整实验表；缺少 baseline solve rate 与当前 solve rate 的精确数字；缺少 49 个 case 的逐项结果；缺少 PDB、Harness、Router 各自贡献的消融实验；缺少运行日志或 patch 样例。"
+        "reason": "本周报告给出了明确硬进展：在 SWE-bench Pro 49-python 全量测试上声称相对 baseline 提升 8-10%，solve rate 接近 60%；同时新增了 PDB-augmented Working Memory、Harness Controller、Task-aware Plan-then-Act Router 三类系统模块，并识别出下一阶段的失败模式。扣分点在于关键实验结果缺少可复核细节，尤其是 baseline 数值、具体 solved cases、对照实验、重复运行稳定性、模块消融结果均未提供。",
+        "missingEvidence": [
+          "baseline 的准确 solve rate、当前 solve rate 的精确数值，而不是 8-10% 区间描述",
+          "49 个 case 的逐项结果表，包括新增解决、仍失败、退化的 case",
+          "PDB Working Memory、Harness Controller、Task-aware Router 的代码提交、配置或运行日志",
+          "各模块单独加入后的 ablation 数据",
+          "提升是否来自一次运行还是多次运行平均，是否有随机性控制"
+        ]
       },
       "cognitiveIncrement": {
-        "score": 12,
-        "reason": "认知增量比较清楚：高密度 PDB 信息必须与 Harness 约束成对出现；Plan-then-Act 需要任务感知路由；复杂 Bug 定位要从单轨 failing trace 转向 Regression vs Reproduction 的差分定位。这些不是泛泛总结，能反向指导系统设计。但其中一部分仍停留在推演阶段，尤其差分定位尚未在本周完成验证。",
-        "missingEvidence": "缺少高密度 PDB 无约束时导致性能下降的定量证据；缺少不同任务类型对应不同 repair strategy 的分类效果；缺少差分定位相对单轨定位的本周实验证据。"
+        "score": 13,
+        "reason": "认知增量较清晰：从“增加运行时信息”推进到“高密度信息必须配套强 Harness”；从统一 Plan-then-Act 推进到任务感知异构策略；从单轨 failing trace 推进到需要 success/fail 差分定位。这些都与实际系统瓶颈相关，且能指导下一步设计。扣分点是部分认知仍停留在强假设阶段，尤其是 Regression Test 差分分析尚未落地验证。",
+        "missingEvidence": [
+          "高密度 PDB 信息在无 Harness 时导致 solve rate 下降或失焦的具体实验数据",
+          "异构 Plan-then-Act 相比统一 prompt 的量化提升",
+          "剩余 failure case 中有多少比例属于“缺少参照物”问题",
+          "差分定位能够提高 localization accuracy 的预实验或案例证据"
+        ]
       },
       "cot2Depth": {
         "score": 12,
-        "reason": "CoT's CoT 有二阶抽象：从“加更多信息”上升到“信息必须有消费契约”，从“找错误”上升到“构造成功参照组找偏差”。它解释了为什么当前 pipeline 到达单轨推理上限，也提出了下一步系统结构。但存在一定过度断言，例如“最后一块拼图”“彻底打破上限”等表述目前缺少实证支撑。",
-        "missingEvidence": "缺少失败 case 的系统归因统计；缺少证明‘信息增多反而 solve rate 崩塌’的实验曲线；缺少差分执行分析能把搜索空间压缩到具体行级位置的实际案例。"
+        "reason": "CoT's CoT 有一定深度，能够从具体调试模块上升到系统级 schema、信息消费契约、对照组生成、差分执行分析等架构层认知。尤其是把 meta-cognition 具体化为“主动索取参照组”的调度策略，是有价值的抽象。扣分点是论证中存在较多未证实的强表述，例如“最后一块拼图”“彻底打破上限”“老师原本不知道”，这些判断缺乏本周实验支撑；同时 CoT's CoT 与实际新增模块之间的因果链还不够可验证。",
+        "missingEvidence": [
+          "证明 Harness 是差分 Trace 可消费前提的实验或失败案例",
+          "从 block-level 到 line-level/token-level localization 的当前基线与瓶颈数据",
+          "CoT's CoT 中提出的 memory schema 或 agent policy 的具体格式样例",
+          "“老师原本不知道”的依据无法从周报内验证"
+        ]
       },
       "brainaryMapping": {
         "score": 8,
-        "reason": "Brainary 映射较完整，能对应到 Memory、Cognitive Control、Reasoning & Tool Orchestration，并提出 Task-aware Policy Router、Differential Diagnostic Agent、双轨 Trace Diff memory schema 等可沉淀对象。扣分点是映射仍偏概念层，尚未明确这些模块在 Brainary 总架构中的接口、输入输出、状态更新协议和评价指标。",
-        "missingEvidence": "缺少 Brainary 模块接口定义；缺少 memory schema 示例；缺少 agent policy 的伪代码或流程图；缺少该能力如何被其他任务复用的证据。"
+        "reason": "Brainary 映射覆盖了 Memory、Cognitive Control、Reasoning & Tool Orchestration，并且能对应到具体模块：PDB 工作记忆、双轨 Trace Diff、Task-aware Policy Router、Differential Diagnostic Agent。映射方向是合理的。扣分点是仍偏概念性，缺少 Brainary 内部接口、对象结构、调用链、评估指标或如何沉淀为可复用资产的更具体说明。",
+        "missingEvidence": [
+          "PDB Trace Memory 或双轨 Trace Diff 的 schema 草案",
+          "Task-aware Router 在 Brainary 中的输入、输出、路由规则",
+          "Differential Diagnostic Agent 与现有 Brainary 模块的接口关系",
+          "Brainary 能力提升的可测指标"
+        ]
       },
       "monetaryValue": {
         "score": 4,
-        "reason": "周报给出 $120,000 的价值估计，并尝试将性能突破和架构资产拆分定价。但计算方法基本是主观锚定，$2M 基数、6% 权重、4%/2% 拆分都没有外部依据，也没有转化为论文价值、产品价值、客户价值或算力节省价值。该部分目前更像自我估值，不足以支持管理决策。",
-        "missingEvidence": "缺少市场或论文影响的定价依据；缺少与现有工具或竞品的性能价值对比；缺少每提升 1pp solve rate 对应商业价值的假设来源；缺少成本收益分析。"
+        "reason": "报告给出了 $120,000 的价值估算，并尝试把性能提升和架构资产拆分定价。但该估值主要来自主观比例分摊，缺少外部市场、论文影响、产品转化、算力成本节省、客户价值或竞品基准等证据。当前更适合作为内部研发优先级信号，而不是可信货币价值。",
+        "missingEvidence": [
+          "为什么以 $2M 作为价值基数",
+          "4% 和 2% 权重的来源",
+          "8-10% 相对提升对应的论文、产品或商业收益换算逻辑",
+          "与同类 SWE-bench Agent 的性能和成本对比",
+          "该模块未来可复用到多少任务或项目的估算依据"
+        ]
       },
       "projectManagement": {
         "score": 12,
-        "reason": "项目管理信息相对完整：有本周投入时间、下周投入时间、API 成本、资源需求、关键里程碑、是否需要老师介入，以及从成文转向差分链路的纠偏动作。问题是下周计划仍缺少可验收阈值，例如定位准确率提升多少才算成功、Regression Test 质量如何判定、如果生成失败如何备选。",
-        "missingEvidence": "缺少明确验收指标；缺少风险清单；缺少失败预案；缺少下周实验排期拆分；缺少对 API 成本上限和样本规模的约束。"
+        "reason": "项目管理信息较完整：有本周投入时间、下周投入时间、资源需求、成本、瓶颈、里程碑和纠偏动作；能说明为何暂缓成文并转向 Regression vs Reproduction 差分链路。扣分点是里程碑仍偏结果导向，缺少可执行任务拆解、风险预案、验收阈值和时间盒；同时“本人独立推进”可能掩盖了 review、复现实验和工程质量控制风险。",
+        "missingEvidence": [
+          "下周任务的日级拆解",
+          "Regression Test 生成失败时的备选路线",
+          "差分 Trace 对比的最小验收标准，例如 localization accuracy 提升多少才继续",
+          "论文成文与继续实验之间的决策门槛",
+          "代码 review、实验复现、日志归档的管理方案"
+        ]
       },
       "nextAction": {
-        "score": 8,
-        "reason": "下周最小可验证动作明确：接入 Regression Test 生成模块，并行跑 Reproduction Fail 与 Regression Pass，在 Debug Agent 中做双轨 PDB 差分比对，验证定位准确率是否提升。这是具体、可执行、与本周卡点直接相连的动作。扣分点是没有说明最小样本集、评估指标、成功阈值和具体 ablation 设计。",
-        "missingEvidence": "缺少下周要跑多少个 case；缺少 localization accuracy 的定义；缺少成功阈值；缺少与单轨 RCA 的对照实验设计；缺少 Regression Test 生成失败时的替代方案。"
+        "score": 9,
+        "reason": "下周最小可验证动作明确：接入 Regression Test 生成模块，并行运行 failing reproduction 与 passing regression，在 Debug Agent 中实现双轨 PDB 差分比对，评估 localization accuracy 是否提升。该动作与本周识别出的瓶颈高度一致，且具备自动化科研转化路径。扣分点是没有给出最小实验规模、成功阈值和如果结果不提升时如何判断原因。",
+        "missingEvidence": [
+          "首批双轨实验计划覆盖多少 case",
+          "Regression Test 的生成质量如何评估",
+          "localization accuracy 的定义和测量方式",
+          "成功阈值，例如 solve rate、block-level accuracy 或 line-level accuracy 至少提升多少",
+          "如果差分分析无效，下一步如何排除是测试生成问题、Trace 对齐问题还是模型推理问题"
+        ]
       },
       "evidenceQuality": {
-        "score": 2,
-        "reason": "证据质量偏弱。周报包含关键数字和模块名称，但多数是结论式陈述，没有附表、日志、case 级证据、消融实验或复现实验设置。对于声称 8-10% 提升、逼近 60% solve rate、信息过载导致崩塌等重要判断，目前证据不足。",
-        "missingEvidence": "缺少实验配置；缺少原始结果表；缺少 run ID；缺少成功 patch 示例；缺少失败 case 归因表；缺少统计显著性或重复运行数据。"
+        "score": 3,
+        "reason": "证据质量中等偏弱。报告有具体 benchmark 名称、样本规模、相对提升区间、模块名称和成本投入，这比纯叙述更好；但缺少原始数据、表格、日志、commit、消融、失败案例清单和可复现实验设置。当前可以支持“本周有实质推进”的判断，但不足以支持“里程碑突破”“逼近上限”“价值 $120,000”等强结论。",
+        "missingEvidence": [
+          "原始实验结果表",
+          "运行日志或截图",
+          "代码提交记录",
+          "配置文件和 prompt 版本",
+          "消融实验",
+          "失败案例归因样例",
+          "成本明细"
+        ]
       }
     },
-    "totalScore": 74,
+    "totalScore": 77,
     "tier": "B",
-    "oneLineJudgment": "本周有真实系统推进和清晰认知增量，但关键性能数字与模块贡献缺少可审计证据，当前更适合作为强工程进展周报，而不是可以直接支撑论文结论的实验周报。",
-    "professorFollowUp": "老师最该追问三件事：第一，要求给出 49 个 SWE-bench Pro case 的逐项结果表、baseline、当前结果和失败类型归因；第二，要求做 PDB、Harness、Task-aware Router 的消融实验，确认 8-10% 提升来自哪里；第三，下周差分链路必须预先定义验收标准，例如 RCA block-level 或 line-level localization accuracy 至少提升多少，Regression Test 质量如何评估。"
+    "oneLineJudgment": "这是一个方向感和系统抽象很强、硬进展也可能真实显著的周报，但关键性能提升与架构收益缺少可复核证据，因此应评为“高潜力但证据不足”的 B 档。",
+    "professorFollowUp": [
+      "要求学生下周提交 49 个 SWE-bench Pro case 的逐项结果表，标出 baseline、上周、本周、每个模块消融后的 solve 状态。",
+      "要求明确当前 solve rate 的精确值，而不是“8-10% 相对提升”或“接近 60%”这类区间表达。",
+      "要求给出 PDB Working Memory、Harness Controller、Task-aware Router 的最小代码或 schema 样例，以判断是否真能沉淀为 Brainary 模块。",
+      "要求下周差分实验预注册验收标准：实验 case 数、Regression Test 质量标准、localization accuracy 指标、继续推进或回退成文的决策阈值。",
+      "教授本周最应该学习的一点是：复杂 Bug 定位的下一步价值不在继续堆 failing trace，而在构造 passing trace 作为对照组，用成功/失败轨迹的 divergence 压缩定位搜索空间。"
+    ]
   }
 }
