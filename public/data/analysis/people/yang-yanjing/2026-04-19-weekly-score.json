@@ -1,54 +1,103 @@
 {
   "key": "person:yang-yanjing:2026-04-19:weekly-score",
-  "generatedAt": "2026-05-24T11:36:22.915Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "68e1cb3d7c1d8f210507749171cbb90a0958b3fd22d6bf8cc288aeb8881169a5",
+  "generatedAt": "2026-06-06T13:15:51.100Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "6f574506b0d66c278bcfdefe2983957cfa58fd39af524ade6be9686c21a937b5",
   "result": {
-    "hardProgress": {
-      "score": 15,
-      "reason": "本周扩展了数据集，实现了 LLM baseline 并跑通流程，接入了 CLI-everything 获取 API 调用数据，初步形成了统一实验框架，均为实质性进展，但缺少规模、覆盖率、实验指标等量化证据。",
-      "missingEvidence": "扩展后的数据集具体规模与覆盖范围；LLM baseline 在具体任务上的准确率等指标；CLI-everything 获取数据的完整性与示例。"
+    "week": "2026-04-19",
+    "name": "Yang Yanjing",
+    "scores": {
+      "hardProgress": {
+        "score": 15,
+        "reason": "本周有明确硬进展：扩展了开源选型数据集，完成并跑通一版 LLM-based baseline，将 CLI-everything 接入数据获取流程，并初步形成“数据集 + baseline + 逆向补充”的实验框架。这些属于可推进论文和系统验证的实质工作。但周报没有给出数据集规模、覆盖范围变化、baseline 实验结果、CLI 输出样例或代码/实验记录，因此硬进展可信但不可充分复核。",
+        "missingEvidence": [
+          "缺少扩展前后数据集规模、任务数量、API 数量、relation-sensitive 样本占比等量化信息。",
+          "缺少 LLM baseline 的具体模型、设置、指标、结果表。",
+          "缺少 CLI-everything 接入后的输出样例、有效率、噪声比例。",
+          "缺少统一实验框架的代码链接、流程图或可运行说明。"
+        ]
+      },
+      "cognitiveIncrement": {
+        "score": 12,
+        "reason": "认知增量较清楚：报告识别出 AKB 的价值不在于是否引入知识库，而在于任务是否依赖 API 关系；同时重新定位 CLI-everything 为关系发现数据源，并把恶意 API/skill 视为异常 API 关系模式。这些认知能影响 benchmark 设计、方法对比和后续选题边界。扣分点是认知尚未被实验结果强支撑，也没有进一步拆解不同关系类型对效果的具体影响。",
+        "missingEvidence": [
+          "缺少单 API 任务与 relation-sensitive 任务上的对比结果。",
+          "缺少不同关系类型，如组合、替代、依赖，对 AKB 增益的分别分析。",
+          "缺少恶意 API 模式是否真的能用关系结构区分的初步案例证据。"
+        ]
+      },
+      "cot2Depth": {
+        "score": 11,
+        "reason": "CoT’s CoT 部分符合模板要求，写出了“老师原本不知道什么”“信息差在哪里”“新增认知”“自动化潜力”和“沉淀形式”。第一条关于 relation-sensitive benchmark 的判断较有价值，能指导实验设计。第二条将恶意 API 统一为异常关系模式也有拓展性。但深度仍偏概念化，对‘为什么老师原本不知道’的论证较主观，缺少反例、边界条件和验证路径；证据等级 A/B 是自评，没有配套证据。",
+        "missingEvidence": [
+          "缺少支持 CoT’s CoT 1 证据等级 A 的实验或数据。",
+          "缺少支持 CoT’s CoT 2 证据等级 B 的文献、案例或初步分析结果。",
+          "缺少对该认知可能不成立场景的讨论，例如 LLM 已隐式掌握 API 关系时 AKB 是否仍有增益。",
+          "缺少从认知到自动化模块的具体输入、输出、评价指标。"
+        ]
+      },
+      "brainaryMapping": {
+        "score": 7,
+        "reason": "报告将工作映射到 memory、reasoning、cognitive control、benchmark/evaluation、risk modeling，方向基本合理，尤其是 API relation memory 与多 API 决策的对应关系清楚。也说明了为什么尚未系统化：relation-aware benchmark 与异常模式建模尚未统一。但映射仍停留在标签层，缺少 Brainary 内部模块接口、数据流、状态更新机制和如何服务自动化科研闭环的具体设计。",
+        "missingEvidence": [
+          "缺少 API relation memory 的结构定义，例如节点、边、权重、来源、置信度。",
+          "缺少 reasoning 模块如何调用 relation memory 的流程。",
+          "缺少 cognitive control 如何约束候选 API 空间的具体机制。",
+          "缺少 benchmark/evaluator 与 Brainary 自动化科研流程的接口设计。"
+        ]
+      },
+      "monetaryValue": {
+        "score": 6,
+        "reason": "报告识别了潜在买单方：IDE、AI coding assistant、安全分析平台，并判断该题目可沉淀为论文、benchmark、module，具备一定研究和产品价值判断。价值判断方向成立，但商业场景仍较粗，没有明确用户痛点、付费触发点、替代方案、性能指标或落地路径。当前更像研究价值判断，货币化价值论证不足。",
+        "missingEvidence": [
+          "缺少具体应用场景，例如 API 迁移、库选型、代码修复、安全审计中的哪一类任务最先落地。",
+          "缺少谁会付费、为什么现在方案不够用、AKB 能带来多少收益的论证。",
+          "缺少与现有 IDE 插件、代码助手、安全扫描工具的差异分析。",
+          "缺少可商业化指标，例如推荐准确率提升、人工排查时间下降、误报率下降。"
+        ]
+      },
+      "projectManagement": {
+        "score": 10,
+        "reason": "周报包含本周任务、硬进展、实验发现、卡点和下周动作，项目推进结构完整。当前关键卡点也识别明确：relation-sensitive 数据不足、CLI 输出噪声高、baseline 未结合关系信息。但项目管理仍缺少里程碑、优先级、验收标准、时间预算和风险缓解计划。‘当前由我推进’说明责任人明确，但协作和资源需求没有展开。",
+        "missingEvidence": [
+          "缺少下周 relation-sensitive 子任务集的目标规模和验收标准。",
+          "缺少 baseline vs AKB-enhanced 对比实验的具体指标和实验配置。",
+          "缺少 CLI 噪声处理的计划，例如规则过滤、人工标注、置信度建模。",
+          "缺少项目阶段性时间表，例如 benchmark 完成、方法集成、论文实验冻结节点。"
+        ]
+      },
+      "nextAction": {
+        "score": 8,
+        "reason": "下周动作较具体：构建 relation-sensitive 子任务集，并对比 LLM baseline 与 AKB-enhanced 方法。这是一个能直接验证核心假设的最小动作，方向正确且可执行。恶意 API 方向的下周动作相对更探索性，只说分析是否纳入 relation-based 框架，缺少可交付物。总体 next action 有验证闭环，但还需要量化验收条件。",
+        "missingEvidence": [
+          "缺少 relation-sensitive 子任务集预计构建多少条、覆盖哪些关系类型。",
+          "缺少 AKB-enhanced 方法的具体实现形式。",
+          "缺少对比实验成功或失败的判定标准。",
+          "缺少恶意 API 调研下周应产出的具体结果，例如案例表、taxonomy 或数据 schema。"
+        ]
+      },
+      "evidenceQuality": {
+        "score": 2,
+        "reason": "报告提供了若干实验发现和证据等级，但主要是文字性陈述，缺少可复核证据。没有数据表、实验指标、样例、链接、错误案例或日志。当前证据足以说明方向和思考，但不足以支撑强结论，尤其是‘LLM baseline 在单 API 任务稳定、组合任务不稳定’和‘CLI 输出噪声较高’都需要具体结果。",
+        "missingEvidence": [
+          "缺少实验结果表。",
+          "缺少数据样例和错误案例。",
+          "缺少代码、日志或实验配置。",
+          "缺少证据等级 A/B 的判定依据。"
+        ]
+      }
     },
-    "cognitiveIncrement": {
-      "score": 12,
-      "reason": "确认了 relation-sensitive 数据的重要性，重新理解了 CLI-everything 作为 API 关系发现数据源，并从恶意 API 研究获得异常关系模式的新认知，但认知增量多停留在方向确认层面，缺乏更深层的机理分析。",
-      "missingEvidence": "对 relation-sensitive 任务的详细定义；CLI-everything 噪声的结构化处理方法设想；恶意 API 模式与正常 API 关系空间的量化差异分析。"
-    },
-    "cot2Depth": {
-      "score": 13,
-      "reason": "提出了两个高价值的 CoT’s CoT：1) API 知识库有效性取决于任务是否包含 API 关系（证据等级 A，自动化潜力高）；2) 恶意 API 可建模为异常 API 关系模式（证据等级 B）。信息差识别清晰，新增认知具体，且给出了沉淀路径。",
-      "missingEvidence": "第一个 CoT’s CoT 虽证据 A，但未给出具体的 benchmark 设计示例；第二个自动化潜力中，未明确自动化路径的瓶颈。"
-    },
-    "brainaryMapping": {
-      "score": 8,
-      "reason": "准确映射了 memory、reasoning、cognitive control、benchmark、risk modeling 能力，回答了‘老师原本不知道吗’及未系统化原因，并给出了可能的沉淀形式，但映射较泛，缺少与具体模块的对应设计。",
-      "missingEvidence": "各能力在现有实验框架下的具体实现程度或设计草图；relation-aware benchmark 与异常模式模块之间的接口关系。"
-    },
-    "monetaryValue": {
-      "score": 6,
-      "reason": "明确了题目解决的真实问题（API 推荐、修复与分析），指出了 IDE、AI coding assistant、安全分析平台等买单方，判断为通用能力，但未估算市场价值、潜在收益或成本。",
-      "missingEvidence": "目标市场的规模数据；当前方案相比竞品的降本增效量化；潜在客户付费意愿的初步验证。"
-    },
-    "projectManagement": {
-      "score": 10,
-      "reason": "对两个核心任务均进行了分解，识别了卡点并给出了下周动作，但缺少整体时间规划、里程碑、资源需求与风险管理。",
-      "missingEvidence": "项目整体时间线；关键里程碑的预期完成时间；所需计算或人力资源；应对卡点的备选方案或时间缓冲。"
-    },
-    "nextAction": {
-      "score": 8,
-      "reason": "针对两个任务提出了明确的下周最小可验证动作：构建 relation-sensitive 子任务集并对比；分析恶意 API 模式融入框架的可行性。动作具体可执行。",
-      "missingEvidence": "构建 relation-sensitive 子任务的具体数据来源或构造方法；对比实验的详细设计。"
-    },
-    "evidenceQuality": {
-      "score": 3,
-      "reason": "多数进展描述缺乏数据支撑，如数据集规模、baseline 性能等；CoT’s CoT 虽标注了证据等级，但未提供支撑其等级的具体实验或文献依据。",
-      "missingEvidence": "数据集扩展的实际样例或统计；baseline 方法的具体设置与结果数值；CLI-everything 获取数据的有效性验证。"
-    },
-    "totalScore": 75,
+    "totalScore": 71,
     "tier": "B",
-    "oneLineJudgment": "本周建立了包含数据集、baseline 和逆向补充的实验框架，提炼了两个关键认知，但缺乏量化证据与项目管理的细节。",
-    "professorFollowUp": "重点关注 relation-sensitive benchmark 的设计，确保其能有效区分知识库的贡献；同时讨论将恶意 API 模式纳入框架的具体方案。"
+    "oneLineJudgment": "本周已经从概念推进到“数据集 + baseline + 逆向补充”的实验闭环雏形，核心认知是必须用 relation-sensitive 任务验证 AKB，但目前证据和量化结果不足，仍处于可验证假设阶段。",
+    "professorFollowUp": [
+      "要求学生下周提交 relation-sensitive 子任务集的最小版本，包括任务数量、关系类型分布、样例和标注规则。",
+      "要求学生给出 LLM baseline 的第一版结果表，至少区分单 API 任务、组合任务、替代任务、依赖任务。",
+      "追问 AKB-enhanced 方法具体如何使用 API relation：是检索增强、候选约束、路径推理，还是排序特征。",
+      "要求学生提供 CLI-everything 输出的 5 到 10 个真实样例，并标注哪些是有效 API 调用关系、哪些是噪声。",
+      "要求学生暂时不要扩大恶意 API 方向，除非能在一周内产出一个可并入 relation benchmark 的异常关系 schema 或小样本案例表。"
+    ]
   }
 }

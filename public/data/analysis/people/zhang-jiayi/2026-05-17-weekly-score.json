@@ -1,54 +1,58 @@
 {
   "key": "person:zhang-jiayi:2026-05-17:weekly-score",
-  "generatedAt": "2026-05-24T11:37:02.796Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "142d09d39cc0c60af9ffdd2b727e9b41a79b5903a1a4ff7fece9c685ab49309f",
+  "generatedAt": "2026-06-06T13:16:54.356Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "df556e1c07184915d0d0e65b6cdbb8d07d80de9a525098136de22678dc9f64cd",
   "result": {
-    "hardProgress": {
-      "score": 12,
-      "reason": "完成了 Test Agent 和 Computer Use Agent 的 working memory schema 详细建模，给出了结构化的知识表示设计，是实质性的进展。",
-      "missingEvidence": "未提供已实现模型的运行实例、实际用例测试结果或可演示的原型。"
+    "week": "2026-05-17",
+    "name": "Zhang Jiayi",
+    "scores": {
+      "hardProgress": {
+        "score": 12,
+        "reason": "本周有明确的结构性产出：Test Agent 的 working memory schema 覆盖了 spec-side、build-side、spec-build comparison、test generation、execution/repair、bug report 等模块；Computer Use Agent 给了一个具体 working memory 示例。但主要仍是 schema 设计与文字建模，没有提供代码实现、数据结构文件、提交记录、端到端运行结果或真实 case 验证。因此属于“设计层进展较实，工程落地证据不足”。",
+        "missingEvidence": "缺少仓库链接、commit、schema 文件、实际解析样例、生成测试样例、运行日志、失败分类样例、bug report 样例，以及 Computer Use Agent 是否真的按该 memory 执行成功的证据。"
+      },
+      "cognitiveIncrement": {
+        "score": 12,
+        "reason": "认知增量较明显：报告把 Test Agent 的核心问题从“生成测试”推进到“spec 与 build 的工作记忆分离、显式比较分歧、再驱动测试生成”，并意识到 oracle 不能硬猜，需要根据证据强度选择 predicate。这比普通测试生成框架更接近可审计的测试智能体设计。",
+        "missingEvidence": "缺少本周相较上周或相较原方案的具体差异说明；缺少一个真实需求如何被转成 req/use_case/constraint，再如何影响 oracle 的完整链路。"
+      },
+      "cot2Depth": {
+        "score": 11,
+        "reason": "有一定 CoT 的 CoT 深度：Test Agent 中不仅描述推理对象，还描述了推理失败时如何降级 oracle、如何分类 failure、如何保护 HIGH confidence assertion；Computer Use Agent 示例中也有 Reflection，能解释上一步 click_text 失败原因并选择 zoomed image 策略。但这些仍主要是框架规则，没有展示 agent 在真实多轮任务中如何自我修正、如何判断自己推理不可靠、如何避免错误修复。",
+        "missingEvidence": "缺少真实 failure → classification → fix attempt → follow-up outcome 的闭环样例；缺少对 oracle 置信度冲突、文档缺口、runtime 偏向 build 时的实际判定案例。"
+      },
+      "brainaryMapping": {
+        "score": 8,
+        "reason": "Brainary/working memory 映射较强：报告清楚区分了 Spec-Side Knowledge、Build-Side Knowledge、Comparison、Test Case、Outcome、Failure Classification、Fix Attempt、Bug Report 等记忆节点，并设计了 trace/ref/lineage。Computer Use Agent 也把 task、plan、focus、storyboard、observations、notes、reflection、blockers、knowledge 分层组织。这说明作者在把 agent 的长期/短期记忆结构化。",
+        "missingEvidence": "缺少这些记忆字段之间的实际图结构、存储格式、更新机制、生命周期管理，以及 schema 如何被 agent prompt 或工具调用消费的证据。"
+      },
+      "monetaryValue": {
+        "score": 5,
+        "reason": "项目潜在价值存在：如果 Test Agent 能可靠生成 oracle、分类 bug/doc gap，并形成可追溯 bug report，会对自动化测试、验收、回归检测有实际价值；Computer Use Agent 的 working memory 也可提升桌面操作 agent 的稳定性。但本周没有量化价值、没有目标用户、没有节省成本估计、没有对比现有测试生成工具的优势证明。",
+        "missingEvidence": "缺少真实项目场景、用户痛点、节省人力或提高 bug 发现率的数据、与现有 agent/test generation 方法的比较、可交付产品形态或商业/科研价值判断。"
+      },
+      "projectManagement": {
+        "score": 8,
+        "reason": "有主线、当前问题和下周目标，说明任务方向没有散。但项目管理粒度不足：没有列出本周计划完成项与实际完成项对照，没有验收标准，没有风险优先级，没有时间分配，没有明确 deliverable，也没有说明 Test Agent 与 Computer Use Agent 两条线之间的依赖和优先级。",
+        "missingEvidence": "缺少里程碑、任务拆解、完成定义、阻塞项状态、风险列表、负责人/协作者、下周可验收产物，以及本周是否达到预期的判断。"
+      },
+      "nextAction": {
+        "score": 7,
+        "reason": "下周行动方向是合理的：与老师讨论 oracle 生成问题和 working memory building 问题，并在实际 case 中迭代 schema。这正好对应当前最关键的不确定性。但行动仍偏抽象，没有指定要跑哪个 case、产出什么样的 oracle、如何衡量“精确程度”和“分歧可靠程度”。",
+        "missingEvidence": "缺少下周具体任务清单、输入样例、预期输出、验收指标、实验设计，以及需要老师决策的问题列表。"
+      },
+      "evidenceQuality": {
+        "score": 3,
+        "reason": "证据以详细 schema 文本为主，能证明作者做了设计思考；但没有外部可验证证据。报告中 Test Agent schema 还有大段重复内容，降低了产出整理质量。Computer Use Agent 示例是一个 mock-like working memory 展示，不能证明系统实现或效果。",
+        "missingEvidence": "缺少可运行 artifact、截图、日志、实验结果、真实输入输出、评测指标、commit hash、PR、测试报告。"
+      }
     },
-    "cognitiveIncrement": {
-      "score": 10,
-      "reason": "识别出需求中隐式约定导致 oracle 推导困难的关键问题，提出通过显式推理规范与实现分歧来驱动测试用例生成的思路，加深了对测试代理认知过程的理解。",
-      "missingEvidence": "缺少从建模过程中提炼出的关于测试代理认知规律的新假设或可验证的认知理论。"
-    },
-    "cot2Depth": {
-      "score": 8,
-      "reason": "CU agent 示例中体现了对动作失败的反思和调整，但 Test agent 部分未展示对建模过程本身的元认知反思，如为何选取这些知识维度、推理链条的有效性评估等。",
-      "missingEvidence": "未提供对 Test agent working memory 设计逻辑的自我审视、不同方案比较或局限性分析。"
-    },
-    "brainaryMapping": {
-      "score": 8,
-      "reason": "将人类测试员的认知过程映射为 Spec-Side 和 Build-Side 两个工作记忆空间，并通过分歧比较驱动测试生成，结构化清晰，符合脑力模型设计原则。",
-      "missingEvidence": "未引用认知科学理论或人类测试行为研究来支撑该映射的有效性。"
-    },
-    "monetaryValue": {
-      "score": 3,
-      "reason": "目前处于早期建模阶段，尚未产生直接经济价值；潜在价值在于提升测试自动化水平和准确率，但未经量化评估。",
-      "missingEvidence": "缺少潜在成本节约、效率提升或市场价值的估算数据。"
-    },
-    "projectManagement": {
-      "score": 10,
-      "reason": "有明确的主线、进度总结、当前问题和下周目标，展现了基本的项目管理意识。",
-      "missingEvidence": "缺乏更详细的任务分解、里程碑、时间线或风险清单。"
-    },
-    "nextAction": {
-      "score": 7,
-      "reason": "下周计划具体包括与老师讨论 oracle 生成和 working memory building，并在实际案例中迭代优化 schema，具有可操作性。",
-      "missingEvidence": "缺少下一步行动的具体步骤、预期成果和衡量标准。"
-    },
-    "evidenceQuality": {
-      "score": 3,
-      "reason": "提供了详尽的 schema 定义表格作为设计成果的证据，但属于文档层面的静态描述。",
-      "missingEvidence": "缺少实验数据、日志、代码片段或真实运行反馈来证明进展的硬度和有效性。"
-    },
-    "totalScore": 61,
+    "totalScore": 66,
     "tier": "C",
-    "oneLineJudgment": "本周在测试代理认知建模方面取得了清晰的结构化进展，但缺乏实证支撑和更深层的反思，整体处于早期探索阶段。",
-    "professorFollowUp": "请与同学讨论 (1) 如何将 oracle 推理失败案例转化为 schema 迭代的具体输入；(2) working memory 建模的认知科学依据及其对测试覆盖度的预期影响。"
+    "oneLineJudgment": "本周是一次较完整的 working memory/schema 设计推进，但仍停留在架构建模层，缺少真实 case、运行闭环和可验证工程证据。",
+    "professorFollowUp": "老师最应该追问一件事：请学生下周用一个真实项目样例跑通从 spec/build 输入、分歧识别、测试生成、oracle 置信度选择、执行结果、失败分类到 bug report 的最小闭环；如果不能跑通，就要求明确卡在 oracle 生成、memory building、还是执行/修复环节。"
   }
 }

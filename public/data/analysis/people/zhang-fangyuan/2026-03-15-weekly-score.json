@@ -1,54 +1,64 @@
 {
   "key": "person:zhang-fangyuan:2026-03-15:weekly-score",
-  "generatedAt": "2026-05-24T11:36:42.259Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "8c3f18ba409dc9252b513ff27aa08271ab05870e8ba3f2d11a1cbbdf28f82e07",
+  "generatedAt": "2026-06-06T13:16:24.156Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "df36ae5be75ec541d6cb6fe8a985b954ff6d00709b748cbe0d5931d0fabc447e",
   "result": {
-    "hardProgress": {
-      "score": 16,
-      "reason": "本周在 Nginx 数据集上完成了两项消融实验，得出‘抽象知识→具体代码’映射优于堆砌抽象知识的明确结论，并在 OpenSSL 23 个版本 diff 上完成了端到端评估，给出了 F1=0.73、Recall=0.84 等量化结果，但 OpenSSL 评估因 API 故障排除了部分版本，且误报率高达 35%，整体进展受限于资源与数据质量。",
-      "missingEvidence": "未提供消融实验的完整实验设置（如基线方法、重复次数、统计显著性检验）；未说明 OpenSSL 评估中排除 API 故障版本的具体标准及对结果的影响；缺少误报样本的初步分析。"
+    "week": "2026-03-15",
+    "name": "Zhang Fangyuan",
+    "scores": {
+      "hardProgress": {
+        "score": 18,
+        "reason": "本周有明确硬进展：完成了 Nginx 数据集上的两组消融实验，并在 OpenSSL 全量数据集的 23 个版本 diff 上完成端到端评估；报告给出了关键指标，包括 F1、Recall、Precision 近似值、5 个版本 100% recall，以及两个设计选择的正负效果。进展不是停留在想法层面，而是已经形成可用于论文论证的实验结果。",
+        "missingEvidence": "缺少 Nginx 消融实验的样本量、基线分数、置信区间或显著性检验；OpenSSL 中“排除 API 故障版本”的具体数量和排除标准未说明；没有列出 23 个版本逐版本结果。"
+      },
+      "cognitiveIncrement": {
+        "score": 13,
+        "reason": "认知增量较明确：从实验中得出“抽象知识本身不如抽象知识到具体代码变量的映射有效”的判断，并进一步发现 Precondition Enrichment 可能损害模型判断。这不是简单跑分，而是对 LLM 安全补丁检测机制形成了新的设计原则。",
+        "missingEvidence": "缺少对为什么 Precondition Enrichment 会带偏 LLM 的错误案例分析；没有说明该结论是否只适用于 Nginx，还是已在 OpenSSL 上复现。"
+      },
+      "cot2Depth": {
+        "score": 11,
+        "reason": "报告包含 CoT's CoT，并能从实验现象上升到 pipeline 设计原则：抽象知识适合用于检索阶段，判断阶段应使用落地后的具体映射。这个层次已经超过普通结果描述，但机制解释仍偏短，尚未展开 LLM 被抽象概念带偏的具体路径。",
+        "missingEvidence": "缺少典型样例：同一个候选点在加入抽象知识前后如何改变判断；缺少对 role grounding、consequence 验证、invariant 验证三步之间认知链条的拆解。"
+      },
+      "brainaryMapping": {
+        "score": 5,
+        "reason": "周报中隐含了 Brainary 映射思想，即把抽象安全知识映射到具体代码变量上再判断，但没有显式给出知识节点、代码节点、关系边、证据链或可复用 schema。因此只能算有局部映射意识，尚未形成完整的 Brainary map。",
+        "missingEvidence": "缺少明确的映射结构，例如“抽象安全概念—前置条件—代码变量—代码行为—安全后果”的图式；缺少一个真实 diff 的映射示例；缺少说明这些映射如何存储、复用或自动化生成。"
+      },
+      "monetaryValue": {
+        "score": 4,
+        "reason": "报告证明了方法在安全补丁检测任务上有研究价值，尤其是 OpenSSL 大规模评估和高 recall 对漏洞补丁识别有潜在应用意义。但没有明确讨论项目价值判断：例如相比人工审计节省多少成本、误报率对可用性的影响、token 成本是否使方案不可部署、以及下一步如何转化为论文或工具价值。",
+        "missingEvidence": "缺少成本收益分析，包括每个版本 diff 的调用成本、人工复核成本、误报带来的工程负担、与现有工具或基线方法的价值对比。"
+      },
+      "projectManagement": {
+        "score": 10,
+        "reason": "项目管理信息基本存在：列出了当前主线、硬进展、卡点和下周计划；能识别 API quota、误报率、token 开销三个关键风险，并知道这些风险会影响 recall 和规模化评估。但计划仍偏方向性，缺少优先级、完成标准和资源请求。",
+        "missingEvidence": "缺少每个卡点的 owner、预期完成时间、备选方案、成功判据；API 额度问题没有说明需要多少额度、如何申请或如何降级实验；误报归类没有说明分类框架。"
+      },
+      "nextAction": {
+        "score": 6,
+        "reason": "下周计划方向正确，包括继续跑更多版本、系统归类误报、探索降低 token 开销。但动作粒度仍不够可执行，例如“解决 API 额度问题后”是前置依赖而不是具体动作，“探索降低 token 开销”也没有列出候选方案或判断标准。",
+        "missingEvidence": "缺少具体下一步实验设计，例如优先跑哪些版本、误报分类表如何构建、token 降本方案是缓存、批处理、规则预筛、模型替换还是减少验证轮次；缺少下周可交付物定义。"
+      },
+      "evidenceQuality": {
+        "score": 3,
+        "reason": "证据质量中等偏好：有定量指标和实验结论，能够支撑本周的主要判断。但报告缺少实验设置细节、对照组定义、数据规模、版本排除规则、误报样例和统计可靠性，导致结果可信度尚不能完全判断。",
+        "missingEvidence": "缺少原始表格、版本级指标、候选点数量、正负样本数量、API 故障版本清单、误报样例、统计显著性或重复实验结果。"
+      }
     },
-    "cognitiveIncrement": {
-      "score": 14,
-      "reason": "消融实验纠正了‘喂给 LLM 更多信息总是有益’的常见假设，明确指出抽象知识应在检索阶段使用，判断阶段应仅使用落地后的具体映射，否则会带偏 LLM。这一发现对 LLM pipeline 设计具有启发意义，认知增量显著。",
-      "missingEvidence": "未能解释为什么‘先验知识铺垫’反而有害的心理或模型机制；缺乏对比实验验证该结论在不同模型或数据集上的泛化性。"
-    },
-    "cot2Depth": {
-      "score": 11,
-      "reason": "在 CoT's CoT 中明确指出抽象知识在 pipeline 中的合理位置，反思了设计与直觉的冲突，但深度停留在现象总结，未进一步剖析模型推理的内部机制或失败模式。",
-      "missingEvidence": "未结合实例展示抽象概念如何‘带偏’判断的具体思维链；未分析不同模型规模或架构下该效应的稳定性。"
-    },
-    "brainaryMapping": {
-      "score": 0,
-      "reason": "周报未尝试将研究发现与任何认知科学或神经科学原理进行映射，也未提及相关的一般性范式。",
-      "missingEvidence": "完全缺失对脑映射或一般性认知原则的类比或讨论。"
-    },
-    "monetaryValue": {
-      "score": 4,
-      "reason": "安全补丁自动检测可降低人工审计成本，具有潜在商业价值，但目前技术误报率过高（~35%），若直接应用将产生大量人工复核开销，经济收益受限；且依赖高额 API 调用，成本结构尚不明确。",
-      "missingEvidence": "未估算降低误报后可能节省的人力成本；未比较当前方案与现有商业工具的性价比。"
-    },
-    "projectManagement": {
-      "score": 10,
-      "reason": "卡点（误报、API 额度、token 开销）识别清晰，但下周计划较为笼统（如‘解决 API 额度问题后’未给出具体措施），缺乏优先级和预期产出，项目管理存在被动性。",
-      "missingEvidence": "未提供 API 额度不足的具体数据（如已用量、剩余量、预估所需量）；未对卡点进行风险等级排序。"
-    },
-    "nextAction": {
-      "score": 6,
-      "reason": "下周计划只列出三个方向，均未拆解为可执行步骤，没有时间节点或负责人，缺乏可操作性。",
-      "missingEvidence": "未说明如何‘解决 API 额度问题’（申请新额度、优化调用频次等）；未给出误报归类的初步框架或标准。"
-    },
-    "evidenceQuality": {
-      "score": 4,
-      "reason": "提供了 F1、Recall、Precision 等数值，但缺乏实验细节，如消融研究的控制变量是否严格、OpenSSL 评估中排除 API 故障版本是否引入偏差、结果是否统计显著等，降低了证据的可靠性。",
-      "missingEvidence": "未报告消融实验的多次运行均值与方差；未给出 OpenSSL 评估中因 API 故障排除的版本数量及对整体结论的影响分析。"
-    },
-    "totalScore": 65,
-    "tier": "C",
-    "oneLineJudgment": "本周通过消融实验获得了有价值的认知结论，但大规模评估受限于资源，进展有限，且误报问题凸显。",
-    "professorFollowUp": "请关注以下三点：1) API 额度与 token 优化方案是否有初步思路？2) 能否对误报类型进行快速分类，并设计简单的特征过滤？3) 消融实验的结论是否已在其他数据集上初步验证？"
+    "totalScore": 70,
+    "tier": "B",
+    "oneLineJudgment": "本周有扎实实验产出和一个有论文价值的机制性结论，但证据展开、Brainary 映射、成本价值判断和下周执行颗粒度仍不足。",
+    "professorFollowUp": [
+      "要求学生补一张实验结果表：Nginx 两组消融的基线、样本量、Precision、Recall、F1、显著性，以及 OpenSSL 23 个版本逐版本指标。",
+      "追问 Precondition Enrichment 为什么有害：至少给 2 个错误案例，展示抽象知识如何导致 LLM 误判。",
+      "要求把“抽象知识→具体代码”的 role grounding 做成一个可复用 schema 或 Brainary map，而不是只停留在文字结论。",
+      "让学生下周优先做误报归类表，并给出每类误报的过滤策略、预期收益和可能损失 recall 的风险。",
+      "要求给出 token/API 成本核算：每个候选点调用次数、每个版本平均候选点数、完整跑 23 个版本需要多少预算，以及至少两个降本方案。"
+    ]
   }
 }

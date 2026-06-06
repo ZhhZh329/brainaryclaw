@@ -1,59 +1,103 @@
 {
   "key": "person:hou-xinmeng:2026-04-12:weekly-score",
-  "generatedAt": "2026-06-06T08:01:58.728Z",
+  "generatedAt": "2026-06-06T13:03:06.899Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
-  "inputHash": "1e79030842ef1dad583673c4c940639d7529d2083aa8c749b79ce54d1182e0f6",
+  "inputHash": "e0294c8501ee527b84784dc96b5fb1f5f0b59ddbd5c1a5a7688cac085206a20c",
   "result": {
     "hardProgress": {
       "score": 17,
-      "reason": "本周报告呈现了明确的硬进展：从 v3 单体式架构迁移到 v8，包含 split execution、pipeline_state.json、T-category、applicability tags、venue_type、3.I 拆分、timing_log、trick_signals.log 等多个可落地组件。进展不是泛泛学习，而是围绕论文生成流水线的架构、状态、门控、日志和场景适配进行了系统重构。扣分点在于：v8 尚未完成端到端真实数据测试，许多“稳定”“可运行”“产生 drafts”的说法缺少实际运行样例、失败记录或验收结果。",
-      "missingEvidence": "缺少代码仓库链接、关键文件 diff、pipeline_state.json 示例、default-tricks.md 标注前后对比、一次完整 paper run 的输出、质量门控通过/失败日志。"
+      "reason": "本周有明确的工程型硬进展：从 v3 单体架构迁移到 v6/v7/v8，拆分为 11–15 个可独立触发的步骤；引入 pipeline_state.json、T 类 story spine workflow、适用性标签、venue_type 处理、3.I 拆分、timing_log.json、trick_signals.log 等。进展不是泛泛学习，而是形成了多个可命名的系统组件。但最大扣分点是 v8 尚未在完整真实数据上端到端跑通，当前仍处于“架构完成、集成测试未完成”的状态。",
+      "missingEvidence": [
+        "缺少 v8 端到端运行结果",
+        "缺少 pipeline_state.json、timing_log.json、trick_signals.log 的实际样例",
+        "缺少代码仓库、文件 diff 或 prompt 文件版本证据",
+        "缺少一篇真实论文从 3.A 到 3.I-c 的完整产物"
+      ]
     },
     "cognitiveIncrement": {
-      "score": 13,
-      "reason": "认知增量清楚：从“长 prompt 更好”转向“短 prompt + 外部状态更可靠”；区分 quality tricks 与 coverage tricks；意识到 section coherence 需要 story spine 而不是独立生成。这些认知都直接来自本周架构迁移，并能反向指导系统设计。扣分点是部分判断仍以设计直觉为主，例如“10 个短 prompt 严格优于 1 个长 prompt”尚未用对照实验支持。",
-      "missingEvidence": "缺少 v3 与 v6/v8 在同一论文任务上的输出质量对比、context exhaustion 失败案例、revision loop 次数变化数据。"
+      "score": 14,
+      "reason": "认知增量清楚，主要包括：单体长 prompt 是 LLM research pipeline 的反模式；质量 trick 与覆盖 trick 是不同维度；跨章节一致性不能靠独立生成后修补，而应前置到 story spine。三点都直接服务于架构设计，不是抽象感想。扣分点是部分判断仍来自个人构建经验，尚未通过对照实验验证，例如“10 个短 prompt 严格优于 1 个长 prompt”的结论还缺少量化比较。",
+      "missingEvidence": [
+        "缺少 v3 与 v6/v8 输出质量对比",
+        "缺少 context exhaustion 前后质量下降的具体案例",
+        "缺少短 prompt 与长 prompt 在同一任务上的成功率或错误率数据"
+      ]
     },
     "cot2Depth": {
       "score": 13,
-      "reason": "CoT’s CoT 部分有较深的抽象：把 LLM pipeline 解释为状态机，把 story spine 解释为 compile-time check，把 applicability tags 解释为 trick type system。这些不是任务复述，而是对系统结构的二阶理解，并且包含 advisor 是否已知、为何未知、自动化潜力和证据等级。扣分点在于第二条“compile-time check 降低 revision cost”仍主要是类比和结构分析，缺少实际 revision rate 或成本数据。",
-      "missingEvidence": "缺少 FSM 状态转移图、形式化 invariant 列表、T-category 介入前后 revision loop 数量、3.H-major 成本估计依据。"
+      "reason": "CoT’s CoT 有较强二阶分析：把 pipeline_state.json 上升为状态机抽象，把 story spine 理解为 compile-time check，把 applicability tags 理解为 trick type system。这些不是单纯复述任务，而是在解释为什么这些设计会改变系统可验证性、错误发现时机和自动化边界。扣分点是有些表述推进到“形式化验证”“严格更便宜”等层面，但报告中还没有提供足够实验或形式定义支撑。",
+      "missingEvidence": [
+        "缺少状态机的正式状态定义、转移规则和 invariant 列表",
+        "缺少 story spine 前置检查减少 revision loop 的实测数据",
+        "缺少 trick type checker 的实际运行记录或失败案例",
+        "缺少 advisor 是否已知这些洞见的外部依据"
+      ]
     },
     "brainaryMapping": {
       "score": 9,
-      "reason": "Brainary mapping 比较完整，把 pipeline_state.json 映射到 memory + workflow management，把 T-category 映射到 reasoning + cognitive control，把 applicability tags 映射到 calibration + tool orchestration，并说明 sedimentation 形式。最有价值的是将 pipeline_state.json 视为 Brainary memory protocol 的原型。扣分点是 mapping 仍停留在概念层，缺少 Brainary 现有模块接口、数据结构对齐或可复用边界说明。",
-      "missingEvidence": "缺少 Brainary 现有能力表的对照、该 pipeline schema 如何迁移为通用 Brainary memory schema 的字段级映射、agent module 的接口草案。"
+      "reason": "Brainary 映射较完整，把 pipeline_state.json 对应到 memory/workflow management，把 T-category 对应到 reasoning/cognitive control，把 applicability tags 对应到 calibration/tool orchestration，把 timing protocol 对应到 risk modeling。这些映射有系统沉淀方向，例如 memory schema、agent module、evaluation protocol、monitoring module。扣分点是映射仍以概念表为主，还没有真正落成 Brainary 可复用模块。",
+      "missingEvidence": [
+        "缺少 Brainary 模块接口定义",
+        "缺少 memory schema 的通用化版本",
+        "缺少 agent module 或 evaluator 的最小可运行原型",
+        "缺少从 Learning Sciences 场景迁移到其他场景的验证"
+      ]
     },
     "monetaryValue": {
-      "score": 6,
-      "reason": "报告给出了人民币 80 万 / 约 11 万美元的估值，并尝试从 labor replacement、SaaS pricing、research infrastructure 三个角度计算，这是符合模板要求的。问题是商业证据偏弱：用户是谁、愿不愿付费、实际节省多少、输出质量是否达到可投稿水平，都没有被验证。Writefull、Grammarly、Overleaf 的类比跨度较大，‘10–100x more value’ 属于主观估计。",
-      "missingEvidence": "缺少真实用户访谈、实验室内试用反馈、每篇论文实际节省小时数、可投稿质量评估、竞品功能对比表、定价敏感性或付费意愿证据。"
+      "score": 7,
+      "reason": "报告提供了明确的价值判断和金额估算：人民币 80 万，并从 labor replacement、SaaS pricing、research infrastructure 三个角度估算。优点是没有只说“有价值”，而是说明谁可能付费、解决什么问题、为何不是局部优化。扣分点是估值假设偏强，尤其是 80% 自动化、20 篇/年、500 名目标用户、10–100 倍于 Writefull/Grammarly 的价值，都还没有市场或使用数据支撑；Overleaf 对比也较远。",
+      "missingEvidence": [
+        "缺少真实用户愿付费证据",
+        "缺少实际节省工时的测量",
+        "缺少 pipeline 生成论文质量达到可投稿标准的证据",
+        "缺少目标用户规模和转化率依据",
+        "缺少与现有工具的功能和效果基准比较"
+      ]
     },
     "projectManagement": {
       "score": 13,
-      "reason": "项目管理信息充分：有原计划与实际完成对比、投入时间、下周时间预算、关键 milestone、人员/compute/API 资源、依赖关系、critical path、token 消耗和偏差原因。也明确指出当前阶段是 prototype，第一轮 integration test pending。扣分点是缺少验收标准的量化定义，例如什么算 v8 integration test 通过、每个 gate 的 pass/fail 指标是什么。",
-      "missingEvidence": "缺少任务拆分的实际 issue/task board、验收 checklist、风险清单、端到端测试通过标准、token 成本的美元金额、API 调用失败率或运行稳定性记录。"
+      "reason": "项目管理信息充分：有本周原计划、实际完成、投入时间、下周时间、关键里程碑、资源、依赖、token/cost、偏差原因和纠偏策略。对当前状态的判断也比较清楚：架构完成，首个集成测试待完成。扣分点是范围扩张明显，虽然报告称为正向偏差，但没有给出 scope control 机制；此外“advisor approval”作为依赖，但没有说明教授需要审什么、以什么标准批准。",
+      "missingEvidence": [
+        "缺少实际 35 小时投入的任务分解",
+        "缺少每个里程碑的验收标准",
+        "缺少 v8 架构文档供审阅的摘要或链接",
+        "缺少风险登记表，尤其是质量风险、成本风险和过度架构化风险",
+        "缺少多论文扩展时的资源估算"
+      ]
     },
     "nextAction": {
-      "score": 9,
-      "reason": "下周行动非常具体：用 JOURNAL venue_type 跑一篇完整论文，从 3.A 到 3.I-c，验证 applicability tags 过滤和 timing_log 准确性；同时自动化路径提出 TypeScript schema 与 read/write contract。这是可验证、可执行的 minimum verifiable action。扣分点是没有指定用于测试的具体论文/数据集、验收阈值和失败后的处理策略。",
-      "missingEvidence": "缺少测试样本 ID、输入数据来源、通过标准、预期输出文件列表、tag filtering 的检查方法、timing_log 误差容忍范围。"
+      "score": 8,
+      "reason": "下周行动具体：用 JOURNAL venue_type 跑通一篇完整论文，从 3.A 到 3.I-c，验证 applicability tags 过滤和 timing_log 估算。这是当前阶段正确的最小可验证动作，因为它直接检验本周架构是否可运行。扣分点是还缺少具体测试数据、成功标准、失败处理规则和输出包格式。",
+      "missingEvidence": [
+        "缺少要运行的具体论文或数据集名称",
+        "缺少成功标准，例如每个 gate 通过条件、允许错误数、人工干预次数",
+        "缺少失败后的 debug protocol",
+        "缺少下周应提交给教授的验证材料清单"
+      ]
     },
     "evidenceQuality": {
       "score": 3,
-      "reason": "证据质量中等偏弱。报告内部结构完整，并多次给出 evidence level，但主要证据来自自述的实现结果和架构描述。没有附带 artifact、日志、样例输出、对照实验或第三方验证。对于本周独立评分，可以接受其作为阶段性工程周报，但不能把所有性能和价值判断视为已证实。",
-      "missingEvidence": "缺少外部可检查证据：代码、文件样例、运行日志、测试输出、真实数据 run、对照结果、advisor 或用户反馈。"
+      "reason": "报告内部证据结构较好，包含具体文件名、版本演化、日志 schema、evidence level、自评 A/B 等。但证据基本仍是自述，没有外部可检查材料。尤其是“339 行 tagged tricks 已部署”“pipeline_state.json 是 running code”“v8 functional”这些关键断言，没有附样例、运行记录或产物。因此证据质量中等偏弱。",
+      "missingEvidence": [
+        "缺少真实文件样例",
+        "缺少运行日志",
+        "缺少测试输出",
+        "缺少代码或 prompt diff",
+        "缺少对照实验或第三方检查",
+        "缺少 token/cost 消耗的账单或记录"
+      ]
     },
-    "totalScore": 83,
+    "totalScore": 84,
     "tier": "A",
-    "oneLineJudgment": "这是一个高质量的架构推进周报，硬进展和二阶认知都强，但核心短板是 v8 还没有端到端真实数据验证，商业价值也主要停留在估算层。",
+    "oneLineJudgment": "这是一个强架构进展周，认知和系统化程度高，但当前核心风险是 v8 仍未被真实端到端运行验证，证据主要停留在自述和设计层。",
     "professorFollowUp": [
-      "请学生下周必须提交一篇完整 JOURNAL paper 的 v8 端到端运行包，包括输入、pipeline_state.json、timing_log.json、trick filtering 日志、各阶段输出和失败/修复记录。",
-      "要求学生把‘v8 integration test 通过’定义成可检查标准，例如每个 gate 的 pass/fail 条件、venue tag 过滤准确率、session timing 误差范围。",
-      "要求学生提供 v3 与 v8 在同一任务上的最小对照：context failure、revision loop、输出 coherence、token 成本分别如何变化。",
-      "商业价值暂时不要扩大叙事，先验证单篇论文是否真的节省时间、降低修改轮次、达到可投稿草稿质量。"
+      "不要先讨论是否继续扩展架构；先要求下周提交一个完整 v8 单论文运行包，包括输入、pipeline_state.json、timing_log.json、trick filtering 记录、各阶段输出和失败点。",
+      "要求学生定义 v8 集成测试的通过标准：哪些 gate 必须通过、允许多少人工干预、输出论文最低质量标准是什么。",
+      "重点追问 applicability tags 是否真的在每个步骤被过滤，而不是只在文档中被标注。",
+      "要求把 pipeline_state.json 抽象成正式 schema，并列出至少 5 个 invariant，例如未通过 E0 gates 不得进入 3.G。",
+      "提醒学生下周收窄目标：不要继续发明 v9，必须用真实数据证明 v8 可运行。"
     ]
   }
 }

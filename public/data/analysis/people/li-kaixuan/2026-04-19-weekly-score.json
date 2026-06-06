@@ -1,104 +1,54 @@
 {
   "key": "person:li-kaixuan:2026-04-19:weekly-score",
-  "generatedAt": "2026-06-06T02:04:32.989Z",
+  "generatedAt": "2026-06-06T13:06:36.936Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
-  "inputHash": "22e4e08d2057c8e041e03c8679b2825538dc12b3d427ea891a9b5d9d5cc7ea19",
+  "inputHash": "d65ce2c20449d39c8674265320c036796f4c8db8640630cda02c1d4b6bc20246",
   "result": {
     "hardProgress": {
       "score": 16,
-      "reason": "本周有三个可计入硬进展的事项：Fuzz Driver Generation 进入写作前阶段且声称方法与实验已稳定；PoC Migration 实验完成并进入论文完善；Maoyi 根因分析工作被 TOSEM 正式录用。TOSEM 录用是最强硬证据。两个在研项目的“实验完成/稳定”属于重要进展，但周报没有给出实验规模、指标、对比结果或论文材料完成度，因此不能给满分。",
-      "missingEvidence": [
-        "Fuzz Driver 的具体实验结果、基线、数据集规模、覆盖率或漏洞发现指标缺失",
-        "PoC Migration 的大规模实验细节、成功率、失败类型、对比方法缺失",
-        "TOSEM 录用缺少录用通知截图、论文题目、作者列表或 DOI/链接",
-        "写作前阶段的具体产物缺失，例如大纲、图表、方法伪代码、已完成章节"
-      ]
+      "reason": "本周有较明确的硬进展：Fuzz Driver Generation 声称方法与实验已稳定、进入写作前阶段；PoC Migration 声称实验完成、进入论文完善阶段；Maoyi 根因分析工作 TOSEM 正式录用。三条线都不是停留在想法层面，其中 TOSEM 录用是最硬的外部结果。但 Fuzz Driver 和 PoC Migration 的实验完成情况只给了阶段判断，没有给出具体实验结果、指标、对比基线或新增产物，因此不能给满分。",
+      "missingEvidence": "缺少实验表格、核心指标、相对 baseline 的提升、失败案例、代码/数据集/论文草稿链接；TOSEM 录用缺少录用通知或论文题目信息。"
     },
     "cognitiveIncrement": {
       "score": 13,
-      "reason": "认知增量较明确：将两个项目从“依赖 LLM 生成/推测”重新表述为“约束建模、语义验证、程序合成、SMT 求解”的结构化问题。这对研究路线有实质影响，也能改变系统设计优先级。扣分点在于，这些判断主要以结论形式出现，缺少从实验失败、错误案例或消融结果推导出该认知的证据链。",
-      "missingEvidence": [
-        "缺少具体案例说明为什么 LLM 作为核心决策器失败",
-        "缺少约束建模相比 LLM 方案带来多少增益的量化结果",
-        "缺少本周新增认知与此前认知的边界说明",
-        "缺少反例或适用范围：哪些场景仍需要 LLM 作为核心组件"
-      ]
+      "reason": "认知增量比较清楚：从“依赖 LLM 生成”转向“结构化约束、可验证机制、solver/程序合成主导”，并分别落实到 Fuzz Driver 与 PoC Migration 两个项目。这不是普通进度汇报，而是对研究问题本质的重新表述，具有较高价值。但该认知是否真正来自本周实验仍缺少证据链。",
+      "missingEvidence": "缺少导致该认知转向的具体实验现象，例如 LLM 失败率、不可达路径比例、SMT 验证带来的准确率变化、约束建模前后的对照结果。"
     },
     "cot2Depth": {
-      "score": 12,
-      "reason": "周报提供了较清晰的 CoT’s CoT：Fuzz Driver 的核心是约束建模而非生成；PoC Migration 是 satisfiability 问题；方法论上要降低对模型能力的依赖。这些不是简单任务总结，而是上升到了问题重表述和系统设计原则。扣分在于深度仍偏概念化，没有展示推理链中的关键分叉、失败路径、验证机制和可证伪标准。",
-      "missingEvidence": [
-        "缺少从具体实验现象到元认知结论的推导过程",
-        "缺少对 alternative hypothesis 的比较，例如更强 LLM、RAG、微调是否被排除",
-        "缺少可证伪标准：什么实验结果会推翻“LLM 应降级为工具”的判断",
-        "缺少对 Fuzz Driver 与 PoC Migration 两个项目之间共性机制的更严格抽象"
-      ]
+      "score": 13,
+      "reason": "CoT's CoT 部分有较强二阶思考：不仅说明做什么，还说明为什么原问题表述错了，例如 fuzz driver 的核心不是生成而是约束建模，PoC migration 不是语法变换而是 satisfiability 问题，并进一步抽象到“弱化对大模型依赖”。这符合模板对元认知和方法论反思的要求。扣分点是深度主要停留在判断性结论，缺少对替代路线、反例、边界条件和失败模式的展开。",
+      "missingEvidence": "缺少对该方法论的反证测试、适用边界、哪些场景仍需要 LLM 作为核心、哪些约束无法形式化、solver 不可扩展时的处理方案。"
     },
     "brainaryMapping": {
-      "score": 8,
-      "reason": "Brainary 映射覆盖了 program synthesis、constraint modeling、constraint solving、meta-reasoning、system design，方向基本准确，并且能和项目任务对应。扣分原因是映射仍停留在标签级别，没有说明每个 Brainary 能力如何变成模块、数据结构、接口或自动化单元。",
-      "missingEvidence": [
-        "缺少 knowledge schema 的具体字段设计",
-        "缺少 driver synthesizer、PoC validator、solver module 的模块边界",
-        "缺少从 Brainary 概念到工程 workflow 的流程图或接口定义",
-        "缺少哪些能力可复用、哪些只服务于当前论文的判断"
-      ]
+      "score": 7,
+      "reason": "报告给出了 Brainary 映射：Fuzz Driver 对应 program synthesis + constraint modeling，PoC Migration 对应 constraint solving，方法论转向对应 meta-reasoning + system design。这些映射方向正确，且有助于教授判断研究资产应沉淀到哪里。但映射还比较粗，没有形成可复用知识单元、模块边界或与 Brainary 中已有节点的连接关系。",
+      "missingEvidence": "缺少具体 Brainary 节点、输入输出 schema、可复用模块接口、与既有知识库/agent/workflow 的连接方式，以及本周新增了哪些可沉淀条目。"
     },
     "monetaryValue": {
       "score": 7,
-      "reason": "周报尝试为三个任务估算金额，并给出买单方、成本替代逻辑和市场参照，这是加分项。Fuzz Driver 估值 300 万、PoC Migration 100 万、根因分析 80 万人民币有初步商业想象。但估算较粗，关键假设没有验证，例如客户数量、转化率、付费意愿、部署成本、竞争产品价格和实际 ROI。",
-      "missingEvidence": [
-        "缺少真实客户访谈或潜在用户反馈",
-        "缺少竞品价格与能力对比",
-        "缺少从论文原型到可售产品的成本估算",
-        "缺少估值公式中的关键变量来源，例如 100 个项目、每项目节省成本、自动化替代比例",
-        "缺少不同商业模式的判断，例如 license、SaaS、咨询、企业内嵌模块"
-      ]
+      "reason": "价值判断比普通周报更完整：列出了潜在付费方、估算金额、计算依据和为什么值钱。Fuzz Driver、PoC Migration、根因分析都尝试从工程成本节省和安全效率提升角度估值，符合模板要求。但估值仍偏粗，主要是类比推算，没有客户访谈、采购预算、真实市场价格或转化路径的证据。",
+      "missingEvidence": "缺少具体客户画像、真实报价、竞品价格、ROI 计算、企业采购场景、谁会在什么预算科目下购买，以及估值从研究原型到产品能力之间的折损系数。"
     },
     "projectManagement": {
-      "score": 12,
-      "reason": "项目管理信息比较完整：列出了阶段、投入小时数、下周计划、milestone、依赖、关键路径和进度判断。Fuzz Driver 识别为关键路径，PoC Migration 非关键路径，这对资源分配有帮助。扣分点是计划仍偏高层，没有拆成可验收 deliverables，也没有说明风险、缓冲、论文截止日期、作者分工和具体阻塞。",
-      "missingEvidence": [
-        "缺少下周论文初稿的章节拆分和验收标准",
-        "缺少 CCS 截止日期、内部 review 时间表和倒排计划",
-        "缺少每个项目的剩余任务清单与优先级",
-        "缺少风险登记，例如实验复现失败、baseline 补充、写作延迟",
-        "缺少协作者分工和检查点"
-      ]
+      "score": 11,
+      "reason": "项目管理信息较完整：每条主线给出了阶段、时间投入、下周时间计划、依赖、关键路径和进度判断。Fuzz Driver 明确是关键路径，PoC Migration 非关键路径，说明有一定优先级意识。但计划仍偏概括，缺少可验收 deliverable、风险项、具体论文写作分工、实验冻结标准和 deadline 倒排。",
+      "missingEvidence": "缺少下周论文初稿的章节级目标、实验补充清单、图表清单、投稿截止日期、风险缓冲、每日计划、阻塞问题，以及何时由教授审阅。"
     },
     "nextAction": {
       "score": 7,
-      "reason": "下周行动方向明确：Fuzz Driver 写论文初稿 30 小时，PoC Migration 写作 15 小时，并将自动化方向分别推进到 workflow、agent module、solver module。但这些 next action 还不是可执行级任务，没有定义完成标准、产出文件、评审节点或优先顺序。",
-      "missingEvidence": [
-        "缺少 Fuzz Driver 初稿应完成哪些章节、图表和实验表",
-        "缺少 PoC Migration 下周要修改哪些部分",
-        "缺少自动化转化路径的最小可行原型任务",
-        "缺少下周结束时可检查的交付物",
-        "缺少如果时间不足时的取舍策略"
-      ]
+      "reason": "下周动作有明确方向：Fuzz Driver 写论文初稿 30 小时，PoC Migration 继续写作 15 小时，并提出 workflow、agent module、solver module 等自动化转化方向。问题是 next action 仍然偏阶段性描述，没有拆成具体可执行任务，也没有定义完成标准。",
+      "missingEvidence": "缺少具体下一步清单，例如完成 introduction/method/evaluation 哪些章节、补哪几个实验、产出哪几个图表、交付哪份 draft、自动化模块本周要实现哪个最小版本。"
     },
     "evidenceQuality": {
       "score": 3,
-      "reason": "证据质量中等偏弱。周报声明 Fuzz Driver 和 PoC Migration 的证据等级为 A，方法论转向为 B，并有 TOSEM 录用这一强证据。但除录用事项外，其他证据主要是自我标注，没有附具体数据、图表、实验设置、统计结果或复现实物。因此证据等级与材料支撑不完全匹配。",
-      "missingEvidence": [
-        "缺少实验表格、指标、样本数量和显著性说明",
-        "缺少 baseline 名称和对比结果",
-        "缺少失败案例分析",
-        "缺少论文录用证明或引用信息",
-        "缺少代码、数据集、benchmark 或实验日志链接"
-      ]
+      "reason": "报告中自评了证据等级，Fuzz Driver 和 PoC Migration 标为 A，方法论转向标为 B；也提到已有实验、大规模实验和跨项目观察。但这些证据只被声明，没有展示。作为单周周报，证据质量中等偏低：有结果结论，但缺少可检查材料。",
+      "missingEvidence": "缺少实验数据、样本规模、benchmark 名称、对比方法、统计显著性、失败案例、论文草稿、代码提交、日志、录用证明等可验证证据。"
     },
-    "totalScore": 78,
+    "totalScore": 77,
     "tier": "B",
-    "oneLineJudgment": "本周方向判断和研究重表述很强，且有 TOSEM 录用作为硬成果，但两个核心在研项目的实验证据和下周可验收交付物不足，当前更像高质量研究路线汇报，而不是充分可审计的周进展报告。",
-    "professorFollowUp": [
-      "要求学生下周提交 Fuzz Driver 的论文初稿目录、核心图、实验总表和失败案例表，而不仅是继续写作。",
-      "要求补充 PoC Migration 的实验数据：数据集规模、迁移成功率、SMT 验证贡献、与 LLM-only 方法的对比。",
-      "追问“LLM 降级为工具”的证据边界：哪些实验直接支持该结论，哪些场景仍可能需要 LLM 作为核心。",
-      "要求把 Brainary 映射落到工程接口：knowledge schema、constraint abstraction、solver module、driver synthesizer 的输入输出。",
-      "要求把金额估算改成可验证商业假设：目标客户、节省人时、部署成本、竞品价格和最小可销售模块。"
-    ]
+    "oneLineJudgment": "本周周报在认知增量和研究方向判断上很强，且有 TOSEM 录用这一硬结果，但多数关键实验与项目进度仍停留在声明层，缺少可验证证据和可执行拆解，因此评为 B。",
+    "professorFollowUp": "教授最应该追问三件事：第一，Fuzz Driver 和 PoC Migration 所谓实验完成的核心数据表是什么，是否足以支撑目标会议投稿；第二，弱化 LLM 依赖这一方法论转向是否有定量对照证据，而不是事后解释；第三，下周必须交付哪一版论文草稿、哪些图表和哪些自动化模块原型。"
   }
 }

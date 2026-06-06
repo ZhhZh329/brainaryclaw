@@ -1,60 +1,96 @@
 {
   "key": "person:hu-zhichao:2026-05-03:weekly-score",
-  "generatedAt": "2026-06-06T08:02:39.292Z",
+  "generatedAt": "2026-06-06T13:03:45.672Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
-  "inputHash": "241f55b2be36bded7c204c9737bc0ce1146fa8e3ac0dbd89b88c6670715e14b8",
+  "inputHash": "39b4edf34a5707389d520c01bd9f1ee6669e7863f4db1634cb706f1292e952b3",
   "result": {
     "hardProgress": {
-      "score": 14,
-      "reason": "本周有明确的结构性产出：APT 数据集构建方向完成了 Agent 方案重构，收敛为 1 个总控 Agent 和 7 个核心 Agent；明确了 Long-term Memory、Working Memory、KG、Vector Index、Metadata Index、Object Store 的分工；可解释日志异常检测和 ProvBreak 方向也完成了与 Memory/Agent 体系的关系梳理。但硬进展主要停留在架构、Schema 和叙事层，实验结果、最小链路实现、自动构建 Memory、KG 原型等尚未真正完成。",
-      "missingEvidence": "缺少具体架构文档、Schema 文件、KG 节点边定义、最小链路运行截图或代码提交；日志异常检测缺少完整实验结果；ProvBreak 缺少扰动策略对检测结果影响的验证数据。"
+      "score": 12,
+      "reason": "本周最实的进展集中在 APT 数据集构建 Agent 与 Memory 系统的架构重构：形成“1 个总控 Agent + 7 个核心 Agent”的边界判断，明确 Long-term Memory、Working Memory、KG、Vector Index、Metadata Index、Object Store 的分工，并给出最小验证链路方向。但主要仍是方案设计和认知整理，Long-term Memory 自动构建、KG Index、Working Memory 样例测试、日志异常检测实验、ProvBreak 扰动实验均未完成。",
+      "missingEvidence": [
+        "缺少实际产出的 Agent 架构文档或 Schema 文件链接",
+        "缺少 MemoryObject、KG Schema、Working Memory 示例的具体样例",
+        "缺少任何实验结果、指标表或运行日志",
+        "缺少 APT 报告到 attack_chain_spec 的最小链路验证结果"
+      ]
     },
     "cognitiveIncrement": {
-      "score": 12,
-      "reason": "认知增量较清楚：从“按流程切 Agent”推进到“按 Memory 边界、决策边界、handoff 边界切 Agent”；从“KG 是知识库”修正为“KG 是关系索引层”；将 Memory 分为 Semantic、Procedural、Episodic、Artifact、Evaluative、Policy，并与具体 APT 数据集构建任务对齐。这些增量能直接改变系统设计方式。但报告也明确说明多数概念老师原本知道，学生本周主要贡献是场景化落地，因此原创认知增量有限。",
-      "missingEvidence": "缺少新旧 Agent 架构的对比图、被删除或合并的 Agent 清单、每个 Agent 的 Memory 边界示例，以及这些认知改变如何减少复杂度或提升可实现性的证据。"
+      "score": 13,
+      "reason": "认知增量较明确：从“按流程拆 Agent”转向“按 Memory 边界、决策边界、handoff 边界设计 Agent”；从“KG 是知识库”转向“KG 是关系索引层，Artifact/Object Store 管大对象，Vector 管相似性，Metadata 管过滤与版本”。这些理解直接影响了 APT 数据集构建方案。",
+      "missingEvidence": [
+        "缺少新旧 Agent 方案的对照表，无法判断认知变化带来的结构性改进幅度",
+        "缺少具体案例说明某个 Agent 因 Memory 边界判断被合并、删除或保留"
+      ]
     },
     "cot2Depth": {
-      "score": 11,
-      "reason": "CoT’s CoT 写出了两个较深层的抽象：Agent 必要性应由 Memory/决策/handoff 边界决定；Memory 顶层应是认知结构而非业务知识库。也标注了老师是否已知、自动化潜力和沉淀形式，符合模板要求。问题是深度仍偏设计哲学，缺少反例、失败案例、边界条件和可检验假设；对‘为什么 7 个核心 Agent 是最优或足够’没有论证。",
-      "missingEvidence": "缺少一个具体任务从原始输入到 Memory 调用再到 Working Memory 投影的完整 CoT trace；缺少错误设计案例；缺少 Agent 数量选择的消融或决策依据。"
+      "score": 12,
+      "reason": "CoT’s CoT 能反思 Agent 是否必要的判据，并把 Memory 从业务分类上升到 Semantic、Procedural、Episodic、Artifact、Evaluative、Policy 等认知结构，深度较好。但两条都明确写明“老师原本知道”，因此对教授的新信息量有限；同时还没有通过失败案例、反例或最小实现来验证这些抽象是否正确。",
+      "missingEvidence": [
+        "缺少一个具体任务中 Memory 边界如何决定 Agent 边界的完整推理案例",
+        "缺少反例：哪些模块不应成为 Agent，为什么",
+        "缺少这些 CoT’s CoT 如何转化为工程约束或检查规则的实例"
+      ]
     },
     "brainaryMapping": {
       "score": 8,
-      "reason": "Brainary 映射比较充分，明确对应 Long-term Memory、Working Memory、KG-based Memory Index、Meta-Cognition、Workflow/Agent Orchestration、Benchmark/Evaluation，并给出 Data Agent、Attack Knowledge Agent、Adversarial Strategy Agent、Dataset Construction Agent 分别沉淀什么长期记忆、当前任务激活什么工作记忆。这是本周报告中较强的部分。扣分点是映射仍是概念层，尚未形成可运行的 Brainary 实例或接口定义。",
-      "missingEvidence": "缺少 Brainary 组件到具体数据结构、API、工作流节点、输入输出字段的映射表；缺少一个样例任务在 Brainary 架构中的执行记录。"
+      "reason": "与 Brainary 的映射比较清楚，覆盖 Long-term Memory、Working Memory、KG-based Memory Index、Meta-Cognition、Workflow/Agent Orchestration、Benchmark/Evaluation，并结合 APT 数据集构建给出 Data Agent、Attack Knowledge Agent、Adversarial Strategy Agent、Dataset Construction Agent 的长期记忆和工作记忆例子。欠缺的是 Brainary 内部标准接口、对象格式和运行闭环的实证映射。",
+      "missingEvidence": [
+        "缺少 Brainary 组件到本项目模块的正式映射表",
+        "缺少 MemoryObject 在 Brainary 中如何被创建、检索、投影、写回的样例",
+        "缺少一次端到端 Brainary workflow 运行记录"
+      ]
     },
     "monetaryValue": {
       "score": 6,
-      "reason": "报告按模板给出了金额：3000 万人民币加 500 万人民币，并列出潜在买单方，包括国家安全机构、网络安全厂商、科研院所、高校实验室和攻防评测平台建设单位。价值方向合理，能够说明该题目可能沉淀为数据集、Benchmark、Agent workflow、评测平台和项目系统。但金额估算依据过粗，只说参考国家重大科技专项预算和两个项目估价，没有拆分产品形态、采购场景、交付边界、成本结构或竞品参照。",
-      "missingEvidence": "缺少金额拆分逻辑，例如数据集值多少钱、平台值多少钱、评测服务值多少钱、项目系统交付范围是什么；缺少真实招标、预算、客户需求或同类平台价格依据。"
+      "reason": "报告按模板写出了金额：3000 万人民币 + 500 万人民币，并说明潜在买单方包括国家安全机构、网络安全厂商、科研院所、高校实验室等，也说明可沉淀为数据集、Benchmark、平台、论文和项目系统。但估值方法较粗，只写“根据项目估价”和“国家重大科技专项预算”，没有拆分功能模块、交付物、客户场景、采购路径或竞品替代价值。",
+      "missingEvidence": [
+        "缺少 3000 万和 500 万分别对应什么交付物的拆分",
+        "缺少真实项目、招标、预算或市场案例依据",
+        "缺少买单方的具体使用场景和验收标准",
+        "缺少从论文原型到项目系统的商业化路径"
+      ]
     },
     "projectManagement": {
       "score": 12,
-      "reason": "项目管理部分较完整，分别覆盖 APT 数据集构建 Agent 与 Memory 系统、可解释性日志异常检测、ProvBreak 三个项目，包含阶段、原计划、实际完成、投入时间、下周投入、里程碑、资源、依赖、关键路径、成本、进度偏差和纠偏动作。能看出主线优先级已经转向 APT 数据集构建。扣分点是验收标准仍不够硬，例如‘最小链路验证’没有定义成功指标；人员分工还停留在‘下周讨论后落实’；风险管理和阻塞预案不足。",
-      "missingEvidence": "缺少任务拆解表、责任人、交付物清单、验收指标、甘特图或 issue 列表；缺少对 5 月中旬里程碑的可量化定义；缺少延期后的优先级取舍方案。"
+      "reason": "项目管理部分较完整，分别写了 APT 数据集构建 Agent 与 Memory 系统、可解释性日志异常检测、ProvBreak 三个项目的阶段、原计划、实际完成、投入人天、下周人天、关键里程碑、资源、依赖、关键路径、成本、偏差原因和纠偏动作。主要问题是项目仍偏宏观，负责人分工、验收指标、具体交付物编号、风险等级和截止日期不够硬。",
+      "missingEvidence": [
+        "缺少每个下周任务的 owner、deadline 和验收标准",
+        "缺少实际产出物清单，例如文档、代码、schema、实验脚本、数据样例",
+        "缺少里程碑完成判定指标",
+        "缺少对关键风险的优先级排序和备用方案"
+      ]
     },
     "nextAction": {
       "score": 8,
-      "reason": "下周动作比较明确：APT 数据集方向要做最小链路验证，包括 APT 报告到 attack_chain_spec、日志窗口到 Working Memory、MemoryObject 到 KG Index；日志异常检测要跑完重构实验并观察 Findings、证据组合和异常解释是否稳定提升；ProvBreak 要将 1 到 2 个意图扰动策略写成 Adversarial Strategy Memory 实例并验证对检测结果影响。动作具备一定可验证性。扣分点是缺少具体样例数量、数据集名称、评价指标、成功阈值和输出文件形式。",
-      "missingEvidence": "缺少下周每个动作的验收标准，例如使用几篇 APT 报告、多少条日志窗口、KG 至少包含哪些节点边、实验指标提升多少算有效、扰动策略影响检测结果的判定标准是什么。"
+      "reason": "下周动作具有一定最小可验证性：APT 数据集方向要做 APT 报告到 attack_chain_spec、日志窗口到 Working Memory、MemoryObject 到 KG Index 的初步映射；日志异常检测要补齐实验结果；ProvBreak 要写出 1 到 2 个意图扰动策略并验证对检测结果的影响。自动化路径也列出了 7 步。但动作的样本规模、完成标准、评价指标和失败判定仍不够具体。",
+      "missingEvidence": [
+        "缺少每个最小验证动作的输入样例数量",
+        "缺少成功标准，例如准确率、稳定性、覆盖率、人工审校一致性等",
+        "缺少下周结束时必须交付的具体文件或实验表格",
+        "缺少如果实验不提升时的替代判断路径"
+      ]
     },
     "evidenceQuality": {
       "score": 2,
-      "reason": "报告对证据等级有自知，明确指出很多判断仍需要最小实现、完整实验和扰动验证支撑。但当前证据主要是方案设计、自我总结和理论关系梳理，缺少实验表格、代码、样例、可复现输出或实际系统运行结果。证据质量不足以支撑强结论，只能支撑‘方向和架构设计初步形成’。",
-      "missingEvidence": "缺少实验结果、baseline 对比、消融分析、Schema 样例、KG 原型、MemoryObject 实例、代码提交记录、数据样例和自动化链路运行记录。"
+      "reason": "报告有单独的证据等级判断，并诚实指出多个方向还需要实验验证。但当前证据主要是自述和方案判断，缺少文档链接、代码提交、实验截图、数据样例、指标表、失败案例或外部评审记录。对于 hard progress 来说，证据强度偏弱。",
+      "missingEvidence": [
+        "缺少实验结果和定量指标",
+        "缺少代码、文档、schema 或流程图附件",
+        "缺少真实样例的端到端输出",
+        "缺少第三方或导师审阅反馈"
+      ]
     },
     "totalScore": 73,
     "tier": "B",
-    "oneLineJudgment": "本周的主要价值是把 APT 数据集构建重新组织成 Memory-driven Agent 架构，认知和项目框架有进展，但硬证据和最小可运行验证明显不足，仍未从设计期进入工程验证期。",
+    "oneLineJudgment": "本周的主要价值是把 APT 数据集构建从流程型 Agent 设计推进到 Memory-driven Agent 架构设计，但仍处于概念和 schema 阶段，硬实验与最小链路验证不足。",
     "professorFollowUp": [
-      "请优先检查 1 个总控 Agent 加 7 个核心 Agent 的边界是否合理，尤其是哪些 Agent 只是流程产物而不应存在。",
-      "要求学生下周必须提交一个最小样例链路：至少包含一篇 APT 报告、一个日志窗口、一个 MemoryObject 样例、一个 KG Index 映射和一个 Working Memory 投影结果。",
-      "要求为 5 月中旬里程碑定义硬验收标准，例如输入数量、输出文件、Schema 字段、KG 节点边、成功/失败判据。",
-      "对日志异常检测和 ProvBreak 不要继续只做叙事整合，应要求给出实验表格或失败案例，否则这两个方向的进度应判定为滞后。",
-      "本周老师最应关注的一点是：学生已经意识到 Agent 不是流程模块，而是由长期记忆、工作记忆和认知控制边界定义的任务单元；下一步关键是把这个认识变成可运行的最小链路，而不是继续扩展概念设计。"
+      "请重点检查“1 个总控 Agent + 7 个核心 Agent”的边界是否真的由 Memory 边界、决策边界和 handoff 边界支撑，而不是重新命名的流程模块。",
+      "要求下周必须交付一个最小样例：从一份 APT 报告抽取 MemoryObject，映射到 KG Index，再生成 attack_chain_spec 和 Working Memory。",
+      "要求日志异常检测方向给出完整实验表，不再只汇报 Findings 和证据推理的概念收益。",
+      "要求 ProvBreak 至少验证 1 个意图扰动策略是否改变 Frequency baseline 或溯源检测判断。",
+      "要求把 3500 万估值拆成具体交付物、客户、验收指标和项目预算依据，否则金额判断暂不能支撑项目决策。"
     ]
   }
 }

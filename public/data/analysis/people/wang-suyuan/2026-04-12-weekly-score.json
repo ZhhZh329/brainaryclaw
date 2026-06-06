@@ -1,54 +1,95 @@
 {
   "key": "person:wang-suyuan:2026-04-12:weekly-score",
-  "generatedAt": "2026-05-24T11:36:12.475Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "26fb9d89d989877aafda0e84777e9b1fa52e743b1939503d23336c2afb7cee65",
+  "generatedAt": "2026-06-06T13:13:08.315Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "cbb04a59745f7892f426e416d3be19d471cd4104a86639281af7848c18a20d44",
   "result": {
+    "week": "2026-04-12",
+    "name": "Wang Suyuan",
     "hardProgress": {
-      "score": 18,
-      "reason": "本周部署了自动科研Agent并完成漏洞验证领域文献调研，梳理了SOTA方法的上限与依赖；同时输出了AutoVerif V6端到端架构设计、实验计划及三层归因评价指标，硬性产出明确。",
-      "missingEvidence": "未附上Agent实际执行过程的日志或产出报告截图，文献调研的具体摘要未展示。"
+      "score": 15,
+      "reason": "本周有明确硬进展：部署了自动科研 Agent 框架，完成漏洞验证方向文献调研，形成了 AutoVerif V6 端到端架构和 16 个实验区块的实验计划，并提出三层崩溃归因指标。但主要产出仍停留在调研、设计和计划层面，尚未看到可运行代码、实验日志、样例输出或真实验证结果。",
+      "missingEvidence": [
+        "缺少 Auto-Research Agent 实际运行日志、检索结果样例或自动总结产物链接。",
+        "缺少 AutoVerif V6 提案和 EXPERIMENT_PLAN 的具体内容或附件证据。",
+        "缺少任何已执行实验、代码提交、样例 CVE 验证结果。"
+      ]
     },
     "cognitiveIncrement": {
       "score": 13,
-      "reason": "更新了两项关键认知：指出业界错位评估起点，真实痛点在SAST告警到PoC；提出需建立跨漏洞经验复用图谱。认知增量明显，切中领域盲点。",
-      "missingEvidence": "缺少对SAST告警到PoC实际工作流的量化对比分析，经验图谱的可行性缺乏前置实验或案例。"
+      "reason": "认知增量较强，明确指出现有 PoC 生成工作的评估输入与工业真实场景错位，即从结构化 CVE 报告转向 SAST 模糊告警；同时提出跨漏洞经验复用和失败轨迹沉淀的问题。这些判断直接影响选题定义和系统架构，不是泛泛总结。",
+      "missingEvidence": [
+        "缺少对 PAGENT、DrillAgent、VulnSage、Cve2PoC 等工作的逐项对比表，无法核验其是否确实都依赖结构化 CVE 或崩溃报告输入。",
+        "缺少工业 SAST 告警到 PoC 验证的真实案例或数据样本。"
+      ]
     },
     "cot2Depth": {
-      "score": 14,
-      "reason": "CoT's CoT 1将崩溃归因提炼为LLM-as-a-Judge问题，洞察深刻，属于老师原本未知的新知；CoT's CoT 2对Agent洞察力边界的观察也具反思性，具有较强的元认知深度。",
-      "missingEvidence": "CoT's CoT 1缺乏引用具体文献说明业界确无此类Judge的直接论述；CoT's CoT 2的Agent表现缺乏对比实验支撑。"
+      "score": 12,
+      "reason": "CoT’s CoT 有较好的二阶抽象：把崩溃归因从简单匹配提升为跨调用栈因果推导问题，并将其定位为独立 Evaluator；同时反思 Auto-Research Agent 在洞察生成上的边界。深度较好，但 LLM-as-a-Judge 的有效性仍是设计假设，尚未通过最小实验验证。",
+      "missingEvidence": [
+        "缺少 LLM Judge 在跨函数崩溃归因上的实际测试样例。",
+        "缺少传统匹配方法失败、LLM Judge 成功的对照案例。",
+        "缺少 Agent 无法发现结构性空白的具体交互记录或失败案例。"
+      ]
     },
     "brainaryMapping": {
-      "score": 7,
-      "reason": "将跨调用栈漏洞验证判定器对接到Brainary的Evaluator/Benchmark能力，指出了Brainary现有能力的缺失，但关联相对直接，创意性一般。",
-      "missingEvidence": "未提供Brainary现有能力的具体差距分析及集成方案细节，仅停留在概念关联。"
+      "score": 8,
+      "reason": "与 Brainary 的映射比较清楚，定位到 Evaluator 和 Benchmark，且提出动态崩溃报告与静态告警之间的三级归因判定逻辑，具备沉淀为系统组件的可能。但还没有说明该 Evaluator 的输入输出协议、与 Brainary 现有模块的接口、评测数据来源和可复用边界。",
+      "missingEvidence": [
+        "缺少 Brainary 接入形态，例如 API、数据 schema、调用流程。",
+        "缺少 Evaluator 的标准输入输出样例。",
+        "缺少 Benchmark 数据集构建方案。"
+      ]
     },
     "monetaryValue": {
-      "score": 9,
-      "reason": "分别估算了任务一和任务二的年化价值，给出了计算方法和参考依据，估值逻辑基本合理，体现了商业化思考。",
-      "missingEvidence": "估值依赖假设，无市场数据或竞品定价佐证，200万SaaS估值未拆解客户获取成本。"
+      "score": 7,
+      "reason": "商业价值判断方向成立：企业 SOC 和 DevSecOps 确实可能为自动化漏洞复现和误报过滤付费，也给出了按告警数量和人工成本估算的价值模型。但金额估算较粗，1000 个高危告警、每个 2000 元、20% 技术转化价值等关键参数没有数据来源，SaaS 商业化路径也尚未验证。",
+      "missingEvidence": [
+        "缺少企业真实 SAST 告警量、复核成本和采购预算的来源。",
+        "缺少潜在用户访谈或需求验证。",
+        "缺少竞品价格、替代方案成本或采购案例。"
+      ]
     },
     "projectManagement": {
-      "score": 14,
-      "reason": "项目管理部分包含阶段、时间、资源、依赖、成本、进度判断和纠偏，规划细致，时间预算（20小时）、单次成本（$0.05/case）明确，整体符合预期。",
-      "missingEvidence": "未说明GPT-4/Claude额度具体数量及获取途径，大内存容器规格未明确。"
+      "score": 12,
+      "reason": "项目管理信息较完整，说明了当前阶段、下周投入时间、资源需求、API 和容器依赖、关键路径和成本估计。问题是里程碑仍偏宏观，缺少可验收交付物定义，例如下周 RVC Parsing 完成到什么程度、ETG 基建的最小功能是什么、失败时如何纠偏。",
+      "missingEvidence": [
+        "缺少本周计划与实际交付物的可核验对照。",
+        "缺少下周任务拆解到具体文件、模块、测试用例或验收标准。",
+        "缺少风险预案，尤其是 API 不足、算力有限、长上下文幻觉的替代方案。"
+      ]
     },
     "nextAction": {
-      "score": 9,
-      "reason": "下周动作为experiment bridge、Auto Research Loop及手动测试LLM Judge的Prompt，具体可验证，并规划了RVC转换脚本编写，行动路径清晰。",
-      "missingEvidence": "未设定下周实验的验收标准或期望结果，如测试通过率阈值。"
+      "score": 8,
+      "reason": "下周动作中，抽样 5 个跨函数 CVE 手动测试 LLM Judge Prompt 是较好的最小可验证动作，能直接验证核心假设。RVC 格式转换脚本和简单 case 测试也具备执行性。但任务一的 experiment bridge 和 Auto Research Loop 描述偏抽象，没有说明输入、输出和成功标准。",
+      "missingEvidence": [
+        "缺少 5 个 CVE 的选择标准和预期标注方式。",
+        "缺少 LLM Judge Prompt 的初版或评判 rubric。",
+        "缺少 experiment bridge 和 Auto Research Loop 的具体定义。"
+      ]
     },
     "evidenceQuality": {
-      "score": 4,
-      "reason": "CoT's CoT 1有实验计划支撑（A级），CoT's CoT 2有实际部署现象支撑（B级），自评合理，但所有证据均停留在提案或现象层面，缺乏初步实验数据。",
-      "missingEvidence": "40% TP召回率提升仅为预估，缺少小规模验证数据；Agent洞察力边界的现象未提供具体对话记录。"
+      "score": 2,
+      "reason": "证据质量偏弱。周报给出了论文名、能力区间、实验计划和价值估算，但大多是结论性描述，没有原始证据、链接、表格、日志、代码提交或实验数据。特别是 Level 3 提升 40% TP 召回率属于预估，不是已验证结果。",
+      "missingEvidence": [
+        "缺少文献调研表和引用来源。",
+        "缺少 Benchmark 能力区间 50% 到 77% 的出处。",
+        "缺少 EXPERIMENT_PLAN 原文或摘要表。",
+        "缺少代码仓库、提交记录、运行截图或日志。",
+        "缺少任何定量实验结果。"
+      ]
     },
-    "totalScore": 88,
-    "tier": "A",
-    "oneLineJudgment": "本周硬进展扎实，认知深刻，架构设计与实验计划清晰，项目管理到位，但Brainary关联可更深入，证据尚需实证支持。",
-    "professorFollowUp": "SAST告警到崩溃的归因中LLM Judge的假阳性如何控制？三层匹配法在长调用栈下的可靠性实验何时开展？"
+    "totalScore": 77,
+    "tier": "B",
+    "oneLineJudgment": "本周是高质量的选题收敛和系统设计周，认知增量明确，但硬证据和可运行验证不足，核心假设仍需下周用小样本实验尽快落地。",
+    "professorFollowUp": [
+      "要求学生下周必须交付 5 个跨函数 CVE 的 LLM Judge 归因测试表，包括输入告警、崩溃日志、人工标签、LLM 判断、错误分析。",
+      "要求补一张文献对比表，逐项证明现有 SOTA 是否依赖结构化 CVE 或 Sanitizer 崩溃报告，以及是否支持 SAST 原生输入。",
+      "要求把三层归因 Evaluator 写成最小可运行模块，至少定义输入输出 schema 和一个 end-to-end demo。",
+      "重点追问 Level 3 Call-Graph Attribution 是否真的需要 LLM，还是静态/动态调用图加规则即可覆盖大部分场景。",
+      "要求将商业价值估算中的关键参数换成可追溯来源，避免用未经验证的金额支撑项目价值。"
+    ]
   }
 }

@@ -1,34 +1,214 @@
 {
   "key": "person:xie-maoyi:2026-05-03:longitudinal",
-  "generatedAt": "2026-05-24T11:52:22.300Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "a2398c97b11af247adbff0735d6d563ca98ce7d494a42cfaa527cbabd09dbacc",
+  "generatedAt": "2026-06-06T13:15:59.452Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "2218c15e07ec764514447cdef66479d6f5aa5ee01596a876881a3a6e6e57333c",
   "result": {
-    "overallTrajectory": "学生从基于trace的Kernel Fault Localization起步，发现信息覆盖不足以提升LLM性能，逐步转向候选空间控制和Bug-Type推理，并最终转向高价值的Kernel Bug Hunting实证方向。研究重心从方法指标优化转向真实漏洞产出，认知上从重视数据增强到重视验证链和闭环流程，表现出研究能力和价值判断的成熟化趋势。",
-    "stageByWeek": {
-      "2026-04-12": "KCOV pipeline搭建与初步LLM验证，处于实验基础设施建立和方法探索初期，calltree对FL提升有限。",
-      "2026-04-19": "系统性实验分析与Bug-Type推理突破，Top-10准确率从3.7%提升至59.3%，明确calltree的条件价值，出现论文信号。",
-      "2026-04-26": "候选空间控制与filtering验证，RC保留率提升至92.6%，Top-10达66.7%，方法向pruning+reasoning收敛，原型化KernelLocator。",
-      "2026-05-03": "转向Kernel Bug Hunting，基于sibling-fix reverse search挖掘真实漏洞，形成‘pattern→筛选→PoC验证’闭环，方法沉淀与工具化设计启动。"
-    },
-    "trendScores": {
-      "hardProgress": "前期以FL准确率为核心指标，提升显著但遭遇瓶颈；后期转为输出confirmed kernel bugs，硬进展从实验数据升级为上游认可的真实漏洞。趋势：从量变到质变，实际影响力增强。",
-      "cognitiveMaturity": "初期聚焦于工具链和数据处理技术，中期洞察到搜索空间控制和因果/分类推理的关键性，后期认识到验证链优先于推理链。认知层次从技术细节上升至方法论。",
-      "CoTCoTMaturity": "CoT's CoT从粗粒度问题分解（覆盖vs推理）演进到精细化流水线抽象（候选生成-剪枝-推理），再到模式驱动的高精度候选生成和运行时验证元认知。证据等级从B/C提升至全A，成熟度显著提高。",
-      "brainaryMappingMaturity": "最初仅映射reasoning和弱cognitive control，后加入workflow management，最终形成含reasoning、cognitive control、tool orchestration、risk modeling的完整agent能力映射。结构清晰度逐步增强。",
-      "valueReasoning": "价值评估从基础设施和实验洞察（数万元）转向能够产出真实漏洞、可复用方法论和工具化路径的工作（20万+），并明确连接买单方和通用能力。价值观从学术指标导向转向产业价值导向。",
-      "projectManagement": "时间投入稳定（35-40h），能根据结果及时纠偏（从trace转reasoning，从FL转bug hunting），但第四周出现项目方向重大切换，可能带来认知资源分散风险。"
-    },
-    "valueFunctionChange": "学生早期认为trace构建和LLM实验有价值（4-6万），但逐渐意识到推理机制和候选空间控制才是性能突破点（15万）。第四周价值判断进一步转向能够直接产出真实漏洞、可复用方法论和工具化路径的工作（20万+10万+8万），并将价值连接到具体用户（内核维护者、安全团队）和金钱收益。整体价值观从‘论文信号’向‘产业影响力’和‘可复制系统’迁移。",
-    "repeatedBlockers": [
-      "LLM在候选空间过大时搜索效率低，提示缺乏结构化推理（前3周反复）",
-      "calltree信息与噪声的平衡，缺乏自适应机制（前3周）",
-      "方法偏启发式，未形式化/结构化（贯穿全程）",
-      "验证成本高，需PoC但自动化不足（第4周突出）"
+    "overallTrajectory": "总体判断：这个学生最近四周不是单纯变忙，而是在明显增强研究能力；最强信号是他能把实验结果拆成条件性结论、识别负结果边界、从“增加信息”转向“控制候选空间/验证链”，并开始思考如何沉淀为 Brainary 可复用模块。但项目连续性存在风险：前 3 周的 Kernel FL / KernelLocator 主线在第 4 周几乎没有交代状态，说明研究判断在提升，项目组合管理还需要更清楚的收敛和取舍。",
+    "headline": "研究能力在上升：从工程跑通进步到条件化假设、失败模式归因、验证标准和自动化模块意识；下一步需要把主线切换、里程碑和可交付物管理做实。",
+    "overviewSentence": "学生正在从“多做实验”转向“用证据拆问题、定义适用边界、形成可复用研究模块”，但需要补齐跨项目连续推进和交付闭环。",
+    "fourWeekTimeline": [
+      {
+        "week": "2026-04-12",
+        "metacognition": "开始能识别“trace 覆盖到不等于能定位”的认知误区，记录了 KCOV 丢失、多线程/fork、buffer early stop、kernel thread 未捕获等失败模式，也能提出下周最小验证动作；但当周仍主要停留在 pipeline 和现象层，方法框架尚不清楚。",
+        "valueJudgment": "价值判断处于早期探索：认为 kernel bug 定位是真问题，但承认方法不清晰、通用性不确定；已意识到 trace 需要结构化，可能沉淀为 workflow 或 graph builder，但证据等级还只有 B/C。",
+        "projectManagement": "KCOV pipeline 有可检查交付：65 个 bug 中 57 个收集到 calltree、RC 覆盖约 42%；LLM 对比实验有 Top-1/Top-5/Top-10 结果；KernelLocator 只有 very small dependency graph 的计划，尚未实现。资源、依赖、投入和纠偏动作写得较清楚。",
+        "evidence": "证据包括：65 个 bug、57 个 calltree、24 个 RC in calltree、Top-1 2/24 无提升、失败模式列表、下周动作如 KCOV_REMOTE 和小规模稳定性验证。"
+      },
+      {
+        "week": "2026-04-19",
+        "metacognition": "出现明显跃迁：把问题拆成 RC 在 backtrace、RC 不在 backtrace 但在 calltree、RC 不在 calltree 三类；从“calltree 是否有用”转为“什么时候有用”；主动修复数据泄露问题，说明证据边界意识增强。",
+        "valueJudgment": "科研价值判断更清楚：题目价值不再来自“trace 增强”，而来自 BT 不可见场景下的信息补全与 bug-type reasoning；明确负结果“RC 已在 BT 时 calltree 是噪声”，显示开始有取舍。",
+        "projectManagement": "推进质量较高：完成 128 crash bugs 整体分析、27 个 RC-not-in-BT 子集、56 个 RC-in-BT 负结果、Phased calltree 与 Flat calltree 对比、Bug-Type prompt 结果。Brainary 相关的 reasoning module、decision policy 已有 prototype 信号，但仍缺结构化表达。",
+        "evidence": "证据包括：RC 在 BT 的 56 个 Top-10 85.7%，RC 不在 BT 的 baseline Top-10 约 3.7%，Phased calltree RC 保留率 22/27，Bug-Type Final Top-10 16/27，数据泄露修复。"
+      },
+      {
+        "week": "2026-04-26",
+        "metacognition": "进一步从单点 prompt 优化走向流程分解：candidate generation → candidate pruning → reasoning；能识别 prompt 是规则堆叠而非统一机制，能把“减少无关信息比增加信息更关键”提升为 agent policy。",
+        "valueJudgment": "价值判断更稳定：把方法价值分解为 calltree 提供信息、bug-type 提供推理、filtering 控制空间；能判断 candidate filtering 可能是核心模块，KernelLocator graph 的主要作用是压缩 search space 而非直接提高准确率。",
+        "projectManagement": "前一周计划大多有承接：MAX_PHASES 从 8 到 16，RC 保留率 22/27 到 25/27；分析 6 个失败 case 并提升 Bug-Type v2；实现 filtering，candidate 从约 400 到 120–150；KCOV_REMOTE 小规模验证；KernelLocator minimal graph 在 5 个 bug 上测试。Brainary 的 pruning module、reasoning module 有更明确交付雏形。",
+        "evidence": "证据包括：Top-10 16/27 到 18/27，Top-5 11/27 到 13/27，candidate 缩小到 120–150 且性能基本不降，KCOV_REMOTE 3/5 成功并新增 2 个 RC-in-CT，graph 将候选缩到 60–80。"
+      },
+      {
+        "week": "2026-05-03",
+        "metacognition": "研究认知迁移到 Kernel Bug Hunting：从“推理链”转向“验证链”，明确 agent 多一致不等于正确、静态分析不等于可验证、PoC + runtime 才是 oracle；这是很强的证据标准提升。但对前 3 周 Kernel FL / KernelLocator 的状态没有交代，项目切换的元认知说明不足。",
+        "valueJudgment": "价值判断转为“高 precision 候选生成 + LLM 筛选 + 人工/PoC 验证”的闭环，认为 sibling-fix reverse search 是当前最高 EV 方法；能把个人 bug hunting 经验连接到 pattern library、query system、LLM filter module、verification workflow，Brainary 系统能力意识增强。",
+        "projectManagement": "Bug Hunting 主线有真实外部反馈和闭环：#2 到 v6，#12 被 maintainer 确认为 bug，#1/#3 进入 mainline/net tree，confirmed bug 约 6–7 个；同时方法 memory、工具化 A/B 路径、directed fuzz/template 都有下周最小动作。缺口是没有说明 Kernel FL / KernelLocator 是否暂停、完成、转入后台或被替换。",
+        "evidence": "证据包括：多个 bug 达到 PoC + patch + maintainer acknowledgement，bpf_token 类被 reject 的 WAI 误判，phantom bug 误判，helper-pair catalogue，计划将 2–3 个 helper-pair 转成 query prototype。"
+      }
     ],
-    "professorShouldAsk": "1. Kernel FL项目是否已放弃？两个方向之间有何关联？是否考虑将FL中的结构化推理方法迁移到Bug Hunting中？\n2. Bug Hunting方法目前只有6-7个confirmed bugs，如何扩大到规模化？如何解决误判（WAI）问题？\n3. 价值观转向产业影响很好，但是否忽视了学术贡献的沉淀（如论文）？如何平衡？",
-    "nextBestIntervention": "建议在Bug Hunting中借鉴FL阶段积累的候选空间控制和分类引导推理经验，尽快将helper-pair pattern形式化为CodeQL或semgrep查询，并构建自动化验证流水线。同时明确两个项目的关系，避免认知资源分散。"
+    "metacognitionChange": {
+      "summary": "元认知变化是四周中最明显的进步：从第一周发现“trace 不直接提升 FL”，到第二周建立条件化问题分解和负结果边界，再到第三周形成 candidate generation/pruning/reasoning 的机制分解，第四周迁移到 bug hunting 中的验证链意识。这个变化说明他在从“做了什么”走向“为什么有效、何时有效、如何证明、如何沉淀”。",
+      "byWeek": [
+        {
+          "week": "2026-04-12",
+          "change": "开始识别自己的原假设被证伪：更多 trace 不等于更好定位，RC 在 trace 中也不保证能找到；但还缺统一方法框架。"
+        },
+        {
+          "week": "2026-04-19",
+          "change": "能主动划分子问题、建立对照、识别适用边界，并把数据泄露作为实验有效性的风险处理。"
+        },
+        {
+          "week": "2026-04-26",
+          "change": "能从失败 case 中抽象出 attention 偏移、候选混淆、语义误导，并将 prompt heuristic 的局限指向结构化 reasoning schema。"
+        },
+        {
+          "week": "2026-05-03",
+          "change": "能把 bug hunting 的正确性标准定义为 PoC + runtime oracle，而不是 agent 共识或静态推理；但没有解释项目切换对原主线假设的影响。"
+        }
+      ],
+      "currentLevel": "当前达到“有研究问题分解能力和证据边界意识”的阶段，接近可以独立推进一个方法型研究原型；尚未完全达到“稳定管理多个研究主线并形成结构化系统交付”的阶段。",
+      "strongestSignal": "最强信号是他连续证伪了自己的直觉路线：从“trace 会显著提升 FL”到“calltree 只在 RC 不在 BT 时有条件价值”，再到“真正提升来自 bug-type reasoning 和 candidate pruning”，最后到“bug hunting 正确性来自验证链”。",
+      "nextLift": "下一步提升不是继续增加任务量，而是要求每条主线写出：当前核心假设、已证伪假设、证据等级、停止/继续标准、最小可复现实验、可沉淀模块。尤其要补上 Kernel FL / KernelLocator 在 05-03 周的状态说明。"
+    },
+    "valueGrowth": {
+      "summary": "科研/项目价值判断在变清楚：他不再只按工程产出来估值，而是开始判断哪些机制真正构成可发表、可复用、可自动化的能力。价值函数逐步从“能否跑通 pipeline”转为“是否能缩小候选空间、是否有条件性增益、是否能形成 benchmark/module/workflow、是否有 runtime oracle”。",
+      "byWeek": [
+        {
+          "week": "2026-04-12",
+          "valueJudgment": "认为 Kernel FL 是真实问题，但承认方法不清晰、通用性不确定；Brainary 连接主要停留在 workflow/agent module 的可能性。"
+        },
+        {
+          "week": "2026-04-19",
+          "valueJudgment": "判断题目出现“可写论文信号”：不是泛泛提升 FL，而是 BT 不可见场景下的信息补充与 bug-type aware reasoning；负结果帮助明确适用边界。"
+        },
+        {
+          "week": "2026-04-26",
+          "valueJudgment": "价值判断更模块化：calltree 是候选生成，filtering 是稳定提升方向，bug-type prompt 是 reasoning 原型，KernelLocator graph 是 search space control。"
+        },
+        {
+          "week": "2026-05-03",
+          "valueJudgment": "在 bug hunting 中形成新的价值函数：高 precision pattern-driven candidate generation、LLM high-recall filter、PoC/runtime oracle；能连接到 pattern library、query system、LLM filter module 和 verification workflow。"
+        }
+      ],
+      "currentValueFunction": "当前他认为值得持续投入的项目应满足四个条件：一是真实痛点明确，如 kernel FL 中 BT 不可见或 bug hunting 中误报率高；二是有外部或实验验证，如 maintainer acknowledgement、Top-k 对照、无泄露 pipeline；三是能转化为可复用模块，如 pruning module、reasoning module、pattern library、verification workflow；四是能降低长期自动化科研中的不确定性，如候选空间控制和 runtime oracle。",
+      "improvementSignals": [
+        "能用负结果缩小价值边界：RC 已在 BT 时 calltree 不是帮助而是噪声。",
+        "能把个人经验抽象为系统能力：helper-pair catalogue、pattern library、LLM filtering module、verification workflow。",
+        "能区分 LLM 的适合角色：在 FL 中需要 structured reasoning，在 bug hunting 中更适合作为 high-recall filter 而不是 primary detector。",
+        "能把 Brainary 能力建设与具体项目机制相连：cognitive control 对应候选空间控制，tool orchestration 对应 BT/CT 或 grep/LLM/PoC，verification module 对应 runtime oracle。"
+      ],
+      "nextValueQuestion": "他下一步需要回答：Kernel FL / KernelLocator 和 Kernel Bug Hunting 哪条是未来 4–6 周的主论文/主系统路线，另一条如何定义为支线、资产沉淀或暂停；选择依据必须是证据强度、可交付性、自动化沉淀价值和老师资源需求，而不是当周兴趣或即时反馈。"
+    },
+    "projectManagementReview": {
+      "summary": "项目管理质量总体上从“有任务清单”提升到“有指标、有对照、有失败模式、有下周最小动作”；但跨周组合管理不足，第 4 周主线从 Kernel FL 切到 Bug Hunting，未说明原主线状态、交接物和是否继续，导致老师难以判断资源投入优先级。",
+      "projects": [
+        {
+          "project": "Kernel FL / KCOV calltree / Bug-Type reasoning",
+          "weeks": [
+            "2026-04-12",
+            "2026-04-19",
+            "2026-04-26"
+          ],
+          "quality": "前三周推进扎实，有实验指标、对照组、失败模式和纠偏动作；从 KCOV pipeline 到 Phased calltree，再到 Bug-Type reasoning 和 candidate filtering，呈现连续研究推进。05-03 周没有报告该主线状态，证据缺失。",
+          "whatWorked": "有效做法包括：把 RC-in-BT 与 RC-not-in-BT 分开评估；修复 RC 泄露风险；用 Phased calltree 提升 RC 保留率；用 Bug-Type prompt 将 RC-in-CT 子集 Top-10 提升到 18/27；用 filtering 将候选从约 400 缩到 120–150 且性能基本不降。Brainary 相关的 reasoning module、pruning module、decision policy 有明确雏形。",
+          "managementGap": "缺少论文级固定 pipeline 的版本号、数据集最终口径、每个指标的统计稳定性说明；05-03 未说明该项目是否暂停、转入后台、等待老师决策或被 bug hunting 替代。Brainary 模块还停留在 prototype/潜在沉淀，尚未形成可复用接口或文档化交付。",
+          "nextConcreteMove": "下周应提交一个一页项目状态表：当前最佳方法、固定数据集、Top-1/Top-5/Top-10、失败 case 清单、是否继续做 structured reasoning schema、是否暂停 KCOV_REMOTE，以及一个可复现实验脚本/README。"
+        },
+        {
+          "project": "KernelLocator graph / dependency-based search space control",
+          "weeks": [
+            "2026-04-12",
+            "2026-04-26"
+          ],
+          "quality": "从 04-12 的想法阶段，到 04-26 有 minimal graph 在 5 个 bug 上验证，说明有推进；但规模很小，05-03 无后续，证据不足以判断其是否成为主方法。",
+          "whatWorked": "graph 表示把候选从约 120 缩到 60–80，Top-10 未下降，个别 case 有提升；这与 Brainary 的 cognitive control 能力相关，说明 graph 目前价值主要是候选空间压缩而非直接推理。",
+          "managementGap": "缺少明确的 dependency 类型定义、data/state-flow 是否可行、graph builder 的输入输出格式、与 filtering/prompt 的组合位置；没有说明是否继续扩展到 27 个 bug 或更多。",
+          "nextConcreteMove": "选择 5 个成功和 5 个失败 case，定义 graph 节点/边/schema，报告 graph 相比 filtering 的增量收益；若无增益，应将其降级为辅助压缩模块而不是论文核心。"
+        },
+        {
+          "project": "KCOV_REMOTE coverage 补全",
+          "weeks": [
+            "2026-04-12",
+            "2026-04-26"
+          ],
+          "quality": "有从计划到执行的承接：04-12 提出尝试 KCOV_REMOTE，04-26 在 5 个 kworker bug 上执行并成功 3/5，新增 2 个 RC-in-CT。但项目是否值得扩大尚未形成决策。",
+          "whatWorked": "解决了一部分 kernel thread coverage 问题，使 65 bug 子集 RC 覆盖从 24 到 26；对 Brainary 的 tool orchestration 有资产意义，因为它涉及 trace 工具和 LLM 输入的自动组合。",
+          "managementGap": "kernel 修改成本高、稳定性不足，但没有给出继续/停止标准；05-03 没有状态更新。",
+          "nextConcreteMove": "定义扩大 KCOV_REMOTE 的门槛：例如每新增 10 个 bug 至少带来多少 RC-in-CT、是否显著提升最终 Top-k、维护成本是否可接受；否则停止扩展，只保留为 coverage 补充工具。"
+        },
+        {
+          "project": "Kernel Bug Hunting / sibling-fix reverse search",
+          "weeks": [
+            "2026-05-03"
+          ],
+          "quality": "第 4 周作为新主线推进质量较高，有外部 maintainer 反馈、patch/mainline 进展、confirmed bug 数量和失败模式；但作为四周窗口中的新主线，连续性证据只有一周。",
+          "whatWorked": "已形成较强闭环：sibling-fix reverse search 生成候选，PoC + patch + maintainer acknowledgement 验证，WAI/phantom bug 作为失败模式沉淀。Brainary 相关能力包括 risk modeling、tool orchestration、LLM filter module、verification workflow，且比前三周更强调 runtime oracle。",
+          "managementGap": "confirmed bug 数量约 6–7，尚未达到报告中自定的 15–20 系统化规模；helper-pair catalogue 仍是文本经验，pattern 未 formalize，oracle 未统一；依赖 LKML/maintainer review，等待周期和阻塞策略未写清。",
+          "nextConcreteMove": "下周最小交付应是：#16 的 PoC + patch、1–2 个新增 confirmed bug、2–3 个 helper-pair query prototype、一个 bug 状态看板，区分候选/PoC 成功/上报/review/accepted/rejected/WAI。"
+        },
+        {
+          "project": "方法论 memory / helper-pair catalogue / agent verification",
+          "weeks": [
+            "2026-05-03"
+          ],
+          "quality": "有从经验到 memory 的意识，记录 disclosure、WAI 判断、配额计算、helper-pair、agent verification；但目前仍是文本经验，未进入结构化工具层。",
+          "whatWorked": "明确了必须 PoC 验证、sub-agent 输出不能直接信、helper-pair 是高价值信号；这直接服务 Brainary 的 memory、agent policy 和 verification module。",
+          "managementGap": "缺少机器可读格式、规则字段、触发条件、反例、适用子系统、验证脚本；没有说明 memory 如何被未来 agent 调用。",
+          "nextConcreteMove": "把 helper-pair catalogue 转成结构化表：pattern、前置条件、反例、目标子系统、候选生成 query、验证 oracle、历史成功/失败 bug 编号。"
+        },
+        {
+          "project": "工具化路径：Pattern query / LLM filter / directed fuzz harness",
+          "weeks": [
+            "2026-05-03"
+          ],
+          "quality": "设计层次清楚，提出 Pattern → candidate → LLM filter → 人工验证，以及 LLM 写 harness → 参数空间探索 → oracle 判断；但还没有实际 query prototype 或 harness 交付。",
+          "whatWorked": "角色划分合理：Pattern 高 precision，LLM 高 recall，人工 PoC 是最终 oracle；这对 Brainary 的自动化科研路径有明确价值，可沉淀为 workflow、pattern module、LLM filter module。",
+          "managementGap": "Pattern 未 formalize，LLM filter 成本高，harness template 和 oracle 未标准化；缺少资源/API/GPU/运行环境成本说明。",
+          "nextConcreteMove": "优先做 2–3 个 helper-pair 的 CodeQL/semgrep query prototype，并在一个 bug 上实现 parametric harness；交付标准是候选数、误报数、PoC 是否复现、人工时间成本。"
+        }
+      ],
+      "managementPattern": "学生每周能写出硬进展、失败模式和下周最小动作，这是好模式；但容易在出现新高价值方向时切换主线，而没有给旧主线做阶段关闭、资产归档和继续/暂停决策。",
+      "nextManagementMove": "老师应要求他维护一个跨项目研究看板：每个项目只保留核心假设、当前证据、下周最小验证、阻塞依赖、是否需要老师、是否继续/暂停；尤其要把 Brainary 可沉淀物从“想法”推进到“接口、数据、脚本、README”。"
+    },
+    "repeatedBlockers": [
+      "方法仍多次被描述为 heuristic，缺少结构化 schema 或统一机制：Bug-Type prompt、filtering、helper-pair catalogue 都有这个问题。",
+      "候选空间控制是反复出现的关键瓶颈：Kernel FL 中 LLM 在大 calltree 中迷失，bug hunting 中也需要高 precision candidate generation。",
+      "验证成本高且 oracle 难统一：FL 需要无泄露评估和 Top-k 对照，bug hunting 需要 PoC + runtime + maintainer 反馈。",
+      "Brainary 沉淀从报告看多为潜在模块，真正可复用的接口、规则库、workflow 文档和自动化脚本证据不足。",
+      "项目切换缺少显式状态管理：05-03 没有说明 Kernel FL / KernelLocator 的阶段性结论和后续安排。"
+    ],
+    "teacherQuestions": [
+      "你现在的主线到底是 Kernel FL / KernelLocator，还是 Kernel Bug Hunting？请用证据强度、4 周可交付、论文可能性和 Brainary 沉淀价值解释取舍。",
+      "Kernel FL 项目在 04-26 之后的状态是什么：继续、暂停、归档，还是被 bug hunting 吸收为候选空间控制能力？阶段性可交付物是什么？",
+      "你说 helper-pair catalogue 是高价值信号，下周能否给出 2–3 个结构化 query prototype，并报告候选数、误报率、PoC 成功率？",
+      "对于 Brainary，当前最应该先沉淀的是 pruning module、reasoning module、pattern library 还是 verification workflow？为什么这个优先级最高？",
+      "你的停止标准是什么：如果 Bug Hunting 两周内 confirmed bug 数量没有接近 15–20，或者 query prototype 误报率过高，你会如何调整路线？"
+    ],
+    "nextIntervention": "建议老师下一次 meeting 做一次“主线收敛干预”：要求学生在 30 分钟内给出两个候选主线的证据表和取舍结论，并指定未来两周唯一主交付。若选 Kernel Bug Hunting，交付应是 query prototype + PoC/patch 状态看板 + helper-pair 结构化规则；若选 Kernel FL，交付应是固定数据集上的可复现实验包 + structured reasoning schema + KernelLocator graph 增量评估。老师不需要直接介入技术细节，主要介入优先级、停止标准和 Brainary 沉淀格式。",
+    "studentFeedback": {
+      "summary": "你最近的进步不只是工作量增加，而是开始用证据拆问题、承认负结果、定义适用边界，并把经验转成可复用系统能力；下一步要把这种研究判断落实到项目取舍和可交付物管理上。",
+      "whatImproved": [
+        "你从“trace 是否有用”推进到“trace 何时有用、为什么有用、如何不引入噪声”。",
+        "你能用失败 case 修正方法，而不是只汇报成功结果。",
+        "你开始把 LLM 的角色看清楚：不是万能发现器，而是在不同任务中承担 reasoning、filtering 或 workflow orchestration 的一环。",
+        "你对验证标准更严格了，尤其是从 agent 共识转向 PoC + runtime oracle。"
+      ],
+      "nextStep": "下周不要只增加 bug 数或实验数；请明确一个主线，并交付一个可检查系统资产：结构化 helper-pair query、verification workflow、FL reproducible pipeline 或 pruning/reasoning module 中的一个。"
+    },
+    "evidenceLinks": [
+      {
+        "week": "2026-04-12",
+        "evidence": "KCOV pipeline 在 65 个 bug 中收集到 57 个 calltree，RC in calltree 为 24 个；Top-1 从 2/24 到 2/24 无提升；学生明确证伪“trace 会显著提升 FL”。"
+      },
+      {
+        "week": "2026-04-19",
+        "evidence": "将 128 crash bugs 拆分为 RC-in-BT、RC-not-in-BT、RC-not-in-calltree；Bug-Type Final 在 27 个 RC-in-CT bugs 上 Top-10 达 16/27；RC-in-BT 子集加 calltree 无提升甚至略降。"
+      },
+      {
+        "week": "2026-04-26",
+        "evidence": "MAX_PHASES 从 8 到 16 后 RC 保留率 22/27 到 25/27；Bug-Type v2 Top-10 到 18/27；filtering 将候选从约 400 缩到 120–150；KernelLocator graph 小规模将候选缩到 60–80。"
+      },
+      {
+        "week": "2026-05-03",
+        "evidence": "#2 推进至 v6，#12 被 maintainer 确认为 bug，#1/#3 进入 mainline/net tree；confirmed bug 约 6–7；明确 WAI 和 phantom bug 失败模式，并提出 Pattern → candidate → LLM filter → 人工验证流程。"
+      },
+      {
+        "week": "2026-05-03",
+        "evidence": "证据缺口：本周没有报告 Kernel FL / KCOV / KernelLocator 的后续进展、暂停原因或阶段性归档，因此无法判断该主线是否按周持续推进。"
+      }
+    ]
   }
 }

@@ -1,190 +1,132 @@
 {
   "key": "person:zhang-haonan:2026-06-07:horizontal",
-  "generatedAt": "2026-06-06T12:16:34.111Z",
+  "generatedAt": "2026-06-06T13:23:59.876Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
-  "inputHash": "519ea0cd0c389454fc5f904a3f2b3e733fd4b22191e984f8d27e4c043516d964",
+  "inputHash": "dedd553f64625fd2dd4df806ca8f4a871b53ab050aad162afbb6e7a4329d23c9",
   "result": {
     "overallLevel": "特别值得读",
-    "headline": "从“语法方案”推进到“可运行原型 + 小样本对照 + 可信性边界收缩”的一周",
-    "overviewSentence": "这份周报同时给出硬实验结果、负向对照、可信性边界反思和下周关键路径，按本周研究管理标准属于很值得老师优先阅读的一类。",
-    "shortRead": {
-      "whyRead": "老师应优先读原文，因为本周不只是完成了原型，还通过 BFCL simple/multiple 和 entity-only 等对照，把方法的有效边界、阶段耦合问题、可信性论证缺口都暴露出来了。",
-      "oneThingProfessorShouldLearn": "在大模型和工具之间加入意图树，并不会自动带来可信性；真正可审计的收益主要发生在意图树之后的符号匹配阶段，因此下一步要量化“中间层到底消除了多少不确定性”。",
-      "meetingFocus": "下一次 meeting 最值得围绕两个问题展开：第一，多工具场景坍塌到底来自意图分解还是匹配排序；第二，这条线的价值论证是否应从“整条链路可信”收缩为“工具选取错误可定位、可评测、可审计”。"
-    },
+    "headline": "原型、对照实验、失败模式和可信性反思同时出现，适合老师优先读并追问方向取舍",
+    "overviewSentence": "这份周报把工具调用路由从语法设计推进到可运行原型和小样本对照，并清楚指出可信性收益尚需重新定义。",
+    "shortRead": "建议老师优先读原文，尤其是 CoT's CoT 1、CoT's CoT 2、项目管理和“老师应学到的新东西”四部分。它的核心价值不只是跑出了 BFCL Simple 上 95% 工具准确率，而是主动用 multiple 和 entity-only 对照暴露了多工具坍塌、阶段耦合、意图树可信性三类关键问题。下一次 meeting 最值得讨论的是：这条线应把主张收缩为“可定位、可审计的工具选择中间层”，还是继续追求更强的端到端可信工具调用。",
     "levelRationale": {
-      "hardProgress": {
-        "level": "特别值得读",
-        "read": "本周完成语法 v0、打通完整可运行原型、实现可插拔 LLM 后端、工具自动转 TST，并在 BFCL simple/multiple 上跑出首批小样本对照结果，已经从设计阶段进入可验证阶段。",
-        "evidence": "报告中给出 baseline vs Tree 对照协议、BFCL Simple 上 95% 工具准确率 / 70% 参数精确匹配、Multiple 上 Tree 方法 5% 工具准确率等具体结果。"
-      },
-      "cognitiveIncrement": {
-        "level": "特别值得读",
-        "read": "认知增量清楚：学生从“语法是卡脖子问题”推进到“阶段间耦合才是当前瓶颈”，并认识到 simple 成功可能高估了方法强度。",
-        "evidence": "报告明确写到 entity-only 掉到 35%，说明修 Stage 2 可能破坏 Stage 3；multiple 上坍塌说明单工具红利不能代表多工具能力。"
-      },
-      "cotOfCot": {
-        "level": "特别值得读",
-        "read": "CoT's CoT 不停留在方法描述，而是追问可信性收益到底发生在哪里，并把局部修复导致全局退化提炼成可自动化监控的规则。",
-        "evidence": "报告提出“意图树仍由大模型生成，不可信点只是迁移”以及“任何单阶段修改必须重跑端到端对照”。"
-      },
-      "brainaryMapping": {
-        "level": "非常好",
-        "read": "Brainary 映射覆盖 tool orchestration、risk modeling、benchmark/evaluation、cognitive control、memory，并给出 module、protocol、benchmark 的沉淀方向。",
-        "evidence": "报告将 UIST 作为显式中间表示，将 intent 层 cache 映射到 memory，将阶段间耦合评测映射到 benchmark/evaluation。"
-      },
-      "evidenceQuality": {
-        "level": "非常好",
-        "read": "证据质量较充分，包含直接实验数据、对照组、失败定位和证据等级自评；建设性提升点是样本量仍为 n=20，跨模型验证和可信性增益量化尚未完成。",
-        "evidence": "报告给出 entity-only 35%、tree-naive 60%、entity+slot 95%、baseline 90% / 80%、multiple Tree 5% 与 baseline 30%。"
-      },
-      "topicValue": {
-        "level": "非常好",
-        "read": "题目价值判断较完整，明确指向 Agent 工具调用的可审计性、幻觉工具、参数错误、工具旁路和企业合规场景，且能说明 paper、benchmark、module 三类沉淀。",
-        "evidence": "报告第 6 节说明买单方包括 MCP / Agent 平台团队、企业安全与合规团队、模型厂商。"
-      },
-      "monetaryValue": {
-        "level": "很好",
-        "read": "金额价值有明确估算框架，把安全检测模块、LTM cache、工具选取能力和评测协议合并估算为约 100 万人民币；建设性提升点是目前缺少客户访谈、竞品报价或实际采购场景证据。",
-        "evidence": "报告给出 30 万到 100 万以上的估算逻辑，并说明依据来自工具调用幻觉、企业合规、成本节省和 benchmark 独立价值。"
-      },
-      "projectManagement": {
-        "level": "特别值得读",
-        "read": "项目管理信息完整，包含阶段、原计划与实际完成、投入时间、下周投入、关键里程碑、资源诉求、依赖关系、成本规划和纠偏动作。",
-        "evidence": "报告写明本周投入 30 小时、下周预计 30 小时、2026.06.13 前修复多工具匹配坍塌、需要老师讨论可信性方向取舍、需要 API key 和 benchmark 支持。"
-      },
-      "automationPath": {
-        "level": "非常好",
-        "read": "自动化沉淀路径清楚，优先落到 evaluation protocol、monitoring rule 和 benchmark，而不是只停留在论文叙事。",
-        "evidence": "报告提出量化“意图树错误率 vs 直接工具调用错误率”，并强制任何单阶段修改重跑端到端对照。"
-      },
-      "nextWeekActionQuality": {
-        "level": "非常好",
-        "read": "下周动作聚焦在关键路径：定位并修复 BFCL multiple 多工具匹配坍塌，使 Tree 方法至少不低于 baseline；动作可验证、可复盘。",
-        "evidence": "报告明确把多工具匹配修复设为后续 scale-up 前提，并给出匹配排序与意图分解两个排查方向。"
-      }
+      "hardProgress": "特别值得读：本周完成语法 v0、统一 UIST/TST、实现三阶段符号匹配引擎、可插拔 LLM 后端、工具自动转 TST，并在 BFCL simple/multiple 上跑出首批对照结果，已经从设计进入小规模实验。",
+      "cognitiveIncrement": "特别值得读：认知增量不是泛泛总结，而是从实验中推出“语法本身不是最大瓶颈，阶段耦合才是当前瓶颈”，并识别 simple 成功会高估方法强度。",
+      "cotOfCot": "特别值得读：两条 CoT's CoT 都有明确机制含义，尤其是“意图树仍由大模型生成，所以可信性收益不能默认成立”和“局部修复会改变下游输入假设”。",
+      "brainaryMapping": "非常好：映射到 tool orchestration、benchmark/evaluation、cognitive control、memory 等能力，并提出可插拔中间层、可信性增益评测协议、阶段耦合 benchmark 的沉淀方向。",
+      "evidenceQuality": "非常好：有 n=20 小样本对照、baseline 与 Tree 对比、entity-only / entity+slot 消融、simple 与 multiple 分场景结果；下一步需要补强的是扩大样本、跨模型验证和量化意图树错误率。",
+      "topicValue": "特别值得读：题目直指 Agent 工具调用的可审计性、参数错误、工具旁路等真实上线问题，并能沉淀为 paper、benchmark 和 module。",
+      "moneyValue": "很好：给出了 100 万人民币估值、模块形态、潜在买单方和计算逻辑；下一步若补充具体采购场景、替代方案价格或企业合规需求证据，会更有说服力。",
+      "projectManagement": "特别值得读：原计划、实际完成、投入时间、下周时间、里程碑、依赖、资源诉求、关键路径和纠偏动作都写得清楚，可直接用于老师安排支持。",
+      "automationPath": "非常好：能把本周发现转成 evaluation protocol、monitoring rule 和 benchmark，尤其是“单阶段修改必须重跑端到端对照”的规则很适合自动化沉淀。",
+      "nextWeekActionQuality": "非常好：下周动作聚焦“定位并修复 bfcl_multiple 多工具匹配坍塌”，目标明确；如果再补上可观测诊断表和停止条件，会更利于验收。"
     },
-    "sameWeekPosition": "按本周研究管理标准，这份周报属于较值得优先阅读的一类；它的突出之处不是结果都正向，而是能把原型、对照、反例、项目依赖和价值边界放在同一张管理图里。",
+    "sameWeekPosition": "按本周研究管理标准，这份周报属于较值得优先阅读的一类；它同时提供了硬进展、证伪型实验、可信性反思、项目依赖和老师需要介入的决策点。",
     "highlightedSignals": [
-      "硬进展明确：从语法 v0 走到完整可运行原型，并完成首批 BFCL 小样本实验。",
-      "证据链有层次：不仅有 simple 上的正向结果，也有 multiple 坍塌和 entity-only 退化这类能修正判断的对照。",
-      "价值判断有边界：学生没有把“意图树中间层”直接包装成可信方案，而是指出可信性收益主要来自后续符号匹配。",
-      "项目管理可执行：时间、资源、依赖、API 需求、benchmark 需求和下周关键路径都写清楚了。",
-      "自动化意识较强：能把本周发现转成 evaluation protocol、monitoring rule 和 benchmark 设计。"
+      "硬进展信号：从语法 v0 推进到完整可运行原型，并跑出 BFCL simple/multiple 小样本对照。",
+      "关键数据：BFCL Simple 上 entity+slot 联合提示达到 95% 工具准确率和 70% 参数精确匹配，baseline 为 90% / 80%。",
+      "关键反例：entity-only 提示掉到 35%，说明单独修 Stage 2 会破坏 Stage 3 的槽名对齐假设。",
+      "关键边界：BFCL Multiple 上 Tree 方法只有 5% 工具准确率，说明 simple 场景的成功不能直接外推到多工具场景。",
+      "CoT's CoT 信号：学生明确承认意图树由大模型生成时，可信性问题只是被移动到上游，而不是被消除。",
+      "项目管理信号：列出了 30 小时投入、下周 30 小时计划、2026.06.13 新里程碑、API key 和组内 benchmark 诉求。",
+      "自动化沉淀信号：提出可信性增益量化协议、阶段间耦合回归监控、证伪型对照优先的 agent policy。"
     ],
     "focusDimensions": {
       "valueJudgment": {
-        "read": "价值判断达到“非常好”：学生能说明真实问题、潜在买单方、通用能力边界和沉淀形态，也能主动收缩价值论证，不把尚未验证的可信性收益提前当成结论。",
-        "evidence": "报告第 6 节说明该题解决工具调用不可靠与可解释性问题，买单方包括 MCP / Agent 平台、企业安全与合规团队、模型厂商；第 11 节进一步说明价值论证应从“整条链路可信”收缩为“工具选取错误可被定位”。",
-        "nextLift": "下一步可以把金额价值从“合理估算”推进到“证据化估算”：补充一个最小商业验证表，例如目标用户、现有替代方案、他们当前为工具调用审计或安全模块付出的成本、该模块能替代或节省的部分。"
+        "read": "非常好：价值判断覆盖真实问题、买单方、通用性、沉淀形态和金额估算，不只是说题目有意义。",
+        "evidence": "报告中明确写到工具调用幻觉、参数错误、工具旁路、可解释性和企业合规需求，并估计可插拔工具调用安全中间层约 100 万人民币价值。",
+        "nextLift": "下一步可以把价值主张从“整条链路可信”调整为“工具选取错误可定位、符号匹配阶段可审计、可信性增益可量化”，并补充更具体的买单场景或同类模块价格依据。"
       },
       "projectManagement": {
-        "read": "项目管理达到“特别值得读”：计划、实际、时间投入、里程碑调整、资源诉求和纠偏动作都清楚，老师可以据此直接决定是否给 API、benchmark 或方向取舍建议。",
-        "evidence": "报告写明原计划是语法 v0 与语法 skill，实际完成了语法 v0、可运行原型和首批实验；本周投入 30 小时，下周预计 30 小时；新里程碑为 2026.06.13 前修复多工具匹配坍塌；外部支持包括 agent 接口、组内 benchmark、Claude/OpenAI API key。",
-        "nextLift": "下周建议把“修复 multiple”拆成两到三个可判定的小实验，例如分别验证意图分解、TST 匹配排序、prompt 生成顺序对结果的影响，并为每个实验设定通过标准。"
+        "read": "特别值得读：项目管理信息完整，老师可以直接看到当前阶段、时间投入、里程碑变化、资源需求和关键路径。",
+        "evidence": "原计划是语法 v0 和语法 skill，实际完成语法 v0、完整原型和首批 BFCL 实验；本周投入 30 小时，下周预计 30 小时；新里程碑是 2026.06.13 前修复多工具匹配坍塌。",
+        "nextLift": "下周可以把“修复 multiple”拆成可验收诊断项，例如意图分解准确率、候选工具排序命中率、slot 对齐率、端到端工具准确率，并说明每一项对应的修复动作。"
       },
       "metacognition": {
-        "read": "元认知变化达到“特别值得读”：学生已经意识到原型的价值不只是证明方案成立，而是尽早暴露自我证伪点；这会显著提高后续实验设计质量。",
-        "evidence": "报告第 5 节写到，如果只停在 simple 的 95% 会误以为方法成立，正是 multiple 和 entity-only 两组“会让自己难看”的对照暴露了真问题，并提出新方法第一轮实验必须包含最可能失败的对照。",
-        "nextLift": "下一步可以把这种元认知写成固定实验模板：每周报告不仅列主实验，还列“本周最可能推翻自己假设的对照是什么、结果如何改变下一步决策”。"
+        "read": "特别值得读：元认知变化很明确，学生把原型的价值理解为尽早暴露自我证伪点，而不是只证明方案成立。",
+        "evidence": "报告指出如果只停在 simple 的 95%，会误以为方法成立；正是 multiple 和 entity-only 两组对照暴露了多工具坍塌与局部修复整体退化。",
+        "nextLift": "可以继续把这种元认知固化成实验模板：每个新方法第一轮必须包含主实验、最可能打脸的对照、阶段耦合检查和结论适用边界。"
       }
     },
     "growthOpportunities": [
-      {
-        "area": "可信性增益量化",
-        "suggestion": "目前已经指出“意图树仍由大模型生成”这一关键边界，下一步需要把它量化：分别统计意图树错误、符号匹配错误、直接工具调用错误，避免只看最终工具准确率。"
-      },
-      {
-        "area": "多工具坍塌定位",
-        "suggestion": "下周最好把 multiple 问题拆成可隔离的诊断链：并列动作分解是否正确、候选工具排序是否正确、slot 对齐是否保持、entity 词表是否在多工具下过度约束。"
-      },
-      {
-        "area": "金额价值证据",
-        "suggestion": "100 万人民币估算有方向感，但还需要更可核查的依据，例如企业愿意购买的是安全检测、审计日志、工具路由准确率提升，还是成本节省；不同形态应分别估值。"
-      },
-      {
-        "area": "实验规模与泛化",
-        "suggestion": "当前 n=20 已适合早期定位问题；当 multiple 修复后，应增加样本规模并补充 Claude/OpenAI 等跨模型对照，形成更稳的证据链。"
-      }
+      "把可信性论证进一步量化：目前 CoT's CoT 1 的证据等级是 B，下一步需要比较“意图树错误率”和“直接工具调用错误率”，而不是默认中间层有收益。",
+      "扩大证据覆盖面：当前 n=20 小样本足以发现机制问题，但若要支撑论文或模块价值，需要扩大样本并做 Claude / OpenAI / DeepSeek 跨模型验证。",
+      "把 multiple 坍塌拆成诊断面板：建议分别记录意图树分解、entity 对齐、候选工具排序、slot 填充、最终调用五个位置的通过率。",
+      "金额价值可以更可审计：100 万人民币估值已有逻辑，但还需要更具体的采购对象、替代方案、成本节省或合规审计场景作为依据。",
+      "Brainary 映射可以更靠近实现：报告已经指出 tool orchestration、memory、benchmark 等方向，下一步可明确哪个最先变成 module，哪个先变成 evaluation protocol。"
     ],
     "teacherAction": {
       "readOriginal": true,
       "meetingQuestions": [
-        "你认为 multiple 上 5% 的主要原因更可能是意图树对并列动作的分解问题，还是 TST 匹配排序问题？下周准备用哪两个最小实验区分它们？",
-        "如果我们承认“用户输入到意图树”仍由大模型完成，那么这条线的主张是否应该改成“错误可定位、可审计、可回归监控”，而不是“整条链路可信”？",
-        "你打算如何设计“中间层消除了多少不确定性”的评测协议？最小可行指标是意图树错误率、工具选择错误率、参数错误率，还是阶段归因准确率？",
-        "entity 与 slot 提示互补这一点，是否能沉淀成固定的管线耦合监控规则？以后任何单阶段修改是否都自动触发端到端回归？",
-        "目前最需要老师决策的是方向取舍、组内 benchmark、agent 接口还是 Claude/OpenAI API key？优先级如何排？"
+        "你现在认为这条线的核心 claim 应该是什么：端到端可信工具调用，还是“中间层让工具选择错误更可定位、更可审计”？",
+        "BFCL Multiple 的 5% 结果，你准备如何区分是意图分解问题、TST 匹配排序问题，还是 slot 对齐问题？下周能否给出一张错误归因表？",
+        "如果意图树仍由大模型生成，你会怎样设计实验来量化中间层到底消除了多少不确定性？指标是意图树错误率、工具准确率，还是参数精确匹配？",
+        "entity-only 掉到 35% 说明阶段耦合明显，你准备把“单阶段修改必须重跑端到端对照”做成脚本、评测协议，还是实验规范？",
+        "当前最需要老师决策的是方向收缩、API 资源、组内 benchmark，还是与 Brainary 现有接口对接？"
       ],
       "nextWeekWatch": [
-        "BFCL multiple 的 Tree 方法能否至少达到或超过 baseline 的工具准确率。",
-        "学生是否能把坍塌根因归因到意图分解、匹配排序、slot 对齐或 entity 约束中的具体环节。",
-        "是否开始量化“意图树错误率 vs 直接工具调用错误率”，而不只报告最终工具准确率。",
-        "是否把阶段间耦合回归做成固定 evaluation protocol 或 monitoring rule。",
-        "金额价值是否从估算逻辑进一步补充到买单场景、替代方案和可交付模块。"
+        "是否完成 bfcl_multiple 的根因定位，并给出按阶段拆解的错误统计。",
+        "Tree 方法在 multiple 场景中是否达到或超过 baseline 的 30% 工具准确率。",
+        "是否产出“可信性增益量化”评测协议草稿，至少包含意图树错误率与直接工具调用错误率对比。",
+        "是否把阶段耦合监控变成固定实验规则，而不是手动补跑。",
+        "是否明确需要老师提供的 API、benchmark 或 agent 接口支持，并给出最小对接需求。"
       ]
     },
     "studentFeedback": {
-      "summary": "你这周最好的进展，是把工具调用路由从语法设想推进到可运行原型和对照实验，并且主动用 multiple 与 entity-only 对照暴露了方法边界，这让下一步研究判断更可靠。",
+      "summary": "你这周最好的地方是没有停在 simple 的好结果上，而是主动用会暴露问题的对照实验把方法边界、可信性主张和下周关键路径都说清楚了。",
       "whatYouDidWell": [
-        "硬进展扎实：完成语法 v0、打通原型、实现可插拔 LLM 后端和工具自动转 TST，并跑出了首批 BFCL 结果。",
-        "实验设计有自我证伪意识：没有只停在 simple 95% 的好看结果，而是补了 multiple 和 entity-only 对照，发现多工具坍塌与阶段耦合问题。",
-        "价值边界判断清楚：你明确指出意图树仍由大模型生成，因此可信性收益不能默认成立，应该专门量化。"
+        "硬进展扎实：语法 v0、可运行原型、BFCL 对照、entity/slot 消融和多工具实验都完成了，已经进入真实验证阶段。",
+        "认知增量清楚：你从结果中看到了阶段耦合问题，也意识到 simple 的 95% 不能直接证明方法成立。",
+        "元认知很好：你把原型看成暴露自我证伪点的工具，这会让后续研究更稳健。"
       ],
       "nextStep": [
-        "下周把 BFCL multiple 坍塌拆成可诊断的小实验，分别定位是意图分解、匹配排序、slot 对齐还是 entity 约束的问题。",
-        "把“中间层到底消除了多少不确定性”转成指标表，至少区分意图树错误、工具选择错误、参数匹配错误和阶段归因。",
-        "金额价值部分可以补一层证据：谁会买、买的是哪个模块、替代方案是什么、100 万估算对应哪些可交付物。"
+        "下周把 bfcl_multiple 的问题拆细，不只报告端到端准确率，还要分别报告意图分解、entity 对齐、排序、slot 填充四个位置的结果。",
+        "把可信性主张收缩并量化：重点回答“意图树中间层相比直接工具调用，到底减少了哪一类错误、减少了多少”。",
+        "金额价值部分可以继续保留，但最好补充更具体的客户场景、采购理由或替代模块价格，让 100 万估值更可审计。"
       ],
-      "suggestedRewrite": "下周周报可以这样写得更清楚：『本周针对 BFCL multiple 坍塌做了 3 个定位实验：A 检查并列意图分解，B 固定正确意图树只测 TST 排序，C 固定工具选择只测 slot 对齐；结果显示主要瓶颈是……，因此下周只改……，通过标准是 Tree 在 multiple 上工具准确率至少达到 baseline，并同步报告意图树错误率、工具选择错误率和参数错误率。』"
+      "suggestedRewrite": "下周周报可以这样写得更清楚：『本周针对 bfcl_multiple 坍塌做了四段式诊断：意图分解正确率 X%，entity 对齐正确率 Y%，候选工具 Top-1 排序命中率 Z%，slot 精确匹配率 W%；结果显示主要瓶颈在____，因此我修改了____，端到端工具准确率从 5% 变为____，与 baseline 30% 的关系是____；这说明当前方法的可信性收益主要来自____，尚未覆盖____。』"
     },
     "evidenceLinks": [
       {
-        "section": "1. 本周核心任务",
-        "evidence": "完成 UIST 与 TST 统一语法、语法契约文档、三阶段符号匹配引擎、可插拔 LLM 后端、工具自动转 TST，并在 BFCL simple/multiple 上完成小样本对照。",
-        "whyItMatters": "证明本周有可运行系统和实验结果，不只是概念推进。"
+        "section": "本周核心任务",
+        "evidence": "完成 UIST 与 TST 统一语法、三阶段符号匹配引擎、可插拔 LLM 后端、工具自动转 TST，并跑通 BFCL simple/multiple 小样本对照。",
+        "whyItMatters": "证明本周不是停留在想法层，而是进入可运行原型和实验验证。"
       },
       {
-        "section": "2. CoT 增量",
-        "evidence": "学生将瓶颈判断从“语法本身”修正为“匹配阶段之间的耦合”，并指出 simple 成功可能高估方法强度。",
-        "whyItMatters": "说明认知增量来自实验反馈，而不是事后包装。"
+        "section": "实验结果",
+        "evidence": "BFCL Simple 上 Tree 方法在 entity+slot 联合提示下达到 95% 工具准确率 / 70% 参数精确匹配，baseline 为 90% / 80%；entity-only 为 35%；BFCL Multiple 上 Tree 为 5%，baseline 为 30%。",
+        "whyItMatters": "同时提供正向结果、消融反例和多工具边界，是判断方法真实进展的关键证据。"
       },
       {
-        "section": "3. CoT's CoT",
-        "evidence": "提出两个关键反思：意图树仍由大模型生成，可信性论证未完全成立；局部修复 Stage 2 可能破坏 Stage 3，必须端到端回归。",
-        "whyItMatters": "这是老师 meeting 最值得追问和帮助定方向的部分。"
+        "section": "CoT 增量",
+        "evidence": "学生明确提出语法本身不是当前最大瓶颈，Stage 2 entity 与 Stage 3 slot 的耦合才是关键问题。",
+        "whyItMatters": "体现从设计假设到机制判断的认知增量。"
       },
       {
-        "section": "4. 和 Brainary 的关联",
-        "evidence": "将工作映射到 tool orchestration、benchmark/evaluation、cognitive control、memory，并提出可插拔工具调用中间层和可信性增益量化协议。",
-        "whyItMatters": "说明该项目有系统沉淀路径，不只是单次实验。"
+        "section": "CoT's CoT 1",
+        "evidence": "只要意图树仍由大模型生成，可信性论证就没有真正成立，可信性收益只发生在意图树之后的符号匹配阶段。",
+        "whyItMatters": "这是老师 meeting 中最应讨论的方向收缩点。"
       },
       {
-        "section": "7. 价值观总结",
-        "evidence": "估计价值为 100 万人民币，并说明来自安全中间层、LTM cache、工具选取能力和评测协议的组合价值。",
-        "whyItMatters": "金额判断有结构，但后续还需要更直接的市场或用户证据。"
+        "section": "CoT's CoT 2",
+        "evidence": "entity-only 提示掉到 35%，说明局部修复 Stage 2 会破坏 Stage 3 槽名对齐的输入假设。",
+        "whyItMatters": "可沉淀为阶段耦合监控规则和端到端回归评测协议。"
       },
       {
-        "section": "8. CoT's CoT 证据等级",
-        "evidence": "CoT's CoT 1 自评为 B，CoT's CoT 2 自评为 A，并给出 entity-only 35%、tree-naive 60%、entity+slot 95% 的实验依据。",
-        "whyItMatters": "报告对不同结论的证据强度有区分。"
+        "section": "项目管理",
+        "evidence": "本周投入 30 小时，下周预计 30 小时；原定 2026.06.13 前完成语法 v0 已提前完成，新里程碑为 2026.06.13 前修复多工具匹配坍塌。",
+        "whyItMatters": "让老师能直接判断资源、节奏和下周验收点。"
       },
       {
-        "section": "9. 项目管理",
-        "evidence": "列出本周 30 小时、下周 30 小时、里程碑、API key、benchmark、agent 接口、关键路径和纠偏动作。",
-        "whyItMatters": "老师可以据此直接安排资源和 meeting 问题。"
+        "section": "自动化科研转化路径",
+        "evidence": "提出 evaluation protocol、benchmark、monitoring rule，包括量化中间层可信性增益和单阶段修改必须重跑端到端对照。",
+        "whyItMatters": "说明本周发现可以转成自动化科研资产，而不只是一次手动实验。"
       },
       {
-        "section": "10. 自动化科研转化路径",
-        "evidence": "提出 evaluation protocol、monitoring rule 和 benchmark，尤其是量化中间层可信性增益与阶段间耦合监控。",
-        "whyItMatters": "显示本周发现可以转成自动化科研资产。"
-      },
-      {
-        "section": "11. 我这周最希望老师学到的新东西",
-        "evidence": "核心结论是意图树不会自动带来可信性，价值论证要从整条链路可信收缩为工具选取错误可定位，并需要专门量化中间层收益。",
-        "whyItMatters": "这是老师最应该从本周报告中带走的一句话。"
+        "section": "我这周最希望老师学到的新东西",
+        "evidence": "在大模型和工具之间加一层意图树并不会自动带来可信性，不可信点只是从生成工具调用挪到生成意图树。",
+        "whyItMatters": "这是本周最值得老师带走的判断，会影响项目主张和实验设计。"
       }
     ]
   }

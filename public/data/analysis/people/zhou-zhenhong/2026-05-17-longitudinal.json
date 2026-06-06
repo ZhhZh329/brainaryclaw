@@ -1,30 +1,226 @@
 {
   "key": "person:zhou-zhenhong:2026-05-17:longitudinal",
-  "generatedAt": "2026-05-20T14:35:09.838Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "d82275ec6fa81105886db8e5bbc88e233a510015a5509906d3d1f969cd170b3f",
+  "generatedAt": "2026-06-06T13:19:15.529Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "86b7b4f6635be2701b1c4e5c209c517d4aa4d295364a570d4a3c7858f34701c8",
   "result": {
-    "overallTrajectory": "学生从单一数据选择agent的工程化出发，逐步拓展到数据合成闭环、agent安全与感知、论文冲刺以及方法论构建，研究视野从工具可用性提升到系统决策建模与跨领域安全，认知上明显从“能跑”转向“可交付、可评测、可复用”，项目管理从粗放描述进化为包含资源与里程碑的结构化规划，整体研究能力显著增强，而非仅仅忙碌。",
-    "stageByWeek": {
-      "week1": "2026-04-26：工具化与工程化阶段，专注数据选择agent的交互界面与解析稳定性，形成基础pipeline，认知上开始强调中间决策能力，价值判断限于组件级别（10万），项目管理处于原型阶段。",
-      "week2": "2026-05-03：能力闭环与方向拓展阶段，打通数据选择+合成pipeline，同时开辟内容保护安全新方向，意识到资源与API瓶颈，价值函数扩大并出现更高金额（20万、100万），认知上突出闭环与输入侧控制。",
-      "week3": "2026-05-10：交付与多线深化阶段，数据模块正式交付协作，debias实验快速推进并定位顶会，另启动agent perception结构调研，形成“研究方向转向agent安全”的核心认知，价值函数引入论文估值（100万）与潜在结构（50万），项目管理开始区分阶段与风险。",
-      "week4": "2026-05-17：冲刺与体系化阶段，debias论文冲EMNLP deadline，数据生成workflow引入system 2与working memory方法论，音频安全调研启动，认知上升华到“自动研究决策需显式建模偏差、规则与记忆”，价值函数稳定在100万量级并关联长期复用，项目管理达到可追踪里程碑与资源规划的水平。"
+    "overallTrajectory": "总体判断：这个学生在最近四周不是单纯变忙，而是在从“实现一个模块”逐步转向“判断科研流程中的关键决策、偏差、评测和系统沉淀”。研究能力有真实上升，最强信号是他能把数据选择、数据合成、debias、working memory、perception 统一理解为 auto-research 中的“中间研究决策能力”，并开始把交付、benchmark、evaluation protocol、memory schema 作为沉淀目标。但目前证据边界也很清楚：多个方向的论断仍停留在“方向判断”和“效果很好”的描述，缺少可复查指标、实验表格、失败案例、消融和明确 kill criteria。",
+    "headline": "从模块开发者向研究决策建模者转变，但下一步必须用可复查评测和取舍标准证明这些方向真的值得持续投入。",
+    "overviewSentence": "周振宏最近四周显示出研究能力上升：他开始围绕 auto-research 的中间决策、偏差、记忆和感知建模组织项目，但仍需要把“判断”落到可检查指标、实验证据和项目取舍上。",
+    "fourWeekTimeline": [
+      {
+        "week": "2026-04-26",
+        "metacognition": "从“后端能跑”进步到意识到“能被使用才算能力存在”，并识别出 research intent、claim 抽取和数据集推荐评估标准是核心认知盲区。",
+        "valueJudgment": "价值判断集中在数据选择 agent 是 auto-research 的通用中间决策能力，能沉淀为 module、workflow、benchmark、evaluation protocol；但为什么这个问题比其他 auto-research 组件更优先，证据仍不足。",
+        "projectManagement": "项目单线推进较清楚，有页面、pipeline refinement、失败模式、API 成本、关键路径和下周最小验证动作；但评测方式尚未定义，因此交付质量还无法独立判断。",
+        "evidence": "报告写到完成基础交互页面，形成“标准化输入结构 → 抽取 claim → 匹配数据”的 pipeline，并指出长文本 claim 抽取偏移、推荐缺乏明确评估标准。"
+      },
+      {
+        "week": "2026-05-03",
+        "metacognition": "认知从单点数据选择扩展到 selection + synthesis 闭环，能识别两者目标不一致会影响实验效果；同时开始注意 API 和 coding plan 是研究速度的约束。",
+        "valueJudgment": "开始把值得做的问题定义为完整数据准备能力和内容级保护能力，价值判断从单模块扩展到 pipeline 和安全问题定义；但安全方向证据等级为 C，仍主要是概念判断。",
+        "projectManagement": "数据选择 + 合成有 pipeline 初版和 Chengyue 对齐，安全方向只有方案设计；项目管理开始写资源瓶颈，但时间规划、里程碑和具体实验指标不够细。",
+        "evidence": "报告写到打通“research text → 数据选择 → 数据构造”的 workflow，失败模式是 selection 与 synthesis 不完全对齐；安全方向卡在缺少 coding plan、评测标准和资源支持。"
+      },
+      {
+        "week": "2026-05-10",
+        "metacognition": "进一步从数据问题扩展到 pipeline-level bias 和 agent perception，提出很多 agent 错误可能不是 reasoning 错，而是 perception 错，这是更高层的失败模式识别。",
+        "valueJudgment": "价值判断更接近研究问题本身：debias 值得做因为它处理 auto-research pipeline 的偏差，perception 值得做因为它影响 agent 对任务、资源、数据和环境的感知；但仍缺少明确的优先级排序。",
+        "projectManagement": "数据选择 + 合成进入交付/refinement，Debias 进入实验推进，Agent Perception 处于调研；相比前两周，项目阶段更清楚，但 debias 的实验结果、任务设置和论文 story 证据没有展开。",
+        "evidence": "报告写到数据选择 + 合成交付给 Zhengzi，Debias 已有论文化趋势并目标 EMNLP，Agent Perception 缺少统一抽象和 benchmark。"
+      },
+      {
+        "week": "2026-05-17",
+        "metacognition": "本周元认知最完整：他把数据选择、数据 debias、数据生成和音频 perception 安全都归结为 agent 必须显式建模的研究决策、偏差、规则、working memory 和感知可靠性。",
+        "valueJudgment": "价值判断比前三周更系统：值得做的项目不只是能发论文或做工具，而是能沉淀为 benchmark、evaluation protocol、workflow、memory schema、agent module，并服务 Brainary 的 memory、calibration、risk modeling、cognitive control 和 workflow management 能力。",
+        "projectManagement": "项目管理质量明显提升：写清原计划 vs 实际、投入、依赖、关键路径、资源、成本、是否需要老师介入和下周动作；但多个判断仍缺少外部可复查证据，如 debias 效果指标、音频方向 novelty 的文献边界、rules 收集的结构化产物。",
+        "evidence": "报告写到数据选择代码和 artifact 交付 Zhengzi，debias 实验推进快并计划 10 天后 EMNLP，数据生成开始收集跨学科 rules，音频安全等待 Zhao Xuanyue 调研 perception filtering。"
+      }
+    ],
+    "metacognitionChange": {
+      "summary": "元认知有连续上升：从识别一个 agent 的工程可用性问题，到识别 pipeline 内部耦合，再到识别 auto-research 的 bias 和 perception 失败模式，最后形成“自动科研不是自动生成，而是自动研究决策”的框架。这个变化说明他不只是列任务，而是在抽象任务背后的认知控制结构。不过，当前还需要从概念抽象继续前进到验证标准：每个认知判断都要对应指标、数据、失败样例和下一步判定门槛。",
+      "byWeek": [
+        {
+          "week": "2026-04-26",
+          "change": "知道模块不只是能跑，还要能被使用；知道中间决策链条比最终生成更关键；识别评测缺失是盲区。"
+        },
+        {
+          "week": "2026-05-03",
+          "change": "知道 selection 和 synthesis 是强耦合，不是两个独立功能；开始把资源和 coding plan 视为研究推进条件。"
+        },
+        {
+          "week": "2026-05-10",
+          "change": "知道 bias 可以来自整个 auto-research pipeline，perception 错误可能先于 reasoning 错误；这是失败模式层级的提升。"
+        },
+        {
+          "week": "2026-05-17",
+          "change": "知道 agent 的数据选择、数据生成和感知输入都需要可靠性判断，开始把 meta-cognition 落到 rules、working memory、policy、evaluation protocol。"
+        }
+      ],
+      "currentLevel": "当前处在“能提出系统级研究抽象，但还未稳定给出可复查证据标准”的阶段。比四周前更有研究能力，但仍未完全达到可以独立闭环定义问题、构建 benchmark、证明方法有效、决定取舍的水平。",
+      "strongestSignal": "最强信号是 2026-05-17 的 CoT’s CoT：他把数据选择、数据 debias、数据生成统一解释为实验前的关键研究判断，并指出这些判断被 agent 接管时必须显式建模偏差、规则和 working memory。",
+      "nextLift": "下一步提升不是再开新方向，而是给每条核心判断补上验证标准：什么指标说明数据选择更好，什么设置证明 debias 不是偶然，什么 benchmark 能测试 perception filtering，什么失败结果会让项目降级或停止。"
     },
-    "trendScores": {
-      "硬进展趋势": "稳步上升，从搭建交互页面（原型）到交付可用pipeline与冲刺顶会实验，产物从内部工具走向论文级产出。",
-      "认知趋势": "明显深化，从“能跑”到“能用”再到“需闭环决策与perception建模”，逐渐认识到中间过程、偏差、working memory的关键性。",
-      "CoT's CoT成熟度": "逐周成熟，从补中间决策到闭环pipeline，再到agent安全体系与自动研究决策框架，证据等级虽以B为主，但内容覆盖面和系统性增强。",
-      "Brainary映射成熟度": "持续扩展，从初始关联reasoning/calibration到涵盖memory、risk modeling、cognitive control，并具体化为memory schema、evaluation protocol等沉淀形式。",
-      "价值推理成熟度": "显著提升，金额估算从10万到多个100万，依据从组件工程价值到论文价值与长期复用潜力，且能明确连接用户、通用能力、Brainary模块与自动化路径。",
-      "项目管理成熟度": "结构性增强，从简单阶段描述到包含时间规划、资源规划、依赖关系、token成本与纠偏动作的完整框架。",
-      "下一步动作质量": "愈发具体且具挑战性，从“优化稳定性”到“冲刺EMNLP deadline”与“构建working memory规则库”，动作与长期目标对齐度提高。"
+    "valueGrowth": {
+      "summary": "科研/项目价值判断在变清楚：早期主要认为数据选择 agent 是 auto-research 的通用组件；中期开始看到 selection + synthesis 闭环、pipeline-level debias、agent perception 的研究价值；最新一周能把价值落到 Brainary 的 memory、calibration、risk modeling、workflow management、cognitive control 等长期系统能力。提升点是真正开始问“这个项目能沉淀成什么系统能力”。不足是取舍标准还不够稳定：多个方向都被判断为通用能力，但没有明确说明哪个最应该投入、哪个只是候选、哪个需要等待证据。",
+      "byWeek": [
+        {
+          "week": "2026-04-26",
+          "valueJudgment": "认为数据选择 agent 值得做，因为它解决科研实验前“应该用什么数据”的问题，并可沉淀为 module、workflow、product feature。这个判断方向正确，但评估标准缺失。"
+        },
+        {
+          "week": "2026-05-03",
+          "valueJudgment": "把价值从数据选择扩展到数据准备闭环，并提出内容级保护方向；但安全方向还缺少攻击模型、评测标准和 coding plan，因此价值判断证据偏弱。"
+        },
+        {
+          "week": "2026-05-10",
+          "valueJudgment": "开始以论文问题和系统可靠性来判断价值：Debias 对应 auto-research pipeline 的可信性，Agent Perception 对应 agent 安全与可靠性。价值判断更科研化。"
+        },
+        {
+          "week": "2026-05-17",
+          "valueJudgment": "进一步把价值判断连接到可沉淀资产：benchmark、evaluation protocol、workflow、memory schema、agent module。尤其是数据生成 workflow 与 Brainary memory 能力的连接，比前几周更明确。"
+        }
+      ],
+      "currentValueFunction": "当前他的隐含价值函数是：优先做能补齐 auto-research 中间决策链条、能提高系统可信性、能沉淀为 Brainary 长期能力、并有论文或 benchmark 产出的方向。这个价值函数比四周前更系统，但还需要加入资源约束、证据强度和停止条件。",
+      "improvementSignals": [
+        "从“这个模块有工程价值”进步到“这个模块是否构成 research workflow 的关键决策”。",
+        "从“数据选择推荐是否可用”进步到“数据选择本身是否会引入 bias”。",
+        "从“让模型生成数据”进步到“先构建学科 rules 和 working memory 再生成”。",
+        "从“安全是输出控制”进步到“perception 层接收、忽略和过滤信息本身也是安全问题”。"
+      ],
+      "nextValueQuestion": "下次需要他回答：如果只能保留一个主项目和一个探索项目，基于现有证据、截止日期、系统沉淀价值和 Brainary 能力建设，他会保留哪两个，暂停哪几个，判定依据是什么？"
     },
-    "valueFunctionChange": "价值观从单点组件价值（10万，auto-research工具）逐步转向系统能力价值（20万闭环，100万论文/IP保护），最终稳定在“论文发表+长期复用+新方向启动”的综合估值（100万级）；始终认为值得做的事须是通用能力、能被auto-research或企业买单、能沉淀为Brainary模块/benchmark/workflow，且价值函数随周次明显扩宽——从关注功能实现到关注学术影响力与底层基础设施，金额连接从个体工程费上升到市场定价，产物形式从module/workflow扩展到论文、memory schema、evaluation protocol，自动化路径也从单一agent转为benchmark、workflow与cognitive control模块。",
-    "repeatedBlockers": "API费用与资源受限（个人承担成本，限制实验规模），缺乏明确评测标准（数据选择、安全、perception均缺少稳定benchmark），跨领域规则与统一建模困难（数据生成working memory规则差异大，安全方向缺乏清晰问题定义）。",
-    "professorShouldAsk": "1. 如何从perception角度为agent安全构建统一的评测基准？2. 数据生成workflow中的working memory能否与Brainary的memory模块直接整合？3. debias工作如何抽取出通用的pipeline calibration模块，而非仅一篇论文？4. 针对持续的API成本瓶颈，有无更高效的实验策略或外部资源支持的可能？",
-    "nextBestIntervention": "协助对接API/算力资源以缓解学生自费压力；深度参与debias论文的story收敛，确保EMNLP投稿成功；推动agent perception安全与Brainary cognitive control模块的融合设计；鼓励将数据生成rules收集标准化为公开benchmark，加速领域基础设施建设。"
+    "projectManagementReview": {
+      "summary": "项目管理质量整体上升，尤其 2026-05-17 已经能写原计划 vs 实际、依赖、关键路径、资源、成本、老师介入点和下周动作。主要短板不是忙不忙，而是交付证据还不够可检查：多个项目写了“推进很快”“效果很好”“novelty 较强”，但没有给指标、链接、实验表、文献边界或验收标准。",
+      "projects": [
+        {
+          "project": "Auto-research 数据选择 / 数据合成 / 数据选择 Debias",
+          "weeks": [
+            "2026-04-26",
+            "2026-05-03",
+            "2026-05-10",
+            "2026-05-17"
+          ],
+          "quality": "这是四周内最连续、最有硬进展的项目。它从数据选择 agent 原型、页面、pipeline refinement，推进到 selection + synthesis workflow，再到交付 Zhengzi，并进一步转成数据选择 debias 论文实验。它涉及 Brainary 的 reasoning、calibration、benchmark/evaluation、workflow management，且有持续推进和交付迹象。",
+          "whatWorked": "持续做事且有阶段性交付：基础交互页面、标准化输入到 claim 抽取再到数据匹配的 pipeline、selection → synthesis workflow、代码和 artifact 交付、debias 实验推进。项目价值也从工具功能提升到 auto-research 中数据选择可信性和 pipeline-level debias。",
+          "managementGap": "最关键缺口是评测证据。报告承认缺少稳定评估标准，但到最后一周仍没有给出数据选择质量指标、debias 实验任务列表、baseline、主要结果数值、失败案例、消融设计或投稿前验收清单。Zhengzi 反馈是依赖项，但反馈时间和验收格式不明确。API/token 压力被提到，但还没有具体预算或替代实验策略。",
+          "nextConcreteMove": "在下一次 meeting 前提交一页 EMNLP 冲刺表：包含核心 claim、实验 setting、数据集、baseline、当前结果数值、还缺的实验、每个实验的最晚完成时间、谁负责、如果结果不支持 story 如何改题或降级。数据选择模块需要补一个最小 evaluation protocol，至少定义推荐正确性、一致性、稳定性和人工验收标准。"
+        },
+        {
+          "project": "Auto-research 数据生成 Workflow / working memory / 跨学科 rules",
+          "weeks": [
+            "2026-05-17"
+          ],
+          "quality": "这是新起的长期能力项目，当前处于想法、规则收集和 workflow 设计阶段。它与 Brainary 的 memory、reasoning、workflow management、cognitive control 直接相关，潜在系统沉淀价值较高，但目前硬交付还早。",
+          "whatWorked": "相比简单 prompt 生成数据，他提出先收集学科数据集生成与选择 rules，再构建 working memory，再让模型基于 memory 合成数据，这说明他在把个人兴趣连接到 Brainary 的记忆结构和自动化科研沉淀。",
+          "managementGap": "当前证据只有“已让学弟收集 rules”和一条方法设想，没有看到 rules schema、样例学科、收集模板、合格标准、版本化产物或与现有数据选择/合成 pipeline 的接口。不同学科差异被识别为卡点，但还没有缩小范围。",
+          "nextConcreteMove": "先不要追求跨学科统一，选 2 个学科做最小闭环：每个学科整理 10 条数据选择/生成 rules、3 个正例、3 个反例、1 个 working memory schema 草图，并用同一 research text 测试“无 memory 生成”和“有 memory 生成”的差异。"
+        },
+        {
+          "project": "Agent Perception / Agent 安全 / 音频 Perception 过滤",
+          "weeks": [
+            "2026-05-03",
+            "2026-05-10",
+            "2026-05-17"
+          ],
+          "quality": "这条线从内容级保护设想，发展到 agent perception 结构调研，再到音频安全 survey 与 perception filtering idea。研究抽象在变强，但项目仍处在调研和问题定义阶段，硬交付不足。",
+          "whatWorked": "能连续抓住同一个高层问题：安全不只在输出端，也在输入和 perception 端。到 2026-05-17，他把音频安全重新表述为模型选择性接收、忽略、屏蔽音频信息的问题，并安排王琨、Zhao Xuanyue 协作调研。这对应 Brainary 的 risk modeling、cognitive control、benchmark/evaluation 能力。",
+          "managementGap": "缺少明确实验 setting、攻击/防御模型、benchmark 定义和 novelty 证据。报告说相关工作很少，但没有列出检索范围、代表论文、差异点。内容级保护方向在 2026-05-03 提出后，后续没有看到 coding plan 或实验推进，可能需要明确是暂停、合并到 perception，还是继续作为独立方向。",
+          "nextConcreteMove": "要求形成一页 audio perception filtering 立项判断：已有工作边界、3 个候选任务、1 个最小实验、输入输出定义、评价指标、为什么不是普通音频分类/过滤、两周内能否得到可投稿信号。内容级保护方向需要明确是否并入该线或停止维护。"
+        },
+        {
+          "project": "Auto-research Agent Perception 结构调研",
+          "weeks": [
+            "2026-05-10",
+            "2026-05-17"
+          ],
+          "quality": "这是一个重要的概念桥梁项目，把 debias、数据生成和安全方向连接起来。它有较强理论价值，但目前主要是结构化思考，缺少可执行模块和 benchmark。",
+          "whatWorked": "他提出很多 agent 系统默认 perception 正确，但 perception 本身可能是错误来源；这帮助解释为什么 reasoning 强不等于系统可靠，并可沉淀为 Brainary 的 cognitive control、risk modeling 和 evaluation 能力。",
+          "managementGap": "还没有统一抽象、错误分类、可观测变量或实验设计。若不尽快落到一个可测任务，容易停留在概念层。",
+          "nextConcreteMove": "把 perception 错误先定义成 3 类可测失败：任务理解错误、资源/工具状态感知错误、数据/环境感知错误；每类给 5 个例子和一个自动或半自动评测方式，再决定是否作为 debias 或音频安全的上层框架。"
+        }
+      ],
+      "managementPattern": "管理模式从早期单项目工程推进，发展到多项目并行和协作交付。优点是能快速响应老师思路、把模块转交他人、组织学弟和合作者；风险是方向扩张快于证据沉淀，容易出现每条线都有价值判断但缺少优先级、验收标准和停止条件。",
+      "nextManagementMove": "建立一个每周项目表，只保留三个状态：冲刺、孵化、暂停。冲刺项目只能有一个，即当前 EMNLP debias；孵化项目最多两个，即数据生成 workflow 和音频 perception；其余概念线必须合并或暂停。每个项目都要写本周可检查交付、验收指标、依赖人、最晚反馈时间和是否需要老师决策。"
+    },
+    "repeatedBlockers": [
+      "评测标准反复缺失：数据选择推荐、selection + synthesis 一致性、debias 效果、perception filtering 都提到需要 benchmark 或 evaluation protocol，但尚未看到成型版本。",
+      "资源/API 成本多次出现：2026-04-26、2026-05-03、2026-05-17 都提到 API 成本或 token/quota 压力，但缺少具体预算、调用规模和省成本实验方案。",
+      "方向扩张快：从数据选择扩展到合成、debias、内容保护、agent perception、数据生成 workflow、音频安全，显示思考活跃，但需要项目组合管理。",
+      "证据表达不够可复查：如“效果很好”“推进非常快”“相关工作确实很少”缺少指标、表格、链接、样例或文献清单。",
+      "依赖反馈未完全闭环：多次依赖 Zhengzi、Chengyue、学弟、王琨、Zhao Xuanyue，但反馈时间、交付格式和失败时的替代路径不够明确。"
+    ],
+    "teacherQuestions": [
+      "Debias 论文现在最核心的一个 claim 是什么？请用一句话说清，并给出当前最强的实验数值和最弱的实验数值。",
+      "数据选择模块交付给 Zhengzi 后，验收标准是什么？如果 Zhengzi 反馈不好，哪些问题属于工程修复，哪些问题会推翻当前方法？",
+      "数据生成 workflow 中的 working memory 具体长什么样？请拿一个学科给出 rules、memory schema、生成样例和失败样例。",
+      "音频 perception filtering 与已有音频安全、输入过滤、音频分类工作的本质差异是什么？你用什么实验证明它是一个新问题而不是旧问题换名？",
+      "如果本周只能保留一个冲刺项目，你会暂停哪两条线？暂停依据是证据不足、资源不足、还是与 Brainary 长期能力关系不够强？"
+    ],
+    "nextIntervention": "老师下一步最有价值的介入不是继续给新 idea，而是帮助他做项目收敛和证据门槛设定。建议 meeting 用 30 分钟完成三件事：第一，锁定 EMNLP debias 的核心 story 和最低投稿实验清单；第二，要求数据生成 workflow 和音频 perception 各自提交一页最小立项证据；第三，明确所有项目的 benchmark/evaluation protocol 负责人和完成时间。若学生不能提供数值、样例或文献边界，应要求降级为调研，不占用冲刺资源。",
+    "studentFeedback": {
+      "summary": "你最近四周的进步不只是做得更多，而是开始把 auto-research 看成一组需要被建模、评估和交付的研究决策。这个方向是对的，但下一步必须减少抽象判断，多给可复查证据。",
+      "whatImproved": [
+        "你从单个数据选择 agent，推进到了 selection + synthesis、debias、working memory 和 perception 的系统框架。",
+        "你更能识别失败模式：claim 抽取偏移、推荐缺少评估、selection 与 synthesis 不一致、pipeline-level bias、perception 错误。",
+        "你开始把项目和 Brainary 的长期能力连接起来，包括 memory、calibration、risk modeling、workflow management、cognitive control 和 benchmark/evaluation。",
+        "你的项目管理在最后一周明显变细，已经写出依赖、关键路径、资源、成本、老师介入点和 deadline。"
+      ],
+      "nextStep": "下一周请把“我认为有价值”改写成“我用什么证据证明有价值”。最优先交付 debias 的实验表和投稿清单；数据生成 workflow 交付一个 rules + working memory 样例；音频 perception 交付一页 novelty 和最小实验定义。"
+    },
+    "evidenceLinks": [
+      {
+        "claim": "数据选择项目有连续硬进展",
+        "weeks": [
+          "2026-04-26",
+          "2026-05-03",
+          "2026-05-10",
+          "2026-05-17"
+        ],
+        "evidence": "从基础页面和 pipeline refinement，到 selection → synthesis workflow，再到交付 Zhengzi 和代码/artifact 交接。"
+      },
+      {
+        "claim": "元认知从工程可用性上升到研究决策建模",
+        "weeks": [
+          "2026-04-26",
+          "2026-05-17"
+        ],
+        "evidence": "前者写到能力要能被使用，后者写到 auto-research 不能只做自动生成，而要做自动研究决策。"
+      },
+      {
+        "claim": "他能识别证据边界和失败模式，但还没有完全解决",
+        "weeks": [
+          "2026-04-26",
+          "2026-05-03",
+          "2026-05-10",
+          "2026-05-17"
+        ],
+        "evidence": "多次指出缺少评估标准、benchmark、统一分析框架、working memory 结构和 perception filtering 定义。"
+      },
+      {
+        "claim": "价值判断开始连接 Brainary 能力建设",
+        "weeks": [
+          "2026-05-10",
+          "2026-05-17"
+        ],
+        "evidence": "报告将数据选择/Debias 对应 calibration、benchmark/evaluation、workflow management，将数据生成 workflow 对应 memory、reasoning、cognitive control，将音频安全对应 risk modeling 和 cognitive control。"
+      },
+      {
+        "claim": "项目管理最后一周显著细化",
+        "weeks": [
+          "2026-05-17"
+        ],
+        "evidence": "项目管理部分写明原计划 vs 实际完成、投入时间、关键里程碑、资源规划、依赖关系、token/成本、进度判断、纠偏动作和是否需要老师介入。"
+      },
+      {
+        "claim": "当前最需要补充的是可复查实验和评测证据",
+        "weeks": [
+          "2026-05-17"
+        ],
+        "evidence": "报告称 debias 实验推进快、效果较好，音频方向相关工作很少，但未提供具体指标、实验设置、结果表或文献边界。"
+      }
+    ]
   }
 }

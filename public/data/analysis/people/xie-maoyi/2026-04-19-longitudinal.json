@@ -1,31 +1,223 @@
 {
   "key": "person:xie-maoyi:2026-04-19:longitudinal",
-  "generatedAt": "2026-05-24T11:52:33.246Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "1c61c377a99f8ca82a7346d1905181dd1c98560df94bcb04c8fa692a10350c6c",
+  "generatedAt": "2026-06-06T13:15:59.588Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "1ae0701416f6333b5e6e017cc576ac030bf99890fd606ec8da5a845ce88a77a8",
   "result": {
-    "overallTrajectory": "学生在四周内从执行驱动的‘搭建者’成长为能识别问题本质并找到突破方向的研究者。初期盲目追高覆盖率，连遭证伪后转向结构化信息与条件推理，最终靠Bug-Type推理实现性能跃升。研究能力明显增强，远不止‘更忙’。",
-    "stageByWeek": [
-      "Week1：搭建ftrace流程，trace覆盖率低，LLM实验无显著提升，识别‘RC 不在 backtrace’与因果缺失两大核心问题，提出graph方向。",
-      "Week2：转向KCOV calltree，覆盖率提升到42%，但LLM实验仍差，发现瓶颈在candidate ranking与search space，明确FL三阶段（覆盖、排序、因果）。",
-      "Week3：KCOV稳定化，重复验证calltree提升有限，审稿训练判断力，方法方向仍模糊，进度略缓，价值判断趋于谨慎。",
-      "Week4：系统清理实验，发现calltree价值有条件性，通过Bug-Type specific prompt将Top-10从3.7%拉到59.3%，获得关键正向信号，确认题目成立。"
+    "overallTrajectory": "最近四周看，这名学生不是单纯变忙，而是在第 4 周出现了较明确的研究能力跃迁：他从“收集更多 trace / calltree”转向“区分信息可见性、候选空间控制、bug-type 推理与适用边界”，并用分组实验、负结果和数据泄露修复来支撑判断。但这个跃迁仍不稳定：graph / causal reasoning 连续多周作为下一步出现却没有实质交付，Brainary 相关沉淀仍主要停留在 reasoning module、decision policy、benchmark 的概念层，尚未形成可复用系统能力。",
+    "headline": "研究判断力在 2026-04-19 明显上升：从追求更多执行信息，转向识别 calltree 的条件价值与 bug-type reasoning 的真实贡献。",
+    "overviewSentence": "该学生最近四周的核心进步是从工程型 trace 实验转向有证据边界的科研问题分解，但仍需要把 heuristic prompt 和反复提到的 graph / causal reasoning 固化为可检查模块。",
+    "fourWeekTimeline": [
+      {
+        "week": "2026-03-29",
+        "metacognition": "已经能识别“更多 trace 不等于更好 fault localization”，并提出 trace 到 reasoning 的连接缺失；能写出失败模式、被证伪路径和下一步验证标准，说明不是只在堆工程。",
+        "valueJudgment": "价值判断处于假设阶段：认为 Kernel FL 有潜力，但明确 trace 路线不一定最优、KernelLocator 未验证；能把问题连接到 causal structure、Brainary 的 reasoning / memory / tool orchestration，但主要还是概念映射。",
+        "projectManagement": "有清楚的原计划、实际完成、成功率、覆盖率、下周动作和资源成本；但 KernelLocator 的 graph 还未开始，关键路径从 trace 转向 KCOV + graph。",
+        "evidence": "40 个 crash bug 中 ftrace 成功收集 24 个，RC in trace 8/24；trace + LLM 只在 1 个 case 明显提升；提出下周 KCOV baseline 和 function-level dependency graph。"
+      },
+      {
+        "week": "2026-04-05",
+        "metacognition": "认知从“trace 不够”推进到“coverage、ranking、causality 是不同问题”，并明确 LLM 在大 search space 下退化；CoT’s CoT 中把 search space explosion 提到 A 级证据。",
+        "valueJudgment": "价值判断比上一周更具体：KCOV 能解决是否执行，但不能解决为什么错误，因此 KernelLocator 的价值不在 trace 本身，而在 candidate filtering 与 graph-guided reasoning；仍承认方法未验证。",
+        "projectManagement": "KCOV pipeline 有实质交付，57/65 成功收集 calltree，24/57 覆盖 RC；有明确的 KCOV_REMOTE 和 graph prototype 里程碑。但 graph 构建仍未开始，候选过滤只是下一步。",
+        "evidence": "65 个困难 bug 上 KCOV calltree 成功 57/65，RC coverage 42.1%，Top-1 2/24 到 2/24，Top-10 2/24 到 4/24；下周计划 KCOV_REMOTE 和 function-level dependency graph。"
+      },
+      {
+        "week": "2026-04-12",
+        "metacognition": "这一周的元认知表达更保守，承认方法框架还不清晰、审稿判断还不稳定；但相对 04-05 的硬进展增量不足，很多数据和结论重复出现，无法从周报证据判断本周有明显新增研究能力。",
+        "valueJudgment": "价值判断没有明显前进：仍认为方向可以但方法不清晰、通用性不确定；新增审稿带来对 benchmark 泛化和 evaluation split 的认识，但尚未反馈到 Kernel FL 的方法设计中。",
+        "projectManagement": "管理上有一个建设性变化：提出不要扩规模、做小规模稳定性验证；但 04-05 已经报告过 57/65、24/57 等结果，04-12 又以“初步打通”表述，周际增量和版本关系不清楚。",
+        "evidence": "重复报告 65 个 bug 中 57 个 calltree、24 个 RC in calltree；新增审稿 2 篇；下周仍计划 KCOV_REMOTE、filter、very small dependency graph。"
+      },
+      {
+        "week": "2026-04-19",
+        "metacognition": "出现最强的研究能力信号：把问题拆成 RC-in-BT、RC-not-in-BT-but-in-calltree、RC-not-in-calltree 三类，并通过正结果、负结果和数据泄露修复来定义证据边界；从“给更多信息”进一步转到“何时给、给什么、如何引导推理”。",
+        "valueJudgment": "价值判断显著更清楚：方向是否值得做不再只基于潜力，而是基于非 BT 子集上的实质提升、calltree 的条件价值、RC-in-BT 子集的负结果和可写论文信号；能把项目价值连接到 benchmark split、reasoning module、decision policy。",
+        "projectManagement": "项目从 pipeline 搭建进入方法验证，交付包括 65/128 bug 分析、Flat vs Phased calltree、bug-type prompt、RC-in-BT 负结果和 clean pipeline 修复；但项目管理字段比前几周少了资源/API/依赖/成本/下周里程碑细节，graph/结构化 reasoning 仍未交付。",
+        "evidence": "128 个 crash bugs 中 RC 在 BT 的 56 个 Top-10 为 85.7%，RC 不在 BT 的 27 个 baseline Top-10 约 3.7%；Phased calltree RC 保留 22/27，高于 Flat 14/27；Bug-Type Final Top-10 达 16/27，Top-5 40.7%，Top-1 18.5%。"
+      }
     ],
-    "trendScores": {
-      "researchCapabilityTrend": "从机械执行到问题驱动，能快速证伪假设并调整方向，Week4出现自主创新（Bug-Type Prompt），研究能力显著上升。",
-      "cognitionTrend": "认知从‘多信息=好’进化到‘信息可见性+搜索空间控制’，最终落脚于‘条件化利用加推理引导’，CoT层层深入。",
-      "valueJudgmentTrend": "早期估值偏重工作量（5-8万），后期聚焦性能突破与论文潜力（Bug-Type Prompt 15万），价值函数明显向‘研究贡献’收敛。",
-      "projectManagementTrend": "前两周偏重扩大覆盖，Week3转向小规模验证，Week4里程碑完成并产出清晰下一步，纠偏及时，项目管理渐趋成熟。"
+    "metacognitionChange": {
+      "summary": "总体元认知在四周内有真实进步，尤其体现在第 4 周：学生不再把失败简单归因于 trace 不够或 LLM 不强，而是能区分信息可见性、候选空间规模、推理策略、适用条件和数据泄露风险。最重要的变化是从“做 pipeline 并看指标”进步到“通过子集划分和负结果判断方法何时有效”。不足是结构化 causal reasoning 和 graph 多周停留在口头下一步，尚未形成可验证沉淀。",
+      "byWeek": [
+        {
+          "week": "2026-03-29",
+          "change": "能识别 trace 信息粒度不足、RC 覆盖低、trace 不是核心，提出 causal structure，但证据等级多为 B/C。"
+        },
+        {
+          "week": "2026-04-05",
+          "change": "将问题拆成 coverage、ranking、causality，识别 search space explosion，并把部分 CoT’s CoT 提升到 A 级证据。"
+        },
+        {
+          "week": "2026-04-12",
+          "change": "反思更谨慎，承认方法框架不清晰；但与 04-05 相比硬增量不足，证据显示这一周更像整理和降速验证。"
+        },
+        {
+          "week": "2026-04-19",
+          "change": "用分层实验、负结果、条件适用性和数据泄露修复来校准判断，元认知从“问题归纳”进入“证据边界定义”。"
+        }
+      ],
+      "currentLevel": "当前处于从经验性实验者向研究型问题建模者转变的阶段：能提出可证伪判断、识别失败模式和适用边界，但还没有把核心推理机制形式化为稳定算法或模块。",
+      "strongestSignal": "最强信号是 2026-04-19 对 calltree 的条件价值判断：RC 已在 BT 时 calltree 是噪声，RC 不在 BT 时 calltree 才可能提供增量，而真正提升来自 bug-type aware reasoning。",
+      "nextLift": "下一步应把 heuristic prompt 转化为可检查的结构化 reasoning protocol：输入是什么、候选如何剪枝、bug-type 规则如何生成、每一步如何避免 RC 泄露、失败 case 如何反证或修改规则。"
     },
-    "valueFunctionChange": "深层价值观发生明显转移：Week1-3将价值归结为‘基础设施可用’和‘产生insight’，估价基于类比工本；Week4开始以‘能否成为论文核心贡献’为标尺，Bug-Type推理直接估值15万，并与本方向买单方（kernel开发者）、自动化产物（reasoning module）以及Brainary映射（cognitive control）显式连接，表明学生从‘研究技工’向‘成果导向研究者’转变。",
+    "valueGrowth": {
+      "summary": "科研/项目价值判断从“Kernel FL 有潜力但未验证”进步到“非 BT 子集是值得聚焦的问题，calltree 的价值是条件性的，bug-type reasoning 是当前论文核心信号”。这说明学生开始用证据、适用边界和系统沉淀潜力来判断项目价值，而不是只看工作量或基础设施复杂度。但 Brainary 能力建设仍偏映射层：reasoning module、decision policy、benchmark 已被识别，尚未看到可复用实现。",
+      "byWeek": [
+        {
+          "week": "2026-03-29",
+          "valueJudgment": "认为 kernel bug 定位是真问题，trace pipeline 是 supporting work，KernelLocator 有潜力但不确定；价值判断主要基于问题重要性和初步负结果。"
+        },
+        {
+          "week": "2026-04-05",
+          "valueJudgment": "判断从 trace 价值转向 search space 和 causality 价值，认识到 KCOV 提升 coverage 但不能直接形成方法；科研价值更集中在 candidate filtering / graph reasoning。"
+        },
+        {
+          "week": "2026-04-12",
+          "valueJudgment": "价值判断没有明显提升，仍是方向可以、方法不清晰；新增审稿让其注意 evaluation 是否拆分子问题，但尚未形成项目取舍。"
+        },
+        {
+          "week": "2026-04-19",
+          "valueJudgment": "价值判断明显增强：用 RC-in-BT 与 RC-not-in-BT 的性能差异证明问题值得做，用 RC-in-BT 负结果限定 calltree 使用边界，用 bug-type prompt 的大幅提升判断出现论文信号。"
+        }
+      ],
+      "currentValueFunction": "当前隐含的科研价值函数是：优先做能暴露 LLM fault localization 真实瓶颈、能被子集实验验证、能形成 evaluation split / decision policy / reasoning module 的问题；减少对单纯 trace 工程和无条件数据增强的投入。",
+      "improvementSignals": [
+        "从“更多 trace 是否提升 FL”转向“trace/calltree 在什么条件下提供不可见信息”。",
+        "能用负结果提升价值判断：RC-in-BT 子集上 calltree 无提升，因此不应普遍使用 calltree。",
+        "开始把个人兴趣中的 kernel FL 与 Brainary 的 reasoning、cognitive control、tool orchestration 连接到 benchmark、decision module 和 reasoning module。",
+        "开始关注数据泄露和 RC 无泄露约束，说明他知道什么证据才可被论文接受。"
+      ],
+      "nextValueQuestion": "这个项目最值得沉淀的不是 calltree pipeline 本身，而是“BT 可见性判定 + bug-type reasoning + candidate pruning”的通用研究能力；下周需要回答：这个能力能否脱离手写 prompt，成为可复用的 Brainary reasoning / decision policy 模块？"
+    },
+    "projectManagementReview": {
+      "summary": "项目管理总体有按周推进和硬交付，尤其 Kernel FL 主线连续四周都有数据、实验、失败模式和下周动作。但存在两个管理缺口：第一，graph / causal reasoning 连续多周作为关键下一步出现却没有交付；第二，04-19 虽有最大科研进展，但资源、依赖、成本、里程碑和老师介入需求写得比前几周少，管理可检查性下降。",
+      "projects": [
+        {
+          "project": "Kernel FL：ftrace / KCOV / calltree / Bug-Type reasoning / KernelLocator",
+          "weeks": [
+            "2026-03-29",
+            "2026-04-05",
+            "2026-04-12",
+            "2026-04-19"
+          ],
+          "quality": "主线持续推进，硬进展充分：从 ftrace 60% 收集成功和 33% RC 覆盖，推进到 KCOV 57/65 收集和 42.1% 覆盖，再到 04-19 的分层实验与 Bug-Type Final Top-10 16/27。研究质量在 04-19 明显提高，因为实验不再混合所有样本，而是围绕 RC 是否在 BT / CT 中拆分问题。",
+          "whatWorked": "有效做法包括：用 baseline 对照避免自我感觉式改进；用 Flat vs Phased calltree 比较结构化输入价值；用 RC-in-BT 负结果界定 calltree 的适用边界；修复 RC safety net、rc_file subsystem filter 等泄露风险。Brainary 相关能力方面，reasoning（bug-type guided）、cognitive control（是否引入 calltree）、tool orchestration（BT + CT）已经出现 prototype 信号，尤其是 decision policy 和 reasoning module 有潜在沉淀价值。",
+          "managementGap": "graph / causal reasoning 是 03-29、04-05、04-12 反复出现的下一步，但到 04-19 仍未看到 function-level dependency graph 或 causal module 的交付；Bug-Type prompt 带来提升，但仍是 heuristic，没有被拆成可复用规则、模块接口或自动评估流程。04-19 缺少 API/GPU/成本、依赖关系、是否需要老师介入等管理字段，影响老师判断关键路径资源。",
+          "nextConcreteMove": "下周只做一个最小闭环：在 6 个 RC-in-calltree 但 GPT 未找到的失败 case 上，输出一张 failure taxonomy 表；同时把 bug-type prompt 拆成结构化步骤，定义每步输入、输出、候选数量变化、是否可能泄露 RC；最后给出是否需要 graph 的实验证据，而不是继续把 graph 作为抽象方向。"
+        },
+        {
+          "project": "KCOV / calltree clean pipeline 与实验规范",
+          "weeks": [
+            "2026-04-05",
+            "2026-04-12",
+            "2026-04-19"
+          ],
+          "quality": "有持续推进，但 04-05 与 04-12 的版本关系不清晰；04-19 开始重视无泄露实验规范，这是论文可用性的关键提升。",
+          "whatWorked": "实现 unified KCOV、多线程、fork-loop、buffer 扩展、calltree reconstruction、Phased calltree、子系统过滤和噪声去除；04-19 明确 RC 无泄露约束，使 pipeline 从工程可跑向论文可信推进。",
+          "managementGap": "pipeline 复杂度上升，但缺少固定版本号、输入输出规范、clean pipeline 的验收标准；MAX_PHASES 从 8 调到 15~20 的目标有 RC 保留率预期，但未说明对 token 长度、Top-k、误杀率的联合评估标准。",
+          "nextConcreteMove": "固化一个 clean pipeline checklist：不得使用 RC 信息的步骤、允许使用的 crash report 信息、calltree 截断规则、过滤规则、输出长度分布、RC 保留率、Top-k 指标；每次改 pipeline 必须报告这些指标。"
+        },
+        {
+          "project": "审稿与论文评价能力训练",
+          "weeks": [
+            "2026-04-12"
+          ],
+          "quality": "只有一周证据，不能判断持续推进；但内容与研究能力有关，因为学生开始关注 benchmark 泛化和 evaluation 是否拆分 generation vs ranking。",
+          "whatWorked": "审稿让学生意识到许多工作在 benchmark 上效果好但泛化有限，且 evaluation 往往不区分子问题；这与 Kernel FL 中 coverage / ranking / reasoning 的拆分有潜在关联。",
+          "managementGap": "没有看到后续一周是否形成 checklist，也没有看到该 checklist 如何反哺 Kernel FL 的实验设计。",
+          "nextConcreteMove": "如果继续保留该项目，下周应交付一页评价 checklist，并用它重新审视当前 Kernel FL 实验：是否区分信息可见性、candidate generation、ranking、reasoning、data leakage。"
+        }
+      ],
+      "managementPattern": "该学生擅长每周产出实验数据、失败模式和下一步动作，也能根据负结果改变方向；管理弱点是容易把重要方法模块长期放在“下周尝试”而没有验收标准，且在出现研究突破时反而省略资源、依赖和里程碑字段。",
+      "nextManagementMove": "老师应要求他把下周计划压缩为 2 个可检查交付：一是 6 个失败 case 的结构化错误分析，二是 bug-type reasoning 的模块化协议草案；暂时不要扩充 bug 数量，也不要继续泛泛承诺 graph，除非给出一个 5-case 最小 graph prototype 的明确验收指标。"
+    },
     "repeatedBlockers": [
-      "trace/KCOV 覆盖率始终未根本解决（~50%），但已被绕过；",
-      "calltree 噪声与 LLM 搜索空间失控多周反复，直到Week4才通过推理引导缓解；",
-      "因果建模与结构化表示一直停留在概念，尚未起步。"
+      "结构化 causal reasoning / graph 多周被识别为核心，但没有实际交付；这是从 insight 到方法的主要断点。",
+      "calltree 太长导致 LLM 迷失、太短导致 RC 丢失，这个 trade-off 反复出现，需要联合报告 RC 保留率、候选规模和 Top-k，而不是单独优化长度。",
+      "LLM 在大 search space 中 selection 能力不足反复出现；04-19 的 bug-type prompt 暂时缓解，但还没有机制化。",
+      "Brainary 映射持续出现，但还没有从 workflow / module / decision policy 的命名进入接口、数据结构和评估协议。",
+      "04-05 与 04-12 的实验结果高度重叠，周际增量证据不足；需要更清楚地区分复现实验、整理实验和新增实验。"
     ],
-    "professorShouldAsk": "Bug-Type的提示设计目前仍是heuristic，能否抽象出系统化的bug语义特征以避免变成手工调参？",
-    "nextBestIntervention": "引导学生将Bug-Type启发式设计升华为可复现的知识注入或自动Prompt生成模块，同时基于‘RC是否在BT’构建可公开的kernel FL benchmark，并启动论文故事线围绕‘信息可见性 vs 推理’展开。"
+    "teacherQuestions": [
+      "你在 2026-04-19 的 Bug-Type Final 提升中，哪些提升来自 calltree 信息，哪些来自 prompt 的先验规则？能否设计一个 ablation 把两者分开？",
+      "6 个 RC 在 calltree 中但 GPT 仍未找到的 case，各自失败原因是什么：候选太多、bug-type 规则不对、RC 函数语义不显眼，还是 calltree phase 丢上下文？",
+      "你连续三周提到 dependency graph / causal reasoning，但没有交付；下周最小 graph prototype 的输入、输出、5 个 case 验收指标分别是什么？",
+      "RC-in-BT 时 calltree 是噪声，RC-not-in-BT 时 calltree 有价值；你准备如何自动判断是否引入 calltree，decision rule 的特征和评估指标是什么？",
+      "当前 Bug-Type prompt 如何沉淀成 Brainary 的 reasoning module 或 decision policy，而不是一组手写提示词？"
+    ],
+    "nextIntervention": {
+      "type": "方法结构化与验收标准干预",
+      "reason": "学生已经获得可写论文的初步信号，但关键风险是停留在 heuristic prompt 和经验性 pipeline；老师介入应帮助他把结果转为论文方法和系统模块，而不是继续扩工程。",
+      "actions": [
+        "要求下周 meeting 前提交一页方法图：BT 可见性判定、calltree 构建、bug-type reasoning、candidate pruning、最终 ranking 的模块边界。",
+        "要求提交 6 个失败 case 的表格，每个 case 包含 RC 是否在 CT、候选数量、bug type、prompt 输出、错误选择、失败归因、下一条规则是否可泛化。",
+        "要求定义 clean pipeline 的无泄露规范，特别说明哪些步骤不能使用 RC file / RC function。",
+        "如果继续推进 Brainary 沉淀，先选择 decision policy 或 reasoning module 之一，不要同时泛化 benchmark、workflow、memory schema 和 graph builder。"
+      ]
+    },
+    "studentFeedback": {
+      "summary": "你最近四周的进步不是工作量增加，而是研究判断开始变清楚：你能用负结果、分组实验和泄露修复来判断方法是否真的有效。下一步的关键不是再多跑数据，而是把 Bug-Type reasoning 从 prompt 技巧变成可复用、可验证的方法。",
+      "whatImproved": [
+        "你从“trace / KCOV 是否能提升 FL”推进到“信息是否可见、候选空间如何控制、推理如何引导”这三个子问题。",
+        "你开始使用负结果定义边界：RC-in-BT 时 calltree 无帮助，说明 calltree 不是通用增强。",
+        "你在 04-19 给出了强证据：Bug-Type Final 将 RC-not-in-BT 子集 Top-10 从约 3.7% 提升到 59.3%。",
+        "你开始关注数据泄露和实验规范，这是从工程实验走向论文实验的重要一步。"
+      ],
+      "nextStep": "下周不要优先扩数据或继续泛泛做 graph；先把 6 个失败 case 分析透，并把 bug-type reasoning 写成结构化协议，证明它不是靠手调 prompt，而是一个可以沉淀进 Brainary reasoning / decision policy 的方法。"
+    },
+    "evidenceLinks": [
+      {
+        "claim": "学生的核心认知从“更多 trace”转向“结构化推理和候选空间控制”。",
+        "weeks": [
+          "2026-03-29",
+          "2026-04-05",
+          "2026-04-19"
+        ],
+        "evidence": "03-29 写到 trace 价值不在更多信息而在 causal structure；04-05 写到 coverage、ranking、causality 三分；04-19 写到 calltree 本身提升有限，bug-type reasoning 才是关键。",
+        "evidenceLevel": "高"
+      },
+      {
+        "claim": "04-19 出现明确研究跃迁，而不只是更忙。",
+        "weeks": [
+          "2026-04-19"
+        ],
+        "evidence": "完成 128 个 crash bugs 整体分析、27 个 RC-not-in-BT 子集对比、Flat vs Phased calltree、Bug-Type Final、RC-in-BT 负结果和数据泄露修复；同时给出 Top-10 3.7% 到 59.3% 的提升。",
+        "evidenceLevel": "高"
+      },
+      {
+        "claim": "graph / causal reasoning 是持续卡点，没有硬交付证据。",
+        "weeks": [
+          "2026-03-29",
+          "2026-04-05",
+          "2026-04-12",
+          "2026-04-19"
+        ],
+        "evidence": "前三周均把 function-level dependency graph 或 graph prototype 作为下周动作，但 04-19 的交付集中在 phased calltree 和 bug-type prompt，没有报告 graph prototype 结果。",
+        "evidenceLevel": "高"
+      },
+      {
+        "claim": "Brainary 关联已出现方向，但系统沉淀证据不足。",
+        "weeks": [
+          "2026-03-29",
+          "2026-04-05",
+          "2026-04-12",
+          "2026-04-19"
+        ],
+        "evidence": "多周提到 reasoning、memory、tool orchestration、cognitive control、workflow、agent module；04-19 写到已出现 Bug-Type prompt prototype 和潜在 reasoning module / decision policy，但没有接口、模块实现或评估协议。",
+        "evidenceLevel": "中"
+      },
+      {
+        "claim": "04-12 的周际硬增量证据不足。",
+        "weeks": [
+          "2026-04-05",
+          "2026-04-12"
+        ],
+        "evidence": "两周均报告 65 个 bug、57 个成功收集 calltree、24 个 RC in calltree、Top-1 2/24 到 2/24、Top-5/Top-10 轻微提升等相似结果；04-12 额外有审稿，但 Kernel FL 新增实验证据不清楚。",
+        "evidenceLevel": "中"
+      }
+    ]
   }
 }

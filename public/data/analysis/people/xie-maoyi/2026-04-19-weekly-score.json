@@ -1,54 +1,60 @@
 {
   "key": "person:xie-maoyi:2026-04-19:weekly-score",
-  "generatedAt": "2026-05-24T11:36:14.922Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "b2d31a162a2ed3b15b7af68c4a20466764c265b22e2b639c8769df2f00da8f29",
+  "generatedAt": "2026-06-06T13:14:50.892Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "51369a4d47cfecd74048a3959208d6ec3aa2d24c0263f3c9aaee01b7c3eac428",
   "result": {
     "hardProgress": {
       "score": 18,
-      "reason": "完成了65个bugs分析，量化结果清晰：RC在BT中Top-10达85.7%，结合bug-type prompt后非BT子集Top-10从3.7%提升至59.3%。实验对比充分。",
-      "missingEvidence": "未提供所有bug的详细分布或原始数据链接。"
+      "reason": "本周有明确硬进展：完成 BT / non-BT / calltree 子集拆分，建立 baseline，对 Flat calltree、Phased calltree、Bug-Type prompt 做了对比，并报告了 Top-10、Top-5、Top-1 等结果。最重要的硬结果是 RC-in-CT 的 27 个 bug 上，Bug-Type prompt 将 Top-10 从 1/27 提升到 16/27。还包含负结果：RC-in-BT 时 calltree 无提升甚至略降，这对论文边界很重要。",
+      "missingEvidence": "缺少完整实验表、每个 bug 的结果明细、具体 prompt、模型版本、重复次数、统计显著性；报告中同时出现“65 个 kernel crash bugs”和“128 个 crash bugs 整体分析”，样本口径需要澄清。"
     },
     "cognitiveIncrement": {
       "score": 14,
-      "reason": "提炼出关键增量：LLM瓶颈是信息可见性而非推理能力；calltree价值有条件性；真正的提升来自bug-type aware reasoning。证伪了“加calltree就有效”和“更多trace更好”。",
-      "missingEvidence": "缺少统计检验（如置信区间）来强化结论的可靠性。"
+      "reason": "认知增量清晰：从“给更多 trace”转向“信息是否可见 + 如何在候选空间推理”；明确证伪了“只要给 calltree 就会提升”和“更多 trace 更好”。这不是简单实验记录，而是形成了可指导下一步方法设计的判断。",
+      "missingEvidence": "缺少对不同 bug type 下为什么 prompt 有效的机制分析；目前还停留在经验性总结，尚未给出可复用的推理结构。"
     },
     "cot2Depth": {
       "score": 13,
-      "reason": "将问题拆解为信息覆盖和选择推理两个独立维度，抽象出条件性工具价值和搜索空间管理，自动化潜力高，证据等级A。",
-      "missingEvidence": "未提供结构化推理模块的初步设计或原型。"
+      "reason": "CoT’s CoT 有较好深度：把 fault localization 拆成 coverage 和 reasoning 两个子问题，并进一步提出 conditional calltree、candidate pruning、structured reasoning 等方向。它已经从结果层上升到方法论层，能指导论文结构和系统设计。",
+      "missingEvidence": "缺少更细的二阶推理证据，例如哪些失败 case 支持“大 search space selection 是核心问题”，以及 candidate pruning 应该基于什么特征实现。"
     },
     "brainaryMapping": {
-      "score": 9,
-      "reason": "明确对应推理、认知控制、工具编排能力，已有bug-type prompt原型，可沉淀为推理模块和决策策略。",
-      "missingEvidence": "未给出模块接口或架构草图。"
+      "score": 8,
+      "reason": "Brainary 映射比较明确：reasoning、cognitive control、tool orchestration 分别对应 bug-type guided reasoning、候选空间控制、BT+CT 工具编排。也指出了可能沉淀为 reasoning module 和 decision policy。",
+      "missingEvidence": "缺少模块接口定义、输入输出格式、可自动化节点、与 Brainary 现有能力栈的具体对接方式；目前还是概念映射，不是工程映射。"
     },
     "monetaryValue": {
-      "score": 8,
-      "reason": "各任务估值合计37万，核心任务（bug-type prompt）估值15万，与突破性进展匹配，逻辑合理。",
-      "missingEvidence": "估值依据未量化，如基于节省的工程师时间或论文贡献度。"
+      "score": 7,
+      "reason": "报告给出了各任务的金额估值，并能说明对应价值：问题划分、信息补充机制、真实作用验证、核心 prompt 提升、适用边界。这说明作者开始做项目价值判断，而不是只报工作量。",
+      "missingEvidence": "金额估值缺少依据，没有说明这些金额对应论文价值、产品价值、节省人力、benchmark 资产还是模块复用价值；也没有比较该方向相对其他项目的机会成本。"
     },
     "projectManagement": {
       "score": 13,
-      "reason": "阶段清晰，从pipeline转向方法验证，投入40小时，里程碑完成，偏差发现及时纠偏，进度略好于预期。",
-      "missingEvidence": "未展示风险登记或后续资源计划。"
+      "reason": "项目管理信息较完整：说明当前阶段已从 pipeline 搭建转向方法验证，记录约 40 小时投入，给出关键里程碑、进度判断、偏差和纠偏方向。尤其是从“数据增强”转向“推理机制”的纠偏是有效管理动作。",
+      "missingEvidence": "缺少明确时间表、论文目标版本、风险优先级、每个下周动作的验收标准和依赖关系；也缺少对数据 pipeline 复杂性的具体风险拆解。"
     },
     "nextAction": {
       "score": 9,
-      "reason": "每个任务均有具体的最小可验证动作，如聚焦非BT子集、调整参数、优化prompt、构建决策规则，可操作性高。",
-      "missingEvidence": "未对多个动作进行优先级排序。"
+      "reason": "下周动作具体且可验证：聚焦 RC-not-in-BT 的 27 个子集，调整 MAX_PHASES，分析 6 个失败 case，做 targeted prompt refinement，构建是否引入 calltree 的 decision rule，固化 clean pipeline。这些动作都直接回应当前卡点。",
+      "missingEvidence": "缺少优先级排序和单一主线；多个动作并行，可能分散。需要明确下周最重要的一个可交付物，例如“完成 decision rule + 6 个失败 case 分类表”。"
     },
     "evidenceQuality": {
       "score": 4,
-      "reason": "主动修复数据泄露问题，确保无RC信息污染，实验设计有baseline对照。",
-      "missingEvidence": "未描述实验重复性保证或完整复现步骤。"
+      "reason": "证据质量较高：有 baseline、有方法对比、有负结果、有样本数、有 Top-k 指标，也主动处理 RC 信息泄露问题。当前结论不是纯主观判断。",
+      "missingEvidence": "缺少原始数据表、实验脚本链接、随机性控制、模型参数、prompt 全文、失败案例列表和统计检验；部分样本口径不一致，需要补齐。"
     },
-    "totalScore": 88,
+    "totalScore": 86,
     "tier": "A",
-    "oneLineJudgment": "本周在bug-type推理上取得重大突破，但方法仍偏 heuristic，需结构化沉淀。",
-    "professorFollowUp": "建议本周重点关注如何将bug-type prompt抽象为可复用的推理模块，并开始设计结构化表达，同时为论文实验梳理 clean pipeline。"
+    "oneLineJudgment": "这一周已经从实验堆叠推进到可写论文的核心信号：calltree 的价值是条件性的，真正提升来自 bug-type aware reasoning，但还需要把 heuristic prompt 结构化并补齐实验可复现证据。",
+    "professorFollowUp": [
+      "要求学生下周首先澄清样本口径：65、128、56、27、RC-in-CT 的集合关系必须画成一张数据流图。",
+      "要求提交一张完整结果表：每个 bug 的 BT 是否含 RC、CT 是否含 RC、baseline 排名、Flat CT 排名、Phased CT 排名、Bug-Type prompt 排名。",
+      "重点追问 6 个失败 case：RC 已在 calltree 中但 GPT 未找到，失败原因分别是候选过多、prompt 不匹配、bug type 误判、上下文缺失，还是模型选择错误。",
+      "要求把 Bug-Type prompt 从 heuristic 改成结构化机制：输入 bug type、trace phase、候选函数特征，输出候选排序理由。",
+      "要求下周形成 decision rule：什么时候只用 BT，什么时候引入 CT，什么时候进入 bug-type reasoning；这会决定论文方法是否成立。"
+    ]
   }
 }

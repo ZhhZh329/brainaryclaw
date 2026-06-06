@@ -1,0 +1,194 @@
+{
+  "key": "person:sun-xiao:2026-05-24:horizontal",
+  "generatedAt": "2026-06-06T13:13:05.308Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "3d8027966a8757eeea2e52d02d454d522d9aad2aaf127e6d6e9a5e0dc741a670",
+  "result": {
+    "overallLevel": "特别值得读",
+    "headline": "本周把主线从 action-first runtime 推进到可回放的 task-state episodic memory runtime，并形成了 WBD/BPT 的 slot/no-slot 诊断判断。",
+    "overviewSentence": "按本周研究管理标准，这份周报属于较值得优先阅读的一类，因为它同时给出了硬工程推进、机制性认知增量、题目价值判断和下周可验证动作。",
+    "shortRead": {
+      "whyRead": "老师应优先读原文，尤其是“本周判断”“CoT’s CoT”“题目是否值得做”“项目管理”和“我这周最希望老师学到的新东西”几段，因为这里已经从工程记录上升到 benchmark 机制判断。",
+      "coreProgress": "本周完成了 task-state episodic memory runtime 的核心改造：actor turn 被拆成 action selection 与 utterance realization，并记录 visible dialogue、action semantic、task_state、LLM IO；同时修正为 sequential actor-turn，并完成 WBD/BPT × 8 modes × slot/no-slot 的初步对照。",
+      "mainJudgment": "最有价值的判断是：communication mode 的影响需要通过 episode memory 传导到后续 action trajectory；slot/state 不是通用增益，WBD 适合 current-state memory，BPT 需要 versioned agreement memory。",
+      "readForMeeting": "下一次 meeting 最值得追问的是：BPT versioned agreement memory 如何定义最小状态合同、slot/no-slot 公平重跑如何排除 prompt wording 干扰、以及哪些 trajectory metrics 可以支撑论文级结论。"
+    },
+    "levelRationale": [
+      {
+        "dimension": "硬进展",
+        "level": "特别值得读",
+        "rationale": "报告给出了明确的工程产物：TaskObservation、TaskAgentAction、TaskStateLLMAgent、TaskStateSotopiaEnv、task_state.py、task_state_benchmark.py、realization_modes、schema_loader 等，并说明了从 batch-style simultaneous step 到 sequential actor-turn 的关键修正。硬进展不是停留在想法层，而是已经有可运行链路和 JSONL 结果。"
+      },
+      {
+        "dimension": "认知增量",
+        "level": "特别值得读",
+        "rationale": "认知增量集中在一个清晰转向：benchmark 不应只被描述为 action schema 接入，而应被描述为 episodic memory runtime。报告还进一步区分了 object-current state 与 versioned agreement state，这对后续论文定位和系统设计都有直接作用。"
+      },
+      {
+        "dimension": "CoT's CoT",
+        "level": "特别值得读",
+        "rationale": "CoT’s CoT 部分没有只复述本周做了什么，而是解释了为什么现有 multi-agent benchmark 不容易自动吸收该机制：需要同时修改 agent、action、env、runner 四层合同。这是可沉淀为 workflow/module/memory 的二阶判断。"
+      },
+      {
+        "dimension": "Brainary 映射",
+        "level": "非常好",
+        "rationale": "Brainary 关联写出了 benchmark infrastructure、episodic memory、causal traceability、multi-agent interaction semantics、trajectory analysis 等能力映射，也指出了可能沉淀为 ActorTurnMemoryWriter、SequentialActorTurnEnv、ModeToTrajectoryDiagnostics、FamilyTopologyAwareMemorySelector。还可以进一步补上这些模块在 Brainary 内的接口边界。"
+      },
+      {
+        "dimension": "证据质量",
+        "level": "很好",
+        "rationale": "报告列出了 semantic-only JSONL、slot JSONL、LLM IO trace、terminal rate、turn-to-terminal、unique action、accept repetition 等证据类型，并给出 BPT 0/8 terminal、WBD slot 提高 closure 等关键观察。但原文没有呈现完整数表、样例链接、可复现实验命令和代表性 trace 摘录，因此目前更适合作为强诊断周报，还未完全达到论文结果证据形态。"
+      },
+      {
+        "dimension": "主题价值",
+        "level": "特别值得读",
+        "rationale": "题目价值判断清楚：它解决的是 multi-agent communication evaluation 中 communication mode 是否真的改变后续 action trajectory 的因果归因问题，而不是只评估话术风格。这个判断已经连接到 benchmark、workflow intelligence、企业协作 agent、negotiation/collaboration evaluation、AI safety/evaluation 等潜在使用场景。"
+      },
+      {
+        "dimension": "金额价值",
+        "level": "很好",
+        "rationale": "报告说明了谁可能需要该能力，但没有给出具体金额、预算、节省成本、算力成本或商业转化路径的量化证据。当前金额价值属于方向上成立、量化证据待补足。"
+      },
+      {
+        "dimension": "项目管理",
+        "level": "特别值得读",
+        "rationale": "项目管理写得具体：区分了两个项目主线，给出当前阶段、时间规划、资源规划、依赖关系、关键路径、token/成本规划、进度判断和纠偏动作。尤其是明确下周不扩大全 family，而是先修 prompt regression、做公平重跑、设计 BPT versioned agreement memory，体现了较成熟的研究节奏控制。"
+      },
+      {
+        "dimension": "自动化沉淀",
+        "level": "非常好",
+        "rationale": "自动化路径清楚，最适合先沉淀为 EpisodicTaskStateRuntime 与 ModeConditionedTrajectoryDiagnostics，并识别了 actor-turn memory、Step1 memory consumption、mode-only-through-utterance、trajectory metrics 四层门槛。下一步若能补充接口、输入输出格式和最小复现脚本，会更接近可复用资产。"
+      },
+      {
+        "dimension": "下周动作质量",
+        "level": "特别值得读",
+        "rationale": "下周动作不是泛泛继续实验，而是围绕最小可验证链条展开：修 generation prompt 回归、slot/no-slot 公平重跑、BPT versioned agreement memory、WBD mode divergence 指标、terminal/agreement-to-completion/action entropy 图表。这些动作能直接提高证据质量。"
+      }
+    ],
+    "sameWeekPosition": "按本周研究管理标准，这份周报属于较值得优先阅读的一类；它的突出点不是篇幅长，而是把工程推进、机制判断、证据口径和下周关键路径放在同一个研究闭环里。",
+    "highlightedSignals": [
+      "硬进展明确：从 action-first runtime 推进到 task-state episodic memory runtime，并完成 sequential actor-turn 修正。",
+      "有可诊断实验：WBD/BPT、8 个 communicative modes、semantic-only 与 slot/stateful 对照已经形成初步观察。",
+      "认知增量强：communication mode 被重新定义为通过 visible utterance memory 影响后续 action trajectory 的 treatment。",
+      "价值判断清楚：题目定位在 multi-agent communication evaluation 的因果归因能力，而不是单轮对话质量评价。",
+      "项目管理成熟：明确不先扩大规模，而是先处理 prompt regression、公平对照、BPT memory ontology 和最小图表。",
+      "证据仍需补全：报告提到多类 JSONL 和指标，但没有展示完整表格、样例 trace、复现实验命令和统计口径。"
+    ],
+    "focusDimensions": {
+      "valueJudgment": {
+        "read": "价值判断达到“特别值得读”。报告不仅说题目值得做，还说明了真实问题、潜在买单方、通用层与 family-specific 层的边界，以及为什么当前证据已经使它从纯工程问题变成 benchmark 可诊断能力问题。",
+        "evidence": "原文指出：同一模型、同一 case、同一 action schema 下，不同 communicative modes 会产生不同 trajectory；slot/state 能改变 closure 与重复确认；WBD 适合 current-state memory，BPT 需要 versioned agreement memory。",
+        "nextLift": "下一步最好把价值判断压成一条论文级 claim：在什么条件下，communication mode 经由 episodic memory 改变 action trajectory；再配一张最小证据表，区分 runtime 贡献、mode 贡献和 state ontology 贡献。"
+      },
+      "projectManagement": {
+        "read": "项目管理达到“特别值得读”。周报把项目拆成 task-state episodic runtime 与 communication treatment diagnostics 两条主线，并分别给出了阶段、资源、依赖、关键路径、成本控制和纠偏动作。",
+        "evidence": "报告明确写到下周不直接扩展所有 family，而是先修 generation.py prompt wording 回归、重跑 WBD/BPT 全 mode 小样本、设计 BPT versioned agreement memory，并准备 terminal、agreement-to-completion、action entropy 的最小图表。",
+        "nextLift": "建议下周把计划进一步写成验收表：每个动作对应一个输入、一个输出、一个通过标准和一个停止条件，例如“BPT versioned agreement memory 若仍无法触发 complete_transaction，则检查 terminal contract，而不是继续改 mode 文案”。"
+      },
+      "metacognition": {
+        "read": "元认知变化达到“特别值得读”。报告体现出学生已经从“能不能跑通”转向“什么样的 memory representation 才能解释 communication effect”，并能主动克制扩大实验规模。",
+        "evidence": "原文写到：当前卡点从“能否跑通多轮”转向“哪一种 memory representation 对不同 family 有效”；还指出本周不能把所有机制一次性定稿，应先沉淀 runtime、diagnostics 和对照证据。",
+        "nextLift": "下一步可以把元认知进一步外化为决策日志：本周哪些判断被实验改变了，哪些判断仍只是工作假设，哪些判断需要下周用最小实验推翻或确认。"
+      }
+    },
+    "growthOpportunities": [
+      {
+        "area": "证据呈现",
+        "suggestion": "把 WBD/BPT 的 slot/no-slot 结果整理成一张最小表：terminal rate、平均结束 turn、unique action、accept repetition、agreement-to-completion gap、action entropy。当前报告说明有这些数据，但读者还不能直接核查。"
+      },
+      {
+        "area": "复现性",
+        "suggestion": "补充 1-2 条可复现实验命令、对应 JSONL 文件名、代表性 trace ID 和 prompt 版本号，这样老师可以快速判断 prompt regression 是否影响结论。"
+      },
+      {
+        "area": "BPT memory ontology",
+        "suggestion": "下周可以把 versioned agreement memory 写成最小 schema，而不是先做复杂实现：例如 proposal_id、price_terms、pickup_terms、accepted_by_buyer、accepted_by_seller、ready_for_completion、superseded_by。"
+      },
+      {
+        "area": "金额价值",
+        "suggestion": "目前已经写清楚谁会需要该能力；下一步可补一小段量化假设，例如它能减少多少人工 trajectory 审查、支持多少 benchmark case 的自动诊断，或节省多少无效 token rerun。"
+      },
+      {
+        "area": "论文叙事",
+        "suggestion": "建议把本周结果收束成一个核心图式：mode instruction → utterance realization → visible dialogue memory → next action selection → trajectory outcome，这会让读者更快理解贡献。"
+      }
+    ],
+    "teacherAction": {
+      "readOriginal": true,
+      "meetingQuestions": [
+        "你认为 BPT 的 versioned agreement memory 最小必须包含哪些字段？哪些字段只是方便调试、暂时不应进入核心 state？",
+        "slot/no-slot 公平重跑中，如何确保唯一差异是 state/argument carrier，而不是 prompt wording、generation prompt 或 action description 的差异？",
+        "WBD 中 slot 提高 closure 但压缩 mode 差异，这在论文里应被解释为正结果、边界条件，还是需要进一步拆分的机制现象？",
+        "你准备选择哪 2-3 个 high-contrast modes 作为下周 debug 样本？选择标准是什么？",
+        "如果只能保留三项 trajectory-level metrics，你会选 terminal、agreement-to-completion、action entropy，还是还有更能说明 communication influence 的指标？",
+        "这套 EpisodicTaskStateRuntime 最小可复用接口是什么？哪些部分是通用 runtime，哪些部分必须按 family 自定义？"
+      ],
+      "nextWeekWatch": [
+        "是否完成 generation.py prompt regression 清理，并记录 prompt 版本。",
+        "是否完成 WBD/BPT slot/no-slot 公平重跑，且给出最小结果表。",
+        "BPT versioned agreement memory 是否从概念变成可运行 schema 或伪代码。",
+        "是否给出至少 1 条 WBD 和 1 条 BPT 的代表性 trace 摘录，用于支撑 trajectory 判断。",
+        "是否避免在机制未稳定前扩大到所有 family 或多 seed。",
+        "是否形成 terminal、agreement-to-completion、action entropy 或同等级别的最小图表。"
+      ]
+    },
+    "studentFeedback": {
+      "summary": "你这周最好的地方是把项目从“跑通 action schema”推进到了“可解释 communication effect 的 episodic memory runtime”，并且能判断不同 family 需要不同 memory ontology。",
+      "whatYouDidWell": [
+        "你给出了很扎实的硬进展：runtime、agent、env、runner、slot/state、JSONL trace 和 sequential actor-turn 都有明确推进。",
+        "你的价值判断很清楚：这个题目真正要解决的是 communication mode 是否改变后续 action trajectory 的归因问题，而不是让话术看起来不同。",
+        "你的项目管理节奏很好：没有急着扩大实验规模，而是把下周重点放在 prompt regression、公平对照和 BPT versioned agreement memory。"
+      ],
+      "nextStep": [
+        "下周请把证据压成最小可核查表格，至少包括 WBD/BPT、slot/no-slot、8 modes 下的 terminal、turn、重复 accept、agreement-to-completion 等指标。",
+        "请把 BPT versioned agreement memory 写成最小 schema，并说明它如何解决 accept_exchange_arrangement 到 complete_transaction 的断点。",
+        "请补充代表性 trace ID、实验命令和 prompt 版本，让老师能快速判断结果是否可复现、是否公平对照。"
+      ],
+      "suggestedRewrite": "下周周报可以这样写得更清楚：『本周我修复了 generation prompt regression，并在同一模型、同一 case、同一 action schema 下重跑 WBD/BPT 的 slot/no-slot 对照；唯一变量为 memory carrier。结果表显示：WBD slot 版 terminal 从 X/Y 变为 X/Y，平均结束 turn 从 X 变为 X；BPT 在加入 versioned agreement memory 后，agreement-to-completion gap 从 X/Y 变为 X/Y。代表性 trace 为 run_id=...，说明 complete_transaction 是否被触发取决于双方是否接受同一 proposal_id。』"
+    },
+    "evidenceLinks": [
+      {
+        "section": "本周主线",
+        "evidence": "报告明确说明本周从 action-first runtime 推进到 task-state episodic memory runtime，并完成 WBD/BPT、8 communicative modes、16 atomic actor turns 的对照运行。"
+      },
+      {
+        "section": "本周判断",
+        "evidence": "报告提出 gpt-5.4 + sequential actor-turn 已能减少 action collapse，task_state/slot 对 WBD 有明显正收益，但 BPT current-slot 设计不足以触发 complete_transaction。"
+      },
+      {
+        "section": "1.1 主线任务一",
+        "evidence": "报告列出 TaskObservation、TaskAgentAction、TaskStateLLMAgent、TaskStateSotopiaEnv、agenerate_task_action_decision、agenerate_task_utterance_by_realization_mode 等新增模块。"
+      },
+      {
+        "section": "1.2 主线任务二",
+        "evidence": "报告说明 communicative modes 不只是改变话术，而会改变下一步 action selection 的路径，并观察到 WBD semantic-only 与 slot 版的不同 trajectory 表现。"
+      },
+      {
+        "section": "2. CoT 增量",
+        "evidence": "报告把核心认知更新概括为 episodic memory runtime、communication effect 传导链、sequential actor-turn 必要性、family-specific state ontology。"
+      },
+      {
+        "section": "3. CoT’s CoT",
+        "evidence": "报告解释了为什么该机制尚未被自动化科研吸收：它需要修改 observation、agent、env、runner 四层合同，而不是单独改 prompt。"
+      },
+      {
+        "section": "6. 题目是否值得做",
+        "evidence": "报告明确题目解决 multi-agent communication evaluation 中的因果归因问题，并说明潜在需求方和可沉淀资产。"
+      },
+      {
+        "section": "7. 项目管理",
+        "evidence": "报告给出两条项目主线的阶段、时间、资源、依赖、成本规划和下周纠偏动作。"
+      },
+      {
+        "section": "8. 自动化科研转化路径",
+        "evidence": "报告提出最适合先转成 EpisodicTaskStateRuntime + ModeConditionedTrajectoryDiagnostics，并列出四层转化门槛。"
+      },
+      {
+        "section": "证据缺口",
+        "evidence": "报告提到 JSONL、LLM IO trace 和多项指标，但输入材料中没有提供完整结果表、具体文件链接、实验命令、prompt 版本或代表性 trace 原文。"
+      }
+    ]
+  }
+}

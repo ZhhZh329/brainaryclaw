@@ -1,46 +1,223 @@
 {
   "key": "person:wan-wenyuan:2026-05-24:longitudinal",
-  "generatedAt": "2026-05-24T12:25:34.448Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "7b2645537c0cbb035d378f104b960f2b895856ebda1d46201ab77058f7b33e13",
+  "generatedAt": "2026-06-06T13:13:41.196Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "3a68e7b6c849f8f1b30e7794c7523612b81d96c8aa13a02c5e2a002a3ebb0602",
   "result": {
-    "overallTrajectory": "王文渊同学在四周内完成了从宏观概念探索到精细实验验证的转变。第一周提出内部/外部注意力与相关性提取的概念框架，定位系统模块；第二周聚焦于基准数据集与基线实验，确认数据集可同时支持问答与分割验证；第三周实施文本检测框记忆的消融实验，发现无稳定提升，但定位类问题有正向信号，进而区分内外部注意力的工程路线；第四周将问题深化为按任务类型选择视觉证据，设计规则版路由器。整个过程中，学生的研究能力显著增长，由抽象认知逐步转向可验证假设和系统性解决方案，价值函数从单纯节省人力演化为构建可复用模块与自动化路径。",
-    "stageByWeek": [
+    "overallTrajectory": "总体看，这名学生最近四周不是单纯变忙，而是在从概念拆解推进到实验验证、失败模式识别和路线纠偏；研究能力有上升，最强信号是 5.17 能用 full-set ablation 否定“bbox memory 无条件增强”的假设，并在 5.24 把失败转化为 task-type visual evidence router 的下一步验证问题。但当前能力仍处在“能提出可验证机制和局部实验”的阶段，距离稳定形成系统模块还缺少 full-set router 定量结果、题型分类误差分析、adapter 训练样例闭环和与 Chunhan 分割结果的接口对齐。",
+    "headline": "从“定义 attention/relevance”进步到“用消融实验识别视觉证据的适用边界”，研究能力在提升，但下一步必须用规则版 router 的定量结果证明路线。",
+    "overviewSentence": "该学生正在从概念型推进转向证据驱动的模块设计，真正进步体现在能根据实验失败收敛问题，而不是继续堆更多视觉证据。",
+    "fourWeekTimeline": [
       {
         "week": "2026-05-03",
-        "stage": "概念构建期。定义了内部/外部注意力与相关性提取的认知分工，形成注意力-相关性链路，并计划从具身数据集中抽取样例验证。认知重点：注意力是认知资源分配，相关性是感知到任务目标的压缩机制。"
+        "metacognition": "开始把 attention 从模型内部权重重新理解为认知资源分配机制，并识别出 relevance 不能等同于 object detection；已经能说清失败模式和评价标准缺口，但主要仍是高层结构判断。",
+        "valueJudgment": "认为值得做的核心问题是具身 VLM 不知道当前该关注什么，并把其价值连接到 Brainary 的 memory、reasoning、calibration、cognitive control 和 benchmark；价值判断方向较清楚，但证据主要是系统需求分析，实验支撑不足。",
+        "projectManagement": "项目阶段写为原型设计/小规模实验准备；原计划与实际完成基本一致，明确了下周要抽取 2-3 个具身任务样例并形成 attention-relevance schema；依赖 Chuhan Li 的视觉 features 和 long-term memory 输出，且需要老师确认语义定义。",
+        "evidence": "报告写明“relevance 的评价标准还不够清楚”“下周从已有具身任务数据集中抽取 2-3 个代表性样例”“CoT's CoT 证据等级 B/B/C”。"
       },
       {
         "week": "2026-05-10",
-        "stage": "基准确立期。选定LMEE-Bench作为主数据集，完成无记忆的VQA基线（72.84%），并计划输出检测框文本作为记忆。认知重点：答对不等于看对，需要视觉证据进入记忆。"
+        "metacognition": "从概念定义进入 baseline 建立，认识到 VQA accuracy 只能说明答对，不足以证明看对；开始把“答案”和“视觉证据”拆开，这是明显的验证意识提升。",
+        "valueJudgment": "把 LMEE-Bench 判断为可同时支撑 VQA 与 grounding 的统一验证场，价值判断从抽象模块转向可复用 benchmark/workflow；但对 text-box memory 的价值仍是待验证路线判断。",
+        "projectManagement": "完成 RynnBrain-2B 在 LMEE-Bench 上 no-memory baseline，full choice QA 405 题 accuracy 72.84%，subset 145 题 accuracy 73.10%；下周计划错题分桶、检测框文本输出、写入 memory 后对比 VQA，依赖 Chunhan 的分割验证结果。",
+        "evidence": "报告写明“405 题 accuracy = 72.84%”“145 题 accuracy = 73.10%”“还没做错题分桶”“需要老师确认是否认可检测框文本先作为 memory 的路线”。"
       },
       {
         "week": "2026-05-17",
-        "stage": "实验深化期。完成全量文本检测框记忆消融实验，发现整体准确率无提升（73.33% vs 73.09%），但定位类有增益，属性/计数类有副作用。据此将外部注意力定为可约束文本记忆，内部注意力定为适配器训练。认知重点：记忆不是越多越好，需按任务约束。"
+        "metacognition": "出现最强研究能力信号：没有把实验不提升解释为噪声，而是明确 text-box memory 不是无条件增强项，并区分定位类问题可能受益、属性/计数/全局状态可能受干扰；能从失败中提出证据适用边界。",
+        "valueJudgment": "价值判断进一步稳定：项目价值不在于多加 memory，而在于建立 context memory ablation workflow、text-box memory schema 和 evidence selection 规则，避免无效 context 堆叠；同时提出 external attention 与 internal attention 的工程分工。",
+        "projectManagement": "完成 full set 405 题 context memory ablation：no-memory 73.33%，加入 generated bbox-memory context 后 73.09%，整体持平略降；新增脚本 examples/rynnbrain_context_memory_ablation.py，并说明 GPU 5/6/7、环境 agent；下周计划收敛 schema 和 adapter 样例格式。",
+        "evidence": "报告写明“full set 405 题”“no-memory baseline accuracy 是 73.33%，加入 generated bbox-memory context 后是 73.09%”“CoT's CoT 1 证据等级 A”。"
       },
       {
         "week": "2026-05-24",
-        "stage": "精细化路由期。从单纯加入检测框记忆扩展到分析多种视觉证据形式（物体、边界框、局部裁剪、标注图像、结构化文本）对不同题型的干扰，提出按任务类型选择证据的规则版路由器。认知重点：视觉证据本身是认知干预，需作为控制变量。"
+        "metacognition": "进一步从“bbox memory 是否有用”提升到“不同视觉证据如何作为 attention 干预影响不同题型”；能区分结构化文字 memory、crop、marked image、bbox 的不同副作用，并明确本周结论仍缺 full-set 定量验证。",
+        "valueJudgment": "价值判断从单一 memory 增强转为 perception-to-reasoning 的通用控制模块：task-type visual evidence router；能把个人实验、Brainary 的 cognitive control/memory/reasoning/calibration、未来 adapter 内化路线连接起来，取舍比前几周更清楚。",
+        "projectManagement": "完成样例分析、相关工作梳理和 router 方案设计，但未完成规则版 router 的 full-set 定量；下周计划实现规则版 visual router，并对比 no-memory、structured memory、selected crop、marked image 等输入方式；继续依赖 Chunhan 检测/分割结果。",
+        "evidence": "报告写明“还没有完成 full-set 的新一轮定量对比”“下周在 LMEE-Bench 上实现一个规则版 visual router”“CoT's CoT 证据等级 B/B/C”。"
       }
     ],
-    "trendScores": {
-      "题目聚焦度": "从宽泛的认知框架收敛为具体的按题型路由视觉证据，问题边界日益清晰。",
-      "实验实证强度": "由概念设计推进到全量消融实验（405题）和现象分析，虽未完成最终路由验证，但已具备数据支撑。",
-      "认知成熟度": "从区分内外注意力，到理解记忆的适用边界，再到视觉证据作为认知干预的深度，认知层次逐步提升。",
-      "CoT's_CoT证据等级": "前两周多为B/C级，第三周出现A级证据（基于全量消融），整体从推测走向实证。",
-      "价值推理成熟度": "从估算人力节省，转向强调模块复用、工作流和自动化转化路径，价值函数更接近系统级收益。",
-      "项目管理成熟度": "能根据实验结果及时纠偏，依赖关系明确，但关键依赖（同伴的检测/分割结果）始终存在，需加强协调。"
+    "metacognitionChange": {
+      "summary": "元认知有实质进步：从 5.3 的概念性反思，发展到 5.17 的实验性否证，再到 5.24 的证据适用边界和验证标准设计。最关键变化是他不再把额外 memory/evidence 默认视为增益，而是开始追问证据何时进入 context、何时造成认知偏移、如何按题型验证。",
+      "byWeek": [
+        {
+          "week": "2026-05-03",
+          "change": "能识别 object detection 与 relevance 的混淆，提出“相关性”定义不清是卡点；但验证动作还停留在计划抽样和 schema 设计。"
+        },
+        {
+          "week": "2026-05-10",
+          "change": "能意识到 accuracy 与 grounding 不等价，开始建立 no-memory baseline，为后续增量提供比较基准。"
+        },
+        {
+          "week": "2026-05-17",
+          "change": "能用 ablation 结果修正原假设，指出 bbox evidence 对不同题型有不同作用，并把失败转成 schema 约束和 adapter 样例设计问题。"
+        },
+        {
+          "week": "2026-05-24",
+          "change": "能把视觉 evidence 视为 attention 干预，明确样例观察与 full-set 定量之间的证据边界，并设计规则版 visual router 作为下一步验证标准。"
+        }
+      ],
+      "currentLevel": "当前达到“能用小规模/全量 benchmark 消融发现失败模式，并据此重构下一步假设”的水平；尚未达到“能稳定交付可复用模块并证明跨题型收益”的水平。",
+      "strongestSignal": "5.17 的 405 题 ablation 是最强信号：结果没有提升，学生没有回避，而是明确“直接塞 bbox context 不能作为通用增强方法”，并提出定位类与非定位类分桶评估。",
+      "nextLift": "下一步元认知提升应从“提出合理 router 假设”进入“预注册式验证”：先写清题型分类规则、每类 evidence 选择策略、主要指标、失败判据和如果不提升时的决策规则，再跑 full-set。"
     },
-    "valueFunctionChange": "学生认为值得做的事从第一周的“定义认知框架”和“构建相关性机制”，转向第二周的“建立可复用基准”和“低成本文本记忆”，再到第三周的“消融工作流”和“内部适配器路线”，最终聚焦于“按任务路由证据”这一通用控制模块。价值估算始终基于人力成本和长期复用价值，金额区间在30万-80万之间，且随着实验反馈调整，从单纯“增加信息”转变为“正确选择信息”，体现了从功能节省到模块化、自动化能力的价值跃迁。学生明确将价值与具身智能公司、机器人团队等用户，通用能力（任何多模态代理都需要证据选择），以及沉淀形式（基准、记忆模式、路由器、评估协议）相关联，价值函数随周次变得更加务实和可迁移。",
+    "valueGrowth": {
+      "summary": "科研/项目价值判断在变清楚：5.3 认为 attention-relevance 是 Brainary 的认知控制层；5.10 把价值落到 LMEE-Bench 统一验证场；5.17 认识到真正价值是避免无效 context 堆叠、建立 evidence 适用边界；5.24 进一步收敛为 task-type visual evidence router，即把 external attention 做成 perception 到 reasoning 之间的可控系统能力。",
+      "byWeek": [
+        {
+          "week": "2026-05-03",
+          "valueJudgment": "值得做的问题被定义为具身 VLM 如何知道该关注什么；价值来源是通用认知控制、memory/reasoning/calibration/workflow/benchmark 的接口能力，但证据主要是结构分析。"
+        },
+        {
+          "week": "2026-05-10",
+          "valueJudgment": "值得投入的是 LMEE-Bench 作为统一验证场，因为它能同时检验“答对”和“看对”；这比单独追求 VQA accuracy 更接近科研价值。"
+        },
+        {
+          "week": "2026-05-17",
+          "valueJudgment": "项目价值从“text-box memory 可能提升 accuracy”升级为“通过 ablation 判断 memory 是改善模型还是只是改变模型”；这是更成熟的研究价值判断。"
+        },
+        {
+          "week": "2026-05-24",
+          "valueJudgment": "价值判断进一步稳定为：视觉证据选择是一个通用控制问题，router 若有效，可沉淀为 Brainary 的 structured memory schema、relevance selector、calibration/evaluator 和未来 internal attention 训练数据。"
+        }
+      ],
+      "currentValueFunction": "当前他隐含的价值函数是：优先做能把 perception、memory、reasoning 和 calibration 连接起来、能用 benchmark 验证、能沉淀为 Brainary 系统能力的模块；不再优先做单次 prompt 增强或只看总体 accuracy 的实验。",
+      "improvementSignals": [
+        "能把“答对”与“看对”拆开，说明不再用单一 accuracy 判断项目价值。",
+        "能根据 negative/flat ablation 结果重新定义项目价值，转向 evidence applicability 和 router，而不是继续扩大 bbox memory。",
+        "能把 external attention 的规则实验与 internal attention 的 adapter/router 训练数据连接起来，显示出长期系统能力建设意识。",
+        "能明确哪些结论证据等级较低，例如 5.24 承认 router 还未完成 full-set 定量，internal attention 仍是路线判断。"
+      ],
+      "nextValueQuestion": "下周必须回答：task-type visual evidence router 如果只在少数题型提升、但总体 accuracy 不提升，它是否仍然值得继续做？判断标准应是 grounding 改善、错误证据注入减少、题型内稳定收益，还是 Brainary workflow 可复用性。"
+    },
+    "projectManagementReview": {
+      "summary": "项目管理质量整体在提高：每周都有原计划、实际完成、卡点、依赖、下周最小动作和老师介入点；硬交付从概念框架推进到 baseline、ablation 脚本和 router 方案。但仍有三个管理缺口：一是部分计划从“下周做”变成“下周再做”，例如错题分桶和分割对齐未见完成证据；二是 5.24 的 router 仍是方案和样例观察，缺少定量交付；三是 Brainary 系统能力沉淀路径明确但接口规范、数据格式和验收指标还未固定。",
+      "projects": [
+        {
+          "project": "内部/外部 attention 与 relevance 提取框架",
+          "weeks": [
+            "2026-05-03",
+            "2026-05-17",
+            "2026-05-24"
+          ],
+          "quality": "持续推进，概念从 attention-relevance schema 演化为 external attention 与 internal attention 的工程分工；研究问题保持连续，但可检查交付主要集中在外部 attention，内部 attention 仍缺实验。",
+          "whatWorked": "5.3 明确内部 attention、外部 attention、relevance 的系统位置；5.17 把外部 attention 对应到 text memory/context，把内部 attention 对应到 adapter；5.24 进一步提出“先外部可控，再内部学习”。这与 Brainary 的 memory、reasoning、calibration、cognitive control 映射持续一致。",
+          "managementGap": "内部 attention adapter 仍停留在路线判断，没有训练样例文件、监督信号定义、数据来源清单或验收标准；relevance schema 也未看到已完成的稳定版本。",
+          "nextConcreteMove": "在下周 router 实验之前，写一页接口规格：external attention 输入字段、输出字段、进入 context 的条件、禁止进入条件，以及哪些字段未来可转成 adapter/router 训练监督。"
+        },
+        {
+          "project": "LMEE-Bench VQA/grounding evaluation workflow",
+          "weeks": [
+            "2026-05-10",
+            "2026-05-17",
+            "2026-05-24"
+          ],
+          "quality": "硬进展较好，已经形成 no-memory baseline 和 context memory ablation；但 grounding/segmentation 对齐依赖 Chunhan，当前报告中没有看到该依赖已解除。",
+          "whatWorked": "5.10 完成 RynnBrain-2B 在 LMEE-Bench 上 405 题和 145 题 baseline；5.17 完成 405 题 context memory ablation；5.24 将 LMEE-Bench 进一步规划为按题型拆分的 evidence selection 验证场。这可沉淀为 Brainary 的 benchmark/evaluation workflow。",
+          "managementGap": "5.10 提出的错题分桶和与 Chunhan 分割结果对齐，在后续报告中没有完整交付证据；5.24 的 task-type split 还未定量完成。",
+          "nextConcreteMove": "生成一个固定结果表：每题包含题型、no-memory 答案、structured memory 答案、crop/marked image 答案、是否答对、是否看对、evidence 是否改变答案，并先覆盖 full set。"
+        },
+        {
+          "project": "text-box memory / structured visual memory schema",
+          "weeks": [
+            "2026-05-10",
+            "2026-05-17",
+            "2026-05-24"
+          ],
+          "quality": "从想法到实验再到 schema 收敛，推进质量较高；最有价值的是通过 5.17 结果证明它不能作为无条件增强，并在 5.24 扩展为多种 evidence 类型。",
+          "whatWorked": "RynnBrain-2B 能稳定生成目标物体、bbox 和 reason；5.17 新增 ablation 脚本并跑完 405 题；5.24 将 evidence 拆成 object、bbox、crop、marked image、structured memory，这对 Brainary 的 memory schema 和 calibration 都有沉淀价值。",
+          "managementGap": "structured memory 的最终字段、字段长度、证据来源、适用题型、写入/不写入规则尚未成为可执行 schema；5.24 对 marked image 干扰的判断主要来自样例观察，证据级别不足以作为模块决策。",
+          "nextConcreteMove": "固定一个最小 schema：question_type、target_objects、evidence_type、bbox_or_crop_source、confidence、applicability_reason、do_not_use_condition，并在 router 实验中只允许这些字段进入 context。"
+        },
+        {
+          "project": "task-type visual evidence router",
+          "weeks": [
+            "2026-05-24"
+          ],
+          "quality": "这是从失败模式中生成的新关键路径项目，问题定义清楚、下周动作具体，但目前还没有硬实验交付。",
+          "whatWorked": "5.24 明确 Location、Relationship、Attribute、State、Counting 等题型需要不同 visual evidence；提出 router 位于 perception 和 reasoning 之间，是 external attention 控制层，可沉淀为 Brainary 的 cognitive control、workflow management 和 relevance selector 能力。",
+          "managementGap": "题型分类规则、router 策略、评价指标和失败判据还未量化；如果题型分类错误会怎样影响 evidence selection，目前只有风险意识，没有实验设计细节。",
+          "nextConcreteMove": "先做规则版 router 的最小闭环：用固定规则或 Qwen3 标注题型，跑 no-memory、bbox text、structured memory、selected crop、marked image 五组对比，并按题型报告 accuracy、答案被错误改变率和证据适用率。"
+        },
+        {
+          "project": "internal attention adapter / router 训练数据路线",
+          "weeks": [
+            "2026-05-17",
+            "2026-05-24"
+          ],
+          "quality": "战略方向清楚，但项目管理成熟度最低，因为还没有数据样例、训练脚本、资源估计或里程碑交付。",
+          "whatWorked": "学生没有急于训练，而是提出先用 external attention 规则找到稳定模式，再转成 adapter/router 训练数据；这显示了避免盲目训练的判断力，也符合 Brainary 从 workflow 到可训练系统能力的沉淀路径。",
+          "managementGap": "缺少 adapter 学什么的可检查定义：输入、监督信号、正负样本、answer change 标签、grounding 标签、训练/验证划分、GPU 预算均未明确。",
+          "nextConcreteMove": "在 router 定量前，不启动训练；只交付 20 条 adapter 训练样例草案，包含 image/object-region/task/evidence/answer-change/failure-type 字段，供老师判断监督信号是否合理。"
+        }
+      ],
+      "managementPattern": "该学生的管理模式是“每周沿一个主线递进，并能把失败转成下周计划”；优点是连续性强、依赖和老师介入点写得清楚，缺口是有些计划缺少验收表格，容易从实验结果转入新的方案设计而未完成上一轮错误分桶和依赖对齐。",
+      "nextManagementMove": "要求下周周报必须以一张 router 实验结果表为核心交付，而不是只写路线；表中至少包含题型分布、各 evidence 条件下的准确率、错误改变率、样例数、是否使用 Chunhan 分割/检测结果、以及是否达到继续做 adapter 的门槛。"
+    },
     "repeatedBlockers": [
-      "严重依赖Chunhan的检测/分割结果，但进展同步性不足，导致证据对齐滞后。",
-      "内部/外部注意力的高层设计需要老师反复确认，延缓了实现节奏。",
-      "从概念到可评估实验的转换较慢，前三周才完成首个全量消融，而路由器验证尚在计划中。",
-      "早期实验设计偏“增强堆叠”，而非“条件选择”，直到第四周才系统纠正。"
+      "relevance/evidence 的定义持续在收敛中，但尚未形成稳定 schema 和验收指标。",
+      "依赖 Chunhan 的检测/分割结果多次出现，报告中没有看到该依赖已经完成对齐的证据。",
+      "题型分桶和错题分桶多次被提出，但截至 5.24 仍没有 full-set 分桶定量结果。",
+      "internal attention adapter 路线持续出现，但训练数据格式、监督信号和资源预算尚未落地。",
+      "GPU 时间和实验脚本整理被列为瓶颈，但目前没有看到具体排期、运行时长或失败重跑策略。"
     ],
-    "professorShouldAsk": "你的视觉路由器依赖题型分类，如果分类错误（例如把计数类误判为定位类），会不会引入比统一加检测框更严重的误差？你是否有计划对路由器本身做容错测试或信心度校准？另外，内部适配器的训练数据将如何从外部实验中抽取，你预计最早何时能启动一次最小规模的训练验证？",
-    "nextBestIntervention": "建议要求学生在本周内完成规则版路由器的定量对比实验，严格按照题型拆分评估，明确哪种证据形式对各类题型的增益与副作用；同时推动Chunhan提供稳定的分割结果作为高质量证据源，对齐后融入规则路由器。在学生获得可靠的实验结果之前，暂缓启动内部适配器训练，但可并行设计适配器训练的样例格式，为后续转化做准备。"
+    "teacherQuestions": [
+      "你下周的规则版 visual router，预先定义的成功标准是什么：总体 accuracy 提升、特定题型提升、错误改变率下降，还是 grounding 证据更一致？",
+      "5.10 提出的错题分桶和 Chunhan 分割结果对齐，现在完成到什么程度？如果没有完成，是不是会影响 router 的证据质量判断？",
+      "structured memory、crop、marked image、bbox text 四种 evidence，你认为哪一种最应该进入 Brainary 的长期 schema，哪一种只适合作为实验干预？依据是什么？",
+      "如果题型分类错了，router 会不会比 no-memory 更差？你准备如何测量 router 自身引入的误差？",
+      "在进入 internal attention adapter 之前，你认为至少需要哪些 external attention 实验证据，才说明值得把模式内化到模型参数里？"
+    ],
+    "nextIntervention": "老师下一次 meeting 最有效的介入不是重新讨论 attention 概念，而是要求学生把 5.24 的 router 假设转成可验收实验协议：固定题型规则、evidence 选择规则、对照组、指标、失败判据和是否进入 adapter 的门槛；同时确认 Chunhan 分割/检测依赖的交付时间，避免 router 实验建立在不稳定 evidence 上。",
+    "studentFeedback": {
+      "summary": "你最近四周的真实进步是：能把一个抽象的 Brainary attention/relevance 问题，推进到 LMEE-Bench baseline、context memory ablation、失败模式和 visual router 假设；这说明你在变得更像研究者，而不只是执行任务。",
+      "whatImproved": [
+        "你开始用 baseline 和 ablation 约束自己的判断，而不是只讲概念。",
+        "你能承认 bbox memory 整体没有提升，并从中提炼出“证据适用边界”这个更有价值的问题。",
+        "你对 Brainary 的映射更系统：memory、reasoning、calibration、cognitive control、workflow、benchmark 都被连接到了同一个 evidence selection 主线。",
+        "你能区分证据等级：5.17 的 full-set ablation 是强证据，5.24 的 router 目前仍是待验证假设。"
+      ],
+      "nextStep": "下周不要再扩大概念范围，集中交付规则版 visual router 的定量结果；先证明按题型选择 evidence 比无条件加入 bbox 更稳定，再谈 internal attention adapter。"
+    },
+    "evidenceLinks": [
+      {
+        "claim": "学生已从概念推进到硬实验。",
+        "week": "2026-05-10",
+        "evidence": "完成 RynnBrain-2B 在 LMEE-Bench 上 general VQA baseline：405 题 accuracy 72.84%，145 题 accuracy 73.10%。",
+        "evidenceLevel": "中高"
+      },
+      {
+        "claim": "学生能用失败结果修正假设，而不是只报告忙碌。",
+        "week": "2026-05-17",
+        "evidence": "405 题 context memory ablation 显示 no-memory 73.33%，generated bbox-memory context 73.09%，学生据此判断“直接塞入 context 不能作为通用增强方法”。",
+        "evidenceLevel": "高"
+      },
+      {
+        "claim": "学生的元认知从事后反思转向前置证据选择。",
+        "week": "2026-05-17",
+        "evidence": "报告写明“模型能生成 bbox 不等于 bbox 应该进入所有问题的 context”，并提出按定位类和非定位类分开评估。",
+        "evidenceLevel": "高"
+      },
+      {
+        "claim": "学生的价值判断正在从单点 accuracy 转向系统能力沉淀。",
+        "week": "2026-05-24",
+        "evidence": "提出 task-type visual evidence router，并将其映射到 Brainary 的 memory、reasoning、calibration、cognitive control、workflow management 和 benchmark/evaluation。",
+        "evidenceLevel": "中"
+      },
+      {
+        "claim": "5.24 的 router 仍未被证明。",
+        "week": "2026-05-24",
+        "evidence": "报告明确写明“还没有完成 full-set 的新一轮定量对比”，当前结论来自 5.17 ablation 和样例观察。",
+        "evidenceLevel": "高"
+      },
+      {
+        "claim": "internal attention adapter 目前证据不足。",
+        "week": "2026-05-24",
+        "evidence": "报告写明“internal attention 仍然停留在路线设计，还没有开始 adapter / router 训练”。",
+        "evidenceLevel": "高"
+      }
+    ]
   }
 }

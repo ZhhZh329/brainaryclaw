@@ -1,54 +1,98 @@
 {
   "key": "person:wan-wenyuan:2026-05-17:weekly-score",
-  "generatedAt": "2026-05-24T11:35:55.984Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "4cec1089ee52204bb48ee159642d4b85be34b80596379e0c6342ac93db4986b2",
+  "generatedAt": "2026-06-06T13:12:48.894Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "9d38f0744b90219276d61d55590abb211e4211ac92ca831d636e0c66e006e224",
   "result": {
-    "hardProgress": {
-      "score": 17,
-      "reason": "完成LMEE-Bench full set 405题的context memory ablation，得到no-memory baseline 73.33%与bbox-memory 73.09%的准确率对比，新增实验脚本，识别了定位类正向、属性/计数/全局状态类负面的失败模式。硬进展明确，但整体无稳定提升。",
-      "missingEvidence": "无"
+    "week": "2026-05-17",
+    "name": "Wan Wenyuan",
+    "scores": {
+      "hardProgress": {
+        "score": 18,
+        "reason": "本周有明确硬进展：完成 LMEE-Bench full set 405 题的 context memory ablation，给出 no-memory baseline 73.33% 与 generated bbox-memory context 73.09% 的对比结果；新增脚本 examples/rynnbrain_context_memory_ablation.py；完成三卡并行实验；识别出 bbox evidence 对定位类问题可能有效、对属性/计数/全局状态类问题可能有副作用。硬进展不是概念讨论，而是有实验、脚本、数值和失败模式。",
+        "missingEvidence": [
+          "缺少按问题类型拆分后的准确率表，尤其是定位类与非定位类的具体增减幅度。",
+          "缺少错误案例样本，无法确认副作用是否真由 bbox context 导致。",
+          "缺少实验配置细节，例如 prompt 模板、生成格式、解码参数、是否固定随机种子。"
+        ]
+      },
+      "cognitiveIncrement": {
+        "score": 14,
+        "reason": "认知增量清楚：从“bbox memory 可能提升 VQA”更新为“text-box memory 不是无条件增强项，必须按任务类型和 evidence 类型约束”。报告明确指出被削弱路径是无条件把 bbox evidence 塞入所有 context，被支持路径是将 bbox/coordinate context 用作定位类问题的外部视觉证据或 relevance selector 的一部分。这是由实验结果推动的认知更新。",
+        "missingEvidence": [
+          "缺少更细粒度的认知边界：哪些问题类型算定位类、哪些算属性/计数/全局状态类，目前只是定性分类。",
+          "缺少对 alternative explanation 的排除，例如是否是 bbox 质量、格式长度、reason 文本噪声或 prompt 干扰导致整体下降。"
+        ]
+      },
+      "cot2Depth": {
+        "score": 13,
+        "reason": "CoT's CoT 有较好深度：不仅总结结论，还讨论为什么额外 memory 会成为 attention 干预，为什么 memory schema 不能只定义写入内容，还要定义适用任务和副作用验证；也把内部 attention 与外部 attention 对应到工程路径，即文本 memory 与 adapter。证据等级区分为 A/B，能区分已验证实验与未验证路线。扣分点是第二个 CoT's CoT 中 adapter 仍主要是路线判断，尚未有训练样例或验证结果。",
+        "missingEvidence": [
+          "缺少把 CoT's CoT 转成可执行 workflow 的具体输入输出定义。",
+          "adapter 路线缺少任何训练数据样例、损失函数、评价指标或初步 feasibility check。",
+          "缺少对 memory 副作用的系统性度量方法，只提出方向，尚未形成可复用协议。"
+        ]
+      },
+      "brainaryMapping": {
+        "score": 8,
+        "reason": "Brainary 映射覆盖 memory、reasoning、calibration、cognitive control、benchmark/evaluation，并能说明 text-box memory 如何作为视觉 evidence 的中间层，以及 no-memory vs memory ablation 如何用于 calibration。映射不是空泛贴标签，和本周实验有连接。但仍偏概念层，尚未明确 Brainary 中各模块的数据结构、接口和流转条件。",
+        "missingEvidence": [
+          "缺少 Brainary 模块级接口定义，例如 memory 写入字段、读取条件、calibration 触发逻辑。",
+          "缺少从 perception 到 memory 到 reasoning 的具体数据流图或伪代码。",
+          "缺少说明 grounding evaluator 如何接入现有 Brainary 系统。"
+        ]
+      },
+      "monetaryValue": {
+        "score": 6,
+        "reason": "价值判断有尝试量化，分别给出 ablation workflow、text-box memory schema、internal attention adapter 的人民币估值，并说明依据来自人力成本、GPU 时间、接口设计和复用价值。问题是估值主要是主观成本替代法，缺少外部需求证据、竞品对比、真实用户痛点验证或可交付产品边界。adapter 价值尤其依赖尚未验证的技术假设。",
+        "missingEvidence": [
+          "缺少谁会实际采用该 workflow/schema 的具体场景和付费依据。",
+          "缺少与现有 VLM memory、grounding、RAG 或 adapter 方案的成本/性能对比。",
+          "缺少从研究资产到产品/论文/平台模块的明确转化路径和验收标准。",
+          "缺少对估值中风险折扣的处理，尤其是 adapter 尚未开始训练。"
+        ]
+      },
+      "projectManagement": {
+        "score": 13,
+        "reason": "项目管理较完整：写清原计划、实际完成、投入时间、下周投入、月底和六月中旬里程碑、所需人力、GPU/数据/工具、依赖关系、关键路径、瓶颈、纠偏动作以及是否需要老师介入。能把实验负结果转化为下周 schema 收敛和 adapter 样例设计的纠偏。扣分点是下周工作缺少具体验收指标和风险缓冲。",
+        "missingEvidence": [
+          "缺少下周交付物的量化验收标准，例如 schema 版本、样例数量、分类准确性、ablation 复现实验指标。",
+          "缺少如果 Chunhan 检测/分割结果延期时的替代方案。",
+          "缺少任务优先级排序：schema、分类评估、adapter 样例三者之间的先后和依赖还不够明确。"
+        ]
+      },
+      "nextAction": {
+        "score": 8,
+        "reason": "下一步动作明确：不继续无条件扩大 bbox memory，而是收敛外部 attention 文本输入结构；将定位类和非定位类问题分开评估；整理 adapter 训练样例格式。动作符合本周实验结论，属于最小可验证推进。扣分点是还没有写出具体实验矩阵、成功标准和最小样例规模。",
+        "missingEvidence": [
+          "缺少下周具体实验表：要跑哪些 subset、每类多少题、比较哪些 memory schema。",
+          "缺少成功/失败阈值，例如定位类提升多少才算 text-box memory 有效。",
+          "缺少 adapter 样例格式的具体 JSON/schema 草案。",
+          "缺少对错误分析样本数量和标注方式的安排。"
+        ]
+      },
+      "evidenceQuality": {
+        "score": 4,
+        "reason": "证据质量较好但不满分。报告提供 full set 405 题实验、baseline 与 memory accuracy、脚本名、运行环境和资源信息，足以支持“无条件塞 bbox context 不能作为通用增强方法”的结论。但对“定位类问题有帮助、属性/计数/全局状态有副作用”的关键判断仍缺少分组数值和案例证据。",
+        "missingEvidence": [
+          "缺少 raw result 文件、日志路径或可复现实验命令。",
+          "缺少按类别的准确率、样本数和置信区间。",
+          "缺少显著性检验；73.33% 到 73.09% 的差异很小，是否有统计意义不清楚。",
+          "缺少代表性成功/失败案例。"
+        ]
+      }
     },
-    "cognitiveIncrement": {
-      "score": 13,
-      "reason": "认知更新包括：text-box memory不是无条件增强项，外部attention用文本memory可行但必须约束输入，被实验削弱的路径是直接塞bbox进所有context，被支持的路径是bbox作为定位问题证据。形成了更清晰的内外attention两层路线。认知增量具体，有基于实验的判断。",
-      "missingEvidence": "内部attention adapter的认知增量尚无实验验证，仍基于推理。"
-    },
-    "cot2Depth": {
-      "score": 13,
-      "reason": "两个CoT's CoT均有深度：1) 外部memory不是越多越好，需绑定任务类型，分析为何未被自动化吸收，建议沉淀形式；2) 内部与外部attention对应两种工程路径，分析转化障碍。都给出了证据等级（A和B），推理清晰。",
-      "missingEvidence": "CoT's CoT 2的证据等级为B，内部adapter未训练，缺少实验支撑。"
-    },
-    "brainaryMapping": {
-      "score": 8,
-      "reason": "明确关联到memory、reasoning、calibration、cognitive control、benchmark/evaluation等Brainary模块，并指出中间层的缺失，提出了6种可能沉淀形式，Mapping具体。",
-      "missingEvidence": "目前仅是映射和设想，尚未有系统实现或接口定义。"
-    },
-    "monetaryValue": {
-      "score": 8,
-      "reason": "对三项任务分别估计价值50万、40万、80万人民币，有计算方法（人力、GPU、复用价值），参考依据合理，说明了为什么值这个钱，具有逻辑支撑。",
-      "missingEvidence": "市场实际需求验证或量化收益评估不足，仍基于内部估算。"
-    },
-    "projectManagement": {
-      "score": 12,
-      "reason": "项目名、阶段清晰，时间规划详细，原计划与实际对比明确，偏差分析为方法/认知问题，纠偏动作具体。资源规划、依赖关系、关键路径、进度判断、纠偏动作完整，Token成本规划亦有涉及。",
-      "missingEvidence": "缺少更细化的里程碑界面或交付物标准。"
-    },
-    "nextAction": {
-      "score": 8,
-      "reason": "下周计划明确：收敛外部attention文本输入内容和格式，分开评估定位/非定位问题，设计内部attention adapter训练样例格式。动作具体、可验证。",
-      "missingEvidence": "内部adapter样例的具体结构尚未形成，停留在计划阶段。"
-    },
-    "evidenceQuality": {
-      "score": 4,
-      "reason": "CoT's CoT 1有LMEE-Bench full set 405题ablation直接支撑，证据等级A；CoT's CoT 2外部text-box memory已有实验，但内部adapter未验证，整体证据可信。",
-      "missingEvidence": "CoT's CoT 2缺乏内部adapter训练实验证据。"
-    },
-    "totalScore": 83,
+    "totalScore": 84,
     "tier": "A",
-    "oneLineJudgment": "方向正确但方法需收敛：文本记忆不能无条件注入上下文，外部注意需约束输入，内部注意应通过适配器内化任务相关知识。",
-    "professorFollowUp": "确认两点：一是外部注意力是否继续走可约束文本记忆路线，二是内部注意力是否按适配器训练推进。"
+    "oneLineJudgment": "这是一份有实验硬结果、有负反馈吸收、有路线纠偏的高质量周报；最大短板是关键判断仍缺少分类型量化证据，adapter 路线也还停留在设计前阶段。",
+    "professorFollowUp": [
+      "请确认外部 attention 是否继续以可约束 text-box memory 作为主线，而不是转向更重的视觉模块。",
+      "要求下周必须提交按问题类型拆分的 ablation 表，包括定位、属性、计数、全局状态等类别的样本数和准确率变化。",
+      "要求给出 text-box memory schema 的第一版字段定义，并说明每个字段的写入条件和禁止写入条件。",
+      "要求给出 adapter training sample 的最小格式草案，包括输入、监督信号、目标函数和评价指标。",
+      "提醒学生不要过早宣称 monetary value；当前更应把价值判断绑定到可复用 workflow、benchmark protocol 和模块接口。"
+    ]
   }
 }

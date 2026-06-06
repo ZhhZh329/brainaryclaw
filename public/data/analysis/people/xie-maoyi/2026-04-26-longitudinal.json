@@ -1,55 +1,259 @@
 {
   "key": "person:xie-maoyi:2026-04-26:longitudinal",
-  "generatedAt": "2026-05-24T11:52:41.587Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "a4619df3f47e94c459faeae610c039e12d326246f1c3d251e282189c28c99de1",
+  "generatedAt": "2026-06-06T13:16:12.450Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "3646662c9a23d50aab659d46f4c59429179eb3a67541cde62ee2c784ca1fd402",
   "result": {
-    "overallTrajectory": "学生从搭建KCOV trace pipeline开始，经历LLM直接应用的失败，逐步认识到fault localization的本质瓶颈不是覆盖率，而是候选空间控制和因果推理。随后通过引入bug-type aware reasoning实现关键突破，使Top-10从3.7%提升至59.3%，并进一步通过candidate filtering和结构化压缩将性能提升至66.7%。认知上，从“更多信息更好”转向“控制信息结构与推理引导”的深层理解。当前已从探索阶段进入方法收敛期，形成了“信息补充—候选剪枝—引导推理”的三阶段思路，但方法仍偏启发式，缺乏系统化结构。",
-    "stageByWeek": [
+    "overallTrajectory": "总体判断：这个学生不只是更忙，最近四周有明显研究能力增长，核心变化是从“把 trace 做出来、把实验跑出来”逐步转向“拆分问题、识别适用边界、用负结果纠偏、形成 candidate generation/pruning/reasoning 的方法链条”。但当前能力仍主要停留在经验性方法收敛阶段，结构化推理机制、泛化验证、可复现实验协议和项目管理颗粒度还不够稳定。",
+    "headline": "研究能力正在从工程推进转向问题分解与方法收敛，但下一步必须把 prompt/filtering/graph 从启发式规则沉淀为可验证的系统模块。",
+    "overviewSentence": "四周内他从验证 KCOV 覆盖率，推进到明确 BT/non-BT 条件边界、发现 bug-type reasoning 的有效性，并开始把 Brainary 相关的 cognitive control 与 reasoning 能力落到 pruning、reasoning、workflow 模块上。",
+    "fourWeekTimeline": [
       {
         "week": "2026-04-05",
-        "hardProgress": "完成KCOV calltree统一收集pipeline，RC覆盖率达42.1%（较ftrace提升3.3倍）；在24个RC-in-calltree bug上进行LLM实验，发现calltree对定位提升有限（Top-10仅从2/24增至4/24）。",
-        "cognitionChange": "提出三个关键认知：（1）KCOV解决“是否执行”但不解决“为什么错误”；（2）瓶颈是候选排名与因果缺失；（3）LLM在大搜索空间中退化。开始意识到需从execution构建可推理结构。",
-        "valueOrientation": "认为KCOV pipeline（6万）和LLM实验（8万）具有基础价值，但非最终方案；KernelLocator早期想法估值4万。价值重心在实验infra和经验证据。"
+        "metacognition": "已经能识别“更好的 trace 不等于更好的 fault localization”，并明确 coverage、ranking、causality 三类问题；这说明他开始从工程实现转向认知瓶颈分析。",
+        "valueJudgment": "判断 kernel FL 有潜力，但 KernelLocator 尚未验证；价值判断仍偏早期，知道方向可能重要，但还没有把“什么证据证明值得继续投”写成稳定标准。",
+        "projectManagement": "KCOV pipeline 有硬数据：57/65 收集 calltree、24/57 RC in calltree、RC coverage 42.1%；LLM 实验有 Top-k 对照；KernelLocator 仍是想法阶段，graph 构建未开始。下周动作写得具体，包括 KCOV_REMOTE、subsystem/frequency filter、5 个 bug graph prototype。",
+        "evidence": "报告中写明“KCOV 解决覆盖问题，但没有解决 candidate ranking / reasoning 问题”；CoT's CoT 证据等级为 A/B；项目管理列出原计划、实际、投入、里程碑、资源和依赖。"
       },
       {
         "week": "2026-04-12",
-        "hardProgress": "延续KCOV pipeline稳定性验证，初步对比ftrace与KCOV；完成2篇审稿。但系统性能无明显提升，LLM定位效果仍有限。",
-        "cognitionChange": "深化理解：trace仅提供执行信息，不能直接提升定位；LLM问题在搜索空间而非理解代码。新增审稿带来的方法论视角，意识到benchmark评估常忽略generation与ranking的拆分。",
-        "valueOrientation": "下调了各任务估值（pipeline 4万、LLM实验6万），新增审稿价值1万，反映对前期工作的重新审视，更谨慎评价实际贡献。"
+        "metacognition": "继续强调 trace 只是执行信息，不提供错误原因，并把“多给信息”与“控制信息结构”区分开；但与 04-05 的内容高度重复，证据上更像复述和巩固，新增认知增量有限。",
+        "valueJudgment": "方向判断保持谨慎：认为题目可以做，但方法不清晰、通用性不确定；这比单纯乐观更健康，但仍缺少继续/停止/转向的判定阈值。",
+        "projectManagement": "KCOV、LLM、KernelLocator 继续推进，但不少指标与 04-05 重复；新增审稿任务，并提出要形成评估 checklist，但后续周报没有看到 checklist 交付证据。",
+        "evidence": "报告写明“减少工程扩展，多做小规模验证”；审稿任务提到 benchmark 泛化和 generation vs ranking 的评价拆分，但没有后续产物证据。"
       },
       {
         "week": "2026-04-19",
-        "hardProgress": "完成65个bug的系统性实验分析，划分出easy（BT含RC）与hard（RC不在BT）两类子集；设计Phased calltree方法，将RC保留率提升至81%；最大的突破是引入bug-type aware reasoning，使Top-10从基线1/27提升至16/27（59.3%）。",
-        "cognitionChange": "认知跃迁：明确LLM的真实瓶颈是信息可见性而非能力；calltree的价值是条件性的（仅补充BT缺失信息）；性能飞跃的关键不是数据本身，而是如何引导LLM理解bug语义。开始区分信息补充与推理引导。",
-        "valueOrientation": "估值重心转向方法创新：bug-type prompt估值15万（论文核心），而数据性工作价值相对下降。价值函数开始从“输入规模”转向“推理增益”。"
+        "metacognition": "发生关键跃迁：把问题拆成 RC in BT、RC not in BT but in calltree、RC not in calltree，并用负结果确认 calltree 对 RC-in-BT 是噪声。这是从“做方法”进入“识别适用条件”的研究能力信号。",
+        "valueJudgment": "本周判断从“方向还可以”变为“方向成立且有可写论文信号”，依据是 bug-type prompt 将 non-BT 子集 Top-10 从 3.7% 提升到 59.3%，并且有负结果界定边界；价值判断比前两周更有证据支撑。",
+        "projectManagement": "项目从 pipeline 搭建转入方法验证；交付包括 128 crash bugs 整体分析、27 个 RC-not-in-BT 子集、Flat vs Phased CT、Bug-Type prompt、RC-in-BT 负结果、数据泄露修复。下周动作包括分析 6 个失败 case、decision rule、clean pipeline。",
+        "evidence": "报告给出 baseline Top-10：RC-in-BT 85.7%、RC-not-in-BT 约 3.7%；Phased CT RC 保留率 22/27；Bug-Type Final Top-10 16/27；并明确“所有实验均无 RC 信息泄露”。"
       },
       {
         "week": "2026-04-26",
-        "hardProgress": "RC保留率提升至92.6%；bug-type reasoning v2将Top-10推至66.7%，Top-5 48.1%；实现candidate filtering缩小搜索空间至120-150函数；KCOV_REMOTE初步增加2个RC；构建轻量级function-level graph，进一步压缩候选至60-80。",
-        "cognitionChange": "提出完整的fault localization步骤：candidate generation → pruning → reasoning。确立“控制搜索空间比增强模型更重要”的元认知。开始将启发式prompt显式化为结构化pipeline。",
-        "valueOrientation": "candidate filtering估值15万（潜在核心模块），bug-type v2估值12万，graph原型6万，基础设施类工作仍在5万左右。价值观进一步向可复用、可自动化的推理/剪枝模块倾斜，强调通用性与系统沉淀。"
+        "metacognition": "进一步从“bug-type prompt 有效”推进到“candidate generation → candidate pruning → reasoning”的流程模型，并承认 prompt 仍是规则堆叠、需要统一 reasoning schema；这是更成熟的证据边界意识。",
+        "valueJudgment": "价值函数变得更清楚：calltree 提供信息，bug-type 提供推理，filtering 控制空间，KernelLocator/graph 主要用于压缩 search space；他开始把个人实验结果连接到 Brainary 的 pruning module、reasoning module、workflow 沉淀。",
+        "projectManagement": "有连续硬交付：RC 保留率 22/27 到 25/27，Bug-Type v2 Top-10 16/27 到 18/27，candidate 从约 400 缩到 120–150 且性能不降，KCOV_REMOTE 在 5 个 kworker bug 中成功 3 个并新增 2 个 RC-in-CT，KernelLocator graph 在 5 个 bug 上缩到 60–80。管理缺口是多条线并行，但缺少统一里程碑、消融计划和是否继续 KCOV_REMOTE 的决策标准。",
+        "evidence": "报告写明 CoT's CoT：FL 关键步骤是 candidate generation、candidate pruning、reasoning；证据等级 A/A/B；自动化科研路径优先为 FL workflow、pruning module、reasoning module。"
       }
     ],
-    "trendScores": {
-      "hardProgress": "第1周: 5/10 (pipeline搭建，初步结果); 第2周: 4/10 (无显著提升，但积累经验); 第3周: 8/10 (bug-type方法带来质变，突破低基线); 第4周: 7/10 (性能进一步提升，但增幅趋缓，且开始系统化)。",
-      "cognitionDepth": "第1周: 6/10 (指出瓶颈，方向正确但抽象); 第2周: 5/10 (认知有重复，未深入底层机制); 第3周: 9/10 (关键洞察：信息可见性、条件价值、语义引导); 第4周: 9/10 (融合为pipeline认知，元认知成型)。",
-      "coTsCoTMaturity": "第1周: 6/10 (两个核心点，证据A/B，沉淀形式清晰); 第2周: 4/10 (降级为B/C，缺乏新论证); 第3周: 8/10 (三个A级CoT，系统且可操作); 第4周: 9/10 (进一步抽象为三阶段，自动化路径明确)。",
-      " brainaryMapping ": "第1周: 5/10 (关联到 reasoning/cognitive control/tool orchestration); 第2周: 4/10 (描述较泛); 第3周: 7/10 (对应更具体：reasoning模块、decision policy); 第4周: 8/10 (形成pruning module、reasoning module等明确资产)。",
-      "valueOrientation": "第1周: 偏重实验数据和infra的货币量化; 第2周: 回归保守，重新评估; 第3周: 转向创新方法的溢价，重视推理增益; 第4周: 坚定投资于可复用、结构化模块，不再被“更多信息”迷惑。",
-      "projectManagement": "第1周: 明确但计划偏技术（KCOV_REMOTE）; 第2周: 略显分散（审稿、多任务并行）; 第3周: 聚焦于系统实验和关键突破; 第4周: 方法收敛，并行探索filtering/graph，但主线清晰。"
+    "metacognitionChange": {
+      "summary": "元认知有真实进步，尤其体现在三个方面：第一，他能用负结果修正原假设，例如从“trace 会提升 FL”修正为“trace 只在 BT 缺失时有条件价值”；第二，他开始明确证据边界，例如区分 RC-in-BT 与 RC-not-in-BT，避免混合分析导致错误结论；第三，他能把失败模式转化为下一步验证动作，例如从 6 个失败 case 中归纳候选函数混淆、attention 偏移、语义误导，并提出 reasoning schema。主要不足是，当前元认知仍以经验总结为主，缺少正式的验证标准、统计置信度、泛化测试和失败案例 taxonomy 的稳定版本。",
+      "byWeek": [
+        {
+          "week": "2026-04-05",
+          "change": "从工程问题中抽象出 coverage、ranking、causality 三层瓶颈，开始否定“更好的 trace 必然带来更好的 FL”。"
+        },
+        {
+          "week": "2026-04-12",
+          "change": "巩固了“增加信息不等于提高决策能力”的认识，但与上一周内容重复，新增证据有限。"
+        },
+        {
+          "week": "2026-04-19",
+          "change": "显著进步在于用子集划分和负结果界定方法适用范围，开始知道什么时候 calltree 是信息、什么时候是噪声。"
+        },
+        {
+          "week": "2026-04-26",
+          "change": "进一步抽象为 generation、pruning、reasoning 三阶段，并意识到 prompt/filtering 仍是 heuristic，需要结构化机制。"
+        }
+      ],
+      "currentLevel": "当前处于“能从实验结果中提炼研究结构”的阶段，强于单纯工程执行；但还没有完全进入“能设计稳定理论机制和可复现评估协议”的阶段。",
+      "strongestSignal": "最强信号是 04-19 和 04-26：他没有继续盲目优化 calltree，而是发现 calltree 的 conditional value，并把性能提升归因到 bug-type reasoning 与 search space control，而不是把所有提升归功于 KCOV 或 trace。",
+      "nextLift": "下一步提升应是把经验性洞察变成可检验协议：为 pruning、bug-type reasoning、graph dependency 分别写出假设、输入输出、失败条件、消融实验、停止标准和泛化验证集。"
     },
-    "valueFunctionChange": "学生的价值函数从第1周的“实验基础设施和实证数据值钱”，到第2周因进展不及预期而调低估值，第3周发生关键转变：认识到创新点（bug-type reasoning）能带来巨大性能提升，其货币价值远超纯数据或工程工作，开始区分“信息提供”与“推理引导”，并将价值锚定在方法论突破和可复用模块上。第4周，价值函数进一步内化，更重视“控制搜索空间”、“剪枝模块”等能放大系统能力的中间件，认为其货币潜力与通用性更高。整体上，学生认为值得做的不再是“更好的trace”，而是“如何让模型更聪明地利用信息”；其价值连接点从“数据收集效率”转向“推理增益/模块沉积”，并能联系到用户（kernel开发者）、通用能力（可扩展到其他大型系统）、产物形式（benchmark/workflow/module）以及Brainary和自动化科研转化。",
+    "valueGrowth": {
+      "summary": "科研/项目价值判断明显变清楚。前两周价值判断主要是“kernel FL 是真实问题，KCOV pipeline 有基础设施价值，KernelLocator 有潜力但未验证”；后两周转向更具体的价值函数：只有当 RC 不在 BT 时，calltree 才有信息补充价值；bug-type reasoning 是当前论文信号；candidate filtering/pruning 可能是可沉淀为 Brainary cognitive control 的核心能力；graph 的当前价值不是直接提高准确率，而是压缩搜索空间。这说明他开始用证据、适用边界和系统沉淀来判断项目是否值得，而不是只看工作量或单点指标。",
+      "byWeek": [
+        {
+          "week": "2026-04-05",
+          "valueJudgment": "认为方向有潜力，但 KCOV + LLM 尚未形成明确方法；判断依据是 coverage 提升和 LLM 提升有限。"
+        },
+        {
+          "week": "2026-04-12",
+          "valueJudgment": "判断更谨慎：方向可以做，但方法不清晰、通用性不确定；同时从审稿中意识到 benchmark 泛化和 evaluation split 的重要性。"
+        },
+        {
+          "week": "2026-04-19",
+          "valueJudgment": "价值判断发生跃迁：通过 bug-type prompt 的大幅提升和 RC-in-BT 负结果，确认方向有论文信号，并明确 calltree 的条件性价值。"
+        },
+        {
+          "week": "2026-04-26",
+          "valueJudgment": "价值判断进一步系统化：calltree 是信息来源，bug-type 是推理引导，filtering 是空间控制，KernelLocator graph 是搜索空间压缩工具；这已经能连接到 Brainary 的 pruning、reasoning、workflow 能力建设。"
+        }
+      ],
+      "currentValueFunction": "当前最值得持续投入的是能形成系统能力的部分：一是 candidate pruning/filtering，因为它有稳定缩小搜索空间且性能不明显下降的证据；二是 bug-type reasoning，因为它带来主要性能增益；三是 clean benchmark/evaluation split，因为它能支撑论文可信度和自动化科研复用。KCOV_REMOTE 是否继续扩大，需要以新增 coverage 对最终 FL 性能的边际贡献为标准，而不是以能否收集更多 trace 为标准。",
+      "improvementSignals": [
+        "从关注 KCOV coverage 转向关注 coverage 是否转化为 FL 有效信息。",
+        "从混合 65/128 个 bug 观察，转向按 BT 可见性划分子问题。",
+        "从“calltree 是否提升”转向“何时使用 calltree、何时不用”。",
+        "从 prompt 提升结果，进一步追问 prompt 是否只是 heuristic、如何结构化。",
+        "从单项目实验结果，开始映射到 Brainary 的 cognitive control、reasoning、workflow 和 module 沉淀。"
+      ],
+      "nextValueQuestion": "下次需要他回答：如果只能保留一个论文核心贡献和一个 Brainary 可复用模块，他会选择 bug-type reasoning、candidate pruning、graph dependency、还是 KCOV_REMOTE？选择标准是什么，哪组消融结果会让他改变选择？"
+    },
+    "projectManagementReview": {
+      "summary": "项目管理质量在硬交付方面较强，几乎每周都有可检查数据和下一步动作；但管理结构仍偏“多线推进”，缺少统一关键路径、每条线的停止/继续标准、跨模块依赖关系和最终论文里程碑。Brainary 相关能力已有实质映射，尤其是 pruning module、reasoning module、FL workflow，但还没有看到模块接口、输入输出定义或自动化评估脚本的交付证据。",
+      "projects": [
+        {
+          "project": "KCOV trace pipeline 与 calltree 构建",
+          "weeks": [
+            "2026-04-05",
+            "2026-04-12",
+            "2026-04-19",
+            "2026-04-26"
+          ],
+          "quality": "持续推进且有硬指标：从 57/65 calltree 收集、24/57 RC-in-calltree，到 Phased CT 在 27 个目标 bug 上保留 22/27，再到 25/27。质量问题是周与周之间数据口径有变化，65、128、27、RC-in-CT/RC-not-in-BT 的集合关系需要更清楚。",
+          "whatWorked": "Phased calltree 比 Flat calltree 更能保留 RC；MAX_PHASES 从 8 到 16 后 RC 保留率提升到 92.6%。这部分可以沉淀为 Brainary workflow 中的 trace-to-candidate generation 组件。",
+          "managementGap": "trade-off 已识别但还未制度化：calltree 越长 RC 保留越高，但 LLM attention 越分散。缺少明确的长度预算、RC 保留目标、LLM 可读性指标和自动化压缩评估。",
+          "nextConcreteMove": "建立一张固定评估表：每个构建策略同时报告 RC 保留率、平均长度、候选数、Top-1/5/10、误删 RC 数、是否使用 RC 信息；并明确下一版结构化压缩优先优化哪个指标。"
+        },
+        {
+          "project": "LLM fault localization 与 Bug-Type reasoning",
+          "weeks": [
+            "2026-04-05",
+            "2026-04-12",
+            "2026-04-19",
+            "2026-04-26"
+          ],
+          "quality": "从 baseline vs calltree 的小幅提升，推进到 bug-type prompt 的显著提升，再到 v2 的定向错误修复。硬交付清楚：Top-10 从 1/27 到 16/27，再到 18/27；Top-5 到 13/27；Top-1 到 6/27。",
+          "whatWorked": "他能分析失败 case 并把候选函数混淆、attention 偏移、语义误导转化为 prompt 改动；这对应 Brainary 的 reasoning 能力建设，已经有 reasoning prompt 的原型。",
+          "managementGap": "当前 prompt 仍是规则堆叠，缺少统一 reasoning schema，也缺少防止过拟合 27 个 bug 的验证设计。没有看到独立 holdout、不同 bug type 的分层结果或 prompt ablation。",
+          "nextConcreteMove": "把 bug-type reasoning 拆成可消融的 schema：错误类型识别、生命周期/状态变化线索、低频函数优先、远离 crash-site 偏置校正；每个子规则单独报告增益和失败案例。"
+        },
+        {
+          "project": "Candidate filtering / pruning",
+          "weeks": [
+            "2026-04-05",
+            "2026-04-26"
+          ],
+          "quality": "这是最近一周出现的强信号项目：候选数从约 400 缩到 120–150，Top-10 与 Bug-Type v2 基本持平，说明 pruning 可能是稳定系统能力。但目前只有一周明确数据，证据还需要连续验证。",
+          "whatWorked": "低频函数、子系统过滤、phase-based 保留能显著缩小搜索空间且没有明显损失性能；这直接对应 Brainary 的 cognitive control/pruning module，是最值得系统化的方向之一。",
+          "managementGap": "误删 RC 约 2 个，说明 pruning 缺少保底机制；也没有 adaptive 策略或阈值选择依据。当前还不能证明该规则能跨 bug type、跨 subsystem 泛化。",
+          "nextConcreteMove": "下周必须交付 pruning 的保底机制和消融：无 filtering、低频、子系统、phase、组合策略分别报告候选数、误删 RC、Top-k，并定义“可接受误删率”。"
+        },
+        {
+          "project": "KernelLocator graph / dependency prototype",
+          "weeks": [
+            "2026-04-05",
+            "2026-04-12",
+            "2026-04-26"
+          ],
+          "quality": "从想法阶段推进到轻量原型：function-level call relation 加 phase-based execution grouping，在 5 个 bug 上把候选从 120 缩到 60–80，Top-10 未下降，个别 case 有提升。证据仍小规模。",
+          "whatWorked": "他修正了对 graph 的价值判断：graph 当前不是直接提高准确率，而是进一步压缩 search space。这是较好的价值边界识别，也可沉淀为 Brainary 的结构化表示和 pruning 支撑模块。",
+          "managementGap": "graph 仍然粗糙，没有 data-flow/state dependency；5 个 bug 的样本太小，无法支撑方法核心贡献。缺少 graph 构建接口、节点边定义、依赖来源和错误分析。",
+          "nextConcreteMove": "先不要扩大概念，定义 minimal graph spec：节点、边、phase、权重、输入输出；再在同一 27 bug 子集上报告 graph 是否稳定减少候选、是否误删 RC、是否提升 reasoning。"
+        },
+        {
+          "project": "KCOV_REMOTE coverage 补全",
+          "weeks": [
+            "2026-04-05",
+            "2026-04-12",
+            "2026-04-26"
+          ],
+          "quality": "有推进但不应成为主线：从计划解决 kworker，到 5 个 kworker bug 中成功收集 3 个，新增 2 个 RC-in-CT，使 65 bug 子集 RC 覆盖 24 到 26。",
+          "whatWorked": "KCOV_REMOTE 对部分 kernel thread 路径有增量 coverage，可作为 coverage gap 的补充工具。",
+          "managementGap": "稳定性不足、kernel 修改成本高，且新增 coverage 是否转化为最终 FL Top-k 提升尚未证明。是否继续扩大没有决策标准。",
+          "nextConcreteMove": "设定继续条件：如果新增 RC-in-CT 的 bug 经过 filtering + reasoning 后不能带来明确 Top-k 改善，KCOV_REMOTE 暂停扩大，只保留为补充实验。"
+        },
+        {
+          "project": "数据质量、实验规范与 benchmark/evaluation split",
+          "weeks": [
+            "2026-04-12",
+            "2026-04-19"
+          ],
+          "quality": "04-19 有重要进展：修复 RC safety net、rc_file subsystem filter、噪声规则误杀，并强调 trace 构建不能依赖 RC 信息。04-12 审稿中也提到 generation vs ranking 的评价拆分。",
+          "whatWorked": "他开始意识到实验可信度本身是科研价值的一部分，BT/non-BT benchmark split 有潜力沉淀为自动化科研 evaluation protocol。",
+          "managementGap": "报告说要固化 clean pipeline，但 04-26 没有看到 clean pipeline 的明确交付；审稿 checklist 也没有后续证据。",
+          "nextConcreteMove": "下周交付一个可复现实验协议文档：数据集划分、RC 泄露检查、BT/non-BT 定义、每个实验输入、prompt 版本、filtering 版本、随机性控制和结果表模板。"
+        },
+        {
+          "project": "审稿与论文评价能力训练",
+          "weeks": [
+            "2026-04-12"
+          ],
+          "quality": "仅出现一周，完成 2 篇论文审阅，并提到 benchmark 泛化和 generation vs ranking 的评价问题。",
+          "whatWorked": "审稿经验可能反向帮助他识别自己项目中的 evaluation split 和泛化问题。",
+          "managementGap": "没有看到后续 checklist 交付，也没有证据显示这些审稿标准被系统应用到 Kernel FL 项目中。",
+          "nextConcreteMove": "如果继续保留该训练线，应把 checklist 压缩成 5 条，并用它审视当前 Kernel FL：问题拆分是否清楚、baseline 是否公平、是否有数据泄露、是否有泛化、是否有消融。"
+        }
+      ],
+      "managementPattern": "他的周报优点是硬数据多、失败模式多、下周动作通常具体；缺口是项目之间的主次关系不够明确，容易同时推进 KCOV_REMOTE、calltree、prompt、filtering、graph、clean pipeline。现在关键路径应收敛为：固定数据协议 → candidate generation/pruning → bug-type/structured reasoning → graph dependency 是否作为增强模块。KCOV_REMOTE 应变成边界补充，而不是吞噬主线资源。",
+      "nextManagementMove": "要求他下周用一页表格给出论文最小闭环：目标子集、主方法、核心 baseline、三个消融、一个负结果、一个 Brainary 可沉淀模块、两周内的验收指标。"
+    },
     "repeatedBlockers": [
-      "calltree信息量与可读性之间的 trade-off：太短丢失RC，太长LLM迷失。",
-      "LLM在候选集中难以有效区分关键函数，缺乏结构化筛选机制。",
-      "KCOV覆盖率仍有上限，内核线程/kworker等场景未完全覆盖。",
-      "prompt依赖人工启发式规则，未抽象为可泛化的推理框架。",
-      "缺乏data-flow信息，导致部分bug（如语义弱的工具函数）无法被定位。"
+      "方法仍偏 heuristic：bug-type prompt、filtering 规则、graph 原型都有效果，但尚未形成统一机制。",
+      "数据口径需要固定：报告中出现 65、128、27、24/57、22/27、25/27 等多个集合，集合关系和评估子集需要标准化。",
+      "search space 与信息保留存在持续 trade-off：calltree 太短会丢 RC，太长会让 LLM attention 分散。",
+      "Brainary 沉淀还停留在能力映射和潜在模块层面，缺少模块接口、自动化评估和可复用 workflow 的实际交付证据。",
+      "泛化证据不足：当前关键提升主要在 27 个 RC-in-CT bugs 上，尚未看到 holdout、跨 bug type、跨 subsystem 或跨数据集验证。",
+      "项目线较多，缺少继续/暂停标准，尤其是 KCOV_REMOTE 和 graph 是否应成为主线还需要明确决策。"
     ],
-    "professorShouldAsk": "你现在的性能提升主要集中在RC-in-calltree的27个样本上，有没有在完全未见过的bug类型或更大规模数据集上测试过bug-type reasoning的泛化边界？另外，何时应该关闭calltree而回到纯BT推理，你的decision rule能否做成可学习的策略？",
-    "nextBestIntervention": "建议立即将现有组件（calltree构建、bug-type prompt、filtering）梳理成标准化的pipeline，输出成可复现的benchmark和workflow，并设计消融实验分离出每个模块的贡献。同时尝试用RL或LLM自动生成bug-type profiles，摆脱人工规则，向agent module转化。暂停继续堆积KCOV覆盖率，全力聚焦于将当前66.7%的基线稳定化并寻求结构化泛化。"
+    "teacherQuestions": [
+      "如果把论文贡献压成一句话，你现在认为核心是 bug-type reasoning、candidate pruning，还是 BT/non-BT 条件化 benchmark？为什么？",
+      "27 个 RC-in-CT bugs 上的 prompt/filtering 改动是否有过拟合风险？你准备怎样设计 holdout 或跨 subsystem 验证？",
+      "请画出 candidate generation → pruning → reasoning 的模块接口：每一步输入、输出、可失败条件、评价指标分别是什么？",
+      "KCOV_REMOTE 新增 2 个 RC-in-CT 后，最终 Top-k 有没有提升？如果没有，你是否愿意暂停扩大 KCOV_REMOTE？",
+      "你说 graph 的作用是压缩 search space，不是直接提升准确率；那 graph 相比普通 filtering 的不可替代证据是什么？"
+    ],
+    "nextIntervention": "建议老师下一次 meeting 不要主要讨论更多工程实现，而是要求学生做一次“方法冻结与消融设计”。具体干预：让他在会前提交一张固定数据表和一张方法模块图；会上只决策三件事：第一，主贡献选择 pruning 还是 reasoning；第二，KCOV_REMOTE 是否暂停扩大；第三，Brainary 沉淀先做 pruning module 还是 reasoning module。老师应重点追问验证标准，而不是继续给新方向。",
+    "studentFeedback": {
+      "summary": "你这四周的进步不在于做了更多任务，而在于开始能用负结果和分层实验修正自己的研究判断。现在最重要的是停止把所有有效规则继续堆上去，转向把有效规则变成可复现、可消融、可泛化的系统机制。",
+      "whatImproved": [
+        "你从“优化 trace”转向“识别 trace 的条件性价值”，这是研究判断进步。",
+        "你能把 RC-in-BT 和 RC-not-in-BT 分开评估，避免混合数据掩盖问题。",
+        "你能从失败案例中提取候选函数混淆、attention 偏移、语义误导等错误类型，并转化为下一步实验。",
+        "你已经开始把项目结果连接到 Brainary 的 cognitive control、reasoning、workflow，而不是只停留在一次性实验。"
+      ],
+      "nextStep": "下周请交付三个东西：一张固定评估表、一版结构化 reasoning schema、一个 pruning module 的最小接口定义。不要只报告又提升了几个点，要报告为什么提升、在哪些 case 失败、什么证据会推翻当前方法。"
+    },
+    "evidenceLinks": [
+      {
+        "claim": "学生的元认知从工程实现转向问题分解。",
+        "evidence": "04-05 提出 coverage、ranking、causality 三类问题；04-26 提出 candidate generation、candidate pruning、reasoning 三阶段。",
+        "evidenceLevel": "较强"
+      },
+      {
+        "claim": "他能用负结果界定方法边界。",
+        "evidence": "04-19 在 RC-in-BT 子集发现 baseline Top-10 85.7%，加入 calltree 无提升甚至略降，并总结 calltree 在此时是噪声。",
+        "evidenceLevel": "强"
+      },
+      {
+        "claim": "Bug-Type reasoning 是当前最强论文信号。",
+        "evidence": "04-19 报告在 27 个 RC-in-CT bugs 上 Top-10 从 1/27 到 16/27；04-26 v2 到 18/27，Top-5 到 13/27，Top-1 到 6/27。",
+        "evidenceLevel": "强，但需要泛化验证"
+      },
+      {
+        "claim": "Candidate filtering 可能是最适合沉淀为 Brainary cognitive control 的模块。",
+        "evidence": "04-26 报告 candidate 从约 400 缩到 120–150，Top-10 基本持平；CoT's CoT 认为控制 search space 比增强模型能力更重要，证据等级 A。",
+        "evidenceLevel": "中到强，因只有一周明确数据"
+      },
+      {
+        "claim": "KernelLocator graph 已有原型但还不能作为核心贡献。",
+        "evidence": "04-26 在 5 个 bug 上 graph 将候选从 120 缩到 60–80，Top-10 未下降，个别 case 提升；但没有 data-flow，样本仅 5 个。",
+        "evidenceLevel": "中等偏弱"
+      },
+      {
+        "claim": "KCOV_REMOTE 是否值得继续扩大证据不足。",
+        "evidence": "04-26 在 5 个 kworker bug 中成功 3 个，新增 2 个 RC-in-CT，但没有报告这些新增 coverage 对最终 Top-k 的影响。",
+        "evidenceLevel": "不足"
+      },
+      {
+        "claim": "审稿训练是否转化为研究能力证据不足。",
+        "evidence": "04-12 报告审阅 2 篇论文并计划总结 checklist，但后续周报没有 checklist 或应用结果。",
+        "evidenceLevel": "不足"
+      },
+      {
+        "claim": "周报存在时间线和新增性口径不完全清楚的问题。",
+        "evidence": "04-05 与 04-12 都报告 57/65 calltree、24 个 RC-in-calltree、约 42% coverage，以及相似的 KCOV/LLM 结论；无法仅凭周报确认 04-12 的新增实验量。",
+        "evidenceLevel": "证据提示存在重复，需要学生澄清"
+      },
+      {
+        "claim": "老师最应该学到的一点是性能提升关键不在更多 trace，而在候选空间控制与 bug-type 引导推理。",
+        "evidence": "04-26 周报最后明确写道“性能提升的关键不是更好的 trace，而是对候选空间的控制和 bug-type 引导的推理”。",
+        "evidenceLevel": "强"
+      }
+    ]
   }
 }

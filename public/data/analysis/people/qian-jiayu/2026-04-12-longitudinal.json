@@ -1,41 +1,223 @@
 {
   "key": "person:qian-jiayu:2026-04-12:longitudinal",
-  "generatedAt": "2026-05-24T11:50:44.870Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "2e1ba79ab508d93be18846b3647f52039af4af7f3719022dda14cdab62a32efc",
+  "generatedAt": "2026-06-06T13:11:01.245Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "540d750d629d993d9e228fd79a1dec500af962b67ce5cea121cd6ad2ef798fe1",
   "result": {
-    "overallTrajectory": "钱加宇在四周内展现出显著的研究能力成长，而非单纯忙碌。她从一个具体的技术问题（SFT导致保守偏置）出发，通过定量复盘深化认知，提出解耦对齐的方法论，继而将单点突破收敛为统一框架（Clinical Logic），最终形成跨项目的主轴原则（no lesion no diagnosis）。其认知从局部优化跃升至全局抽象，项目管理从单一任务自救扩展至多线协同与人才培养，价值观从商业估值转向长期科研资产沉淀。尽管后期多线并行导致部分进度滞后，但整体趋势表明她正在从执行者向课题设计者和团队组织者进化。",
-    "stageByWeek": [
-      "2026-03-22：发现SFT在医疗VQA中的致命保守偏置（L2 recall 0.559→0.207），认识到交叉熵损失对临床安全盲目。提出将格式对齐与逻辑约束解耦，走向SFT+GRPO两阶段路径。项目因认知局限陷入停滞，后自行完成认知破局，转向GRPO。估值任务A（150万）和B（40万），侧重直接商业价值。",
-      "2026-03-29：推进clinical referral benchmark和direct-only baseline，识别出severe/PDR undercall风险。GPT辅助伪病灶生成路线收窄至two-stage workflow（视觉抽取层与协议审计层拆开），提出CoT's CoT：高风险任务中感知与审计不能强耦合。估值三个任务共38万，开始关注方法资产的复用价值。项目管理多条线并行，进度整体符合，但Protocol CoT验证滞后。",
-      "2026-04-05：收敛论文主线为“Clinical Logic Benchmark → Mix Direct-CoT → Logic GRPO”统一框架。确认clinically grounded CoT + mixed training有效，摒弃blind lesion mining。价值观转向方法资产长期价值，估值60万（三个任务），CoT's CoT聚焦于support mining和统一逻辑。项目管理三个子项目进度基本符合，原计划“继续探索”已升级为“收敛闭环”。",
-      "2026-04-12：整理M3D medical baseline，判断foundation model已接近医疗专模，需要更尖锐的医学主张。将学生课题CoVT与主线对齐，提出“no lesion no diagnosis”作为三条线的统一科学原则。估值以科研资产和人才培养为主（共41万），价值观升华至团队长期产出能力。项目管理中M3D和临床视网膜因缺少error taxonomy和mixed summary导致进度不符合预期，但已识别偏差并计划纠偏。"
+    "overallTrajectory": "总体判断：这个学生最近四周不是单纯变忙，而是在研究能力上有明显上升，主要体现在能从实验失败中抽象出目标函数错配、从分散模块中收敛统一 scientific claim、并开始用 benchmark/evaluator/reward/workflow 的系统接口思考项目；但当前风险是概念收敛快于关键实验闭环，尤其 mixed training formal summary、GRPO 最小版本、error taxonomy 和 clinician-checked 验证仍未补齐。",
+    "headline": "从“发现 SFT/CoT 失败”进步到“用 no lesion no diagnosis 统一 benchmark、训练、reward 和学生课题”，但下一步必须用最小闭环实验压实主张。",
+    "overviewSentence": "该学生的研究能力在增强：他正在从做实验转向定义问题、识别失败模式、收敛主线和设计可复用系统接口，但关键证据闭环仍需补齐。",
+    "fourWeekTimeline": [
+      {
+        "week": "2026-03-22",
+        "metacognition": "这一周的元认知进步主要来自失败复盘：他没有把 Case-SFT 一致性提升误判为成功，而是识别出“形式一致性不等于临床安全性”，并进一步定位到 SFT 交叉熵目标与临床风险目标错配。这是从结果表面读数走向机制解释的明显进步。",
+        "valueJudgment": "价值判断已经从“提高指标”上升到“医疗 VLM 必须避免高危漏诊和逻辑互斥”，并把题目价值连接到临床风险感知、硬逻辑约束、GRPO reward、Brainary 的 risk modeling 与 cognitive control。不过当周仍有较强的高价值叙事，需要后续实验闭环支撑。",
+        "projectManagement": "项目管理写得较完整：有原计划、实际完成、偏差、偏差原因、关键里程碑、资源/API/GPU、下周最小动作和是否需要老师介入。主要缺口是 GRPO 路线还处于推演和准备阶段，尚未有 reward engine 的实际运行结果。",
+        "evidence": "报告给出 Case-SFT 将 case_consistency_rate 从 0.701 提升到 0.928，但 l2_recall 从 0.559 暴跌到 0.207；明确提出下周写出基于 ICDR 的 Reward 规则引擎，并在单个数据集上验证漏诊修复。"
+      },
+      {
+        "week": "2026-03-29",
+        "metacognition": "这一周从单个失败机制进一步发展到变量隔离意识：他认识到 model、prompt、benchmark、runtime 是耦合变量，不能简单归因于模型强弱；同时明确 single-stage prompt 会把视觉观察与协议审计耦合过紧，导致过度保守。",
+        "valueJudgment": "价值判断更接近科研问题定义：他把核心价值从“生成更好 CoT”转成“建立视觉事实层与协议审计层之间的结构化中间层”，并连接到 Brainary 的 risk-aware evaluator、分层 cognitive control 和中间 memory schema。",
+        "projectManagement": "项目拆分为 referral benchmark、pseudo-lesion/Protocol CoT MVP、two-stage workflow/GRPO 前置结构，均有阶段、硬交付、下周动作和资源需求。质量较高，但 two-stage 还只有 dry-run 和接口验证，真实 API 输出与 clinician-checked 验证缺失。",
+        "evidence": "报告形成 referral_v1 train/val/test benchmark、referral-aware evaluator、formal baseline row；完成 ordered 10-case 三模型对照；新增双阶段 prompt/schema/runner/analyzer，但注明“真实 API two-stage 输出尚未跑”。"
+      },
+      {
+        "week": "2026-04-05",
+        "metacognition": "这一周的变化是主线收敛能力增强：他意识到项目变大后不是简单少做，而是要找到贯穿 benchmark、CoT、training、reward 的唯一主轴，并把 Clinical Logic 定义为统一骨架。",
+        "valueJudgment": "科研价值判断更稳定：他主动放弃 blind lesion generation 作为主线，转向 clinically grounded support mining，并判断第一篇 paper 应聚焦 logic-constrained workflow、Mix Direct-CoT 和 Logic GRPO。这说明他开始有取舍，而不是继续平铺所有探索分支。",
+        "projectManagement": "项目管理从探索型转向关键路径型：Clinical Logic Benchmark、Mix Direct-CoT、Logic-Guided GRPO 都标注了依赖关系和关键路径。硬进展包括 Qwen3.5-122B CoT 生成、mixed training 和统一方法接口；但“显著提升”没有在周报中给出具体数值，GRPO 仍未进入最小可运行版本。",
+        "evidence": "报告称完成 short CoT、long CoT、mixed CoT 数据构造与训练尝试，并观察到显著提升；同时提出下周完成 long/short/mixed CoT ablation 和第一个最小 reward/verifier 版本。"
+      },
+      {
+        "week": "2026-04-12",
+        "metacognition": "这一周的元认知从单项目收敛上升到项目群组织：他意识到临床视网膜、M3D medical、CoVT 不能并排推进，而要放进同一棵问题树，用 no lesion no diagnosis 作为共同科学原则。这是研究组织能力的提升。",
+        "valueJudgment": "价值判断进一步抽象为 evidence-grounded diagnosis：医疗 VLM 的关键不是会不会回答诊断，而是没有可信 lesion/visual evidence 时是否应给出强诊断。这个判断比前三周更统一，也能连接 benchmark、CoT、latent reasoning、reward、Brainary evaluator/workflow/reasoning module。",
+        "projectManagement": "项目管理开始覆盖多线协同，但本周硬实验减少，更多是 baseline 整理、framing 和 formalization。M3D、CoVT、临床视网膜都写出当前阶段、实际完成、偏差和下周动作；主要缺口是 M3D error taxonomy 未完成、CoVT contribution boundary 未冻结、临床视网膜 mixed training formal summary 未补齐。",
+        "evidence": "报告固定 Clinical Referral Benchmark 规模为 92,500 cases / 492,633 QA items；整理 M3D VQA-RAD 74.5、SLAKE 81.7、PathVQA 62.3、PMC-VQA 60.6、OmniMedVQA 85.1；明确下周补 error taxonomy、method overview figure、mixed training summary。"
+      }
     ],
-    "trendScores": {
-      "题目轨迹": "从解决SFT逻辑冲突的单一技术问题，到构建临床逻辑基准与分层workflow，再到形成跨任务统一框架，最后升华为“无病灶不诊断”的通用科学原则，抽象层级持续提高。",
-      "硬进展趋势": "前期定量实验、benchmark构建和训练pipeline产出密集，后期转向形式化整理和多线布局，实体实验/数据产出放缓，但概念资产固化加强。后期部分任务（mixed summary）硬进展滞后。",
-      "认知趋势": "从观察到目标函数错配的现象级认知，到解耦对齐的方法论认知，再到分层控制和统一逻辑的设计认知，最终到达多项目协同和团队科研组织的元认知，认知深度和广度均大幅增长。",
-      "CoT's CoT 成熟度": "CoT's CoT经历从证据强烈的具体反思（A级）到框架性收敛（A/B级）再到统领性科学主张（A级），成熟度明显提升，但后期个别主张证据等级仍为B，需实证闭环。",
-      "Brainary 映射成熟度": "最初仅关联risk modeling和cognitive control，随后扩展到benchmark、evaluator、workflow、memory等多维度，并开始将学生培养纳入系统，映射更系统化，但部分高阶能力（如团队research protocol）尚未形式化。",
-      "价值推理": "价值推断从直接计算商业节省（金额精确到万），到考虑方法资产复用和研发成本节省，再到融合学生培养和团队长期产出能力，价值观从短期市场定价向长期科研系统工程价值迁移。",
-      "项目管理": "从单一项目进度偏离后自我纠偏，演进为多项目并行、主动设定里程碑、识别关键路径，但仍暴露多线收敛不足、协作边界模糊等问题，项目管理复杂度上升但控制力有波动。",
-      "自动化路径": "从设想临床指南编译器agent，到聚焦workflow和benchmark的转化，再到结合学生课题形成checklist和framing workflow，路径逐渐具体化，但未能完全落地任何自动化模块，门槛仍在于形式化验证。"
+    "metacognitionChange": {
+      "summary": "四周内，学生的元认知从“复盘一个实验为什么坏掉”逐步发展到“识别目标函数错配、变量耦合、主线收敛、项目群对齐”。这不是简单工作量增加，而是能更清楚地区分表面成功与真实安全性、方法资产与分支噪声、模型强弱与控制结构、项目并列与科学主轴。但证据边界仍需更硬：多个关键判断已经形成，部分仍停留在 formalization 或小样本观察，尚未全部转化为可复现实验闭环。",
+      "byWeek": [
+        {
+          "week": "2026-03-22",
+          "change": "识别“case_consistency_rate 提升”可能掩盖 l2_recall 灾难，说明他开始能对自己的成功指标保持怀疑，并追问指标背后的临床风险。"
+        },
+        {
+          "week": "2026-03-29",
+          "change": "能把 prompt tightening、model choice、fixed sample、evaluator 放入同一因果框架，避免把结果误归因给模型强弱。"
+        },
+        {
+          "week": "2026-04-05",
+          "change": "能从多个探索分支中收敛出 Clinical Logic 统一主轴，并主动降低 blind lesion generation 的优先级。"
+        },
+        {
+          "week": "2026-04-12",
+          "change": "能把自己主线、M3D 和师弟 CoVT 组织成同一科学问题树，说明研究管理和问题抽象能力在增强。"
+        }
+      ],
+      "currentLevel": "当前处于“能定义问题和设计系统接口，但仍需用关键实验闭环证明”的阶段；比四周前更有研究能力，但尚未到“每个核心 claim 都有同口径定量证据支撑”的稳定阶段。",
+      "strongestSignal": "最强信号是他连续多周能从失败或分支混乱中提炼更高层结构：SFT 目标错配、视觉事实层/协议审计层拆分、Clinical Logic 统一 formalism、no lesion no diagnosis 统一科学原则。",
+      "nextLift": "下一步提升不是再扩概念，而是为每个核心判断设置最小验证标准：mixed training 提升具体是多少、GRPO reward 是否修复 recall 且不损害 consistency、two-stage 是否优于 single-stage、M3D gap 到底来自知识/视觉/任务形式。"
     },
-    "valueFunctionChange": "价值观从“解决高价值具体技术问题”向“构建可复用科研资产与培养团队”明显迁移。第一周以商业定价为核心，强调帮企业过审、节省成本，价值锚定在直接市场回报；第二周开始纳入研究方法资产的复用溢价；第三周将方法链的统一性和长期试错成本纳入估值；第四周明确引入学生培养和团队知识积累的价值，金额计算从市场报价转向综合研发效能和人才成长。同时，值得做的事从“逻辑对齐框架”扩展到“定义科学原则并跨线协同”，价值尺度从短期货币延伸至长期学术资产和科研组织能力。",
+    "valueGrowth": {
+      "summary": "科研/项目价值判断在变清楚：从医疗安全指标出发，到中间层结构化资产，再到 Clinical Logic 统一 benchmark、training、reward，最后收敛为 no lesion no diagnosis 的 evidence-grounded diagnosis 原则。价值判断的提升体现在更能说明“为什么这个问题值得做”和“哪些分支不应继续投入”，而不是金额估算。",
+      "byWeek": [
+        {
+          "week": "2026-03-22",
+          "valueJudgment": "认为值得做的核心是临床风险感知与硬逻辑约束，因为单纯 SFT 会造成高危漏诊；价值锚点是安全性、监管逻辑和 Brainary risk modeling/cognitive control。"
+        },
+        {
+          "week": "2026-03-29",
+          "valueJudgment": "价值锚点变成结构化中间层：视觉事实层与协议审计层拆开，才能支持 evaluator、workflow、memory schema 和后续 reward。"
+        },
+        {
+          "week": "2026-04-05",
+          "valueJudgment": "价值判断进一步收敛：第一篇 paper 不应围绕 blind lesion generation，而应围绕 Clinical Logic formalism 贯穿 benchmark、CoT、SFT、GRPO。"
+        },
+        {
+          "week": "2026-04-12",
+          "valueJudgment": "价值判断升级为项目群级原则：临床视网膜、M3D、CoVT 都服务于 no lesion no diagnosis，即诊断必须被可信视觉证据约束。"
+        }
+      ],
+      "currentValueFunction": "当前他的项目价值函数大致是：优先投入能把医疗 VLM 从 aggregate score 推向 evidence-grounded、risk-aware、logic-controlled diagnosis 的工作；优先沉淀 benchmark/evaluator/workflow/reward schema/memory schema；减少只增加模型表、只扩 prompt 分支、只做 general MLLM reasoning 叙事的投入。",
+      "improvementSignals": [
+        "能明确说 direct-only baseline 高 accuracy 不等于 screening safety，转而重视 referable_recall 和 undercall_severe_or_pdr_rate。",
+        "能判断 pseudo-lesion blind generation 成本高、稳定性差，不适合作为主训练真值来源。",
+        "能把师弟 CoVT 从 side paper 重新接入主线，判断其价值在于补上 visual evidence 如何进入 latent reasoning 和 reward。",
+        "能把 Brainary 关联从泛泛能力映射推进到具体资产：risk-aware evaluator、memory schema、workflow、reward module、reasoning module。"
+      ],
+      "nextValueQuestion": "下次需要他回答：在 no lesion no diagnosis 这个原则下，哪一个最小实验证据足以证明它不是口号，而是比现有 medical VLM benchmark 或 CoT training 更强的科研贡献？"
+    },
+    "projectManagementReview": {
+      "summary": "项目管理质量整体提升明显：四周都能写出阶段、交付、偏差、资源和下周动作，且逐渐从单项目实验管理走向项目群对齐管理。主要短板是部分“下周最小动作”没有在下一周形成明确闭环回报，例如 3月22日提出的 GRPO reward、3月29日 two-stage 真实输出与 clinician check、4月5日 ablation 和最小 reward/verifier，在 4月12日仍未看到完整完成证据。",
+      "projects": [
+        {
+          "project": "临床视网膜 / Clinical Logic Benchmark / Clinical Referral Benchmark",
+          "weeks": [
+            "2026-03-22",
+            "2026-03-29",
+            "2026-04-05",
+            "2026-04-12"
+          ],
+          "quality": "这是四周中持续性最强、交付最稳定、最接近主线关键路径的项目。它从 SFT 失败诊断推进到 referral benchmark、risk-aware evaluator、Clinical Logic formalism，再到 92,500 cases / 492,633 QA items 的 evidence pack formalization。",
+          "whatWorked": "硬交付包括 benchmark 跑通、referral-aware evaluator、formal baseline row、多层级 benchmark、benchmark-oriented evidence pack。Brainary 相关能力在这里推进较实：risk modeling、benchmark/evaluation、calibration、reasoning 和 evidence interface 都有项目内落点，不是单纯概念映射。",
+          "managementGap": "mixed training formal summary 尚未补齐；Logic GRPO 最小 reward/verifier 在 4月5日计划下周完成，但 4月12日未看到完成证据；Clinical Logic 到 reward 的闭环仍是关键缺口。",
+          "nextConcreteMove": "下周只做一个最小闭环表：同一 benchmark 下列出 zero-shot、full_flat SFT、Mix Direct-CoT、如果已有则加 Logic reward/verifier 的 referable_recall、undercall_severe_or_pdr_rate、case_consistency_rate，并标注是否进入主文。"
+        },
+        {
+          "project": "Protocol CoT / pseudo-lesion / support mining / Mix Direct-CoT",
+          "weeks": [
+            "2026-03-29",
+            "2026-04-05",
+            "2026-04-12"
+          ],
+          "quality": "这个项目的研究判断进步很明显：从单阶段 pseudo-lesion prompt 试错，转向 two-stage，再进一步收敛到 clinically grounded support mining 和 Mix Direct-CoT。但实验闭环和量化证据还不够完整。",
+          "whatWorked": "形成 pseudo-lesion JSON schema、ordered sampling、三模型 comparison harness、two-stage prompt/schema/runner/analyzer；之后转向 Qwen3.5-122B clinically grounded CoT 和 mixed training。Brainary 的 memory schema、workflow、cognitive control 在这个项目中有可沉淀对象：support evidence、风险警告、协议一致性和中间事实。",
+          "managementGap": "3月29日计划跑 gpt-4o two-stage 10-case MVP 并人工 spot-check，但 4月5日没有清楚报告该验证结果；4月5日称 mixed training 有显著提升，但未给出具体指标、对照设置和统计边界；4月12日承认 mixed training formal summary 仍未补齐。",
+          "nextConcreteMove": "补一页 ablation summary：short CoT、long CoT、mixed CoT 的数据量、训练设置、核心指标、失败样例各 3 个，并明确 support mining 是否成为主文方法还是附录资产。"
+        },
+        {
+          "project": "Logic-Guided GRPO / reward / verifier",
+          "weeks": [
+            "2026-03-22",
+            "2026-03-29",
+            "2026-04-05"
+          ],
+          "quality": "概念设计强，但实际交付证据不足。它被多次定义为解决 SFT 目标错配和临床安全性的关键路径，也被连接到 Brainary 的 cognitive control、reward module、evaluator-to-reward pipeline，但最近一周没有看到最小可运行结果。",
+          "whatWorked": "学生已经能把 ICDR 逻辑冲突、L2 高危漏诊、跨层级一致性转化为 reward/verifier 设想，并意识到 reward 应依赖结构化中间资产，而不是直接从最终答案开始。",
+          "managementGap": "3月22日提出下周写出 ICDR Reward 规则引擎；4月5日提出下周完成第一个最小 reward/verifier 版本；4月12日没有报告该版本是否完成。当前证据不足以判断 GRPO 路线已经进入实验阶段。",
+          "nextConcreteMove": "老师应要求他下次只展示一个最小 reward/verifier demo：输入 5 个模型输出，自动判定 L2/L3 逻辑冲突和 false negative，给出 reward 分数，并说明如何接入训练。"
+        },
+        {
+          "project": "M3D medical",
+          "weeks": [
+            "2026-04-12"
+          ],
+          "quality": "这是新进入管理视野的路线判断项目，目前定位清楚：不是继续堆 aggregate score，而是判断 medical foundation model 的 gap 来自知识、视觉感知还是任务形式。",
+          "whatWorked": "已形成 baseline comparison table，并给出 VQA-RAD、SLAKE、PathVQA、PMC-VQA、OmniMedVQA 的统一结果；能识别如果只汇报 aggregate score 会变成低新意 benchmark 表。",
+          "managementGap": "error taxonomy 尚未完成；题目边界未冻结；当前还不能判断它能否成为 no lesion no diagnosis 的外部验证，而不是一个独立 baseline 整理工作。",
+          "nextConcreteMove": "下周完成一个 30到50例错误分类表，至少区分知识缺失、视觉证据缺失、题型/benchmark 噪声、答案格式问题，并据此决定是否继续扩实验。"
+        },
+        {
+          "project": "CoVT / 师弟课题对齐 / no lesion no diagnosis 外延",
+          "weeks": [
+            "2026-04-12"
+          ],
+          "quality": "这是项目管理能力的新变化：他开始把带学生视为主线扩展，而不是额外负担。当前主要交付是 framing、contribution skeleton、模块边界和主线对齐，硬实验本周较少。",
+          "whatWorked": "把 CoVT 重解释为 medical VQA construction、medically grounded multi-granularity CoT、CoVT latent reasoning、visual-aware GRPO reward，并与 no lesion no diagnosis 对齐；明确 Metadata Parsing、Router + Prompt、Judge、Rewrite 四个模块角色。",
+          "managementGap": "contribution boundary 未冻结；实验表还未裁剪；师弟负责执行、他负责 framing 的责任接口需要更可检查，否则容易变成写作层面收敛而不是实验层面收敛。Brainary 的 team research protocol 和 project routing 只是想法，尚未有系统化交付。",
+          "nextConcreteMove": "下周产出 method overview figure、contribution paragraph 和实验保留/删除清单，并让老师拍板 boundary，避免继续扩成 general MLLM reasoning。"
+        }
+      ],
+      "managementPattern": "优点是能持续写清项目阶段、交付、偏差原因、依赖和下周动作，并能主动减少分支；短板是有些关键动作被下一周的新 framing 覆盖，导致闭环追踪不够硬。当前管理模式需要从“每周提出下周动作”升级为“每周回收上周承诺动作并给出完成/未完成证据”。",
+      "nextManagementMove": "建立一张四列追踪表：上周承诺、实际完成、证据文件/指标、未完成原因。优先追踪四件事：mixed training formal summary、最小 reward/verifier、M3D error taxonomy、CoVT contribution boundary。"
+    },
     "repeatedBlockers": [
-      "实验分支过多导致主线模糊：初期在多数据集扩展、API路线和SFT调参中陷入广度探索，后期三条线并行而部分任务（如mixed training summary）未及时收口。",
-      "形式化总结滞后：mixed training、CoVT贡献边界等关键结果多次作为“下周动作”出现，未能及时形成可复用的formal evidence，拖慢决策和写作。",
-      "学生课题与主线对齐缺乏结构化规则：虽然认识到对齐必要性，但直到第四周仍未完成contribution boundary冻结和实验裁剪，协作效率受限于非标准化的对齐方式。",
-      "过度依赖API路线或仅用强模型解决问题：早期API生成pseudo-lesion成本高且不稳定，后虽转向support mining，但仍存在把模型能力作为主要手段的倾向，对基础模型局限的认知才逐步清晰。"
+      "概念收敛快于实验证据闭环：多个关键 claim 已形成，但 GRPO、two-stage、mixed summary、error taxonomy 的完成证据不够连续。",
+      "分支较多，容易用新的统一叙事覆盖旧承诺动作：例如从 pseudo-lesion 到 support mining、从 Clinical Logic 到 no lesion no diagnosis 是合理收敛，但需要保留上周承诺的完成状态。",
+      "部分实验结果表述缺少具体数值边界：例如 4月5日的 mixed training“显著提升”没有给出指标、对照和数据规模。",
+      "Brainary 映射越来越清楚，但从能力映射到系统交付仍有距离：evaluator 和 benchmark 较实，reward module、agent module、team research protocol 仍偏设计。",
+      "临床验证证据不足：3月29日提到 clinician-checked 小样本验证是门槛，但后续没有看到明确完成证据。"
     ],
-    "professorShouldAsk": [
-      "你提出的“no lesion no diagnosis”原则如何在Benchmark、GRPO Reward和评估协议中具体落地？有没有可量化的指标保证这一原则不被弱化？",
-      "三条线（临床视网膜、M3D、CoVT）的优先级和产出截止点明确吗？如果时间冲突，你会如何牺牲？",
-      "你的学生目前对“no lesion no diagnosis”的理解是否与你一致？他/她能否独立完成contribution boundary的裁剪？你计划如何检验其掌握程度？",
-      "mixed training summary缺失是否意味着实验还不够扎实？如果它最终不进入主文，你对主线的支撑是否足够？"
+    "teacherQuestions": [
+      "你现在认为 no lesion no diagnosis 的最小可发表证据是什么？请只用一张表说明 benchmark、training、reward 各自必须证明什么。",
+      "4月5日提到 Mix Direct-CoT 有显著提升，具体提升在哪些指标、相对哪个 baseline、是否牺牲 referable recall 或 consistency？",
+      "GRPO/reward/verifier 到底完成到哪一步了？能否现场展示一个输入模型输出、自动打分 L2/L3 冲突和 false negative 的最小 demo？",
+      "M3D medical 如果 error taxonomy 做完后发现主要 gap 不是 visual evidence，而是知识或题型噪声，你会不会砍掉这条线作为主线外部验证？判断标准是什么？",
+      "CoVT 里哪些模块是支撑 no lesion no diagnosis 的必要模块，哪些只是 general reasoning 或 tool-use 的附属模块，可以删掉或放附录？"
     ],
-    "nextBestIntervention": "立即组织一次三人讨论（教授、钱加宇、师弟），以“no lesion no diagnosis”为框架，共同冻结CoVT的贡献边界和实验表最小集合，并确定第一版投稿的叙事线。同时，要求钱加宇在下次讨论前补齐临床视网膜的mixed training formal summary和M3D error taxonomy，将多线推进的隐性依赖显性化。教授需明确三条线的阶段性目标和对齐规则，并提供关键决策（如GRPO是否入主文）以避免持续并行消耗。"
+    "nextIntervention": "建议老师下一次 meeting 不要泛泛讨论大方向，而是做一次“claim-to-evidence 审计”：要求学生把 no lesion no diagnosis 拆成 3 个可证伪子命题，并为每个子命题列出已有证据、缺失证据、下周最小实验、是否需要老师拍板。老师最需要介入的是 CoVT contribution boundary 和 GRPO 是否进入主文；其余执行可先由学生推进。",
+    "studentFeedback": {
+      "summary": "你的进步不在于做了更多项目，而在于开始能把失败、分支和协作项目收敛到同一个科学问题上；现在最需要补的是证据闭环和承诺回收。",
+      "whatImproved": [
+        "你能识别表面指标的误导性，例如一致性提升但召回崩溃。",
+        "你能从 prompt、model、benchmark、runtime 的耦合中拆出真正变量。",
+        "你开始有取舍，能把 blind lesion generation 降级，把 support mining 和 Clinical Logic 放到主线。",
+        "你能把临床视网膜、M3D、CoVT 放进同一棵问题树，而不是并列推进。"
+      ],
+      "nextStep": "下周请不要再扩新概念，集中交付四个可检查物：mixed training formal summary、最小 reward/verifier demo、M3D error taxonomy、CoVT contribution boundary 图和实验裁剪表。"
+    },
+    "evidenceLinks": [
+      {
+        "week": "2026-03-22",
+        "evidence": "Case-SFT 将 case_consistency_rate 从 0.701 拉升至 0.928，但 l2_recall 从 0.559 暴跌至 0.207；学生据此判断一致性不等于临床安全性。"
+      },
+      {
+        "week": "2026-03-22",
+        "evidence": "项目管理中明确原计划扩展 9 个数据集未完成，偏差原因归为认知问题，并提出停止盲目 SFT 调参，转向 DPO/GRPO。"
+      },
+      {
+        "week": "2026-03-29",
+        "evidence": "完成 referral_v1 train/val/test benchmark、referral-aware evaluator、formal baseline row，并指出 severe/PDR 仍 undercall。"
+      },
+      {
+        "week": "2026-03-29",
+        "evidence": "完成 pseudo-lesion JSON schema、ordered sampling、三模型 comparison harness；同时承认 two-stage 只有 dry-run 和接口验证，真实 API 输出尚未跑。"
+      },
+      {
+        "week": "2026-04-05",
+        "evidence": "学生把分散的 benchmark、CoT、API 生成、训练探索收敛成 Clinical Logic Benchmark -> Mix Direct-CoT -> Logic GRPO 统一框架。"
+      },
+      {
+        "week": "2026-04-05",
+        "evidence": "报告称完成 Qwen3.5-122B clinically grounded CoT 生成与 mixed training，并观察到显著提升，但未给出具体数值。"
+      },
+      {
+        "week": "2026-04-12",
+        "evidence": "固定 Clinical Referral Benchmark 规模为 92,500 cases / 492,633 QA items，并形成 benchmark-oriented evidence pack。"
+      },
+      {
+        "week": "2026-04-12",
+        "evidence": "学生把临床视网膜、M3D medical 和 CoVT 收敛到 no lesion no diagnosis，认为医疗 VLM 应在有可信 lesion / visual evidence 的前提下再给 diagnosis。"
+      },
+      {
+        "week": "2026-04-12",
+        "evidence": "M3D medical 当前 baseline 已整理，但 error taxonomy 和题目边界尚未冻结；临床视网膜 mixed training formal summary 还没补齐。"
+      }
+    ]
   }
 }

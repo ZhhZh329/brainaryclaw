@@ -1,54 +1,104 @@
 {
   "key": "person:wang-suyuan:2026-04-26:weekly-score",
-  "generatedAt": "2026-05-24T11:36:04.346Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "5227491dc3fb3fe9213306f180e4e0aa253225152d89783a246b3bdd321a713b",
+  "generatedAt": "2026-06-06T13:13:16.554Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "ae844cefc3320fbd535df98884dd6d8de87b8da5e1227acf05882f2d530dd0e7",
   "result": {
-    "hardProgress": {
-      "score": 19,
-      "reason": "本周完成Rebuttal定稿与提交，补全了误差归因、大模型验证、SAST对比等关键硬数据，明确了52%上下文受限与48%模型推理错误的结论，提供了20B/120B模型P-C对比和四种SAST工具最高10.67%的量化结果，进度扎实、产出可验证。",
-      "missingEvidence": "无缺失，Rebuttal提交本身即为可验证的硬进展。"
+    "week": "2026-04-26",
+    "name": "王粟源",
+    "scores": {
+      "hardProgress": {
+        "score": 18,
+        "reason": "本周有明确硬产出：完成并提交 USENIX Security AdvTaint Rebuttal；补充了误差归因、120B 大模型基准、4 种 SAST 对比、运行开销等关键数据。硬进展不是停留在写作，而是围绕审稿意见补齐了论文能否成立的核心证据。扣分点在于周报未给出完整实验表、具体样本规模、数据集范围、审稿意见对应修改清单，因此外部读者无法独立核验这些新增结果。",
+        "missingEvidence": [
+          "缺少 Rebuttal 提交确认或版本链接。",
+          "缺少 20B、120B、SAST 对比的完整实验表。",
+          "误差归因 52%/48% 的样本量、标注方法和置信度未给出。",
+          "开销测试只提到已补充，未展示具体时间、显存、吞吐等结果。"
+        ]
+      },
+      "cognitiveIncrement": {
+        "score": 13,
+        "reason": "认知增量清晰：指出二分类评估会虚高漏洞检测效果，必须转向 RCA-aware tuple；同时形成轻量静态分析与 LLM 推理之间的工程平衡判断。这些不是泛泛感想，而是从 Rebuttal 数据和系统设计中抽象出的可迁移认知。扣分点是两个认知更新都较偏结论，缺少失败案例、反例边界和适用条件说明。",
+        "missingEvidence": [
+          "缺少二分类指标与 RCA-aware 指标在同一实验上的具体差异表。",
+          "缺少轻量路径提取相比 CodeQL/Joern 的可复现实验条件。",
+          "未说明在哪些漏洞类型或代码规模下该认知可能失效。"
+        ]
+      },
+      "cot2Depth": {
+        "score": 13,
+        "reason": "CoT’s CoT 部分有较强二阶深度：不仅说模型变大效果有限，还进一步归因到过程间上下文粒度不合适；不仅说 LLM-as-a-Judge 可用，还提出其尚未系统化为评测 Pipeline。每条都包含证据等级、信息差、自动化潜力和沉淀形式，符合模板要求。扣分点在于“老师原本是否知道”的判断较主观，且 A 级证据的底层数据没有充分展开。",
+        "missingEvidence": [
+          "20B 到 120B 的提升幅度、基线指标和统计显著性缺失。",
+          "ID3 消融实验只被提及，没有具体设计和结果。",
+          "LLM-as-a-Judge 的 0.67% 误差率与“抽样 50 对齐数据”之间存在解释不足，未说明分母和计算方式。",
+          "缺少 Judge 与人工专家一致性的详细标注协议。"
+        ]
+      },
+      "brainaryMapping": {
+        "score": 8,
+        "reason": "与 Brainary 的映射比较明确：RCA-Aware Evaluator 对应 Evaluator/Benchmark，TPT 对应 Memory Schema/Workflow Management，并说明了为什么尚未系统化以及可能沉淀成什么模块。这说明作者能把论文工作转译为组内自动化科研资产。扣分点是映射仍停留在模块命名层面，缺少接口、输入输出、依赖关系和集成优先级。",
+        "missingEvidence": [
+          "缺少 RCA-Aware Evaluator 的输入输出 schema。",
+          "缺少 TPT Token 压缩模块与 Brainary 现有流程的接口设计。",
+          "缺少最小集成版本的工程任务拆分。",
+          "未说明该模块是否已有可复用代码。"
+        ]
+      },
+      "monetaryValue": {
+        "score": 7,
+        "reason": "价值判断有明确对象：安全服务厂商和 DevSecOps 产线；也尝试用人工排错成本估算 200 万人民币价值，说明作者在思考真实买单方和工程收益。扣分点是估值链条较粗，5000 个告警、30% 准确率提升、1500 小时节约、人力成本折算都缺少来源；同时“最可能沉淀成安全国际顶会论文”是学术价值，不等同于商业价值。",
+        "missingEvidence": [
+          "缺少企业白盒告警数量和安全工程师处理成本的来源。",
+          "缺少从 RCA-verified F1 提升到实际人工节约的换算依据。",
+          "缺少与现有商业 SAST 或 DevSecOps 工具的价格/效果对照。",
+          "未说明该能力的商业化形态是工具、API、评测套件还是咨询服务。"
+        ]
+      },
+      "projectManagement": {
+        "score": 12,
+        "reason": "项目管理信息较完整：说明当前阶段、时间投入、资源使用、本地 A100、token/KLOC、成本风险、进度判断和封账计划。对 Deadline 管理和资源意识较好。扣分点是下阶段 AutoVerif/RCA 基建没有形成具体计划，‘等待 Rebuttal 出结果后’导致项目切换存在空窗；也没有列出风险、依赖、验收标准和明确时间表。",
+        "missingEvidence": [
+          "缺少 Rebuttal 后归档清单。",
+          "缺少 AutoVerif 框架的里程碑、时间表和验收指标。",
+          "缺少代码、数据、实验脚本的归档位置。",
+          "缺少下阶段资源需求和协作者安排。",
+          "缺少如果论文结果不理想时的备用路线。"
+        ]
+      },
+      "nextAction": {
+        "score": 7,
+        "reason": "下周方向明确：封存 AdvTaint，转入自动化验证与 RCA 分析基建，并优先考虑 RCA-Aware Tuple Evaluator。但‘设计 AutoVerif 框架’和‘考虑剥离开源评测套件’仍偏方向性，不是足够小的可验证动作。模板要求的最小可验证动作应具体到一个产物，例如 schema、脚本、数据集映射或 demo。",
+        "missingEvidence": [
+          "缺少下周必须交付的具体文件或代码产物。",
+          "缺少 RCA-Aware Evaluator 的最小 demo 定义。",
+          "缺少完成标准，例如跑通多少样本、输出哪些指标。",
+          "缺少时间安排和优先级。"
+        ]
+      },
+      "evidenceQuality": {
+        "score": 4,
+        "reason": "周报提供了多个具体数字：52%/48% 误差归因、120B P-C 39.4%、SAST 最高 P-C 10.67%、LLM Judge 误差率 0.67%、A100 与 token/KLOC 等，证据密度较高。扣分点是大多数数字没有表格、链接、样本量或实验协议支撑；证据等级虽然标为 A，但读者只能信任描述，无法复核。",
+        "missingEvidence": [
+          "缺少原始实验结果表或日志链接。",
+          "缺少数据集规模、样本抽样方法和统计置信区间。",
+          "缺少人工标注协议和一致性检查。",
+          "缺少实验脚本或配置说明。"
+        ]
+      }
     },
-    "cognitiveIncrement": {
-      "score": 14,
-      "reason": "提出两个重要认知增量：一是二分类评估在漏洞检测中具有误导性，必须采用RCA感知元组；二是轻量级静态分析与LLM推理存在黄金平衡点，重型图构建不具落地可行性。这两个认知均对既有方法构成修正，且有实验对比支撑。",
-      "missingEvidence": "两项认知已嵌入实验数据中（如RCA-verified F1提升18.6-34.2%支撑认知一，过程间路径实验支撑认知二），未单独给出对照实验表格，但现有信息已证明认知有效性。"
-    },
-    "cot2Depth": {
-      "score": 14,
-      "reason": "CoT’s CoT1通过20B与120B的消融实验揭示模型规模无法弥补上下文结构缺陷，直击业界“暴力通读”的误区，并指出高质量上下文重构才是能力上限，深度突出且老师原本不知；CoT’s CoT2验证了LLM-as-a-Judge的0.67%极低误差率，突破了循环论证的认知偏见，虽老师已知但将其工程可行性量化仍具价值。两者均附A级证据。",
-      "missingEvidence": "CoT’s CoT1已直接附实验数据，CoT’s CoT2给出抽样规模和误差计算，无缺失。"
-    },
-    "brainaryMapping": {
-      "score": 9,
-      "reason": "明确将RCA-Aware Evaluator映射为Brainary的Evaluator/Benchmark能力，将TPT Token压缩映射为Memory Schema/Workflow Management，指出了两项能力当前未系统化的原因（传统指标阻碍、未集成到上下文管理流程），并给出了沉淀形态建议，关联清晰且可执行。",
-      "missingEvidence": "未说明RCA-Aware Evaluator与现有Brainary模块的具体接口差异，但已点出沉淀路径，不构成关键缺失。"
-    },
-    "monetaryValue": {
-      "score": 8,
-      "reason": "估值200万元，基于提升30%根因定位准确率可节约1500人·年高级安全工程师人工的计算逻辑，参考了企业SAST运维成本，估算链完整；但未给出工程师时薪或算力单价的具体基准，使得货币化稍显粗放，但仍具合理性。",
-      "missingEvidence": "缺少年均高级安全工程师成本的具体构成或参考报价，但影响有限。"
-    },
-    "projectManagement": {
-      "score": 14,
-      "reason": "项目管理信息齐全：明确了项目阶段（Rebuttal定稿提交）、时间投入（高强度完成4位审稿人回复）、资源占用（本地A100、212.7k tokens/KLOC测试）、成本可控（本地模型）、进度判断（符合预期，赶上Deadline）及纠偏动作（下周封存），展现了良好的节奏控制与资源意识。",
-      "missingEvidence": "未提供更精细的日进度或里程碑节点，但当前描述已满足管理透明性要求。"
-    },
-    "nextAction": {
-      "score": 9,
-      "reason": "下周最小可验证动作明确为“归档封账，转入AutoVerif框架设计”，具体且可检验，能推动项目闭环并衔接新基建；若补充AutoVerif的设计启动标志或原型目标会更具指导性。",
-      "missingEvidence": "缺乏AutoVerif框架设计的最简交付定义，但作为周级下一步动作已足够清晰。"
-    },
-    "evidenceQuality": {
-      "score": 5,
-      "reason": "关键发现均标注A级证据，如20B/120B对比、SAST工具对比、LLM-as-a-Judge误差率等直接给出实验数据或抽样规模，证据链条完整，支撑坚实。",
-      "missingEvidence": "无。"
-    },
-    "totalScore": 92,
-    "tier": "S",
-    "oneLineJudgment": "本周以Rebuttal冲刺为核心，在硬数据产出、深层认知突破（尤其过程间上下文的价值辩驳）和系统化能力映射上均达成高密度进度，是一份充分体现从实验到工程转化的S级周报。",
-    "professorFollowUp": "建议跟进USENIX Security审稿最终结果，并评估AutoVerif框架的启动资源与里程碑，可提前讨论RCA-Aware Evaluator作为Brainary标准件的集成排期。"
+    "totalScore": 82,
+    "tier": "A",
+    "oneLineJudgment": "这是一个高质量的单周科研冲刺周报：硬进展、二阶认知和系统化映射都强，但下一步工程化动作仍不够可验收，部分关键数字缺少可复核证据。",
+    "professorFollowUp": [
+      "要求他下周不要只说设计 AutoVerif，而是交付一个 RCA-Aware Evaluator 的最小可运行版本：输入漏洞报告与 ground truth，输出 RCA-aware tuple 匹配结果。",
+      "要求补一页实验证据索引表，把 52%/48%、39.4%、10.67%、0.67% 等数字对应到数据集、样本量、脚本和结果文件。",
+      "追问 TPT Token 压缩模块如何接入 Brainary：输入 schema、输出 schema、压缩率指标、是否影响 RCA 准确率。",
+      "要求明确 AdvTaint 归档标准：代码、数据、Rebuttal 版本、实验脚本、审稿意见应放在什么位置，谁能复现实验。",
+      "提醒他把‘论文价值’和‘产品/平台价值’分开，重新给出 RCA-Aware Evaluator 作为 DevSecOps 基础设施的真实买单路径。"
+    ]
   }
 }

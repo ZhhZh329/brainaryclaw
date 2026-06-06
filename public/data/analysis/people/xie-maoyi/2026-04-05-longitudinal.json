@@ -1,59 +1,204 @@
 {
   "key": "person:xie-maoyi:2026-04-05:longitudinal",
-  "generatedAt": "2026-05-24T11:53:19.679Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "05038f504f4e1330ca726d99027965b95af90be757a1c1b98837dff3f70156a8",
+  "generatedAt": "2026-06-06T13:15:52.348Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "4a5c5f98e42fded85f9ea9db3bce766e28ffac741023b0c085f02e92b4e9c4bd",
   "result": {
-    "overallTrajectory": "学生从初步原型和调研出发，经历了方法增强、负结果发现、到深刻认知瓶颈，尽管工程产出（如trace pipeline）增加，但核心因果推理图构建始终未落地；研究能力从执行任务提升到识别并聚焦核心科学问题，认知深度显著增长，但执行力在关键创新点上滞后，呈现“认知快于实现”的态势。",
-    "stageByWeek": [
+    "overallTrajectory": "总体看，这名学生在最近四周不是单纯变忙，而是在逐步提高研究能力：他从第1周的调研与原型堆叠，发展到第2周能拆解失败模式和提出可证伪假设，第3-4周能用负结果修正路线，并把问题从“更多 trace/coverage”推进到“search space 控制、candidate filtering 与 causality 建模”。但当前最大短板也很清楚：KernelLocator/KRDG 被反复提出，却连续数周仍停留在想法阶段，研究判断已经进步，核心方法交付尚未跟上。",
+    "headline": "研究判断在变强：能识别负结果和瓶颈迁移，但核心图结构方法仍未进入可验证实现。",
+    "overviewSentence": "学生正在从工程实验推进到问题建模与证据边界识别，但需要尽快把 KernelLocator/KRDG 从反复计划变成最小可检验交付。",
+    "fourWeekTimeline": [
       {
         "week": "2026-03-15",
-        "summary": "周1完成文献调研与KernelLocator原型设计，构建了KRDG图模块和评估框架，提出两阶段定位引擎，但未跑实际实验。研究方向聚焦逻辑bug定位，迈出实现第一步。",
-        "hardProgress": "实现了KRDG图构建、Bug Report解析、两阶段引擎，但无实验结果。",
-        "cognitiveInsight": "认识到kernel场景需要依赖图结构进行因果推理，初步提出KernelLocator的思路。",
-        "valueJudgment": "未明确金额，但从原型设计看，认为构建图引导的定位系统有价值。",
-        "plannedNext": "下载内核源码，跑通KRDG并进行端到端验证。"
+        "metacognition": "主要表现为高强度调研、benchmark 选择、baseline 整理和 KernelLocator 原型设想；有初步方法意识，但周报中较少显式反思失败模式、证据边界和判断标准。",
+        "valueJudgment": "能判断 LinuxFLBench 适合作为评估基准，并识别 logic/functional bug 是 kernel 场景主流问题；但还没有清楚说明为什么该问题相对其他方向更值得长期投入，也没有明确项目价值的验证证据。",
+        "projectManagement": "有明确下周动作：下载 kernel 源码、跑通 KRDG dry-run、在 5-10 个 bug 上端到端验证；但缺少原计划 vs 实际完成、关键路径、依赖、资源和里程碑。Conti/Logickaller 只报告集成 RCA 和复现 3 个 bug，后续是否持续推进证据不足。",
+        "evidence": "报告包含 LinuxFLBench 250 个 bug、50 个评估子集、6 组 baseline、KRDG 构建模块、bug report 结构化解析、两阶段定位引擎和评估框架，但没有给出实验结果或失败分析。"
       },
       {
         "week": "2026-03-22",
-        "summary": "周2深入分析FLBench数据集，提出8类failure pattern，实现LinuxFL⁺后处理框架并取得显著recall提升，同时澄清瓶颈：candidate generation而非ranking。将KernelLocator设计为下一步方向。",
-        "hardProgress": "构建failure taxonomy，实现三阶段增强，Recall@1提升7-11%，每bug成本$0.04；明确了logic bug为主流。",
-        "cognitiveInsight": "核心认知：现有FL方法瓶颈在假设空间生成，结构信息（图）比语义信息更重要；扩展假设空间比优化决策重要。",
-        "valueJudgment": "为任务赋值：FLBench分析5万，FL⁺ 10万，Locator 3万，认为有实际提升的工作价值高，但方法若heuristic则价值受限。",
-        "plannedNext": "构建最小KRDG并验证，对失败case做error analysis。"
+        "metacognition": "出现明显提升：能把 250 个 bug 分类为 crash 与 non-crash，并提出 8 类 failure pattern；能指出 taxonomy 仍是描述性、尚未转成可计算结构；能提出被证伪路径，如单纯多跑 agent 和 ensemble 上限明显。",
+        "valueJudgment": "价值判断开始从“做一个 locator”转向“candidate generation/hypothesis space 是核心瓶颈”；能判断 LinuxFL⁺ 虽然有效但偏 heuristic，KernelLocator 是否值得取决于能否显著超越 FL⁺。",
+        "projectManagement": "项目管理显著更完整：给出当前阶段、原计划 vs 实际、投入时间、2 周和 4 周里程碑、资源/API、依赖、是否关键路径和纠偏动作。Brainary 相关能力被映射到 reasoning、memory、tool orchestration、benchmark/evaluation，但仍是设计层映射，尚未有系统接口或模块交付。",
+        "evidence": "报告给出 FL⁺ 在三个 agent 上 Recall@1 提升 7%-11%、Recall@10 提升 18%-25%，ensemble 上限 58.4%，并明确 KRDG 仍是 conceptual、graph granularity 未定。"
       },
       {
         "week": "2026-03-29",
-        "summary": "周3转向ftrace收集和实验，发现trace对LLM定位提升有限，RC覆盖率仅33%。得出关键负结果，并重新聚焦问题本质：需要结构化因果模型。提出KernelLocator核心方向。",
-        "hardProgress": "实现ftrace收集pipeline，60%成功率，trace+LLM实验仅1例提升；明确RC不在backtrace是主因。",
-        "cognitiveInsight": "证伪了“trace显著提升FL”的假设，认识到信息必须结构化才有价值；LLM的不足在于search space不明。",
-        "valueJudgment": "负结果被赋予8万价值，显示学生开始重视科学发现而非仅效果。方向价值仍需验证。",
-        "plannedNext": "实现KCOV baseline，构建最小图并测试。"
+        "metacognition": "进一步提升：能接受负结果并修正判断，明确“trace 本身不是核心问题，关键是 trace → reasoning 的连接缺失”；识别“更多数据不等于更好定位”的失败模式。",
+        "valueJudgment": "开始区分 supporting work 与核心方法：trace pipeline 有基础设施价值，但不是最终研究贡献；KernelLocator 有潜力但未验证。价值判断比前一周更谨慎，能把项目继续投入的条件绑定到结构化因果建模。",
+        "projectManagement": "ftrace pipeline 有明确交付：build → QEMU → ftrace → 收集，40 个 crash bug 实验，24/40 成功；但 KernelLocator 仍未构建 graph。Brainary 相关沉淀被表述为 trace/code/reasoning 统一接口、execution-state memory、causal inference module，但仍未转化为可复用组件。",
+        "evidence": "报告给出 ftrace 成功率 60%、RC in trace 8/24 即 33%、trace+LLM 仅在 7 个 RC-in-trace bug 上小幅提升，并明确 trace 路线收益低、转向 KCOV + graph。"
       },
       {
         "week": "2026-04-05",
-        "summary": "周4用KCOV替代ftrace，RC覆盖率提升至42.1%，但LLM定位仍无改进。最终明确：瓶颈在candidate ranking和causality。仍计划构建图但未行动。",
-        "hardProgress": "KCOV calltree收集pipeline，覆盖率比原始提升3.3x；calltree+LLM实验几乎无增益。",
-        "cognitiveInsight": "核心认知转为“控制search space比增加信息更重要”，LLM失败主因search space explosion；需要构建execution graph。",
-        "valueJudgment": "KCOV pipeline值6万，实验8万（因有结论），但整体价值未突破，因为仍未形成有效方法。",
-        "plannedNext": "加入calltree压缩策略，并构建函数级依赖图过滤候选。"
+        "metacognition": "当前最强信号是能把瓶颈再次细分：coverage、ranking、causality 三类问题，并证伪“更好的 trace → 更好的 FL”和“只要 RC 在 trace 中就能找到”。这说明他不再把实验成功率等同于研究进展，而是在追问信息如何变成可推理结构。",
+        "valueJudgment": "价值判断更稳定：KCOV 可提升覆盖但不是最终方案，KCOV+LLM 提供 empirical insight 但提升有限，KernelLocator 仍需验证；他能把值得投入的理由落到大型系统 FL、search space 控制、causal reasoning 和可沉淀的 FL agent/workflow/benchmark 上。",
+        "projectManagement": "KCOV pipeline 有硬交付：65 个困难 bug、57/65 收集成功、24/57 RC coverage；下周动作是 KCOV_REMOTE 和 candidate filtering。但连续数周承诺的 function-level dependency graph 仍未开始，KernelLocator 仍处想法阶段，是当前关键项目管理风险。",
+        "evidence": "报告给出 KCOV RC coverage 42.1%、较原始方法 3.3x、Top-1 无提升、Top-5 2/24 到 3/24、Top-10 2/24 到 4/24，并提出下周测试过滤 80% candidate。"
       }
     ],
-    "trendScores": {
-      "hardProgressTrend": "工程产出增加（数据收集、覆盖率提升），但方法突破不明显，核心指标（定位准确率）陷入停滞。",
-      "cognitiveTrend": "持续深化，从假设验证迅速迭代到识别根本瓶颈，认知质量显著上升。",
-      "cotMaturityTrend": "从现象描述（生成重要性）逐步提炼为可操作方向（构建可推理结构），并积累实证等级，成熟度上升。",
-      "valueReasoningTrend": "从看重工具效果转向看重科学洞察，负结果被视为正价值，判断标准升级，但外在金额赋值变化不大。",
-      "projectManagementTrend": "每周自我纠偏快，但关键动作（图构建）多次延迟，显示执行力在概念性任务上的不足。"
+    "metacognitionChange": {
+      "summary": "元认知有真实进步，尤其体现在三点：第一，他能把实验结果转化为失败模式，而不是只报告完成量；第二，他能主动证伪路线，例如 trace、更多数据、RC 在 trace 中即可定位等假设；第三，他能持续收窄问题表述，从 fault localization 泛问题，收敛到 hypothesis space、search space、candidate ranking 和 causality 建模。但目前仍存在一个关键断点：他能准确命名核心瓶颈，却还没有把瓶颈转成可验证的最小结构模型。",
+      "byWeek": [
+        {
+          "week": "2026-03-15",
+          "change": "以调研和实现为主，元认知表达较弱；能提出 KRDG 和两阶段定位，但缺少失败标准与证据边界。"
+        },
+        {
+          "week": "2026-03-22",
+          "change": "开始建立 failure taxonomy，能识别 taxonomy 仍不可计算，并提出候选生成比 ranking 更关键；这是从“做了什么”到“为什么这样做”的转折。"
+        },
+        {
+          "week": "2026-03-29",
+          "change": "能从 ftrace 负结果中得出“信息必须结构化才有价值”，并修正 trace 路线判断；体现出对失败模式和判断错误的识别。"
+        },
+        {
+          "week": "2026-04-05",
+          "change": "能进一步区分 coverage、ranking、causality，并用 KCOV 结果说明 coverage 提升不等于 FL 提升；当前元认知已进入“怎样证明/怎样沉淀”的阶段，但实现还未跟上。"
+        }
+      ],
+      "currentLevel": "中上：具备研究型问题重构能力、负结果吸收能力和证据等级意识；尚未达到成熟研究者水平，因为核心假设的最小可验证实验还没有按周落地。",
+      "strongestSignal": "最强信号是连续两周面对 trace/KCOV 的有限收益后，没有继续堆工程，而是把认知更新为“coverage 不是最终瓶颈，search space 控制和 causality 才是核心”。",
+      "nextLift": "下一步提升不是再写更完整的 insight，而是把 insight 变成验证标准：例如定义 KRDG 最小图结构、candidate filtering 指标、与 FL⁺/KCOV baseline 的对照方式，并在 5 个 bug 上给出成功/失败判据。"
     },
-    "valueFunctionChange": "初期价值函数：能提高recall的实用增强方法值得投入（周2的FL⁺值10万），纯分析值较低（5万）；经历负结果后，洞察和证伪也获得价值（周3 trace实验值8万），但最高价值仍寄托于未验证的方法突破（图推理）。后期对实用性的判断更严谨，明确需要结构化解决方案而不仅是数据增强。学生从追求“有效果”转向追求“可解释、可泛化的机制”，尽管金额未见增长，但内在价值标准从工程收益转向科学贡献。",
+    "valueGrowth": {
+      "summary": "科研/项目价值判断在变清楚：他逐步从“kernel logic bug 很重要”推进到“为什么现有方法失败、什么贡献可能可发表/可沉淀、什么只是 supporting infra”。他对价值的判断不再只依赖工程规模，而开始依赖是否能产生 benchmark、workflow、agent module、memory schema、reasoning module 等系统能力。不过周报中仍混入金额估算，这对判断科研价值帮助有限；更重要的价值证据应是问题覆盖面、baseline 失效机制、可复用能力和可验证性能提升。",
+      "byWeek": [
+        {
+          "week": "2026-03-15",
+          "valueJudgment": "初步判断 LinuxFLBench 适合作为基准，logic/functional bug 是主流；但价值函数还不完整，缺少为什么该问题比其他 kernel/fuzzing/RCA 问题更值得投入的论证。"
+        },
+        {
+          "week": "2026-03-22",
+          "valueJudgment": "明确 candidate generation/hypothesis space 是核心瓶颈，并将 FL⁺ 判断为有效但 heuristic；能提出 KernelLocator 价值取决于是否显著超越 FL⁺。"
+        },
+        {
+          "week": "2026-03-29",
+          "valueJudgment": "能把 trace pipeline 定位为 supporting work，把 trace+LLM 负结果定位为 empirical insight，把 KernelLocator 定位为高不确定性方向；价值判断更有取舍。"
+        },
+        {
+          "week": "2026-04-05",
+          "valueJudgment": "能判断 KCOV 解决 coverage 但不解决最终 FL，下一步价值集中在 candidate filtering 和 causality；这比上一周更稳定，也更接近可发表和可系统化的研究贡献。"
+        }
+      ],
+      "currentValueFunction": "当前隐含价值函数是：值得持续投入的方向应满足四个条件：一是针对 kernel logic/functional bug 这类现有方法覆盖不足的真实问题；二是能解释 baseline 为什么失败，而不是只提升指标；三是能从 heuristic pipeline 沉淀为 graph/reasoning/memory/workflow 等 Brainary 可复用能力；四是能通过小规模但严格的对照实验证明 candidate space 被缩小、ranking 改善或 causal chain 更可解释。",
+      "improvementSignals": [
+        "从第2周开始明确 FL⁺ 有效果但偏 heuristic，因此不是最终研究形态。",
+        "第3周能承认 trace 路线不一定最优，说明他没有把已投入工程量误判为项目价值。",
+        "第4周把 KCOV 的价值限定在 coverage，并将真正贡献转向 candidate ranking 和 causality，价值判断更有边界。",
+        "连续报告中把自动化科研沉淀形式从 benchmark/workflow 扩展到 graph builder、memory schema、reasoning module、agent policy，说明他开始连接个人实验和长期系统能力。"
+      ],
+      "nextValueQuestion": "下次需要他回答：KernelLocator 相比 FL⁺、KCOV+LLM、单纯 rerank 的不可替代价值是什么？如果两周内 KRDG 只能过滤 candidate 但不能提升 Top-k，它仍然值得做的研究理由是什么，还是应转向 benchmark/evaluation protocol 贡献？"
+    },
+    "projectManagementReview": {
+      "summary": "项目管理质量整体上升：第2周后开始稳定报告阶段、原计划 vs 实际、投入、里程碑、资源和纠偏动作；ftrace 与 KCOV 都有可检查交付和指标。但管理风险集中在 KernelLocator/KRDG：它是周报中反复确认的关键路径，也是 Brainary reasoning/memory/tool orchestration 能力沉淀的核心载体，却连续三周停留在计划或概念层，尚未产生最小 graph prototype。",
+      "projects": [
+        {
+          "project": "LinuxFLBench / FL⁺ 后处理框架",
+          "weeks": [
+            "2026-03-15",
+            "2026-03-22"
+          ],
+          "quality": "中高。前两周有清晰数据集、baseline、failure taxonomy 和实验指标；第2周给出 Recall@1、Recall@10 提升以及 ensemble 上限，具备可检查交付。",
+          "whatWorked": "能从 benchmark 分布和 agent 失败中提炼 candidate generation/hypothesis expansion 问题；FL⁺ pipeline 包含 directory expansion、hypothesis expansion、RRF + LLM rerank，可沉淀为 Brainary 的 workflow 和 evaluation protocol 雏形。",
+          "managementGap": "第3-4周该项目不再作为独立推进项出现，缺少是否冻结、是否继续写成论文/benchmark、是否与 KernelLocator 对接的状态说明；FL⁺ 与后续 KCOV/KRDG 的关系没有形成明确依赖图。",
+          "nextConcreteMove": "明确 FL⁺ 的项目状态：作为 baseline、ablation 组件还是论文主线之一；补一页对照表，说明 FL⁺、KCOV、KRDG 分别解决 candidate generation、coverage、ranking/causality 中的哪一段。"
+        },
+        {
+          "project": "ftrace 动态 trace pipeline",
+          "weeks": [
+            "2026-03-29"
+          ],
+          "quality": "中。工程交付明确，完成 build → QEMU → ftrace → 收集，并在 40 个 crash bug 上验证；但研究贡献有限，且学生已正确识别其收益低。",
+          "whatWorked": "产生了 24/40 成功收集、RC in trace 33%、trace 压缩等数据，并识别 whitelist、timing、trace window 等失败模式；这些负结果帮助后续转向 KCOV 和结构化 reasoning。",
+          "managementGap": "作为一次探索性路线完成后，缺少归档交付说明，例如代码是否可复用、数据是否入库、失败 case 是否标注；Brainary 可沉淀方向如 trace → structure workflow 仍停留在概念。",
+          "nextConcreteMove": "将 ftrace 标记为低优先级 supporting baseline，仅保留可复现实验脚本和失败模式表，不再投入大规模工程，除非它能服务 KRDG 的 execution graph 构建。"
+        },
+        {
+          "project": "KCOV calltree pipeline 与 KCOV + LLM 实验",
+          "weeks": [
+            "2026-04-05"
+          ],
+          "quality": "中高。第4周有明确硬交付：unified KCOV pipeline、TLS、多线程、all-syscall flush、fork-loop、1M buffer、65 个困难 bug 系统实验；指标完整，但方法价值仍未转化为 FL 性能。",
+          "whatWorked": "KCOV 将 RC coverage 提升到 42.1%，较原始方法 3.3x，并识别 kworker、inline、mount、buffer、RC 定义偏差等失败模式；这为 Brainary 的 tool orchestration 和 execution + code memory schema 提供了原始能力基础。",
+          "managementGap": "KCOV + LLM 的 Top-k 提升有限，说明 pipeline 交付不等于研究贡献；目前缺少 candidate filtering 的具体算法、压缩前后指标、以及如何与 KRDG 连接的接口定义。",
+          "nextConcreteMove": "下周只做一个最小可验证动作：实现 KCOV_REMOTE 后先验证 coverage 是否超过 50%；同时对 24 个 RC-in-calltree bug 做 subsystem/frequency filter ablation，报告过滤比例、RC 保留率和 Top-5 变化。"
+        },
+        {
+          "project": "KernelLocator / KRDG / graph-guided causal reasoning",
+          "weeks": [
+            "2026-03-15",
+            "2026-03-22",
+            "2026-03-29",
+            "2026-04-05"
+          ],
+          "quality": "当前质量是“研究方向判断强，项目执行弱”。它每周都被识别为关键方向，但第2-4周反复写到 KRDG 仍 conceptual、graph 未构建、causal reasoning 抽象。",
+          "whatWorked": "方向逐渐清晰：从最初 KRDG + bug report 解析 + 两阶段定位，演化为 execution → graph → reasoning，并将 Brainary 的 reasoning、memory、cognitive control、tool orchestration 连接起来；这是最可能沉淀为系统能力的项目。",
+          "managementGap": "关键路径没有按周兑现。第2周计划最小 KRDG，第3周计划 function-level dependency graph，第4周仍计划 function-level dependency graph；缺少最小图 schema、节点/边定义、输入输出、成功指标和与 KCOV/FL⁺ 的接口。",
+          "nextConcreteMove": "老师应要求一周内交付最小 KRDG v0：只包含 function 节点、call/include/subsystem 三类边，在 5 个 bug 上输出 candidate filtering 结果；验收标准为过滤掉至少 80% candidate 且保留至少 4/5 个 ground-truth RC 或明确说明失败原因。"
+        },
+        {
+          "project": "Conti / Logickaller RCA 集成",
+          "weeks": [
+            "2026-03-15"
+          ],
+          "quality": "证据不足。只在第1周报告“Kernel fuzzing 持续推进、RCA 组件集成到 Logickaller、复现 3 个 Kernel bug”，后续三周没有状态。",
+          "whatWorked": "第1周至少有 3 个 bug 复现和 RCA 集成方向，但没有交付细节。",
+          "managementGap": "缺少当前阶段、原计划 vs 实际、依赖、是否被暂停、是否与 Kernel FL 主线合并、是否需要 Praveen 或老师介入。不能判断是否持续推进。",
+          "nextConcreteMove": "在下周周报中用三行说明该项目状态：继续、暂停或并入 KernelLocator；若继续，列出一个可检查交付；若暂停，说明暂停原因和恢复条件。"
+        }
+      ],
+      "managementPattern": "该学生能管理探索性实验，并能在负结果后转向；但容易把核心方法项目延后，把周内主要时间投入到支撑性 pipeline。也就是说，他现在的管理模式更擅长“验证现有工具链是否有用”，还不够擅长“强制推进最小原创方法”。",
+      "nextManagementMove": "下周应把所有任务压缩成两个验收项：一是 KCOV_REMOTE coverage 是否超过 50%；二是 KRDG v0 是否在 5 个 bug 上完成 candidate filtering。其他任务都应服务这两个验收项，避免继续产生没有连接到核心假设的工程工作。"
+    },
     "repeatedBlockers": [
-      "因果依赖图（KRDG/Kernel dependency graph）自周1原型后始终未实际构建，连续三周列为下周计划但未执行。",
-      "candidate ranking和causality建模被反复确认为核心瓶颈，但无实质性方法突破，仅停留在方向设计。"
+      "KernelLocator/KRDG 连续数周被列为关键方向，但 graph prototype 未落地。",
+      "trace、KCOV、calltree 都产生了更多观测信息，但信息到 causality/reasoning 的结构化转换仍缺失。",
+      "LLM 在大 search space 中退化为搜索，candidate filtering 和 ranking 机制尚未形成。",
+      "Brainary 相关能力映射较清楚，但仍是概念映射，缺少统一 representation、接口和可复用模块交付。",
+      "项目之间的关系需要更明确：FL⁺、ftrace、KCOV、KRDG 分别是 baseline、supporting infra 还是主线贡献，目前仍有混合。"
     ],
-    "professorShouldAsk": "你什么时候能给出最小可行图原型并证明它能过滤80%候选？如果图构建是必要基础，为什么它一直排在执行track的后面？",
-    "nextBestIntervention": "要求学生立即暂停所有数据收集实验（打住KCOV优化），集中两周时间构建函数级依赖图（哪怕手工），在至少5个bug上验证它是否能有效缩小候选集80%以上，再基于结果决定下一步是继续优化图还是补充其他模块。"
+    "teacherQuestions": [
+      "你下周交付的 KRDG v0 最小 schema 是什么？节点、边、输入、输出和失败判据分别是什么？",
+      "如果 KCOV_REMOTE 把 coverage 提到 50% 以上，但 Top-k 仍不提升，你会如何判断 KCOV 路线的研究价值和停止条件？",
+      "KernelLocator 相比 FL⁺ 的不可替代贡献是什么：candidate generation、candidate filtering、ranking，还是 causal explanation？请只选一个作为两周主目标。",
+      "你能否把 5 个 bug 的端到端验证表提前定义好，包括 baseline、过滤比例、RC 是否保留、Top-k 变化和错误原因？",
+      "Conti/Logickaller 项目现在是暂停、并入 Kernel FL，还是仍需独立交付？是否需要我或其他人协调资源？"
+    ],
+    "nextIntervention": "建议老师下一次 meeting 不主要讨论更多想法，而是要求学生带来一页“KernelLocator 最小验证协议”：5 个 bug、KRDG v0 schema、candidate filtering 指标、与 FL⁺/KCOV baseline 的对照、成功/失败阈值。如果学生无法在一周内产出该协议和最小结果，应帮助他缩小问题范围，避免继续在 trace/KCOV 工程上消耗主线时间。",
+    "studentFeedback": {
+      "summary": "你最近四周的进步不只是工作量增加，而是能从实验结果中识别研究瓶颈，并能用负结果修正方向。现在最需要提升的是把已经说清楚的 insight 变成最小可验证方法。",
+      "whatImproved": [
+        "你从“构建 pipeline/跑 baseline”进步到能拆解 failure pattern、证伪错误路线、标注证据等级。",
+        "你能看出 trace/KCOV 提供的是观测覆盖，不等于 causal reasoning，这是真正的研究判断进步。",
+        "你对项目价值的判断更清楚：supporting infra、empirical insight、核心方法贡献之间开始分开。",
+        "你已经能把工作连接到 Brainary 的 reasoning、memory、tool orchestration、cognitive control 和 benchmark/workflow 沉淀。"
+      ],
+      "nextStep": "下一周不要再扩大工程面，先交付 KRDG v0 和 5 个 bug 的最小验证。你需要证明的不是“我又收集了更多信息”，而是“我能把信息变成结构，并且这个结构能缩小 search space 或改善定位”。"
+    },
+    "evidenceLinks": [
+      {
+        "week": "2026-03-15",
+        "evidence": "选择 LinuxFLBench 作为基准，构建 50 bug 子集，整理 6 组 baseline，提出 KRDG、bug report 解析、两阶段定位和评估框架；但缺少实验结果和项目管理细节。"
+      },
+      {
+        "week": "2026-03-22",
+        "evidence": "250 个 bug 分类，non-crash 占 72%，提出 8 类 failure pattern；FL⁺ 在三个 agent 上 Recall@1 提升 7%-11%、Recall@10 提升 18%-25%；明确 Locator 进展慢是方法设计不清晰。"
+      },
+      {
+        "week": "2026-03-29",
+        "evidence": "ftrace 在 40 个 crash bug 上 24/40 成功，RC in trace 33%；trace+LLM 仅在 7 个 RC-in-trace bug 上小幅提升；明确 trace 路线收益低并转向 KCOV + graph。"
+      },
+      {
+        "week": "2026-04-05",
+        "evidence": "KCOV 在 65 个困难 bug 上 57/65 成功，RC 出现在 calltree 24/57，即 42.1%；GPT-4o 实验 Top-1 无提升、Top-5 2/24 到 3/24、Top-10 2/24 到 4/24；提出 coverage、ranking、causality 三类问题。"
+      },
+      {
+        "week": "跨周证据",
+        "evidence": "KernelLocator/KRDG 从 2026-03-15 起持续出现，但 2026-03-22、2026-03-29、2026-04-05 均显示 graph 仍未构建或仍处想法阶段，这是主线交付滞后的关键证据。"
+      }
+    ]
   }
 }

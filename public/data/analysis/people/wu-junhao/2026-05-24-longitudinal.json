@@ -1,31 +1,233 @@
 {
   "key": "person:wu-junhao:2026-05-24:longitudinal",
-  "generatedAt": "2026-05-24T14:02:15.573Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "7d092e7abfcda53e46c4853012181218cd1060377ea0674d76559a889bd857e3",
+  "generatedAt": "2026-06-06T13:14:58.054Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "4cbe18614bdad20dbd9f40f2298466e8b2bce04961bc13012cb20ada9d1d42ca",
   "result": {
-    "overallTrajectory": "学生从关注KG与任务表面的对齐，逐渐深入理解模型使用外部知识的本质瓶颈，最终将KG重新定义为‘program的压缩’，并开始转向agent范式。认知升级显著，研究能力从执行型向认知型提升。虽然硬成果滞后，但问题定义能力和方法论意识明显增强，能主动与导师高阶框架对齐。",
-    "stageByWeek": [
-      "第11周：意识到KG与影像任务不对齐，开始区分短期补丁与长期医学表示。初步整合world model、patient representation和working memory。",
-      "第12周：发现KG内容质量与模型使用KG是独立问题，形成方法论小工具。开始接受LTM抽象/实例化分层，认知从‘做对KG’向‘让模型用KG’漂移。",
-      "第13周：通过严格对照实验和重新评估，意识到评估指标会掩盖真实能力，并多次回原文校对消除理解偏差。从fine-tuning视角色脱身，理解perception应作为agent过程。",
-      "第14周：基于大量实验，将KG重新定义为program的压缩，并指出single forward pass无法unpack program。完成认知框架的根本性修正，并将实验证据与agent认知链对齐。"
+    "overallTrajectory": "在最近四周里，这名学生不像只是变忙，而是在研究能力上有真实上升：他逐步从“扩 KG、跑实验、求涨点”转向“拆变量、校准指标、回原文验证、识别模型是否真正使用证据、把 KG 映射为可执行 program 和 Brainary 的 memory/agent 能力”。但项目管理质量仍明显落后于认知进步，多个计划没有形成连续交付，尤其是 Merlin×INSPECT、整合医学医生问题清单、KG 抽象/实例化 schema 和 architecture-level memory 代码落地都缺少按周闭环。",
+    "headline": "研究判断力在增强，尤其是失败诊断和证据边界意识；但交付闭环、里程碑和资源依赖管理仍不足。",
+    "overviewSentence": "吴俊豪最近四周的进步主要体现在能从实验失败中修正研究假设和评价协议，但还需要把这些高层 framing 压到可检查的代码、schema、实验矩阵和周交付上。",
+    "fourWeekTimeline": [
+      {
+        "week": "2026-05-03",
+        "metacognition": "开始区分“为了当前 benchmark 涨点的 KG 调整”和“长期值得沉淀的医学表示能力”，能意识到疾病层级 KG 与 DeepTumorVQA 的 CT 问题空间不对齐，并提出要做失效模式分析。这是从做节点扩展转向判断表示是否适配任务。",
+        "valueJudgment": "价值判断从单一涨点转向长期医学状态表示：认为 KG 只是工程入口和短期实验资产，长期价值在于外部知识、语义空间、working memory、医生反馈共同支撑医学状态理解。该周价值判断较清楚，但仍偏概念化。",
+        "projectManagement": "有具体进展：KG 自动节点抽取、本体补全、Mondo 对齐、PubMed 检索做到 311 个节点；Merlin×INSPECT 有复现实验和 AUROC 结果；下周计划包含 DeepTumorVQA 小规模前后对比、KG 失效模式分类、EHR 接入、医生问题清单。但缺少明确交付验收标准和时间估计。",
+        "evidence": "报告称 KG 已做到 311 个节点；发现 DeepTumorVQA 主要问 HU、Couinaud 段、attenuation、增强方式和病灶位置；Merlin MLP 在 1m、6m、12m mortality 上 AUROC 为 0.861、0.831、0.803，高于 image-only LRCN。"
+      },
+      {
+        "week": "2026-05-10",
+        "metacognition": "通过失败实验否定“只要 KG 更贴合任务，模型就能用上”的假设，明确区分“KG 内容质量”和“模型是否使用 KG”两个变量。这是方法论层面的真实进步。同时他承认 CoT² 能力有限，更多是被动接住老师 framing。",
+        "valueJudgment": "价值判断从“有没有涨点”扩展到“能否沉淀为可复用 evaluation protocol”。他开始把无涨点实验中的失效模式识别看作长期方法学价值，而不是简单低估。",
+        "projectManagement": "研究投入受毕业论文影响减少；原计划部分搁置。对 KG 对照实验有阶段性发现，但只在一个数据集和部分 case 上验证。下周计划提出完整实验矩阵、KG 抽象/实例化拆解和 zero-shot/few-shot 检验，方向合理但交付颗粒度仍偏大。",
+        "evidence": "报告称即使给每道题精确 oracle knowledge 和判断规则，模型输出基本逐字相同；提出下周在重新训练模型上分离“KG 内容好坏”和“模型是否会用 KG”。"
+      },
+      {
+        "week": "2026-05-17",
+        "metacognition": "元认知明显加强：他发现 accuracy 对能力判断有结构性误导，改用 Sens/Spec/Youden's Index 后推翻此前结论；同时识别出自己依赖 GPT/公众号总结理解论文会带来结构性偏差，提出必须回原文校准。这是证据边界和判断错误识别能力的增强。",
+        "valueJudgment": "价值判断进一步从实验结果转向评估协议、文献校准和研究范式选择。他开始认为 fine-tuning 解决 KG 整合是在窄空间搜索，agent+动态 memory 在知识更新上有更深必要性。",
+        "projectManagement": "继续受毕业论文影响，原计划 KG 搭建没有推进；但完成了更完整的 DeepTumorVQA 对照和评估重读。下周计划更具体：消化 Phase 1 训练结果、验证 aux classification loss 是否提升 Youden's Index、推进 architecture-level memory 代码、启动 minimal viable KG pipeline。问题是这些计划多线并行，缺少优先级和最小闭环。",
+        "evidence": "报告称零视觉条件下 Sens=1.0、Spec=0.0，说明模型全答 yes；正常视觉 Youden's 为 +0.46；continue training 在 fatty liver 子任务上提升约 7pp；承认原计划 KG 搭建没有动。"
+      },
+      {
+        "week": "2026-05-24",
+        "metacognition": "开始把老师的“KG 是对 program 的压缩”和自己的实验、DeepTumorVQA v2 论文对齐，认识到 use KG 不是单纯 channel 工程，而是把压缩的 program unpack 成可执行步骤的问题。这是 CoT² 层面的较强进展，也更接近 Brainary 的 agentic perception framing。",
+        "valueJudgment": "价值判断更稳定：他不再把 KG 当额外知识源，而是看作 program template、evidence 调用和 memory 抽象/实例化的连接点。价值判断已能连接个人 KG 实验、Brainary memory 能力、agent 工具调用、自动化科研沉淀。",
+        "projectManagement": "本周做了二十多组对照实验，覆盖 KG 注入 channel、训练数据组合、KG 内容结构，并得到 per-question 级别证据；但仍没有 deliverable 级涨点。下周计划包括完成 KG-use 训练、推进 architecture-level memory 调用接口代码、尝试 trace SFT。项目管理有所恢复，但关键路径、资源依赖、验收指标仍需写清。",
+        "evidence": "报告称二十多组实验发现 measurement 类子任务在合适 KG 用法下有稳定 KG-use signal，分类标签类子任务会被 KG 表层文本结构推向错误答案；DeepTumorVQA v2 提供 segmentation、measurement、knowledge lookup 三类 tool；zero-shot agent 几乎不会主动调用 knowledge tool。"
+      }
     ],
-    "trendScores": {
-      "题目轨迹": "从多任务探索收敛到KG-program-agent核心问题，连续性良好，聚焦度提升",
-      "硬进展趋势": "实验数量递增，但产出多为认知和方法论修正，无显性涨点；实证证据积累渐强",
-      "认知趋势": "从被动调优到主动质疑实验假设，再到范式转移，呈现跳跃式上升",
-      "CoT's CoT成熟度": "逐步从识别具体瓶颈到方法论反思，再到范式层重构，成熟度明显提升",
-      "Brainary映射成熟度": "从外围知识提供者到核心认知组件的理解，第四周达到高度对齐",
-      "价值推理": "价值函数从短期涨点转向长期可复用方法学和认知框架，估值理性且引用行业对标",
-      "项目管理": "尽管受到毕业论文干扰，仍能保持双线推进，后期重新聚焦并制定精准下一步",
-      "重复卡点": "时间挤占、评估指标误用、文献理解偏差等被识别并形成系统性解决方案"
+    "metacognitionChange": {
+      "summary": "这四周的元认知变化是主线进步：从第 1 周识别 KG 与任务空间不对齐，到第 2 周拆分 KG 质量和模型是否使用 KG，到第 3 周发现评价指标与真实能力不等价、文献理解存在结构性偏差，再到第 4 周把 KG-use 重构为 program unpack 和 agentic perception 问题。这个变化说明他不是只增加工作量，而是在提升研究判断的分辨率。",
+      "byWeek": [
+        {
+          "week": "2026-05-03",
+          "change": "能识别短期 benchmark 补丁和长期医学表示能力的差异，但仍主要停留在表示层和方向层。"
+        },
+        {
+          "week": "2026-05-10",
+          "change": "能从失败实验中否定自己的核心假设，并提出上限实验和变量分离，是方法论进步。"
+        },
+        {
+          "week": "2026-05-17",
+          "change": "能识别自己之前的指标误读和文献误读，并把回原文校准纳入流程，这是证据边界意识增强。"
+        },
+        {
+          "week": "2026-05-24",
+          "change": "能把实验现象、论文设计和老师 framing 对齐为“KG 是 program 压缩，use KG 是 program unpack”，开始形成较高层的研究模型。"
+        }
+      ],
+      "currentLevel": "当前达到“能从失败和反例中修正研究假设，并能把实验诊断上升到系统设计原则”的水平；但还没有稳定达到“先定义验证标准、再组织项目交付、按周沉淀可复用系统组件”的水平。",
+      "strongestSignal": "最强信号是第 3 周和第 4 周：他先发现 accuracy 掩盖了真实视觉判别能力，再把单步 KG 注入失败解释为 single forward pass 无法执行多步 program，这说明他能纠正自己的判断错误，并把错误转成新的实验设计原则。",
+      "nextLift": "下一步提升不是再写更多高层反思，而是每个 framing 都必须落到一个可检查 artifact：例如 KG 抽象/实例化 schema、trace SFT 数据格式、tool 调用接口、per-question evaluation table、失败类型 taxonomy，并在下周报告中给出链接、表格或最小复现实验。"
     },
-    "valueFunctionChange": "学生最初以‘能否涨点’作为主要价值判断，第二周开始区分短期可量化价值和长期方法学价值，并意识到之前低估了后者。第三周围绕着评估协议修正和认知偏差校准，进一步强化了对方法论价值的认可。第四周在没有涨点的情况下，仍基于实验证据的锚定作用给予估值，并引入行业研究员薪酬作为研究投入价值的参照。整体价值函数从结果导向转向过程与认知导向，更重视长期可复用的资产和深层理解。",
-    "repeatedBlockers": "1. 毕业论文事务持续占用研究时间，导致实验和阅读量阶段性下降；2. KG与模型使用之间的鸿沟反复出现，但逐步深化解决方案；3. 评估指标选择不当（如accuracy掩盖不平衡问题）多次导致误判，后形成系统修正；4. 对文献的理解偏差（依赖二次总结）多次出现，后计划纳入常规流程。",
-    "professorShouldAsk": "1. 你的‘KG是program的压缩’这一认识，如何具体转化为可验证的实验假设？2. 在architecture-level memory设计中，你打算如何区分抽象层和实例化层，并让agent自主判定调用时机？3. 你是否有信心在毕业论文结束后，将方法论修正转化为实质性的性能提升？",
-    "nextBestIntervention": "建议导师：1. 提供更多关于cognitive architecture与agent implementable设计的对比例子，帮助学生将program unpack思维落地；2. 鼓励学生在architecture-level memory上做一个微型原型，即使功能有限，也能验证调用接口的可行性；3. 明确期望学生将评估协议修正作为可交付的方法论贡献，而不仅是认知积累。"
+    "valueGrowth": {
+      "summary": "科研/项目价值判断在变清楚：他逐步从“KG 是否涨点”转向“KG 是否揭示医学系统需要的中间表示、是否能成为 Brainary 的 memory/agent 能力、是否能沉淀为可复用 evaluation protocol 和 program-style execution”。这个价值函数比四周前更稳定，也更有取舍。",
+      "byWeek": [
+        {
+          "week": "2026-05-03",
+          "valueJudgment": "认为 benchmark 适配有短期价值，但真正长期价值在医学状态形成、演化和可观察变量的表示；把 KG 定位为工程入口和短期实验资产，而非终局。"
+        },
+        {
+          "week": "2026-05-10",
+          "valueJudgment": "开始重估无涨点实验的价值：如果失败能形成可复用 protocol，仍有研究价值；这修正了把短期 deliverable 等同于研究价值的偏差。"
+        },
+        {
+          "week": "2026-05-17",
+          "valueJudgment": "把评估协议修正、文献原文校准和 fine-tuning 到 agent+memory 的范式迁移视为持续价值，不再只看当前模型分数。"
+        },
+        {
+          "week": "2026-05-24",
+          "valueJudgment": "把 KG 的价值定义为 program 压缩、evidence 调用和抽象/实例化 memory 的接口，能更直接连接 Brainary 能力建设和自动化科研路径。"
+        }
+      ],
+      "currentValueFunction": "当前他倾向于投入那些能同时满足三点的项目：第一，能暴露医学 AI 的结构性瓶颈，而不只是调参涨点；第二，能形成可复用协议、schema、tool 调用或 memory 机制；第三，能映射到 Brainary 的 LTM、WM、attention/selection、agentic perception 或自动化 KG 生成与质量检测能力。",
+      "improvementSignals": [
+        "不再盲目扩 KG 节点，而是问哪些题型真正需要外部知识、哪些不应继续用 KG 强行解决。",
+        "不再把模型分数等同于能力，而是关注指标是否能测出视觉使用、KG 使用和 shortcut。",
+        "不再把 KG 看作静态知识库，而是看作可被 agent 在 program 正确阶段调用的压缩结构。",
+        "开始把个人实验与 Brainary 的 LTM 抽象/实例化、working memory、attention/selection、agent 工具调用连接起来。"
+      ],
+      "nextValueQuestion": "下一个价值判断问题应当是：在 DeepTumorVQA 这条线上，最值得沉淀的不是“一个更高分模型”，而是哪一个可复用系统能力？是 trace SFT 的调用轨迹生成、KG 抽象/实例化 schema、measurement tool 接口、KG-use 评估协议，还是 agent 自检 shortcut 的自动化评估器？他需要选一个作为未来两周主交付。"
+    },
+    "projectManagementReview": {
+      "summary": "项目管理质量明显弱于研究思考质量。优点是每周都有实验诊断和下一步计划，且 DeepTumorVQA/KG 主线持续推进；问题是多个项目没有形成闭环，原计划与实际完成差异常被毕业论文打断，里程碑、依赖、资源和最小可验证动作写得不够硬。",
+      "projects": [
+        {
+          "project": "DeepTumorVQA 医学 KG 与 KG-use 实验",
+          "weeks": [
+            "2026-05-03",
+            "2026-05-10",
+            "2026-05-17",
+            "2026-05-24"
+          ],
+          "quality": "这是四周中最连续的主项目，研究问题从 KG 对齐、oracle KG 注入、指标重读、Phase 1 训练，推进到 KG-use 训练和 program-style execution。质量在认知诊断上较高，但交付层面还没有稳定涨点或可复用代码/schema。",
+          "whatWorked": "他持续用 DeepTumorVQA 暴露 KG 与模型接口问题；完成了 oracle KG 注入、零视觉/打乱视觉/正常视觉对照、Youden's 指标重读、二十多组 KG 注入 channel 和数据组合实验；第 4 周形成 per-question 级别 evidence，说明 measurement 类任务更可能出现 KG-use signal。",
+          "managementGap": "缺少一个固定实验矩阵表和每周状态栏：哪些实验已完成、哪些失败、每个失败对应什么结论、是否进入下一阶段。KG 与 Brainary 相关的能力推进仍偏 framing，KG 抽象/实例化 schema、tool 调用接口、trace SFT 数据格式尚未交付。",
+          "nextConcreteMove": "下周只保留一个主验证：完成 KG-use 训练，并用 lesion_volume、inter-segment comparison、器官体积测量三类 measurement-driven 子任务做一张表，列出 baseline、KG prompt、KG-use training、trace SFT 四列，对比 Youden's、调用正确率、答案正确率和错误类型。"
+        },
+        {
+          "project": "Architecture-level memory 与 Brainary KG memory 能力",
+          "weeks": [
+            "2026-05-10",
+            "2026-05-17",
+            "2026-05-24"
+          ],
+          "quality": "这是最有长期价值但落地最不足的项目。认知上从 LTM 内容层推进到抽象/实例化分层，再推进到 program template 与实例化 evidence；但代码层、接口层、schema 层都没有明确交付。",
+          "whatWorked": "他已经能把 Brainary 的 LTM 抽象/实例化映射到医学 KG：抽象层是 medical reasoning program template，实例化层是具体病例中的 segment、lesion volume、ratio 和 criterion；也意识到 agent 需要决定何时调 segmentation、measurement、knowledge lookup。",
+          "managementGap": "没有明确 architecture decision：controller 放模型外还是模型内，memory activation 的输入输出是什么，KG embedding 如何进入模型，抽象层和实例层的 schema 字段是什么。Brainary 能力建设尚未沉淀为系统组件。",
+          "nextConcreteMove": "下周交付一页接口设计和一个最小 schema：包括 program_step、required_evidence、tool_name、input、output、confidence、failure_mode、linked_KG_rule；同时给出一个 largest_lesion_location 或 lesion_volume 的端到端伪代码。"
+        },
+        {
+          "project": "Trace SFT 与 tool-augmented agent 路径",
+          "weeks": [
+            "2026-05-24"
+          ],
+          "quality": "这是第 4 周从 DeepTumorVQA v2 paper 中提炼出的新路径，方向与“perception as meta-cognitive agent”高度相关，但目前只是计划，证据不足以判断执行质量。",
+          "whatWorked": "他从论文中抓到了 trace SFT + knowledge-first ordering 的关键机制，并能解释其价值不是增加 KG 文本，而是训练 agent 在 program 正确位置调用知识工具。",
+          "managementGap": "缺少训练数据来源、trace 格式、最小样本量、GPU/API 资源、评估指标和失败判定标准。自动化科研路径还没有变成 pipeline。",
+          "nextConcreteMove": "下周先人工构造 20 条 trace 样例，覆盖 recognition、measurement、knowledge lookup 三类 tool 调用，跑一个小规模 SFT 或 prompting ablation；如果不能训练，也至少交付 trace 数据格式和评估脚本。"
+        },
+        {
+          "project": "Merlin×INSPECT / patient representation / 预后预测",
+          "weeks": [
+            "2026-05-03"
+          ],
+          "quality": "第 1 周有较强证据和方向判断，但后续三周没有持续推进，项目连续性不足。",
+          "whatWorked": "第 1 周复现出 Merlin 在 mortality 预后任务上优于 image-only LRCN，并据此提出 Merlin 更可能学习全身疾病风险表征，而不是 PE 检测能力。",
+          "managementGap": "第 1 周计划下周验证 EHR 接入是否提升预后任务表现，但后续周报没有看到 EHR 接入、实验结果或搁置原因。证据显示该线被中断。",
+          "nextConcreteMove": "老师需要让他明确：这条线是暂停、归档，还是作为 patient representation 长线保留；如果保留，下周只需交付一页状态说明，包括已有结果、缺少的数据/API/GPU、下一步最小实验。"
+        },
+        {
+          "project": "整合医学与医生交流问题清单",
+          "weeks": [
+            "2026-05-03"
+          ],
+          "quality": "第 1 周提出了有潜力的问题：如何把“平衡被打破”从哲学表述落到变量、症状、检查指标和病程模式。但后续没有证据显示问题清单完成或医生交流发生。",
+          "whatWorked": "能识别整合医学方向的关键不是把中医证型硬塞进 KG，而是追问医生如何判断整体状态变化，这个价值判断是正确的。",
+          "managementGap": "没有交付问题清单、访谈对象、时间安排、访谈纪要或变量候选表。该项目目前证据不足，不能判断实际推进。",
+          "nextConcreteMove": "如果仍保留此方向，下周交付 10 个医生访谈问题和一个变量表模板，字段包括环境因素、情绪/认知状态、长期症状、检查指标、病程模式、可观测性、数据来源。"
+        },
+        {
+          "project": "文献校准与研究流程自动化",
+          "weeks": [
+            "2026-05-17",
+            "2026-05-24"
+          ],
+          "quality": "这是从失败中生长出来的流程项目，价值高但还未制度化。他已识别 GPT/总结导致论文理解偏差，也开始重读 DeepTumorVQA v2，但还没有形成自动化或半自动化文献校准 protocol。",
+          "whatWorked": "回原文后纠正了对 DeepTumorVQA intended use、TumorChain 不是 hard CoT、Merlin 在 PE 上表现不佳等误解；第 4 周重读 v2 paper 后提炼出 tool-augmented agent 和 trace SFT 路径。",
+          "managementGap": "没有固定文献阅读模板，例如“原文 claims、我之前的理解、偏差点、对实验设计的影响、需要验证的假设”。也没有把该流程接入 Brainary 的自动化科研沉淀。",
+          "nextConcreteMove": "下周为 DeepTumorVQA v2 写一份一页 paper-to-experiment mapping，列出论文机制、对应自己系统的模块、可复现实验、不可复现原因和下一步。"
+        }
+      ],
+      "managementPattern": "他的管理模式是“认知上快速重构，执行上多线漂移”。主线 DeepTumorVQA/KG 持续存在，但每周计划常被新的 framing 或毕业论文打断；计划经常写成方向而非验收标准；资源依赖如 AutoDL、4B model、LoRA、数据不均衡、GPU/API、医生访问没有被系统管理。",
+      "nextManagementMove": "未来两周应采用单主线冲刺：只围绕“program-style KG-use 最小闭环”推进，固定交付四件东西：一张实验矩阵表、一个 KG 抽象/实例化 schema、20 条 trace SFT 样例、一个 per-question evaluation 表。其他方向如 Merlin 和整合医学先归档或降级为背景。"
+    },
+    "repeatedBlockers": [
+      "毕业论文连续两周占用大量时间，导致原计划 KG 搭建和实验推进未完成。",
+      "高层 framing 进步快，但 schema、代码、接口、数据格式和评估脚本交付不足。",
+      "KG 与模型关系多次被证明不是简单 prompt/channel 问题，但 architecture-level memory 方案仍未落地。",
+      "评价指标和文献理解曾发生系统性误读，虽然已识别，但尚未形成固定校准流程。",
+      "数据分布不均衡、4B model + LoRA 容量、subtype 题量差异可能 confound KG-use 实验，但资源和控制方案还不够明确。",
+      "多个支线项目提出后未闭环，包括 Merlin EHR 接入、整合医学医生问题清单、KG 抽象/实例化 zero-shot/few-shot 检验。"
+    ],
+    "teacherQuestions": [
+      "你现在要把 DeepTumorVQA/KG 主线沉淀成 Brainary 的哪个具体系统能力：KG 抽象/实例化 schema、tool 调用 controller、trace SFT 数据、还是 KG-use 评估协议？请只选一个作为未来两周主交付。",
+      "你说“KG 是 program 的压缩”，请用一个具体题型画出 program template、每一步 evidence、对应 tool、KG 抽象层和实例化层字段；哪些字段下周能写进代码？",
+      "二十多组实验里，哪些结论是强证据，哪些只是单 case 现象？请按证据等级列出，并说明下一步最小验证标准。",
+      "Merlin×INSPECT 和整合医学医生访谈这两条线是暂停还是继续？如果继续，它们和当前 KG/Brainary memory 主线的依赖关系是什么？",
+      "如果 trace SFT 下周失败，你如何判断失败原因是数据 trace 不够、模型容量不够、tool 接口不对，还是 KG/program framing 本身不适合？"
+    ],
+    "nextIntervention": "老师下一次 meeting 应该把干预重点放在“收敛与交付”而不是继续扩展 framing：要求学生在一周内交付一个 program-style KG-use 最小闭环，包括一个题型的 program 分解、KG 抽象/实例化 schema、20 条 trace 样例、一个可运行或伪代码级 tool 调用接口、以及按 Youden's/KG 调用正确率/答案正确率评估的表格。老师还应明确哪些支线暂停，避免他在高层概念之间继续漂移。",
+    "studentFeedback": {
+      "summary": "你最近四周最大的进步不是做了更多实验，而是能从失败实验中识别自己原来的假设、指标和论文理解哪里错了，并把 KG 从“额外知识”重构为“program 压缩和 agent 调用”的问题。这说明你的研究能力在变强。",
+      "whatImproved": [
+        "你能把 KG 内容质量、模型是否使用 KG、评价指标是否测对能力分开看，这是研究方法上的进步。",
+        "你能承认自己对论文和指标的误读，并回到原文校准，这是证据边界意识的进步。",
+        "你能把个人 KG 实验和 Brainary 的 LTM、WM、attention/selection、agentic perception 联系起来，说明价值判断更系统。",
+        "你开始用 per-question 级别 evidence 支撑 framing，而不是只写概念。"
+      ],
+      "nextStep": "接下来不要再主要增加高层解释，而要把一个 framing 压成一个 artifact。建议下周只做一件事：选一个 measurement-driven 子任务，完成 program 分解、KG schema、trace SFT 样例和评估表；做到这个，你的研究能力才会从“会反思”进一步变成“能沉淀系统能力”。"
+    },
+    "evidenceLinks": [
+      {
+        "week": "2026-05-03",
+        "evidence": "KG 已通过 agent 自动完成节点抽取、本体补全、Mondo 对齐和 PubMed 检索，做到 311 个节点；但发现器官→疾病→子类结构与 DeepTumorVQA 的 CT 影像属性问题空间不对齐。"
+      },
+      {
+        "week": "2026-05-03",
+        "evidence": "Merlin×INSPECT 复现显示 Merlin 在 mortality 任务上 AUROC 高于 image-only LRCN，由此提出 patient representation 不只服务单诊断标签。"
+      },
+      {
+        "week": "2026-05-10",
+        "evidence": "oracle KG 注入后模型输出基本逐字相同，学生据此区分 KG 内容质量和模型是否使用 KG。"
+      },
+      {
+        "week": "2026-05-10",
+        "evidence": "学生明确承认 CoT² 能力有限，更多是被动接住老师 framing，并提出需要读认知科学和方法论论文。"
+      },
+      {
+        "week": "2026-05-17",
+        "evidence": "用 Sens/Spec/Youden's Index 重读实验后，发现零视觉全答 yes，accuracy 误导了对视觉能力的判断。"
+      },
+      {
+        "week": "2026-05-17",
+        "evidence": "学生指出自己依赖 GPT 和总结理解论文会留下结构性偏差，需要更频繁回原文校对。"
+      },
+      {
+        "week": "2026-05-17",
+        "evidence": "报告称原计划 KG 搭建实际没有动，说明项目推进受毕业论文和优先级管理影响。"
+      },
+      {
+        "week": "2026-05-24",
+        "evidence": "本周完成二十多组对照实验，覆盖 KG 注入 channel、训练数据组合、KG 内容结构；发现 measurement 类子任务有稳定 KG-use signal，分类标签类子任务可能被 KG 表层文本结构误导。"
+      },
+      {
+        "week": "2026-05-24",
+        "evidence": "学生把 DeepTumorVQA v2 的 Recognition、Measurement、Visual Reasoning、Medical Reasoning 以及 segmentation、measurement、knowledge lookup tools 映射到 program-style execution 和 Brainary 的 KG memory 抽象/实例化。"
+      }
+    ]
   }
 }

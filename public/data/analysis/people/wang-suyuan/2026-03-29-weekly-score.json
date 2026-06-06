@@ -1,11 +1,92 @@
 {
   "key": "person:wang-suyuan:2026-03-29:weekly-score",
-  "generatedAt": "2026-05-24T11:35:45.027Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "c57fd27b04e0a80f06f4b6653839207f2ba6abf01fc0184f368c2466ee7bb40b",
+  "generatedAt": "2026-06-06T13:13:02.258Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "ee3522721267db31345e97da5a885eaeb7b096927de01c27e7ac6c5c2c9186b3",
   "result": {
-    "text": ""
+    "hardProgress": {
+      "score": 17,
+      "reason": "本周完成了 VGExplainer 论文最终修改、排版并投稿 ASE，属于明确的硬交付；项目状态从写作/修改推进到已提交盲审，阶段性闭环清楚。",
+      "missingEvidence": [
+        "缺少 ASE 投稿编号、提交截图或 EasyChair/CMT 确认信息。",
+        "缺少本周具体修改内容清单，例如实验补充、论文结构调整、图表更新、审稿风险修正等。",
+        "缺少代码封箱状态说明，虽然提到下周要封箱，但本周是否完成可复现归档尚不清楚。"
+      ]
+    },
+    "cognitiveIncrement": {
+      "score": 13,
+      "reason": "CoT 增量较具体：一是 Max Pooling 优于 Sum/Average Pooling，并给出漏洞逻辑由单点强信号决定的解释；二是指出 LLM 直接处理长代码或残缺子图会放大噪音并导致漏洞类型幻觉。这些不是泛泛总结，而是从实验和错误案例中抽象出的认知变化。",
+      "missingEvidence": [
+        "缺少 Max/Sum/Average Pooling 的具体实验指标、对比表或样本案例。",
+        "缺少 LLM 将 Buffer Overread 误报为 Integer Overflow 的具体输入输出样例。",
+        "没有说明这些认知是否改变了论文方法、实验设计或后续 Agent 方向。"
+      ]
+    },
+    "cot2Depth": {
+      "score": 12,
+      "reason": "CoT’s CoT 提出了“空间锚点”法则，把 GNN 子图逆映射为代码行号，再交给 LLM 做语义推理，抽象层次较高，也能形成 Prompt Mask / Preprocessing Module。该部分有机制解释、与 Graph2Text 路线的对比以及自动化沉淀方向，深度较好。",
+      "missingEvidence": [
+        "“业界普遍还在尝试 Graph2Text 或图编码器”的判断缺少引用或代表性工作列表。",
+        "“老师原本不知道”属于主观判断，缺少与课题组已有 Brainary/Agent 设计的差异说明。",
+        "缺少失败路线的定量比较，例如直接输入图结构、序列化子图、完整代码、空间锚点四种方法的结果对照。"
+      ]
+    },
+    "brainaryMapping": {
+      "score": 8,
+      "reason": "能把本周成果映射到 Brainary 的 Tool Orchestration / Workflow Management，并指出 GNN 推理结果可以被抽象成一种注意力引导工具，最终封装为标准 Node。这个映射有系统化潜力，不只是论文结论。",
+      "missingEvidence": [
+        "缺少 Brainary 中该 Node 的接口草案，例如输入输出 schema、调用时机、错误处理方式。",
+        "没有说明该能力如何与现有 grep、编译执行、静态分析工具链协同。",
+        "缺少从硬编码脚本迁移到 Brainary workflow 的最小集成计划。"
+      ]
+    },
+    "monetaryValue": {
+      "score": 7,
+      "reason": "价值判断相对清醒：承认该题目主要是论文和毕业 KPI，商业化潜力不如原生 Agent 系统；估值 1万-3万元也没有夸大。对真实问题、买单方、局部优化属性和后续停止投入都有明确判断。",
+      "missingEvidence": [
+        "估值依据较粗，只提到学术界常规论文奖励和人工时间成本，没有具体学校/项目/奖励标准。",
+        "“安全厂商会为传统 DL + 大模型架构买单”的证据不足。",
+        "没有说明这篇投稿若不中，对课题组资产和后续 Agent 项目的残值如何体现。"
+      ]
+    },
+    "projectManagement": {
+      "score": 13,
+      "reason": "项目管理信息完整：有阶段、原计划与实际完成、投入时间、下周投入、里程碑、资源、依赖、成本、进度判断和纠偏动作。项目已从执行阶段进入等待盲审阶段，管理状态清楚。",
+      "missingEvidence": [
+        "缺少投稿完成后的归档清单，例如论文版本、代码版本、实验结果、配置文件、随机种子、模型权重位置。",
+        "没有列出盲审期间可能需要补充材料或 rebuttal 准备的风险。",
+        "下周完全转向新项目，但没有说明旧项目最小维护责任和知识交接方式。"
+      ]
+    },
+    "nextAction": {
+      "score": 6,
+      "reason": "下周动作方向明确：封箱 VGExplainer，转向复杂漏洞 Agent 的早期调研与基建对接。但可验证性不足，缺少具体产出定义、时间盒和验收标准。",
+      "missingEvidence": [
+        "“彻底封箱代码”缺少可验证标准，例如仓库 tag、README、复现实验脚本、artifact checklist。",
+        "“复杂漏洞 Agent 早期调研与基建对接”过于宽泛，没有列出要调研的论文、系统、benchmark 或 Brainary 接口。",
+        "没有给出下周最小可交付物，例如一页技术路线、一个 workflow prototype、一个漏洞任务 benchmark。"
+      ]
+    },
+    "evidenceQuality": {
+      "score": 3,
+      "reason": "报告声称 CoT’s CoT 有 A 级证据，并提到 DeepSeek-R1 上 TPR 和 MIoU 显著提升，但没有给出具体数值、表格、实验设置或样本。证据方向可信，但呈现不足。",
+      "missingEvidence": [
+        "缺少 TPR、MIoU 的具体提升幅度和统计显著性。",
+        "缺少实验数据表、消融实验、baseline 名称和样本规模。",
+        "缺少投稿证明和论文最终版本链接。",
+        "缺少关键错误案例或成功案例的输入输出对照。"
+      ]
+    },
+    "totalScore": 79,
+    "tier": "B",
+    "oneLineJudgment": "本周有明确硬交付和较强方法论抽象，最有价值的是“空间锚点”作为 GNN 到 LLM 的低成本接口，但证据呈现和下周可验证动作还不够项目化。",
+    "professorFollowUp": [
+      "要求学生补充 ASE 投稿证明、最终论文版本、实验结果表和代码仓库位置，完成 VGExplainer 的可复现封箱。",
+      "让学生把“Spatial Anchor”整理成 Brainary Node 的最小接口草案：输入、输出、依赖工具、失败模式、可复用场景。",
+      "追问 Max Pooling 优于 Sum/Average Pooling 的具体实验数据，以及该结论是否能迁移到复杂漏洞 Agent。",
+      "要求下周复杂漏洞 Agent 调研给出一个最小可验证产出，而不是泛泛转向，例如一个 benchmark、一个 workflow 原型或一页系统设计。"
+    ]
   }
 }

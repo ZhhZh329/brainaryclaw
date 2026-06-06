@@ -1,34 +1,192 @@
 {
   "key": "person:wan-wenyuan:2026-05-17:longitudinal",
-  "generatedAt": "2026-05-24T11:52:35.179Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "78dadf089f58a1b67e0b171260218777ab548a91251cf430ca9ee2d668cfb52b",
+  "generatedAt": "2026-06-06T13:13:28.919Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "06f464381d052200c4f41a656726ae2d137850a364c2ca183bb0b45980e34233",
   "result": {
-    "overallTrajectory": "该生在四周（实际三周）内，从抽象认知框架逐步走到具体数据集、可控实验和工程分化路线。选题始终围绕具身VLM的注意力与相关性机制，第一周完成认知控制概念设计；第二周选定LMEE-Bench，测得RynnBrain-2B无记忆VQA基线72-73%；第三周通过全量消融实验发现文本bbox memory整体无增益，但定位类问题有正向信号，并据此将外部attention收敛为可约束文本memory，内部attention规划为可训练adapter。研究从“概念正确”走向“实验证伪”，硬进展从零数据到对照实验，认知从宽泛认识到清晰区分问题类型，具备越来越强的工程意识与系统化能力。",
-    "stageByWeek": {
-      "2026-05-03": "概念构建与系统定位：明确内部/外部attention与relevance的认知分工，形成高层链路，指出失败模式并准备最小化benchmark。",
-      "2026-05-10": "数据集选定与基线建立：收敛到LMEE-Bench，测得RynnBrain-2B的VQA准确率，确立no-memory基线，准备将文本检测框作为轻量记忆中间层。",
-      "2026-05-17": "对照实验与工程路线收敛：完成全量bbox memory消融实验，发现整体无增益且存在副作用，据此提出外部attention走约束文本、内部attention走adapter训练的两层路线，并开始设计adapter样例格式。"
+    "overallTrajectory": "在输入的三周内，王文渊表现出研究能力的真实增量：从概念框架搭建，推进到基线实验，再推进到带有负结果解释的消融实验；关键变化不是更忙，而是开始用实验结果约束自己的方法判断，并能把失败模式转化为下一步 schema、selector、adapter 数据格式的问题。",
+    "headline": "研究能力在上升，最强信号是能把“text-box memory 没有整体提升”解释成 evidence 适用边界，而不是继续堆 context。",
+    "overviewSentence": "他正在从概念型推进者转向能用 baseline、ablation、失败模式和下一步验证标准约束研究路线的学生。",
+    "fourWeekTimeline": [
+      {
+        "week": "2026-05-03",
+        "metacognition": "主要进步是把 attention 从模型内部权重重新理解为认知资源分配机制，并识别出把 relevance 等同于 object detection 的失败模式；但这一周仍以高层结构判断为主，实验验证尚未落地。",
+        "valueJudgment": "认为 attention-relevance 值得做的理由是它连接 perception、memory、reasoning 和 task goal，能解决具身 VLM 不知道关注什么的问题；价值判断方向清楚，但证据主要是系统分析和任务现象，尚未有实验结果支撑。",
+        "projectManagement": "写清了当前阶段、依赖 Chuhan Li 的视觉 features 和 long-term memory 输出、下周最小动作是抽 2-3 个具身任务样例并形成 schema；管理质量较好，但实际交付还停留在概念框架和验证计划。",
+        "evidence": "报告中写到“relevance 的评价标准还不够清楚”“直接把 relevance 等同于 object detection”是失败模式，并计划“从已有具身任务数据集中抽取 2-3 个代表性样例”。"
+      },
+      {
+        "week": "2026-05-10",
+        "metacognition": "从概念验证推进到 baseline 意识：他认识到 VQA accuracy 只能说明最终答案，不能说明模型真的看对了，因此需要同时看 answer、target object、segmentation/grounding。",
+        "valueJudgment": "价值判断更具体：LMEE-Bench 值得投入不是因为它方便，而是因为同一数据集可以同时验证“答对”和“看对”，能作为 relevance/memory 的共同评测场；这是从题目价值转向实验平台价值的进步。",
+        "projectManagement": "完成 RynnBrain-2B 在 LMEE-Bench 上的 no-memory VQA baseline，full choice QA 405 题 accuracy 72.84%，subset 145 题 accuracy 73.10%；下周计划错题分桶、测试检测框文本输出、写入 memory 后对比效果。依赖 Chunhan 的分割验证结果仍未解决。",
+        "evidence": "报告中给出 full set 405 题 72.84%、subset 145 题 73.10%，并说明“之后如果加入 memory、检测框文本或 segmentation grounding，至少要说明它比这个 baseline 多解决了什么”。"
+      },
+      {
+        "week": "2026-05-17",
+        "metacognition": "这一周出现最强研究能力信号：他没有把 generated bbox-memory context 的整体持平略降视为单纯失败，而是识别出 context 注入本身是一种 attention 干预，并提出按问题类型区分 evidence 适用范围。",
+        "valueJudgment": "价值判断进一步稳定：text-box memory 不再被视为通用增强项，而是被定位为外部 attention 的可约束输入；同时提出内部 attention 通过 adapter 内化 task-relevant 关注能力，开始把个人兴趣、Brainary 的 memory/reasoning/calibration/cognitive control 能力和自动化科研沉淀连接起来。",
+        "projectManagement": "完成 405 题 full set context memory ablation，no-memory baseline 73.33%，加入 generated bbox-memory context 后 73.09%，并新增脚本 examples/rynnbrain_context_memory_ablation.py；写清 GPU 5/6/7、环境 agent、下周做 schema 收敛和 adapter 样例格式。项目管理较成熟，但 adapter 训练数据、监督信号和 Chunhan 分割对齐仍未闭环。",
+        "evidence": "报告中写到“直接塞入 context 不能作为通用增强方法”“定位类问题有帮助，但对属性、计数、全局状态类问题可能有副作用”，并将 CoT's CoT 1 证据等级标为 A。"
+      }
+    ],
+    "metacognitionChange": {
+      "summary": "元认知在三周内明显增强：5.3 是识别概念边界和潜在失败模式，5.10 是建立 baseline 和中间证据意识，5.17 是用负向/持平实验结果修正方法路线，并提出 evidence applicability 的下一步验证框架。",
+      "byWeek": [
+        {
+          "week": "2026-05-03",
+          "change": "能识别“object detection 不等于 relevance”的认知盲区，也知道 relevance 标准未定义；但证明方式还主要停留在计划层。"
+        },
+        {
+          "week": "2026-05-10",
+          "change": "开始区分最终答案和中间视觉证据，明确 no-memory baseline 的作用；盲区是错题分桶尚未完成，grounding 证据依赖他人结果。"
+        },
+        {
+          "week": "2026-05-17",
+          "change": "能把 ablation 的非预期结果转化为失败模式：bbox context 会造成注意力偏移；并提出按问题类型验证，而不是继续无条件扩大 memory。"
+        }
+      ],
+      "currentLevel": "当前已从“做了什么”提升到“为什么这样做、怎样证明、失败说明什么、下一步如何缩小验证范围”的阶段；但距离成熟研究者还差一步：需要把定位类、属性类、计数类、全局状态类的分桶指标真正跑出来，而不只是提出分类。",
+      "strongestSignal": "最强信号是 2026-05-17 的 full set 405 题 context memory ablation：整体 accuracy 从 73.33% 到 73.09% 基本持平略降，他据此否定了“bbox evidence 无条件塞 context”的路径，并提出 evidence 适用边界。",
+      "nextLift": "下一步提升是把元认知判断固化成可复用检查表和实验协议：每一种 memory/evidence 写入前必须说明适用问题类型、预期提升指标、副作用指标、no-memory 对照和何时停止投入。"
     },
-    "trendScores": {
-      "hardProgress": "上升趋势。从纯概念设计发展到拥有一套可重复的消融实验流程和定量结果，并生成新的失败模式洞察。",
-      "cognitiveDepth": "上升趋势。第一周将attention理解为资源分配，第二周意识到VQA准确率不足以说明视觉正确，第三周通过实验认识到视觉证据不能无条件注入，认知被反复修正并细化。",
-      "cotCotMaturity": "上升趋势。第一周证据等级多为B/C，第二周仍以B为主，第三周出现一个A级证据（全量405题消融），推理从概念演绎转向实验驱动。",
-      "valueReasoning": "上升趋势。估值从第一周的90万升至第三周的170万，价值函数从“节省人力与复用”扩展到“构建可训练核心能力”，与自动化科研的长期回报对齐更紧密。",
-      "projectManagement": "改善趋势。时间规划、资源依赖、纠偏动作逐步细化，对实验偏差的归因分析越来越准确，行动从抽象试错转向具体模型约束设计。"
+    "valueGrowth": {
+      "summary": "科研/项目价值判断在变清楚：早期价值来自对 Brainary 认知控制层的系统想象，中期价值转向 LMEE-Bench 作为统一验证场，最近一周价值判断开始受实验结果约束，能区分通用方向值得做与当前方法不能直接扩大。",
+      "byWeek": [
+        {
+          "week": "2026-05-03",
+          "valueJudgment": "认为 attention-relevance 值得做，因为它是 perception、long-term memory、working memory 和 task goal 之间的认知控制层；判断偏宏观，证据等级 B/C，主要缺少 benchmark。"
+        },
+        {
+          "week": "2026-05-10",
+          "valueJudgment": "把价值落到 LMEE-Bench：同一数据集同时支持 VQA 和 grounding，能验证“答对”和“看对”；这是更接近研究资产的判断。"
+        },
+        {
+          "week": "2026-05-17",
+          "valueJudgment": "价值判断更有取舍：text-box memory 有价值，但不是通用 context 增强；真正值得沉淀的是 context memory ablation workflow、text-box memory schema、evidence applicability checklist、adapter training dataset format 和 relevance selector。"
+        }
+      ],
+      "currentValueFunction": "当前他的项目价值函数可以概括为：优先投入那些能把 Brainary 的 memory、reasoning、calibration、cognitive control 串成可评估闭环的中间层；方法是否值得继续，不看是否看起来智能，而看是否能在 baseline、grounding、ablation 和任务类型分桶中证明增量或暴露边界。",
+      "improvementSignals": [
+        "不再只说 attention/relevance 是通用能力，而是开始问哪些 evidence 适合进入 context、哪些应该通过 adapter 内化。",
+        "开始把研究价值和自动化科研沉淀连接起来，包括 evaluation workflow、memory schema、relevance selector、grounding evaluator、adapter training dataset format。",
+        "能接受一个方法整体不提升，并从中提取下一阶段价值：从通用增强转向有适用范围的外部 attention 输入约束。"
+      ],
+      "nextValueQuestion": "下一次需要他回答的价值问题是：在 LMEE-Bench 上，text-box memory 到底服务于哪一类可复用能力——提高定位类问题准确率、提高 grounding 证据一致性、减少错误 context 注入，还是为 adapter 训练提供监督信号？只能选 1-2 个主指标作为近期价值锚点。"
     },
-    "valueFunctionChange": {
-      "overall": "学生的价值观从‘用模块替代研究员工作、节省实验成本’逐渐转向‘构建可复用、可训练的系统能力’。",
-      "weeklyChange": "第一周：认为定义认知控制框架和relevance标准价值90万，主要基于替代人力和减少试错。第二周：认为复用一个双验数据集和制作轻量文本记忆价值100万，强调减少适配成本和降低工程不确定性。第三周：总估值170万，其中adapter路线占80万，认为将任务相关知识内化为模型能力是跳出prompt堆叠、走向可持续可泛化的关键，价值展望更具前瞻性。",
-      "connectionDetail": "价值始终连接到具体金额（以研发人力、GPU成本、token节省等估算）、明确的买单方（具身智能公司、多模态agent团队）、通用能力特性（任何具身或记忆系统均需）、产物形式（benchmark、schema、workflow、module等）以及Brainary和自动化科研的沉淀路径，并且这一连接方式在周次间保持稳定并深化。"
+    "projectManagementReview": {
+      "summary": "项目管理质量总体提升明显：三周内从概念 schema 计划推进到 baseline，再到 full set ablation 和脚本交付；但关键依赖和分桶分析仍未完全闭环，尤其是 Chunhan 的检测/分割结果、错题类型分桶、adapter 训练样例格式还需要变成可检查交付。",
+      "projects": [
+        {
+          "project": "内部/外部 attention 与 relevance 提取机制",
+          "weeks": [
+            "2026-05-03",
+            "2026-05-17"
+          ],
+          "quality": "方向连续，概念推进较强，已从“内部/外部 attention 的认知分工”推进到“外部 attention 走文本 memory，内部 attention 走 adapter”的工程路线；但 schema 仍未完全固化，adapter 也还没有训练样例。",
+          "whatWorked": "持续围绕 Brainary 的 memory、reasoning、calibration、cognitive control 能力推进，没有把 attention 停留在抽象名词；5.17 已能把外部 attention 定义为可读、可检查、可约束的 text memory，把内部 attention 定义为 adapter/embedding 内化能力。",
+          "managementGap": "5.3 计划两周内形成 attention-relevance schema，但到 5.17 仍主要是路线判断和 schema 收敛计划；缺少一版可检查的字段定义、输入输出样例、评价指标和失败判据。",
+          "nextConcreteMove": "下周交付一页 attention-relevance schema：字段包括 task、question_type、target_object、bbox/region、evidence_source、applicability、reason、write_to_memory_decision、expected_metric；同时给出 5 个正例和 5 个反例。"
+        },
+        {
+          "project": "LMEE-Bench VQA/grounding evaluation workflow",
+          "weeks": [
+            "2026-05-10",
+            "2026-05-17"
+          ],
+          "quality": "这是当前最扎实的项目线：已完成 no-memory VQA baseline，并用同一数据集继续做 context memory ablation；有明确数据规模和准确率结果。",
+          "whatWorked": "LMEE-Bench 被定位为 Brainary memory/relevance/grounding 的统一评测入口，能支持“答对”和“看对”的拆分；5.10 给出 405 题 72.84% 和 145 题 73.10%，5.17 给出 405 题 no-memory 73.33% 与 bbox-memory 73.09%。",
+          "managementGap": "5.10 承诺抽 20-30 个错题做分桶，但 5.17 没有给出明确错题分桶表；报告提到定位类有正向信号、属性/计数/全局状态可能受干扰，但证据粒度不足，缺少每类题数量、准确率变化和统计可信度。",
+          "nextConcreteMove": "下周必须交付一个 LMEE-Bench 分桶结果表：至少包含定位、属性、计数、空间关系、全局状态五类，每类题数、no-memory accuracy、bbox-memory accuracy、变化方向、2-3 个具体错例。"
+        },
+        {
+          "project": "text-box memory context ablation",
+          "weeks": [
+            "2026-05-10",
+            "2026-05-17"
+          ],
+          "quality": "执行质量较高，有清楚的原计划与实际完成，有脚本、有 full set 结果、有失败模式；这是判断他研究能力提升的核心证据。",
+          "whatWorked": "完成 examples/rynnbrain_context_memory_ablation.py，使用 GPU 5/6/7 三卡并行，验证 bbox evidence 可以稳定生成；该项目直接服务 Brainary 的 memory schema、calibration、relevance selector 和 context ablation workflow。",
+          "managementGap": "目前的 ablation 只说明“无条件塞 context 不稳定”，还没有证明“约束后的 text-box memory 在适用场景稳定有效”；text-box memory 的字段、压缩策略、写入规则和拒绝写入规则还未定稿。",
+          "nextConcreteMove": "设计一个二阶段实验：第一阶段只在定位/grounding 类题目注入 bbox evidence；第二阶段对非定位题目默认不注入或只注入目标物体不注入坐标；比较整体准确率、分桶准确率和 answer flip 中的错误翻转比例。"
+        },
+        {
+          "project": "内部 attention adapter 样例设计",
+          "weeks": [
+            "2026-05-17"
+          ],
+          "quality": "目前是合理路线，但还处于方案阶段；价值在于把外部 context 的经验转为可训练能力，风险在于训练目标、数据来源和监督信号尚未定义。",
+          "whatWorked": "能把 Brainary 的长期系统能力建设与自动化科研沉淀连接起来：外部 text memory 提供可解释 evidence，内部 adapter 尝试把 task-relevant 关注能力内化为模型能力，避免长期依赖 prompt/context 堆叠。",
+          "managementGap": "没有开始训练，也没有样例格式；报告只提出输入 image/object-region/task，监督信号包括 task-relevant object、bbox/region、reason 或 correct answer change，但缺少数据来源、标注规则、训练/验证切分和评价指标。",
+          "nextConcreteMove": "先不要训练，先交付 20 条 adapter training sample 草案，每条包含 image_id、question、question_type、target_object、region/bbox、positive_evidence、negative_evidence、expected_answer、why_relevant，并说明这些样例如何从 LMEE-Bench 与 Chunhan 的分割结果中生成。"
+        }
+      ],
+      "managementPattern": "他的管理模式正在从“写清想法和计划”转向“按周交付实验结果并据此纠偏”；优势是每周都有最小动作和依赖关系，弱点是部分计划没有闭环复盘，例如错题分桶、segmentation 对齐、schema 定稿和 adapter 数据格式仍停留在下一步。",
+      "nextManagementMove": "要求他下周只围绕一个最小闭环交付：LMEE-Bench 分桶 ablation 表 + text-box memory schema v0.1 + 10 条样例；不要同时扩展 adapter 训练、分割对齐和新 benchmark，除非前述闭环完成。"
     },
     "repeatedBlockers": [
-      "与Chunhan的模块输出对齐问题（特征、记忆格式、分割结果）连续三周出现，虽对齐内容在演进，但尚未闭环。",
-      "需要老师确认方向（认知解释是否符合设想、检测框文本作为记忆路线、内外attention工程路线），每周都有，反映学生对自己判断的审慎，但也可能成为依赖。"
+      "relevance/evidence 的评价标准反复出现但尚未完全固定：5.3 是“什么叫相关”不清楚，5.17 是“什么 evidence 适合进入 context”不清楚。",
+      "依赖 Chunhan 的检测/分割结果持续存在：5.10 需要分割验证结果，5.17 仍需要用其结果判断 bbox evidence 和 segmentation evidence 哪个更适合作为外部 attention 输入。",
+      "错题/问题类型分桶是关键但未充分交付：5.10 提出抽 20-30 个错题，5.17 只有定性结论，没有给出分桶数据表。",
+      "Brainary 系统能力映射较清楚，但工程沉淀还缺少可复用 artifact：schema、checklist、evaluator、adapter dataset format 都被提出，但需要版本化交付。",
+      "资源瓶颈从 API/token 转为 GPU 时间和实验运行速度；目前没有严重 quota 问题，但需要更严格的实验优先级。"
     ],
-    "professorShouldAsk": "你计划用何种监督信号训练内部attention adapter，以确保它学到的不是bbox输出偏差的简单复制，而是能泛化到未见过任务的任务相关注意力？在Chunhan的分割结果落地前，adapter的样例构造如何保持有效推进？",
-    "nextBestIntervention": "要求学生在下周提交一份明确的adapter训练样例设计文档，至少包含三种具有不同问题类型（定位、属性、计数）的样例，并说明监督信号的获取方式、与外部text memory的接口以及评估方案。同时，为减少对齐风险，建议学生与Chunhan约定一个最小闭环验证日，锁定输入输出格式。"
+    "teacherQuestions": [
+      "你说定位类问题有正向信号，请给出分桶后的题数、准确率变化和 3 个具体例子；如果没有数据，哪些结论需要降级为假设？",
+      "text-box memory 进入 context 的准入规则是什么？哪些问题类型必须拒绝写入 bbox 坐标？",
+      "如果只能沉淀一个 Brainary 系统能力，你下周优先沉淀 evaluation workflow、memory schema、relevance selector 还是 adapter dataset format？为什么？",
+      "Chunhan 的分割结果如果延迟，你是否有不依赖分割结果的最小验证路径？会牺牲什么证据？",
+      "adapter 路线的第一版监督信号到底是什么：bbox 一致性、答案变化、grounding 正确性，还是 reason 的相关性？近期只选一个主目标。"
+    ],
+    "nextIntervention": "老师下一次 meeting 应该做一次范围收敛干预：认可他从负结果中提取边界的研究能力，但要求下周交付可检查的分桶 ablation 表和 schema v0.1；暂缓大规模 adapter 训练，只允许做 adapter 样例格式，不允许把新路线扩展成新的开放问题。",
+    "studentFeedback": {
+      "summary": "你最近三周的进步不是工作量变多，而是研究判断开始被实验约束：你能用 baseline 设定比较对象，也能从 context memory 没有整体提升中提取失败模式和下一步边界。",
+      "whatImproved": [
+        "你从 attention/relevance 的概念框架推进到了 LMEE-Bench baseline 和 405 题 full set ablation，这是硬进展。",
+        "你开始区分“答对”和“看对”，并意识到 memory/context 可能误导模型，这比单纯追求 accuracy 更像研究思维。",
+        "你能把 Brainary 的 memory、reasoning、calibration、cognitive control 和自动化科研沉淀连接起来，尤其是 evaluation workflow、memory schema、relevance selector、adapter dataset format。"
+      ],
+      "nextStep": "下一步不要继续扩大概念图，而是把你已经发现的边界做实：交付分桶结果表、text-box memory schema v0.1、10-20 条 adapter 样例草案；每个结论都标明是 A 级实验支持、B 级小样例支持，还是 C 级路线假设。"
+    },
+    "evidenceLinks": [
+      {
+        "week": "2026-05-03",
+        "claim": "他能识别概念盲区，但证据仍偏概念层。",
+        "evidence": "报告写到“relevance 的评价标准还不够清楚”，并指出“直接把 relevance 等同于 object detection”会忽略关系、风险和经验。",
+        "evidenceLevel": "B/C"
+      },
+      {
+        "week": "2026-05-10",
+        "claim": "他建立了 no-memory baseline，并把后续方法价值绑定到可比较结果。",
+        "evidence": "LMEE-Bench full choice QA 405 题 accuracy 72.84%，subset 145 题 accuracy 73.10%；报告说明后续 memory/relevance 至少要说明比 baseline 多解决什么。",
+        "evidenceLevel": "B"
+      },
+      {
+        "week": "2026-05-10",
+        "claim": "他开始区分最终答案和视觉证据。",
+        "evidence": "报告写到“VQA accuracy 只能说明最终答案，不足以说明模型真的看对了”，并提出同时做 VQA 和分割验证。",
+        "evidenceLevel": "B"
+      },
+      {
+        "week": "2026-05-17",
+        "claim": "他完成了关键消融实验，并能从负/持平结果中更新路线。",
+        "evidence": "405 题 full set ablation：no-memory baseline 73.33%，generated bbox-memory context 73.09%；结论是“直接塞入 context 不能作为通用增强方法”。",
+        "evidenceLevel": "A"
+      },
+      {
+        "week": "2026-05-17",
+        "claim": "他对 Brainary 系统沉淀的判断更具体。",
+        "evidence": "报告提出 text-box memory schema、context memory ablation workflow、relevance selector、adapter training dataset、grounding evaluator、cognitive control policy。",
+        "evidenceLevel": "B"
+      },
+      {
+        "week": "2026-05-17",
+        "claim": "当前最大证据缺口是问题类型分桶尚未数据化。",
+        "evidence": "报告定性写到定位类问题有帮助、属性/计数/全局状态类问题可能有副作用，但未提供各类题数和分桶准确率。",
+        "evidenceLevel": "证据不足"
+      }
+    ]
   }
 }

@@ -1,60 +1,91 @@
 {
   "key": "person:huang-xun:2026-05-10:weekly-score",
-  "generatedAt": "2026-06-05T12:46:53.215Z",
+  "generatedAt": "2026-06-06T13:04:24.141Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
-  "inputHash": "075331aafd0e721ecf3b8757721dee4de574aa9d827b0beb30036f3177e92cdf",
+  "inputHash": "5909d251c30655f553976514896637c2915fd74ed3d9a4debcb376c183e1ae35",
   "result": {
     "hardProgress": {
       "score": 17,
-      "reason": "本周有明确实验产出：SafeClaw-R 完成 1971 条评测并得到 88.64% accuracy、错误类型分布和 risk type 差异；DARWIN 完成 100 条 DeepSeek-V4-Pro 实验并给出 ASR、query number 与 baseline 对比；新语言规则完成 40 条规则遵循测试和 50 条 sub AdvBench 初测。硬进展较强，不只是阅读或想法。但 SafeClaw-R runtime 仍是 mock 初步验证，DARWIN 尚未做策略池 ablation，新语言规则样本量小且缺对照，因此不能给满分。",
-      "missingEvidence": "缺少 SafeClaw-R runtime mock 的 case 数、具体 BLOCK/CONFIRM/ALLOW 命中统计；缺少 DARWIN 失败样本明细、策略来源分布和 judge 设置；缺少新语言规则的原始英文对照组、规则遵循率统计和回复长度量化。"
+      "reason": "本周有明确的实验证据产出：SafeClaw-R 完成 1971 条 Google Workspace 安全分类评测并得到 88.64% accuracy，DARWIN 完成 100 条 DeepSeek-V4-Pro 复现实验并记录 ASR 与 query number，新语言规则 red team 完成 40 条规则遵循测试和 50 条 sub AdvBench 初测。进展不是停留在阅读或想法层面，而是进入可量化实验阶段。扣分点是 SafeClaw-R 的 runtime 仍是 mock 初步验证，DARWIN 尚未完成策略池 ablation，新语言规则实验样本量较小且缺少对照组。",
+      "missingEvidence": [
+        "缺少 SafeClaw-R runtime mock 的完整 case 列表、日志样例和可复现实验脚本证据。",
+        "缺少 DARWIN 100 条实验的失败样本明细、baseline 配置说明和 judge 标准。",
+        "缺少新语言规则 40 条遵循测试与 50 条 red team 测试的具体 prompt、模型版本和判定标准。"
+      ]
     },
     "cognitiveIncrement": {
       "score": 12,
-      "reason": "认知增量比较清楚：SafeClaw-R 从能跑转向区分 classification、runtime mock gating、real API execution；DARWIN 从关注进化轮数转向策略池质量和选择机制；新语言规则从造语言转向 protocol-conditioned red team。增量不是泛泛总结，能改变下一步实验设计。但报告中多处承认这些不是老师原本不知道的内容，因此新颖性有限，更多是把已有原则应用到当前实验。",
-      "missingEvidence": "缺少能证明这些认知增量改变结论的消融实验，例如 SafeClaw-R prompt/verdict/runtime 设置对齐前后的差异、DARWIN 策略池质量与 ASR 的相关性、新语言规则与原始 prompt 的直接对照。"
+      "reason": "认知增量较清楚：SafeClaw-R 从“能不能跑”推进到“实验层级与误差来源”；DARWIN 从“进化轮数不足”转向“策略池质量与选择机制”；新语言规则项目从“造语言”转向“规则约束下的安全边界漂移与回复质量变化”。这些判断能改变下一步实验设计。扣分点是部分认知仍是合理假设，还没有通过 ablation 或对照实验证实。",
+      "missingEvidence": [
+        "缺少证明 SafeClaw-R 低分 risk type 源于 prompt、verdict 解析或 runtime 策略不对齐的直接对照实验。",
+        "缺少证明 DARWIN 瓶颈来自策略池质量而非模型、judge、baseline 或实现差异的证据。",
+        "缺少证明新语言规则导致安全边界漂移而非偶然样本噪声的三组对照实验。"
+      ]
     },
     "cot2Depth": {
       "score": 12,
-      "reason": "CoT’s CoT 部分有三条可抽象的方法论：实验层级显式化、strategy pool 作为 memory object、规则约束下的行为漂移，并且写出了为什么未自动化、自动化潜力、建议沉淀形式和证据等级。这符合模板要求。扣分点是三条都偏框架化，缺少更深的机制拆解和可执行 schema 字段定义；证据等级 B 的两项还没有通过系统实验验证。",
-      "missingEvidence": "缺少具体自动化字段设计，例如实验层级 schema、strategy memory 字段、rule-conditioned benchmark 字段；缺少失败归因树、因果假设列表和每个假设的验证实验。"
+      "reason": "CoT’s CoT 部分能从单个实验上升到方法论：安全评测要区分 classification、runtime mock gating、real API execution；自演化 red team 要把 strategy pool 当成 memory object；red team 要把 communication rule 作为变量。这些都有自动化潜力、沉淀形式和证据等级。扣分点是三条 CoT’s CoT 中有两条明确写到“老师原本不知道的吗：否”，说明新颖性有限；同时还缺少更具体的 schema 字段、自动化判定逻辑和可执行接口设计。",
+      "missingEvidence": [
+        "缺少 classification、runtime mock gating、real API execution 三层实验 schema 的具体字段设计。",
+        "缺少 strategy memory object 的字段、生命周期规则和状态转移样例。",
+        "缺少 protocol-conditioned red team benchmark 的最小可运行定义。"
+      ]
     },
     "brainaryMapping": {
       "score": 8,
-      "reason": "报告把三个项目分别映射到 Brainary 的 risk modeling、tool orchestration、memory、reasoning、calibration、benchmark/evaluation、workflow management、cognitive control 等能力，并给出可能沉淀的模块。这说明作者理解项目资产如何进入系统。扣分点是映射仍偏概念层，缺少模块接口、输入输出、优先级和与现有 Brainary 架构的具体连接方式。",
-      "missingEvidence": "缺少 Brainary 中已有模块的对接点、数据结构草案、最小可集成版本、谁使用这些模块以及集成后的评测指标。"
+      "reason": "Brainary 关联覆盖了 risk modeling、tool orchestration、benchmark、workflow management、memory、reasoning、calibration、cognitive control 等能力，并能对应到 evaluator、workflow、memory schema、safety drift evaluator 等潜在系统产物。扣分点是映射仍偏概念层，尚未说明这些模块如何接入 Brainary 的现有架构、输入输出格式、调用链路和优先级。",
+      "missingEvidence": [
+        "缺少 Brainary 现有模块与本周三个项目之间的具体接口映射。",
+        "缺少每个可沉淀模块的最小输入、输出、评测指标和调用场景。",
+        "缺少判断哪个方向最应该优先进入 Brainary 工程化的比较依据。"
+      ]
     },
     "monetaryValue": {
-      "score": 7,
-      "reason": "价值估计覆盖三个项目，并给出人民币区间、计算方法和依据：SafeClaw-R 5–15 万、DARWIN 8–20 万、新语言规则 3–8 万。估值没有只写口号，而是关联到节省人工复现、评测时间和研究助理工作量。扣分点是估值仍是内部成本替代法，没有客户验证、市场价格参照、交付形态、转化周期和置信度。",
-      "missingEvidence": "缺少真实买方访谈、同类工具价格、内部项目节省工时的计算明细、维护成本、产品化门槛和可收费交付物定义。"
+      "score": 8,
+      "reason": "价值判断比较完整，分别给出 SafeClaw-R 5–15 万、DARWIN 8–20 万、新语言规则 3–8 万人民币的估计，并说明按研究原型、节省人工复现时间、策略池分析工具或探索实验资产估算。优点是没有把原型夸成成熟产品。扣分点是估值主要来自主观工作量折算，缺少外部买方验证、竞品替代成本、真实交付边界和复用概率。",
+      "missingEvidence": [
+        "缺少具体潜在买方或内部使用方的需求证据。",
+        "缺少每个项目能节省多少人工时间的可验证计算过程。",
+        "缺少与现有安全评测工具、red team 平台或 benchmark 的替代成本比较。"
+      ]
     },
     "projectManagement": {
       "score": 13,
-      "reason": "项目管理信息较完整：每个项目都有当前阶段、原计划、实际完成、投入时间、下周投入、里程碑、资源需求、依赖关系、关键路径、成本、偏差、偏差原因、纠偏动作和是否需要老师介入。管理颗粒度明显高于一般周报。扣分点是缺少明确验收标准、风险优先级、任务负责人之外的协作安排，以及下周每项任务完成后的判定指标。",
-      "missingEvidence": "缺少每个里程碑的 definition of done、失败预案、具体样本数计划、实验脚本路径、日志保存规范和时间排期。"
+      "reason": "项目管理信息较充分：每个项目都有当前阶段、原计划、实际完成、投入时间、下周投入、里程碑、资源需求、依赖、关键路径、成本、偏差、偏差原因、纠偏动作和是否需要老师介入。管理颗粒度达到教授可判断是否要干预的程度。扣分点是下周里程碑缺少明确验收标准，例如样本量、通过阈值、完成定义和风险触发条件。",
+      "missingEvidence": [
+        "缺少下周每个里程碑的验收标准，例如完成多少 case、成功率达到多少、输出什么文件。",
+        "缺少如果下周复现仍低于论文或 baseline 时的停损/转向条件。",
+        "缺少三个项目之间的优先级排序和时间冲突处理方案。"
+      ]
     },
     "nextAction": {
       "score": 8,
-      "reason": "下周动作具体且和本周问题对应：SafeClaw-R 要扩展 OpenClaw test workflow 和 runtime enforcement；DARWIN 要抽样检查策略有效性、重复度和 active/silent 状态；新语言规则要做三组对照并记录多指标。这些动作能推进失败归因。扣分点是动作还缺精确范围，例如抽样多少策略、跑多少 case、成功标准是什么、优先级如何排序。",
-      "missingEvidence": "缺少下周每个实验的样本量、对照条件、验收阈值、统计方法、预计产物和若结果不显著时的备选路径。"
+      "reason": "下周动作具体且与本周发现对应：SafeClaw-R 转向 OpenClaw runtime enforcement workflow，并扩展另外两个场景；DARWIN 分析策略收集与策略池维护机制；新语言规则做原始英文、语言规则、语言规则加 jailbreak 三组对照，并记录规则遵循率、回复长度、信息密度、拒答率和 ASR。扣分点是动作还缺少最小样本规模、优先顺序、预期输出和判断标准。",
+      "missingEvidence": [
+        "缺少 SafeClaw-R 下周 workflow 的 case 数、通过标准和错误分类表输出要求。",
+        "缺少 DARWIN 策略池抽样分析的抽样比例、重复度定义、迁移性评估标准。",
+        "缺少新语言规则三组对照实验的样本量、模型设置和显著性判断方式。"
+      ]
     },
     "evidenceQuality": {
       "score": 4,
-      "reason": "证据质量总体较好，有具体样本量、准确率、ASR、query number、错误类型和部分 risk type 表现，并且主动标注证据等级。主要问题是多数证据仍停留在汇总统计，没有提供原始日志、显著性、置信区间、judge 一致性、prompt 版本和运行配置，因此复核性不足。",
-      "missingEvidence": "缺少原始数据链接、实验配置、prompt/verdict parser 版本、judge 标准、重复运行结果、置信区间、case-level 错误样例和统计检验。"
+      "reason": "证据质量总体较好，有样本数、准确率、ASR、query number、false negative、false positive、risk type 差异和证据等级。报告也能区分 A/B 级证据，并承认缺少 ablation 和对照实验。扣分点是未提供原始日志、统计置信区间、判定器一致性、baseline 可比性说明和实验配置细节，因此证据可读但尚不完全可审计。",
+      "missingEvidence": [
+        "缺少原始实验日志或结果文件链接。",
+        "缺少模型版本、prompt 版本、随机种子、judge 规则和运行环境说明。",
+        "缺少置信区间、重复运行结果或人工复核一致性数据。"
+      ]
     },
-    "totalScore": 81,
+    "totalScore": 82,
     "tier": "A",
-    "oneLineJudgment": "这是一份硬进展和研究管理都较强的周报，真正的问题不是执行不足，而是关键结论仍需要通过对照实验、ablation 和可复核日志从“合理判断”升级为“可验证结论”。",
+    "oneLineJudgment": "这是一份强实验型周报：本周有实质数据产出，也有可转化为自动化科研资产的方法论增量，但关键假设仍需要 ablation、对照实验和可审计日志来支撑。",
     "professorFollowUp": [
-      "请优先确认 SafeClaw-R 的研究边界：本阶段是否明确只做 tool-use safety evaluation，而不进入真实 Google Workspace API 执行。",
-      "请要求学生下周给 DARWIN 策略池做最小 ablation：策略来源、重复度、active/silent 状态、失败计数和成功率必须能关联到单条样本结果。",
-      "请要求新语言规则项目先完成三组对照，不要继续扩大语言规则复杂度；核心是验证 4% ASR 是否稳定，以及回复变短是否可量化。",
-      "请让学生把三个方向的自动化沉淀都压成一个最小 schema 草案：输入字段、输出字段、日志字段、评测指标和验收标准。",
-      "老师本周最应该学到的一点是：自演化 red team 的瓶颈可能不在 evolution loop 是否存在，而在 strategy pool 是否被当作可评分、可追踪、可失活和可恢复的 memory object 管理。"
+      "要求学生下周优先把 SafeClaw-R 的三层实验 schema 写出来：classification、runtime mock gating、real API execution 分别记录什么字段、什么指标、什么失败类型。",
+      "要求 DARWIN 不要先增加进化轮数，而是先提交 strategy pool 分析表：来源、重复度、成功率、active/silent 状态变化、失败计数、被剪枝原因。",
+      "要求新语言规则 red team 必须完成三组对照实验，并明确样本量、模型、judge 标准和 ASR/拒答率/规则遵循率/回复长度的统计方式。",
+      "要求所有项目下周补充最小可审计证据包：配置、prompt、样本列表、结果表、失败样例和一页结论。"
     ]
   }
 }

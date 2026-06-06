@@ -1,64 +1,58 @@
 {
   "key": "person:guo-yaoqi:2026-04-05:weekly-score",
-  "generatedAt": "2026-06-06T08:01:26.106Z",
+  "generatedAt": "2026-06-06T13:02:27.601Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
-  "inputHash": "624db95882245ebcc3879665e4fa537e926e62e08275f83d48ae7641a9a0e68d",
+  "inputHash": "2bebada7bdc10188a91e17314407683609ccb745b1524f82532672280b176799",
   "result": {
     "week": "2026-04-05",
-    "name": "郭尧琦",
+    "name": "郭尧琪",
     "scores": {
       "hardProgress": {
         "score": 16,
-        "reason": "本周有明确硬进展：实现了 Reproduction Test Agent 第一版，并在 SWE-bench Pro 上完成 50 个 case 的端到端测试，得到约 15/50、约 30% fail-to-pass 的首个基线结果；同时形成了初步失败分类，并把检索/定位识别为主要瓶颈。这是对 Unified Repair Agent 入口环节的实质推进。",
-        "missingEvidence": "缺少 50 个 case 的明细、成功/失败判定标准、失败类型统计比例、具体生成 test 示例、代码或模块接口说明，也没有说明是否可复现该 30% 数字。"
+        "reason": "本周有明确硬进展：实现了 Reproduction Test Agent 第一版，并在 SWE-bench Pro 上完成 50 个 case 的端到端测试，得到约 15/50、约 30% fail-to-pass 的基线结果；同时完成了初步失败归因，识别检索/定位为主要瓶颈，并提出混合检索与 working memory 的改进方向。这是可验证的系统构建与实验推进。但报告没有提供代码提交、实验配置、case 列表、成功/失败样例或失败类别统计，因此硬进展的可复核性不足。",
+        "missingEvidence": "缺少代码链接或提交记录、50 个 case 的清单、每个 case 的运行结果、fail-to-pass 判定标准、失败案例样例、失败类型的数量分布。"
       },
       "cognitiveIncrement": {
         "score": 12,
-        "reason": "认知增量比较清楚：从泛泛认为 test case 质量是瓶颈，推进到 reproduction test 生成是多环节串联任务，并提出“瀑布式失败传播”判断，即检索/定位失败会级联影响 issue 理解与 test 生成。也提出 hybrid retrieval 与 working memory 是下一步杠杆点。",
-        "missingEvidence": "缺少支撑“检索/定位是最突出瓶颈”的定量归因，例如多少失败 case 由检索导致、多少由 issue 理解或 test 生成导致；也缺少不同失败类型之间因果关系的验证。"
+        "reason": "认知增量较清晰：从笼统的 reproduction test 生成困难，推进到“多环节混合失败”与“检索作为上游瓶颈会产生瀑布式失败传播”的判断，并据此提出不平均用力、优先优化上游检索的策略。这对后续研究决策有用。但该判断主要来自定性分析，尚未通过分组实验或失败类别比例支撑。",
+        "missingEvidence": "缺少失败归因的量化表，例如多少失败由检索导致、多少由 issue 理解导致、多少由 test 生成导致；缺少证明检索是最大杠杆点的对照实验。"
       },
       "cot2Depth": {
         "score": 12,
-        "reason": "CoT's CoT 有两条较完整的系统级抽象：一是多环节 Agent 任务应优先优化最上游瓶颈，二是多步探索任务需要显式 working memory。两条都连接到了证据等级、老师是否已知、信息差和可沉淀形式，符合模板要求。",
-        "missingEvidence": "证据等级标注偏自述，尤其 L4 和 L3 缺少原始实验材料支撑；第二条 working memory 的新增性较弱，更多是已知概念在当前任务上的迁移，尚未给出具体 schema 或实验对比。"
+        "reason": "CoT's CoT 部分覆盖了两层重要抽象：一是多环节 Agent 任务中的上游瓶颈识别，二是 working memory 从隐式上下文到显式结构化记忆的架构意义。每个点都说明了证据等级、老师是否已知、自动化潜力和沉淀形式，符合模板要求。扣分点在于证据等级偏自评，L4 的说法与实际报告中的证据颗粒度不完全匹配，因为没有展示系统性失败分析数据。",
+        "missingEvidence": "缺少 CoT's CoT 结论与具体实验样本之间的对应关系；缺少 working memory 方案的具体 schema 草案；缺少证明 memory 机制能改善任务表现的实验或消融。"
       },
       "brainaryMapping": {
-        "score": 8,
-        "reason": "Brainary 映射较到位，覆盖 memory、tool orchestration、reasoning、cognitive control，并能说明短期沉淀为 reproduction test working memory schema 与代码仓库检索模块，长期作为 Brainary memory 子系统参考实现。",
-        "missingEvidence": "缺少 Brainary 现有模块接口与本周模块之间的具体对应关系；没有说明该 memory schema 如何被 Brainary 复用、如何评估 schema 质量、如何自动从实验中提炼 schema。"
+        "score": 7,
+        "reason": "报告将本周工作映射到 Brainary 的 memory、tool orchestration、reasoning、cognitive control，并指出短期可沉淀为 reproduction test 专用 working memory schema 与代码仓库检索模块，长期作为 Brainary memory 子系统参考实现。映射方向合理。但目前仍偏概念层，缺少 Brainary 内部接口、模块边界、数据结构、调用方式和自动化吸收路径的具体化。",
+        "missingEvidence": "缺少 Brainary 中对应模块的接口设计、memory schema 字段定义、检索模块输入输出、与现有 Brainary 组件的集成方案。"
       },
       "monetaryValue": {
-        "score": 5,
-        "reason": "给出了 6 万美元估值，并尝试用成熟 Unified Repair Agent 年化商业价值 200 万美元、当前节点占 3% 来计算。该估值至少与项目里程碑挂钩，而不是完全没有依据。",
-        "missingEvidence": "估值依据较弱：200 万美元年化价值、3% 权重都没有外部或内部证据；没有说明 30% 成功率对应的商业可用性、节省人工成本、潜在客户、论文价值或算力成本回报。"
+        "score": 6,
+        "reason": "报告单独判断了题目是否值得做，并给出信心略降、若改进后仍低于 50% 需重审方案的风险判断，这一点有决策价值。价值金额 $60,000 的计算方式清楚，但主要基于假设的 $2M 年化价值和 3% 权重，商业依据较弱，缺少与实际用户需求、竞品、成本节省或论文价值之间的证据连接。",
+        "missingEvidence": "缺少 $2M 年化商业价值的来源、3% 权重的依据、当前 30% 成功率对商业或论文价值的影响分析、与其他 repair agent 或 SWE-bench 系统的价值对比。"
       },
       "projectManagement": {
-        "score": 12,
-        "reason": "项目管理信息较完整：有本周投入、下周投入、资源/API 成本、里程碑、当前进度是否符合预期、偏差原因、纠偏动作和是否需要老师介入。风险判断也比较明确，即如果改进后仍低于 50%，需要重新审视方案。",
-        "missingEvidence": "缺少更细的任务拆分和验收标准，例如混合检索何时完成、working memory schema 何时冻结、端到端 pipeline 的评价指标是什么；也没有列出失败分析和改进实验的优先级队列。"
+        "score": 11,
+        "reason": "项目管理信息较完整：写明本周投入约 40 小时、下周预计 40 小时、API 成本约 50 SGD、资源需求、当前进度是否符合预期、偏差原因、纠偏动作和是否需要老师介入。风险也有阈值意识，即改进后若仍低于 50% 需重新审视方案。但下周计划仍较粗，缺少任务拆解、验收标准、时间分配、优先级和失败预案。",
+        "missingEvidence": "缺少下周具体任务列表、每天或阶段性里程碑、每项任务的完成定义、实验预算、失败预案、与 xiaoxia 团队协作的具体接口和责任边界。"
       },
       "nextAction": {
-        "score": 8,
-        "reason": "下周动作明确：引入 hybrid retrieval 与 unified working memory，并将改进后的 Reproduction Test Agent 接入 RCA Agent，在 SWE-bench Pro 上跑通 reproduction test 生成到 RCA 定位的端到端 pipeline。该动作可验证，且与本周瓶颈直接相关。",
-        "missingEvidence": "下周最小动作仍偏大，包含检索改进、memory 引入、接入 RCA 和端到端评估多个任务；缺少具体成功阈值，例如 reproduction test 成功率提升到多少、RCA 行级定位是否保持、跑多少 case。"
+        "score": 7,
+        "reason": "下周最小可验证动作明确为将改进后的 Reproduction Test Agent 接入 RCA Agent，并在 SWE-bench Pro 上跑通 reproduction test 生成到 RCA 定位的端到端 pipeline。这是合理的闭环验证动作。扣分点是动作粒度仍不够可执行：没有说明先改检索还是先改 memory，没有指定 case 数量、对照基线、成功指标、预期提升幅度和止损条件。",
+        "missingEvidence": "缺少下周实验的 case 数、评估指标、成功阈值、对照组、消融设计、若未提升到目标时的下一步决策规则。"
       },
       "evidenceQuality": {
         "score": 3,
-        "reason": "有关键实验数字：SWE-bench Pro 50 case、约 15 个 fail-to-pass、约 30% 成功率，也有失败原因分类和成本数据。这比纯叙述强。",
-        "missingEvidence": "证据粒度不足：没有 case 列表、日志、评测脚本、失败分类表、统计置信度、baseline 对照、人工标注标准或复现实验说明。当前证据支持方向判断，但不足以支持强结论。"
+        "reason": "有一定证据基础：50 个 SWE-bench Pro case、约 30% fail-to-pass、初步失败模式分析。这比纯想法汇报强。但证据仍不可复核，关键数字没有实验协议、日志、样例和统计表支撑；失败归因主要是结论性描述，缺少原始观察或标注规则。",
+        "missingEvidence": "缺少实验日志、case 明细、评测脚本、运行环境、随机性控制、失败归因标注标准、成功和失败样例、与基线方法的比较。"
       }
     },
-    "totalScore": 76,
+    "totalScore": 74,
     "tier": "B",
-    "oneLineJudgment": "本周完成了 reproduction test agent 的首个可测基线并识别检索为上游瓶颈，是实质进展；但关键结论仍缺少失败归因的定量证据和可复现实验材料。",
-    "professorFollowUp": [
-      "要求学生下周提交 50 个 case 的表格：每个 case 的成功/失败、失败主因、是否检索到正确文件、是否理解 bug、test 是否有效。",
-      "要求把“检索是最突出瓶颈”从定性判断改为定量归因，例如失败 case 中多少比例首先失败在定位阶段。",
-      "要求下周端到端实验设定明确阈值：例如至少跑同一批 50 case，reproduction 成功率目标是否超过 50%，接入 RCA 后整体定位精度如何变化。",
-      "要求给出 working memory 的最小 schema 草案，包括存什么字段、何时更新、如何查询、如何判断它带来收益。",
-      "教授最应关注的一点：当前项目的关键风险已经从 RCA 能力转移到 reproduction test 生成入口，尤其是大仓库代码检索/定位能力是否能被显著提高。"
-    ]
+    "oneLineJudgment": "本周完成了 Reproduction Test Agent 第一版和 50 case 基线实验，形成了有价值的瓶颈判断，但证据颗粒度和下周实验设计还不足以支撑高置信度决策。",
+    "professorFollowUp": "老师最应该追问三件事：第一，让学生提交 50 个 case 的逐项结果和失败归因表，验证“检索是最上游瓶颈”是否被数据支持；第二，要求下周改进实验设置对照组和消融，包括原版、混合检索版、working memory 版、二者结合版；第三，明确端到端接入 RCA 的验收指标，例如 reproduction test 成功率、RCA 行级定位精度、整体 fail-to-pass 变化，以及低于 50% 时的方案重审条件。"
   }
 }

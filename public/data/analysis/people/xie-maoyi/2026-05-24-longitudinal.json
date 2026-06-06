@@ -1,32 +1,234 @@
 {
   "key": "person:xie-maoyi:2026-05-24:longitudinal",
-  "generatedAt": "2026-05-24T11:52:05.331Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "e0144c8d657681508cb4bd60addf2bd3a216fdac742d8959bb0d7eb1fc849fb8",
+  "generatedAt": "2026-06-06T13:16:10.399Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "63a985a544dd29d3e82e438078aed27bf0bb184259744cc3f5e287f61b1564bb",
   "result": {
-    "overallTrajectory": "从内核故障定位的具体工具优化，转向内核漏洞挖掘的方法论构建，再演进到不变量家族的体系化知识梳理；研究方向不断深化，从‘技术效果提升’过渡到‘方法学原理’和‘领域模式识别’，研究能力显著成长，而非简单忙碌。",
-    "stageByWeek": {
-      "2026-04-19": "内核故障定位实验阶段：在calltree与bug-type reasoning上获得关键性能突破（Top-10: 3.7%→59.3%），确认LLM瓶颈为信息可见性而非推理能力，形成初步CoT's CoT。",
-      "2026-04-26": "方法收敛阶段：优化calltree保留率，改进bug-type prompt，引入候选过滤，初步形成‘候选生成→剪枝→推理’的方法链，认知转向搜索空间控制。",
-      "2026-05-03": "课题切换至内核漏洞挖掘：确立sibling-fix reverse search为最高价值方法，明确‘验证链’重于‘推理链’，形成方法论沉淀，并规划工具化路径。",
-      "2026-05-24": "进入不变量挖掘阶段：开始将漏洞归纳为不变量家族，构建helper-pair与canonical pattern知识结构，从孤立漏洞转向系统化知识，为自动化科研奠定基础。"
-    },
-    "trendScores": {
-      "硬进展趋势": "从实验性性能指标提升，转向可获得真实漏洞与元方法积累，硬成果的通用性和长期价值递增。",
-      "认知深度趋势": "由具体技术洞察（信息可见性）深化为方法论元认知（验证链、候选空间控制），再上升到领域本体（不变量家族），认知层级持续跃升。",
-      "方法论成熟度": "从启发式prompt逐步趋向结构化流程（如候选剪枝、oracle分层），但整体仍处于经验规则阶段，尚未达到形式化程度。",
-      "自动化潜力": "自动化意识一直存在，后期更明确转化路径（不变量知识库、查询系统），但因形式化不足而潜力发挥受限。",
-      "价值函数变化": "价值判断从单任务性能回报转向方法论的可复用性与知识积累，金额估算更强调长期资产而非一次性产出。"
-    },
-    "valueFunctionChange": "早期以具体技术带来的性能提升为核心价值（如bug-type prompt价值15万），中期看重方法论沉淀的可复用性（sibling-fix方法10万），后期更注重不变量体系的知识积累与通用性（invariant taxonomy 6万）；价值函数从‘直接效果’向‘长期可放大资产’迁移，连接至方法论、知识库、自动化路径，并始终与金额、用户（kernel maintainers/security teams）挂钩。",
-    "repeatedBlockers": [
-      "方法仍偏启发式，缺乏结构化表示与形式化定义，多周均出现‘prompt是规则堆叠’、‘memory未结构化’、‘invariant边界不稳定’等问题。",
-      "样本规模不足，导致方法泛化性难以验证，如bug挖掘数量未达系统化规模（仅6-7个），invariant taxonomy也因数据量小而不稳定。",
-      "自动化转化门槛高，关键组件（如helper语义形式化、oracle统一、sibling关系表示）长期未突破。"
+    "overallTrajectory": "总体看，这名学生在最近四次周报中呈现出研究能力提升，而不只是工作量增加：他从早期的实验跑通和指标比较，逐步转向假设拆解、负结果吸收、失败模式归因、验证链设计、方法资产沉淀与自动化模块构想；但当前主要短板是形式化不足、项目切换后的闭环交付不够清晰，以及若干方法资产仍停留在文本经验而非可复用工具。",
+    "headline": "从“做实验/找 bug”进步到“识别信息边界、验证链和 invariant family”，但下一步必须把方法论沉淀成可检查的 query、schema、oracle template。",
+    "overviewSentence": "该学生的研究能力在增强，核心信号是能用负结果修正方向、抽象出可复用方法链，并开始把 bug 个例提升为 invariant 与 oracle 层面的系统问题。",
+    "fourWeekTimeline": [
+      {
+        "week": "2026-04-19",
+        "metacognition": "这一周已经不只是汇报实验数量，而是能把 kernel fault localization 拆成“信息是否可见”和“如何在候选空间中推理”两个子问题，并明确证伪了“只要给 calltree 就会提升”和“更多 trace 更好”的路径。对失败模式的识别较具体，例如 calltree 太短丢 RC、太长导致 LLM 迷失、RC 在 BT 中时 calltree 反而是噪声。",
+        "valueJudgment": "价值判断开始围绕科研问题边界展开：他认为值得做的不是泛化地提高 FL，而是解决 RC 不在 backtrace 时的信息不可见问题，并把 bug-type reasoning 视为论文核心信号。判断有数据支撑，但方法价值仍偏依赖 prompt heuristic，结构化表达不足。",
+        "projectManagement": "项目推进有明确实验分组、baseline、指标和下周最小动作。硬交付包括 128 个 crash bugs 分类、27 个 RC-not-in-BT 子集分析、Phased calltree、Bug-Type prompt、数据泄露修复。项目阶段从 pipeline 搭建转为方法验证，关键路径识别为 reasoning 结构化。",
+        "evidence": "报告给出 baseline Top-10 1/27、Phased CT 5/27、Bug-Type Final 16/27；同时说明 RC-in-BT 时 baseline 85.7%、加 calltree 无提升或略降。"
+      },
+      {
+        "week": "2026-04-26",
+        "metacognition": "相比前一周，他进一步把问题拆成 candidate generation、candidate pruning、reasoning，并认识到“减少无关信息比增加信息更关键”。这说明认知从增加输入转向控制搜索空间，失败模式也从单点报错转为 trade-off 分析，如 RC 保留率和 calltree 可读性的冲突。",
+        "valueJudgment": "价值判断更稳定：calltree 被定位为候选空间来源，Bug-Type prompt 是推理增强，candidate filtering 是稳定提升方向。这比前一周更有模块化价值判断，也更接近 Brainary 中 cognitive control、reasoning、workflow management 的系统能力沉淀。",
+        "projectManagement": "延续前一周主线并有可量化推进：MAX_PHASES 从 8 到 16，RC 保留率 22/27 到 25/27；Bug-Type v2 Top-10 从 16/27 到 18/27；candidate 从约 400 缩到 120–150 且性能未明显下降；KernelLocator 小规模原型把候选进一步缩到 60–80。但多个模块仍处于规则堆叠，尚未形成统一 schema。",
+        "evidence": "报告列出 RC 保留率 92.6%、Bug-Type v2 Top-10 66.7%、Top-5 48.1%、Top-1 6/27，并明确 filtering 误删 RC 约 2 个。"
+      },
+      {
+        "week": "2026-05-03",
+        "metacognition": "这一周主线切到 Kernel Bug Hunting，但认知延续了前两周的“控制候选空间”和“验证边界”思想。他明确提出正确性来自验证链而不是推理链，能识别 agent 多一致不等于正确、静态分析不等于可验证，这是研究判断能力的重要进步。",
+        "valueJudgment": "价值判断从单个 bug 产出转向高 precision 候选生成机制。他认为 sibling-fix reverse search 是最高 EV 方法，LLM 更适合筛选而非发现，PoC/runtime 是最终 oracle。这个判断更清楚地区分了 pattern、LLM、人工验证各自的价值和边界。",
+        "projectManagement": "Kernel Bug Hunting 有持续硬进展：#2 到 v6，#12 被 maintainer 确认为 bug，#1/#3 进入 mainline/net tree，confirmed bug 约 6–7 个。方法沉淀包括 disclosure、WAI 判断、helper-pair catalogue、agent verification。下周动作包括 #16 PoC+patch、新增 1–2 个 confirmed bug、把 2–3 个 helper-pair 转成 query prototype。缺口是没有说明前两周 FL/KernelLocator 项目是否暂停、归档或转入新项目。",
+        "evidence": "报告明确写到多个 bug 达到 PoC + patch + maintainer acknowledgement，并将 bug 数量增长慢归因于 verification 成本高。"
+      },
+      {
+        "week": "2026-05-24",
+        "metacognition": "这一周的认知进一步抽象：从 bug 个例转向 invariant family，认识到很多 bug 是 invariant 没有跨 subsystem 系统传播，而不是随机错误。同时他开始区分 static 与 dynamic oracle，说明对证据边界和社区接受标准的理解更细。但 formal predicate、static oracle criteria、invariant hierarchy 还没有完成，证据等级也从部分 A 降到 B，说明目前更多是方法论起点而非验证完成。",
+        "valueJudgment": "价值判断从“找到真实漏洞”提升到“构建 invariant propagation 的通用能力”。他认为值得投入的是 invariant KB、helper-pair query library、oracle router、reachability reconstruction，这能连接个人 bug hunting 经验、长期系统能力和 Brainary 的 memory、reasoning、tool orchestration 能力。但当前判断仍需要用 query prototype 和 formal predicate 证明，而不只是 taxonomy 文本。",
+        "projectManagement": "项目进入 Kernel Invariant Mining 的 methodology accumulation / early formalization 阶段。原计划整理已有 bug pattern，实际开始 invariant taxonomy，资源、依赖、API 成本、老师介入点写得比前几周更完整。可检查交付包括 taxonomy 雏形、helper-pair catalogue 初版、invariant→canonical helper mapping、reach-pattern notes 初版；但这些交付多为 notes/schema 草稿，缺少可运行 query、可复现实验或新增 confirmed bug 的周内闭环。",
+        "evidence": "报告说明下周最小动作是为 2–3 个 invariant 补 formal predicate、把 1 个 helper-pair 转成 query prototype、为 1 个 structural class 写 evidence template、在一个 subsystem 验证 MLTA 辅助调用恢复。"
+      }
     ],
-    "professorShouldAsk": "你的不变量分类与形式化谓词之间如何建立映射？如何最小化地验证这些不变量家族具有跨子系统的传播性？目前的经验积累何时能转化为可发布的论文或系统原型？",
-    "nextBestIntervention": "选择1-2个不变类，协助其完成形式化谓词定义，并设计一个小型查询实验，在5个以上子系统中验证传播假设，推动‘方法论积累’向‘可证明的研究贡献’转化。"
+    "metacognitionChange": {
+      "summary": "元认知在四次周报中明显增强：从“实验结果如何”推进到“为什么有效、何时无效、证据边界在哪里、下一步如何验证”。最强变化是他能接受负结果并改变问题表述，例如从优化 calltree 转向控制候选空间和结构化 reasoning；从相信 agent/静态推理转向 PoC/runtime 验证；从追 bug 个例转向 invariant family 和 oracle routing。",
+      "byWeek": [
+        {
+          "week": "2026-04-19",
+          "change": "能区分信息可见性和推理能力，识别 calltree 的条件性价值，并用负结果限定适用范围。"
+        },
+        {
+          "week": "2026-04-26",
+          "change": "进一步形成 candidate generation、candidate pruning、reasoning 的过程模型，开始把失败归因为搜索空间控制问题。"
+        },
+        {
+          "week": "2026-05-03",
+          "change": "把 bug hunting 的正确性来源定义为验证链，而不是模型推理链，能识别 WAI、phantom bug、agent 输出不可信等失败模式。"
+        },
+        {
+          "week": "2026-05-24",
+          "change": "从个例层面提升到 invariant family、oracle class、reachability pattern，但形式化和可运行验证仍不足。"
+        }
+      ],
+      "currentLevel": "当前处于“研究问题结构化能力正在形成”的阶段：能提出假设、识别边界、记录失败模式、设计最小验证动作，并能把经验映射到 Brainary 的 memory、reasoning、tool orchestration 等系统能力；但还未稳定做到把每个 insight 转成可复用 schema、query、benchmark 或工具。",
+      "strongestSignal": "最强信号是他能主动修正原假设：在 FL 项目中发现 calltree 本身提升有限后，转向 bug-type reasoning 和 candidate filtering；在 bug hunting 中发现静态/agent 判断不可靠后，转向 PoC、runtime oracle 和 evidence template。",
+      "nextLift": "下一步提升不是增加任务数，而是把每个抽象判断绑定到一个可检查产物：例如一个 invariant formal predicate、一个 helper-pair query、一个 oracle evidence template、一个 reachability 恢复实验，并在下周报告中写清通过/失败标准。"
+    },
+    "valueGrowth": {
+      "summary": "科研/项目价值判断在变清楚：早期价值来自实验性能提升和论文信号，随后转向模块化系统能力，如 pruning、reasoning、pattern library、verification workflow、invariant KB。最重要的提升是他开始判断“什么值得持续投入”：不是纯粹更大 trace、纯 agent、纯 fuzz 或纯 static pattern，而是能形成高 precision 候选、明确 oracle、可跨 subsystem 传播的系统方法。",
+      "byWeek": [
+        {
+          "week": "2026-04-19",
+          "valueJudgment": "认为 kernel FL 值得做的原因是 RC 不在 BT 时存在真实信息缺失，Bug-Type reasoning 有明显性能信号，适合形成论文核心；同时承认方法偏 heuristic。"
+        },
+        {
+          "week": "2026-04-26",
+          "valueJudgment": "价值判断从单一性能提升转向模块组合：calltree 负责信息，filtering 负责搜索空间，bug-type prompt 负责推理；这更接近可沉淀的自动化科研模块。"
+        },
+        {
+          "week": "2026-05-03",
+          "valueJudgment": "认为 bug hunting 的高价值路径是 sibling-fix reverse search，因为它提供高 precision 候选生成；LLM 被放在 filter 位置，PoC/runtime 被放在 oracle 位置，价值判断更工程化也更可验证。"
+        },
+        {
+          "week": "2026-05-24",
+          "valueJudgment": "价值判断进一步抽象为 invariant propagation：值得做的不是单个 bug，而是 invariant family、helper dependency、oracle routing 和 reachability reconstruction；但当前证据主要来自已有个例回溯，形式化验证不足。"
+        }
+      ],
+      "currentValueFunction": "当前他隐含的价值函数是：优先投入那些能把个例经验转化为可复用系统能力的方向，尤其是能产生高 precision 候选、明确验证 oracle、跨 subsystem 复用、并可沉淀为 Brainary memory/schema/module/workflow 的问题；不优先投入纯增加信息、纯 agent 自主探索、纯 fuzz 或缺少 oracle 的方向。",
+      "improvementSignals": [
+        "能把负结果转化为价值边界，例如 RC-in-BT 时 calltree 是噪声，不应作为通用增强。",
+        "能区分工具角色，例如 Pattern 高 precision、LLM 高 recall/filter、人工 PoC 是最终 oracle。",
+        "能把个人 bug hunting 经验上升为 helper-pair catalogue、invariant taxonomy、oracle router、reachability pattern 等长期资产。",
+        "能主动说明证据等级，5月24日对 invariant family 和 oracle routing 标为 B，说明知道这些判断还未完全证明。"
+      ],
+      "nextValueQuestion": "下次需要他回答：在 Kernel Invariant Mining 中，哪一个 invariant class 最值得先做成可运行 query，为什么它比继续手工找 bug、扩展 taxonomy 或做 MLTA reachability 更值得，本周用什么证据判定它值得继续投入？"
+    },
+    "projectManagementReview": {
+      "summary": "项目管理质量整体在提升，尤其是每周能写当前阶段、硬进展、卡点、下周最小动作；5月24日还补充了资源、依赖、API/token、是否需要老师介入。主要问题是项目切换后的状态管理不足：FL/KernelLocator、directed fuzz 等支线没有明确暂停、归档或转化关系；方法资产多次被称为 catalogue、notes、taxonomy，但缺少版本化交付和验收标准。",
+      "projects": [
+        {
+          "project": "Kernel Fault Localization：calltree、Bug-Type reasoning、candidate filtering、KernelLocator",
+          "weeks": [
+            "2026-04-19",
+            "2026-04-26"
+          ],
+          "quality": "前两周推进质量较高，有清晰实验设计、对照组、指标、失败模式和迭代动作。Bug-Type prompt 和 candidate filtering 都有量化收益或至少无明显性能下降。涉及 Brainary 的 reasoning、cognitive control、tool orchestration 能力已出现原型，但尚未沉淀为稳定模块。",
+          "whatWorked": "最有效的是把 FL 拆成信息可见性、候选生成、候选裁剪、推理四段，并用数据证明 calltree 的条件性价值和 bug-type reasoning 的增量。Candidate filtering 把函数数从约 400 缩到 120–150，KernelLocator 小规模缩到 60–80，说明 cognitive control 方向有系统能力潜力。",
+          "managementGap": "5月03日之后没有交代该项目是否暂停、结题、转入 bug hunting，KernelLocator 的 dependency/data-flow 计划也没有后续。Brainary 相关的 reasoning module、pruning module、decision policy 仍是潜在沉淀，没有报告可复用接口、版本、测试集或交付物。",
+          "nextConcreteMove": "需要补一个项目状态决策：继续、暂停还是归档。若继续，下一步最小动作应是固定 27 bug 子集上的 structured reasoning schema 与 candidate pruning ablation；若暂停，应输出一页结题 memo，包含可复现实验脚本、数据 split、主要结论、未解决问题和可迁移到 bug hunting 的模块。"
+        },
+        {
+          "project": "Kernel Bug Hunting：sibling-fix reverse search 与真实 bug 上报",
+          "weeks": [
+            "2026-05-03",
+            "2026-05-24"
+          ],
+          "quality": "这是当前最有持续性的主线之一。5月03日有真实社区反馈和 mainline/net tree 进展，5月24日进一步把方法从个例上升为 invariant propagation。项目价值和验证路径较清楚，但5月24日缺少新增 confirmed bug 或 patch 状态更新，硬产出从社区闭环转为方法整理。",
+          "whatWorked": "sibling-fix reverse search 有实际确认 bug 支撑，并形成了 grep sibling subsystem、LLM filter、人工 PoC 验证的流程。该项目把 Brainary 的 tool orchestration、risk modeling、reasoning 能力连接到真实维护者反馈和 PoC oracle，比纯 agent 探索更可控。",
+          "managementGap": "关键路径写成了 verification 和 candidate generation，但没有周度量化漏斗，例如扫描多少 helper-pair、产生多少 candidate、过滤多少、PoC 成功多少、上报多少、被确认多少。5月24日说流程仍 heavily manual，但没有给自动化优先级排序。",
+          "nextConcreteMove": "下周应选 1 个 helper-pair，交付一个可运行 query prototype，并报告完整漏斗：输入 fix commits/helper、候选点数量、LLM 过滤后数量、人工验证数量、PoC/静态证据结果、是否值得扩大。"
+        },
+        {
+          "project": "Invariant Taxonomy 与 helper-pair catalogue",
+          "weeks": [
+            "2026-05-03",
+            "2026-05-24"
+          ],
+          "quality": "这是从项目经验向研究资产沉淀的关键项目。5月24日已有 taxonomy 雏形、helper-pair catalogue 初版、invariant 到 canonical helper 的 mapping，说明他在把个人经验转成 Brainary memory/invariant KB。但当前仍偏文本经验，形式化不足。",
+          "whatWorked": "能把 cross-ns info leak、cross-ns capability gap、namespace value transform missing、cached net pointer consistency 等 recurring pattern 归为 bug family，并意识到很多 bug 是 invariant 未跨 subsystem 传播。这是从个例到系统能力的明显进步。",
+          "managementGap": "缺少每个 invariant class 的边界定义、正负例、formal predicate、canonical fix pattern、证据要求和查询方式。报告承认有些 case 同时属于多个 class，taxonomy 边界不稳定；这意味着当前还不能直接作为可复用 Brainary memory schema。",
+          "nextConcreteMove": "不要继续泛化扩 taxonomy，先选 2–3 个高置信 invariant，为每个写一页 schema：定义、触发条件、必须伴随的 helper、正例、反例、query 草案、dynamic/static oracle、通过标准。"
+        },
+        {
+          "project": "Oracle routing 与 evidence template",
+          "weeks": [
+            "2026-05-03",
+            "2026-05-24"
+          ],
+          "quality": "方向重要且与真实科研判断强相关。学生已经从“必须 PoC”进一步细分为 dynamic oracle 和 static oracle，并观察到不同 bug class 在 kernel 社区中的证据要求不同。当前证据等级为 B，属于早期框架。",
+          "whatWorked": "能识别 cross-ns leak、capability gap、quota isolation 等行为性 bug 通常需要 PoC，而 cached pointer consistency、continuation recheck 等结构性 bug 可能接受静态 reasoning。这对降低验证成本和规范上报有价值，也可沉淀为 Brainary 的 oracle router/verification workflow。",
+          "managementGap": "static oracle 的 formal criteria 缺失，dynamic oracle 的 harness/oracle 模板没有在5月24日给出实例。5月03日提出 parametric harness，但5月24日没有后续，说明验证工具化支线有断点。",
+          "nextConcreteMove": "选一个 structural class 写完整 evidence template，并用一个已确认 bug和一个 dropped/WAI case 测试模板能否区分；同时说明哪些字段可以自动生成，哪些必须人工判断。"
+        },
+        {
+          "project": "Reachability reconstruction：Canonical Reach Pattern 与 MLTA 接入",
+          "weeks": [
+            "2026-05-24"
+          ],
+          "quality": "这是新提出的支线，问题判断有价值：很多 bug 的发现瓶颈不是 reasoning，而是 syscall 到 subsystem/helper 的 reachability reconstruction。但目前只有 notes 初版，没有硬验证。",
+          "whatWorked": "已经列出 proto_ops、netdev_ops、genl_ops、rtnl_link_ops 等 syscall reachability pattern，说明开始把 bug hunting 的候选生成前置到调用路径恢复。",
+          "managementGap": "MLTA 尚未接入，indirect call 路径难恢复仍只是问题陈述。缺少选定 subsystem、输入输出定义、成功标准和与 sibling-fix query 的依赖关系。",
+          "nextConcreteMove": "只选一个 subsystem 做 MLTA 辅助调用恢复，报告恢复出的 syscall→ops→helper 路径数量、人工核验准确率、是否新增可验证 candidate。"
+        },
+        {
+          "project": "Directed fuzz / parameterized harness",
+          "weeks": [
+            "2026-05-03"
+          ],
+          "quality": "5月03日提出 fuzz 不是发现工具而是 trigger reliability 工具，并计划在 1 个 bug 上实现 parametric harness；这是合理的价值定位。",
+          "whatWorked": "能把 fuzz 从泛化发现重新定位为验证链中的可靠触发工具，避免纯 fuzz 方向失焦。",
+          "managementGap": "5月24日没有继续汇报该支线，缺少 harness template、oracle 统一、是否暂停的说明。证据不足以判断该项目是否推进。",
+          "nextConcreteMove": "明确该支线是否暂停。若继续，选择一个已确认 bug 做最小 harness template，交付参数字段、oracle、运行脚本和复现结果。"
+        }
+      ],
+      "managementPattern": "他的管理模式从实验驱动逐渐转为方法资产驱动：每周能给出 hard progress、失败模式、卡点和最小动作；但还缺少跨周项目台账，导致支线状态不透明。当前最大的管理风险不是不努力，而是多个有价值资产同时展开，却没有明确优先级、验收标准和归档规则。",
+      "nextManagementMove": "建立一个四列表项目台账：继续推进、下周交付、暂停归档、等待老师决策。每个项目只允许有一个下周最小可验证动作，并必须绑定验收标准，例如 query 是否能跑、predicate 是否覆盖正负例、template 是否能区分 confirmed 与 dropped case。"
+    },
+    "repeatedBlockers": [
+      "形式化不足反复出现：FL 中 prompt 是 heuristic，bug hunting 中 helper semantics 未 formalize，5月24日 invariant predicate 和 static oracle criteria 仍缺失。",
+      "从文本经验到工具交付的转换不足：多次出现 catalogue、notes、taxonomy、workflow，但可运行 query、schema、module、template 的交付证据不足。",
+      "搜索空间控制是长期主题：FL 中 candidate 太大导致 LLM 迷失，bug hunting 中 candidate generation 和 filtering 决定效率，reachability reconstruction 也服务于候选生成。",
+      "验证成本高是持续瓶颈：PoC/runtime 是强 oracle，但构造成本高；static oracle 又缺 criteria。",
+      "项目切换后的状态管理不够清楚：FL/KernelLocator、directed fuzz、KCOV_REMOTE 等支线后续缺少暂停、归档或转化说明。"
+    ],
+    "teacherQuestions": [
+      "你现在要优先推进的一个 invariant class 是哪一个？请说明它的正例、反例、formal predicate、对应 helper-pair，以及为什么它比继续手工找新 bug 更值得。",
+      "sibling-fix reverse search 的完整漏斗数据是什么：从多少 fix/helper 出发，产生多少候选，LLM 过滤到多少，PoC 或静态证据确认多少，被 maintainer 接受多少？",
+      "FL/KernelLocator 项目现在是继续、暂停还是归档？如果暂停，哪些模块或结论会迁移到当前 bug hunting / invariant mining 项目？",
+      "你说不同 bug class 需要不同 oracle，那么一个 structural class 的 static oracle 最小证据模板是什么？用一个 confirmed case 和一个 dropped/WAI case 能否验证它？",
+      "下周如果只能交付一个可检查产物，你会选 query prototype、formal predicate、oracle template 还是 reachability 实验？验收标准是什么？"
+    ],
+    "nextIntervention": "建议老师下次 meeting 不主要讨论更多方向，而是要求学生做一次“收敛式交付”：选择一个 invariant class，在一周内完成 formal predicate、helper-pair query prototype、正负例、oracle evidence template 和漏斗数据。老师可以重点介入 invariant hierarchy 和 evidence boundary，帮助他避免 taxonomy 继续发散。",
+    "studentFeedback": {
+      "summary": "你最近的进步不是因为做得更多，而是因为你开始能解释为什么某条路径有效、什么时候无效、用什么证据证明，以及如何把经验沉淀为系统能力。现在最需要提升的是把这些判断从周报文字变成可复用、可检查的研究资产。",
+      "whatImproved": [
+        "你能用负结果修正方向，例如从“给更多 calltree”转向“控制候选空间和 bug-type reasoning”。",
+        "你能识别验证边界，例如 agent 多一致不等于正确，静态判断不能替代 PoC/runtime oracle。",
+        "你开始把 bug 个例抽象成 invariant family、helper-pair、oracle routing 和 reachability pattern，这比单纯找更多 bug 更接近研究能力。",
+        "你对 Brainary 能力的连接更具体，已经不是泛泛说自动化，而是能映射到 memory、reasoning、tool orchestration、risk modeling 等模块。"
+      ],
+      "nextStep": "下一周不要扩大太多方向；请选择一个 invariant class，交付一个能被老师检查的最小闭环：formal predicate、query prototype、2 个正例、1 个反例、oracle template、以及跑出的候选漏斗数据。"
+    },
+    "evidenceLinks": [
+      {
+        "week": "2026-04-19",
+        "evidence": "Baseline 1/27、Phased CT 5/27、Bug-Type Final 16/27；RC-in-BT 时 baseline 85.7%、加 calltree 无提升或略降。",
+        "supports": "说明他能用对照实验识别方法增量和适用边界。"
+      },
+      {
+        "week": "2026-04-19",
+        "evidence": "CoT 增量写明“LLM 失败本质是信息缺失问题”“calltree 作用是补充 BT 中缺失的信息”“性能提升关键是 bug-type aware reasoning”。",
+        "supports": "说明从实验现象上升到问题分解。"
+      },
+      {
+        "week": "2026-04-26",
+        "evidence": "RC 保留率从 22/27 提升到 25/27；Bug-Type v2 Top-10 从 16/27 到 18/27；candidate 数量从约 400 到 120–150。",
+        "supports": "说明项目不是只忙，有可量化硬进展。"
+      },
+      {
+        "week": "2026-04-26",
+        "evidence": "CoT’s CoT 写明 fault localization 的关键步骤是 candidate generation → candidate pruning → reasoning。",
+        "supports": "说明元认知从信息增加转向流程结构化。"
+      },
+      {
+        "week": "2026-05-03",
+        "evidence": "#12 被 maintainer 确认为 bug，#1/#3 已进入 mainline/net tree，confirmed bug 约 6–7 个。",
+        "supports": "说明 bug hunting 项目有外部社区验证，不只是内部判断。"
+      },
+      {
+        "week": "2026-05-03",
+        "evidence": "报告写明“agent 多一致 ≠ 正确”“静态分析 ≈ 可验证”被证伪，且“bug oracle 必须是 PoC + runtime”。",
+        "supports": "说明他开始明确证据边界和失败模式。"
+      },
+      {
+        "week": "2026-05-24",
+        "evidence": "提出 cross-ns info leak、cross-ns capability gap、namespace value transform missing、cached net pointer consistency 等 invariant taxonomy，并计划补 formal predicate。",
+        "supports": "说明从个例 bug 转向 invariant family，但形式化仍未完成。"
+      },
+      {
+        "week": "2026-05-24",
+        "evidence": "项目管理中写明阶段为 methodology accumulation / early formalization，资源包括 grep、LLM、KASAN VM、LKML archive，依赖 upstream fix history 和 maintainer review，偏差是 formalization 比预期慢。",
+        "supports": "说明项目管理信息更完整，也暴露当前关键短板。"
+      }
+    ]
   }
 }

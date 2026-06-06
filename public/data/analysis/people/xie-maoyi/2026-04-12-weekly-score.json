@@ -1,54 +1,64 @@
 {
   "key": "person:xie-maoyi:2026-04-12:weekly-score",
-  "generatedAt": "2026-05-24T11:36:37.044Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "a39b1ddf21aeb2f37097c7d68b859f18c7b15a892b11e633ef08eb412dcb4e53",
+  "generatedAt": "2026-06-06T13:14:56.442Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "b75a5db69137bc6eeaa9ad3a73995e9db59119ee307a51389703bd62babed035",
   "result": {
-    "hardProgress": {
-      "score": 14,
-      "reason": "本周有明确数据产出：KCOV在65个bug中成功收集57个calltree，RC覆盖率从约10%提升至42%，并发现了多线程丢失、buffer不足、kernel thread未捕获等失败模式。KCOV+LLM实验得到Top‑1无提升但Top‑5/10有轻微改善的定量结果。审稿2篇并提炼出常见问题。但整体进展仍属初步，覆盖率有限且不稳定，定位效果未实质提升，核心瓶颈未破。",
-      "missingEvidence": "未提供calltree大小分布、多线程丢失的量化比例、LLM实验的详细设置（prompt、温度等）以及Top‑5/10提升的具体数值。"
+    "week": "2026-04-12",
+    "name": "Xie Maoyi",
+    "scores": {
+      "hardProgress": {
+        "score": 16,
+        "reason": "本周有较明确的硬进展：从 ftrace 转向 KCOV，搭建了单线程、多线程到统一版本的 KCOV 收集流程；在 65 个选定 bug 上完成小规模验证，57 个成功收集 calltree，24 个 RC 在 calltree 中；完成了 24 个 case 的 baseline 与 +calltree 对比，并形成了初步脚本、calltree 重建和压缩方法。进展不是停留在想法层面，而是有实验数据和失败模式。但 KernelLocator 仍处在问题分析和方向收敛阶段，graph-based/causal reasoning 尚未实现，LLM 输入也未稳定。",
+        "missingEvidence": "缺少 65 个 bug 的选择标准、每个 bug 的详细结果表、脚本是否可复现、calltree 收集成功与失败的具体日志，以及 baseline 和 +calltree 实验的完整指标。"
+      },
+      "cognitiveIncrement": {
+        "score": 12,
+        "reason": "认知增量比较清楚：KCOV 提升执行覆盖但不直接提升定位能力；LLM 的主要瓶颈是 search space 过大；trace 只是执行信息，不等同于错误原因；并且明确证伪了“trace 会显著提升 FL”和“只要 RC 在 trace 中就能找到”两个假设。这些增量与本周实验结果有对应关系。扣分点是认知仍主要停留在问题识别层，尚未提出可验证的新机制或可操作的理论框架。",
+        "missingEvidence": "缺少更细粒度的失败案例分析，例如哪些 case 中 RC 在 trace 中但 LLM 仍失败，失败是否来自函数数量、调用层级、上下文缺失或 prompt 设计。"
+      },
+      "cot2Depth": {
+        "score": 10,
+        "reason": "报告有 CoT's CoT 层面的反思：将问题上升到 candidate generation、search space control、trace 结构化表示和 evaluation protocol，并且标注了证据等级和自动化沉淀形式。这符合模板要求。但深度仍有限，两个 CoT's CoT 都明确写出“这不是老师原本不知道的”，说明新颖性较弱；对为什么现有自动化科研体系没有吸收的解释偏概括，没有形成更强的机制性判断。",
+        "missingEvidence": "缺少对候选空间过大的定量刻画，例如平均函数数量、不同规模下 LLM Top-k 的下降曲线；缺少 graph 表示如何解决问题的初步实验或反例。"
+      },
+      "brainaryMapping": {
+        "score": 6,
+        "reason": "报告将本周工作映射到 reasoning、cognitive control、tool orchestration，并指出最终可能沉淀为 workflow 或 agent module，方向是合理的。问题是映射较粗，基本是能力标签级别，没有说明 Brainary 中具体哪个模块、输入输出接口、自动化闭环、评估指标或如何从当前 KCOV pipeline 迁移为系统能力。",
+        "missingEvidence": "缺少 Brainary 模块级设计，例如 trace collector、graph builder、candidate generator、LLM ranker、evaluator 之间的数据结构和调用关系。"
+      },
+      "monetaryValue": {
+        "score": 6,
+        "reason": "报告对四类任务分别给出人民币估值，并解释其来源：KCOV pipeline 作为实验基础设施，KCOV+LLM 作为 empirical insight，KernelLocator 作为 early idea，审稿作为学术服务。优点是有价值判断意识。扣分点是估值基本是主观判断，没有和可复用资产、论文产出概率、工程节省时间、潜在用户付费意愿或替代成本建立清晰关系。",
+        "missingEvidence": "缺少价值计算依据，例如该 pipeline 可节省多少人工调试时间、可服务多少 bug、是否可被 fuzzing 系统集成、与现有工具相比的增量价值。"
+      },
+      "projectManagement": {
+        "score": 12,
+        "reason": "项目管理信息较完整：说明了阶段、原计划与实际、投入时间、下周预计、关键里程碑、资源、依赖、成本、进度偏差和纠偏动作。尤其是明确提出减少工程扩展、多做小规模验证，说明有一定风险控制意识。扣分点是里程碑仍偏宽泛，缺少明确验收标准；关键路径依赖 kGym/数据集，但没有风险预案；老师是否介入也写得较模糊。",
+        "missingEvidence": "缺少每个里程碑的成功判据，例如 KCOV 稳定性的最低覆盖率、重复运行方差、graph 是否要将 candidate 数量降低到某个阈值。"
+      },
+      "nextAction": {
+        "score": 8,
+        "reason": "下周动作较具体，且多为最小可验证动作：尝试 KCOV_REMOTE、对小批 bug 做稳定性验证、对 calltree 做 frequency/subsystem 过滤、构建 very small dependency graph、总结审稿 checklist。这些动作和本周失败模式直接对应。扣分点是部分动作缺少量化验收标准，例如什么叫稳定、Top-5 提升多少算有效、dependency graph 在几个 case 上验证。",
+        "missingEvidence": "缺少下周实验设计表，包括样本数量、对照组、成功阈值、预期失败模式和停止条件。"
+      },
+      "evidenceQuality": {
+        "score": 4,
+        "reason": "证据质量中等偏好。本周提供了样本量、覆盖结果、RC coverage、Top-k 对比的关键结论、失败模式和证据等级。比纯叙述更可判断。但仍缺少完整数据表、实验设置、bug 类型分布、prompt 方案、重复实验稳定性和统计显著性，因此证据尚不能完全支撑方法结论。",
+        "missingEvidence": "缺少原始实验记录、benchmark 列表、每个 bug 的 RC 是否在 calltree 中、Top-1/Top-5/Top-10 完整结果、calltree 大小分布和失败 case 复盘。"
+      }
     },
-    "cognitiveIncrement": {
-      "score": 10,
-      "reason": "本周提炼了3项认知增量：KCOV覆盖更稳定但不能直接提升定位；LLM瓶颈在于搜索空间过大而非理解代码；trace只提供执行信息无视错误原因。同时证伪了两个假设。这些认知推进了理解，但部分可能为已知，深度一般。",
-      "missingEvidence": "未说明在自身认知框架中推翻了哪些前序假设，也未区分哪些是全新认知。"
-    },
-    "cot2Depth": {
-      "score": 9,
-      "reason": "提出了两个CoT’s CoT：1. 缩小候选空间是FL关键，建议沉淀为benchmark和evaluation protocol；2. trace需结构化才能有效辅助LLM，建议沉淀为workflow或graph builder模块。老师原本已知，但给出了具体沉淀形式。自动化潜力中等，证据等级B/C。",
-      "missingEvidence": "未展示这两点如何被实验验证或如何嵌入自动化科研流程，也未给出可操作的验证方案。"
-    },
-    "brainaryMapping": {
-      "score": 5,
-      "reason": "将本周工作与Brainary的reasoning、cognitive control、tool orchestration三项能力对应，承认推理能力弱、控制搜索空间等，但仅为概念关联，尚无系统化接口或设计。",
-      "missingEvidence": "未说明如何在现有Brainary架构中落地，未提供映射图或可行性分析。"
-    },
-    "monetaryValue": {
-      "score": 8,
-      "reason": "为四个任务给出了估值：KCOV pipeline 4万、LLM实验6万、方向探索2万、审稿1万，合计13万元人民币。估值有说明依据，但部分偏主观（如探索仅2万），且LLM实验因负结果估值稍高。总体估值合理但不够系统。",
-      "missingEvidence": "缺少对标市场参考价或同行估值标准，未计算直接成本（API、计算资源）与产出的比值。"
-    },
-    "projectManagement": {
-      "score": 13,
-      "reason": "项目管理部分描述了阶段、时间投入（35小时）、下周预计（40小时）、里程碑、资源依赖（kGym/QEMU）、成本（$20‑30）及进度偏差，并给出了减少工程、多做小规模验证的纠偏动作。结构完整，但缺乏可量化的中期目标和风险预案。",
-      "missingEvidence": "未定义里程碑的量化完成标准（如“覆盖率稳定”的具体指标），也未列出主要风险及应对措施。"
-    },
-    "nextAction": {
-      "score": 8,
-      "reason": "下周动作具体：任务1尝试KCOV_REMOTE+稳定性验证，任务2对calltree做简单过滤看Top‑5提升，任务3构建小dependency graph，任务4总结审稿checklist。动作可验证但部分目标较模糊，如graph多小、验证成功的标准不明确。",
-      "missingEvidence": "缺少对每个动作的预期结果定义，如“稳定性验证”的通过条件、“Top‑5提升”的幅度阈值。"
-    },
-    "evidenceQuality": {
-      "score": 3,
-      "reason": "周报以自述数据为主，如57/65收集成功、RC覆盖率42%，但未附截图、calltree样例、LLM实验详情或审稿记录，证据可信度中等。",
-      "missingEvidence": "缺少原始calltree文件、LLM对话日志、实验配置、审稿意见摘要等可验证的附件。"
-    },
-    "totalScore": 70,
+    "totalScore": 74,
     "tier": "B",
-    "oneLineJudgment": "本周KCOV覆盖有所提升，但LLM定位效果未实质改善，瓶颈在于候选空间过大与缺失结构化推理，下周需聚焦小规模验证并避免过度工程化。",
-    "professorFollowUp": "关注calltree过滤后Top‑5是否稳定提升，以及是否会再次陷入“增加实验规模而忽略认知收敛”的循环。"
+    "oneLineJudgment": "本周有扎实的小规模工程与实验进展，并形成了正确的问题收敛：KCOV 改善覆盖但不能自动带来 FL 提升；下一步关键不是扩规模，而是证明结构化候选生成是否能稳定缩小搜索空间。",
+    "professorFollowUp": [
+      "要求学生下周不要优先扩充 bug 数量，而是固定一小批 case，做 KCOV 稳定性、calltree 大小、RC 覆盖和 LLM Top-k 的可复现实验表。",
+      "追问：在 24 个 RC 已经进入 calltree 的 case 中，LLM 为什么仍然找不到？请至少分类 5 个失败案例，区分 search space、上下文缺失、辅助函数不显眼、prompt 失效等原因。",
+      "要求给出 dependency graph 的最小设计：节点、边、数据来源、如何从 calltree 构建、如何减少 candidate、成功阈值是什么。",
+      "建议把下一周目标定义为一个判定问题：简单过滤或 graph 是否能让 Top-5 在固定小样本上相对 baseline 有稳定提升；如果没有提升，应及时转向 candidate generation benchmark 或 evaluation protocol。",
+      "老师本周最应该学到的一点：KCOV 的价值主要是改善执行覆盖和实验基础设施，但当前 fault localization 的核心瓶颈已经转移到候选空间控制与因果建模。"
+    ]
   }
 }

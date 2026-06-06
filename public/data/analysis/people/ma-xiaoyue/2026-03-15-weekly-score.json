@@ -1,100 +1,106 @@
 {
   "key": "person:ma-xiaoyue:2026-03-15:weekly-score",
-  "generatedAt": "2026-06-05T18:06:39.753Z",
+  "generatedAt": "2026-06-06T13:09:51.130Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
-  "inputHash": "6227249f0b029c4ff49243c628782278db3b23f1cdd8276010988e14b53d01d6",
+  "inputHash": "ebd7691479ed40711583445172df62710e44210782e9065135c3b5617911612c",
   "result": {
     "hardProgress": {
       "score": 13,
-      "reason": "本周有明确的工程推进：围绕 Brainary runtime reliability 实现了 runtime failure detector prototype，覆盖 plan registration、session lifecycle tracking、action loop detection、state stagnation detection、runtime detector orchestration，并提出多类 recovery actions。硬进展主要停留在 prototype 层，且说明部分代码由 vibe coding 快速生成，尚未证明可合并、可运行、可测试。",
+      "reason": "本周有明确的工程推进：实现了 MetacognitiveMonitor 的 runtime failure detector 机制，覆盖 plan registration、session lifecycle tracking、action loop detection、state stagnation detection、runtime detector orchestration，并定义了多类 recovery actions。进展不只是阅读或想法，而是已有 prototype。但周报承认主要通过 vibe coding 快速完成，且没有说明代码位置、接口形态、运行结果、集成程度或测试通过情况，因此硬进展可信但完成度未闭环。",
       "missingEvidence": [
-        "缺少代码仓库链接、提交记录或 PR",
-        "缺少 detector 的接口、输入输出样例或运行截图",
-        "缺少测试结果、benchmark 或 failure case 复现",
-        "缺少与 Brainary 现有模块集成后的实际运行证据"
+        "缺少代码仓库链接、PR、commit 或文件路径",
+        "缺少 detector 的输入输出样例",
+        "缺少实际运行截图、日志或 demo",
+        "缺少与 Brainary 主干系统的集成状态说明",
+        "缺少测试用例和测试结果"
       ]
     },
     "cognitiveIncrement": {
       "score": 11,
-      "reason": "CoT 增量体现在将 runtime failure reasoning 划分为 Plan–Execution mismatch、Resource exhaustion、Liveness failure，并提出 REPLAN、ROLLBACK、ABORT、DEGRADE、INSERT_STEP、SKIP_REFLECTION 等 recovery actions。这说明本周不是单纯写代码，而是在构造一套 failure reasoning taxonomy。但这些类别与 action 之间的触发条件、优先级、冲突处理和适用边界尚未展开。",
+      "reason": "CoT 增量较清楚：新增 Plan–Execution mismatch、Resource exhaustion、Liveness failure 三类 runtime failure reasoning，并进一步配套 REPLAN、ROLLBACK、ABORT、DEGRADE、INSERT_STEP、SKIP_REFLECTION 等 recovery actions。说明学生对 agent runtime failure 的分类和处理动作有新的结构化理解。但这些分类与动作之间的因果关系、触发条件、优先级和冲突处理尚未展开，认知增量还停留在框架化归纳与初步落地层面。",
       "missingEvidence": [
-        "缺少每类 failure 的形式化定义或判定规则",
-        "缺少 failure type 到 recovery action 的映射表",
-        "缺少具体案例说明检测逻辑如何推理",
-        "缺少与已有 agent failure taxonomy 的差异分析"
+        "缺少每类 failure 的正式定义和判定边界",
+        "缺少 failure type 到 recovery action 的映射规则",
+        "缺少与已有 agent failure taxonomy 的差异说明",
+        "缺少具体案例展示这些 reasoning 如何改变系统行为"
       ]
     },
     "cot2Depth": {
-      "score": 12,
-      "reason": "CoT² 增量较清楚：将 detector 设计为 metacognitive runtime observer，不修改 planner 或 executor，通过监控计划、状态、动作循环和停滞来进行二阶监督。这是对 agent 自我监控层的有效推进，符合 CoT 的 CoT 方向。短板是目前仍偏机制罗列，缺少 detector orchestration 的决策逻辑、误报控制和恢复策略选择机制。",
+      "score": 11,
+      "reason": "CoT² 层面有比较明确的推进：将 detector 设计为 runtime observer，不修改 planner 或 executor，体现出对元认知监控层与执行层解耦的理解；同时涉及 lifecycle tracking、loop detection、stagnation detection 等运行时自监控机制。这符合 Brainary 中 metacognitive monitoring 的方向。但深度仍有限，尚未看到监控层如何反思自身误报、漏报、置信度、检测成本，或如何在多 detector 冲突时进行二阶决策。",
       "missingEvidence": [
-        "缺少 MetacognitiveMonitor 的架构图或模块关系说明",
-        "缺少 detector orchestration 的决策流程",
-        "缺少如何处理误报、漏报和 detector 冲突的说明",
-        "缺少 runtime observer 对系统性能影响的测量"
+        "缺少 detector 自身可靠性的评估机制",
+        "缺少误报和漏报分析",
+        "缺少多 detector 冲突时的 arbitration 机制",
+        "缺少 recovery action 失败后的二阶恢复策略",
+        "缺少监控开销对 agent runtime 的影响评估"
       ]
     },
     "brainaryMapping": {
       "score": 8,
-      "reason": "Brainary 映射较明确：将 agent framework reliability failures 映射到 Brainary 的 metacognitive monitoring layer，并提出 runtime monitoring、failure detection rules、recovery mechanisms 和 reliability knowledge base。这个方向与 Brainary 的元认知架构有关联。扣分点是尚未说明这些机制会落在 Brainary 的哪些具体数据结构、API、状态机或执行流程中。",
+      "reason": "周报与 Brainary 的映射较强：明确把 agent failure patterns 映射到 Brainary 的 metacognitive monitoring layer，并提出 runtime monitoring、system snapshot、rollback、agent reliability knowledge base 等方向。不是泛泛谈 AI agent，而是围绕 Brainary runtime reliability 机制展开。扣分点在于映射仍偏概念和 prototype，缺少 Brainary 当前架构中的具体模块边界、API 接入点、数据结构和合并路径。",
       "missingEvidence": [
-        "缺少 Brainary 当前架构中的具体挂载点",
-        "缺少与 planner、executor、memory、tool layer 的接口关系",
-        "缺少 Brainary 内部状态表示与 detector 输入之间的映射",
-        "缺少知识库如何被 Brainary 查询和更新的设计"
+        "缺少 Brainary 现有架构图中的具体落点",
+        "缺少与 planner、executor、memory、tool layer 的接口说明",
+        "缺少 runtime observer 的注册方式和调用链说明",
+        "缺少与现有 metacognitive monitoring layer 的兼容性说明"
       ]
     },
     "monetaryValue": {
-      "score": 3,
-      "reason": "主题本身具有潜在商业价值：agent runtime reliability、failure recovery、tool access control 都可能降低自动化系统的失败成本，提高企业级 agent 可用性。但本周报告没有给出明确的用户场景、付费对象、成本节省、可靠性指标或产品化路径，因此货币价值主要停留在隐含层面。",
+      "score": 5,
+      "reason": "周报提出 domain-specific failure taxonomy、failure detection rules、recovery mechanisms 和 Brainary agent reliability knowledge base，这些方向对提高 agent 可用性和降低部署风险有潜在项目价值。但没有明确说明其商业价值、科研价值优先级、用户场景、可量化收益或为什么这是 Brainary 当前最值得投入的可靠性问题。因此价值判断存在，但尚未转化为可决策的价值论证。",
       "missingEvidence": [
-        "缺少目标用户或应用场景，例如 coding agent、browser agent、data agent 的具体需求",
-        "缺少可靠性提升如何转化为成本节省或收入的估算",
-        "缺少竞品或现有解决方案对比",
-        "缺少可产品化的最小功能定义"
+        "缺少目标用户或应用场景",
+        "缺少该 reliability 机制能降低什么成本或提升什么指标",
+        "缺少与其他 Brainary 工作方向相比的优先级判断",
+        "缺少可发表论文、可交付系统或可产品化模块的价值路径",
+        "缺少真实 failure 数据规模和需求强度"
       ]
     },
     "projectManagement": {
-      "score": 8,
-      "reason": "报告说明了本周任务、已做内容、阻碍和下周计划，也识别出 vibe coding prototype 需要代码合并与测试流程讨论。项目管理意识存在，但还不够工程化：没有任务拆解、优先级、里程碑、负责人、验收标准，也没有说明本周原计划完成度。",
+      "score": 10,
+      "reason": "项目管理层面有基本意识：说明了本周因为材料填写导致部分代码采用 vibe coding 快速实现，识别出后续需要讨论代码合并与测试流程，也列出了与 Wangchong 讨论的协作事项。说明学生知道 prototype 与可合并代码之间存在差距。扣分点是缺少任务拆解、优先级、完成标准、风险等级、时间预算和依赖关系，尚不能让教授准确判断下周是否能进入可验证阶段。",
       "missingEvidence": [
-        "缺少本周计划与实际完成情况的对照",
-        "缺少任务优先级和截止时间",
-        "缺少代码合并、测试、评审的具体流程安排",
-        "缺少风险登记，例如 vibe coding 代码质量、集成风险、测试风险"
+        "缺少本周原计划与实际完成情况对比",
+        "缺少任务优先级和预计完成时间",
+        "缺少代码合并的具体阻塞点",
+        "缺少测试计划的范围和验收标准",
+        "缺少与合作者的责任分工"
       ]
     },
     "nextAction": {
-      "score": 7,
-      "reason": "下周计划比较具体，包括加入 additional failure modes，如 state drift，设计 detection 与 recovery，实现 system snapshot 支持 rollback，并与 Wangchong 讨论代码合并和测试流程。这些动作与本周进展连续。扣分点是缺少可验收产出，例如完成几个 detector、哪些测试通过、snapshot 保存哪些状态、讨论后形成什么文档或 PR。",
+      "score": 8,
+      "reason": "下周计划较具体，包括加入 additional failure modes，例如 state drift；设计 detection 与 recovery；实现 system snapshot 支持 rollback；与 Wangchong 讨论 prototype 的代码合并与测试流程。这些行动与本周进展自然衔接，并能推动 prototype 走向可恢复机制。主要不足是没有定义每项任务的完成标准，例如 state drift 的检测条件、snapshot 保存哪些状态、rollback 成功如何验证。",
       "missingEvidence": [
         "缺少下周每项任务的验收标准",
-        "缺少 state drift detector 的最小实现范围",
-        "缺少 system snapshot 的状态字段定义",
-        "缺少与 Wangchong 讨论后的预期产物，例如合并方案、测试清单或 PR"
+        "缺少 snapshot 机制的数据范围和接口设计",
+        "缺少 state drift 的最小可行检测规则",
+        "缺少讨论后应产出的文档、PR 或测试清单",
+        "缺少优先级排序"
       ]
     },
     "evidenceQuality": {
       "score": 2,
-      "reason": "报告提供了较多概念和模块名称，但证据质量偏弱。没有代码链接、实验数据、测试结果、demo、截图、issue、PR 或文档链接。因此只能确认其声称的方向与设计，不能验证实现质量、运行效果或 Brainary 集成程度。",
+      "reason": "周报叙述了实现内容和设计方向，但证据质量偏弱。没有提供代码链接、实验日志、测试结果、运行案例、失败样例或设计文档，因此无法独立验证 prototype 是否真的可运行、是否有效检测 failure、是否能触发 recovery。当前证据主要是自述。",
       "missingEvidence": [
-        "缺少可检查的代码证据",
-        "缺少实验或测试证据",
-        "缺少运行日志或 demo",
-        "缺少文献整理文档或 failure pattern mapping 表"
+        "缺少代码证据",
+        "缺少实验或运行证据",
+        "缺少测试证据",
+        "缺少失败案例和恢复案例",
+        "缺少文档化设计产物"
       ]
     },
-    "totalScore": 64,
+    "totalScore": 68,
     "tier": "C",
-    "oneLineJudgment": "本周有实质性的 Brainary runtime reliability prototype 和元认知监控设计推进，但证据不足、工程验收缺失、商业价值未展开，当前更像概念验证而不是可评估交付。",
+    "oneLineJudgment": "本周有真实的 Brainary runtime reliability prototype 推进和较清楚的元认知监控思路，但证据链、测试闭环和价值论证不足，仍处于可疑可用的早期原型阶段。",
     "professorFollowUp": [
-      "要求学生下周提交一个最小可运行 demo：给定一个 plan-execution mismatch 或 action loop case，MetacognitiveMonitor 能检测并触发对应 recovery action。",
-      "要求补一张 Brainary 映射表：failure mode、detector 输入、触发规则、recovery action、Brainary 挂载模块、测试用例。",
-      "要求明确 vibe coding prototype 的工程处理方式：哪些代码保留、哪些重写、哪些需要测试、谁来 review。",
-      "要求把 system snapshot 定义为可验收任务：必须说明保存哪些状态、如何恢复、如何验证 rollback 成功。",
-      "教授本周最该关注的一点是：学生已经抓住了 Brainary 可靠性中的元认知监控切入点，但必须尽快从 taxonomy 和 prototype 转向可运行、可测试、可合并的工程闭环。"
+      "请学生下周必须提交一个最小可运行 demo：给定一个 plan-execution mismatch 或 action loop，MetacognitiveMonitor 能检测并触发指定 recovery action。",
+      "要求补充代码证据，包括仓库链接、PR、核心文件路径和运行命令。",
+      "要求明确 failure type 到 recovery action 的映射表，并说明每个 detector 的触发条件、误报风险和预期成本。",
+      "要求把 runtime observer 在 Brainary 架构中的接入点画出来，说明是否修改 planner、executor、memory 或 tool layer。",
+      "要求下周的 system snapshot 不要只停留在概念，应定义保存哪些状态、何时保存、如何 rollback、如何验证 rollback 成功。"
     ]
   }
 }

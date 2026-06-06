@@ -1,40 +1,252 @@
 {
   "key": "person:sun-xiao:2026-05-24:longitudinal",
-  "generatedAt": "2026-05-24T11:52:28.092Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "34cedb0829ff9fdf41ddfd851cfcc95173feaaddfa181f088b5c22c29bf41645",
+  "generatedAt": "2026-06-06T13:13:08.161Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "f624dbaf743971c485eebbc4f5132b411c07b18f4e6ecc5e65e860b6133481cc",
   "result": {
-    "overallTrajectory": "研究能力显著提升：从静态schema定义推进到可验证的运行时链路，再到comparison-based决策与episodic memory架构，认知框架逐周深化，逐渐从工程实现转向科学诊断。学生已能主动识别核心瓶颈、设计可验证实验并区分不同任务拓扑的memory需求，表现出独立的研究规划和归因能力。",
-    "stageByWeek": {
-      "2026-05-03": "完成strict non-comm action schema v4定版，定义非语言外部动作为唯一action，并开始接入Plan-and-Act/ToM agent。认知突破：明确communication与action边界分离是因果测试的前提。卡点：schema虽定版，但如何接入agent并保证action selection服从约束。下一步：在少量family上进行action-first rollout，对比有无communication。",
-      "2026-05-10": "将action schema接入runtime，确立direct schema two-call协议；重构communication为source-grounded content-selection strategy，定义13种策略。认知突破：schema文件存在不等于运行时执行，旧路径残留会污染实验；communication变量必须成为可控干预。卡点：旧candidate/mask/fallback路径未完全消除。下一步：最小验收BPT1案例，验证链路清洁。",
-      "2026-05-17": "完成runtime清理与12family小规模回归，发现action分布不均与轨迹坍缩；将action selector改造为显式all-action comparison，强制LLM比较所有候选。认知突破：LLM易将action schema当作主题标签，需comparison输出结构才能确保离散决策；prior utterance是后续action选择的可见证据。卡点：comparison-based selector的实际运行稳定性与成本。下一步：smoke测试comparison selector，再跑seeded回归。",
-      "2026-05-24": "将runtime升级为task-state episodic memory，分步记录每个actor turn的action决策与utterance实现，修复sequential actor-turn；比较不同communicative modes与slot记忆结构对trajectory的影响。认知突破：benchmark实为episodic memory runtime，state结构须匹配family交互拓扑；WBD适合current-state memory，BPT需versioned agreement memory。卡点：BPT的agreement state设计不足，slot可能压缩mode差异。下一步：修复prompt回归，公平重跑slot/no-slot对照，设计versioned agreement memory。"
+    "overallTrajectory": {
+      "judgment": "这个学生最近四周是在变得更有研究能力，而不只是更忙；主要证据是他持续把问题从“生成 schema / 跑实验”上移到“因果变量边界、runtime 可验收性、决策结构、episode memory 与 family-specific state ontology”的层面。",
+      "confidence": "中高",
+      "whyNotJustBusy": "每周都有从失败或异常结果中抽象出的下一层机制：05-03 从 speech act/action 混淆抽象出 strict non-comm action；05-10 从离线 schema 抽象到 runtime trace contract；05-17 从 action collapse 抽象到 all-action comparison selector；05-24 从 history 拼接抽象到 task-state episodic memory runtime。",
+      "mainCaveat": "目前证据多来自小规模 pilot、验收回归和诊断性对照，正式论文级结果、跨 family 稳定性、多 seed 统计、metric/figure 仍缺失；因此可以判断研究能力在提升，但还不能判断研究结论已经稳固。"
     },
-    "trendScores": {
-      "硬进展趋势": "从静态schema定义（week1）→ 运行时合约定版（week2）→ comparison-based决策（week3）→ episodic memory与对照实验（week4），硬成果可操作性与可诊断性逐周提升。",
-      "认知深度趋势": "从分离边界（week1）→ 链路清洁归因（week2）→ 决策形态重构（week3）→ 记忆分层与拓扑适配（week4），认知框架从单一走向系统。",
-      "CoT's CoT成熟度": "自反能力逐步增强：从定义纠偏到执行纠偏，再到任务形态重构和memory形态重建，每一次都基于前序实验证据推动核心假设的修正。",
-      "Brainary映射成熟度": "从基础representation/cognitive 能力归纳（week1），到module-level沉淀方案（week2-4），路径清晰，可直接转化为独立模块与评估器。",
-      "价值推理趋势": "主题价值判断从‘该问题普遍存在’泛化为‘因果归因必须验证’（week2-3），再细化为‘不同family需不同memory ontology’（week4），价值函数从抽象意义向具体的可沉淀资产和诊断能力收敛。",
-      "项目管理趋势": "从大方向规划（接入agent）逐步收敛到最小可验证动作（1 case验收→smoke→公平重跑），控制颗粒度变细，纠偏动作从‘不扩prompt’到‘不要改schema，先修memory’，管理精度提升。",
-      "自动化潜力认知": "从笼统提出‘high automation potential’到具体列出verifier、registry、episodic runtime等可转化模块，自动化路径具象且可执行。"
+    "headline": "研究能力提升明显：从 schema 工程推进到因果边界、可验收 runtime、决策验证与 episodic memory，但下一步必须收敛到最小论文级证据链。",
+    "overviewSentence": "这个学生的进步主要体现在能把失败模式转化为可验证的系统机制，而不是只增加实验量。",
+    "fourWeekTimeline": [
+      {
+        "week": "2026-05-03",
+        "metacognition": "开始明确最大认知盲区不是 schema 生成本身，而是 communication/action 边界不干净会污染后续因果解释；能识别 prompt-only induction 的证据边界，并提出 evidence-grounded adjudication。",
+        "valueJudgment": "认为值得做的问题是 social agent benchmark 中 communication 与 action 混用导致无法判断 communication 是否影响 action；价值判断从“做出 action schema”上升到“构造可因果比较的 benchmark 基建”。",
+        "projectManagement": "strict non-comm action schema v4 有明确交付，包括 12 family schema、turn-action assignments、adjudication report；Plan-and-Act/ToM 接入还处在设计阶段，最小动作是 1–2 个 family 的 runnable loop。",
+        "evidence": [
+          "“最终 action 应表示 non-communicative external task/environment state update，纯语言行为必须留在 communication channel。”",
+          "“prompt-only induction 能帮助发现候选结构，但不能自动保证 benchmark-ready schema。”",
+          "“下周先完成一个最小 runnable loop：读取 family action schema → 构造 current state / admissible actions → Plan-and-Act executor…”"
+        ]
+      },
+      {
+        "week": "2026-05-10",
+        "metacognition": "从定义正确进一步推进到运行时是否真的遵守定义；能识别代码自报、旧 candidate/mask、旧 summary、private goal leakage 等隐藏失败模式，开始用 trace 作为证据标准。",
+        "valueJudgment": "价值判断变得更稳定：不是比较话术好坏，而是比较同一 non-comm action 和同一 state 下，不同 source-grounded content-selection strategy 是否改变后续 trajectory。",
+        "projectManagement": "action schema runtime contract、direct two-call、diagnostic proof、13 个 communication strategy registry 都有规格；但正式 benchmark 结果缺失，仍在最小验收前。",
+        "evidence": [
+          "“工程验收必须从‘代码自报已改’转为‘trace 可证明已改’。”",
+          "“communication 不能再被定义成 baseline / grounding / influence 这类粗 schema id，也不能只是 action verbalization。”",
+          "“本周尚未把工作推进到正式 benchmark 结果分析。”"
+        ]
+      },
+      {
+        "week": "2026-05-17",
+        "metacognition": "能从 156 cells completed 但 action collapse 的结果中识别‘跑通不等于理解 schema’；把失败归因从 prompt 长度不足转为决策结构不受约束，并提出 all-action comparison 与 semantic fill alignment。",
+        "valueJudgment": "价值判断进一步转向可诊断能力：communication effect 的可信性依赖 action selector 是否真正把 schema 当作离散决策空间；他没有急于包装正式结果，而是主动降低结论强度。",
+        "projectManagement": "完成 12family × 1case × 13 communication 小规模回归并暴露真实瓶颈；comparison-based selector 已设计并进入 smoke 前，但 evidence 显示尚未通过完整验证。",
+        "evidence": [
+          "“运行层面已从大量 failed 进入 156 cells 全部 completed 的状态，但 action 分布不均、trajectory collapse…仍然存在。”",
+          "“仅靠把 prompt 写得更长，无法保证 LLM 正确区分 action。”",
+          "“下周先…跑 1 family × 1 case × 2 communication strategies 的 smoke。”"
+        ]
+      },
+      {
+        "week": "2026-05-24",
+        "metacognition": "进一步把 benchmark 理解为 episodic memory runtime，而非 history 拼接或 action schema 接入；能区分 object-current memory 与 versioned agreement memory，说明他开始识别 representation 与 family 拓扑之间的关系。",
+        "valueJudgment": "价值判断更接近论文问题：不同 communicative modes 是否通过 visible utterance memory 改变后续 action trajectory，以及 state/memory ontology 何时帮助、何时压缩 mode effect。",
+        "projectManagement": "完成 benchmark_task 链路、sequential actor-turn 修复、WBD/BPT × 8 modes × 16 atomic turns、slot/no-slot 初步对照；但 prompt regression、公平重跑、BPT versioned agreement memory、正式 metric/figure 尚未完成。",
+        "evidence": [
+          "“benchmark 不再只是‘action schema 能否被选中’，而是形成了一个可视为 episodic memory 的多轮执行层。”",
+          "“gpt-5.4 + sequential actor-turn 已能显著降低 action collapse。”",
+          "“BPT 的关键瓶颈不是‘有没有 slot’，而是 current-slot state 无法表达 versioned agreement。”"
+        ]
+      }
+    ],
+    "metacognitionChange": {
+      "summary": "四周内的元认知变化是清楚的：他从关注产物是否完成，逐步转向关注变量边界是否干净、运行链路是否可证明、模型选择是否可验证、memory representation 是否匹配任务拓扑；这是研究能力提升的核心信号。",
+      "byWeek": [
+        {
+          "week": "2026-05-03",
+          "change": "识别 speech act/action 混淆会破坏因果比较，提出 strict non-comm action 与 evidence-grounded adjudication。"
+        },
+        {
+          "week": "2026-05-10",
+          "change": "识别 schema 文件存在不等于 runtime 遵守，提出 trace proof、CLI、summary、branch、llm_io 等验收标准。"
+        },
+        {
+          "week": "2026-05-17",
+          "change": "识别工程 completed 不等于 selector 理解 schema，把失败模式从输出合法性推进到决策结构可验证性。"
+        },
+        {
+          "week": "2026-05-24",
+          "change": "识别 communication effect 需要 episode memory 作为传导机制，并进一步区分不同 family 需要不同 state ontology。"
+        }
+      ],
+      "currentLevel": "已从执行型项目推进者转向机制诊断型研究者；当前能提出失败模式、证据边界和下一步验证标准，但还需要把诊断转成更少、更硬的论文级证据。",
+      "strongestSignal": "最强信号是他多次主动降低结论强度：05-10 不把 pilot 包装成正式结果，05-17 不把 completed cells 写成 benchmark 结论，05-24 不直接扩全 family，而是提出公平重跑、BPT versioned memory 和最小图表。",
+      "nextLift": "下一步提升不是继续增加模块，而是把当前多个诊断收敛成一个可证伪主张：例如“在 sequential episodic memory runtime 下，communication mode 通过 visible dialogue memory 改变 action trajectory；state ontology 的匹配程度调节 closure 与 mode divergence”。"
     },
-    "valueFunctionChange": {
-      "初始价值观（week1-2）": "学生认为题目值得做，是因为multi-agent benchmark中长期混淆communication与action，导致无法科学评价沟通对行为的影响，具备通用基建价值，受益方包括agent benchmark、企业流程、多智能体协作等。价值连接：通用能力（可迁移至其他social/business benchmark），产物为strict action schema catalog和communication intervention evaluator，对应Brainary的representation、causal abstraction等能力，自动化潜力高。但尚未建立具体金额/用户规模的连接，仍停留在定性论证阶段。",
-      "中期价值观（week3）": "随着实验暴露action selection collapse，学生明确：若不保证action selector正确使用schema，所有communication effect分析都将无意义。价值判断从‘题目重要’转变为‘必须建立可验证的decision procedure才能归因’，更强调方法论严谨性。此时附加价值：通用性依赖stable selector和diagnostics，产物扩展为comparison-based selector和alignment filler，自动化路径聚焦到verifier和diagnostics，Brainary映射到decision procedure design。",
-      "近期价值观（week4）": "当episodic memory和对照实验获得初步信号后，学生意识到核心瓶颈已转向‘不同任务的交互拓扑需要不同memory ontology’，价值不再是做一个统一benchmark，而是建立一套可分化的diagnostic framework。此时价值连接：可沉淀为FamilyTopologyAwareMemory和ModeToTrajectoryDiagnostics，直接支持workflow intelligence和谈判评估，具备明确的资产可复用性和商业模式可能性（可服务企业协作诊断），但未量化金额。价值观整体随周次推移从宏观意义走向具体可操作的科学资产，且能自我修正，说明学生的研究价值观在快速成熟。",
-      "变化总结": "价值函数从‘问题重要’→‘方法可靠’→‘机制可分’层层收敛，逐渐嵌入可被验证的因果链条和可复用的模块设计。虽然仍缺少定量商业连接，但对通用能力、产物形式和自动化路径的表述越来越具体，价值判断的证据基础不断增强。"
+    "valueGrowth": {
+      "summary": "科研/项目价值判断在四周内变得更清楚、更稳定：值得投入的不是某个 agent prompt 或话术集合，而是能让 communication effect 可归因、可回放、可诊断的 benchmark 基建。",
+      "byWeek": [
+        {
+          "week": "2026-05-03",
+          "valueJudgment": "价值在于先清理 action/communication 边界，否则 communication 影响 action 的实验从输入层就不成立。"
+        },
+        {
+          "week": "2026-05-10",
+          "valueJudgment": "价值在于把边界落到 runtime contract 与 source-grounded communication intervention，而不是只做 schema 或 persona/style 变化。"
+        },
+        {
+          "week": "2026-05-17",
+          "valueJudgment": "价值在于让 action selection 本身成为可诊断对象，否则 communication effect 会被 topic-label collapse 掩盖。"
+        },
+        {
+          "week": "2026-05-24",
+          "valueJudgment": "价值在于建立 episodic memory runtime 与 family-topology-aware memory，使 communication mode、state memory、trajectory outcome 之间可被解释。"
+        }
+      ],
+      "currentValueFunction": "当前价值函数可以概括为：优先做能提升因果归因能力、可回放 trace、trajectory 诊断、Brainary 系统能力沉淀的工作；暂缓大规模扩 family、扩策略、扩 prompt，直到最小证据链稳定。",
+      "improvementSignals": [
+        "能把个人兴趣从 schema/agent prompt 转向更底层的 benchmark infrastructure、memory、diagnostics 和 verifier。",
+        "能判断哪些项目值得继续：WBD/BPT 小样本值得深挖，因为它们分别暴露 object memory 与 agreement memory 的差异。",
+        "能识别不值得立即投入的方向：不急于扩全 12 family、多 seed、多 mode，也不继续增加 communication 文案。",
+        "能把工作连接到 Brainary 能力建设：action schema loader、runtime verifier、AllActionComparisonSelector、EpisodicTaskStateRuntime、ModeToTrajectoryDiagnostics 都可沉淀为系统能力。"
+      ],
+      "nextValueQuestion": "下一次需要他明确回答：这个项目最小论文贡献到底是‘communication mode 改变 trajectory’，还是‘episodic memory runtime 让这种影响可归因’，还是‘family-specific memory ontology 决定 closure 与 divergence’；三者都重要，但必须选一个作为主贡献，其他作为支撑。"
+    },
+    "projectManagementReview": {
+      "summary": "项目管理质量总体在提升：每周都有阶段、交付、失败模式和下周最小动作；但仍存在主线频繁升级、验证闭环未完全收口、旧方案与新方案关系解释不足的问题。",
+      "projects": [
+        {
+          "project": "strict non-comm action schema 与 runtime 接入",
+          "weeks": [
+            "2026-05-03",
+            "2026-05-10",
+            "2026-05-17"
+          ],
+          "quality": "较强。schema v4、family_action_schema.json 读取路径、direct two-call、apply adapter、diagnostic summary 等都有明确交付和验收口径。",
+          "whatWorked": "把 Brainary 相关的 representation grounding、benchmark infrastructure、causal traceability 能力落到了可复用组件：strict action schema loader、direct action runtime contract、schema-source diagnostic layer。",
+          "managementGap": "05-17 之后该线是否已经完全验收通过不够清楚；05-24 转向 episodic runtime 后，没有明确说明 strict runtime verifier 的最终状态和遗留问题是否关闭。",
+          "nextConcreteMove": "列一个 closure checklist：旧 PDDL/candidate/mask 是否完全消失、action_schema_source/path 是否稳定、apply adapter 是否跨 WBD/BPT 有 trace proof；若已完成，就标记为基础设施冻结。"
+        },
+        {
+          "project": "comparison-based action selector 与 selection-aligned semantic fill",
+          "weeks": [
+            "2026-05-17",
+            "2026-05-24"
+          ],
+          "quality": "中等偏强。05-17 对 action collapse 的问题定位很好，并提出 all-action comparison、selection_context、fill alignment；但 05-24 没有充分交代该 selector smoke 是否通过，证据链有断点。",
+          "whatWorked": "该项目把 Brainary 的 verifier-guided LLM control、semantic grounding、workflow reliability 转成具体模块：AllActionComparisonSelector、ComparisonValidator、SelectionAlignedSemanticFiller。",
+          "managementGap": "05-24 报告说 gpt-5.4 + sequential actor-turn 显著降低 collapse，但无法区分改善来自 comparison selector、模型升级、sequential 修复还是 episodic memory；归因证据不足。",
+          "nextConcreteMove": "做一个最小消融表：同一 WBD/BPT case 下比较 single-shot vs comparison selector、batch vs sequential、gpt-4o-mini vs gpt-5.4，至少报告 action entropy、repeat action、terminal rate。"
+        },
+        {
+          "project": "communication strategy / communicative mode 对后续 trajectory 的影响",
+          "weeks": [
+            "2026-05-10",
+            "2026-05-17",
+            "2026-05-24"
+          ],
+          "quality": "有研究潜力，但管理上需要解释范式切换。05-10 是 13 个 source-grounded content-selection strategies，05-24 变成 8 个 communicative realization modes，中间缺少两套 treatment 的关系说明。",
+          "whatWorked": "从 style/persona 转向可控 intervention 是正确方向；05-24 初步显示 WBD 中不同 mode 会导致 terminal、turn length、action path 差异，这开始接近真正的 trajectory-level evidence。",
+          "managementGap": "13 strategy 与 8 mode 的继承、合并或替代关系不清楚；如果不说明，后续读者会难以判断 communication 变量到底是什么。",
+          "nextConcreteMove": "写一个 treatment taxonomy 决策：保留 8 mode 作为论文主 treatment，还是保留 13 strategy；若二者并存，需要说明 strategy 是 content selection，mode 是 realization function，并给出组合边界。"
+        },
+        {
+          "project": "task-state episodic memory runtime 与 slot/no-slot 对照",
+          "weeks": [
+            "2026-05-24"
+          ],
+          "quality": "一周内推进很大且方向重要，但证据仍是初步。已有 TaskObservation、TaskAgentAction、TaskStateLLMAgent、TaskStateSotopiaEnv、sequential actor-turn、JSONL trace、slot/no-slot 对照。",
+          "whatWorked": "该线对 Brainary 系统能力沉淀最明确：EpisodicTaskStateRuntime、ActorTurnMemoryWriter、VisibleDialogueMemory、TaskActionSemanticMemory、LLMIOTraceMemory、ModeConditionedTrajectoryDiagnostics 都有可复用价值。",
+          "managementGap": "目前 WBD slot 正收益与 BPT slot 失败的解释合理，但还没有公平重跑；报告承认 generation prompt regression，因此当前 slot/no-slot 结论证据等级不能过高。",
+          "nextConcreteMove": "先修 prompt regression，再做 WBD/BPT × 8 modes 的公平重跑；BPT 若仍 0/8 terminal，则进入 VersionedAgreementMemory，而不是继续微调 prompt。"
+        },
+        {
+          "project": "正式结果、指标与论文级证据链",
+          "weeks": [
+            "2026-05-17",
+            "2026-05-24"
+          ],
+          "quality": "目前仍不足。学生多次正确地没有过早包装结论，但下一阶段必须从诊断转向可发表证据。",
+          "whatWorked": "已经有候选指标：terminal rate、turn-to-terminal、unique action、action entropy、accept repetition、max consecutive repeated action、agreement-to-completion gap、mode divergence。",
+          "managementGap": "还缺少固定 case selection、seed/repeat 计划、主要图表、统计口径、失败 case 展示标准和老师是否需要介入的资源判断。",
+          "nextConcreteMove": "下周只产出一页最小结果包：2 family、8 modes、slot/no-slot、公平 prompt、3 个主指标、2 个代表 trace、1 个失败诊断。"
+        }
+      ],
+      "managementPattern": "管理模式从“每周推进一个大模块”逐渐变成“用失败模式驱动系统重构”。优点是研究深度提升；风险是主线不断升级，导致上一阶段验收闭环没有被正式关闭。",
+      "nextManagementMove": "要求学生建立一个四列表：已冻结基础设施、正在验证机制、待修复 bug、暂不做扩展；每个项目必须有是否进入论文证据链的状态标记。"
     },
     "repeatedBlockers": [
-      "action selection的topic-label collapse：前两周通过schema定义和comparison多次修正，第三周正式识别为需comparison输出结构，第四周通过episodic memory partially缓解但BPT仍存在accept loop。",
-      "communication/action边界执行：第一周定义分离，第二周runtime中仍出现communication history或utterance泄漏到action payload，通过逐层清理逐步解决。",
-      "旧工程路径残留：旧candidate generator、PDDL mask等在第二、三周反复出现，影响链路验证，通过严格验收和trace证明逐步消除。",
-      "state representation不足：第三周出现state digest但未被验证约束，第四周concrete化为state slot但BPT需versioned agreement memory，说明结构化记忆的设计需反复迭代。"
+      "旧路径污染反复出现：旧 PDDL/candidate/mask、旧 summary、旧 communication schema、batch step 等都曾影响实验口径。",
+      "prompt 规则无法替代结构化验证：多周报告都显示仅靠更长 prompt 不足以保证 action selection、semantic fill 或 memory 使用正确。",
+      "action collapse / trajectory collapse 是持续瓶颈：05-17 明确暴露，05-24 有改善但归因仍不清楚。",
+      "communication treatment 的定义在演化，但 13 strategy 到 8 mode 的关系证据不足，需要收敛。",
+      "BPT 的 agreement-to-completion gap 是当前最重要的 family-specific failure：current-slot memory 无法表达 versioned agreement 和双方接受状态。",
+      "正式证据层仍偏弱：目前多为小样本、单 case、pilot、验收型回归，缺少稳定多 seed 和论文级图表。"
     ],
-    "professorShouldAsk": "在目前的成果基础上，你能否确定一个最小可行的论文实验，用WBD和BPT两个family展示episodic memory与mode effect的交互，并提供可解释的trajectory divergence指标？你计划如何将family-specific memory ontology设计为可自动学习/适配的模块？",
-    "nextBestIntervention": "建议学生暂时冻结多family扩展，集中在WBD和BPT上完成fair ablation（slot vs. no-slot, 关键mode对比），并设计一套轨迹差异的定量指标（如action entropy、closure gap、mode-divergence ratio），同时正式提出versioned agreement memory的工程spec，将当前观察转化为论文级诊断模型。"
+    "teacherQuestions": [
+      "你现在认为论文主贡献是哪一个：strict action schema、episodic memory runtime、communication mode effect，还是 family-topology-aware memory？请只选一个主贡献，其他作为支撑。",
+      "05-24 的 action collapse 改善到底来自 gpt-5.4、sequential actor-turn、comparison selector，还是 episodic memory？你能用一个最小消融把归因分开吗？",
+      "13 个 communication strategies 和 8 个 communicative modes 的关系是什么？后续实验到底固定哪一个 treatment 空间？",
+      "BPT 的 versioned agreement memory 最小字段是什么？什么 trace 证据能证明它解决了 accept-to-complete gap，而不是只是 prompt 更强？",
+      "下周能否交付一页论文级最小证据链：2 个 family、固定 case、slot/no-slot、8 modes、3 个指标、2 条代表 trace？"
+    ],
+    "nextIntervention": {
+      "recommendation": "老师下一次 meeting 应该把学生从继续扩系统拉回到最小可发表证据链。",
+      "specificAsk": "要求他在一周内冻结 runtime 和 treatment，不再新增 family/mode/module；只做 WBD/BPT 的公平重跑、BPT versioned agreement memory、最小指标表和代表 trace。",
+      "teacherShouldInterveneOn": [
+        "主贡献选择：防止 strict schema、comparison selector、episodic memory、slot ontology 四条线同时争主线。",
+        "实验归因：要求最小消融，不接受只说 gpt-5.4 + sequential 后变好。",
+        "treatment 定义：要求解释 13 strategy 与 8 mode 的关系并冻结一个版本。",
+        "论文证据：要求从诊断报告转成图表、metric 和 trace example。"
+      ],
+      "doNotPushYet": "暂时不要推动全 12 family、多 seed 大规模 benchmark、更多 communication 文案或更多 agent 类型；当前瓶颈不是规模，而是归因和证据链。"
+    },
+    "studentFeedback": {
+      "summary": "你这四周的进步不是工作量变大，而是越来越能把实验失败转化成下一层机制假设和验证标准；现在最需要提升的是收敛能力。",
+      "whatImproved": [
+        "你已经能主动识别认知盲区：speech act/action 混淆、runtime 旧路径污染、completed cells 不等于理解 schema、history 拼接不等于 memory。",
+        "你对项目价值的判断更稳定：核心不是让 agent 更会说话，而是让 communication 对 action trajectory 的影响可归因、可回放、可诊断。",
+        "你开始把工作沉淀成系统能力：schema loader、runtime verifier、comparison selector、episodic memory、mode trajectory diagnostics 都有 Brainary 组件化潜力。"
+      ],
+      "nextStep": "下周不要再扩展新模块；请交付一个最小论文证据包，证明一个清晰命题，并明确哪些结论是 A 级证据、哪些仍只是 pilot 观察。"
+    },
+    "evidenceLinks": [
+      {
+        "week": "2026-05-03",
+        "claim": "元认知从 schema 产物转向变量边界。",
+        "evidence": "报告明确提出 action 必须是 non-communicative external task/environment state update，并指出如果 action 包含 request/propose/apologize 就无法测 communication 对 action 的影响。"
+      },
+      {
+        "week": "2026-05-10",
+        "claim": "证据标准从代码自报转向 trace 可证明。",
+        "evidence": "报告要求通过 --help、rollout_record、diagnostic_summary、branch_evaluation 和 llm_io 验证旧 schema/candidate/mask 是否仍在运行。"
+      },
+      {
+        "week": "2026-05-17",
+        "claim": "能从跑通结果中识别更深失败模式。",
+        "evidence": "报告写到 156 cells 全部 completed，但 action 分布不均、trajectory collapse、selector/filler 数值不一致和 schema-case mismatch 仍存在。"
+      },
+      {
+        "week": "2026-05-17",
+        "claim": "提出可验证决策结构。",
+        "evidence": "报告提出 visible_history_interpretation、action_comparison、selected_action_comparison_item 和 selection_alignment，并要求 validator 检查 comparison 是否覆盖所有 schema action。"
+      },
+      {
+        "week": "2026-05-24",
+        "claim": "研究对象升级为 episodic memory runtime。",
+        "evidence": "报告新增 TaskObservation、TaskAgentAction、TaskStateLLMAgent、TaskStateSotopiaEnv，并把每个 actor turn 拆成 action selection 与 utterance realization。"
+      },
+      {
+        "week": "2026-05-24",
+        "claim": "开始识别 memory ontology 与 family 拓扑的关系。",
+        "evidence": "报告指出 WBD 的对象型决策适合 current slots，而 BPT 的协议型谈判需要 versioned agreement memory。"
+      },
+      {
+        "week": "2026-05-24",
+        "claim": "正式结论证据仍不足。",
+        "evidence": "报告明确说尚未进入正式论文结果图表阶段，下周要处理 prompt regression、BPT versioned agreement state、slot/no-slot 公平重跑和 trajectory-level metrics。"
+      }
+    ]
   }
 }

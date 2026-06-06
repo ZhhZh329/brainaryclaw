@@ -1,66 +1,223 @@
 {
   "key": "person:zhang-fangyuan:2026-04-26:longitudinal",
-  "generatedAt": "2026-05-24T11:52:58.947Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "5a6cfdb1971518b07b545482c2b9d22b4e3a3663206437e9ef69e211204e7b2d",
+  "generatedAt": "2026-06-06T13:17:26.423Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "a50476d24d21cbd44948c40a471482b14bd7346fbb43e3c41066fcf09e82c5d1",
   "result": {
-    "overallTrajectory": "学生从工程优化（双条件验证、重构过滤器、聚类细筛）起步，快速取得系统精度提升；随后引入结构化 Working Memory 解决多阶段推理退化，开始从认知层面设计系统；进而意识到 retrieval 不稳定并非检索算法问题，而是 grounding 问题，主动跨学科迁移认知架构、溯因推理等理论；最后收束于对 top-K 相似性检索的元诊断，并基于 CBR 和溯因推理由理论推导出工程方向。整体轨迹显示研究视角从算法修补上升到方法学重构，认知深度持续强化，但近期实验产出暂时让位于理论重塑。",
-    "stageByWeek": [
+    "overallTrajectory": "总体看，学生在最近四周不是单纯变忙，而是在从“优化一个 pipeline”转向“定义问题、解释失败机制、设计可验证的认知架构”。研究能力有上升信号：能把 precision、recall、Jaccard 不稳定性等现象转化为反事实验证、结构化 Working Memory、procedural grounding 等更高层的问题框架；但当前风险是最近两周理论收束明显多于可检查实验交付，下一步必须把 grounding 重构落到最小实验闭环，否则会停留在概念推进。",
+    "headline": "研究能力在上升：从工程调参转向失败机制建模，但需要尽快用最小实验验证 grounding 重构。",
+    "overviewSentence": "该学生正在变得更能识别系统性失败模式并重构研究问题，但最近两周的实证交付不足，需要把理论判断压回可复现实验。",
+    "fourWeekTimeline": [
       {
         "week": "2026-04-05",
-        "title": "双条件验证与管道优化",
-        "focus": "反事实验证形式化，重构过滤器消除 FP，聚类细筛降低 LLM 成本",
-        "valueStance": "价值锚定在系统指标（precision 0.76→0.84，成本降低 40-60%），追求工具可用性与工程效率",
-        "evidence": "A/B 实验数据，GumTree 重构过滤具体 FP 案例，dep-skip 与 unified verification 设计",
-        "maturitySignal": "初步建立实验驱动的工作习惯，但尚未涉及认知层面的抽象"
+        "metacognition": "已经不只是报告“做了过滤器”，而是明确指出单条件 consequence-only 的认知边界，并提出双条件反事实验证来区分“后果可达”和“不变量恢复”。这是从结果匹配转向因果/反事实判定的进步。",
+        "valueJudgment": "价值判断集中在提升 security patch untangling 的有效性：precision 从 0.69 到 0.76、F1 从 0.79 到 0.84，同时保持 recall 0.95，说明他把项目价值理解为“减少安全补丁误判并保持召回”。但为什么 OpenSSL 全量验证是关键里程碑、发现 0.5-day 漏洞与论文贡献之间的关系还没有展开。",
+        "projectManagement": "有较强工程推进：反事实验证、GumTree 重构过滤、聚类细筛、Dep-skip、调用合并都有明确机制和部分效果。缺口是 OpenSSL 全量验证只是下周计划，尚未给出数据集规模之外的验收表、失败分析模板、资源依赖和风险预案。",
+        "evidence": "报告中给出 Nginx A/B 实验：precision 0.69→0.76、recall 保持 0.95、F1 0.79→0.84；并提出 OpenSSL 23 个版本 diff 的下周验证目标。"
       },
       {
         "week": "2026-04-12",
-        "title": "结构化 Working Memory",
-        "focus": "将多阶段推理的信息退化形式化为 WM 五元组，实现角色绑定固化与假设隔离",
-        "valueStance": "开始重视推理过程的可验证性与可复现性，牺牲部分工程进度换取推理架构的系统性",
-        "evidence": "WM 结构设计、CoT 提示注入 schema、结构化 vs 纯文本 WM 对比分析",
-        "maturitySignal": "从单一算法跳至系统设计，展现在认知表征层面的抽象能力，价值观开始向推理质量偏移"
+        "metacognition": "元认知明显增强：他识别出 LLM 多阶段推理的信息退化、角色绑定重复推断、约束判定模糊、多 fix 假设耦合等失败模式，并把这些失败模式映射到结构化 Working Memory 的字段设计。这是从“CoT 让模型推理”进到“管理 CoT 中间状态”的层级，也就是开始做 CoT 的 CoT。",
+        "valueJudgment": "价值判断从单点 precision 提升扩展到系统能力建设：结构化 WM 的价值不只是某次 prompt 更好，而是 write-once, read-many、无损传递、可验证性、假设隔离，这些都可以沉淀为长期自动化科研能力。若 Brainary 指的是 WM/LTM/推理组件式系统，本周工作对 Brainary 的 WM 组件有直接建设意义；但报告未明确使用 Brainary 名称。",
+        "projectManagement": "有明确交付：设计 W=(A,H,B,C,G)，集成到 fine screen 的 Region CoT prompt，完成结构化 WM 与纯文本 WM 的对比可视化。缺口是没有报告引入 WM 后的量化效果、消融实验、失败样例和是否接入上一周 OpenSSL 全量验证。",
+        "evidence": "报告列出 Anchor Set、Hypothesis Set、Binding Map、Constraint State、Grouping，并说明已将 WM context 集成到 fine screen prompt，同时完成对比分析可视化。"
       },
       {
         "week": "2026-04-19",
-        "title": "问题重构：从检索到 grounding",
-        "focus": "将 retrieval 不稳定重新定义为 procedural rule activation 的 grounding 问题，调研四类理论传统",
-        "valueStance": "彻底转向寻找问题本质，认可根本性建模比局部调优更有长期价值；愿意投入时间进行跨学科文献深挖",
-        "evidence": "明确引用老师指导，对 ACT-R、Voyager、溯因推理做了系统性对比并提取关键机制",
-        "maturitySignal": "已能独立完成问题内涵迁跃，展示了元研究能力；CoT's CoT 显著提升，理论上意识到'匹配'的内涵差异"
+        "metacognition": "本周的核心变化是能接受并吸收老师反馈，把 retrieval 不稳定从“检索算法调优”重构为“从 WM 状态激活 LTM procedural knowledge 的 grounding 问题”。这说明他开始识别原先问题定义层面的判断错误，而不只是在算法表面调参。",
+        "valueJudgment": "他对值得投入的问题有更深判断：真正有价值的不是换一个 embedding 或 top-K 参数，而是建立 structured partial matching、tool/skill selection、abductive hypothesis generation、neural-symbolic integration 之间的理论支撑。这与长期系统能力有关，尤其连接到 WM、LTM、procedural rule activation 的架构化能力；但本周主要是理论展开，尚未说明哪条路线最值得优先实现及取舍标准。",
+        "projectManagement": "项目推进从工程实验转为文献和问题重构。可检查交付是四个研究传统的机制梳理和与当前 retrieval 问题的映射。缺口是没有下周最小实验动作、没有当前 retrieval 不稳定的基线指标复述、没有说明如何从四个传统中选择一个进入实现。",
+        "evidence": "报告明确引用 ACT-R/SOAR、LLM Tool/Skill Selection、Abductive Reasoning、Neural-Symbolic Integration，并指出 procedural rule activation 应基于 structured partial matching 而非 holistic text similarity。"
       },
       {
         "week": "2026-04-26",
-        "title": "Grounding 的方法论收束",
-        "focus": "系统梳理 Production Systems、CBR、Abductive Inference 对 grounding 的回答，诊断 top-K 单一轴缺陷，提出正交多样性假设",
-        "valueStance": "坚定认为解决 'one-to-many 映射下相似性失效' 是首要任务，且愿意为此重新设计检索架构；连接通用能力与自动化",
-        "evidence": "用医学诊断类比阐释 applicability conditions，cross-run Jaccard 7.5% 做实证支撑，给出两个理论引导的工程方向",
-        "maturitySignal": "达到理论综合与诊断的阶段，能清晰区分'候选数量'与'候选结构性独立性'，已具备独立提出可验证假设的研究能力"
+        "metacognition": "元认知继续深化：他把 retrieval 不稳定诊断为 one-to-many 映射下 single-shot similarity 的结构性失败，并用 cross-run Jaccard 7.5% 作为问题证据。关键进步是提出“候选多样性不在数量，而在结构性独立”，这比单纯加大 top-K 更接近可检验的失败机制。",
+        "valueJudgment": "价值判断比前一周更收束：他开始明确哪些方向值得做——CBR 的多维特征和 Abductive Inference 的 hypothesize-then-verify，因为它们直接针对 single-shot similarity 的根本困境。这是比泛泛调研更强的取舍。但还缺少“为什么先做 A 而不是 B”“什么实验结果证明这个方向值得继续”的停止/继续标准。",
+        "projectManagement": "本周有理论收束和下一步工程方向，但缺少实际实现交付。计划提出两个工程方向：多维特征检索、LLM 生成 3-5 个假设后分支 retrieval 再 fine screen 验证。缺口是没有写出最小可验证版本、评估指标、需要的数据/API/GPU、与现有 WM pipeline 的接入点。",
+        "evidence": "报告给出诊断：top-K embedding retrieval 沿单一相似度轴取候选，cross-run Jaccard 仅 7.5%；提出下周方向 A：CBR 多维特征，方向 B：hypothesize-then-verify。"
       }
     ],
-    "trendScores": {
-      "hardProgress": "初期快速产出定量结果，中后期转向理论探索，实验产出暂停；整体硬进展呈先升后稳趋势，但理论储备为后续突破蓄力",
-      "cognitiveDepth": "从具体算法设计，到系统架构创新，再到方法学层面的根本反思，认知深度持续爬升，第四周已接近独立学者水平",
-      "cotMetacognition": "第二周开始意识到 CoT 信息衰减，并设计 WM 应对；第三四周则直接解构 retrieval 中 CoT 的隐含前提，元认知能力显著增强",
-      "brainaryMapping": "从无到有地将安全问题映射到认知架构（ACT-R）、工具选择（Voyager）和推理形式（Abduction），Brainary 映射趋于结构化与可操作化",
-      "valueReasoning": "价值关注点从 precision/成本这类直接指标，迁移到推理可解释性、方法泛化性等深层价值，且能通过理论论述将深层价值与长期系统收益连接",
-      "projectManagement": "每周有明确计划，但第三、四周计划从具体实验转为文献调研，项目时间线出现松缓，需注意理论突破向实验验证的回归节奏",
-      "automationAwareness": "从减少 LLM 调用量的成本自动化，升华到通过结构独立性提升检索鲁棒性的方法论自动化，自动化思考从表面走向深层"
+    "metacognitionChange": {
+      "summary": "四周内元认知从“提升指标的工程优化”推进到“识别推理链的信息退化、问题定义错误和检索不稳定的结构性根因”。最强变化是他开始分析系统为什么失败，而不是只报告模块做了什么；同时开始把 CoT 从一次性自然语言推理改造成有状态、可验证、可复用的结构化推理过程。当前不足是对下一步验证标准写得还不够硬，尤其最近两周理论判断多于实验闭环。",
+      "byWeek": [
+        {
+          "week": "2026-04-05",
+          "change": "识别 consequence-only 的边界，提出 consequence_reachable 与 invariant_restored 双条件，开始用反事实条件定义“安全补丁”的证据标准。"
+        },
+        {
+          "week": "2026-04-12",
+          "change": "识别 LLM 多阶段推理中的信息衰减、判定模糊、假设耦合，并将这些失败模式转化为结构化 WM schema；这是对 CoT 中间状态的元管理。"
+        },
+        {
+          "week": "2026-04-19",
+          "change": "在老师反馈后重新定义 retrieval 不稳定，把表层检索问题上升为 WM 状态到 LTM procedural knowledge 的 grounding 问题。"
+        },
+        {
+          "week": "2026-04-26",
+          "change": "进一步把不稳定性解释为 one-to-many 映射下 single-shot similarity 的结构性失败，并提出结构性独立候选与后续验证。"
+        }
+      ],
+      "currentLevel": "当前已达到“能提出失败机制并重构问题”的阶段，接近研究型思考；但还没有稳定达到“每个理论重构都配套最小实验、失败判据和复现实证”的阶段。",
+      "strongestSignal": "最强信号是从 top-K retrieval 不稳定跳出参数调优，提出“内容相似不等于应用前提成立”，并用 cross-run Jaccard 7.5% 支撑这一诊断。",
+      "nextLift": "下一步提升是把元认知判断转成可执行验证标准：例如定义结构性独立候选的度量、与 top-K embedding 的对照实验、成功阈值、失败后如何回滚或改写假设。"
     },
-    "valueFunctionChange": {
-      "initial": "衡量价值的标准是系统指标（precision、recall、成本降低），认为「好的漏洞发现工具」=「高精度且低成本的管道」",
-      "transition": "在老师引导和自我反思下，意识到指标提升不等于解决问题，开始重视「为什么不稳定」「为什么信息会退化」这些根本问题",
-      "current": "认为最有价值的事情是定义正确的 grounding 机制（applicability conditions 匹配、结构性独立候选生成），因为它决定了方法在未知数据上的可复现性和泛化能力；该价值已连接到通用能力（跨领域知识激活）、自动化（减少人工设计检索规则）以及产物的理论厚度（可发表的研究贡献），但尚未直接折射为金额度量",
-      "changeNature": "从工程指标偏好转向方法学稳健性偏好，且转变较彻底，已体现在后续计划中"
+    "valueGrowth": {
+      "summary": "科研/项目价值判断在变清楚：早期价值函数是提高 precision、降低 cost、跑全量数据；中期扩展为建设结构化 WM 来减少 CoT 信息损耗；后期进一步聚焦到 grounding procedural knowledge，试图解决系统稳定性和长期可扩展性。进步在于他越来越能把个人兴趣、pipeline 性能、自动化科研沉淀、WM/LTM/规则激活等系统能力连接起来。缺口是还没有形成稳定的取舍函数：什么时候继续做工程、什么时候停下来理论重构、什么时候认为某方向不值得继续。",
+      "byWeek": [
+        {
+          "week": "2026-04-05",
+          "valueJudgment": "认为值得做的是能提升安全补丁识别精度并降低 LLM 调用成本的 pipeline 优化，价值证据主要是 precision、recall、F1 和调用量下降预期。"
+        },
+        {
+          "week": "2026-04-12",
+          "valueJudgment": "认为值得做的是把多阶段 LLM 推理的中间状态结构化，因为这能沉淀为可复用、可验证、可追踪的系统能力，而不是一次性 prompt 技巧。"
+        },
+        {
+          "week": "2026-04-19",
+          "valueJudgment": "认为值得做的是重新定义 retrieval 为 procedural grounding，因为这决定系统能否从 WM 状态稳定激活正确知识，而不是依赖脆弱的文本相似度。"
+        },
+        {
+          "week": "2026-04-26",
+          "valueJudgment": "开始对路线做选择：CBR 多维特征和 abductive hypothesize-then-verify 更值得投入，因为它们直接对抗 one-to-many 映射和 single-shot 选择失败。"
+        }
+      ],
+      "currentValueFunction": "当前隐含价值函数是：优先投入那些能提高安全补丁识别稳定性、可解释性和可复现性，并能沉淀为 WM/LTM/procedural knowledge 激活能力的工作；单纯提高 top-K 或替换相似度模型的价值较低，除非能证明它解决结构性不稳定。",
+      "improvementSignals": [
+        "从局部指标提升转向系统机制建设，例如结构化 WM 的 write-once, read-many。",
+        "从 prompt 结果优化转向 CoT 中间状态管理，说明关注可验证推理过程。",
+        "从 embedding retrieval 调参转向 grounding procedural knowledge，说明开始判断问题层级。",
+        "能把文献传统与当前系统失败模式建立对应，而不是只做泛读。"
+      ],
+      "nextValueQuestion": "下次需要他回答：在 CBR 多维特征和 abductive hypothesize-then-verify 两条路线中，哪一条最先做、为什么它对论文主张和系统能力增量最大、什么实验结果证明它值得继续投入、什么结果说明应该停止或换路。"
+    },
+    "projectManagementReview": {
+      "summary": "项目管理质量呈现“前两周工程交付强、后两周理论推进强但实验闭环弱”的模式。持续主线清楚：security patch untangling pipeline → 结构化 WM → retrieval/grounding procedural knowledge；但周报没有持续追踪 OpenSSL 全量验证、WM 引入后的量化收益、grounding 方案的最小实现计划。需要从研究叙事切回每周可验收交付。",
+      "projects": [
+        {
+          "project": "反事实验证与细筛判定框架",
+          "weeks": [
+            "2026-04-05",
+            "2026-04-12"
+          ],
+          "quality": "研究质量较高，因其把安全补丁判定从模式匹配推进到 consequence_reachable ∧ invariant_restored 的双条件验证，并在 Nginx 上给出 A/B 指标。后续连续性证据不足，因为 04-12 之后没有报告该框架在 OpenSSL 上的验证结果。",
+          "whatWorked": "双条件反事实验证给出了更清楚的证据边界：pre-patch 后果必须可达，post-patch 不变量必须恢复；04-12 的 Constraint State 又把这个判断布尔化并附带行级 evidence，能沉淀为自动化验证能力。",
+          "managementGap": "缺少 OpenSSL 23 个版本 diff 的实际完成情况、失败样例、precision>0.80 是否达标、以及达标后持续运行发现 0.5-day 漏洞的状态。",
+          "nextConcreteMove": "补一页实验追踪表：数据集、版本数、样本数、baseline、双条件结果、错误类型、是否达成 precision>0.80、下一步是否进入持续运行。"
+        },
+        {
+          "project": "Pipeline 工程优化：重构过滤、聚类细筛、Dep-skip、调用合并",
+          "weeks": [
+            "2026-04-05"
+          ],
+          "quality": "04-05 有具体工程机制和部分案例证据，但之后没有持续汇报，项目状态不清。",
+          "whatWorked": "GumTree AST matching 用于识别代码搬移和纯重构 FP，Union-Find 聚类、PageRank 排序、Dep-skip、per-cluster cap、unified verification 都指向 precision 提升和成本下降。",
+          "managementGap": "预期 LLM 调用量减少 40-60% 没有后续实测；没有说明资源消耗、API 成本、失败条件、与 WM 集成后的变化。",
+          "nextConcreteMove": "给出实际调用量对比：原始 anchor 数、聚类后调用数、Dep-skip 跳过数、cap 截断数、错误继承风险、最终 precision/recall/cost。"
+        },
+        {
+          "project": "结构化 Working Memory 与 Region CoT",
+          "weeks": [
+            "2026-04-12"
+          ],
+          "quality": "这是四周中最明确的系统能力建设交付：有 schema、有 prompt 集成、有可视化。若 Brainary 关注记忆、推理和自动化科研组件，该项目可视为 WM 能力和 CoT 状态管理能力的建设；但报告没有明确写 Brainary 名称，也没有后续周的持续推进证据。",
+          "whatWorked": "W=(A,H,B,C,G) 把 Anchor、Hypothesis、Binding、Constraint、Grouping 固化为结构化字段，使下游 fine screen 读取而非重复推断；这能减少 CoT 信息退化，并为可追溯 evidence、假设隔离和程序化检查提供基础。",
+          "managementGap": "缺少结构化 WM vs 纯文本 WM 的量化对比结果，例如准确率、稳定性、LLM 调用数、错误类型减少；也缺少与 04-19/04-26 grounding 方案的接口说明。",
+          "nextConcreteMove": "做一个最小消融：同一批 region 分别用纯文本 WM、结构化 WM、无 WM，比较 role binding 一致性、constraint 判断正确率、cross-run 稳定性和调用成本。"
+        },
+        {
+          "project": "Retrieval 不稳定与 Grounding Procedural Knowledge",
+          "weeks": [
+            "2026-04-19",
+            "2026-04-26"
+          ],
+          "quality": "理论推进连续且方向清楚，从老师反馈后的问题重构，到三类/四类理论框架，再到 CBR 与 abductive 两条工程方向。当前主要缺口是仍停留在研究设计前夜，没有实际 prototype 或实验结果。",
+          "whatWorked": "他把 retrieval 从 declarative text similarity 转为 procedural rule activation，明确当前 WM state 与 LTM/spec 的匹配应基于 applicability conditions。04-26 进一步用 cross-run Jaccard 7.5% 支撑不稳定性，并提出结构性独立候选而非同质 top-K。",
+          "managementGap": "没有定义结构性独立的可计算指标；没有说明 3-5 个假设如何生成、如何分子集 retrieval、fine screen 如何倒选；没有给出 baseline、成功阈值、资源/API 依赖和一周内可完成的最小版本。",
+          "nextConcreteMove": "下周只做一个最小闭环：选 30 个已标注 retrieval case，比较 top-K embedding 与 hypothesize-then-retrieve；指标包括正确 spec 命中率、候选多样性、cross-run Jaccard、fine screen 后最终准确率。"
+        }
+      ],
+      "managementPattern": "学生能持续围绕同一大主线推进，并且每周都有概念或工程增量；但项目管理记录没有形成稳定模板，常缺少“上周计划 vs 实际完成”“当前阶段”“关键路径”“依赖资源”“失败标准”。越到理论重构周，越容易缺少可检查交付。",
+      "nextManagementMove": "要求下周周报按每个项目固定写五项：本周交付物、对上周计划的完成/偏差、当前阻塞、下周最小可验证动作、需要老师决策的问题。尤其 grounding 项目必须给出实验表和一周内能跑完的最小样本。"
     },
     "repeatedBlockers": [
-      "retrieval 不稳定性横跨第三、四周仍在分析阶段，未进入实验验证",
-      "管道整体精度验证（目标 >0.80）自第一周提出后未再更新，定量实验进度停滞"
+      "实验闭环跟踪不足：04-05 计划 OpenSSL 全量验证，但后续周报没有交代完成情况。",
+      "理论重构后缺少最小验证标准：04-19 和 04-26 对 grounding 的解释很充分，但没有落到明确 prototype、样本量、指标和成功阈值。",
+      "项目间接口不够清楚：结构化 WM、fine screen、retrieval grounding、LTM/spec 激活之间的输入输出关系尚未在周报中形成系统图或接口表。",
+      "资源与依赖信息缺失：没有说明 API 调用、GPU、数据标注、人力或老师决策依赖。",
+      "价值取舍还需硬化：已经知道哪些方向更有理论价值，但还没有写出继续/停止某路线的判据。"
     ],
-    "professorShouldAsk": "你准备如何在两周内把 orthogonally diverse hypotheses 的生成方案落到一个最小可行实验？你需要什么数据或算力才能跑出第一个支持该假设的实证结果？",
-    "nextBestIntervention": "要求学生在下次周报中提供一张一页的「理论验证草图」：选一段已知会导致 retrieval 不稳定的 diff 样本，手工模拟 CBR 多维特征和 abductive 流程，并标注预期稳定性提升的定量判据（如 cross-run Jaccard 提升多少可视为成功），以此强制将理论洞察转回实验轨道。"
+    "teacherQuestions": [
+      "你 04-05 计划的 OpenSSL 23 个版本 diff 全量验证现在完成了吗？precision>0.80 是否达标？如果没有，卡在哪里？",
+      "结构化 WM 相比纯文本 WM 的量化收益是什么？请给出一个最小消融实验，而不是只给机制解释。",
+      "你说 cross-run Jaccard 只有 7.5%，这个指标是在什么数据、什么 retrieval 设置、多少次 run 上得到的？它具体说明了哪类不稳定？",
+      "CBR 多维特征和 abductive hypothesize-then-verify 下周只能先做一个，你会选哪个？选择标准是什么？",
+      "如果 hypothesize-then-retrieve 的实验没有提升正确 spec 命中率或最终 fine screen 准确率，你准备如何判断是实现问题、假设生成问题，还是理论路线不成立？"
+    ],
+    "nextIntervention": "老师下一次 meeting 最有效的介入不是继续扩展文献，而是要求他把 grounding 重构压成一个一周内可完成的实验协议：固定样本、固定 baseline、固定指标、固定成功/失败阈值。建议让他现场画出 WM state → hypothesis generation → sub-retrieval → fine screen verification → selected spec 的数据流，并标注每一步可观测输出。",
+    "studentFeedback": {
+      "summary": "你的进步不在于做了更多模块，而在于开始能解释系统为什么失败，并把失败机制转成新的研究问题；现在最需要补的是把这些解释变成可复现实验。",
+      "whatImproved": [
+        "你已经从 consequence-only 的局部判断，推进到双条件反事实验证。",
+        "你开始管理 CoT 的中间状态，而不是只依赖 LLM 自然语言推理。",
+        "你能把 retrieval 不稳定重构为 grounding procedural knowledge，这说明你在提升问题定义能力。",
+        "你开始把 WM、LTM、procedural rule activation、hypothesize-then-verify 联系成一个系统能力方向。"
+      ],
+      "nextStep": "下周不要再主要增加理论框架；请交付一个最小实验：用同一批 retrieval case 对比 top-K embedding 与 hypothesize-then-retrieve，报告命中率、候选多样性、Jaccard 稳定性、fine screen 最终结果，以及失败样例。"
+    },
+    "evidenceLinks": [
+      {
+        "claim": "反事实验证带来可量化进展",
+        "weeks": [
+          "2026-04-05"
+        ],
+        "evidence": "Nginx 数据集上 precision 0.69→0.76，recall 保持 0.95，F1 0.79→0.84。",
+        "evidenceLevel": "中等：有指标，但只报告一个数据集，缺少完整实验设置和错误分析。"
+      },
+      {
+        "claim": "结构化 WM 是 CoT 管理能力的增量",
+        "weeks": [
+          "2026-04-12"
+        ],
+        "evidence": "设计 W=(A,H,B,C,G)，并集成到 fine screen 的 Region CoT prompt；字段包括 Anchor、Hypothesis、Binding、Constraint、Grouping。",
+        "evidenceLevel": "中等：有实现和结构设计，但缺少量化对比结果。"
+      },
+      {
+        "claim": "学生能识别原问题定义错误",
+        "weeks": [
+          "2026-04-19"
+        ],
+        "evidence": "将 retrieval 不稳定从“检索算法调优”重构为“从 WM 当前状态激活 LTM procedural knowledge 的 grounding 问题”。",
+        "evidenceLevel": "中等：有清楚的问题重构，但主要是理论论证。"
+      },
+      {
+        "claim": "retrieval 不稳定有初步实证支撑",
+        "weeks": [
+          "2026-04-26"
+        ],
+        "evidence": "报告指出 cross-run Jaccard 仅 7.5%，并诊断 top-K embedding 候选沿单一相似度轴同质化。",
+        "evidenceLevel": "中等偏低：有数字，但缺少实验设置、样本规模和重复次数。"
+      },
+      {
+        "claim": "最近两周工程交付证据不足",
+        "weeks": [
+          "2026-04-19",
+          "2026-04-26"
+        ],
+        "evidence": "两周主要内容是文献调研、理论框架和下一步方向，未报告 prototype、运行结果或与现有 pipeline 的集成结果。",
+        "evidenceLevel": "高：周报文本中确实没有提供相应交付证据。"
+      },
+      {
+        "claim": "Brainary 相关证据需谨慎表述",
+        "weeks": [
+          "2026-04-12",
+          "2026-04-19",
+          "2026-04-26"
+        ],
+        "evidence": "报告出现 WM、LTM、procedural knowledge、spec activation 等系统组件，但未直接出现 Brainary 名称。",
+        "evidenceLevel": "高：只能判断这些工作可能对应 Brainary 的记忆和知识激活能力建设，不能断言已作为 Brainary 模块交付。"
+      }
+    ]
   }
 }

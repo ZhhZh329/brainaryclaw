@@ -1,54 +1,98 @@
 {
   "key": "person:wang-suyuan:2026-05-10:weekly-score",
-  "generatedAt": "2026-05-24T11:36:02.161Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "140b87ca602a961f80b705dcca94b15abb0f9108757930aeea50a6e4bafa2217",
+  "generatedAt": "2026-06-06T13:13:11.488Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "6273bd4493fcf729ac5907f77cfd7d3d2ebeb6137e962bacba1759329776dba9",
   "result": {
     "hardProgress": {
-      "score": 19,
-      "reason": "本周硬进展显著：成功复现两个CVE（njs.cve-2022-32414 与 njs.cve-2022-31307），打通从TypeError到ASan SEGV的跨越路径；独立出BuildAgent并产出execution_profile与11种失败分类；冻结sketch builder输入契约。产出具体、可验证。",
-      "missingEvidence": "未提供代码仓库链接、运行日志或复现截图，无法直接核查复现真实性。"
+      "score": 18,
+      "reason": "本周有较强硬进展：ZeroShotPocAgent 从候选生成升级为验证引擎，加入 fanout、shape guard、deterministic mutator、checker rerun；声称成功复现 njs.cve-2022-32414 和 njs.cve-2022-31307；实现独立 BuildAgent、execution_profile schema、11 类 Build 失败分类，并在 mini_make 和 mruby zero-hint 容器中完成 ASan 构建与 smoke test；Sketch Builder 也有第一版输入契约和规则驱动推断。进展不只是描述想法，而是包含模块、机制和实验对象。",
+      "missingEvidence": [
+        "缺少代码提交链接、commit hash 或文件 diff。",
+        "缺少两例 NJS CVE 的完整运行日志、ASan 输出、checker rerun 复跑记录。",
+        "缺少 BuildAgent 在 mruby 上的构建命令、容器配置、失败/成功样例。",
+        "缺少 Sketch Builder 输入输出 JSON 样例。"
+      ]
     },
     "cognitiveIncrement": {
       "score": 14,
-      "reason": "两条认知更新具有工程深度：指出LLM反复生成的低效性，揭示确定性变异器对击穿语言层沙盒的关键作用；提出环境构建应追求执行剖面的可序列化而非一步到位。认知转变有明确实验支撑。",
-      "missingEvidence": "未提供与基线方法（如纯LLM重试）的对比数据，无法量化新方法的效率提升。"
+      "reason": "认知增量明确：从“让 LLM 反复生成 PoC”转向“LLM 做初始语义映射，后续由执行反馈和 deterministic mutator 接管”；从“自动修依赖”转向“先把 execution profile 序列化”。这两点直接改变系统设计边界，属于可操作的研究认知增量。",
+      "missingEvidence": [
+        "缺少与单纯 prompt retry 的对照实验数据。",
+        "缺少 execution_profile 序列化前后对系统效率提升的量化比较。",
+        "缺少失败类别到 mutator 策略映射的完整表。"
+      ]
     },
     "cot2Depth": {
-      "score": 15,
-      "reason": "两个CoT's CoT均达到高深度：不仅是经验总结，而是对架构去幻觉、从提示搜索到基于失败分类的变异树演进的系统思考；明确标注证据等级、是否为老师已知、自动化潜力及沉淀建议，反思层次丰富。",
-      "missingEvidence": "声称证据等级A但未附上实际双重验证日志或数据摘要，难以独立复验。"
+      "score": 14,
+      "reason": "CoT's CoT 写得较深入，不只是总结结论，而是解释了为何 shape guard 和 checker rerun 能去幻觉、为何 failure class 应成为 mutator tree 的入口，并标注了证据等级、自动化潜力和沉淀形式。尤其是把 LLM 的职责边界重新限定为语义假说映射，这对系统架构有指导意义。",
+      "missingEvidence": [
+        "证据等级标为 A，但没有附原始日志或可复现实验包。",
+        "缺少失败样例分布，例如普通异常、无信号、脏 crash、稳定 oracle 命中的比例。",
+        "缺少 checker rerun 的判定协议细节，例如复跑次数、隔离目录规则、oracle keyword 规则。"
+      ]
     },
     "brainaryMapping": {
       "score": 8,
-      "reason": "清晰关联到Brainary的Evaluator/Risk Modeling能力，指出缺乏动态执行调度接口的现状，并建议沉淀为Workflow Management的核心节点。关联切合实际。",
-      "missingEvidence": "未说明Brainary当前Evaluator模块的成熟度或接口标准，无法评估改造工作量。"
+      "reason": "有明确 Brainary 映射：Dynamic Oracle Checker 对应 Evaluator / Risk Modeling，并指出可沉淀为 Workflow Management 的 Evaluator 节点。映射方向合理，但目前只覆盖一个能力点，尚未展开 BuildAgent、Memory Schema、Strategy Library 与 Brainary 其他模块的关系。",
+      "missingEvidence": [
+        "缺少 Brainary 中现有模块接口与 VeriSketch 组件的对接图。",
+        "缺少 Dynamic Oracle Checker 的输入输出协议。",
+        "缺少 Brainary workflow 中该 Evaluator 节点的调用位置和状态流转定义。"
+      ]
     },
     "monetaryValue": {
-      "score": 10,
-      "reason": "估值逻辑严密：基于中型企业年处理2000个高危告警、4小时/个、300元时薪、50%自动化率计算出直接人力节约120万，并推导出SaaS年订阅价值250万，参考依据可信。",
-      "missingEvidence": "未引用具体厂商报价单或潜在客户意向，估值依据为估算。"
+      "score": 8,
+      "reason": "价值判断比较完整：明确真实痛点是 SAST 告警后的 PoC 验证和复现成本，明确买方是安全产线和白盒扫描厂商，并给出按 2000 个告警、4 小时/个、300 元/小时估算的成本模型。问题是 250 万年价值与 120 万节省成本之间有一定跳跃，SaaS 订阅估值缺少市场证据。",
+      "missingEvidence": [
+        "缺少企业真实告警量、人工复核工时、采购价格的来源。",
+        "缺少系统当前自动化覆盖率能否达到 50% 的证据。",
+        "缺少与现有 SAST、IAST、DAST、漏洞验证平台的竞品比较。",
+        "缺少从成本节约到订阅收入的定价逻辑。"
+      ]
     },
     "projectManagement": {
-      "score": 13,
-      "reason": "项目管理要素较完整：明确项目阶段、时间投入（约35小时）、资源依赖、关键路径、进度判断和纠偏动作。但缺少具体的里程碑节点或进度百分比。",
-      "missingEvidence": "未列出整体计划及本周完成率，无法判断是否偏离总体目标。"
+      "score": 12,
+      "reason": "项目管理信息较完整：给出当前阶段、小规模实验/模块集成期、本周投入 35 小时、资源、本地模型与容器、关键路径、跨语言泛化阻塞和纠偏动作。缺点是缺少明确里程碑、验收标准、风险优先级和任务拆分粒度。",
+      "missingEvidence": [
+        "缺少本周计划与实际完成项的对照。",
+        "缺少下周任务的时间预算和优先级。",
+        "缺少模块集成的里程碑，例如何时完成 NJS、mruby、第三语言目标。",
+        "缺少风险表：模型污染、容器后端、策略库人工积累、BuildAgent 泛化失败等风险的严重性和缓解方案。",
+        "缺少自动化测试覆盖情况。"
+      ]
     },
     "nextAction": {
-      "score": 10,
-      "reason": "下周动作具体且最小可验证：为mruby开发输出清洗器，补充OP_SUPER变异分支，并将execution_profile与PoC Agent接线。每个动作均可被明确的输出（可运行的PoC、接线后的流程）验证。",
-      "missingEvidence": "未给定每个动作的预期完成时间或验收标准（如通过多少个案例算成功）。"
+      "score": 9,
+      "reason": "下周动作具体且可验证：开发 Output Cleaner 剥离模型推理文本，为 mruby 补充 OP_SUPER 状态变异分支，完成 Ruby 环境 PoC 生成；将 execution_profile 与 ZeroShotPocAgent 接线，让 PoC Agent 动态读取运行模板。这些动作直接对应当前卡点。",
+      "missingEvidence": [
+        "缺少成功判据，例如 mruby 至少命中何种 oracle、是否要求 ASan crash、复跑几次。",
+        "缺少 Output Cleaner 的实现边界：正则、AST、语言检测还是模型过滤。",
+        "缺少如果 mruby 仍失败时的备选路径。"
+      ]
     },
     "evidenceQuality": {
-      "score": 4,
-      "reason": "周报中多处声明证据等级为A（基于NJS真实双重验证日志），但未提供任何可查验的日志片段、截图或仓库链接，证据仅为文字声明，可追溯性不足。",
-      "missingEvidence": "缺少指向实际运行日志、测试报告或提交记录的引用。"
+      "score": 3,
+      "reason": "报告中多次声称有真实实验日志和 A 级证据，但正文没有附日志片段、命令、输出、复跑记录、commit、artifact 或量化指标。因此证据质量中等偏弱：可信的工程叙述很多，但可审计证据不足。",
+      "missingEvidence": [
+        "缺少 ASan crash 原始输出。",
+        "缺少 checker rerun 的独立复跑日志。",
+        "缺少运行命令和环境版本。",
+        "缺少代码仓库提交记录。",
+        "缺少失败候选数量、成功率、fanout 分支数、平均耗时等统计。"
+      ]
     },
-    "totalScore": 93,
-    "tier": "S",
-    "oneLineJudgment": "硬进展扎实、认知反思深刻，估值与落地路径清晰，但跨语言泛化是当前主要卡点，且证据链外部可查性不足。",
-    "professorFollowUp": "请关注：(1) mruby场景下LLM输出污染的清洗策略与确定性变异器的整合进展；(2) 建议下周周报中附加关键运行日志或复现录像以固化证据；(3) 讨论BuildAgent向复杂构建系统泛化的可能路径及自动化修复的优先级。"
+    "totalScore": 86,
+    "tier": "A",
+    "oneLineJudgment": "这一周是高质量的系统工程推进周，真正新增了验证闭环、BuildAgent 和状态变异认知，但证据包没有随周报交付，导致可审计性低于其声称的进展强度。",
+    "professorFollowUp": [
+      "请学生下周带来 njs.cve-2022-32414 和 njs.cve-2022-31307 的最小可复现实验包，包括命令、环境、ASan 输出和 checker rerun 日志。",
+      "要求学生把 failure class 到 mutator strategy 的映射表做成 JSON schema，并展示一个从 TypeError 到 ASan SEGV 的完整状态转移链。",
+      "追问 mruby zero-hint 泛化失败的本质：是模型输出污染、Ruby 语义缺失、BuildAgent 环境问题，还是 OP_SUPER 策略库缺失。",
+      "要求明确下周验收标准：Output Cleaner 成功率、mruby PoC 是否必须触发 oracle、execution_profile 接线后的端到端 demo 条件。",
+      "建议把 Dynamic Oracle Checker 抽象成 Brainary Evaluator 节点的接口草案，而不是只停留在概念映射。"
+    ]
   }
 }

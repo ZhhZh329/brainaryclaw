@@ -1,54 +1,54 @@
 {
   "key": "person:zhang-fangyuan:2026-05-10:weekly-score",
-  "generatedAt": "2026-05-24T11:36:36.094Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "bf145fec4b3d3713be9317b999f1751ca2240c8e9911f556c5cb1aed5e0422b6",
+  "generatedAt": "2026-06-06T13:16:21.821Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "7f46b2e91fd3605105929a30b93dda95e2bc8e6b105bd8f5cd4c88dc4b210ccf",
   "result": {
     "hardProgress": {
-      "score": 4,
-      "reason": "本周无实验结果、代码实现或数据产出，主要停留在概念梳理和路线收敛，硬进展不足。",
-      "missingEvidence": "无实验数据、无原型代码、无测试结果。"
+      "score": 8,
+      "reason": "本周有明确的方向收敛：从“JIT 漏洞检测”重新定位为“patch-derived semantic verification”，并提出了不依赖编译运行的主线 pipeline。但进展主要停留在问题定义、技术路线重构和概念框架层面，没有看到实际产物，例如 checklist 草案、案例验证、样例输入输出、原型模块或数据处理结果。",
+      "missingEvidence": "缺少可检查的硬产出：没有实验结果、没有案例分析、没有具体漏洞样本、没有 verification checklist 文档、没有 pipeline 原型、没有任何代码或数据集进展。"
     },
     "cognitiveIncrement": {
       "score": 12,
-      "reason": "对JIT detection的定位从‘从零开始的检测器’修正为‘基于补丁知识的语义验证’，明确了不依赖编译的核心价值，并拆解了验证步骤，认知有显著深化。",
-      "missingEvidence": "缺少对认知转变的对比证据或实际案例说明。"
+      "reason": "认知增量较明显。周报从原先 patch extraction / after-the-fix 的视角，推进到用 security patch 中沉淀出的 root cause、patch strategy、security invariant、trigger condition 等知识反向支持漏洞早期识别。这不是简单换题，而是对已有工作的价值外延做了重新定义。另一个重要增量是把 runtime validation 从主线降级为辅助确认，把核心能力放在 no-compilation semantic verification。",
+      "missingEvidence": "缺少说明这一认知如何来自具体案例、失败经验或老师反馈中的哪一点；也缺少与已有漏洞检测方法的差异边界分析。"
     },
     "cot2Depth": {
       "score": 10,
-      "reason": "反思了LLM直接判断的不足，提出了将验证过程拆解为多个语义检查以提升可解释性和定位误报来源，体现了对思维链的反思。",
-      "missingEvidence": "未展示具体的元认知分析或验证结构的形式化描述。"
+      "reason": "周报不只是给出结论，还进一步拆解了 verification 的内部推理链：dangerous operation 是否存在、unsafe condition 是否成立、security invariant 是否缺失、guard 是否支配危险操作、commit 是否引入 unsafe path 等。这体现了对模型判断过程的再分解，也有误报归因意识。但 CoT 的 CoT 还不够深：没有讨论每一步检查可能失败的原因、证据冲突如何处理、不同语义证据之间如何加权，也没有给出可执行的判定逻辑。",
+      "missingEvidence": "缺少具体推理样例；缺少一个漏洞案例中从 specification 到 verification verdict 的完整链条；缺少误报归因的实例。"
     },
     "brainaryMapping": {
       "score": 6,
-      "reason": "提出了‘patch-derived semantic verification’概念，并将之前的patch extraction推进到verification，建立了从specification到检查项映射的初步框架。",
-      "missingEvidence": "未构建更抽象的脑暴映射图或新颖的框架关联。"
+      "reason": "周报提到了将 patch-based formal entries 映射为 vulnerability specification，包括 root cause、patch strategy、security invariant、trigger condition、代码角色等，这是 Brainary 映射的雏形。但目前仍是概念级枚举，没有展示这些 entry 如何结构化、字段如何定义、如何与代码位置、数据依赖、控制依赖、guard 关系对齐。",
+      "missingEvidence": "缺少 Brainary/知识结构的具体 schema；缺少一个 security patch 被转写为 vulnerability specification 的实例；缺少 specification 与 candidate commit/code 的映射方式。"
     },
     "monetaryValue": {
-      "score": 4,
-      "reason": "方向面向开源漏洞发现自动化，若不依赖编译可规模化，具有潜在商业价值，但本周未涉及具体价值评估。",
-      "missingEvidence": "缺少市场分析、成本收益预估或用户场景货币化说明。"
+      "score": 5,
+      "reason": "周报指出 no-compilation verification 更适合真实开源场景，因为大规模项目编译环境、依赖配置和测试输入不稳定；如果能静态降低误报，会更容易规模化，也更适合作为自动化开源漏洞发现的基础能力。这说明有一定项目价值判断。但价值仍停留在方向合理性，没有量化成本节省、误报降低目标、适用用户、集成场景或相比现有 SAST/LLM 检测工具的商业/科研优势。",
+      "missingEvidence": "缺少目标用户和使用场景；缺少可量化价值指标，如减少多少人工审计时间、降低多少编译成本、提升多少 precision；缺少与现有工具的价值差异。"
     },
     "projectManagement": {
       "score": 8,
-      "reason": "明确了技术路线收敛，并将任务分解为三步：整理checklist、测试排除误报条件、重组pipeline，计划较为清晰。",
-      "missingEvidence": "缺少具体的时间节点、资源需求和潜在风险评估。"
+      "reason": "周报有一定项目管理意识：明确了下周三项任务，并将 pipeline 调整为 candidate identification → semantic evidence collection → specification-driven verification → confidence calibration。也明确 runtime validation 暂不作为主线依赖。但计划仍偏抽象，没有交付物定义、时间安排、风险点、优先级和验收标准。",
+      "missingEvidence": "缺少本周实际完成清单；缺少下周每项任务的可交付物；缺少具体案例数量、完成标准、风险和依赖；缺少是否需要老师决策的问题列表。"
     },
     "nextAction": {
-      "score": 8,
-      "reason": "下周行动步骤具体可行，从checklist设计到pipeline重组，可执行性强。",
-      "missingEvidence": "缺少行动优先级和潜在依赖的说明。"
+      "score": 7,
+      "reason": "下周行动相对清楚：整理 semantic verification checklist/workflow，结合已有案例筛选能排除 false positives 的语义条件，重组 JIT pipeline。这些动作与本周认知收敛一致。但行动还不够可执行，例如没有说明要处理几个案例、输出什么格式、如何判断 checklist 有效、confidence calibration 如何落地。",
+      "missingEvidence": "缺少量化任务：例如下周完成 3 个 CVE 案例的 specification-to-verification 链条、产出 checklist v0.1、给出 false positive 排除表等。"
     },
     "evidenceQuality": {
       "score": 1,
-      "reason": "全部为逻辑推导，无任何实验、案例或文献证据支持观点。",
-      "missingEvidence": "缺少数据、实验对比、案例研究或引用。"
+      "reason": "证据质量较弱。整篇周报几乎完全是概念判断和路线规划，没有数据、案例、实验、对比、失败分析或老师反馈原文支撑。虽然作者主动说明不写实验结果，但评分仍应基于模板中的证据要求，因此只能给低分。",
+      "missingEvidence": "缺少任何实证材料：无样例 commit、无漏洞案例、无 patch entry、无 checklist 草稿、无验证结果、无误报案例、无对比基线。"
     },
-    "totalScore": 53,
+    "totalScore": 57,
     "tier": "C",
-    "oneLineJudgment": "方向调整合理，理论认知有突破，但缺乏实验证据和硬性产出，本周处于规划阶段。",
-    "professorFollowUp": "建议明确语义验证的checklist并基于历史漏洞案例进行初步验证，检验‘不依赖编译’的误报排除能力。"
+    "oneLineJudgment": "本周的主要价值是完成了方向重定位和 verification 思路收敛，但仍是概念周报，缺少可验证的硬产出和案例证据。",
+    "professorFollowUp": "建议老师下周重点追问三件事：第一，要求学生拿 1-3 个真实 security patch，把 root cause、trigger condition、security invariant、guard relation 写成结构化 specification；第二，要求展示一个 candidate code 如何经过 semantic verification checklist 得出判断；第三，明确 no-compilation verification 的最低验收指标，例如能排除哪些类型的 false positive、需要哪些静态证据、confidence calibration 如何定义。"
   }
 }

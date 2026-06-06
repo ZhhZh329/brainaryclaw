@@ -1,54 +1,103 @@
 {
   "key": "person:li-wenke:2026-03-22:weekly-score",
-  "generatedAt": "2026-06-06T02:04:49.113Z",
+  "generatedAt": "2026-06-06T13:07:10.643Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
-  "inputHash": "f25e3badf37b7470359742c29ed9e66592608f841ec43bec87cf059eaeb1d132",
+  "inputHash": "e7109fb96e4338c5e777de3e16f9ff3ba67bd5b81936ddb5397d12414966b797",
   "result": {
     "hardProgress": {
       "score": 11,
-      "reason": "本周形成了 auto scheme generation / maintenance 的 When、Where、How 操作框架，并明确了 field split、merge、rename、scheme 升降级等操作类型；但关键的 decision function 和 score function 尚未完成，未看到可运行模块、实验结果或具体代码证据，因此硬进展主要停留在架构设计和问题拆解层面。",
-      "missingEvidence": "缺少已实现代码、模块接口、算法伪代码、运行示例、实验日志，以及任何证明 When/Where/How 已被系统执行的证据。"
+      "reason": "本周形成了 Auto Scheme Generation / Maintenance 的核心设计框架：When、Where、How，并列出了 query 失败、conflict、redundancy 等触发条件，以及 field split、merge、rename、scheme 升降级等操作类型。这属于明确的方法结构进展。但周报没有提供已实现模块、代码提交、运行样例、实验结果或可复现 demo。报告中也承认决策函数和 score function 尚未完成，因此硬进展主要停留在方案设计和问题拆解层面。",
+      "missingEvidence": [
+        "没有提供代码实现、commit、接口说明或模块运行截图",
+        "没有给出 When/Where/How 框架在具体案例上的输入输出示例",
+        "没有展示任何自动生成或自动维护 scheme 的实验结果",
+        "没有说明本周所谓“实现”具体完成了哪些函数或组件"
+      ]
     },
     "cognitiveIncrement": {
-      "score": 12,
-      "reason": "认知增量较明确：从单纯设计 scheme 更新方法，转向认识到 score function 是闭环成立的前提，是方法能否收敛的核心评价与驱动机制。这一转变对研究路线有实质影响。",
-      "missingEvidence": "缺少 score function 如何改变原有设计路线的具体对比，例如原计划方法与新方法在流程、优先级、实验设计上的差异。"
+      "score": 11,
+      "reason": "认知增量比较明确：学生意识到 score function 不是后置评价工具，而是驱动 scheme maintenance 闭环成立的核心前提，并据此调整研究优先级。这比单纯设计操作规则更进一步，说明其开始理解评价函数与方法收敛之间的关系。同时，对何时修改、修改哪里、如何修改的维护逻辑也更加清晰。不过，该认知尚未转化为可计算定义或可执行决策流程。",
+      "missingEvidence": [
+        "没有给出 score function 的候选公式或指标定义",
+        "没有说明原先方案如何因这个认知而被具体修改",
+        "没有展示该认知如何影响实验设计或系统架构"
+      ]
     },
     "cot2Depth": {
       "score": 10,
-      "reason": "CoT’s CoT 有一定深度，提出在无 ground truth 情况下采用分层、多维评价，并把评价成本纳入决策函数；还进一步推导出不同规模修改应匹配不同评价层级。但该部分仍停留在直觉和 proposal，尚未形式化修改规模、指标计算方式和决策规则。",
-      "missingEvidence": "缺少修改规模的量化定义、结构/数据/任务三类 score 的数学表达、复杂度比较表、以及分层评价是否有效的验证方案。"
+      "reason": "CoT’s CoT 有一定深度。学生提出在没有 ground truth 的 scheme 质量评价中，应采用多维度、分层评价，并把评价成本纳入决策函数：小修改使用低成本结构指标，大修改使用高成本任务指标。这是一个有价值的二阶抽象，能够连接评价体系、修改规模和决策成本。但目前仍停留在直觉和 proposal 层面，学生自己也指出缺少修改规模量化标准和各层 score function 的具体实现，因此还没有形成可封装的方法论。",
+      "missingEvidence": [
+        "没有形式化定义什么是小修改、中修改、大修改",
+        "没有给出不同层级评价指标的计算复杂度或适用条件",
+        "没有文献对比表或已有方法映射",
+        "没有实验验证分层评价是否优于统一评价"
+      ]
     },
     "brainaryMapping": {
       "score": 7,
-      "reason": "Brainary 映射较清楚，将该工作对应到 long-term memory 的插入、维护、查询和自我修复能力，并把 query failure、conflict、redundancy 映射为 memory 失效信号。但还没有进一步说明该模块在 Brainary 系统中的输入输出、接口、调用链和与其他能力模块的边界。",
-      "missingEvidence": "缺少 Brainary long-term memory 模块的架构图、API 草案、数据流说明、与现有 Brainary 能力的集成路径。"
+      "reason": "与 Brainary 的映射较清楚：将 When/Where/How 框架对应到 long-term memory 的插入、维护、查询和自我修复，尤其是把 query failure 理解为 memory miss，把 scheme repair 理解为 memory maintenance protocol。这个映射有助于把当前项目放入长期记忆模块的系统能力中。但映射仍偏概念层，没有说明该模块在 Brainary 架构中的接口、数据流、状态表示或与其他模块的依赖关系。",
+      "missingEvidence": [
+        "没有 Brainary 系统中的具体模块接口设计",
+        "没有说明该 long-term memory 模块如何被调用、更新和评估",
+        "没有给出 memory miss 到 scheme repair 的端到端样例",
+        "没有说明与现有 Brainary 组件的集成路径"
+      ]
     },
     "monetaryValue": {
       "score": 6,
-      "reason": "报告给出了潜在买单方、市场类比和粗略 SaaS 授权估算，说明作者开始从产品模块和企业价值角度思考。但估值主要基于外部公司估值和假设客户数，尚未证明该模块的独立付费意愿、差异化壁垒或可交付形态。",
-      "missingEvidence": "缺少客户访谈、竞品功能对比、可量化 ROI、目标用户痛点证据、定价验证、以及该模块相对现有 schema management / data quality 工具的实证优势。"
+      "reason": "商业价值判断覆盖了问题、买单方、能力范围、沉淀产物和估值逻辑。学生识别的市场痛点是知识库或 RAG 基础设施中 schema 无法自动诊断和结构性修复，这个方向确实有潜在产品价值。估值部分尝试参考 Atlan、Alation、RAG 基础设施市场和企业授权定价，说明其在思考货币化。但当前估值高度推测，缺少客户访谈、竞品功能拆解、真实付费意愿、部署成本和差异化壁垒验证。",
+      "missingEvidence": [
+        "没有客户访谈或潜在用户需求证据",
+        "没有竞品功能表证明“完整闭环”确实缺失",
+        "没有企业愿意为该模块付费的证据",
+        "没有说明从研究原型到可售产品需要哪些工程成本",
+        "没有给出价格假设的来源或可验证依据"
+      ]
     },
     "projectManagement": {
-      "score": 10,
-      "reason": "项目管理信息较完整，包含当前阶段、投入时间、下周投入预期、延期原因、关键路径和纠偏动作。作者也承认当前进度不符合预期，原因是发现 score function 是新增关键问题。但存在不一致：一方面说没有阻塞，另一方面 score function 和 decision function 明显是关键阻塞；资源规划也过于笼统。",
-      "missingEvidence": "缺少明确里程碑、验收标准、任务拆分、风险等级、文献调研清单、实验排期，以及 Token/算力/数据资源的具体预算。"
+      "score": 11,
+      "reason": "项目管理信息较完整，包含项目名称、阶段、投入时间、下周预计投入、进度偏差、资源需求、关键路径、成本规划和纠偏动作。学生承认原计划未完成，并指出原因是发现 score function 和 decision function 需要优先解决，这体现了基本的项目复盘能力。但计划仍缺少明确交付物、验收标准和风险拆解；同时报告称“目前没有阻塞情况”，但 score function 的数学表达实际上已经是关键阻塞点，表述不够一致。",
+      "missingEvidence": [
+        "没有本周实际完成事项的验收清单",
+        "没有下周 score function 和 decision function 的具体交付标准",
+        "没有说明 35 小时如何分配到文献、建模、实现和验证",
+        "没有风险清单，例如数据集缺失、评价指标不可验证、任务指标成本过高",
+        "没有里程碑与延期后的重排计划"
+      ]
     },
     "nextAction": {
       "score": 7,
-      "reason": "下周行动方向明确：从 KG 和 ontology 领域调研现有 score function，并从成本、效率、效果三个维度设计评价方式，再映射到不同 scheme 修改规模。但行动仍偏研究方向描述，缺少可检查的具体产物。",
-      "missingEvidence": "缺少下周应交付的具体文件或结果，例如文献对比表、score function 初版公式、decision function 伪代码、最小实验数据集、以及完成标准。"
+      "reason": "下周行动方向明确：从成本、效率、效果三个维度衡量 score function，并根据 scheme 修改规模匹配不同评价函数；同时从 KG 和 ontology 领域迁移现有方法。这个方向与当前卡点一致，具有连续性。但行动还不够可执行，缺少具体文献列表、候选指标、实验数据、最小验证任务和完成定义。",
+      "missingEvidence": [
+        "没有列出下周要阅读或比较的具体论文、方法或工具",
+        "没有定义 score function 的最小可行版本",
+        "没有说明 decision function 的输入、输出和伪代码目标",
+        "没有给出小范围实验评估的数据集、任务和指标",
+        "没有明确下周完成后应产出文档、代码还是实验表格"
+      ]
     },
     "evidenceQuality": {
       "score": 2,
-      "reason": "证据等级自评为 B，但报告实际证据仍较弱。主要依据是领域常识、proposal、市场类比和作者判断，没有提供文献引用、实验数据、benchmark、代码运行结果或用户需求证据。",
-      "missingEvidence": "缺少系统文献证据、引用来源、实验验证、消融设计、数据集、竞品证据、市场数据来源和可复现材料。"
+      "reason": "证据质量偏弱。周报有较完整的问题分析和自我判断，但实证材料不足。没有代码、实验、数据、具体文献引用、benchmark、案例复盘或可复现结果。学生将 CoT’s CoT 证据等级评为 B，即有现象或领域支撑但未系统验证，这个自评基本合理，但从评分角度看，目前证据仍主要是概念性论证。",
+      "missingEvidence": [
+        "没有实验日志或实验结果",
+        "没有具体文献引用和对比",
+        "没有 benchmark 或数据集说明",
+        "没有人工构造案例来验证 When/Where/How 是否可运行",
+        "没有任何可复现材料"
+      ]
     },
     "totalScore": 65,
-    "tier": "C",
-    "oneLineJudgment": "本周的主要价值是把研究关键从 generation 转向 evaluation/score function，但硬实现和验证不足，仍处于概念架构与问题重定义阶段。",
-    "professorFollowUp": "老师最应该追问：score function 的最小可行定义是什么？请学生下周交付一张文献对比表、一个修改规模分级标准、三类 score 的初版公式、以及 When→Where→How 的 decision function 伪代码；否则该方向会继续停留在框架叙述而无法进入实验。"
+    "tier": "B",
+    "oneLineJudgment": "本周的主要价值是把 auto scheme maintenance 的问题结构和评价优先级想清楚了，但硬实现、形式化定义和实验证据明显不足，仍处在从概念框架走向可执行研究方案的过渡阶段。",
+    "professorFollowUp": [
+      "要求学生下周交付一个最小可行 score function 表格：至少包含结构维度、数据维度、任务维度各 2 个候选指标、计算成本、适用修改规模和失败模式。",
+      "要求学生给出 decision function 的伪代码：输入为触发信号和当前 scheme 状态，输出为 Where 与 How 的操作选择，并说明 score function 如何参与排序。",
+      "要求学生构造 3 个最小案例：field conflict、query failure、redundancy，展示系统如何从 When 走到 Where 和 How。",
+      "要求学生明确“修改规模”的量化标准，否则分层评价无法落地。",
+      "教授本周最应该关注的一点是：该项目的关键不再是继续堆 generation 方法，而是先建立能判断 scheme 修改变好或变差的评价函数；没有这个函数，maintenance 闭环无法成立。"
+    ]
   }
 }

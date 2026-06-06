@@ -1,59 +1,64 @@
 {
   "key": "person:sun-xiao:2026-05-24:weekly-score",
-  "generatedAt": "2026-05-24T11:35:55.681Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "d211d8ff5c013fd93e453a623d6f80e4501145a354a0682a12c5efeea73b00b3",
+  "generatedAt": "2026-06-06T13:12:11.091Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "e059b32353e4b27ab5740b33a2c6a20f556f82e722edc4f0b8bcaf5fce6eda60",
   "result": {
     "week": "2026-05-24",
     "name": "Sun Xiao",
-    "userId": "8606017399",
-    "totalScore": 85,
-    "tier": "A",
-    "oneLineJudgment": "本周成功构建episodic memory runtime，沟通模式对轨迹影响初步显效，但BPT记忆本体需优化，尚未形成正式结论。",
-    "professorFollowUp": "请确认prompt修复和BPT协议记忆设计路径，并评估论文证据链的最小图表需求。",
-    "dimensions": {
+    "scores": {
       "hardProgress": {
-        "score": 17,
-        "reason": "本周完成了task-state episodic memory runtime的核心执行改造，将actor turn拆分为action selection与utterance realization两步；修复了sequential actor-turn关键语义；新增了多个独立模块与benchmark入口；完成了gpt-5.4下WBD/BPT全communicative modes的初步评估，并形成可回放trace与诊断素材。进展扎实，但尚未产生正式图表，slot公平重跑与BPT记忆设计留待下周。",
-        "missingEvidence": "缺少正式图表、slot/no-slot公平重跑结论、BPT versioned agreement memory设计落地。"
+        "score": 18,
+        "reason": "本周有明确硬进展：从 action-first runtime 推进到 task-state episodic memory runtime；新增 TaskObservation、TaskAgentAction、TaskStateLLMAgent、TaskStateSotopiaEnv 等模块；修复 batch simultaneous step 为 sequential actor-turn；完成 WBD/BPT × 8 communicative modes × 16 atomic actor turns 的初步运行；恢复 slot/state 并做 no-slot/slot 对照。进展不是停留在想法层，而是涉及运行合同、环境语义、trace 结构和实验输出。",
+        "missingEvidence": "缺少代码提交链接、运行命令、实验产物路径、完整 JSONL 样例、WBD/BPT 各模式的实际结果表，因此硬进展可信但尚未完全可审计。"
       },
       "cognitiveIncrement": {
-        "score": 13,
-        "reason": "本周明确五个重要认知更新：将runtime定位为episodic memory系统、communication effect传导链条清晰化、sequential actor-turn是必要条件、state价值依赖任务拓扑、不能一次性定稿全部机制。这些增量直接源于实验观察与工程思考，对方法论有显著提升。",
-        "missingEvidence": "BPT ontology匹配的定量对比、mode divergence的量化指标尚未建立。"
+        "score": 14,
+        "reason": "认知增量清楚：从“action schema 是否能被选中”升级为“episodic memory runtime 如何让 communication mode 影响后续 action trajectory”；认识到 sequential actor-turn 是必要执行语义；进一步区分 WBD 的对象型 current-state memory 与 BPT 的协议型 versioned agreement memory。这些判断直接改变后续实验设计。",
+        "missingEvidence": "缺少对认知变化前后具体错误案例的对照展示，尤其是 batch step 修复前后 BPT trajectory 的具体差异。"
       },
       "cot2Depth": {
         "score": 13,
-        "reason": "CoT's CoT深刻反思了记忆形态从历史拼接向可回放episodic memory的重构，并指出他人未实现的原因（需修改四层合同）；另一个深层反思是区分对象型与协议型记忆本体，直指BPT current-slot的先天不足。两个反思洞见明确，且附有自动化潜力与沉淀建议。",
-        "missingEvidence": "对BPT协议记忆本体的完整设计仍为原型，未在实验中验证效果。"
+        "reason": "CoT’s CoT 部分不仅描述发现，还解释为什么现有 multi-agent benchmark 没有自动吸收该机制，并给出可沉淀模块形式，如 EpisodicTaskStateRuntime、ActorTurnMemoryWriter、FamilyTopologyAwareEpisodicMemory。它已经触及 workflow、memory、benchmark 三层抽象。",
+        "missingEvidence": "两条 CoT’s CoT 都写明“这是老师原本不知道的吗：否”，这削弱了其作为新增洞察的独立价值；同时证据等级标为 A，但没有提供可复核证据表或失败样例。"
       },
       "brainaryMapping": {
         "score": 8,
-        "reason": "清晰地将四项本周工作与Brainary能力项相对应（benchmark infrastructure、multi-agent interaction、pragmatic reasoning、representation grounding），并给出沉淀形式建议，判断准确，但部分映射尚停留在概念层，缺乏实现样例的直接支撑。",
-        "missingEvidence": "无具体模块与Brainary能力直接交互的演示或接口。"
+        "reason": "报告明确把 task-state episodic runtime、sequential actor-turn、communicative mode trajectory diagnostics、slot/no-slot memory comparison 映射到 Brainary 的 benchmark infrastructure、episodic memory、causal traceability、pragmatic reasoning、representation grounding 等能力，并指出可沉淀组件。",
+        "missingEvidence": "缺少与 Brainary 现有模块接口、数据结构、部署路径或复用方式的具体对接说明；目前仍偏概念映射。"
       },
       "monetaryValue": {
-        "score": 8,
-        "reason": "题目价值论述充分：解决multi-agent communication的因果归因问题，受众包括agent benchmark、企业协作、AI安全等团队；属于通用基建能力。当前实验结果已显示信号，继续推进的理由扎实，商业化潜力明确。",
-        "missingEvidence": "未提供市场调研或潜在用户具体场景估值。"
+        "score": 7,
+        "reason": "价值判断比较明确：该题目解决 multi-agent communication evaluation 中的因果归因问题，可服务 agent benchmark、workflow intelligence、企业协作 agent、negotiation/collaboration evaluation、AI safety/evaluation 团队。也判断其是通用 benchmark 基建能力，而非局部优化。",
+        "missingEvidence": "缺少具体买单场景的优先级、用户痛点证据、竞品差异、可商业化封装形态、成本收益估算或最小产品定义。"
       },
       "projectManagement": {
         "score": 13,
-        "reason": "项目管理涵盖两条主线，分别描述了当前阶段、时间资源规划、依赖路径、token成本控制与纠偏动作，计划细致且具有风险意识。但时间估算较粗，未显式列出风险登记。",
-        "missingEvidence": "缺少精确的工期表、风险登记及应对措施。"
+        "reason": "项目管理较完整：分成 runtime/slot 对照主线与 communication treatment 诊断主线；列出阶段、时间投入、资源、关键路径、token 成本规划、风险和纠偏动作。尤其明确下周不应盲目扩大 family，而应修 prompt regression、做公平重跑、设计 BPT versioned agreement memory。",
+        "missingEvidence": "缺少具体里程碑验收标准，例如下周什么结果算 prompt regression 修复完成、BPT versioned agreement memory 的最低通过指标是什么、图表产出截止时间是什么。"
       },
       "nextAction": {
         "score": 9,
-        "reason": "下周行动高度聚焦且可验证：清理prompt回归、公平重跑WBD/BPT、设计BPT versioned agreement memory、保留2-3个亮眼case。最小可验证动作具体，直接对齐当前卡点。",
-        "missingEvidence": "任务分解的工作量估计和时间盒未明确。"
+        "reason": "下一步动作非常具体：修 generation.py prompt wording 回归；重跑 WBD/BPT 全 mode 小样本；比较 slot/no-slot 公平对照；设计 BPT versioned agreement memory；准备 terminal、agreement-to-completion、action entropy 等最小图表。行动顺序也合理，先清理混杂因素再扩大实验。",
+        "missingEvidence": "缺少明确负责人、预计产出文件名、实验配置冻结方案和成功/失败判定阈值。"
       },
       "evidenceQuality": {
-        "score": 4,
-        "reason": "本周产生多条trace、JSONL数据和多种诊断指标，证据等级A的评级出现在CoT's CoT资产中，但整体数据仍为初步运行结果，未经过清理对齐，部分结论依赖单一模型，证据支撑尚非严整。",
-        "missingEvidence": "缺少清理后的统一数据集、多seed验证、显著性检验等正式证据。"
+        "score": 3,
+        "reason": "报告提供了较多证据类型描述，包括 JSONL、trace、LLM IO、terminal rate、turn-to-terminal、unique action、accept repetition、mode divergence 等，但多数以文字摘要出现，缺少可复核的数字表格和原始样例。只有 BPT slot 版 0/8 terminal 这类信息相对具体。",
+        "missingEvidence": "缺少完整结果表、样例轨迹、失败案例、日志路径、代码 diff、commit hash、实验配置、随机种子、模型参数和可重复运行命令。"
       }
-    }
+    },
+    "totalScore": 85,
+    "tier": "A",
+    "oneLineJudgment": "这是一个强进展周：核心贡献是把 communication benchmark 推进为可回放的 episodic memory runtime，并用 WBD/BPT 初步证明 mode 与 memory ontology 会改变 trajectory；主要短板是证据还没有表格化、可复核化，不能直接进入论文结论。",
+    "professorFollowUp": [
+      "要求学生下周先交一张 WBD/BPT × mode × slot/no-slot 的最小结果表，至少包含 terminal、turn-to-terminal、unique action、accept loop、agreement-to-completion gap。",
+      "要求提供 2 条成功轨迹和 2 条失败轨迹的完整 trace，包括 selected_action、action_semantic、utterance、task_state、LLM IO。",
+      "追问 BPT versioned agreement memory 的最小 schema：如何表示价格版本、交付安排版本、双方接受状态、当前有效协议和 complete_transaction readiness。",
+      "要求明确 prompt regression 修复后的公平对照标准，避免 slot/no-slot 差异被 prompt wording 污染。",
+      "提醒不要扩大到更多 family 或多 seed，直到 WBD/BPT 的 memory ontology、metric 和可复现实验链路稳定。"
+    ]
   }
 }

@@ -1,29 +1,216 @@
 {
   "key": "person:zhang-fangyuan:2026-05-17:longitudinal",
-  "generatedAt": "2026-05-24T11:52:45.470Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "3ad6221d3c8976678ffaaf934b938b6af6f019de4f31e9a6f5700ba291458f56",
+  "generatedAt": "2026-06-06T13:17:41.064Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "a08fff5d83b3e33c6d5c2d6fb5e75844d0308a07a3cc74e6dd43aec01e056804",
   "result": {
-    "overallTrajectory": "学生从理论问题重构切入，逐步转向具有现实约束的应用方向，认知深度与价值判断明显提升，但硬进展缺失，存在方向论证过剩、执行力不足的问题。整体研究能力在认知维度有成长，但未转化为可验证的产出。",
-    "stageByWeek": {
-      "2026-04-19": "将 retrieval 不稳定问题重构为 grounding 问题，调研四种理论传统，完成概念对齐。无实验或代码产出。",
-      "2026-04-26": "深化 grounding 理论，提炼三个框架的共同教训，诊断 top-K 失效根源，提出 hypothesize-then-verify 路线。仍处于理论综合阶段。",
-      "2026-05-10": "转向 JIT Vulnerability Detection，将问题定位为 patch-derived semantic verification，受老师反馈影响，确定不依赖编译的静态验证为主线，设计 pipeline 雏形。开始具备项目管理意识。",
-      "2026-05-17": "回应老师对传统 SDLC 消亡的判断，论证 JIT 在 Agentic Coding 场景下的必要性，引用行业数据支撑价值。理论辩护多于行动，无新进展。"
+    "overallTrajectory": "整体看，这四周显示出一定研究能力增长：学生从“检索不稳定”这种工程症状，逐步上升到“procedural knowledge grounding”“one-to-many 映射下的候选生成与验证”“patch-derived semantic verification”等更底层的问题表述；但增长主要发生在概念重构、理论映射和价值辩护层面，硬进展、可检查交付、实验闭环和项目管理证据仍然不足。尤其是 2026-05-17 周报很短，更多是在论证 JIT security auditing 为什么仍有价值，而不是报告上周计划中的 checklist、案例验证或 pipeline 改造是否完成，因此不能判断他已经把研究判断稳定转化为执行能力。",
+    "headline": "研究问题表述能力在增强，但最近一周硬证据不足，需要从“方向正确”转向“最小验证闭环”。",
+    "overviewSentence": "他在问题重构和科研价值判断上有进步，但最近一周从验证计划退回到价值辩护，硬交付和可复现实验仍不足。",
+    "fourWeekTimeline": [
+      {
+        "week": "2026-04-19",
+        "metacognition": "能接受并吸收老师对 retrieval 问题的重构，把“不稳定、缺乏区分度”从检索算法调优上升为 WM 当前状态如何激活 LTM procedural knowledge 的 grounding 问题；这说明他开始识别原先判断框架的盲区，即把 procedural rule activation 错当成 declarative text similarity。",
+        "valueJudgment": "价值判断开始从“提高检索效果”转向“找到正确的问题类型”：如果问题本质是 applicability condition matching，那么继续调 embedding 相似度的价值有限，应该转向结构化状态、规则条件、冲突解决等更基础的能力。",
+        "projectManagement": "本周主要是理论重构和文献梳理，覆盖 ACT-R/SOAR、LLM tool selection、abduction、neural-symbolic integration；但没有明确本周原计划、实际完成、交付物、验证指标、下周最小实验或资源依赖。",
+        "evidence": "报告明确写到“老师指出这本质上不是检索算法调优的问题，而是一个更底层的 grounding 问题”，并区分 declarative retrieval 与 procedural rule activation；但缺少实验、代码、数据或 checklist 交付证据。"
+      },
+      {
+        "week": "2026-04-26",
+        "metacognition": "元认知进一步增强：他不仅复述理论，还把 top-K embedding retrieval 的失败模式诊断为“沿单一相似度轴取候选，候选缺少结构性独立”，并用 cross-run Jaccard 仅 7.5% 作为不稳定性的证据。这比上一周更接近“为什么失败、怎样改、怎样验证”。",
+        "valueJudgment": "价值判断更清楚：值得做的不是单纯增加 K 或替换 embedding，而是解决 one-to-many 映射下 single-shot similarity 注定不稳定的问题；他提出候选集的价值不在数量，而在结构性多样性。",
+        "projectManagement": "有明确下一步工程方向：借鉴 CBR 的多维特征，以及借鉴 abductive inference 的 hypothesize-then-verify 架构；但仍未写清具体实验数据集、输入输出格式、里程碑、成功标准、需要的 API/GPU/人工标注或老师介入点。",
+        "evidence": "报告写到“cross-run Jaccard 仅 7.5%”，并提出“让 LLM 先生成 3-5 个假设，每个假设在对应子集内做 retrieval，再用 fine screen 验证倒选最佳假设”。这是四周中最强的研究闭环信号，但还停留在设计层面。"
+      },
+      {
+        "week": "2026-05-10",
+        "metacognition": "出现方向切换后的重新收敛：他把 JIT vulnerability detection 定义为 patch-derived semantic verification，而不是从零开始的新漏洞检测器；能识别“LLM 直接判断像不像漏洞”的失败模式，并拆解为 dangerous operation、unsafe condition、security invariant、guard 支配关系等可检查语义条件。",
+        "valueJudgment": "科研价值判断从 patch extraction 推进到 vulnerability verification：认为从 security patches 中沉淀出的 root cause、patch strategy、security invariant、trigger condition 等知识可以反向用于更早阶段的漏洞识别；同时接受老师建议，把主线价值定位为不依赖编译运行的静态语义验证能力。",
+        "projectManagement": "本周有路线收敛和下周计划：整理 semantic verification checklist/workflow，用已有案例检查哪些语义条件能排除 false positives，重组 pipeline 为 candidate identification → semantic evidence collection → specification-driven verification → confidence calibration；但报告开头说明“不写实验结果”，因此没有本周实际实验、案例数量、误报归因样例或 checklist 初稿。",
+        "evidence": "报告明确写到“JIT detection 不应该被表述为一个从零开始的新漏洞检测器，而应该被定位为一种 patch-derived semantic verification”，并列出六类语义检查；但没有证明 checklist 已产出或 pipeline 已实现。"
+      },
+      {
+        "week": "2026-05-17",
+        "metacognition": "本周元认知证据较弱。学生回应了老师关于传统 SDLC 未来形态的讨论，能重新定位 JIT 为 Agentic Coding 流水线中的 JIT security auditing，而不是传统 SDLC 的某个固定阶段；但没有回到上一周承诺的验证 checklist、案例测试或 pipeline 交付，因此从“怎样证明”角度看出现停顿。",
+        "valueJudgment": "价值判断继续围绕项目意义展开：他认为 AI 生成代码高速增长而安全审计仍是人工线性作业，形成供需失衡，因此 JIT vulnerability detection/security auditing 仍有价值。这个判断比单纯说“JIT 有意义”更贴近未来软件开发形态，但主要依赖外部报告和宏观判断，尚未连接到自己项目的可验证能力证据。",
+        "projectManagement": "项目管理质量不足：没有写清 05-10 计划中的 checklist/workflow 是否完成，没有案例、指标、当前阶段、依赖、下周动作或需要老师介入事项。此周更像价值辩护，而不是周度推进记录。",
+        "evidence": "报告提到“Snyk 2025 年 AI 安全报告指出，48% 的 AI 生成代码存在安全漏洞”，并提出“嵌入到基于 Agentic Coding 开发流水线的 JIT security auditing”；但缺少项目内部进展证据。"
+      }
+    ],
+    "metacognitionChange": {
+      "summary": "元认知的主要进步是：他能把表层失败现象重新定义为更基础的认知/推理问题，并开始提出失败机制和验证架构。04-19 是从检索算法调优转向 grounding；04-26 是把不稳定性归因到 one-to-many 映射和候选缺少结构性独立，并给出 cross-run Jaccard 证据；05-10 是把漏洞检测从“像不像漏洞”拆成可解释的语义验证条件。主要不足是：05-17 没有继续推进上一周的验证标准和交付，说明他的元认知还未稳定转化为每周可检查的研究闭环。",
+      "byWeek": [
+        {
+          "week": "2026-04-19",
+          "change": "能识别自己原先把 procedural knowledge activation 简化为文本相似度检索，这是重要的认知盲区识别。"
+        },
+        {
+          "week": "2026-04-26",
+          "change": "开始用具体失败证据解释机制：cross-run Jaccard 仅 7.5%，问题不是 K 太小，而是候选集缺少结构性独立。"
+        },
+        {
+          "week": "2026-05-10",
+          "change": "能把新方向拆成可解释验证环节，显示出从方向判断走向验证流程设计的能力。"
+        },
+        {
+          "week": "2026-05-17",
+          "change": "能根据老师对未来开发形态的判断重新定位 JIT，但缺少对上周计划执行情况的反思，元认知证据下降。"
+        }
+      ],
+      "currentLevel": "当前处于“能做高质量问题重构和理论映射，但尚未稳定形成实验闭环”的阶段。研究能力不是只变忙，而是在概念层面真实进步；但是否成为更强研究者，还需要看他能否每周产出可验证证据。",
+      "strongestSignal": "最强信号是 2026-04-26：他把 retrieval 不稳定的机制说清楚，并用 cross-run Jaccard 7.5% 支撑诊断，还提出 hypothesize-then-verify 作为下一步架构。",
+      "nextLift": "下一步提升不是再扩展理论，而是把每个判断变成最小可证伪实验：明确假设、输入样例、对照方法、指标、预期失败模式、通过/不通过标准，并在下周报告实际结果。"
     },
-    "trendScores": {
-      "hardProgress": "持续低迷，四周内无代码实现或实验数据，仅停留在文献研究与方向设计。",
-      "cognitiveDepth": "明显上升，从技术错误定位上升到问题本质的哲学层面对比，并能将理论诊断转化为工程原则。",
-      "cotsCoT": "稳步成熟，从发现自身方法的局限（top-K 同质化）到主动设计结构性多样性，并能对前期方向（patch extraction）进行价值升级。",
-      "brainaryMapping": "无明显进展，未将知识映射到 Brainary 的任何维度（特定概念、模型或图谱），属于空白地带。",
-      "valueReasoning": "显著进化，从单纯解决技术不稳定，转向权衡可规模化、编译环境独立性、行业供需矛盾，价值函数从“正确”变为“可落地且有用”。",
-      "projectManagement": "后期初现雏形，能制定分阶段验证工作流，但尚未执行，仍属计划层面。"
+    "valueGrowth": {
+      "summary": "科研/项目价值判断有进步：学生逐步从“做一个检索或漏洞检测模块”转向“建设可复用的语义验证能力”。他能判断哪些方向值得投入：retrieval 方向值得做，是因为它触及 procedural knowledge grounding；JIT 方向值得做，是因为它把 patch-derived specification 用于更早阶段的漏洞识别，并可能适配 Agentic Coding 的连续开发流水线。问题是价值判断目前仍偏概念性，缺少内部证据证明这些能力确实比现有方案更值得持续投入。",
+      "byWeek": [
+        {
+          "week": "2026-04-19",
+          "valueJudgment": "价值判断从“提升 retrieval 稳定性”升级为“用 structured partial matching 激活 procedural knowledge”，说明他开始关注可迁移的基础能力。"
+        },
+        {
+          "week": "2026-04-26",
+          "valueJudgment": "价值判断进一步聚焦：值得投入的是结构性候选生成与验证，而不是沿同一 embedding 相似度轴取更多候选。"
+        },
+        {
+          "week": "2026-05-10",
+          "valueJudgment": "将项目价值定位为 no-compilation semantic verification，理由是开源场景中编译环境、依赖配置和测试输入不稳定，因此静态语义证据更可规模化。"
+        },
+        {
+          "week": "2026-05-17",
+          "valueJudgment": "把 JIT 的长期价值重新嵌入 Agentic Coding 开发流水线，并用 AI 生成代码安全风险和人工审计供需失衡来支撑方向意义；但缺少项目自身证据支撑。"
+        }
+      ],
+      "currentValueFunction": "他当前隐含的价值函数是：优先做能把 patch/security knowledge 沉淀为可复用 specification，并能在不依赖编译运行的情况下支持自动化语义验证的研究；同时，希望这些能力适配未来 Agentic Coding 的高频自动提交场景。",
+      "improvementSignals": [
+        "能把个人正在做的 patch/security 工作连接到更长期的自动化漏洞发现能力，而不是停留在单个数据清洗或单个检测任务。",
+        "能把项目价值从“检测结果”提升到“verification 能力”：包括 evidence collection、specification-driven verification、confidence calibration。",
+        "能根据老师反馈调整价值定位：runtime validation 暂时不是主线，no-compilation verification 才是当前更值得投入的基础能力。"
+      ],
+      "nextValueQuestion": "下一个价值判断问题应是：在 retrieval grounding、patch-derived specification、JIT no-compilation verification 三条线之间，哪一个最能在 2-3 周内产出可验证、可复用、可沉淀为系统能力的结果？判断依据不能只用宏观趋势，而要用内部案例、误报降低证据、自动化程度和可复用接口来证明。"
     },
-    "valueFunctionChange": "初期认为研究价值在于解决 retrieval 不稳定的理论难题，追求认知闭环；后期认为价值在于构建独立于编译环境的语义验证能力，并连接未来开发形态（Agentic Coding）和行业安全痛点（48% AI生成代码有漏洞），尝试用市场规模和供需矛盾论证必要性。但未能将价值进一步量化为具体金额、用户数或自动化效率，也未与 Brainary 的货币化路径关联。",
-    "repeatedBlockers": "持续缺乏硬进展：方向从检索切换到 JIT，但始终未产出可评估的代码或实验；论证过度而行动不足，多次在理论框架间徘徊，未进入最小可行验证。",
-    "professorShouldAsk": "你能否在下周展示一个最小可运行的证据？例如，针对一个已知 CVE，用你的 semantic verification checklist 输出判断结果，并与真值对比，明确误报/漏报来源。",
-    "nextBestIntervention": "强制学生锁定一个具体场景（如 CVE-2024-xxxx），在48小时内完成手工版的 verification pipeline，给出结构化的正确/错误分析，并在下周会议现场演示。用硬数据取代理论辩论。"
+    "projectManagementReview": {
+      "summary": "项目管理的主要问题不是没有方向，而是缺少按周闭环：报告中有较强的问题定义和路线表达，但很少出现“上周计划是什么、实际完成什么、交付在哪里、指标如何、失败原因是什么、下周最小验证动作是什么”。Brainary 相关组件或能力没有被明确命名；从内容看，retrieval/grounding、patch-derived specification、semantic verification 都可能沉淀为 Brainary 的检索、知识激活或验证能力，但目前缺少接口、数据结构、运行记录和持续交付证据。",
+      "projects": [
+        {
+          "project": "Retrieval 不稳定与 Procedural Knowledge Grounding",
+          "weeks": [
+            "2026-04-19",
+            "2026-04-26"
+          ],
+          "quality": "研究问题重构质量较高，理论映射较清楚，尤其能把 embedding retrieval 的不稳定性解释为 one-to-many 映射和候选结构单一的问题；但工程交付和实验验证不足。",
+          "whatWorked": "有效吸收 ACT-R/SOAR、CBR、abductive inference 等框架，把检索对象从文本相似度转向 applicability conditions；04-26 提供了 cross-run Jaccard 7.5% 作为失败证据，并提出 hypothesize-then-verify。若未来沉淀到 Brainary，这条线有潜力成为“从当前 WM 状态激活 LTM procedural knowledge”的系统能力。",
+          "managementGap": "没有看到结构化候选生成器、retrieval 对照实验、fine screen 验证器、候选多样性指标或 ablation 结果；也没有说明这条线在 05-10 之后是否继续推进、暂停还是被 JIT 吸收。Brainary 能力沉淀证据不足：未见模块边界、输入输出 schema、日志或复用接口。",
+          "nextConcreteMove": "用 10-20 个已知案例做最小实验：比较 baseline top-K embedding、CBR 多维特征检索、LLM 生成 3-5 个假设后分支检索三种方法；指标至少包括正确 spec 命中率、候选结构多样性、cross-run 稳定性和 fine screen 后准确率。"
+        },
+        {
+          "project": "JIT Vulnerability Detection / JIT Security Auditing",
+          "weeks": [
+            "2026-05-10",
+            "2026-05-17"
+          ],
+          "quality": "方向定义有进步：不是从零做漏洞检测器，而是 patch-derived semantic verification；但最近一周没有承接上周计划产出 checklist、workflow 或案例验证，项目推进证据不足。",
+          "whatWorked": "05-10 明确了 no-compilation verification 的价值，把判断拆成 dangerous operation、unsafe condition、security invariant、guard 支配关系、unsafe path、specification 结构一致性等检查项；05-17 又把方向嵌入 Agentic Coding 流水线，说明他在调整长期应用场景。",
+          "managementGap": "缺少当前阶段定义和硬交付：没有 checklist 初稿、案例集、false positive 排除样例、pipeline 改造记录、confidence calibration 方法或 evaluation protocol。05-17 主要是价值论证，没有说明 05-10 的三项下周计划是否完成。若要沉淀为自动化科研或 Brainary 能力，需要把 semantic evidence collection 和 specification-driven verification 做成可调用模块，目前证据缺失。",
+          "nextConcreteMove": "下周必须交付一个可检查的 JIT verification mini-benchmark：选择 5 个 patch-derived specifications 和 10 个候选 commits/code regions，按 checklist 输出每例的 dangerous operation、输入状态、guard、invariant、证据缺口、最终置信度，并记录哪些检查最能排除误报。"
+        },
+        {
+          "project": "Patch-derived Formal Entries / Security Patch Knowledge 沉淀",
+          "weeks": [
+            "2026-05-10"
+          ],
+          "quality": "作为 JIT 的基础资产被提到，但没有作为独立交付报告；目前只能判断其概念重要，不能判断质量。",
+          "whatWorked": "报告提到可复用之前从 security patches 中抽取的 root cause、patch strategy、security invariant、trigger condition 和代码角色，并将其作为 vulnerability specification，这是连接个人已有工作与新方向的重要桥梁。",
+          "managementGap": "证据不足：没有说明已有多少 formal entries、覆盖哪些漏洞类型、字段是否稳定、质量如何评估、能否被自动检索和验证调用。也没有说明这些条目是否已经成为可复用系统能力。",
+          "nextConcreteMove": "抽取或整理一个最小可复用规格库：至少 5 条 entries，每条包含 root cause、trigger condition、security invariant、patch strategy、applicability condition、negative evidence，并用 JIT checklist 跑一遍。"
+        }
+      ],
+      "managementPattern": "学生擅长在 meeting 后重构方向、吸收老师反馈、写出概念路线；但周报还没有稳定呈现项目管理所需的计划-执行-证据-复盘-下周动作闭环。当前更像研究备忘录，而不是可管理的项目周报。",
+      "nextManagementMove": "要求下周所有项目按固定表格汇报：上周承诺、实际完成、交付链接或样例、指标结果、失败原因、当前关键路径、依赖资源、下周最小可验证动作、需要老师决策的问题。"
+    },
+    "repeatedBlockers": [
+      "理论重构强于实验闭环：多次能提出好框架，但缺少可证伪实验和结果。",
+      "价值判断强于内部证据：能说明方向为什么重要，但较少证明自己的方法已经产生可比较的效果。",
+      "项目连续性不足：04-26 的 retrieval grounding 下一步与 05-10 的 JIT 方向之间关系没有交代清楚，05-10 的下周计划在 05-17 没有回报完成情况。",
+      "交付物定义不稳定：缺少 checklist、benchmark、formal entries、pipeline 代码、实验表格等可检查产物。",
+      "资源与依赖未显式管理：报告没有说明需要哪些 API、GPU、数据集、人工标注、现有代码库或老师决策。"
+    ],
+    "teacherQuestions": [
+      "你现在的主线到底是 retrieval grounding、JIT no-compilation verification，还是把前者作为后者的 knowledge activation 模块？请画出二者关系和本月优先级。",
+      "上周说要做 semantic verification checklist/workflow，本周实际完成了什么？请拿一个具体 commit 或 code region 按 checklist 走一遍。",
+      "你认为 JIT security auditing 值得继续做，除了 Snyk 报告的宏观趋势，你自己的项目内部有什么证据能证明它比直接 LLM 判断或 runtime validation 更有价值？",
+      "下周最小可验证实验是什么？样本数、输入、输出、baseline、成功标准和失败后决策分别是什么？",
+      "如果这个能力要沉淀为 Brainary 或自动化科研系统的一部分，它的模块输入、输出、状态表示、日志和复用接口分别是什么？"
+    ],
+    "nextIntervention": {
+      "recommendation": "建议老师下一次 meeting 不再继续扩展方向讨论，而是压缩到一个一周 sprint：让学生提交一个 JIT no-compilation verification 的最小闭环。",
+      "requiredDeliverable": "下周必须交付 5 条 patch-derived specifications、10 个候选代码样例、一个 checklist 表格、每个样例的证据链和最终判断、以及与直接 LLM yes/no 判断的对比。",
+      "successCriteria": "成功标准不是准确率一定很高，而是能定位误报来源、说明哪些语义证据有效、哪些字段缺失，并据此决定是否继续投入该路线。",
+      "teacherRole": "老师需要帮助他做一次范围收敛：确认本周只验证 no-compilation semantic verification 是否可行，不再增加新的理论框架或宏观价值论证。"
+    },
+    "studentFeedback": {
+      "summary": "你这四周真正进步的地方，是开始把问题从“模型效果不好”提升为“知识如何被激活、证据如何验证、能力如何复用”。但现在最需要补的是硬闭环：每个判断都要落到样例、指标和交付物。",
+      "whatImproved": [
+        "你能识别原先 retrieval 方案的盲区：文本相似不等于应用前提成立。",
+        "你能用 cross-run Jaccard 7.5% 这样的证据支持失败诊断，而不是只描述感觉不稳定。",
+        "你能把 JIT detection 重新定义为 patch-derived semantic verification，并拆出更可解释的语义检查项。",
+        "你开始把项目连接到 Agentic Coding 和自动化安全审计的长期场景。"
+      ],
+      "nextStep": "下周不要再主要写方向意义；请交付一个最小验证表：选 10 个真实候选代码，逐项填写 dangerous operation、unsafe condition、guard、invariant、patch-derived spec 匹配证据、最终置信度，并总结哪一步最能减少误报。"
+    },
+    "evidenceLinks": [
+      {
+        "claim": "学生的问题重构能力在增强。",
+        "weeks": [
+          "2026-04-19",
+          "2026-04-26",
+          "2026-05-10"
+        ],
+        "evidence": "04-19 将 retrieval 不稳定重构为 grounding procedural knowledge；04-26 进一步诊断 top-K embedding 的结构性候选问题；05-10 将 JIT 定位为 patch-derived semantic verification。",
+        "evidenceLevel": "中等偏强：有清楚论述和一个稳定性指标，但缺少后续实验闭环。"
+      },
+      {
+        "claim": "学生已经不只是更忙，而是在研究判断上有真实进步。",
+        "weeks": [
+          "2026-04-19",
+          "2026-04-26",
+          "2026-05-10"
+        ],
+        "evidence": "报告不是罗列任务，而是在解释为什么原方案失败、为什么新表述更合理、为什么 no-compilation verification 更适合开源场景。",
+        "evidenceLevel": "中等：认知进步明显，但执行证据不足。"
+      },
+      {
+        "claim": "最近一周项目推进证据不足。",
+        "weeks": [
+          "2026-05-17"
+        ],
+        "evidence": "05-17 主要说明传统 SDLC 可能被 Agentic Coding 取代、JIT security auditing 仍有价值，并引用 Snyk 2025 报告；没有报告 05-10 计划中的 checklist、案例检查或 pipeline 重组结果。",
+        "evidenceLevel": "强：输入文本中确实缺少这些交付信息。"
+      },
+      {
+        "claim": "Brainary 能力沉淀的明确证据不足。",
+        "weeks": [
+          "2026-04-19",
+          "2026-04-26",
+          "2026-05-10",
+          "2026-05-17"
+        ],
+        "evidence": "报告涉及 WM/LTM、procedural knowledge activation、patch-derived specification、semantic verification 等可沉淀为系统能力的内容，但没有明确出现 Brainary 组件、模块接口、自动化运行、持久化数据结构或复用记录。",
+        "evidenceLevel": "强：只能判断潜力，不能判断实际推进。"
+      },
+      {
+        "claim": "项目管理需要从方向型周报改成交付型周报。",
+        "weeks": [
+          "2026-04-19",
+          "2026-04-26",
+          "2026-05-10",
+          "2026-05-17"
+        ],
+        "evidence": "四周报告普遍缺少原计划 vs 实际完成、交付链接、关键路径、依赖资源、里程碑和老师介入点；05-10 有下周计划，但 05-17 没有回报完成情况。",
+        "evidenceLevel": "强：周报格式证据充分。"
+      }
+    ]
   }
 }

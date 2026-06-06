@@ -1,54 +1,107 @@
 {
   "key": "person:sun-yuqiang:2026-05-03:weekly-score",
-  "generatedAt": "2026-05-24T11:35:48.507Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "c4b86c44d993f72cd70d7175786a520150201a19795a8db8682fc7542a97b682",
+  "generatedAt": "2026-06-06T13:12:31.688Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "ed52ac4002356d058cd146fe84227ec8b898ade3bb78be662302e02daa336da0",
   "result": {
     "hardProgress": {
-      "score": 14,
-      "reason": "实现了自动化pipeline，能自动总结漏洞类型和检测充要条件，具有可运行的工程产出。但成果仍停留在知识抽取阶段，未转化为可执行知识，且缺少验证指标。",
-      "missingEvidence": "缺失对总结结果的准确率、召回率等性能指标，缺少具体的示例输出以证明pipeline稳定性。"
+      "score": 15,
+      "reason": "本周有明确工程产出：实现了用于处理审计报告的自动化 pipeline，并能自动总结漏洞类型与漏洞检测的充要条件。这属于实质性硬进展，不只是想法。但报告没有说明 pipeline 的输入输出格式、处理了多少份审计报告、是否有样例结果、是否可复现、准确率或稳定性如何，因此硬进展的可信度和完成度仍有限。",
+      "missingEvidence": [
+        "缺少 pipeline 的结构图、模块说明或代码链接",
+        "缺少处理的审计报告数量、来源和样本范围",
+        "缺少自动总结结果的具体案例",
+        "缺少与人工标注或专家判断的对比",
+        "缺少失败案例和错误类型分析"
+      ]
     },
     "cognitiveIncrement": {
-      "score": 10,
-      "reason": "提出了将problem space和solution space分开建模的认知，并识别了漏洞类型与充要条件作为中间层表示，认知增量明确但偏浅层。",
-      "missingEvidence": "未提供具体的CoT推导过程示例，也未对比其他方案的优劣或展示认知的泛化性。"
+      "score": 12,
+      "reason": "认知增量较清晰：从单纯总结漏洞类别，推进到显式区分 problem space 和 solution space，并把“漏洞类型 + 检测充要条件”作为 procedural knowledge 之前的中间表示。这是一个有效的建模层次变化，能降低从原始报告直接生成操作性知识的难度。但该认知仍主要停留在框架判断，尚未通过实验说明这种分层比端到端抽取更稳定。",
+      "missingEvidence": [
+        "缺少分层建模相对端到端方法的对比实验",
+        "缺少 problem space 与 solution space 的正式定义",
+        "缺少“检测充要条件”如何判定的标准",
+        "缺少认知增量带来实际性能提升的证据"
+      ]
     },
     "cot2Depth": {
-      "score": 2,
-      "reason": "周报中明确写道“本周暂无新的CoT’s CoT更新”，缺少对方法论或策略层面的深层反思，认知深度几乎为零。",
-      "missingEvidence": "由于未产生新认知，无法提供相关证据。"
+      "score": 3,
+      "reason": "周报明确写明本周暂无新的 CoT’s CoT 更新，因此高阶方法论反思基本缺失。虽然报告解释了原因，即本周重点在工程实现和中间表示构建，但这只能说明当前工作阶段，不构成新的二阶认知。可以给少量分数是因为其意识到工程实现与方法论判断之间的区别，并没有强行包装。",
+      "missingEvidence": [
+        "缺少对为什么当前 pipeline 设计优于其他设计的二阶反思",
+        "缺少对知识抽取失败机制的抽象",
+        "缺少对 procedural knowledge 转化难点的原则性判断",
+        "缺少可复用的方法论或决策规则"
+      ]
     },
     "brainaryMapping": {
       "score": 7,
-      "reason": "清晰指出了与记忆、推理、工作流管理和基准测试的关联，并预想了可沉淀的模块/工作流/记忆结构/评估协议，但映射内容较为笼统。",
-      "missingEvidence": "未给出具体的映射设计方案，如模块接口定义、记忆模式结构或与现有Brainary组件的集成方式。"
+      "reason": "报告把工作映射到 Brainary 的 memory、reasoning、workflow management、benchmark/evaluation，并指出可能沉淀为 module、workflow、memory structure、evaluation protocol。映射方向合理，尤其是 memory schema 与 workflow 的联系较强。但目前仍偏概念映射，没有说明具体接口、数据结构、模块边界、调用方式或如何进入 Brainary 系统。",
+      "missingEvidence": [
+        "缺少 memory schema 的字段设计",
+        "缺少 workflow 的具体节点和输入输出",
+        "缺少 reasoning 模块如何使用 problem space 与 solution space 的说明",
+        "缺少 benchmark 或 evaluation protocol 的初版定义",
+        "缺少与 Brainary 现有模块的集成路径"
+      ]
     },
     "monetaryValue": {
-      "score": 6,
-      "reason": "给出了40M美元的估计值，从知识资产化和检测自动化的角度进行了逻辑推算，但计算方法与上周一致，缺少本周新增的支撑依据。",
-      "missingEvidence": "没有市场调研、竞品对标或详细的商业价值计算模型，也未见本周工作对估值的影响分析。"
+      "score": 4,
+      "reason": "报告给出了 40M 美元估值，并说明买单方可能包括智能合约安全公司、安全审计团队和 AI 安全分析产品团队，也判断其可能沉淀为 workflow、module、benchmark、product feature。但金额依据较弱，核心计算方法写成“与上周一致”，在单周独立评价中等于缺少本周自洽估算。没有市场规模、客户痛点强度、替代方案成本、付费路径、单客户价值或商业化时间表，因此价值判断偏愿景化。",
+      "missingEvidence": [
+        "缺少 40M 美元估值的具体计算过程",
+        "缺少目标客户数量和单客户付费假设",
+        "缺少当前安全审计自动化市场或竞品参考",
+        "缺少该能力相对现有工具的差异化价值",
+        "缺少从研究原型到产品收入的路径"
+      ]
     },
     "projectManagement": {
-      "score": 13,
-      "reason": "项目管理部分非常详实，涵盖了计划、实际、偏差、纠偏、资源、依赖、成本等要素，能清晰反映项目状态。",
-      "missingEvidence": "时间规划仅细化到下周，缺少更远的里程碑拆解；下周实验的具体设计和验收标准未明确。"
+      "score": 11,
+      "reason": "项目管理部分较完整，包含项目名称、阶段、原计划、实际完成、里程碑、资源、依赖、成本、偏差原因和纠偏动作。能看出当前处于原型和小规模实验前阶段，关键路径是从结构化总结转向 procedural knowledge。但管理颗粒度仍不够：下周实验没有样本量、评估指标、验收标准、时间拆分和风险预案；“方法问题 / 工程实现问题”也没有进一步拆解。",
+      "missingEvidence": [
+        "缺少下周小规模实验的样本数量",
+        "缺少明确验收标准",
+        "缺少稳定性的量化指标",
+        "缺少 procedural knowledge 初版表示的格式定义",
+        "缺少风险清单和备选方案",
+        "缺少具体日程安排"
+      ]
     },
     "nextAction": {
-      "score": 8,
-      "reason": "下周计划进行小规模实验验证稳定性并初步转化，定义了一个小而明确的验证动作。",
-      "missingEvidence": "缺乏实验的具体设计，如数据集、评估指标、成功标准，也未说明转化路径的初步方案。"
+      "score": 7,
+      "reason": "下周动作明确指向小规模实验：验证 problem space 和 solution space 抽取结果是否稳定，并尝试组织成 procedural knowledge 的初版表示。这是合理的最小验证方向，能直接针对当前卡点。但动作仍不够可执行，缺少实验规模、输入数据、评估方法、成功阈值和产出物定义。",
+      "missingEvidence": [
+        "缺少小规模实验的具体数据集",
+        "缺少稳定性验证的指标",
+        "缺少 procedural knowledge 初版的目标格式",
+        "缺少完成标准，例如达到多少一致性或准确率",
+        "缺少失败后如何调整 pipeline 的预案"
+      ]
     },
     "evidenceQuality": {
       "score": 2,
-      "reason": "本周内容几乎全为定性描述，无任何量化数据、图表或示例，证据等级较低。",
-      "missingEvidence": "缺失pipeline产出的具体实例、运行统计、显式的中间结果或记录日志。"
+      "reason": "证据质量偏低。报告有工程产出声明和自评证据等级 B，但没有展示任何案例、数据、日志、截图、样例输出、人工评估或实验结果。当前更像进展陈述，而不是可验证证据。由于本周处于实验前阶段，可以理解证据不足，但评分必须按已提供证据计算。",
+      "missingEvidence": [
+        "缺少实际抽取样例",
+        "缺少实验数据",
+        "缺少人工验证结果",
+        "缺少错误分析",
+        "缺少 pipeline 运行记录或可复现材料"
+      ]
     },
-    "totalScore": 62,
+    "totalScore": 61,
     "tier": "C",
-    "oneLineJudgment": "工程推进有序，但认知深层思考几乎停滞，产出仍停留在提取层，下周亟需用实验数据证明系统稳定性并启动知识转化。",
-    "professorFollowUp": "下周小规模实验后，能否给出一个具体的输出样例和准确率/召回率指标？是否有计划将抽取出的problem/solution空间表示成标准schema？"
+    "oneLineJudgment": "本周有真实工程推进和较清晰的中间表示思路，但缺少 CoT’s CoT、实验结果和可验证证据，当前仍是原型实现阶段而非已验证的科研增量。",
+    "professorFollowUp": [
+      "要求学生下周提交至少 3 个审计报告样例的完整输入、抽取输出和人工校验结果。",
+      "要求明确定义 problem space、solution space、漏洞类型、检测充要条件、procedural knowledge 之间的字段关系。",
+      "要求把“小规模实验”变成可验收计划：样本量、指标、成功阈值、失败类型和下一步调整策略。",
+      "要求重新给出 40M 美元估值的本周独立计算依据，不能引用“与上周一致”。",
+      "重点追问：从 problem/solution 抽取到 procedural knowledge 的最小可执行表示到底是什么。"
+    ]
   }
 }

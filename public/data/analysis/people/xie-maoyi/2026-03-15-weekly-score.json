@@ -1,54 +1,63 @@
 {
   "key": "person:xie-maoyi:2026-03-15:weekly-score",
-  "generatedAt": "2026-05-24T11:36:14.256Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "c537776b4a5d8cf68de57721b1d4d095c294e5c2ea58a1e6dfa800c99863bdf7",
+  "generatedAt": "2026-06-06T13:14:48.405Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "35229008939728dc6ac82247bdcf7be896432e3e891881a9683413d0a6dbfe08",
   "result": {
-    "hardProgress": {
-      "score": 16,
-      "reason": "本周完成了从调研到原型实现的多个具体产出：筛选出kernel场景baseline，选定基准数据集并构建50个bug的评估子集，整理了6组baseline预测结果，实现了KRDG图构建、bug report解析、两阶段定位引擎和评估框架，进展扎实。",
-      "missingEvidence": "缺少各模块的实际运行结果、图构建的样例、评估指标数值或对比表格截图，无法判断实现程度和效果。"
+    "week": "2026-03-15",
+    "name": "谢茂怡",
+    "scores": {
+      "hardProgress": {
+        "score": 15,
+        "reason": "本周有较多实质性推进：完成了故障定位相关工作调研、benchmark筛选，确定LinuxFLBench作为评估基准；从250个bug中构建了50个bug评估子集；整理了6组baseline预测结果；提出KernelLocator并完成图构建、bug report解析、两阶段定位引擎和评估框架的原型模块。硬进展较完整，但目前仍主要停留在原型和准备阶段，尚未报告真实跑通结果、定位指标或端到端实验。",
+        "missingEvidence": "缺少代码仓库链接、模块运行日志、50个bug子集清单、baseline对比表、KRDG构建样例、端到端定位结果。"
+      },
+      "cognitiveIncrement": {
+        "score": 11,
+        "reason": "认知增量较明确：区分了需要测试用例与仅需bug report的方法，识别kernel场景更适合的baseline；注意到LinuxFLBench中logic/functional bug占比高，符合题目目标；对GraphLocator迁移到C/kernel场景做了可行性判断，并形成KernelLocator方法雏形。欠缺的是对为什么现有方法在kernel logic bug上失败的机制性分析，以及方法假设的边界条件。",
+        "missingEvidence": "缺少对baseline失败样例的归因分析、对kernel logic bug独特难点的系统总结、对GraphLocator不可直接迁移部分的具体证据。"
+      },
+      "cot2Depth": {
+        "score": 8,
+        "reason": "报告中体现了一层方法推理：从bug report症状出发，经由KRDG做因果扩展定位buggy file/method。但对‘推理过程本身如何被验证和改进’讨论不足，例如LLM邻居节点评分是否可靠、因果扩展是否会引入噪声、优先队列策略如何避免搜索偏移等。CoT的CoT深度一般。",
+        "missingEvidence": "缺少失败模式分析、推理链样例、因果扩展路径可解释性样例、不同图关系对定位贡献的消融设计。"
+      },
+      "brainaryMapping": {
+        "score": 6,
+        "reason": "已有一定结构化映射：将kernel代码映射为function、struct、macro、include等实体，以及调用、包含、ops绑定等依赖关系；也将benchmark和baseline做了分类。但报告没有呈现完整的Brainary式知识结构图、概念层级、实体关系schema或从bug report到代码图节点的映射规则。",
+        "missingEvidence": "缺少KRDG schema图、实体/边类型定义表、bug report字段到图节点的映射规则、一个完整bug案例的Brainary映射。"
+      },
+      "monetaryValue": {
+        "score": 6,
+        "reason": "选题具有潜在科研和项目价值：Linux kernel logic bug RCA难度高，且与Logickaller集成有工程落地方向；使用LinuxFLBench和多个baseline也有助于形成可发表的实验框架。但本周没有明确价值判断，例如相比现有方法预计提升多少、解决谁的痛点、是否能转化为Conti项目可用能力。",
+        "missingEvidence": "缺少预期收益指标、与现有baseline的目标提升幅度、对Conti/Logickaller集成价值的验收标准、潜在论文贡献点与风险判断。"
+      },
+      "projectManagement": {
+        "score": 10,
+        "reason": "任务组织较清楚，分为调研、数据集构建、原型实现、下周计划，并给出下一步跑源码、接LLM、迭代prompt的安排。项目管理不足在于没有说明实际完成度、时间投入、阻塞点、优先级、交付物位置和验收标准；Conti项目部分也较粗略。",
+        "missingEvidence": "缺少每项任务的完成百分比、代码/文档链接、阻塞问题、风险列表、下周任务优先级、Conti集成进度的具体里程碑。"
+      },
+      "nextAction": {
+        "score": 8,
+        "reason": "下周行动具体且顺着当前关键路径推进：下载对应版本kernel源码、跑通KRDG构建和dry-run、在5到10个bug上接入LLM端到端验证、根据结果优化prompt和图扩展策略。这些动作能直接检验原型有效性。扣分点是缺少明确成功标准和实验记录格式。",
+        "missingEvidence": "缺少每个行动的验收指标，例如KRDG构建成功率、5到10个bug的Recall@k/MRR目标、失败样例记录模板、何时判定策略需要重构。"
+      },
+      "evidenceQuality": {
+        "score": 3,
+        "reason": "证据质量中等：报告给出了具体论文、benchmark名称、bug数量、baseline数量和已实现模块，具有一定可核验性。但缺少直接证据材料，例如实验表、运行截图、样例输出、代码链接和数据清单，因此无法判断完成质量。",
+        "missingEvidence": "缺少仓库提交记录、运行日志、评估子集文件、baseline预测结果表、GraphLocator分析笔记、原型模块测试结果。"
+      }
     },
-    "cognitiveIncrement": {
-      "score": 11,
-      "reason": "从调研中提炼出KernelLocator方法，核心思想是将依赖图与因果推理结合，产生了有别于现有LLM-based方法的认知增量。但对GraphLocator迁移的可行性分析仍较浅，未深入探讨kernel场景下的根本挑战和认知跃迁。",
-      "missingEvidence": "缺少对现有方法局限的深度归因，以及KernelLocator思维链条的详细拆解（如为何C代码依赖图能解决logic bug的因果推理缺口）。"
-    },
-    "cot2Depth": {
-      "score": 7,
-      "reason": "报告中缺少对自身方法论的元认知反思，未见到对假设、边界或潜在失败模式的自我质疑，也未能体现从失败中迭代认知的痕迹。",
-      "missingEvidence": "未说明在设计KRDG时是否有过错误假设及如何纠正，缺少对因果扩展策略的自我批判和改进记录。"
-    },
-    "brainaryMapping": {
-      "score": 5,
-      "reason": "调研了多个相关工作，但未将新知识结构化地映射为Brainary可复用的概念或关系，未建立与Brainary的连接。",
-      "missingEvidence": "未提供任何Brainary卡片、概念图或组件抽象，未能展示将GraphLocator、SWE-Agent等方法转化为可重用知识单元的证据。"
-    },
-    "monetaryValue": {
-      "score": 5,
-      "reason": "Linux内核bug定位对操作系统安全有潜在价值，但目前仍处于早期原型阶段，距离工程化落地和产生直接经济收益较远。",
-      "missingEvidence": "缺少市场分析、潜在客户需求、应用场景的具体描述，以及将技术转化为产品或服务的可能路径。"
-    },
-    "projectManagement": {
-      "score": 10,
-      "reason": "本周任务有清晰的调研-数据集-原型三大阶段，并明确了各阶段的输出，但缺乏量化的里程碑、依赖关系分析和风险应对措施。",
-      "missingEvidence": "未给出各任务的计划完成度（如百分比）、关键依赖（如tree-sitter对内核代码的覆盖风险）及备选方案。"
-    },
-    "nextAction": {
-      "score": 8,
-      "reason": "下周计划具体列出了3项实操步骤，具备可执行性，但缺少对预期结果的量化标准（如dry-run成功的定义、Recall@k的目标值）。",
-      "missingEvidence": "未设定端到端验证的通过指标，没有说明若LLM效果不佳时的备选调优路径。"
-    },
-    "evidenceQuality": {
-      "score": 2,
-      "reason": "报告为纯文本，无任何图表、代码片段、运行日志或外部链接，无法验证所声称的完成度。",
-      "missingEvidence": "缺少KRDG图可视化、评估框架输出示例、baseline对比表格截图或代码仓库链接。"
-    },
-    "totalScore": 64,
-    "tier": "C",
-    "oneLineJudgment": "原型搭建进展扎实，但证据支撑不足，认知深度和元认知严重缺失，需尽快产出可验证的端到端结果。",
-    "professorFollowUp": "请确认KRDG构建是否已实际运行并生成图，要求提供5个bug的定位结果和Recall@1对比；同时引导其反思因果推理在kernel场景下的根本性挑战。"
+    "totalScore": 67,
+    "tier": "B",
+    "oneLineJudgment": "本周完成了从调研到原型框架的关键搭建，但尚未用真实kernel源码和bug样例证明KernelLocator有效，当前价值主要是准备性进展而非已验证结果。",
+    "professorFollowUp": [
+      "要求学生下周必须提交5到10个bug的端到端实验表，至少包含Recall@1、Recall@5、MRR、baseline对比和失败原因。",
+      "要求展示一个完整案例：bug report如何解析、命中哪些KRDG节点、因果扩展路径是什么、最终为什么定位到目标文件或函数。",
+      "要求补充KRDG schema和边类型定义，说明哪些kernel特有关系是相对GraphLocator的核心增量。",
+      "要求明确Conti/Logickaller集成的验收标准：RCA组件输入、输出、接口位置、当前阻塞和下周可交付物。"
+    ]
   }
 }

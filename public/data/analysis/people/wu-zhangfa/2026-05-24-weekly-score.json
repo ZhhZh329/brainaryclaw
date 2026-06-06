@@ -1,54 +1,99 @@
 {
   "key": "person:wu-zhangfa:2026-05-24:weekly-score",
-  "generatedAt": "2026-05-24T11:35:57.340Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "39df397e0ed7700ca3f944d2a76db57109ad5d1b036cfd2e5f79f1ebfc9e96a6",
+  "generatedAt": "2026-06-06T13:14:08.323Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "2abc5a6a0ea58d42e0633441bc6a1f07b931dca9c16457d197b4d4d11a86ebed",
   "result": {
     "hardProgress": {
-      "score": 16,
-      "reason": "本周完成了 FlowSCAN 标准版与鲁棒版的双模式训练协议整理、五个 baseline 的 benchmark 矩阵构建、对抗测试协议的分层审计以及数据窗口策略的实验含义澄清，成果可复用，但缺乏实际运行的实验指标数据。",
-      "missingEvidence": "缺少实际运行的性能指标（如 AUPR、F1）来支撑当前模块的有效性。"
+      "score": 14,
+      "reason": "本周有明确的结构性硬进展：FlowSCAN 被整理为 standard/robust 双模式，baseline 被组织成 benchmark matrix，对抗测试协议区分 matched 与 stress，窗口策略也被重新定义为 temporal crop augmentation。这些都能直接降低论文实验设计风险。但主要进展仍停留在协议、框架和实验设计层面，缺少已完成实验结果、数值表格、代码提交或日志证明。",
+      "missingEvidence": [
+        "缺少 FlowSCAN-Standard 与 FlowSCAN-Robust 的实际 clean/robust 指标。",
+        "缺少五个 baseline 已经在统一协议下跑通的结果。",
+        "缺少代码 commit、配置文件、训练日志或实验表格截图。",
+        "缺少窗口策略消融的实际结果。"
+      ]
     },
     "cognitiveIncrement": {
-      "score": 14,
-      "reason": "提出了三个重要认知增量：对抗评估需区分 matched 与 stress 协议、baseline 应按防御范式组织而非简单堆砌、随机窗口是弱标签下的时序增强，这些理解能指导后续实验设计。",
-      "missingEvidence": "缺少对认知增量进行实验验证的直接证据（例如协议不一致导致的结果偏差对比）。"
+      "score": 13,
+      "reason": "认知增量较强，尤其是把对抗鲁棒评估从“攻击越强越好”提升到 matched protocol、stress protocol、adaptive robustness、black-box/query robustness 的层级化理解；同时识别出 random crop 在 flow-level label 下其实是弱标签转移问题，而不是普通数据增强。这些判断能改变后续论文实验写法和审稿风险控制。",
+      "missingEvidence": [
+        "缺少用实验结果验证这些认知判断是否成立。",
+        "缺少对 matched PGD 与 strong PGD 在实际指标上差异的比较。",
+        "缺少 random crop 是否真的提升鲁棒泛化的实证证据。"
+      ]
     },
     "cot2Depth": {
-      "score": 14,
-      "reason": "对 CoT 过程进行了深入反思，解释了老师原本不知道的原因、新增认知与系统化的差距，体现了清晰的元认知，但缺少对思维局限性的批判。",
-      "missingEvidence": "缺少对认知过程自身的潜在偏差或反例的分析。"
+      "score": 13,
+      "reason": "CoT’s CoT 部分不是简单复述工作，而是解释了老师可能不知道什么、为什么过去没有系统化、以及如何转化为自动化科研流程。特别是对 PGD alpha 偏差、baseline 范式组织、flow-level 到 window-level 标签转移的反思比较深入。",
+      "missingEvidence": [
+        "缺少把这些二阶认知落实成具体自动检查规则的原型或伪代码。",
+        "缺少失败案例或反例来证明这些认知确实解决了真实问题。",
+        "缺少对哪些认知是本周新发现、哪些只是整理已有知识的边界说明。"
+      ]
     },
     "brainaryMapping": {
       "score": 9,
-      "reason": "明确将本周工作映射到 Brainary 的协议审计器、基线矩阵构建器、代码-论文一致性检查等可自动化模块，关联具体且可落地，但未提供原型或更细化的技术路径。",
-      "missingEvidence": "缺少这些自动化模块的具体设计或伪代码。"
+      "reason": "Brainary 映射清晰，提出了 Protocol Auditor、Baseline Matrix Builder、Code-to-Experiment-Card、Window Policy Checker、Standard-vs-Robust Delta Reporter 等可自动化模块，且每个模块都和本周具体实验问题对应，不是空泛概念。",
+      "missingEvidence": [
+        "缺少这些 Brainary 模块的输入输出格式。",
+        "缺少最小可运行 demo 或自动化脚本。",
+        "缺少优先级排序：哪些模块应先做，哪些只是长期设想。"
+      ]
     },
     "monetaryValue": {
-      "score": 9,
-      "reason": "金额估算合理，分项拆解清晰，总值 6000–9500 元，符合替代成本逻辑。",
-      "missingEvidence": "缺少外部可比价格或更精确的内部人力成本佐证。"
+      "score": 8,
+      "reason": "金额估算有分项、有替代成本逻辑，并且控制在本周新增科研资产范围内，比较符合项目管理视角。估值对象包括双模式整理、baseline matrix、协议审计、窗口策略解释和 Brainary workflow 抽象，基本对应实际工作内容。",
+      "missingEvidence": [
+        "缺少实际工时记录。",
+        "缺少可交付物链接，例如代码、文档、实验配置或 benchmark 表。",
+        "缺少估值和最终论文价值之间的边界风险说明。",
+        "缺少哪些资产可以复用、哪些只是本项目内部一次性使用的区分。"
+      ]
     },
     "projectManagement": {
-      "score": 14,
-      "reason": "准确识别了三个核心卡点，下周计划针对性强、可操作，包含最小实验集，但未显式给出任务间的依赖关系和预计耗时。",
-      "missingEvidence": "缺少实验任务的时间线或 Gantt 视图。"
+      "score": 11,
+      "reason": "项目管理意识较好，明确列出了三个核心卡点：baseline 协议统一、flow-level 标签与 window-level 训练解释、L_cons 贡献验证；也给出了下周最小验证动作。但仍然缺少任务负责人、时间预算、完成标准、实验运行资源、失败分支和优先级压缩方案。",
+      "missingEvidence": [
+        "缺少每个实验预计耗时和资源需求。",
+        "缺少如果算力不足或 baseline 不兼容时的降级方案。",
+        "缺少统一协议的最终配置文件或 checklist。",
+        "缺少项目当前离论文主表完成还有多少距离的量化判断。"
+      ]
     },
     "nextAction": {
-      "score": 9,
-      "reason": "下周动作具体而且聚焦于关键验证，优先级明确，能直接推动项目。",
-      "missingEvidence": "未提及若负结果出现时的备选路径或风险缓解措施。"
+      "score": 8,
+      "reason": "下周动作具体，包括固定攻击协议、先跑 FlowSCAN standard vs robust 主表、跑五个 baseline 统一协议版本、做窗口策略最小消融。这些动作能直接验证本周提出的关键判断。但任务量偏大，缺少明确优先级和最小闭环定义。",
+      "missingEvidence": [
+        "缺少下周最必须完成的一件事。",
+        "缺少每个动作的验收指标，例如至少产出哪张表。",
+        "缺少如果五个 baseline 无法全部跑完时的优先顺序。",
+        "缺少实验配置冻结时间点。"
+      ]
     },
     "evidenceQuality": {
-      "score": 4,
-      "reason": "周报基于代码实现和协议梳理，逻辑严谨，但缺失实验数据、曲线或表格等硬证据，依靠质性分析。",
-      "missingEvidence": "缺少任何形式的实验数据或图表来佐证有效性。"
+      "score": 2,
+      "reason": "证据质量偏弱。周报提供了大量技术细节、协议参数和实验设计，但几乎没有实证数据、日志、代码引用、结果表或可复核材料。因此可信度主要来自叙述的专业性，而不是可验证证据。",
+      "missingEvidence": [
+        "缺少实验结果数值。",
+        "缺少训练日志或测试日志。",
+        "缺少代码提交记录。",
+        "缺少配置文件或命令行参数。",
+        "缺少 baseline 跑通证明。",
+        "缺少消融实验结果。"
+      ]
     },
-    "totalScore": 89,
-    "tier": "A",
-    "oneLineJudgment": "本周在实验体系梳理、协议审计和认知深化方面取得重要进展，明确了下周关键动作，但缺少实际运行数据以闭合证据链。",
-    "professorFollowUp": "建议立即开展下周计划中的最小实验（如 FlowSCAN 标准版 vs 鲁棒版主表），以验证关键假说，并确认窗口消融结论，为后续论文撰写提供实证支撑。"
+    "totalScore": 78,
+    "tier": "B",
+    "oneLineJudgment": "这一周的主要价值是把 FlowSCAN 的鲁棒评估从零散实验推进到可解释、可消融、可审计的实验协议框架，但还没有形成足够的实证结果闭环。",
+    "professorFollowUp": [
+      "请先要求学生下周只保证一个最小闭环：FlowSCAN-Standard 与 FlowSCAN-Robust 在 Clean、PGD-20 matched、PGD-100 matched、AutoAttack 下的主表结果。",
+      "要求学生提交最终攻击协议配置文件，避免 matched PGD 和 strong PGD 在论文表格中混用。",
+      "要求学生把 Train random-crop 128 vs Train first-128 的最小消融跑出来，否则不要把 random crop 写成稳定机制。",
+      "要求学生给五个 baseline 做统一协议 checklist，明确哪些已经适配、哪些不能公平比较、哪些只能放附表。",
+      "本周老师最该关注的一点是：对抗鲁棒实验的可信度不取决于攻击数量，而取决于训练协议、测试协议、baseline 协议和数据窗口策略是否一致且可解释。"
+    ]
   }
 }

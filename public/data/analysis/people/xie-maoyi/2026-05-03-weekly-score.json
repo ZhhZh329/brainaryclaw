@@ -1,54 +1,54 @@
 {
   "key": "person:xie-maoyi:2026-05-03:weekly-score",
-  "generatedAt": "2026-05-24T11:36:21.224Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "1d88ee36bd301fb47752265f92619d89ac9bd80ad33e3b87289a6febd67e3fc2",
+  "generatedAt": "2026-06-06T13:14:59.027Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "b56aa8494384549136c4e4e256ebe8e7686e9e74b809cffe73903b5c4c902315",
   "result": {
     "hardProgress": {
       "score": 17,
-      "reason": "多个bug获得确认或推进，方法论形成，工具路径明确，但部分成果停留在设计层面。",
-      "missingEvidence": "无具体helper-pair示例，pattern原型未实现。"
+      "reason": "本周有明确硬进展：#2 推进到 v6，#12 获 maintainer 确认为 bug 且对方起草 patch，#1、#3 进入 mainline 或 net tree；同时覆盖 net、io_uring、nl80211、xfrm、rds 等子系统，并沉淀出 WAI、phantom bug 等失败模式。扣分点是硬结果仍主要是自述，没有 patch 链接、邮件线程、commit id、PoC 结果或具体 bug 列表，且“confirmed bug 约 6–7 个”表述不精确。",
+      "missingEvidence": "缺少每个 bug 的编号对应子系统、邮件链接、maintainer 回复链接、patch 版本链接、mainline/net tree commit id、PoC 运行日志。"
     },
     "cognitiveIncrement": {
-      "score": 13,
-      "reason": "提出了高价值的认知增量，如sibling-fix的高EV、LLM的筛选角色、PoC作为oracle，但部分可能非全新。",
-      "missingEvidence": "缺少与已有工作的对比来证明认知增量。"
+      "score": 12,
+      "reason": "CoT 增量清楚：sibling-fix reverse search 是当前最高 EV 方法，LLM 更适合作筛选而非发现，bug oracle 必须依赖 PoC/runtime；并且列出了被证伪路径，如 agent 多一致不等于正确、静态分析不等于可验证。这些是有效认知增量。扣分点是增量仍偏经验总结，缺少对比实验或失败样本统计来证明 EV 高低。",
+      "missingEvidence": "缺少不同方法的候选数、确认率、误报率、耗时、PoC 成功率等对比数据。"
     },
     "cot2Depth": {
-      "score": 14,
-      "reason": "对自身思考进行了深度反思，提炼出多项CoT's CoT，分析了自动化潜力和未被吸收的原因，证据等级高。",
-      "missingEvidence": "无"
+      "score": 11,
+      "reason": "CoT’s CoT 有三层抽象：高 precision 候选生成、runtime oracle、LLM high-recall filter，并讨论自动化潜力、沉淀形式和证据等级。深度高于普通周报。但报告自己承认这些不是老师原本不知道的东西，且“为什么还没有被自动化科研吸收”的解释较泛，尚未形成可检验的理论或系统设计约束。",
+      "missingEvidence": "缺少对现有 fuzz、symbolic、static analyzer、LLM detector 工作的具体比较；缺少可复现实验来支持证据等级 A。"
     },
     "brainaryMapping": {
-      "score": 8,
-      "reason": "明确了与reasoning、cognitive control等能力的关联，但缺少具体的架构映射和集成路径。",
-      "missingEvidence": "未说明对应Brainary组件的具体接口或模块划分。"
+      "score": 7,
+      "reason": "报告将工作映射到 reasoning、cognitive control、tool orchestration、risk modeling，并提出最终沉淀为 bug hunting agent、workflow、pattern module。映射方向合理，但仍是能力标签级别，未说明 Brainary 中每个模块的输入、输出、状态表示、评价指标和接口。",
+      "missingEvidence": "缺少 Brainary 组件图、数据流、模块接口、memory schema、agent policy、benchmark 或 evaluation harness。"
     },
     "monetaryValue": {
-      "score": 8,
-      "reason": "给出了各任务的价值评估，方向合理，但具体金额缺乏市场依据。",
-      "missingEvidence": "无价值锚点或同类对比。"
+      "score": 4,
+      "reason": "报告给出了任务价值金额：bug 挖掘 20 万、方法沉淀 10 万、工具路径 8 万、fuzz 探索 5 万，并指出可能买单方包括 maintainers、security teams、cloud/infra 公司。但金额基本是主观估计，没有商业假设、客户验证、替代方案成本、漏洞市场价格或安全团队工作流证据。",
+      "missingEvidence": "缺少金额计算依据、潜在客户访谈、bug bounty 或 CVE 价值参照、企业安全团队采购路径、节省人力成本测算。"
     },
     "projectManagement": {
-      "score": 13,
-      "reason": "项目管理信息完整，有阶段、投入、偏差分析和纠偏措施，但bug数量增长慢的量化不够。",
-      "missingEvidence": "缺少更精确的进度指标（如目标bug数量与时间表）。"
+      "score": 12,
+      "reason": "项目管理信息较完整：当前阶段、40 小时投入、单人资源、依赖 LKML/maintainer review、关键路径、偏差、原因和纠偏都有覆盖。主要问题是缺少清晰里程碑和量化燃尽指标；“符合预期”与“bug 数量增长较慢”之间没有给出原计划基线。",
+      "missingEvidence": "缺少本周计划对照、完成率、里程碑日期、bug 漏斗指标、风险优先级、外部依赖等待时间、下周验收标准。"
     },
     "nextAction": {
-      "score": 9,
-      "reason": "下周动作具体且最小可验证，覆盖所有任务，但部分动作如新增1-2个confirmed bug缺乏更细粒度。",
-      "missingEvidence": "无"
+      "score": 8,
+      "reason": "下周动作具体且可验证：完成 #16 的 PoC + patch，新增 1–2 个 confirmed bug，将 2–3 个 helper-pair 转成 query prototype，在 1 个 bug 上实现 parametric harness。这些动作能推进从个例到系统化。扣分点是动作较多，优先级和成功判据还不够严格。",
+      "missingEvidence": "缺少每个 next action 的验收标准、优先级、预计耗时、阻塞条件和失败后的替代路径。"
     },
     "evidenceQuality": {
-      "score": 4,
-      "reason": "提供了bug编号、状态等证据，部分CoT标注证据等级A，但整体数据展示不完整。",
-      "missingEvidence": "helper-pair列表、pattern具体内容未提供。"
+      "score": 3,
+      "reason": "报告包含较多可核查主张，如 maintainer acknowledgement、patch 版本、mainline/net tree 进入状态、confirmed bug 数量，但没有附外部证据。证据等级自评为 A，但缺少原始材料，因此只能视为中等偏弱证据。",
+      "missingEvidence": "缺少 LKML 链接、commit id、patch diff、PoC 代码、运行日志、review 截图或公开 issue。"
     },
-    "totalScore": 86,
-    "tier": "A",
-    "oneLineJudgment": "本周在bug挖掘方法论和工具化路径上取得了坚实进展，认知增量明确，但数据规模仍待提升。",
-    "professorFollowUp": "建议加速helper-pair的形式化，并验证pattern的precision/recall，同时考虑如何将方法论转化为可复用的工具。"
+    "totalScore": 74,
+    "tier": "B",
+    "oneLineJudgment": "这一周有真实 kernel bug 推进和方法抽象，已经从个例挖掘走向 workflow 雏形，但证据链、量化指标和商业价值判断仍不足以支撑更高评级。",
+    "professorFollowUp": "老师最该追问一件事：请把 #1、#2、#3、#12、#16 以及 6–7 个 confirmed bug 做成一张可核查表，包含子系统、发现路径、PoC、patch 链接、maintainer 状态、误判原因和耗时；只有这张表成立，pattern → LLM filter → PoC 验证的自动化路线才有可靠基础。"
   }
 }

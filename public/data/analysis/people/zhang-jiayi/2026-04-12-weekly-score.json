@@ -1,56 +1,54 @@
 {
   "key": "person:zhang-jiayi:2026-04-12:weekly-score",
-  "generatedAt": "2026-05-24T11:36:47.412Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "8fce1a6e5a345fd218ede7d3fc02af1a59a93d544f0e4a49ef7ae8cc56a19de5",
+  "generatedAt": "2026-06-06T13:16:43.158Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "58949157921215fddda011e3abbdd15f17e0299c085413c720e20624956acb53",
   "result": {
-    "dimensions": {
-      "hardProgress": {
-        "score": 11,
-        "reason": "完成了算法选型、边际收益三层建模和灰盒定位，但代码仅部分编码，M1端到端验证未跑通，连续两周延迟，硬进展有限。",
-        "missingEvidence": "价值估计模块编码未完成，缺少至少一个项目的实际运行结果。"
-      },
-      "cognitiveIncrement": {
-        "score": 13,
-        "reason": "提出边际收益度量比调度更难、覆盖不等于测对、灰盒必然性等认知更新，深化了对测试经济学框架的理解，判断对比清晰。",
-        "missingEvidence": "灰盒定位需要更严格的实验设计以避免LLM记忆污染，但本周已识别风险。"
-      },
-      "cot2Depth": {
-        "score": 13,
-        "reason": "CoT’s CoT #1（oracle强度作为独立子问题）和#2（submodularity待验证）触及本质，且有自我批判（#3延迟模式），但部分仍属理论推导。",
-        "missingEvidence": "缺少oracle强度自动评估的实证可行性验证，submodularity在有效覆盖度上的性质未证明或实验。"
-      },
-      "brainaryMapping": {
-        "score": 9,
-        "reason": "将价值估计、探索-利用权衡、停止判断分别映射到Target Understanding、Self-Understanding和TODO管理，组件化潜力明确，冷启动信号层次方案有新意。",
-        "missingEvidence": "多信号融合价值估计器尚未在Brainary外任务上测试通用性。"
-      },
-      "monetaryValue": {
-        "score": 8,
-        "reason": "投入成本估计合理，总价值区间基于假设验证结果给出，诚实折扣50%，但未提供具体折算方法或对比基准。",
-        "missingEvidence": "折扣计算方法可更透明，如按未验证设计的占比估算。"
-      },
-      "projectManagement": {
-        "score": 13,
-        "reason": "有清晰的里程碑修订、硬性deadline、延迟原因分析和具体纠偏动作（前3天只做工程，若失败则手动标注），进度判断客观。",
-        "missingEvidence": "缺少对风险缓冲区或备选实验路径的量化描述。"
-      },
-      "nextAction": {
-        "score": 9,
-        "reason": "下周任务具体、可验证（mutation kill rate对比），明确了“不做”清单，优先级明确，但未指定实验结果失败的后续方向。",
-        "missingEvidence": "若静态价值排序无效的补救方案仅模糊提及换特征，未具体化。"
-      },
-      "evidenceQuality": {
-        "score": 4,
-        "reason": "CoT’s CoT等级划分基本合理：#3有连续两周证据支撑评为A，#1有间接支撑评为B，但#2的C+可更细致，整体证据链诚实。",
-        "missingEvidence": "#2可能需要补充理论证明草图或反例可能性分析。"
-      }
+    "hardProgress": {
+      "score": 12,
+      "reason": "本周有明确的方案级硬进展：完成了 6 个算法模块的选型，提出了“到位程度 = 覆盖充分性 × oracle 强度”的可实现建模，开始了价值估计模块编码，并明确前 4 个算法短期可实现、后 2 个暂缓。但核心承诺的 M1 没完成，端到端验证未跑通，价值估计模块也只是 AST 特征提取部分完成，git 历史分析和接口定义缺失。因此硬进展主要停留在设计和局部编码，实验产出不足。",
+      "missingEvidence": "缺少可运行代码结果、BugsInPy 项目上的价值评分输出、top/bottom 函数测试生成结果、mutation kill rate 对比、端到端流水线截图或日志。"
     },
-    "totalScore": 80,
-    "tier": "B+",
-    "oneLineJudgment": "本周在认知建模和问题拆解上产出显著，但实验落地连续滞后，需警惕“概念层自洽陷阱”，M1验证是下周唯一硬通货。",
-    "professorFollowUp": "重点追问：1）静态价值排序 vs 随机的M1实验能否在4/19前出结果；2）oracle强度自动评估是否值得列为独立子课题，需评估其发表潜力与资源投入。"
+    "cognitiveIncrement": {
+      "score": 14,
+      "reason": "认知增量明显。本周从“测试是资源分配问题”推进到“资源分配的边际收益应如何度量”，并识别出真正瓶颈不是调度算法，而是 oracle 强度的自动评估。还把“覆盖了≠测对了”操作化为覆盖充分性、oracle 强度、故障检测能力三层模型，并修正了实验优先级：先验证静态价值排序是否优于随机，而不是一次性堆 6 个算法。这些是实质性的研究判断更新。",
+      "missingEvidence": "缺少对相关工作的系统对照，无法确认“oracle 强度自动评估几乎没人做过”这一判断的文献证据充分性。"
+    },
+    "cot2Depth": {
+      "score": 13,
+      "reason": "CoT's CoT 有 4 条，能区分技术贡献、理论风险、项目管理风险和论文叙事价值。其中关于 oracle 强度评估、有效覆盖度是否保持 submodularity、M1 延迟模式重复，都有较强的二阶反思价值。尤其能指出自己的设计仍未验证，并将其作为风险而非成果包装。但部分判断仍偏理论推演，例如 submodularity 的讨论没有证明或反例，oracle 强度静态分类的有效性也未验证。",
+      "missingEvidence": "缺少形式化定义、定理证明、反例、先导实验，尤其是有效覆盖度是否 submodular、静态 oracle 强度评分是否与 mutation kill rate 相关。"
+    },
+    "brainaryMapping": {
+      "score": 8,
+      "reason": "Brainary 映射较具体，不只是泛泛类比。报告把价值估计映射到 Target Understanding，把 UCB 置信区间映射到 Self-Understanding，把 SPRT 映射到 TODO 停止判断，并提出可沉淀模块，如多信号价值估计器、认知不确定性监控模块、统计驱动 TODO 管理器。缺点是仍然停留在概念迁移层，尚未说明 Brainary 现有架构中如何接入、输入输出协议是什么、优先级如何排序。",
+      "missingEvidence": "缺少 Brainary 具体接口、模块调用流程、可复用代码边界、与现有 Brainary 能力的差异对照。"
+    },
+    "monetaryValue": {
+      "score": 7,
+      "reason": "有成本核算和价值估计，投入成本约 ¥6,000，诚实估计总价值 ¥40,000-80,000，并明确若 M1 不通过则大幅缩水。价值判断也拆成了算法设计、到位建模、灰盒定位等不同资产。但金额估计缺少外部依据，主要是主观折现；“oracle 强度自动评估有独立发表价值”的商业/科研价值尚未被实验或文献缺口证明。",
+      "missingEvidence": "缺少价值估计依据，如可发表会议定位、竞品/相关工作缺口、潜在用户、复用场景、代码资产规模、实验通过后的具体论文路径。"
+    },
+    "projectManagement": {
+      "score": 11,
+      "reason": "项目管理部分较完整：说明了当前阶段、实际投入时间、下周预计时间、修订后的 M1-M4 里程碑、资源规划、纠偏动作和降级方案。尤其明确了下周前三天只做工程、不做设计，以及若 4/19 仍无结果则改为手动标注高低价值函数。不过本周已经未完成上周承诺的 M1，且编码只到局部模块，说明计划执行力存在问题。项目管理意识强，但本周交付控制不佳。",
+      "missingEvidence": "缺少任务拆分到日级别的完成记录、代码仓库进度、阻塞项清单、M1 延迟的具体耗时证据，以及下周工程任务的验收标准。"
+    },
+    "nextAction": {
+      "score": 9,
+      "reason": "下周行动非常具体：用圈复杂度、扇入度、git 变更频率做最小价值估计；在 BugsInPy 一个项目上给出价值评分；用 TestAgent 对 top-5 和 bottom-5 函数生成测试；用 mutation kill rate 做对比；并明确不碰贝叶斯、信念传播、博弈论。这些行动可验收、可否证、范围控制较好。",
+      "missingEvidence": "缺少具体项目名称、每天完成节点、mutation testing 工具选择、显著性检验方法、top/bottom 函数选择规则的细节。"
+    },
+    "evidenceQuality": {
+      "score": 3,
+      "reason": "报告对证据等级有自评，并诚实标注大量内容仍未验证，这是优点。但本周几乎没有实验数据，核心成果主要来自理论分析、方案设计和自我判断。CoT's CoT 的证据等级中，只有 M1 延迟的项目管理风险证据较强；oracle 强度评估、submodularity、价值排序有效性都缺少实证支持。",
+      "missingEvidence": "缺少实验表格、代码运行结果、文献引用、数据集样本、mutation kill rate、覆盖率对比、oracle 强度分类样例的人工标注一致性。"
+    },
+    "totalScore": 77,
+    "tier": "A",
+    "oneLineJudgment": "这是一份认知和研究设计质量很高、但硬实验交付不足的周报；本周真正价值在于把问题瓶颈从“调度算法”校正为“有效覆盖度与 oracle 强度度量”，但 M1 延迟使项目进入需要强制工程验证的阶段。",
+    "professorFollowUp": "老师下周最应该追问一件事：4/19 前是否真的跑出了 BugsInPy 单项目上“静态价值排序 vs 随机”的 mutation kill rate 对比。如果没有，不应继续讨论贝叶斯、bandit 或博弈论，而应要求其用手动标注 top-5/bottom-5 函数先完成最小可否证实验。"
   }
 }

@@ -1,54 +1,64 @@
 {
   "key": "person:wu-zhangfa:2026-05-31:weekly-score",
-  "generatedAt": "2026-05-31T13:00:53.828Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "3201b18b89de8768bc2a4addd05bc4d77f6a37df3695b88d485cfbb822eaff67",
+  "generatedAt": "2026-06-06T13:14:13.657Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "232c43bb1be50f5d164ce7186598332c58aaeaa25926448c44962d6a6eac7f49",
   "result": {
-    "hardProgress": {
-      "score": 19,
-      "reason": "本周通过逐行代码审计，明确了实际生效的训练目标为 L=L_rank+λ_cons L_cons_adv+λ_adv L_adv，确认了 L_cons 是 adversarial consistency、L_PMC 贡献有限、异常增强未调用、RELIABLE_NEG_FRAC 的真实作用、纠正了 adv_cons_lambda 系数误解，并完成了死代码清理与正式精简版整理，硬进展扎实且具有决策意义。",
-      "missingEvidence": "暂缺精简版主实验的运行结果与定量消融数据，但本周核心工作为代码审计与清理，证据链以代码逻辑和机制澄清为主，可用性高。"
+    "week": "2026-05-31",
+    "name": "Wu Zhangfa",
+    "scores": {
+      "hardProgress": {
+        "score": 16,
+        "reason": "本周有明确硬进展：完成 FlowSCAN 训练代码审计，确认真实生效 loss 为 ranking supervision、adversarial score consistency 和 anomaly-side adversarial margin protection；识别并删除 PMC、异常增强、无效 consistency schedule、无效 CLI 参数等死代码；修正 ADV_CONS_LAMBDA 的实际系数理解，并将正式精简版目标与论文表述重新对齐。硬进展偏工程审计和方法收敛，价值较高。但本周没有提供实际实验结果、代码提交记录、运行日志或清理前后 diff，因此还不能确认精简版是否已完整跑通或性能是否保持。",
+        "missingEvidence": "缺少代码提交链接、diff、实验运行日志、主实验结果、删除 PMC 后的 clean/robust 指标对比、ADV_CONS_LAMBDA=0.2 的验证结果。"
+      },
+      "cognitiveIncrement": {
+        "score": 14,
+        "reason": "认知增量很明确：从“代码里存在某模块”推进到“模块是否进入 forward、loss、optimizer update 才算真实机制”；从复杂模块堆叠转向最小有效机制；重新定义非对称防御的本质是训练授权机制而不是测试攻击列表；意识到 loss 系数必须追踪最终 total loss 的实际系数。这些都直接改变论文方法表述和实验设计。",
+        "missingEvidence": "缺少一份系统化代码审计表，例如每个模块的 config、调用路径、loss 贡献、backward 参与情况；缺少对这些认知如何改变具体论文段落或算法伪代码的实际改稿证据。"
+      },
+      "cot2Depth": {
+        "score": 13,
+        "reason": "CoT’s CoT 深度较好，不只是报告做了什么，而是解释为什么过去理解错、错误来自哪里、以后如何形成审计规则。尤其是 config → function call → loss term → optimizer update 的链条，属于可迁移的方法论。但目前主要还是自我推理总结，缺少反例验证、失败案例复盘和对可能误删模块的风险分析。",
+        "missingEvidence": "缺少对删除 PMC、异常增强后潜在负面影响的验证计划；缺少具体审计清单或自动化脚本输出；缺少对不同解释路径的排除证据。"
+      },
+      "brainaryMapping": {
+        "score": 8,
+        "reason": "Brainary 映射清楚，提出 Dead-Code-to-Method Auditor、Loss Coefficient Tracer、Defense-Mechanism Explainer 三类 agent，并且每个 agent 都对应本周真实问题：死代码识别、loss 系数追踪、防御机制解释。这说明学生能把一次项目审计抽象成可复用自动化能力。扣分点是仍停留在概念设计，没有输入输出 schema、触发条件、评价指标或最小原型计划。",
+        "missingEvidence": "缺少 Brainary agent 的具体工作流、伪代码、输入输出样例、自动化扫描脚本、与现有代码库集成方案、成功判定标准。"
+      },
+      "monetaryValue": {
+        "score": 7,
+        "reason": "金额估算按训练代码审计、正式精简版整理、论文口径统一、消融规划、Brainary workflow 抽象分项计算，结构完整，能体现本周工作替代成本。但估值主要是主观判断，没有工时、市场单价、外包成本或节省审稿风险的量化依据；同时没有用实际产物证明这些资产已经可复用。",
+        "missingEvidence": "缺少每项工作的工时记录、产出文件、代码提交、文档链接、市场参考价格、可复用程度说明、与论文风险降低之间的证据链。"
+      },
+      "projectManagement": {
+        "score": 12,
+        "reason": "项目管理较扎实：主线任务、硬进展、卡点、下周动作均清楚；能识别公式与代码不一致、consistency 系数待验证、删除 PMC 后创新点需重构等关键风险。下周计划也覆盖实验、消融、论文方法和算法伪代码。扣分点是缺少明确时间表、优先级排序、资源需求、完成标准、失败预案，以及当前实验环境和版本锁定信息。",
+        "missingEvidence": "缺少任务排期、每项任务的完成定义、实验配置表、随机种子、数据集版本、训练预算、风险优先级、如果正式版性能下降时的回退方案。"
+      },
+      "nextAction": {
+        "score": 9,
+        "reason": "下周最小可验证动作非常具体：跑正式精简版主实验，检查 Clean、PGD-20、PGD-100、AutoAttack、fixed threshold 指标；做 formal、w/o cons、w/o adv 最小消融；补 consistency 系数消融；同步修改论文方法和算法伪代码。这些动作能直接验证本周结论是否成立。唯一不足是没有给出精确实验顺序、停止条件和性能阈值。",
+        "missingEvidence": "缺少每组实验的预期阈值、成功/失败判定、训练轮数、攻击参数、复现实验命令、优先级顺序、实验完成时间。"
+      },
+      "evidenceQuality": {
+        "score": 3,
+        "reason": "证据质量中等偏弱。周报提供了若干代码片段和逻辑解释，例如 l_cons 的实际定义、loss 组成、X_clean=X_orig、PGD 调用路径等，这些比纯口头描述更有证据性。但没有外部可核查材料，没有实验数值，没有代码 diff，没有日志，也没有截图或 commit hash。因此目前只能确认报告者声称完成了审计，不能独立验证审计结论和代码清理质量。",
+        "missingEvidence": "缺少 commit hash、Git diff、训练脚本路径、关键函数调用栈、单元测试、实验日志、指标表、删改前后配置文件、论文改稿片段。"
+      }
     },
-    "cognitiveIncrement": {
-      "score": 15,
-      "reason": "周报提炼了四个关键认知增量：代码中存在的变量不等于生效的机制、删除无效模块比保留复杂模块更强、非对称防御的本质是训练授权机制而非攻击列表、loss系数必须按实际代码追溯解释。这些认知打通了从实现到论文表述的逻辑，深度强。",
-      "missingEvidence": "认知增量已结合具体代码发现论证，无明显缺失。"
-    },
-    "cot2Depth": {
-      "score": 15,
-      "reason": "专门设有“CoT’s CoT”与“对meta-cognition的新的理解”两部分，对认知过程进行了再思考，提炼出“复杂方法最终要回到最小有效机制”“论文可信度来自代码-公式-解释的闭环”“非对称防御的重点是授权训练”等方法论级见解，元认知层次清晰。",
-      "missingEvidence": "抽象程度到位，无缺失。"
-    },
-    "brainaryMapping": {
-      "score": 10,
-      "reason": "明确将本周工作映射为三个可自动化 Brainary agent：Dead-Code-to-Method Auditor、Loss Coefficient Tracer、Defense-Mechanism Explainer，每个 agent 均有具体功能描述和业务价值，关联性强。",
-      "missingEvidence": "已提供 agent 概念与职责说明，暂无具体实现方案，但作为映射足够。"
-    },
-    "monetaryValue": {
-      "score": 10,
-      "reason": "给出了分项估值表，涵盖审计、整理、解释、规划、抽象五类，合计 6000-9000 元，估值逻辑基于可复用科研资产的替代成本，有节制且合理。",
-      "missingEvidence": "金额为估算，未转换为论文预期直接影响的经济价值，但在周报语境中已足够。"
-    },
-    "projectManagement": {
-      "score": 15,
-      "reason": "清晰指出了三个卡点（公式对齐、λ系数验证、创新点重定义），并给出了下周最小可验证动作：正式版主实验、最小消融、论文方法同步、算法伪代码检查，计划具体可执行。",
-      "missingEvidence": "未设置明确的时间节点与责任人，但在单人周报中可接受。"
-    },
-    "nextAction": {
-      "score": 10,
-      "reason": "下周计划聚焦于主实验验证、消融对比、论文修改与一致性检查，动作均具有最低可验证特性，且与卡点直接对应，落地性强。",
-      "missingEvidence": "无。"
-    },
-    "evidenceQuality": {
-      "score": 5,
-      "reason": "提供了代码片段（如 l_cons 计算、loss 组合）、具体参数取值（ADV_CONS_LAMBDA 从 2.0 调至 0.2）及配置项说明，证据直接支撑了审计结论。",
-      "missingEvidence": "未附完整实验日志或结果图表，但本周聚焦机制澄清，代码证据已足够支撑论述。"
-    },
-    "totalScore": 99,
-    "tier": "S",
-    "oneLineJudgment": "本周通过深入代码审计一举澄清了 FlowSCAN 的非对称防御核心机制，删除无效模块后形成精简正式版，同时沉淀出从代码到论文的闭环认知与可自动化审计能力，进展高质量且决策价值突出。",
-    "professorFollowUp": "建议关注下周精简版主实验的 Clean/鲁棒指标及消融结果，确认 λ_cons 系数与删除 PMC 后的性能稳定性；同步推动论文方法部分与伪代码的修订，以确保代码-公式-论文的闭环一致性。"
+    "totalScore": 82,
+    "tier": "A",
+    "oneLineJudgment": "这是一次高价值的代码—公式—论文口径校准周，核心贡献是把 FlowSCAN 从复杂历史堆叠收敛到可解释的非对称鲁棒防御机制；但目前仍缺少实验结果和可核查代码证据，因此不能评为 S。",
+    "professorFollowUp": [
+      "要求学生下周必须提交精简版代码的 commit hash、关键 diff 和可复现实验命令，否则本周的代码审计结论无法独立验证。",
+      "优先检查 ADV_CONS_LAMBDA=0.2 是否真的优于 0、1.0 或原 2.0，防止只是按直觉修正系数。",
+      "要求给出 formal、w/o cons、w/o adv 三组最小消融表，至少包含 Clean AUC/AUPR/F1、PGD-20、PGD-100、AutoAttack 和 fixed-threshold FPR。",
+      "要求同步提交论文方法公式、算法伪代码和代码实际 loss 的一页对齐表，避免论文继续写入已删除的 PMC、clean consistency 或异常增强。",
+      "老师本周最应该记住的一点是：论文中的每个方法模块都必须能追踪到真实生效路径，即是否被调用、是否进入 loss、是否参与 backward、最终有效系数是多少。"
+    ]
   }
 }

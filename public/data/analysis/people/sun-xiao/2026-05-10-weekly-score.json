@@ -1,54 +1,64 @@
 {
   "key": "person:sun-xiao:2026-05-10:weekly-score",
-  "generatedAt": "2026-05-24T11:35:26.458Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "a99fcebf051169fa087e8598b8285a3cfbca8cd22f7d3bb39ea66c0d2a18ea59",
+  "generatedAt": "2026-06-06T13:12:13.422Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "455b5c6002cc8422250837be457e15f1a21ad2e831b7de322da28ba274e8bdc9",
   "result": {
-    "hardProgress": {
-      "score": 15,
-      "reason": "本周将 strict action schema 从离线定版推进到 runtime 接入规格，并重构了 communication schema，但尚未完成正式 benchmark 运行，硬进展主要体现在设计、规格和验收准备上，缺少可量化的最终结果。",
-      "missingEvidence": "缺少正式 benchmark 运行结果，如 action schema 接入后的性能指标或对比数据。"
+    "week": "2026-05-10",
+    "name": "Sun Xiao",
+    "scores": {
+      "hardProgress": {
+        "score": 15,
+        "reason": "本周有明确硬进展：把 strict non-comm action schema 从离线资产推进到 benchmark_v4 runtime 接入规格，明确唯一 schema 来源、direct two-call action selection、general strict-schema apply adapter、diagnostic trace 要求；communication 侧也从旧 schema id 重构为 13 个 source-grounded content-selection strategies。问题是，这一周主要是规格、验收框架、bug 清单和 pilot 调试复盘，尚未证明代码已完全接入，也没有正式 benchmark 结果。",
+        "missingEvidence": "缺少实际 commit、运行日志、diagnostic_summary 样例、rollout_record 样例、branch_evaluation 输出、13 个 strategy 的真实生成结果和失败率。"
+      },
+      "cognitiveIncrement": {
+        "score": 13,
+        "reason": "认知增量清楚：从“schema 是否定版”推进到“runtime 链路是否可证明遵守 schema”；从“communication 是话术/风格”推进到“communication 是可控 content-selection intervention”；也明确了 trace proof 比代码自报更重要。这些判断直接改变下周实验策略，认知增量有效。",
+        "missingEvidence": "缺少与旧方案的具体对照案例，例如旧 schema id 如何导致不可解释、某个旧 candidate/mask 残留如何污染结果。"
+      },
+      "cot2Depth": {
+        "score": 13,
+        "reason": "CoT’s CoT 部分不只是复述工作，而是抽象出了两个更高层判断：一是 schema-source trace contract 对 benchmark 因果边界的重要性；二是 communication 必须被建模为 source-grounded intervention，而不是语言生成质量问题。还说明了为什么这些理解尚未被自动化科研吸收，并给出模块化沉淀方向。深度较好。",
+        "missingEvidence": "证据等级写为 A-/A，但没有提供支撑该等级的具体实验输出、代码验证或失败案例原文，因此证据等级偏自评。"
+      },
+      "brainaryMapping": {
+        "score": 8,
+        "reason": "Brainary 映射明确覆盖 representation grounding、benchmark infrastructure、causal traceability、pragmatic reasoning、intervention design、partner modeling，并能说明最终可沉淀为哪些模块。映射与本周工作主线一致。",
+        "missingEvidence": "缺少更细的 Brainary ontology 映射，例如这些模块如何进入现有 Brainary memory、workflow、agent loop 或 benchmark registry；目前仍是概念层映射。"
+      },
+      "monetaryValue": {
+        "score": 7,
+        "reason": "报告对项目价值判断较完整：指出该能力服务 agent benchmark、企业流程 agent、多智能体协作、AI eval/safety、workflow intelligence；也说明它不是局部优化，而是可迁移的 benchmark 基建。但商业价值仍停留在方向判断，没有量化谁会付费、付费场景、产品形态、替代方案和近期可交付物。",
+        "missingEvidence": "缺少具体用户画像、购买理由、竞品差异、可收费模块、交付时间线、成本收益估计。"
+      },
+      "projectManagement": {
+        "score": 12,
+        "reason": "项目管理信息比较充分：有当前阶段、时间投入估计、下周资源规划、关键路径、token/成本控制、纠偏动作，并明确不要先跑大规模 matrix。尤其下周先做 BPT 1 case、repeat=1 的回归验收，管理策略合理。扣分点是项目管理段落存在标题重复和结构混乱，且负责人、验收阈值、失败后的决策分支还不够明确。",
+        "missingEvidence": "缺少明确 owner、截止日期、验收 checklist 的通过阈值、若验收失败如何降级或回滚、预计运行成本的具体数字。"
+      },
+      "nextAction": {
+        "score": 9,
+        "reason": "下周动作非常具体：BARGAINING_PRICE_TERMS 1 case、2 个 non-comm policy、2 个 comm policy、13 个 communication strategy、rollout repeat=1、branch enabled，并列出要检查的 CLI、schema source/path、selected strategy、private goal leakage、utterance key-value leakage 等。它是可执行的最小验证动作。",
+        "missingEvidence": "缺少具体命令行、预期输出文件名、通过/失败标准，例如多少个 strategy 必须成功、允许多少 fallback、哪些字段必须非空。"
+      },
+      "evidenceQuality": {
+        "score": 3,
+        "reason": "报告提到 Bargaining pilot 输出、diagnostic zip、bug 清单、运行配置和模块设计，但正文没有展示任何真实日志、表格、样例 trace、错误栈、commit diff 或输出片段。因此证据质量是中等偏弱：有证据意识和证据类型规划，但当前周报中可核验材料不足。",
+        "missingEvidence": "缺少可直接审阅的 artifact：日志片段、zip 内容摘要、失败案例编号、代码路径 diff、schema 文件样例、branch_evaluation 样例、strategy registry JSON 样例。"
+      }
     },
-    "cognitiveIncrement": {
-      "score": 13,
-      "reason": "本周认知更新明确：强调 action schema 接入后的一致性验证链，communication 应作为 source-grounded content-selection intervention，工程验收需从代码自报到 trace 证明，具有深度。",
-      "missingEvidence": "缺少实际运行后的认知验证，认知增量基于推演而非实验数据。"
-    },
-    "cot2Depth": {
-      "score": 13,
-      "reason": "CoT's CoT 深入剖析了 runtime 因果边界验证和 communication 策略空间纠偏，解释了未被自动化科研吸收的原因，并给出了高自动化潜力建议，深度较高。",
-      "missingEvidence": "缺少将这些 CoT's CoT 付诸实践后的效果证明，例如验证器或策略注册表的实际运转情况。"
-    },
-    "brainaryMapping": {
-      "score": 9,
-      "reason": "清晰地将工作映射到 representation grounding、pragmatic reasoning 等 Brainary 能力，并指出最终沉淀形式，映射合理且非老师未知内容。",
-      "missingEvidence": "缺少映射关系的实际产出物，如代码模块或可运行的验证器。"
-    },
-    "monetaryValue": {
-      "score": 6,
-      "reason": "题目解决 communication 变量不可控问题，有潜在商业价值（agent benchmark、企业流程 agent 等），但目前处于基建阶段，尚无直接金钱产出或客户试用。",
-      "missingEvidence": "缺少潜在客户需求量化证据或早期商业合作意向。"
-    },
-    "projectManagement": {
-      "score": 13,
-      "reason": "项目管理分两条主线，包含阶段、时间/资源规划、关键路径、纠偏动作，计划清晰合理，纠偏措施具体。",
-      "missingEvidence": "缺少实际工时统计和资源消耗记录，进度判断偏向定性。"
-    },
-    "nextAction": {
-      "score": 9,
-      "reason": "下周计划明确，先用 BPT 1 case 做最小验收，验证 action 和 communication 链路，动作具体可行。",
-      "missingEvidence": "缺少 Codex 修改是否已完成的确认，以及具体验收标准的细节。"
-    },
-    "evidenceQuality": {
-      "score": 3,
-      "reason": "周报提及 pilot 输出、bug 清单等证据，但均为描述性，未附上实际日志、截图或数据文件，证据可信度中等。",
-      "missingEvidence": "缺少可直接审查的运行时日志、diagnostic summary 或 rollout_record 等原始证据。"
-    },
-    "totalScore": 81,
-    "tier": "B",
-    "oneLineJudgment": "本周从设计推进到验收规格，规划清晰，但缺少实际运行证据，整体处于基建冲刺阶段。",
-    "professorFollowUp": "请关注下周最小验收结果：BPT 1 case 是否成功证明 action schema 与 communication strategy 的 clean 接入，若通过则可扩大规模。"
+    "totalScore": 80,
+    "tier": "A",
+    "oneLineJudgment": "本周不是结果产出周，而是把 action schema 与 communication intervention 从概念设计压到 runtime 可验收边界；价值较高，但目前证据仍主要是规格和自述，必须用下周最小回归证明链路真实生效。",
+    "professorFollowUp": [
+      "要求下周提交一份最小验收包，而不是继续写设计说明：包含 --help 输出、一次 BPT rollout_record、diagnostic_summary、branch_evaluation、llm_io 摘要和 13 个 strategy 的生成状态表。",
+      "重点追问：strict_noncomm_v4_full 是否真的是唯一 action schema 来源？旧 PDDL candidate/mask/admissible_candidates 是否在运行时完全消失？",
+      "重点追问：communication selector 是否被 requested content_selection_policy 强约束？branch 是否固定同一 action 和 S_after_action，只替换 communication？",
+      "要求定义通过标准：例如 action_schema_source/path 必须全量可追踪，private_partner_goal_exposed 必须为 false，utterance 不得泄露 structured key-value payload，branch treatment 必须出现 strategy::<content_selection_policy>。",
+      "如果下周仍无法提供 trace 级证据，应暂停扩大 family 和 repeat，先修 runtime verifier 与 diagnostic summary。"
+    ]
   }
 }

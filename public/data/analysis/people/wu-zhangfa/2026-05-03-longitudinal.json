@@ -1,70 +1,236 @@
 {
   "key": "person:wu-zhangfa:2026-05-03:longitudinal",
-  "generatedAt": "2026-05-24T11:51:57.365Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "495ec272871eb83f93463d1843ae75a8c9cf94034604e6158232fe9d0ed006de",
+  "generatedAt": "2026-06-06T13:15:03.325Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "7987a83f9d3d0e4a92689011cd90ec987a9c8aaaaca6bf5b8a41dc1d7c2a508a",
   "result": {
-    "overallTrajectory": "该生在四周内完成了从局部训练机制修正到全局方法定位的演进。第一周聚焦于修正采样、prior和bank等训练链中的具体偏差，并提出“样本身份分配”是弱监督失败的根本原因。第二周将多分支收敛为单一主线（RTSB+ambiguity-aware），并建立review位面分离框架，使研究决策不再受冲突意见摇摆。第三周转向系统稳定性审计，识别“静态锚点污染”并加入阶段化训练与seed审计，代码向主线精简。第四周进一步删除不可靠的suspicious分支，将方法重新定位为保守能量式弱监督异常检测，并沉淀出可复用的方法资产。认知轨迹从“身份分配控制”深化到“训练权限审计”，对研究价值的判断也从论文叙事转向实际工程节省和自动化科研资产。整体而言，研究能力明显提升：不再被动修补，而是主动做减法、明边界、建资产，体现出更强的系统抽象和方法论自觉。",
-    "stageByWeek": [
+    "overallTrajectory": "总体判断：这个学生最近四周显示出研究能力在增强，而不只是工作量增加；最明显的变化是从“修模块、跑代码”逐步转向“识别训练信号权限、样本身份、失败模式、方法边界和自动化沉淀”。但当前证据仍主要来自自述、代码改动和局部实验结论，缺少连续的多 seed、多比例、跨设定实验闭环，因此还不能判断方法已经稳定成立。",
+    "headline": "研究能力在上升，核心信号是他开始主动删除不可靠训练权限、收敛方法主线，并把失败模式转成可审计规则；主要短板是周计划与实际实验闭环之间仍不够可追踪。",
+    "overviewSentence": "他正在从“把系统做复杂”转向“判断哪些训练信号有资格进入系统”，但还需要用连续实验账本证明这些判断稳定成立。",
+    "fourWeekTimeline": [
       {
         "week": "2026-04-05",
-        "stage": "训练链修正与认知升维",
-        "hardProgress": "修正prior非对称更新、PU真实曝光、split抗泄漏、bank直入判分等模块级问题；形成可复用弱监督训练规则。",
-        "cognitiveHighlight": "提出‘样本身份分配’是弱监督异常检测失败的根源，将零散问题统一到身份控制框架下。",
-        "valueEstimate": "18万元人民币（方法资产+认知增量）",
-        "brainaryMapping": "识别出训练动态审计、身份分配引擎、先验控制器、泄漏感知分割等四个可自动化能力模块。",
-        "blocker": "异常bank保守化后的召回与精度平衡待验证。",
-        "nextAction": "三组对照实验验证prior、bank等对AUCPR和纯度的影响。"
+        "metacognition": "元认知从代码正确性转向训练动态：他识别到弱监督异常检测的关键不是单个 loss 或 backbone，而是样本被系统赋予什么身份，例如 clean anchor、anom seed、unlabeled background；也能提出 prior 方向、bank 准入、PU 真实曝光、split 泄漏等失败模式。",
+        "valueJudgment": "价值判断已经不只看模块是否复杂，而是看其是否进入最终判分、是否能形成可复用训练规则。他判断 bank 如果不进入打分只是高维护成本调度器，这体现出对科研资产价值的初步取舍。",
+        "projectManagement": "有明确主线、模块改动和下周三组对照实验计划；验收指标包括 AUCPR、safe clean 纯度、bank ready/support/effective score、leakage/exposure 偏差。项目管理质量较好，但尚无本周实验结果证明这些改动实际有效。",
+        "evidence": [
+          "“bank 从‘旁路调度器’变成‘决策边界参与者’”",
+          "“prior 学低的代价远高于学高”",
+          "“当前卡点已经从‘代码正确性’转向了‘训练动态与性能平衡’”",
+          "“下周……做 3 组对照实验”"
+        ]
       },
       {
         "week": "2026-04-19",
-        "stage": "主线收敛与研究决策升级",
-        "hardProgress": "废弃多条不兼容分支，收敛到RTSB骨架+ambiguity-aware控制；形成review位面分离解释框架；完成终版trainer逐函数级重构方案。",
-        "cognitiveHighlight": "认识到‘世界观混杂’是版本无法收口的根本原因，建立分支世界观一致性审查；将prior升级为多级统一控制变量（pi_low/med/high/delta_pi），实现训练信号系统化调度。",
-        "valueEstimate": "未明确金额，但明确沉淀了三项可复用资产（一致性检查、review位面分离、ambiguity-aware trainer骨架）。",
-        "brainaryMapping": "提出Review位面分离器，以及将prior不确定性控制作为自动化模块。",
-        "blocker": "ambiguity-aware控制是否在真实数据上稳定抑制自举污染尚未验证。",
-        "nextAction": "在2%、5%、10%异常率下跑RTSB原版vs ambiguity-aware的最小对比实验。"
+        "metacognition": "元认知进一步提升到研究路线管理：他识别出 review 冲突不是简单对错，而是工程闭环审查和论文假设审查的位面不同；也识别出自己过去的失败模式是多分支世界观混杂。",
+        "valueJudgment": "价值判断更清楚：不再把可跑分支等同于值得押的论文主线，而是收敛到 RTSB 骨架加 ambiguity-aware 训练控制。他开始用“能不能跑”和“值不值得继续押”区分项目价值。",
+        "projectManagement": "完成路线收口和逐函数级 trainer 改造方案，但未报告 04-05 计划的三组对照实验是否完成；下周计划是 single-prior trainer 与 ambiguity-aware trainer 在 2%、5%、10% 异常比例下各 3 seeds 对比，指标清楚。",
+        "evidence": [
+          "“最终结论是……收敛到 RTSB 骨架 + ambiguity-aware 训练控制”",
+          "“review 位面分离”",
+          "“把原版 RTSB 的关键训练函数拆出来”",
+          "“如果这个最小实验跑不通，我会立刻停掉进一步包装”"
+        ]
       },
       {
         "week": "2026-04-26",
-        "stage": "系统审计与训练动力学优化",
-        "hardProgress": "明确静态锚点污染风险；加入阶段化ramp训练和encoder-space seed soft audit；清理死接口，形成主线精简代码。",
-        "cognitiveHighlight": "突破动态伪标签污染的思维定式，发现frozen seed、static trust等静态规则也可能形成带偏闭环，并提出二次审计机制。",
-        "valueEstimate": "未明确金额，但强调形成了‘静态锚点污染’审查项和主线精简版代码资产。",
-        "brainaryMapping": "建议将seed audit和staged training audit自动化，但没有显式提出新模块。",
-        "blocker": "positive trust仍属启发式，非严格噪声概率；frozen seed仍是整个系统的单点依赖；代码复杂度偏高。",
-        "nextAction": "消融实验验证seed audit和staged training的实际收益。"
+        "metacognition": "元认知从动态自举污染扩展到静态锚点污染：他意识到即使不做伪标签，frozen seed、static novelty、positive trust、normal candidate 这些静态规则也会把系统带偏。这是对证据边界和隐性失败路径的更细识别。",
+        "valueJudgment": "价值判断更偏向可审计、保守、可靠的弱监督框架，而不是追求更激进的异常挖掘。他把方法定位为“保守、可审计”，说明开始重视问题设定与方法权限之间的匹配。",
+        "projectManagement": "有代码层交付：主线精简版 train.py、model.py、dataloader_MIL.py；有机制交付：staged training、encoder-space seed audit、接口清理。但未说明 04-19 计划的 2/5/10 异常比例三 seeds 对比是否完成，因此计划继承性不足。",
+        "evidence": [
+          "“明确：即使不使用动态伪标签，自身也不一定安全”",
+          "“静态锚点污染”",
+          "“新增 encoder-space frozen seed soft audit”",
+          "“形成了一个主线精简版本，包含 train.py / model.py / dataloader_MIL.py”"
+        ]
       },
       {
         "week": "2026-05-03",
-        "stage": "方法论重构与权限系统建立",
-        "hardProgress": "实验证实suspicious-unlabeled牵引分支无效并删除；将模型重新定位为保守能量式弱监督异常检测；沉淀成可迁移的workflow和方法资产。",
-        "cognitiveHighlight": "最大的认知增量是‘训练权限审计’：高能量未标注样本不应写入正类监督，即使不生成伪标签，参与梯度回传也可能污染表征空间。提出信号权限显式化（read-only vs write）。",
-        "valueEstimate": "3万-5万元人民币（按实际节省研发时间和可复用资产计算，较前次更保守、更工程化）。",
-        "brainaryMapping": "明确提出训练信号权限审计器、科研假设审计能力、失败模式转资产能力，并给出可自动化的检查规则。",
-        "blocker": "方法创新性仍偏结构组合，缺乏理论命名和系统化benchmark。",
-        "nextAction": "多seed稳定性验证、噪声比例敏感性实验、loss消融实验。"
+        "metacognition": "元认知达到最近四周最清楚的一次：他不仅发现 suspicious-unlabeled 分支无效，还把问题抽象为训练信号的权限管理，区分 label 权限、gradient 权限、memory 权限和 diagnostic 权限；这是从‘做什么模块’转向‘什么信号有资格改变系统’。",
+        "valueJudgment": "价值判断明显更有取舍：实验发现 lambda_suspicious=0.0 最好后，他选择删除分支而不是继续保留复杂结构，并将方法定位为保守能量式 PU 学习。价值标准从“增加模块可能有收益”转向“没有稳定证据的训练权限应被降级”。",
+        "projectManagement": "本周有明确交付：删除 lambda_suspicious 相关配置、loss、日志字段，收敛为三类核心 loss，并梳理数学逻辑和 workflow。仍缺少充分实验细节：报告说 lambda_suspicious=0.0 最好，但未给出具体表格、seed 数、方差、数据切分和统计显著性。",
+        "evidence": [
+          "“λ_suspicious=0.0 时效果最好”",
+          "“将 lambda_suspicious 及其相关配置、loss、日志字段全部删除”",
+          "“不进行 unlabeled pseudo-positive writeback”",
+          "“对训练信号进行权限审计，而不是只审查模型结构”"
+        ]
       }
     ],
-    "trendScores": {
-      "硬进展水平": "逐步从局部模块修正（第1周）→主线收敛与方案设计（第2周）→训练机制优化与审计（第3周）→实验证伪与重新定位（第4周），硬进展从执行层上升到决策层，再落实到方法资产，呈递增态势。",
-      "认知成熟度": "第1周身份分配思维出现，第2周世界观一致性审查，第3周静态锚点污染，第4周训练权限审计，认知深度和抽象层级稳步提升，从具体机制认知跃迁到系统设计哲学。",
-      "自动化意识": "第1周提出4个Brainary能力映射，第2周增加review位面分离器，第3周隐性关注审计自动化，第4周明确提出可程序化的训练信号权限审计模块，自动化意识逐渐明确和可落地。",
-      "价值判断严谨性": "第1周估值18万偏向方法资产认知溢价，第4周估值3-5万严格按节省成本和可复用性计算，显示价值判断从感性乐观转向理性务实的工程化思维。",
-      "项目管理成熟度": "第1周存在多任务并行，第2周果断收敛主线，第3周精简代码，第4周做减法删除分支，体现越来越强的范围控制和优先级管理能力。"
+    "metacognitionChange": {
+      "summary": "元认知呈现连续上升：04-05 识别样本身份分配，04-19 识别研究分支世界观和 review 位面，04-26 识别静态锚点污染，05-03 进一步抽象为训练信号权限审计。这个变化说明他不只是更忙，而是在逐步掌握如何定义失败模式、证据边界和下一步验证标准。",
+      "byWeek": [
+        {
+          "week": "2026-04-05",
+          "change": "从修 bug 转到问“样本以什么身份进入优化”；能提出 prior、bank、sampler、split 的系统交互失败。证据边界：仍待实验验证 bank 保守化是否牺牲召回。"
+        },
+        {
+          "week": "2026-04-19",
+          "change": "从单点技术判断转到研究路线判断；能区分工程可跑、论文主线值得押、review 评价位面。证据边界：没有报告前一周 ablation 是否完成。"
+        },
+        {
+          "week": "2026-04-26",
+          "change": "从动态污染扩展到静态锚点污染；能识别看似安全的 frozen seed 和 trust 规则也可能制造系统偏差。证据边界：seed audit 和 staged training 仍是待验证机制。"
+        },
+        {
+          "week": "2026-05-03",
+          "change": "从模块有无转到训练权限审计；能主动删除无增益分支，并把负结果转成 Brainary 可记忆规则。证据边界：缺少完整多 seed、多噪声、多异常比例结果。"
+        }
+      ],
+      "currentLevel": "当前处于“能提出研究假设、识别失败模式、设计验证动作、沉淀自动化规则雏形”的阶段；还未完全达到“用稳定实验矩阵闭环证明方法价值”的阶段。",
+      "strongestSignal": "最强信号是 2026-05-03 他没有继续包装 suspicious-unlabeled 分支，而是依据实验结论将其删除，并把原因表述为训练权限不应授予 high-energy unlabeled tail。",
+      "nextLift": "下一步提升不是再写更长的反思，而是建立实验账本：每周必须报告上周最小验证动作是否完成、结果表、失败原因、是否改变决策，以及哪些 Brainary 规则可以固化为 checklist 或自动脚本。"
     },
-    "valueFunctionChange": "该生的价值函数在四周内发生了明显转变。第1周：认为研究价值在于‘可迁移的方法资产和认知增量’，计算依据包含方法论潜在长期价值和软件复用成本，估值较高（18万），更偏向‘这条认知有多重要’。第4周：则转为‘实际节省的研发时间和可直接复用的工程模块’，估值保守（3-5万），更看重‘防止无效探索和替代的人力成本’。中间两周未直接报价，但反复强调‘可复用审查项/方法资产’和‘主线精简’，暗示其对价值的定义持续收敛为‘可继承、可自动化、可避免重复踩坑’的硬资产。学生逐渐从追求叙事创新转向追求系统可靠性，将‘值得做的事’定义为那些能固化到代码、workflow或检查规则中的动作，并能明确其节省研发资源的货币化意义。这种转变体现出更成熟的研究价值观：不再以论文亮点为中心，而是以可持续的科研能力积累为中心。",
+    "valueGrowth": {
+      "summary": "科研/项目价值判断在变清楚：早期他重视可复用模块和方法资产，随后开始区分工程闭环与论文价值，再到判断保守可审计训练比主动伪异常挖掘更适合当前低异常率设定。最有价值的变化是他开始把‘项目值得继续’绑定到证据、权限边界和可沉淀系统能力，而不是绑定到模块数量。",
+      "byWeek": [
+        {
+          "week": "2026-04-05",
+          "valueJudgment": "认为值得投入的是能形成可复用弱监督训练规则的组合：asymmetric prior learning、conservative anomaly bank admission、true exposure PU sampling、group-aware split。价值判断偏向方法资产化。"
+        },
+        {
+          "week": "2026-04-19",
+          "valueJudgment": "明确不是所有可跑分支都值得成为论文主线；把 RTSB + ambiguity-aware trainer 作为单主线，放弃 projector/core-set 和其他不兼容分支。价值判断开始有取舍。"
+        },
+        {
+          "week": "2026-04-26",
+          "valueJudgment": "把当前方法定位为保守、可审计的弱监督异常检测框架，而不是彻底解决问题的激进框架。价值判断更符合证据边界。"
+        },
+        {
+          "week": "2026-05-03",
+          "valueJudgment": "根据 lambda_suspicious=0.0 最好而删除分支，说明价值标准变为：没有稳定正收益且可能污染训练权限的模块，不应继续占据主线。"
+        }
+      ],
+      "currentValueFunction": "当前他的隐含价值函数可以概括为：优先做适配低异常率、noisy positive、unlabeled 为主设定的问题；优先保留可解释、可审计、可消融验证、可迁移到 Brainary workflow 的训练机制；对无法证明稳定收益且存在污染路径的模块进行删除或降级为诊断。",
+      "improvementSignals": [
+        "能区分“能跑”与“值得押成主线”。",
+        "能把负实验结果转成方法边界，而不是视为单纯失败。",
+        "能把个人兴趣中的弱监督异常检测问题连接到 Brainary 的 Training Dynamics Auditor、Training Signal Permission Auditor、review 位面分离、失败模式 memory 等系统能力。",
+        "能明确提出下周验证标准，例如多 seed、异常比例、噪声比例、loss 消融。"
+      ],
+      "nextValueQuestion": "下一个价值判断问题应是：在现有保守能量式 PU 框架中，哪一个机制是不可替代的核心贡献，哪些只是工程稳态辅助；如果多 seed 和消融显示某些机制贡献不稳定，应如何继续删减到一个最小、可发表、可自动化沉淀的版本？"
+    },
+    "projectManagementReview": {
+      "summary": "项目管理有进步：主线逐渐收口，交付从抽象想法转向代码删除、trainer 改造、审计机制和实验计划。但最大管理问题是周计划继承性不足：每周都会提出很清楚的最小验证动作，却没有稳定报告上一周动作是否完成、结果如何、是否触发继续/停止决策。",
+      "projects": [
+        {
+          "project": "弱监督异常检测主线方法收敛",
+          "weeks": [
+            "2026-04-05",
+            "2026-04-19",
+            "2026-04-26",
+            "2026-05-03"
+          ],
+          "quality": "持续推进，且方向从多模块叠加逐步收敛到保守能量式 PU 学习；研究判断质量在提升。但缺少完整实验结果表支撑每次路线调整。",
+          "whatWorked": "持续识别并收敛核心训练语义：04-05 关注样本身份分配，04-19 收口到 RTSB + ambiguity-aware，04-26 定位为保守可审计框架，05-03 进一步定义为 soft-core normal、positive trust、normal energy、EMA teacher 的组合。",
+          "managementGap": "当前阶段、原计划与实际完成之间的映射不够清楚。04-05 计划三组对照，04-19 没有明确回报；04-19 计划 2/5/10 异常比例各 3 seeds，04-26 没有明确回报；05-03 有 lambda_suspicious 结论，但缺少实验细节。",
+          "nextConcreteMove": "建立一页实验决策表：列出每个曾计划的实验、是否完成、数据口径、seed、核心指标、结论、导致的代码/路线变更；下周 meeting 前提交。"
+        },
+        {
+          "project": "RTSB + ambiguity-aware trainer",
+          "weeks": [
+            "2026-04-19"
+          ],
+          "quality": "方案设计较具体，已经到逐函数级重构计划，但缺少实际运行结果证明。",
+          "whatWorked": "明确将 single prior 升级为 pi_low、pi_med、pi_high、delta_pi，并将其用于 nnPU、clean seed、positive trust、sampler、prototype refresh，体现出统一控制律思路。",
+          "managementGap": "没有证据显示该 trainer 已完成实现并按计划完成 2%、5%、10% 异常比例各 3 seeds 对比；GPU、数据、运行时间、失败日志等资源依赖未报告。",
+          "nextConcreteMove": "若该线仍保留，必须补一个最小结果矩阵：single-prior vs ambiguity-aware，在固定 backbone、固定 split 下至少 3 seeds，并报告 pi 轨迹稳定性和 AUCPR 方差。"
+        },
+        {
+          "project": "seed audit 与 staged training 稳定化",
+          "weeks": [
+            "2026-04-26"
+          ],
+          "quality": "有明确代码和机制交付，适合作为训练稳定性的工程主线；但有效性仍未被消融证明。",
+          "whatWorked": "新增 encoder-space frozen seed soft audit，加入 seed_weight；训练流程从 warmup 硬切换改为 main ramp、warmup tail、residual gate freeze/unlock，减少早期梯度混乱的逻辑较清楚。",
+          "managementGap": "下周动作定义了 seed audit 消融和 staged training 对比，但目前报告中没有看到完成结果；也未说明这些机制是否进入 05-03 的最终三类 loss 版本，存在版本继承关系不清的问题。",
+          "nextConcreteMove": "把 seed audit 和 staged training 放入 05-03 当前版本做二因素消融：有/无 seed audit × 有/无 staged training，报告 AUCPR、FPR@95R、residual_to_evidence_ratio、seed_weight 分布。"
+        },
+        {
+          "project": "suspicious-unlabeled 分支验证与删除",
+          "weeks": [
+            "2026-05-03"
+          ],
+          "quality": "这是四周中项目管理最好的单点动作：有实验发现、有决策、有代码删除、有方法定位变化。仍需补足证据强度。",
+          "whatWorked": "发现 lambda_suspicious=0.0 最好后，删除相关配置、loss、日志字段，并把 suspicious signal 降级为 diagnostic；这直接体现了 Brainary 可沉淀的 Training Signal Permission Auditor 能力：把负结果转成规则、workflow、benchmark 和 memory。",
+          "managementGap": "缺少实验表、方差、不同异常率和噪声比例下的复现；目前只能证明他报告了一个边界发现，不能证明该边界在更广泛设定下稳定。",
+          "nextConcreteMove": "补一个 ablation appendix：lambda_suspicious ∈ {0, 小值, 默认值}，至少 5 seeds，报告 score tail 纯度、hard normal 误伤、AUCPR/FPR@95R，并确认删除决策是否在所有设置下成立。"
+        },
+        {
+          "project": "方法资产与自动化科研沉淀",
+          "weeks": [
+            "2026-04-05",
+            "2026-04-19",
+            "2026-04-26",
+            "2026-05-03"
+          ],
+          "quality": "概念沉淀连续，但工程化沉淀证据不足；目前更多是周报中的能力映射，还不是可执行模块。",
+          "whatWorked": "多次将经验映射为 Brainary 能力：Training Dynamics Auditor、Data Identity Assignment Engine、Review-plane disentangler、Training Signal Permission Auditor。尤其 05-03 的训练权限审计已经较接近可程序化 checklist。",
+          "managementGap": "没有看到 checklist、脚本、日志 schema、自动诊断器、benchmark template 的实际文件或接口；因此 Brainary 相关推进目前证据等级为概念设计，而非系统交付。",
+          "nextConcreteMove": "选择一个最小 Brainary 沉淀物，不要再泛化多个能力：例如写出 Training Signal Permission Auditor 的 YAML/JSON checklist，输入字段、判定规则、输出建议，并用当前模型跑一次人工标注示例。"
+        }
+      ],
+      "managementPattern": "他的项目管理模式是“认知收敛快、实验计划清楚、代码调整积极，但实验结果回填不足”。这会导致老师难以判断每次路线变化是被证据推动，还是被新的认知框架推动。",
+      "nextManagementMove": "下周不要允许再新增方法名或新模块；只允许提交三件东西：一张实验结果表、一张版本继承图、一份训练信号权限 checklist。"
+    },
     "repeatedBlockers": [
-      "训练动态与性能平衡：第1周、第2周、第4周均反复出现，即新机制（保守bank、ambiguity-aware、删除分支）是否在真实数据上带来稳定AUCPR提升而不引入新偏差。",
-      "真实实验验证缺失：第2周、第3周、第4周都在强调需要多seed、多异常比例、消融实验来确认方法的鲁棒性，但目前尚未完整执行。",
-      "代码复杂度与遗留接口：第3周提到清理死接口，第4周虽精简但配置项仍多，表明持续存在工程债务，影响可维护性和自动化。",
-      "positive trust的可靠性：第3周和第4周均指出trust仍为启发式，无法给出严格噪声概率，是系统信心的软肋。",
-      "frozen seed单点依赖：第3周明确frozen seed是地基，即便加了审计仍存在污染风险，第4周未根本解决，可能成为系统性偏差的入口。"
+      "多次提出最小验证动作，但后续周报没有稳定回报完成情况和结果表。",
+      "核心判断仍依赖局部实验或自述，缺少多 seed、多异常比例、多噪声比例的统计证据。",
+      "版本演化较快，RTSB、ambiguity-aware、staged training、seed audit、conservative energy PU 之间的继承关系不够清楚。",
+      "positive trust、frozen seed、normal candidate 的可靠性反复成为地基问题，说明当前方法仍高度依赖早期静态信号质量。",
+      "Brainary 映射有连续概念增量，但缺少可检查的自动化产物，例如 checklist、日志 schema、审计脚本或 benchmark 模板。",
+      "资源依赖信息缺失：报告未说明 GPU、API、运行时间、数据切分版本、失败任务队列或需要他人协助的事项。"
     ],
-    "professorShouldAsk": "你在第四周已经将方法定位为Conservative Energy-based PU Learning，并删除了suspicious分支。但请回答：如果给这套方法与baseline（比如标准PU learning或SOTA弱监督方法）进行严格对比，在DoH2020或类似benchmark上，你预期AUCPR和FPR@95R的改进幅度具体是多少？支撑该预期的除了你自己的消融实验，是否已有独立外部验证或理论分析？如果下一轮实验发现改进不显著，你准备如何止损或转向？",
-    "nextBestIntervention": "立即启动最小化benchmark闭环：用当前精简代码在至少两个外部公开数据集（如CIC-IDS2017/UNSW-NB15）上，运行完整消融+多seed实验，并把训练日志和诊断指标结构化导出。随后，基于这些实验，定义一个可自动执行的‘训练权限审计workflow’，将其封装为Brainary的一个微型模块，输入为训练config和日志路径，输出为权限风险报告。这能将当前的认知增量立刻转化为可复用的自动化科研资产，同时逼迫学生完成从‘方法论创新’到‘证据坚实’的最后一步。"
+    "teacherQuestions": [
+      "你上周计划的最小验证动作中，哪些已经完成、哪些没完成？请用一张表说明每个实验的 seed、split、指标、结论和导致的代码变更。",
+      "lambda_suspicious=0.0 最好的证据有多强？是在几个 seed、几个异常比例、几个噪声比例下成立，还是只在一个设置中成立？",
+      "当前最终版本到底继承了哪些机制：ambiguity-aware prior、seed audit、staged training、EMA teacher、positive trust、anomaly bank 各自是否还在？请画版本继承图。",
+      "如果只能保留一个可发表的核心贡献，你认为是 soft-core normal、positive trust、训练权限审计，还是 conservative energy PU workflow？对应的不可替代证据是什么？",
+      "Training Signal Permission Auditor 如果要进入 Brainary，下周你能交付的最小可执行产物是什么：规则表、日志字段、自动检查脚本，还是一个 benchmark template？"
+    ],
+    "nextIntervention": "建议老师下一次 meeting 进行一次“证据账本干预”：要求学生暂停新增模块和新命名，用 30 分钟逐项回填过去四周所有计划实验的完成状态；然后共同确定一个冻结版本和一个两周验证矩阵。老师需要特别逼问：哪些判断是实验支持的，哪些只是结构上合理；哪些 Brainary 能力已经有可执行接口，哪些只是概念映射。",
+    "studentFeedback": {
+      "summary": "你最近真正的进步不是写了更多代码，而是开始能判断哪些训练信号不该拥有训练权限，并能把失败分支删除、降级或沉淀为规则。下一步要把这种判断用实验账本固定下来，否则老师仍然无法区分你的路线变化是证据驱动还是认知驱动。",
+      "whatImproved": [
+        "你从样本身份分配、review 位面、静态锚点污染一路推进到训练权限审计，元认知确实在升级。",
+        "你开始有研究取舍：不再默认模块越多越好，而是会删除 suspicious-unlabeled 分支。",
+        "你能把负结果转成方法边界和 Brainary workflow 雏形，这是研究能力提升的重要信号。"
+      ],
+      "nextStep": "下周最重要的交付不是新方法，而是证据闭环：固定当前版本，完成多 seed、噪声比例、loss 消融，并把结果写成一张决策表；同时交付一个最小 Training Signal Permission Auditor checklist。"
+    },
+    "evidenceLinks": [
+      {
+        "claim": "元认知从代码正确性转向训练动态和样本身份",
+        "evidence": "2026-04-05：“问题的核心不是‘多加损失’，而是‘样本身份分配机制’。”",
+        "evidenceLevel": "高：周报中有明确概念、失败模式和验证计划；但缺少实验结果。"
+      },
+      {
+        "claim": "能区分工程可跑和论文主线价值",
+        "evidence": "2026-04-19：“一类是代码是否工程闭环……另一类是模型假设是否足以支撑顶刊/顶会级创新。”",
+        "evidenceLevel": "中高：研究决策框架清楚，但未见对应决策实验表。"
+      },
+      {
+        "claim": "识别静态锚点污染",
+        "evidence": "2026-04-26：“哪怕模型不自己写伪标签，只要最开始的 frozen seed 或 static trust 规则有偏差，后续训练仍然可能被带偏。”",
+        "evidenceLevel": "中：失败模式识别清楚，seed audit 机制也有交付；有效性待消融。"
+      },
+      {
+        "claim": "能根据负结果删除分支",
+        "evidence": "2026-05-03：“λ_suspicious=0.0 时效果最好……将 lambda_suspicious 及其相关配置、loss、日志字段全部删除。”",
+        "evidenceLevel": "中：有明确决策和代码动作；缺少完整实验表与统计稳定性。"
+      },
+      {
+        "claim": "Brainary 映射从概念走向可自动化规则雏形",
+        "evidence": "2026-05-03：“任何来自 unlabeled high-score tail 的信号，如果参与 backward，就必须被视为 potential self-training path。”",
+        "evidenceLevel": "中：规则具体，可转成 checklist；但没有报告实际自动化产物。"
+      },
+      {
+        "claim": "项目管理仍有计划回填不足",
+        "evidence": "04-05、04-19、04-26 均提出下周最小验证动作，但后续报告没有逐项说明这些实验是否完成、结果如何。",
+        "evidenceLevel": "高：从周报序列可直接观察到计划与回报没有稳定闭环。"
+      }
+    ]
   }
 }

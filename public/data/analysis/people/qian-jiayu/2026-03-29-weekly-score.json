@@ -1,103 +1,106 @@
 {
   "key": "person:qian-jiayu:2026-03-29:weekly-score",
-  "generatedAt": "2026-06-05T18:07:00.162Z",
+  "generatedAt": "2026-06-06T13:10:11.329Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
-  "inputHash": "75e0d5b5e1521e57e1a2e66e1778f3a05e9da4eb222af2a5d23da5c5734cc220",
+  "inputHash": "3f6fed07887478683831771d871828cb1a76a5e392526a9f57be5a4f995d5577",
   "result": {
     "week": "2026-03-29",
     "name": "Qian Jiayu",
     "scores": {
       "hardProgress": {
         "score": 17,
-        "reason": "本周有明确硬产出：完成 referable/non-referable benchmark 切换，跑通 Qwen3-VL-8B direct-only referral 正式训练与测试，新增 referral evaluator、summary 脚本、pseudo-lesion schema、ordered sampling、三模型对照 harness，并完成 two-stage workflow 的接口原型。硬进展不是停留在想法层，而是形成了可复用数据、模块和实验管线。扣分点是：关键实验结果没有给出具体数值，例如 accuracy、referable recall、severe/PDR undercall rate，也没有展示正式 baseline row 的表格或路径；two-stage 目前只有 dry-run，没有真实输出。",
+        "reason": "本周有明确硬产出：referral 版 train/val/test benchmark、referral-aware evaluator、Qwen3-VL-8B direct-only referral 正式训练与测试、pseudo-lesion schema、ordered 10-case 对照、三模型 comparison harness、two-stage workflow 的 prompt/schema/runner/analyzer 原型。硬进展覆盖数据、评测、baseline、脚本和方法接口，已经不是单纯想法。但周报没有给出 baseline 的具体数值结果，例如 accuracy、referable recall、severe/PDR undercall rate，因此正式结果的可核验性不足。",
         "missingEvidence": [
-          "缺少 Qwen3-VL-8B direct-only referral 的具体指标表。",
-          "缺少 severe/PDR undercall 的定量结果。",
-          "缺少 referral_v1 数据规模、类别分布和 train/val/test 数量。",
-          "缺少 two-stage 真实 API 输出样例。"
+          "缺少 Qwen3-VL-8B direct-only referral 的完整指标表。",
+          "缺少 train/val/test 样本量、类别分布和 severe/PDR 数量。",
+          "缺少三模型 10-case 对照的具体逐例结果或汇总指标。",
+          "缺少代码提交、文件路径或运行日志截图等可复核证据。"
         ]
       },
       "cognitiveIncrement": {
         "score": 13,
-        "reason": "认知增量清楚：从“benchmark 是否成立”推进到“安全性指标才是核心”，并识别出 referable_recall、undercall_severe_or_pdr_rate 比 overall accuracy 更重要；还明确了单阶段 ICDR-aware prompt 会压低召回、模型强弱与 prompt 控制耦合。这个增量与本周实验直接相关。扣分点是认知判断缺少量化支撑，尤其是 recall collapse、gpt-4o 优于 gpt-5.2 等结论没有给出对照数据。",
+        "reason": "认知增量较清楚：从 DR presence 转向 referable/non-referable 后，作者意识到 overall accuracy 不足以代表临床安全，referable recall 与 severe/PDR undercall 更关键；同时认识到单阶段 ICDR-aware prompt 会导致 recall collapse，问题不是单纯换更强模型，而是控制结构。这个增量与本周实验任务直接相关。但一些判断仍停留在定性层面，缺少量化证据支撑其幅度。",
         "missingEvidence": [
-          "缺少不同 prompt 版本的指标对照。",
-          "缺少 gpt-4o、gpt-5.2、gpt-4.1-mini 的逐项比较结果。",
-          "缺少 ordered 10-case 的 case-level 错误分析表。"
+          "缺少 prompt tightening 前后 recall 变化的数值。",
+          "缺少 gpt-4o 优于 gpt-5.2 的具体判定标准。",
+          "缺少 direct-only baseline 如何证明 benchmark 合理的具体实验依据。"
         ]
       },
       "cot2Depth": {
         "score": 13,
-        "reason": "CoT’s CoT 写得比较深入，能从具体失败模式抽象到方法论：视觉事实层与协议审计层需要拆分，prompt 是 cognitive control surface，中间事实资产应先于 RL reward 设计。这些不是普通实验总结，而是对研究结构的再抽象。扣分点是证据等级 A/B 的依据不充分，部分表述如“老师原本不知道”缺少可验证依据；第三条更接近已有常识的项目化表达，新增性略弱。",
+        "reason": "CoT’s CoT 部分达到了方法层抽象：将视觉事实层与协议审计层拆分，把 prompt 视为 cognitive control surface，并提出 RL/agent 前应先沉淀 lesion schema、protocol audit、failure taxonomy 和 risk metrics。这些不是普通进度复述，而是对研究系统设计的上层判断。扣分点是证据等级 A/B 的自评没有配套硬数据，尤其 CoT’s CoT 1 和 2 标为 A，但周报未给出对照表、统计结果或失败案例样本。",
         "missingEvidence": [
-          "缺少支撑 CoT’s CoT 1 为 A 级证据的定量实验结果。",
-          "缺少单阶段与双阶段方案的实证比较。",
-          "缺少说明 prompt 影响大于模型升级的正式 ablation 表。",
-          "缺少 clinician 或人工审核对中间事实层有效性的确认。"
+          "缺少支持 CoT’s CoT 1 的 recall collapse 对照数据。",
+          "缺少支持 CoT’s CoT 2 的 model × prompt × benchmark 结果矩阵。",
+          "缺少典型失败案例的图像编号、输出片段和人工判定。",
+          "缺少 clinician 或领域专家对 CoT’s CoT 判断的外部确认。"
         ]
       },
       "brainaryMapping": {
         "score": 8,
-        "reason": "报告把本周工作映射到 Brainary 的 benchmark/evaluation、risk modeling、cognitive control、workflow management、memory schema 等能力，且每项都说明了可能沉淀成 benchmark、evaluator、agent module 或 memory。映射方向合理，尤其是把视觉事实、负证据、协议一致性和风险警告视为 memory 对象。扣分点是映射仍偏概念层，缺少具体 Brainary 接口、状态结构、调用链或自动化闭环设计。",
+        "reason": "Brainary 关联比较具体，映射到 risk-aware benchmark/evaluator、分层 cognitive control、中间层 memory，并说明可能沉淀为 benchmark、evaluator、workflow、agent module、memory schema。映射不是泛泛而谈，能看出和自动化科研系统的接口。但还没有明确 Brainary 内部对象的数据结构、输入输出协议、调用链或最小集成方式。",
         "missingEvidence": [
-          "缺少 Brainary memory schema 的具体字段定义。",
-          "缺少 workflow 与 Brainary agent/module 的接口草图。",
-          "缺少 evaluator 如何接入自动化科研循环的执行路径。",
-          "缺少 monitoring policy 或 gating rule 的具体规则。"
+          "缺少 Brainary memory schema 的字段草案。",
+          "缺少 workflow/agent module 的输入输出接口定义。",
+          "缺少 evaluator 如何接入 Brainary 的具体路径。",
+          "缺少优先级：哪些映射本周后应立即产品化，哪些只是长期方向。"
         ]
       },
       "monetaryValue": {
-        "score": 7,
-        "reason": "报告给出了金额版价值估算，并按 benchmark/evaluator 资产、工程化、GPU 成本、人工标注替代、后续 RL 复用等维度拆分，优于泛泛说有价值。扣分点是估值高度主观，没有真实市场价格、客户支付意愿、医生审核成本报价、竞品成本或转化概率；17 万、12 万、9 万的数字更像内部折算，不足以支持真实 monetary value 判断。",
+        "score": 6,
+        "reason": "金额版价值判断覆盖了 benchmark、workflow、two-stage 原型，并给出估算依据，如标注成本、GPU 成本、工程成本和复用价值。优点是敢于把研究资产货币化，便于项目管理。主要问题是估值高度主观，缺少市场价格、竞品成本、真实采购方需求、医生审核单价依据和转化概率折扣，因此更像内部估算而非可用于投资决策的价值评估。",
         "missingEvidence": [
-          "缺少真实医生标注或审核报价依据。",
-          "缺少医疗 AI 公司或医院端的支付意愿证据。",
-          "缺少与现有 benchmark/evaluator 产品或服务的成本对比。",
-          "缺少从研究资产到商业资产的转化概率估计。"
+          "缺少医疗标注成本和医生审核成本的来源。",
+          "缺少 GPU/API 实际消耗账单。",
+          "缺少潜在买单方的具体需求或访谈证据。",
+          "缺少估值的风险折扣和成功概率。",
+          "缺少 benchmark/evaluator 资产如何变现或复用的具体场景。"
         ]
       },
       "projectManagement": {
         "score": 13,
-        "reason": "项目管理信息完整：列出了当前阶段、原计划、实际完成、投入时间、下周投入、里程碑、关键路径、偏差、纠偏和是否需要老师介入。能看出三条线之间的依赖关系，并且知道 direct-only 不应继续深挖、应转向 mixed VQA + Protocol CoT。扣分点是里程碑的验收标准不够量化，例如 4/5 是否进入 10% pilot 的判据不清楚；风险管理还缺优先级和触发条件。",
+        "reason": "项目管理部分有阶段、原计划、实际完成、投入小时、下周投入、里程碑、关键路径、偏差、纠偏和是否需老师介入，结构完整。关键路径也能识别：direct-only 不再深挖，转 mixed；Protocol CoT 固定 gpt-4o + two-stage；验证滞后需小样本 clinician check。扣分点是缺少具体负责人之外的协作安排、验收标准、风险优先级，以及 mixed/GRPO 所需 4×H100 的排期和资源确认。",
         "missingEvidence": [
-          "缺少每个里程碑的可验收指标。",
-          "缺少是否进入 10% pilot 的 go/no-go 阈值。",
-          "缺少关键风险清单及触发条件。",
-          "缺少实际代码仓库、脚本运行日志或实验追踪记录。"
+          "缺少每个里程碑的验收指标。",
+          "缺少 mixed/GRPO 训练资源是否已预约或可用的证据。",
+          "缺少医生抽样审核的样本量、标准和时间安排。",
+          "缺少如果 two-stage 10-case 失败时的备选路线。",
+          "缺少代码、数据、实验结果的版本管理说明。"
         ]
       },
       "nextAction": {
-        "score": 8,
-        "reason": "下周动作明确且可执行：固定 baseline row，在同一 benchmark 上跑 mixed VQA + Protocol CoT；用 gpt-4o 跑 two-stage 10-case MVP；定义 stage2 fact filtering rule；做人工 spot-check。这些动作与本周发现直接相连。扣分点是缺少成功标准，例如 two-stage MVP 要达到什么 recall、减少多少 hallucination、spot-check 由谁做、多少例通过才进入 10% pilot。",
+        "score": 9,
+        "reason": "下周动作明确且可执行：固定 baseline row、在同一 benchmark 上跑 mixed VQA + Protocol CoT 小实验、用 gpt-4o 跑 two-stage 10-case ordered MVP、人工 spot-check、定义 stage2 fact filtering rule。动作具备最小验证性质，并且与本周卡点直接相连。扣 1 分是因为部分动作仍缺少通过/失败判据，例如 two-stage MVP 到底达到什么指标才进入 10% pilot。",
         "missingEvidence": [
-          "缺少 two-stage 10-case MVP 的成功判据。",
+          "缺少 two-stage 10-case MVP 的成功阈值。",
           "缺少人工 spot-check 的审核表和判定标准。",
-          "缺少进入 200-case 或 10% pilot 的阈值。",
-          "缺少 mixed VQA + Protocol CoT 小实验的最小实验设计。"
+          "缺少是否进入 10% pilot 的量化门槛。",
+          "缺少 mixed VQA + Protocol CoT 小实验的最小实验配置。"
         ]
       },
       "evidenceQuality": {
         "score": 3,
-        "reason": "证据质量中等偏弱。报告列出了很多文件名、模块名、实验名和失败模式，说明工作不是空写；但关键结论几乎没有附具体结果数值、样例输出、错误案例、表格、链接或日志。对于医疗安全任务，缺少 clinician-checked evidence 是明显短板。当前证据足以说明“做了很多工程和初步实验”，但不足以完全支撑“方法方向已经被验证”。",
+        "reason": "证据质量中等偏弱。周报列出了很多文件名、模块名、实验名和失败模式，说明有实际工作痕迹；但缺少关键数字、表格、样本规模、结果摘要、日志、代码链接、逐例输出和人工审核记录。当前证据足以判断本周确实推进了工程与实验框架，但不足以独立验证研究结论强度。",
         "missingEvidence": [
-          "缺少所有核心实验的指标表。",
-          "缺少模型输出样例和失败案例截图或文本。",
-          "缺少人工或医生审核结果。",
-          "缺少实验日志、代码提交记录或可复现实验命令。",
-          "缺少数据集统计和错误类型分布。"
+          "缺少正式 baseline 结果表。",
+          "缺少三模型对照结果表。",
+          "缺少 10-case ordered sample 的病例构成。",
+          "缺少失败案例原文输出与人工标注。",
+          "缺少运行日志、commit hash、实验配置和随机种子。"
         ]
       }
     },
     "totalScore": 82,
     "tier": "A",
-    "oneLineJudgment": "这是一个高质量的研究推进周：工程、benchmark、方法抽象和项目管理都明显前进，但关键弱点是证据呈现不足，尤其缺少定量结果、case-level 错误分析和医生审核。",
+    "oneLineJudgment": "本周是有效的研究推进周，硬资产和方法接口都形成了，但研究结论的证据强度被缺失的数值结果和人工验证限制住了。",
     "professorFollowUp": [
-      "要求学生下周首先提交一张正式 baseline 表，至少包含 accuracy、referable recall、specificity、severe/PDR undercall rate、case consistency rate。",
-      "要求 two-stage 10-case MVP 不只跑通接口，还必须给出与 single-stage 的同样 10 例逐例对照。",
-      "要求定义进入 10% pilot 的 go/no-go 标准，例如高风险漏判率、伪病灶可用率、人工审核通过率。",
-      "老师最该关注的一点是：该项目的真正资产不是 CoT 文本本身，而是可审计的视觉事实层、协议审计层和风险评估层之间的结构化接口。"
+      "要求学生下周先补一页正式结果表：Qwen3-VL-8B direct-only referral 的 accuracy、referable recall、specificity、severe/PDR undercall rate、case consistency rate。",
+      "要求学生给出 10-case 三模型对照的逐例表，至少包含真实 grade、referable 标签、模型输出、错误类型和是否高风险漏判。",
+      "要求学生把 two-stage MVP 的成功标准提前写清楚，例如 referable recall 不下降、hallucination 不上升、severe/PDR 零漏判或人工审核通过率达到某阈值。",
+      "如果需要老师介入，最值得介入的是定义 clinician spot-check 标准，而不是继续讨论 prompt 文案。",
+      "老师本周应抓住的一件事：这个项目的核心不再是生成更长 CoT，而是建立可审计的视觉事实层到协议审计层的中间结构。"
     ]
   }
 }

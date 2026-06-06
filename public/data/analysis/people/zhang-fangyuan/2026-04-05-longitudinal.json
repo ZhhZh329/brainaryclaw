@@ -1,47 +1,240 @@
 {
   "key": "person:zhang-fangyuan:2026-04-05:longitudinal",
-  "generatedAt": "2026-05-24T11:53:16.934Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "0c7b0432f6b31b31025b8ba0a07fbed05d3300faeb69fc95810fb6ca67f390f0",
+  "generatedAt": "2026-06-06T13:17:21.537Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "0acdf7b4a0e4efbe5d7f3e792afb06fca0cbb7f095365e9c740194c996b6bc3a",
   "result": {
-    "overallTrajectory": "该学生从单一方法验证逐步转向系统化、可扩展的 LLM pipeline 设计。研究能力提升明显，不再是单纯堆砌实验，而是深入挖掘成本-精度之间的统一优化问题，并将程序分析知识结构化为调度策略，逐步逼近产品化所需的经济性阈值。研究深度和认知成熟度随周次显著提高，而不仅仅是任务量的增加。",
-    "stageByWeek": [
+    "overallTrajectory": "正在从“跑实验和修工程”转向“用可验证假设解释 pipeline 失败并沉淀系统能力”，研究能力有上升信号；但项目管理仍偏结果汇报，缺少稳定的周度里程碑、依赖状态、交付物验收标准和老师介入触发条件。",
+    "headline": "研究能力在增强，核心变化是能把 precision、cost、结构化调度、反事实验证统一成可检验的 pipeline 设计问题，而不是只增加实验量。",
+    "overviewSentence": "该学生最近三份周报显示出从实验执行者向研究型系统设计者转变的趋势，但仍需要把每周计划、交付标准和 Brainary 能力沉淀写得更可检查。",
+    "fourWeekTimeline": [
       {
-        "week": "2026-03-15",
-        "stage": "方法论验证",
-        "keyProgress": "通过消融实验确认‘抽象知识→具体代码映射’优于堆砌抽象知识；OpenSSL 端到端 F1=0.73，但误报率 35%。",
-        "mainBlocker": "误报率高；API 额度不足导致大量候选点无法验证。",
-        "cognitiveShift": "意识到给 LLM 更多信息不一定更好，需要上下文相关的映射而非孤立知识。",
-        "valueFunction": "主要追求技术效果（F1 指标），尚未明确连接成本或产品价值。"
+        "week": "2026年03月15日",
+        "metacognition": "开始从单纯实验结果上升到机制判断：认识到“抽象知识本身”不一定帮助 LLM 判断，关键是把抽象安全知识落到具体代码变量和映射关系上，并用消融实验支撑这个判断。",
+        "valueJudgment": "价值判断还主要围绕方法有效性：认为值得做的是能够提升安全补丁识别效果的 pipeline 设计，尤其是 Role Grounding；但尚未充分说明为什么该方向相对其他安全检测问题更值得长期投入。",
+        "projectManagement": "有硬结果：Nginx 两组消融、OpenSSL 23 个版本 diff 端到端评估；也写出主要卡点：误报、API 额度、token 开销。管理不足是下周计划较粗，未给 precision 改进的具体验证标准、资源需求和最小动作。",
+        "evidence": "Nginx 消融中 Role Grounding 使 F1 提升 0.15，Precondition Enrichment 使 F1 下降 0.12；OpenSSL 排除 API 故障版本后 F1=0.73、Recall=0.84、Precision 约 0.65。"
       },
       {
-        "week": "2026-03-22",
-        "stage": "规模化瓶颈突破",
-        "keyProgress": "利用 PDG 实现 94.5% 的成本削减；自动化覆盖 6 项目 50 版本对，发现真实 CVE。将成本优化与精度优化统一为同一问题。",
-        "mainBlocker": "跨项目 precision 仍然不足，亟需重构过滤和负样本补充。",
-        "cognitiveShift": "成本不是工程细节，而是决定可扩展性的研究核心；结构化冗余消除比 prompt 工程更本质。",
-        "valueFunction": "价值观转变：成本成为第一优先级，$217 vs $30 的差异决定系统生死。开始连接买方（安全审计公司）、市场规模（Snyk $7.4B）和自动化产物（CVE 发现流水线）。"
+        "week": "2026年03月22日",
+        "metacognition": "明显前进一步：不再把成本优化视为工程细节，而是识别为 precision 设计的一部分；同时意识到跨项目 precision 瓶颈来自“只学了正样本”、缺少重构和 API rename 等负样本模型。",
+        "valueJudgment": "价值判断更清楚：把问题定位为大型软件 version diff 中安全修复与非安全变更混杂、silent fix 难以持续发现；并提出论文、持续扫描、CVE workflow、Brainary agent policy 的潜在沉淀。但报告中夹杂市场买单方和估值信息，科研价值判断本身已出现但还需要更聚焦于证据和系统能力。",
+        "projectManagement": "这一周项目管理信息最完整：写了当前阶段、原计划与实际、偏差原因、API 消耗、下周重点、是否需要老师介入；也把 AttentionScheduler 作为 Brainary 的 Tool Orchestration 能力雏形提出。缺口是 partial ground truth、refactoring filter、precision ≥0.85、成本目标的验收数据尚未交付。",
+        "evidence": "PDG 结构化 redundancy elimination 带来 94.5% LLM 调用削减且报告称零回归；自动化收集 6 个项目 50 个版本对，curl 找到 7 个已发布 CVE 和多个疑似 silent fix；提出 precision ≥0.85 和成本低于每版本 10 美元作为短期门槛。"
       },
       {
-        "week": "2026-04-05",
-        "stage": "精度与成本联合优化",
-        "keyProgress": "设计双条件反事实验证框架，precision 提升至 0.76；加入重构过滤器和聚类调度，预期再降 40-60% LLM 调用。",
-        "mainBlocker": "precisoin 仍需在 OpenSSL 全量集上验证 >0.80 目标；持续运行的经济性尚未达标。",
-        "cognitiveShift": "将安全判定形式化为因果推理（后果可达且不变量恢复），从模式匹配升级为结构性验证。",
-        "valueFunction": "进一步收敛到可自动化运行的解决方案，明确以发现 0.5-day 漏洞为可量化产出，价值函数与产品化能力紧密绑定。"
+        "week": "2026年03月29日",
+        "metacognition": "未提供周报，无法判断该周是否延续了前一周的反思和验证。",
+        "valueJudgment": "证据缺失，无法判断该周科研价值判断是否有变化。",
+        "projectManagement": "证据缺失，无法判断该周是否按计划完成 refactoring filter、curl partial ground truth 或成本压缩验证。",
+        "evidence": "输入中没有这一周的周报。"
+      },
+      {
+        "week": "2026年04月05日",
+        "metacognition": "进一步形式化：把细筛判断定义为 consequence_reachable 与 invariant_restored 的双条件反事实验证，并用 A/B 实验检验单条件与双条件的差异。这是从“发现 FP”进步到“定义何种证据足以判定 security”的信号。",
+        "valueJudgment": "价值判断继续围绕可持续发现 0.5-day 漏洞：只有当 precision 达到可持续运行门槛后才让 pipeline 长期运行。相比前几周，取舍更集中在“降低误报使持续扫描可行”，但缺少对为什么 OpenSSL 达标后即可外推到更多项目的证据边界说明。",
+        "projectManagement": "有明确技术交付：反事实验证框架、GumTree 重构过滤、cluster-based fine screening、Unified verification；也给出下周目标 precision >0.80。管理不足是没有回报 03月22日计划中的 curl partial GT 进度、50 个版本跨项目结果、成本实际下降值，也未说明 API/GPU/人力依赖和失败时的备选路径。",
+        "evidence": "Nginx 上双条件验证使 precision 从 0.69 到 0.76，recall 保持 0.95，F1 从 0.79 到 0.84；重构过滤器过滤掉 Nginx 中 if→switch 重写产生的 9 个 FP；cluster-based fine screening 预期减少 40%-60% LLM 调用。"
       }
     ],
-    "trendScores": {
-      "researchDepth": "从实验对比上升到抽象理论提炼（冗余消除原理、反事实验证），深度持续增加。",
-      "cognitiveMaturity": "从单点 insight 发展到可泛化的调度模块（AttentionScheduler），元认知能力显著提升。",
-      "projectManagement": "从模糊计划到量化时间线、成本估算和偏差分析，项目管理能力快速成熟。",
-      "valueAwareness": "价值意识从无到有，并逐步深化：第二周起将成本纳入核心研究，第三周以产品化指标为导向。"
+    "metacognitionChange": {
+      "summary": "元认知在增强，主要表现为能识别失败模式并提出可验证修正：从 03月15日的“抽象知识会带偏判断”，到 03月22日的“成本、precision、负样本缺失是同一类筛选问题”，再到 04月05日的“双条件反事实验证”形式化。当前仍欠缺的是对证据边界的稳定记录：哪些结论只在 Nginx 成立，哪些已在 OpenSSL 或跨项目验证，哪些只是预期。",
+      "byWeek": [
+        {
+          "week": "2026年03月15日",
+          "change": "通过消融实验识别出一个认知盲区：给 LLM 更多抽象知识不一定更好，抽象知识需要通过 Role Grounding 落到具体代码变量才有用。"
+        },
+        {
+          "week": "2026年03月22日",
+          "change": "把失败原因从“prompt 或模型不够好”推进到“候选调度和负样本建模不足”：认识到重构、API rename 等非安全变更是 precision 的关键盲区。"
+        },
+        {
+          "week": "2026年03月29日",
+          "change": "证据缺失，无法判断。"
+        },
+        {
+          "week": "2026年04月05日",
+          "change": "将判定标准形式化为 consequence_reachable 与 invariant_restored 两个必要条件，并用 A/B 实验验证，比之前更接近可复用的科研假设。"
+        }
+      ],
+      "currentLevel": "中高：已能提出机制性解释、设计消融或 A/B 验证、识别 precision 与 cost 的共同根因；但还没有形成稳定的证据账本和跨项目外推边界说明。",
+      "strongestSignal": "最强信号是 04月05日的双条件反事实验证：它不是简单修 bug，而是重新定义“什么证据足以说明一个 diff 是安全补丁”，并给出了 precision、recall、F1 对比。",
+      "nextLift": "下一步提升应是每个结论都标注证据等级：已在 Nginx 验证、待在 OpenSSL 验证、待跨项目验证、仅为预期；并提前写出失败时如何解释，例如 precision 未超过 0.80 时是反事实条件错、重构过滤错，还是 ground truth 不完整。"
     },
-    "valueFunctionChange": "第一周：价值判断以 F1 为中心，未涉及经济性或通用性。第二周：价值观发生根本转变——成本从‘工程细节’上升为‘能否上线’的研究瓶颈，并主动调研潜在买方（安全审计公司、供应链平台）、市场规模（Snyk 估值 $7.4B）、通用能力（AttentionScheduler 可泛化到任何结构化 LLM 任务）、产物形式（论文 + 自动化 CVE 发现流水线）以及 Brainary 关联（tool orchestration）。第三周：价值函数进一步细化到具体经济指标（成本 <$10/版本、precision ≥0.85），并将‘自动化发现 0.5-day 漏洞’作为可交付价值，说明学生已从研究者思维转向产品化思维，价值函数随周次动态收敛到可落地方案。",
-    "repeatedBlockers": "1. Precision 不足：第一周误报率 35%，第二周跨项目 precision 仍不理想，第三周目标 >0.80 尚未最终验证。2. 成本过高：第一周 token 开销巨大，第二周虽大幅削减但仍需进一步压缩至 $5/版本，第三周通过调度优化继续降低成本。",
-    "professorShouldAsk": "你的反事实验证框架在非 C/C++ 项目（如 Java/Python）上是否适用？如何证明其泛化性，而不是只在 Nginx 上过拟合？",
-    "nextBestIntervention": "提供扩大规模的资源（如额外 API 额度或计算经费）以加速全量验证，并推动学生将 AttentionScheduler 模块抽象为通用工具，在另外 1-2 个领域（如日志分析、文档审查）测试其可迁移性，同时帮助联系安全厂商获取真实试用反馈，将研究从‘能发论文’推进到‘真有用’。"
+    "valueGrowth": {
+      "summary": "科研和项目价值判断比前几周更清楚：他逐渐把项目价值定义为能否在真实大型软件 version diff 中持续、低成本、低误报地发现安全修复和 silent fix，而不是只追求单次 benchmark 分数。价值观的进步在于开始把个人技术兴趣、论文问题、自动化 CVE workflow、Brainary 的调度能力沉淀连接起来；不足是跨项目泛化价值仍缺少足够证据。",
+      "byWeek": [
+        {
+          "week": "2026年03月15日",
+          "valueJudgment": "认为值得优化的是 LLM 判断阶段的信息组织方式，尤其是从抽象安全知识到具体代码映射；价值判断偏方法局部有效性。"
+        },
+        {
+          "week": "2026年03月22日",
+          "valueJudgment": "价值判断显著扩展：把问题放到大型软件安全修复发现、silent fix、持续扫描、自动化 CVE workflow 和 Brainary Tool Orchestration 中；同时提出 precision、ground truth、运行成本作为能否持续投入的门槛。"
+        },
+        {
+          "week": "2026年03月29日",
+          "valueJudgment": "证据缺失，无法判断。"
+        },
+        {
+          "week": "2026年04月05日",
+          "valueJudgment": "价值判断收敛到一个可执行门槛：在 OpenSSL 全量数据集验证优化，precision >0.80 后持续运行并发现 0.5-day 漏洞；但没有说明为什么 0.80 足够启动，或与前一周 precision ≥0.85 的门槛如何统一。"
+        }
+      ],
+      "currentValueFunction": "当前隐含价值函数是：一个安全研究 pipeline 值得持续投入，当且仅当它能在真实 version diff 上以可承受成本和可复核误报率持续发现安全补丁或 silent fix，并能把结构化调度、反事实验证、负样本过滤沉淀为可复用的 Brainary/agent 能力。",
+      "improvementSignals": [
+        "从只汇报 F1、Recall，进步到讨论 precision、成本、ground truth、自动运行门槛。",
+        "从单项目实验扩展到 OpenSSL、Nginx、curl 以及 6 个开源项目的跨项目初测。",
+        "把 PDG 结构调度抽象为 AttentionScheduler，说明开始考虑 Brainary 的系统能力沉淀。",
+        "把安全补丁判定抽象为双条件反事实验证，说明价值判断开始依赖更明确的证据标准。"
+      ],
+      "nextValueQuestion": "下次需要回答：这个方向最值得持续投入的核心证据是什么——是跨项目 precision 达标、发现未公开 silent fix、CVE workflow 成功闭环，还是 AttentionScheduler 可迁移到非代码任务；如果 OpenSSL 达标但 curl 或其他项目不达标，项目价值如何重新判断？"
+    },
+    "projectManagementReview": {
+      "summary": "项目推进是连续的，但管理质量不稳定：03月22日写得最完整，04月05日技术进展强但管理账本变弱。总体能持续做事、有实验和模块交付，但原计划 vs 实际、依赖、资源消耗、里程碑验收、老师介入条件没有每周稳定呈现。",
+      "projects": [
+        {
+          "project": "LLM 安全补丁检测主 pipeline",
+          "weeks": [
+            "2026年03月15日",
+            "2026年03月22日",
+            "2026年04月05日"
+          ],
+          "quality": "持续推进且有硬指标，但跨周验收链条不够闭合。",
+          "whatWorked": "03月15日在 Nginx 和 OpenSSL 上完成消融和端到端评估；03月22日扩展到 6 个项目 50 个版本对；04月05日提出双条件反事实验证并在 Nginx 上提升 precision 与 F1。",
+          "managementGap": "03月22日计划在 curl 上构建 partial ground truth 并验证成本优化与 precision 修复的联合效果，但 04月05日没有汇报 curl partial GT 是否完成，也没有汇报跨项目 50 个版本的后续结果。",
+          "nextConcreteMove": "下周应给出一张项目级表格：Nginx、OpenSSL、curl、其他项目分别列出数据集规模、GT 状态、precision、recall、F1、每版本 LLM 调用数、每版本成本、当前最大 FP 类别。"
+        },
+        {
+          "project": "Precision 提升：反事实验证与重构过滤",
+          "weeks": [
+            "2026年03月15日",
+            "2026年03月22日",
+            "2026年04月05日"
+          ],
+          "quality": "研究假设逐步清晰，04月05日已有可检查交付。",
+          "whatWorked": "03月15日识别误报率是主要短板；03月22日将 FP 根因定位到负样本缺失和重构/API rename；04月05日实现 GumTree AST matching 的 Refactoring Filter，并提出 consequence_reachable 与 invariant_restored 的双条件验证。",
+          "managementGap": "重构过滤目前只报告了 Nginx 个例和局部效果，没有给出总体 precision、recall 影响，也没有说明 LLM 判定纯重构时的误杀风险。",
+          "nextConcreteMove": "在 OpenSSL 23 个版本上分别报告三组消融：无过滤、仅重构过滤、重构过滤加双条件验证；同时列出误杀的安全补丁数量或确认无误杀的证据。"
+        },
+        {
+          "project": "Cost 优化与结构化 LLM 调度",
+          "weeks": [
+            "2026年03月15日",
+            "2026年03月22日",
+            "2026年04月05日"
+          ],
+          "quality": "方向连续，03月22日证据强，04月05日有新方案但多为预期值。",
+          "whatWorked": "03月22日用 PDG 结构化 redundancy elimination 报告 94.5% 调用削减且零回归；04月05日继续发展为 cluster-based fine screening、Dep-skip、per-cluster cap 和 unified verification。",
+          "managementGap": "04月05日的 40%-60% 调用减少是预期，不是已完成结果；也没有把 03月22日的实际成本目标与 04月05日新方案的成本模型接起来。",
+          "nextConcreteMove": "在同一批 OpenSSL diff 上给出调用数、token、成本、运行时间、precision/recall 的前后对比，明确 cost 降低是否牺牲 recall。"
+        },
+        {
+          "project": "Brainary 能力沉淀：AttentionScheduler / Tool Orchestration",
+          "weeks": [
+            "2026年03月22日",
+            "2026年04月05日"
+          ],
+          "quality": "有能力映射雏形，但尚未看到独立可复用交付物。",
+          "whatWorked": "03月22日明确提出 AttentionScheduler：给定结构图和候选池，输出带 skip 规则的优先级评估计划；这把代码安全任务中的 PDG 调度抽象成 Brainary 的 Tool Orchestration 能力。04月05日的 cluster-based fine screening、Union-Find 聚类和 PageRank 排序可视为该能力的继续推进。",
+          "managementGap": "报告没有说明 AttentionScheduler 是否已经模块化、接口是什么、输入输出格式是什么、是否能在非代码任务或其他 batch LLM 任务复用；04月05日也没有显式回报 Brainary 沉淀状态。",
+          "nextConcreteMove": "把 AttentionScheduler 交付为一个最小模块说明：输入 schema、输出 schema、skip policy、评估指标、一个代码安全案例和一个非代码任务迁移设想。"
+        },
+        {
+          "project": "Benchmark 与 ground truth 构建",
+          "weeks": [
+            "2026年03月15日",
+            "2026年03月22日",
+            "2026年04月05日"
+          ],
+          "quality": "有扩展动作，但 ground truth 状态不透明，是当前证据链的薄弱环节。",
+          "whatWorked": "03月15日使用 Nginx 和 OpenSSL；03月22日自动化收集 6 个项目 50 个版本对，并在 curl 上找到 7 个已发布 CVE；说明学生意识到单数据集不足。",
+          "managementGap": "04月05日没有更新 curl partial ground truth，也没有说明 6 个项目中哪些有可量化 GT、哪些只能做候选发现；因此跨项目结论的证据等级不足。",
+          "nextConcreteMove": "建立 GT 状态表：项目、版本对数量、已匹配 CVE 数、人工确认 silent fix 数、无法确认候选数、可用于 precision/recall 评估的范围。"
+        },
+        {
+          "project": "自动化 CVE / silent fix 发现 workflow",
+          "weeks": [
+            "2026年03月22日",
+            "2026年04月05日"
+          ],
+          "quality": "有路线但尚未闭环。",
+          "whatWorked": "03月22日提出 pipeline 自动扫描 version diff、识别疑似 silent fix、人工复核、申请 CVE 或提交 advisory；04月05日提出 precision >0.80 后持续运行发现 0.5-day 漏洞。",
+          "managementGap": "没有看到实际复核流程、CVE 申请规范确认、候选优先级、人工复核时间预算，也没有定义什么结果算 workflow 成功闭环。",
+          "nextConcreteMove": "选择 curl 或 OpenSSL 的前 10 个高置信候选，完成一次人工复核闭环：确认真阳性、重复已知 CVE、疑似 silent fix、误报四类，并记录每类处理时间。"
+        }
+      ],
+      "managementPattern": "该学生能围绕核心瓶颈连续推进，并且会用实验数据修正方向；但容易在技术突破后跳到新模块，未稳定回填上周承诺的交付状态。项目管理的短板不是不做事，而是缺少一套固定的周度证据账本。",
+      "nextManagementMove": "要求之后每周固定提交一页项目状态表：本周承诺、实际完成、未完成原因、核心指标变化、资源/API 消耗、下周最小可验证动作、需要老师决策的问题。"
+    },
+    "repeatedBlockers": [
+      "Precision 一直是主阻塞：03月15日约 0.65，03月22日跨项目仍需提升，04月05日 Nginx 提升到 0.76 但仍未达到前一周提出的 0.85 或本周提出的 0.80 运行门槛。",
+      "Ground truth 覆盖不足反复出现：03月22日明确新项目无法定量评估，04月05日未更新 partial GT 进度。",
+      "成本与 API 资源约束持续存在：03月15日 API quota 导致 87% 候选无法完成验证，03月22日单次全量扫描成本仍高，04月05日成本降低仍主要是预期而非完整实测。",
+      "跨项目泛化证据不足：已有 6 项目 50 版本初测，但后续没有稳定报告每个项目的指标和失败模式。",
+      "Brainary 沉淀不够闭环：AttentionScheduler 概念明确，但模块化接口、复用评估和持续交付证据缺失。"
+    ],
+    "teacherQuestions": [
+      "你现在对这个 pipeline 的证据等级怎么分层：哪些结论只在 Nginx 成立，哪些已经在 OpenSSL 成立，哪些已经跨项目成立？",
+      "03月22日计划的 curl partial ground truth 完成了吗？如果没有，卡在 CVE 匹配、人工确认、版本定位，还是评估脚本？",
+      "precision 门槛到底是 0.80 还是 0.85？这个门槛对应的是论文实验、持续运行、还是 CVE workflow 的人工复核成本？",
+      "AttentionScheduler 现在是否已经是一个可复用模块？请你下次展示输入、输出、skip policy 和一个非代码任务可迁移例子。",
+      "如果 OpenSSL 全量验证后 precision 没有超过 0.80，你会优先怀疑反事实验证、重构过滤、ground truth，还是候选生成阶段？对应的下一步诊断实验是什么？"
+    ],
+    "nextIntervention": "老师下一次 meeting 应把干预重点放在“证据账本”和“取舍标准”上：要求学生不要只展示新技术模块，而是用同一张表汇报 Nginx、OpenSSL、curl 的指标、GT 状态、成本、FP 类别和 Brainary 模块交付状态；同时要求他统一 precision 运行门槛，并说明失败时的诊断路径。",
+    "studentFeedback": {
+      "summary": "你最近的进步不是更忙，而是开始把 pipeline 的失败模式抽象成可验证的研究问题：抽象知识如何落地、成本为何影响 precision、什么证据足以判定 security、结构化信息如何调度 LLM。",
+      "whatImproved": [
+        "你能用消融和 A/B 实验支持判断，而不是只凭直觉改 prompt。",
+        "你开始识别负样本缺失、重构误报、ground truth 不足、API 成本这些系统性瓶颈。",
+        "你把 PDG 调度抽象成 AttentionScheduler，说明你在尝试把项目经验沉淀为 Brainary 能力。",
+        "你对项目价值的判断从单次指标提升，转向持续扫描、silent fix 发现和自动化科研产出。"
+      ],
+      "nextStep": "下一步不要再只增加模块，而要建立固定证据账本：每个模块必须说明验证数据集、指标变化、成本变化、误伤风险、是否跨项目成立、是否已经沉淀为可复用 Brainary 能力。"
+    },
+    "evidenceLinks": [
+      {
+        "week": "2026年03月15日",
+        "claim": "Role Grounding 有效，抽象知识堆砌可能有害。",
+        "evidence": "Nginx 消融：Role Grounding 使 F1 提升 0.15；Precondition Enrichment 使 F1 下降 0.12。"
+      },
+      {
+        "week": "2026年03月15日",
+        "claim": "主 pipeline 已能在 OpenSSL 大规模版本差异上运行，但 precision 是短板。",
+        "evidence": "OpenSSL 23 个版本 diff，排除 API 故障版本后 F1=0.73、Recall=0.84、Precision 约 0.65。"
+      },
+      {
+        "week": "2026年03月22日",
+        "claim": "结构化调度是成本优化的主要杠杆。",
+        "evidence": "PDG 依赖跳过带来 94.5% 调用削减，报告称零回归；prompt 合并只节省约 33%。"
+      },
+      {
+        "week": "2026年03月22日",
+        "claim": "学生开始把项目映射到 Brainary 的 Tool Orchestration 能力。",
+        "evidence": "提出 AttentionScheduler：给定结构图和候选池，输出带 skip 规则的优先级评估计划。"
+      },
+      {
+        "week": "2026年03月22日",
+        "claim": "跨项目与 ground truth 建设已经启动，但证据尚未闭环。",
+        "evidence": "自动收集 6 个开源项目 50 个版本对；curl 找到 7 个已发布 CVE 和多个疑似 silent fix。"
+      },
+      {
+        "week": "2026年04月05日",
+        "claim": "安全补丁判定被形式化为双条件反事实验证。",
+        "evidence": "consequence_reachable(pre) 与 invariant_restored(diff) 缺一不可；Nginx A/B 中 precision 0.69→0.76，recall 保持 0.95，F1 0.79→0.84。"
+      },
+      {
+        "week": "2026年04月05日",
+        "claim": "重构型 FP 已有针对性过滤方案。",
+        "evidence": "使用 GumTree AST matching 检测跨 region 代码搬移，并过滤 Nginx 中 if→switch 重写产生的 9 个 FP。"
+      },
+      {
+        "week": "2026年04月05日",
+        "claim": "成本降低方案仍需实测。",
+        "evidence": "cluster-based fine screening、Dep-skip、per-cluster cap、Unified verification 预计减少 40%-60% LLM 调用，但报告未给出 OpenSSL 或跨项目实测结果。"
+      }
+    ]
   }
 }

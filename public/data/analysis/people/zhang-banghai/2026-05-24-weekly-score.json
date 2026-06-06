@@ -1,54 +1,54 @@
 {
   "key": "person:zhang-banghai:2026-05-24:weekly-score",
-  "generatedAt": "2026-05-24T16:00:57.546Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "9b7687e5da916e94828d7daa6b27e4702abff523ac0436f00ffe3fffc65a0caf",
+  "generatedAt": "2026-06-06T13:16:01.297Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "776a19b36e00f033c75618a8be97d9d99f9c87fd7abfe1c1ed066cecd432864f",
   "result": {
     "hardProgress": {
-      "score": 12,
-      "reason": "本周完成了小脑模型路线筛选（Isaac Lab Mimic + robomimic，BC-RNN-GMM 基线），设计了大脑-小脑技能调用接口，并调研了数据集，明确了技能调用级数据需求。但实际的数据采集和训练链路尚未跑通，缺乏可量化的实验结果。",
-      "missingEvidence": "缺少实际的数据采集、训练实验指标或仿真回放截图等直接产物。"
+      "score": 13,
+      "reason": "本周有明确的硬收敛：放弃一开始采用 OpenVLA、Octo、GR00T 等端到端大模型路线，转向 Isaac Lab Mimic + robomimic，并把 BC-RNN-GMM 定为第一版状态输入小脑基线；同时明确了“大脑输出技能调用、小脑执行连续控制”的接口方向。但这些主要仍是路线筛选、问题定义和实验设计，尚未完成 Isaac Lab 环境跑通、专家数据采集、HDF5 保存、robomimic 训练或策略回放，因此硬进展停留在实验前置设计层。",
+      "missingEvidence": "缺少实际运行截图、代码提交、环境配置记录、数据样例、训练日志、策略回放结果或任何可复现实验产物。"
     },
     "cognitiveIncrement": {
       "score": 13,
-      "reason": "明确区分了动作级大脑与技能调用级大脑，指出了现有数据集（如CALVIN）偏向语言到动作的范式，而本研究需要任务到技能调用的数据。这一认知增量直接避免了实验设计的误区，强化了分层框架的价值。",
-      "missingEvidence": "尚未通过实验验证该认知区分的正确性，仍停留在概念推演层面。"
+      "reason": "认知增量较清楚：将具身大脑训练区分为动作级输出与技能调用级输出，并指出 CALVIN 等数据集更偏 language/image-to-action，而当前课题需要 language/task-to-skill-call。这一判断直接影响数据选择、模型输出形式和大脑/小脑分层设计，属于对研究问题颗粒度的有效重构。",
+      "missingEvidence": "缺少对 CALVIN 及其他数据集字段、标注层级、任务定义的具体对照表，也缺少证明公开数据集确实不支持技能调用级训练的系统性检索证据。"
     },
     "cot2Depth": {
       "score": 12,
-      "reason": "对本周认知进行了二阶反思，指出老师可能已知大脑小脑分工但不清楚数据集范式差异，从而影响实验设计。反思有深度，但未进一步探究技能调用数据集缺失的深层原因。",
-      "missingEvidence": "缺乏对为什么现有数据集多集中在动作级、如何从机制上解决该问题的系统性分析。"
+      "reason": "CoT's CoT 不只是复述工作，而是提出了老师可能忽略的信息差：公开数据集多沉淀在动作级范式，而非技能调用范式；继续沿用动作级数据会破坏大脑/小脑分层框架。这体现了对研究设计假设的二阶反思。但深度还可以进一步加强，例如比较不同路线的失败模式、判断技能调用数据是否可由动作数据自动抽象生成，以及定义验证该判断的实验标准。",
+      "missingEvidence": "缺少反例分析、替代路径比较、技能调用级数据构造的可行性验证，以及关于‘动作级数据会削弱分层价值’的实验或文献依据。"
     },
     "brainaryMapping": {
       "score": 8,
-      "reason": "工作对应Brainary“结构化认知到具身执行”的中间层，提出技能调用表示可解释、可编辑、可验证，规划沉淀为 workflow、benchmark 和 memory 资产，映射具体且有新意。",
-      "missingEvidence": "尚未实现Brainary与技能调用接口的实际连接，仅停留在概念映射阶段。"
+      "reason": "与 Brainary 的映射较明确：把本工作定位为‘结构化认知到具身执行’的中间层，不让 Brainary 直接生成连续动作，而是生成可解释、可编辑、可验证的技能调用表示；还提出可沉淀为 workflow、benchmark、memory 资产。这符合 Brainary 的结构化认知与可复用工作流方向。",
+      "missingEvidence": "缺少 Brainary 中该技能调用表示的具体 schema、memory 写入格式、workflow 节点定义、benchmark 指标，以及 Brainary 如何与 Isaac Lab/robomimic 实际连接的技术证据。"
     },
     "monetaryValue": {
-      "score": 7,
-      "reason": "估算价值约60万元，基于1名算法工程师6-8个月投入、仿真调试和数据构建成本，依据合理。但如果闭环未能跑通，价值将打折扣。",
-      "missingEvidence": "缺乏同行类似工作的成本对比或市场验证，估算偏主观。"
+      "score": 6,
+      "reason": "报告给出了约 60 万元的价值判断，并说明价值来自机器人学习平台搭建、技能接口开发、数据构建和 benchmark 复用，而不是单次训练结果。这个判断方向合理，但估值仍偏主观，主要按工程师 6–8 个月投入折算，没有和具体可交付资产、外部采购成本、替代方案成本、潜在论文/项目/产品收益建立更强对应。",
+      "missingEvidence": "缺少成本拆分表、同类平台或数据集建设成本参照、可复用资产清单、潜在项目收入或论文产出概率，以及 60 万元估值的可审计计算依据。"
     },
     "projectManagement": {
-      "score": 13,
-      "reason": "任务拆解为三步走，卡点识别清晰，下周最小可验证动作具体。计划性强，但关键链路风险（Isaac Lab 全流程未通）尚未消除。",
-      "missingEvidence": "缺少时间估算或资源调配的具体细节。"
+      "score": 12,
+      "reason": "项目管理表现较好：主线任务、硬进展、核心卡点和下周最小可验证动作之间逻辑一致；当前卡点被拆成链路跑通和技能级数据缺失两类；下周目标也明确收敛为先验证闭环而非追求训练效果。欠缺的是更严格的项目管理要素，例如任务优先级、完成标准、风险预案、时间预算、依赖项和验收指标。",
+      "missingEvidence": "缺少具体时间排期、代码模块拆分、每项任务的完成判据、失败时的降级方案、环境/数据/接口的验收标准，以及是否已有仓库或 issue 管理记录。"
     },
     "nextAction": {
       "score": 9,
-      "reason": "下周动作分5个具体步骤，聚焦最小闭环验证（技能调用接口→数据保存→状态变化），可操作且可验证。",
-      "missingEvidence": "无，下周计划足够具体。"
+      "reason": "下周动作非常具体，符合最小可验证原则：选择一个 Franka 简单任务，打通外部 JSON 到 reach/grasp 技能调用接口，采集少量演示数据，保存为 robomimic 可训练格式，并构造少量技能级标注样本。尤其明确‘先不追求训练效果，只验证任务指令—技能调用—小脑执行—环境状态变化链路’，这是正确的实验收敛。",
+      "missingEvidence": "缺少每个动作的验收阈值，例如至少采集多少条演示、HDF5 字段格式是什么、JSON 指令 schema 是什么、环境状态变化如何判定成功。"
     },
     "evidenceQuality": {
-      "score": 3,
-      "reason": "报告引用了具体技术名词（Isaac Lab, robomimic, CALVIN），但缺乏实验截图、数据样例、接口设计文档等直接证据。",
-      "missingEvidence": "如HDF5数据格式说明、仿真环境截图或技能调用JSON样例等。"
+      "score": 2,
+      "reason": "证据质量偏弱。报告中的路线判断和数据集判断有研究价值，但基本以调研结论和个人判断呈现，没有引用具体论文、数据字段、代码仓库、实验日志或对比表。当前证据足以支持‘形成假设’，不足以支持‘已经验证’。",
+      "missingEvidence": "缺少文献引用、数据集字段截图、任务样例、代码链接、实验运行记录、配置文件、HDF5 样例、训练日志、策略回放视频或失败日志。"
     },
-    "totalScore": 77,
+    "totalScore": 75,
     "tier": "B",
-    "oneLineJudgment": "本周在技能调用级大脑方向做出了清晰的认知区分和实验规划，但硬进展仍停留在调研与设计阶段，尚未产生可验证的闭环。",
-    "professorFollowUp": "建议老师关注下周的最小闭环验证结果，尤其是技能调用接口与数据格式的打通，并评估是否需要投入资源自建技能调用数据集。"
+    "oneLineJudgment": "本周最有价值的是把研究问题从动作级具身大脑收敛到技能调用级大脑，并据此重设实验路线；但当前仍主要是路线设计和认知澄清，缺少实际跑通链路与可复现实验证据。",
+    "professorFollowUp": "建议老师重点追问三件事：第一，要求下周必须提交一个最小闭环证据包，包括 Isaac Lab 任务运行、JSON 技能调用、HDF5 数据样例和一次策略回放或失败日志；第二，要求把 CALVIN 与目标 skill-call 数据格式做成字段级对照表，证明为什么不能直接用、能否自动抽象；第三，要求定义 Brainary 技能调用 schema，包括 skill_name、object、target_pose、constraints、precondition、postcondition 和 execution_feedback。"
   }
 }

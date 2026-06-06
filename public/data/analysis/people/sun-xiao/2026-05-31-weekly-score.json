@@ -1,54 +1,60 @@
 {
   "key": "person:sun-xiao:2026-05-31:weekly-score",
-  "generatedAt": "2026-05-31T11:01:02.375Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "5da6fc4a63071b6788e1a9caa8819987a9bd01a377992ee5c899aa7b06220f0d",
+  "generatedAt": "2026-06-06T13:12:19.295Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "c868047d1e71069c264513dd86eb996438d25c022324e79d105499612bfbdcbb",
   "result": {
     "hardProgress": {
       "score": 15,
-      "reason": "本周完成了action-free ablation的关键清理，拆分了schema约束与communication影响的观察路径；生成了SOTOPIA原生combo留档并重写了筛选标准；理论推进一步明确核心问题定位。但未产生新的运行结果或定量数据。",
-      "missingEvidence": "缺失action-free版本的运行日志或验证截图；缺失combo质量审计的具体样例输出。"
+      "reason": "本周有明确硬进展：完成 action-free ablation 的关键语义清理，移除 task_state、action schema、slot/action_index 等外部约束；修正 Step1/Step2、utterance validator、SOTOPIA leave termination 等残留问题；生成 SOTOPIA 原生 combo 留档，读取到 450 个 environment-agent combos 和 81 个 environment groups。这些是实质性工程与数据准备。但本周没有正式重跑实验，没有产出 trajectory-level 指标结果，也没有完成 combo quality audit 定稿，因此硬进展仍主要停留在实验基础设施和审查准备层。",
+      "missingEvidence": "缺少具体 commit、diff、运行日志、样例 LLM IO、导出的 archive 文件片段、action-free 小样本运行结果、leave termination 验收截图或失败/通过统计。"
     },
     "cognitiveIncrement": {
       "score": 13,
-      "reason": "提出了5条认知更新，包括核心问题从mode差异转向competence必要性、combo质量前置、action-free诊断价值等，增量显著且逻辑自洽。",
-      "missingEvidence": "认知更新仍以推理为主，缺失初步实验观察或定性分析来支撑，如某个combo在action-free下的行为差异。"
+      "reason": "认知增量较强。周报清楚地把问题从“不同 communicative mode 是否导致话术不同”重定位为“communication master 是否通过 episode memory 改变后续 action selection，并带来 task utility”。同时认识到 combo 质量是实验可信度前置条件，action-free ablation 是因果诊断条件，SOTOPIA leave 只解决终止语义而非任务成功。这些判断直接改变了下周实验路线。",
+      "missingEvidence": "缺少一个具体 combo 的前后对照案例来证明该认知更新来自实际观察，而不只是概念推演；也缺少旧 mode 失败样例或 WBD/play_rights/bargain 的具体问题证据。"
     },
     "cot2Depth": {
-      "score": 14,
-      "reason": "两个CoT's CoT深入阐述了问题重定位和episodic memory的因果评估链，并给出了自动化潜力建议和证据等级，思考透彻。",
-      "missingEvidence": "证据等级标为B+，但未附具体观察来源或示例，如从哪些错误案例中提炼出结论。"
+      "score": 12,
+      "reason": "CoT’s CoT 有一定深度，能从实验问题、数据质量、workflow 化条件、自动化潜力四层反思为什么当前工作还不能直接变成 benchmark 或 module。尤其是提出 combo archive、quality audit、case card、communication intervention、trajectory metric 五层协同，这比普通周报的‘下一步继续做’更有研究管理价值。但两个 CoT’s CoT 都承认‘老师原本不知道的吗：否’，说明新颖性不是知识发现，而是执行路径纠偏；证据等级自评 B+，但缺少外部证据支撑。",
+      "missingEvidence": "缺少 CoT’s CoT 对应的可执行规范文档、字段 schema、评价 rubric、自动化输入输出样例；也缺少说明这些反思如何改变具体实验设计的对照表。"
     },
     "brainaryMapping": {
-      "score": 9,
-      "reason": "五个工作项清晰映射到benchmark infrastructure、causal intervention等Brainary能力，并指出了沉淀形式。",
-      "missingEvidence": "映射停留在抽象能力层，未给出具体的模块接口或代码级对齐。"
+      "score": 7,
+      "reason": "Brainary 映射覆盖了 benchmark infrastructure、causal intervention、memory control、dataset audit、case retrieval、trajectory evaluation 等能力，并且每项都给出了潜在沉淀物，如 NoSchemaActionAblation、LeaveBasedTerminationAdapter、SOTOPIAComboArchive、ComboQualityAuditor、CommunicationCompetenceBenchmark。映射方向合理。但目前仍是命名级映射，没有说明这些资产进入 Brainary 后的接口、记忆结构、调用方式、复用场景和自动评估标准。",
+      "missingEvidence": "缺少 Brainary asset 的具体 schema、API 设计、模块边界、输入输出样例、自动触发条件，以及与现有 Brainary 能力图谱的连接证据。"
     },
     "monetaryValue": {
       "score": 7,
-      "reason": "指出了题目解决的真实问题及潜在买单方，判断为通用评估能力，但未涉及市场规模或具体客户价值。",
-      "missingEvidence": "缺少潜在客户案例分析或市场规模估计数据。"
+      "reason": "题目价值判断比较清楚：communication competence 的任务收益评估可服务 agent benchmark、企业协作 agent、negotiation/collaboration agent、workflow intelligence、AI evaluation 和 safety 团队。报告也指出该能力不是局部话术优化，而是通用评估能力。但商业价值仍偏概念层，没有量化买单场景、客户痛点、竞品差异、成本收益或可产品化路径。",
+      "missingEvidence": "缺少具体用户画像、应用场景例子、现有 benchmark/产品为什么不能解决、潜在付费方的验证、价值指标、商业化里程碑或论文/产品双路径判断。"
     },
     "projectManagement": {
-      "score": 14,
-      "reason": "项目管理A和B详细列出了当前阶段、时间规划、资源、依赖、成本规划与纠偏动作，计划具体可行。",
-      "missingEvidence": "未提及风险缓冲计划或备选方案。"
+      "score": 12,
+      "reason": "项目管理结构较完整，分成 combo quality audit 与 communication master intervention/trajectory metrics 两条主线，说明了阶段、时间规划、资源、依赖关系、关键路径、成本控制和纠偏动作。尤其是明确下周不盲跑 450 全量，而是先审 8–12 个 codename、选 3–5 个 pilot，体现了资源约束意识。主要不足是下周交付物验收标准不够硬，缺少风险优先级、具体日程、样本量、责任边界和停止条件。",
+      "missingEvidence": "缺少本周实际投入时间、完成清单与未完成清单的可核验状态；缺少下周每个 deliverable 的验收标准，如 case card 数量、字段完整率、pilot 成功阈值、metric 可观测阈值。"
     },
     "nextAction": {
-      "score": 9,
-      "reason": "下周最小可验证动作明确：小样本action-free重跑、重审特定combo并制作case cards，行动可执行且紧扣主线。",
-      "missingEvidence": "未给出具体的定量指标（如预期完成combo数量）或验收标准。"
+      "score": 8,
+      "reason": "下周动作明确：完成高质量 combo audit，制作 case cards，选择 3–5 个 showcase 候选，设计低沟通 baseline 与 communication-master intervention，做 action-free + SOTOPIA leave 小样本 pilot。方向正确，且避免继续盲跑和旧 mode 微调。但 next action 还不够可执行，缺少具体 combo 列表优先级、每个 case card 的字段模板、pilot 的最小样本量、metric 定义和通过/失败阈值。",
+      "missingEvidence": "缺少下周第一天应执行的具体命令、文件路径、评审表模板、候选 combo id、pilot 配置、metric 公式和验收标准。"
     },
     "evidenceQuality": {
       "score": 3,
-      "reason": "提供了代码验收点、数据文件等静态证据，但本周主要为准备周，缺少实验运行日志、初步观察数据等直接证据。",
-      "missingEvidence": "缺失任何定量分析或具体样例输出，如combo留档样例或action-free模式下的一条对话轨迹。"
+      "reason": "证据质量中等偏弱。报告提供了较多具体名词、文件名、模块名、数据规模和问题残留，说明不是纯空谈；但大部分证据仍是自述，没有附带实验结果、日志、样例输出、错误复现、指标表或案例摘录。当前证据足以证明‘本周做了基础设施与研究设计调整’，不足以证明‘communication 确实改变 action’或‘combo audit 已经有效’。",
+      "missingEvidence": "缺少运行日志、样例 trajectory、before/after prompt、validator 修复前后对比、archive 统计表、combo case 示例、pilot 结果、next-action shift 观测样例。"
     },
-    "totalScore": 84,
-    "tier": "A",
-    "oneLineJudgment": "本周重定位了核心问题为communication master的必要性证明，完成了action-free ablation清理与combo质量审查框架，但尚未产生实验数据支撑。",
-    "professorFollowUp": "下周应关注学生能否筛选出高质量combo并完成最小pilot，以验证communication influence trace的可行性。"
+    "totalScore": 77,
+    "tier": "B",
+    "oneLineJudgment": "本周是一次有效的研究路线纠偏和实验基础设施清理周，硬进展真实但尚未进入结果证明阶段；最大风险是下周如果不能把 combo audit、communication-master 干预和 trajectory metrics 落到可验收样例，当前认知增量会停留在概念层。",
+    "professorFollowUp": [
+      "要求他下周先交 3–5 个完整 case cards，每个必须包含 scenario、双方 private goals、关键隐藏信息、预期 next-action shift、可判定 outcome、失败风险。",
+      "要求他给出一个最小 pilot 表格：combo id、baseline/intervention prompt、运行次数、leave timing、next-action shift、deadlock reduction、feasible resolution 的计算方式。",
+      "追问 action-free ablation 的代码证据：哪些文件改了、schema/state/slot 在 observation 中如何确认已移除、validator 修复如何验收。",
+      "不要让他继续扩大 450 combo 全量 rollout；先证明 3–5 个高质量 combo 上 communication master 能产生可观察的任务轨迹差异。",
+      "要求他把‘communication master’从口号变成干预模板：低沟通 baseline 与 communication-master 条件之间到底差在哪些能力动作上。"
+    ]
   }
 }

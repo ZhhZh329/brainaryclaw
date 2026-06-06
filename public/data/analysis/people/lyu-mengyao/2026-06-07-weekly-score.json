@@ -1,60 +1,94 @@
 {
   "key": "person:lyu-mengyao:2026-06-07:weekly-score",
-  "generatedAt": "2026-06-06T12:15:58.046Z",
+  "generatedAt": "2026-06-06T13:08:58.381Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
-  "inputHash": "bb183b5d2f7e7bf9187f3107bf437a793c78ecb0138bb650c5aef15325b81c42",
+  "inputHash": "e84da2167e5205c55f5b27dd2dd099edbf5131b80026ae90e7b851e1a1f86ace",
   "result": {
     "hardProgress": {
       "score": 14,
-      "reason": "本周有实质性推进，但主要是问题重构、技术判断、路线设计和参数调校，而不是已完成的可复现实验或交付物。Taxonomy/KG 方面定位了单标签失败模式，提出 multi-label、安全实现 taxonomy、query slicing，并完成 OSS 多源证据路线设计；Comm 方面把 agent influencer 收束为 RQ1-RQ3；HepaChat 完成守则数据更新和 retrieval 参数稳定化，控制 reference list 约 5 个。这些是硬进展，但多数仍停留在 schema、roadmap、diagnosis 层，缺少样本结果、表格、代码、benchmark 或定量指标。",
-      "missingEvidence": "缺少漏洞样本上的 multi-label schema 试跑结果；缺少 OSS association 小样本抽取输出；缺少 MMKG SOTA 分析清单或对比表；缺少 agent influencer 最小实验表和 sanity check 结果；缺少 HepaChat 调参前后 20-30 case 定量对比。"
+      "reason": "本周有明确硬推进：Taxonomy/KG 定位了漏洞 taxonomy 的 multi-label failure mode，完成 MMKG 方法判断和 OSS 数据源路线设计；Comm 完成 RQ1–RQ3 重构；HepaChat 完成守则数据更新和 retrieval 参数稳定化。但大部分进展仍处于问题重构、路线设计和参数观察阶段，尚未产出可复现的小样本结果、schema 文件、benchmark 表或定量对比。",
+      "missingEvidence": [
+        "缺少漏洞 multi-label schema v0.1 的实际样例或字段定义。",
+        "缺少 OSS functional association 的样本抽取结果。",
+        "缺少 MMKG SOTA 分析的论文列表、判据表或对比矩阵。",
+        "缺少 HepaChat 调参前后的具体 retrieval 指标。"
+      ]
     },
     "cognitiveIncrement": {
-      "score": 13,
-      "reason": "认知增量清楚，且能从三个项目抽出共同结构：taxonomy 不是单标签分类而是功能关联图；多模态价值在于证据是否保留在关系形成中；communication taxonomy 粒度要由 MCME 可执行性反推；医疗 RAG 要区分 citation presence 和 evidence functionality。增量不是泛泛总结，而是能改变下周实验设计和系统模块设计。",
-      "missingEvidence": "这些认知主要来自个人分析和调参观察，缺少系统化对照实验来证明这些认知确实导致更好的 retrieval、benchmark 或 KG 构建效果。"
+      "score": 14,
+      "reason": "认知增量清楚且有跨项目抽象：taxonomy 从单标签分类升级为功能关联图；MMKG 要检查多模态证据是否在关系中仍然有效；communication 任务从内容生成转向 skill validity 与 orchestration；医疗 RAG 从 similarity 命中转向 evidence-bearing passage。认知不是泛泛总结，而是能改变后续实验设计和系统模块。",
+      "missingEvidence": [
+        "部分认知仍来自技术判断和调参观察，缺少实验验证来证明这些认知会稳定成立。",
+        "没有给出每个认知增量对应的失败案例原文或具体样本。"
+      ]
     },
     "cot2Depth": {
-      "score": 12,
-      "reason": "CoT's CoT 写得较完整，包含内容、老师是否原本知道、信息差、自动化潜力、沉淀形式和证据等级。尤其是 MMKG、agent influencer、RAG evidence-bearing chunk 三个点有二阶判断：不仅知道现象，还能说明为什么没有进入 workflow、agent、benchmark 或 memory。但部分 CoT's CoT 仍偏概念推演，证据等级均为 B，尚未形成可复现的中间指标。",
-      "missingEvidence": "缺少每个 CoT's CoT 对应的最小可验证指标，例如 multi-label coverage、evidence-bearing chunk 分类准确率、MMKG pipeline modality-retention score、communication skill orchestration metric。"
+      "score": 14,
+      "reason": "CoT’s CoT 写得较完整：每条都说明了内容、老师是否原本知道、信息差、为什么尚未自动化、可沉淀形式和证据等级。尤其是 MMKG、agent influencer、HepaChat 三条能明确指出新的科研判断和自动化转化路径。扣分点是证据等级均为 B，但支撑材料没有展开，部分判断仍偏概念化。",
+      "missingEvidence": [
+        "缺少支撑 CoT’s CoT 的原始观察、实验记录或论文诊断表。",
+        "缺少把 CoT’s CoT 转成具体 workflow / benchmark 的最小接口定义。",
+        "没有说明哪些判断如果下周验证失败需要撤回或降级。"
+      ]
     },
     "brainaryMapping": {
-      "score": 8,
-      "reason": "Brainary 关联明确，分别映射到 memory schema、KG construction、benchmark、workflow management、communication skill orchestration、retrieval safety、risk modeling 等能力，并提出可沉淀模块，如 multi-label taxonomy induction、evidence-aware KG memory、communication skill schema、retrieval artifact detector。映射不是空泛贴标签，基本能转成系统组件。",
-      "missingEvidence": "缺少 Brainary 当前架构中这些模块的接口位置、输入输出定义、优先级排序和谁负责落地。也缺少说明哪些是本周必须进入 Brainary roadmap，哪些只是长期可能性。"
+      "score": 9,
+      "reason": "Brainary 映射具体，不只是口号式关联。Taxonomy/KG 对应 memory schema、KG construction、benchmark 和 auto research formulation；Comm 对应 communication skill orchestration；HepaChat 对应 retrieval safety 与 risk-aware evaluation。每条都写了可能沉淀的模块。主要不足是还没有明确 Brainary 内部优先级和模块接口。",
+      "missingEvidence": [
+        "缺少 Brainary 现有模块与本周产物之间的接口关系。",
+        "缺少哪个模块先做、谁使用、如何评测的优先级排序。",
+        "缺少可直接进入 Brainary memory / workflow 的结构化产物。"
+      ]
     },
     "monetaryValue": {
-      "score": 6,
-      "reason": "周报按模板写出了金额、计算方法、参考依据和为什么值钱，覆盖 Taxonomy/KG、Comm、HepaChat 三个方向。优点是没有只写高低，而是给出 S$6.0M、S$4.0M、S$4.5M 的估算。但金额主要是自上而下的收入假设，缺少客户访谈、竞品价格、部署转化率、销售周期、合规成本和技术完成概率校正，因此商业价值判断可用但可信度中等。",
-      "missingEvidence": "缺少真实客户或潜在买单方证据；缺少竞品定价和市场规模引用；缺少医疗部署合规成本；缺少从技术 milestone 到收入的概率折现；缺少每个方向的最小可卖产品定义。"
+      "score": 8,
+      "reason": "报告按项目给出了金额估算、计算方法、付费方和价值理由，符合模板要求。Taxonomy/KG、Comm、HepaChat 都区分了局部产品价值与通用能力价值。扣分点是金额主要基于假设部署数和单价，缺少市场证据、客户验证、竞品价格或销售路径，因此更像战略估值而非可投资性证明。",
+      "missingEvidence": [
+        "缺少真实客户访谈、采购意向或竞品定价依据。",
+        "缺少部署转化率、销售周期和交付成本假设。",
+        "缺少哪个项目最接近商业化收入的优先级判断。"
+      ]
     },
     "projectManagement": {
       "score": 13,
-      "reason": "项目管理部分较完整，包含当前阶段、原计划与实际、投入时间、下周时间、关键里程碑、资源、依赖、关键路径、成本、偏差原因和纠偏动作。能明确承认 Taxonomy/KG 与 HepaChat 偏离原计划，并说明偏差原因是上游结构问题而非简单延期。下周也有明确收束要求。",
-      "missingEvidence": "缺少更硬的交付物编号或仓库链接；缺少每个里程碑的验收标准；缺少风险优先级排序；缺少多项目之间资源冲突的处理方式。"
+      "reason": "项目管理部分较完整：每个项目都有阶段、原计划与实际、投入时间、下周时间、依赖关系、资源、预算、关键路径、偏差原因和纠偏动作。能看出作者知道哪些项目会卡住后续工作。扣分点是同时推进三条主线，范围仍偏宽；部分里程碑是设计性产物，不是可验收交付物。",
+      "missingEvidence": [
+        "缺少已完成产物的链接、文件名或提交位置。",
+        "缺少每个项目的验收标准，例如什么算 schema 稳定、什么算 retrieval 改善。",
+        "缺少三条项目之间的优先级取舍，尤其在时间有限时应先保哪一条。"
+      ]
     },
     "nextAction": {
       "score": 9,
-      "reason": "下周动作具体、可验证且有时间点：下周三完成 OSS functional association 初步结果；漏洞检测写 multi-label v0.1 schema 并用少量样本测试；Comm 固定 RQ1-RQ3 最小实验表并跑 sanity check；HepaChat 做 20-30 case 前后对比，并设定若 clinical passage 未改善则切换 chunk-type filtering。行动粒度符合最小可验证原则。",
-      "missingEvidence": "还缺每个 next action 的具体样本量定义、通过/失败阈值、输出格式和评估责任人。例如 HepaChat groundedness 改善多少算成功，OSS association 稳定性如何判断。"
+      "reason": "下周动作具体且可验证：OSS 小样本 extraction、漏洞 multi-label schema v0.1、Comm 最小实验表与 sanity check、HepaChat 20–30 case 调参前后对比。动作有时间点、样本规模、指标方向和失败后的备选方案。扣分点是部分动作仍未给出具体样本数、数据入口和验收阈值。",
+      "missingEvidence": [
+        "OSS 小样本的具体规模和数据来源未明确。",
+        "漏洞 taxonomy 测试样本数量未明确。",
+        "HepaChat 指标没有设定最低通过阈值。",
+        "Comm sanity check 的 GT 来源和 metric 还未固定。"
+      ]
     },
     "evidenceQuality": {
       "score": 3,
-      "reason": "证据质量中等偏弱。周报有具体 failure mode、参数现象、路线判断和自评证据等级 B，但大多数证据仍是自述，没有附结果表、样本、实验截图、代码、文献列表或定量统计。HepaChat 的 reference list 控制到约 5 个是较具体证据，但仍未完成对 groundedness 和漏召的验证。",
-      "missingEvidence": "缺少原始样本、实验记录、调参日志、数据源清单、MMKG 论文分析表、retrieval 前后指标、人工标注协议和可复现 artifact。"
+      "reason": "证据质量中等偏弱。报告有清楚的自我证据等级判断，且承认多数结论尚未完成定量验证；但当前周报没有附样本、表格、实验结果、日志、论文清单或指标数值。许多结论可信但仍停留在研究者观察和方法判断层面。",
+      "missingEvidence": [
+        "缺少实验数据和定量指标。",
+        "缺少代码、配置、参数版本或运行记录。",
+        "缺少样本级 failure case。",
+        "缺少外部资料引用或 SOTA 分析证据表。"
+      ]
     },
-    "totalScore": 78,
-    "tier": "B",
-    "oneLineJudgment": "这是一份认知和项目管理很强、方向收束清楚的周报，但本周硬交付和定量证据不足，仍处于从问题重构走向小样本验证的阶段。",
-    "oneThingProfessorShouldLearn": "老师本周最该吸收的一点是：无论 KG、MMKG、communication 还是医疗 RAG，核心问题都不是多收集标签、模态或引用，而是判断这些信息是否在下游关系、技能或医学推理中承担了不可替代的证据功能。",
+    "totalScore": 84,
+    "tier": "A",
+    "oneLineJudgment": "这是一份认知和路线重构很强、Brainary 转化意识清楚的周报，但当前硬证据仍不足；下周必须从 schema、extraction 和 retrieval 指标上交出小样本可复现结果。",
     "professorFollowUp": [
-      "要求下周不要继续横向扩展 Taxonomy/KG，必须交付两个 artifact：漏洞 multi-label schema v0.1 和 OSS association 小样本结果表。",
-      "要求 HepaChat 下周必须给出调参前后 20-30 case 的四项指标：reference-list 命中比例、clinical passage 命中比例、answer groundedness、关键守则漏召。",
-      "要求 Comm 把 RQ1-RQ3 转成一页最小实验表，包括输入、输出、GT、metric、失败模式；否则暂不进入大规模 benchmark。",
-      "建议老师只在两个点介入：确认漏洞 multi-label schema 是否符合安全语义；确认 agent influencer 的 RQ 优先级是否服务 Brainary communication module。"
+      "教授本周最该学习的一点是：高风险 RAG 和 KG 构建中，表面上有 citation、标签或多模态输入，不等于证据真的在下游关系和推理中发挥功能。",
+      "建议追问作者：下周三能否提交三个最小产物——漏洞 multi-label schema v0.1、OSS association 小样本结果表、HepaChat 20–30 case 调参对比表。",
+      "建议要求作者把 MMKG SOTA 判断整理成一页 diagnostic checklist，否则“很多 MMKG 其实退化成 text filtering”的判断无法被团队复用。",
+      "建议确认三条线优先级：若时间不够，应优先保 HepaChat 定量验证和 Taxonomy/KG 小样本 schema 验证，因为它们最接近可复用系统模块。",
+      "建议要求所有下周结果附带失败样本，而不只报告平均指标。"
     ]
   }
 }

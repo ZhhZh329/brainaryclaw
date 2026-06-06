@@ -1,54 +1,60 @@
 {
   "key": "person:zhang-jiayi:2026-03-22:weekly-score",
-  "generatedAt": "2026-05-24T11:36:54.844Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "815ea15948e98077faddec6752abc29ef7c3378013ded187bf9e7101b6b7db5e",
+  "generatedAt": "2026-06-06T13:16:50.716Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "656b6f33bb2631eb3316b05b7a41ecf32d29fd7db40f146069d5ecc426aeb80d",
   "result": {
     "hardProgress": {
-      "score": 17,
-      "reason": "Testing Agent端到端验证产出398个测试用例，87.4%通过率，并交付了三个核心模块约2360行代码，识别了三类失败模式；项目闭环方向确认但无代码落地。",
-      "missingEvidence": "缺少消融实验对照、纯LLM基线对比及多项目泛化性验证数据。"
+      "score": 18,
+      "reason": "本周有明确硬产出：在真实 Flask 后端项目上端到端运行，生成并执行 398 个测试用例，348 个通过，报告 87.4% 通过率；实现了 scenario_deriver.py、test_code_generator.py、bash_agent.py 三个核心模块；识别了 Oracle 缺失、Flask jsonify 类型转换、Mock 路径错误等具体失败模式。进展不是停留在设计层，而是有代码、运行结果和失败归因。扣分点是只验证了 1 个项目，且 50 个失败用例的分类仍未被重跑验证。项目闭环部分本周只是方向确认，没有代码落地。",
+      "missingEvidence": "缺少可复现的运行日志、测试报告链接、代码提交记录、398 个测试的分布明细、50 个失败用例的逐项证据，以及 convention 修复后是否真实提升通过率的重跑结果。"
     },
     "cognitiveIncrement": {
-      "score": 14,
-      "reason": "从实验观察中提炼出确定性分析优于纯LLM、Oracle是质量天花板、Agent预算可见性关键三个认知更新，并与上周对比深化了判断。",
-      "missingEvidence": "认知更新2（Oracle天花板）仅有案例支撑，缺乏逐层消融实验量化差距。"
+      "score": 13,
+      "reason": "认知增量较实：从实验中形成了三个可迁移判断，包括确定性分析更适合枚举、LLM 更适合翻译；Oracle 是测试质量上限；Agent 需要预算可见性而不是仅靠外部 max_iterations。这些不是泛泛反思，而是和本周实现、调试、失败模式直接关联。扣分点是部分判断仍是案例级证据，尚未通过严格 baseline、消融或跨项目验证。",
+      "missingEvidence": "缺少纯 LLM baseline 的定量对照、结构化 prompt 与 open-ended prompt 的 A/B 数据、有 Oracle 与无 Oracle 用例的质量差异统计，以及预算感知机制加入前后的效率指标。"
     },
     "cot2Depth": {
-      "score": 14,
-      "reason": "提出了四条CoT's CoT，其中确定性脚手架、Oracle分层降级、Agent预算主动收敛三条具有较高新颖性和可泛化性，闭环逻辑方向正确但新颖性稍弱。",
-      "missingEvidence": "闭环逻辑的证据等级仅为C（方向判断），需实际跑通闭环后升级。"
+      "score": 13,
+      "reason": "CoT's CoT 写到了方法抽象层：deterministic scaffolding + LLM completion、Oracle 分层降级、BudgetAwareScheduler、testing 作为闭环中介层。每条都尝试回答老师是否已知、为什么尚未自动化、未来沉淀形态，符合模板要求。最有价值的是预算可见性从工程 bug 上升到 agent 元认知模块。扣分点是有些新意判断依赖自述，尚未与现有系统或论文做系统区分。",
+      "missingEvidence": "缺少与现有测试生成工具、agent budget 管理框架、LLM testing 论文的具体差异表；缺少证明这些 CoT's CoT 可泛化到其他 agent 或其他代码任务的实验。"
     },
     "brainaryMapping": {
-      "score": 9,
-      "reason": "清晰映射了reasoning+risk融合、cognitive control的预算感知、workflow数据契约三项能力，并说明了新意与沉淀形式。",
-      "missingEvidence": "workflow管理映射仅基于当前Testing Agent，尚未在多Agent协作场景中验证通用性。"
+      "score": 8,
+      "reason": "Brainary 映射比较具体，覆盖 reasoning + risk modeling、cognitive control、workflow management 三类能力，并能把预算感知解释为认知资源分配，把诊断信号解释为 pipeline 数据契约。不是简单贴标签。扣分点是映射还停留在概念到模块的对应，缺少 Brainary 内部接口、状态变量、可复用组件边界的定义。",
+      "missingEvidence": "缺少 BudgetAwareScheduler 在 Brainary 中的标准输入输出定义；缺少 reasoning、risk modeling、cognitive control 三者如何组合成统一模块的架构图或接口协议；缺少 Brainary 既有模块如何调用该能力的说明。"
     },
     "monetaryValue": {
-      "score": 9,
-      "reason": "为四个任务分别估算了开发价值，总计~$7,000-$12,000，计算过程引用了行业报价和成本估算，并对未落地任务诚实标注暂不定价。",
-      "missingEvidence": "Spec Oracle模块价值估算基于假设的bug拦截提升比例，缺乏真实项目数据支撑。"
+      "score": 8,
+      "reason": "价值判断比一般周报更可用：给出了 USD 估值、小时费率、市场参考、Diffblue/Qodo/Copilot Autofix 等参照，并区分了当前开发价值和闭环潜在上限。也明确指出闭环设计本周不能定价。扣分点是 $7,000-$12,000 的本周开发价值主要按替代人工小时估算，缺少对真实客户付费、部署门槛、竞品性能差异、维护成本的校准；部分市场类比偏宏观。",
+      "missingEvidence": "缺少真实用户或客户需求访谈；缺少与 Diffblue、Qodo、Copilot Autofix 在同一任务上的能力对比；缺少单位测试通过率提升对应的经济价值估算；缺少本周实际投入小时与估值之间的核验记录。"
     },
     "projectManagement": {
-      "score": 14,
-      "reason": "两个项目均明确了阶段、时间、资源、Token成本、进度偏差和纠偏动作，任务1进度超出预期并制定了详细下一步，任务2识别出协作依赖。",
-      "missingEvidence": "任务2的里程碑仍较粗粒度，接口格式的具体草稿未产出。"
+      "score": 13,
+      "reason": "项目管理信息完整：区分了 Testing Agent 和项目闭环两个项目，列出阶段、实际投入、下周投入、M1-M3 里程碑、资源需求、API/token 成本、进度偏差和纠偏动作。也明确需要老师协调三人接口会。扣分点是协作项目仍处于想法阶段，接口会议没有具体时间和负责人；Testing Agent 的下周实验成功标准还可以更量化。",
+      "missingEvidence": "缺少具体代码仓库提交、issue 列表、实验记录位置；缺少第二个项目的选择标准和名称；缺少 RCA 同学、Debugging 同学的明确 owner；缺少每个里程碑的验收标准和失败预案。"
     },
     "nextAction": {
       "score": 9,
-      "reason": "下周动作具体可验证：任务1重跑、跨项目验证、spec接口梳理；任务2约协调会。",
-      "missingEvidence": "任务2的会议议程和目标输出物未预先定义清楚。"
+      "reason": "下周动作清楚且可验证：重跑 pipeline 验证 convention 修复后通过率是否超过 90%；在第二个非 Flask 项目运行；梳理 spec 接口规范；与 RCA 同学对齐 diagnosis signal 格式。这些动作能直接降低当前最大不确定性：泛化性、失败修复效果、上下游数据契约。扣分点是动作优先级和最小成功/失败判据还可进一步压缩。",
+      "missingEvidence": "缺少第二个项目的具体候选；缺少如果通过率没有提升时的诊断计划；缺少 spec 接口规范的草案字段；缺少 30 分钟接口会的具体时间、参会人和产出物格式。"
     },
     "evidenceQuality": {
-      "score": 4,
-      "reason": "实验数据与设计构想区分清晰，CoT's CoT标注了证据等级（A/B/C），大部分关键主张有实验日志或案例支撑。",
-      "missingEvidence": "Agent预算感知改善虽有执行日志，但未提供定量对比（如资源浪费比例），部分认知仍是观察性结论。"
+      "score": 3,
+      "reason": "周报提供了不少量化证据：398 个测试、87.4% 通过率、模块行数、技术占比、去重率、token 成本、证据等级。但是证据主要是自述摘要，没有原始日志、实验表、repo 链接、baseline 或可复现脚本。当前证据足以支持‘本周做出了原型并跑通一个项目’，不足以支持‘方法显著优于纯 LLM、可泛化、商业价值明确’。",
+      "missingEvidence": "缺少原始测试输出、失败用例清单、代码 diff、运行命令、目标项目信息、纯 LLM baseline、消融实验、跨项目结果、预算机制前后对照日志。"
     },
-    "totalScore": 90,
+    "totalScore": 85,
     "tier": "A",
-    "oneLineJudgment": "本周Testing Agent实验扎实、认知产出丰富，项目管理清晰，但闭环任务仍处方向确认阶段。",
-    "professorFollowUp": "建议重点关注Agent预算感知机制的通用化设计，并可协助协调闭环任务中Testing-RCA-Debugging三方的接口对齐会议。"
+    "oneLineJudgment": "这是一个高质量的单周进展：真实端到端原型已跑通，认知增量和 CoT's CoT 有项目价值，但关键证据仍停留在单项目自述，下一周必须用重跑、baseline 和第二项目验证把可信度拉上去。",
+    "professorFollowUp": [
+      "要求学生下周提交可复现实验包：运行命令、测试报告、失败用例分类表、代码提交链接。",
+      "优先追问纯 LLM baseline：同一 Flask 项目上，纯 LLM 端到端生成测试的覆盖、通过率、遗漏路径和成本是多少。",
+      "要求第二个非 Flask 项目必须跑通，否则目前的泛化性判断不能成立。",
+      "推动一次 Testing、RCA、Debugging 三方接口会，会议产出必须是 diagnosis signal 的 JSON schema，而不是口头共识。",
+      "让学生把 BudgetAwareScheduler 抽象成最小模块：输入预算状态，输出跳过、继续修复、停止并总结三类策略决策。"
+    ]
   }
 }

@@ -1,54 +1,108 @@
 {
   "key": "person:wu-junhao:2026-05-24:weekly-score",
-  "generatedAt": "2026-05-24T14:01:13.136Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "50ea8e22670c3a1f7f959b9ac2341f24947459914e87e7bd9d66a4876bb4b506",
+  "generatedAt": "2026-06-06T13:13:52.683Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "431e15b635851289d3577223a5a05116a99a75f3de4aa99256627d2e6a8214b7",
   "result": {
-    "hardProgress": {
-      "score": 10,
-      "reason": "本周完成了二十多组对照实验，覆盖KG注入通道、训练数据组合和KG内容结构等维度，但均未产出可交付的性能提升或明确结论，实验仍处于探索阶段。",
-      "missingEvidence": "缺少具体的实验配置细节、定量结果对比（如准确率、F1等）、基线方法与变体的性能差异数据。"
+    "week": "2026-05-24",
+    "name": "吴俊豪",
+    "scores": {
+      "hardProgress": {
+        "score": 12,
+        "reason": "本周有实际研究动作：完成二十多组围绕 KG 注入通道、训练数据组合、KG 内容结构的对照实验，并重读 DeepTumorVQA v2，提炼出 trace SFT、knowledge-first ordering、tool-augmented agent 等可迁移方案。但周报明确说明“没有走到 deliverable 层级的进展”，且没有给出实验表格、指标、模型输出样例或代码结果，因此硬进展主要停留在探索和诊断层。",
+        "missingEvidence": [
+          "二十多组实验的完整实验矩阵缺失",
+          "各实验的指标、baseline、对照结果缺失",
+          "所谓 KG-use signal 的量化定义缺失",
+          "训练是否完成、是否收敛、是否复现实验结果缺失",
+          "可交付物如代码、数据、报告、图表或模型 checkpoint 缺失"
+        ]
+      },
+      "cognitiveIncrement": {
+        "score": 13,
+        "reason": "认知增量较强。学生把 KG 从“额外知识源”重新理解为“program 的压缩”，并据此解释为什么 single forward pass 难以真正 use KG。这一重构能反向解释已有实验现象，也能导向新的技术路径：program unpack、工具调用、trace SFT、knowledge-first ordering。该增量不是泛泛总结，而是和自己的实验失败、DeepTumorVQA v2 的任务结构发生了连接。",
+        "missingEvidence": [
+          "缺少用具体实验结果证明旧 framing 失败、新 framing 更能解释数据的对照证据",
+          "缺少将 reframe 转化为可验证假设的明确列表",
+          "缺少哪些认知判断已经被实验支持、哪些仍是推测的边界划分"
+        ]
+      },
+      "cot2Depth": {
+        "score": 12,
+        "reason": "CoT² 层面有明显推进：学生不只是说如何让模型使用 KG，而是追问“use KG 的本质是什么”，并把问题上升为从压缩 program 到可执行步骤的 unpack 问题；同时将 perception-as-agent、4 阶段诊断 hierarchy、tool use、working memory/long-term memory 串到同一解释框架中。但这一层仍偏理论整合，尚未形成明确的机制设计或可执行决策规则。",
+        "missingEvidence": [
+          "缺少 program unpack 的形式化表示",
+          "缺少 agent 在不同阶段选择 evidence source 的决策机制",
+          "缺少内置 head 与外部 controller 两种路线的比较标准",
+          "缺少把 CoT² 观点落地到 architecture-level memory 的最小原型"
+        ]
+      },
+      "brainaryMapping": {
+        "score": 8,
+        "reason": "Brainary 映射较清楚。学生把本周工作映射到 KG memory 的抽象层与实例化层：抽象层对应 program 模板，实例化层对应具体病例中的 segment、volume、ratio、criterion 等中间产物，并识别出现有 KG schema 把两层混在一起的问题。这是有项目意义的映射。不过还没有给出 schema 拆分方案、接口定义或与 Brainary 其他模块的集成路径。",
+        "missingEvidence": [
+          "KG memory 抽象层与实例化层的具体 schema 缺失",
+          "Brainary 中该模块的输入输出接口缺失",
+          "与现有 architecture-level memory 的连接方式缺失",
+          "缺少最小实现计划或模块图"
+        ]
+      },
+      "monetaryValue": {
+        "score": 5,
+        "reason": "周报尝试做金额估计，并把价值来源解释为二十多组对照实验和 per-question 级 evidence 对 framing 修正的支撑。但估值主要是主观折算，没有实际可复用资产、可交付结果、性能提升或外部验证作为支撑。报告末尾关于估值的句子也不完整，降低了判断质量。",
+        "missingEvidence": [
+          "金额估值与具体产物之间的对应关系不足",
+          "缺少实验资产是否可复用、是否沉淀为代码或数据集的说明",
+          "缺少性能提升、错误减少或人工成本节省的量化证据",
+          "缺少与同类方法或现有 baseline 的价值比较",
+          "价值总结文本结尾不完整"
+        ]
+      },
+      "projectManagement": {
+        "score": 9,
+        "reason": "项目管理有基本结构：说明了当前阻碍，包括训练方式未定论、subtype 数据分布不均、architecture-level memory 尚未 ground；也提出了下周方向。但管理粒度仍不足，缺少时间表、优先级、验收标准、风险缓解方案和实验记录链接。当前更像研究思考日志，而不是可追踪的项目推进表。",
+        "missingEvidence": [
+          "缺少每项任务的负责人、截止时间和验收标准",
+          "缺少实验编号、日志路径、代码分支或数据版本",
+          "缺少对模型大小、数据不均衡、训练失败等风险的处理优先级",
+          "缺少是否暂停某些低收益实验路线的决策",
+          "缺少下周资源需求和计算预算说明"
+        ]
+      },
+      "nextAction": {
+        "score": 8,
+        "reason": "下周计划相对具体：完成 KG-use 训练，检查 lesion_volume、inter-segment comparison 等 measurement-driven 子任务是否能真正 use KG；推进 architecture-level memory 的调用接口；尝试 trace SFT 和 knowledge-first ordering。这些动作与本周认知增量一致，方向正确。但每个动作的成功判据还不够硬，例如什么指标算 use KG、最少训练量是多少、trace SFT 复现目标是什么，都没有明确。",
+        "missingEvidence": [
+          "KG-use 训练的验收指标缺失",
+          "trace SFT 的数据规模、训练设置、baseline 缺失",
+          "architecture-level memory 接口设计的交付形式缺失",
+          "没有明确下周必须完成的一项最高优先级任务",
+          "缺少如果训练失败时的备选路径"
+        ]
+      },
+      "evidenceQuality": {
+        "score": 2,
+        "reason": "证据质量偏弱。周报引用了 DeepTumorVQA v2 paper，并给出若干具体任务例子，如 lesion_volume、inter-segment comparison、fatty liver 分级、largest_lesion_location，这说明不是纯概念空转。但实验部分没有任何定量结果、样例、表格、错误分析截图或日志，无法独立判断二十多组实验是否成立，也无法判断 KG-use signal 是否真实。",
+        "missingEvidence": [
+          "实验结果表缺失",
+          "per-question evidence 的样例缺失",
+          "模型回答前后对比缺失",
+          "KG 调用率、正确率、错误类型统计缺失",
+          "训练配置、数据划分、随机种子、模型版本缺失"
+        ]
+      }
     },
-    "cognitiveIncrement": {
-      "score": 13,
-      "reason": "认知增量显著，将KG的理解从“额外知识源”修正为“对一类program的压缩”，并结合DeepTumorVQA paper和实验观察，认识到让模型使用KG需将program解包为可执行步骤，该框架转换深刻且逻辑自洽。",
-      "missingEvidence": "缺乏对该认知转换的定量验证或具体案例支持，例如通过实验数据展示新旧框架下模型行为的差异。"
-    },
-    "cot2Depth": {
-      "score": 13,
-      "reason": "元认知深度突出，清晰反思了之前将KG使用视作工程优化问题的局限性，并提升到program解包与agent元认知流程的层次，与perception-as-agent框架形成对接。",
-      "missingEvidence": "缺少对元认知过程的显式记录，如思维转变的关键触发事件或对照分析。"
-    },
-    "brainaryMapping": {
-      "score": 8,
-      "reason": "明确将KG memory的抽象层与实例化层映射到program模板和具体病案的中间产物，并指出了当前设计混叠的问题，对Brainary能力分层有直接贡献。",
-      "missingEvidence": "未展开说明该映射如何与其他Brainary模块（如感知、决策）协同，及具体拆分方案的技术细节。"
-    },
-    "monetaryValue": {
-      "score": 5,
-      "reason": "自评估值¥6,000-12,000与折算人工成本¥3-4万，但实验未产出可交付成果，估值偏高且依据不充分。",
-      "missingEvidence": "缺少对工作量的精细核算、市场可比案例，以及该阶段探索性工作的商业转化前景评估。"
-    },
-    "projectManagement": {
-      "score": 13,
-      "reason": "问题识别精准（训练方法未定、数据不均衡、架构落地困难）、阻碍分析透彻，整体项目管理思路清晰。",
-      "missingEvidence": "无重大缺失，可补充风险预案或备选方案。"
-    },
-    "nextAction": {
-      "score": 9,
-      "reason": "下周计划具体、可执行，紧贴认知修正与实验瓶颈，验证capacity、设计调用接口、复现trace SFT三条路径优先级合理。",
-      "missingEvidence": "无。"
-    },
-    "evidenceQuality": {
-      "score": 2,
-      "reason": "虽提及部分观察现象（如测量类子任务有KG-use信号、分类类子任务被误导），但未提供任何数据、图表或统计分析，证据说服力不足。",
-      "missingEvidence": "缺少per-question级别的定量结果、错误案例分析、实验设置详细说明及可视化展示。"
-    },
-    "totalScore": 73,
-    "tier": "B",
-    "oneLineJudgment": "本周认知框架有重要修正，但实验进展未达可交付水平，证据缺失较多。",
-    "professorFollowUp": "建议教授重点关注该生对KG认知的修正是否在实验中得到验证，并要求下周提供具体实验数据以支撑其结论，同时督促architecture设计尽快落地。"
+    "totalScore": 69,
+    "tier": "C",
+    "oneLineJudgment": "本周最大的价值是把 KG 从“外部知识”重构为“压缩 program”并导向 agentic execution，但硬结果和证据链不足，尚不能证明路线有效。",
+    "professorFollowUp": [
+      "要求学生下周只选择一个最高优先级问题：证明 trace SFT 或 program-style execution 是否能提升真实 KG-use，而不是同时铺三条线。",
+      "要求提交一张实验矩阵表：包含二十多组实验的设置、数据、指标、结果、失败原因和结论。",
+      "要求定义“模型真的 use KG”的可观测指标，例如 KG 调用率、答案依赖 KG 的比例、去除 KG 后性能下降、错误类型变化。",
+      "要求把“抽象层 KG memory / 实例化层 KG memory”画成 schema 和接口图，明确哪些字段属于 program template，哪些字段属于 case-specific intermediate state。",
+      "要求在 architecture-level memory 的 controller 与 model-internal head 两条路线之间给出选择标准，而不是继续停留在开放问题。"
+    ]
   }
 }

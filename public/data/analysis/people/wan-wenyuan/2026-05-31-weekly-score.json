@@ -1,54 +1,103 @@
 {
   "key": "person:wan-wenyuan:2026-05-31:weekly-score",
-  "generatedAt": "2026-05-31T12:00:47.495Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "c6f23dd6105863d8174f2b4427fbc0e7a9a5178d52d480ec41a64122f55101db",
+  "generatedAt": "2026-06-06T13:12:39.208Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "d828974a6e30bc9925fcb5211ff29baf47931bc7db40fda51fa4767415a15e37",
   "result": {
     "hardProgress": {
-      "score": 7,
-      "reason": "本周主要产出为框架重构，明确了 attention-memory-imagination 循环的模块链路与交互逻辑，并提出了 memory-conditioned visual evidence activation 和 3D imagination 的分层路线。但未新增定量实验、可运行模块或新 benchmark，硬进展仍停留在概念阶段。",
-      "missingEvidence": "缺少新模块的最小原型实现、定量对比数据或系统 trace 示意，无法评估框架的实际有效性。"
+      "score": 10,
+      "reason": "本周的硬进展主要是把原来的 text-box memory / visual evidence router 重构为 attention-memory-imagination 循环，并定义了 perception、dynamic external attention、internal attention、relevance extraction、working memory update、long-term memory update、3D imagination 等模块关系。它有系统设计产出，但没有新实验、没有可运行原型、没有新增 benchmark、没有新的定量结果，因此硬进展属于“框架重构型”，不是“实验验证型”。",
+      "missingEvidence": [
+        "缺少本周新增实验结果。",
+        "缺少 attention-memory loop 的最小可运行 trace。",
+        "缺少 task-region similarity 的具体实现和输出样例。",
+        "缺少 3D imagination / VGGT 对接结果。",
+        "缺少 schema 的实际样例数据。"
+      ]
     },
     "cognitiveIncrement": {
-      "score": 12,
-      "reason": "认知更新明确：从孤立模块转向 attention-memory-imagination 持续交互循环，重新定位 text-box memory 为 external attention 候选、强调 evidence activation 的必要性，并将 3D imagination 从演示价值提升到空间鲁棒性检验工具。增量可解释性强，直接修正了前期不稳定路线。",
-      "missingEvidence": "暂无。"
+      "score": 13,
+      "reason": "本周认知增量较明确：从“是否把 bbox / crop / visual evidence 加进 context”上移到“系统如何动态决定哪些 evidence 应该被激活”。同时把 attention、memory、imagination 三者从孤立模块重构为认知循环，并明确 3D imagination 应该放在 relevance selection 之后，而不是作为全局 3D 重建。这是有效的问题重定义。",
+      "missingEvidence": [
+        "缺少新认知如何改变具体实验设计的完整对照表。",
+        "缺少哪些旧路径被正式停止、哪些新路径进入验证队列的优先级排序。",
+        "缺少认知增量对应的可执行假设列表。"
+      ]
     },
     "cot2Depth": {
-      "score": 10,
-      "reason": "三条 CoT‘s CoT 均分析了“为什么尚未被自动化科研吸收”“为什么没变成系统”，并给出沉淀建议与证据等级，指出关键卡点在可执行 schema 缺失。但分析较依赖已有实验现象，部分回答（如老师原本不知道）为否定，推理深度的突破性不足。",
-      "missingEvidence": "缺少将分析映射到具体模块运行逻辑的最小实例，仅停留在因果链描述。"
+      "score": 12,
+      "reason": "CoT's CoT 写出了三个较清楚的二阶判断：attention-memory 是循环系统，3D imagination 应该服务于被选中目标的空间假设检验，internal attention 可先工程化为 task-region similarity。每条都回答了为什么还没有自动化、应沉淀为什么模块、证据等级是什么。深度较好，但仍主要停留在路线分析，没有形成可验证的因果链或失败预测。",
+      "missingEvidence": [
+        "缺少每个 CoT's CoT 对应的最小实验设计。",
+        "缺少如果判断错误会出现什么反证现象。",
+        "缺少自动化科研 workflow 的具体输入输出协议。",
+        "缺少对已有替代路线的系统比较。"
+      ]
     },
     "brainaryMapping": {
       "score": 9,
-      "reason": "清晰映射了 memory、reasoning、calibration、cognitive control、tool orchestration、workflow、benchmark 七个 Brainary 能力维度，并解释了接口缺失导致未能系统化的原因，与 Brainary 整体架构对齐度高。",
-      "missingEvidence": "暂无。"
+      "reason": "Brainary 映射较完整，覆盖 memory、reasoning、calibration、cognitive control、tool orchestration、workflow management、benchmark / evaluation，并能说明最终可沉淀为 relevance selector、attention trace logger、object-centric 3D imagination module 等资产。主要不足是还没有把这些能力映射成 Brainary 内部明确接口或责任边界。",
+      "missingEvidence": [
+        "缺少 Brainary 现有模块接口与本周新模块的对齐表。",
+        "缺少各模块由谁维护、如何接入、如何评估的系统边界。",
+        "缺少 Brainary 中 memory schema 的字段定义样例。"
+      ]
     },
     "monetaryValue": {
-      "score": 7,
-      "reason": "为三个子任务分别估算了商业价值（70 万、80 万、60 万），基于人力成本与复用预期，方法合理。但均属内部估算，缺乏外部市场数据或类似组件定价参考，且本周无新实验支撑，价值假设未验证。",
-      "missingEvidence": "缺少成本效益的定量模型、对比基线或潜在用户成本节省的具体场景。"
+      "score": 6,
+      "reason": "周报给出了三个方向的人民币估值，并尝试用研发人力、复用价值、工具链成本来解释。但估值仍偏主观，缺少真实客户需求、竞品替代成本、可交付资产范围、商业落地路径和验证门槛。因此只能认为有价值判断意识，但证据不足以支持具体金额。",
+      "missingEvidence": [
+        "缺少买单方的具体使用场景和痛点证据。",
+        "缺少与现有多模态 agent / robot perception 系统的替代成本比较。",
+        "缺少估值对应的可交付物定义。",
+        "缺少如果实验失败时资产残值是多少的判断。",
+        "缺少从论文价值、工程价值、产品价值之间的拆分。"
+      ]
     },
     "projectManagement": {
-      "score": 11,
-      "reason": "项目管理描述详尽，包含原计划与实际差距、偏差归因（认知上移）、纠偏动作、资源需求与关键路径。但进度明确不符合预期，且依赖外部确认（老师、Chunhan），主动推进的工程产出偏少。",
-      "missingEvidence": "缺少缓冲计划或并行方案以防外部依赖延迟；未明确若下周原型未完成时的备选动作。"
+      "score": 13,
+      "reason": "项目管理信息较充分：写清了原计划、实际完成、偏差原因、投入时间、下周投入、里程碑、资源、依赖、关键路径、成本瓶颈和纠偏动作。尤其明确承认本周没有完成原定 visual router / crop 对比实验，而是因问题上移转向框架重构。主要不足是里程碑仍偏描述性，缺少明确验收标准。",
+      "missingEvidence": [
+        "缺少 6 月上旬系统图和 schema 的验收标准。",
+        "缺少 task-region scorer 的完成定义。",
+        "缺少下周如果时间不足时的优先级裁剪方案。",
+        "缺少风险清单的量化排序。",
+        "缺少 VGGT 是否进入关键路径的决策点。"
+      ]
     },
     "nextAction": {
-      "score": 9,
-      "reason": "三个任务均给出了下周最小可验证动作：系统图与 schema、题型-策略映射表、task-region similarity 最小方案，动作具体、可检查，并与卡点直接对应。",
-      "missingEvidence": "未量化验证成功的标准（如地区相似度阈值），也未明确若最小动作失败将如何调整。"
+      "score": 8,
+      "reason": "下周动作相对具体，包括画系统图、定义模块 I/O 和状态更新、整理最小 schema、做题型到 evidence / imagination 的映射、提出 task-region similarity 最小实现方案。这些动作能把概念推进到原型前状态。扣分点是还没有明确一个最小实验必须在下周跑出来，也没有给出可验收的样例数量或成功标准。",
+      "missingEvidence": [
+        "缺少下周必须产出的最小可运行 demo。",
+        "缺少具体 benchmark 子集规模。",
+        "缺少 task-region similarity 的候选算法选择标准。",
+        "缺少判断 schema 是否足够好的验收指标。",
+        "缺少失败时的备选方案。"
+      ]
     },
     "evidenceQuality": {
       "score": 3,
-      "reason": "本周零新增实验，所有论断依赖旧数据（5.17、5.24）和逻辑推演，CoT’s CoT 证据等级多为 B/C，框架重构缺乏新定量支撑，说服力受限。",
-      "missingEvidence": "需要任何新获取的数值结果、运行日志或可视化示例，以证明新框架的可信度。"
+      "reason": "证据质量中等偏低。本周没有新增实验、数据或 benchmark，主要依赖报告中提到的 5.17 full-set ablation 和 5.24 visual evidence 分析来支撑路线重构。优点是作者明确区分了已有实验事实与本周 proposal，没有编造新 accuracy；缺点是本周核心新判断仍缺少直接证据。",
+      "missingEvidence": [
+        "缺少本周新增定量实验。",
+        "缺少 ablation 表格或具体样例支撑。",
+        "缺少不同题型下 evidence activation 的统计结果。",
+        "缺少 3D imagination 方向的任何运行证据。",
+        "缺少 task-region similarity 是否有效的初步验证。"
+      ]
     },
-    "totalScore": 68,
-    "tier": "C+",
-    "oneLineJudgment": "本周完成了重要的概念重构，将孤立模块升级为 attention-memory-imagination 动态循环，但未产生任何新实验证据，硬进展薄弱，整体处于路线探索与设计阶段。",
-    "professorFollowUp": "请确认：1）attention-memory-imagination 闭环是否作为当前主线的正确收束；2）3D imagination 应优先走显式 depth/point map 还是先探索 latent object-centric 表示；3）是否接受下周仅交付系统图与 schema，暂不强制要求新实验数据。"
+    "totalScore": 74,
+    "tier": "B",
+    "oneLineJudgment": "这是一份认知重构质量较高但实验推进不足的周报：主线从静态 evidence 填 context 上移到 attention-memory-imagination 循环是有价值的，但本周还没有把新框架压成可运行原型或新证据。",
+    "professorFollowUp": [
+      "请确认 attention-memory-imagination 是否应该成为当前主线，还是先收敛到 memory-conditioned visual evidence activation。",
+      "请要求下周必须交付一个最小 schema 样例和一条完整 attention trace，而不只是系统图。",
+      "请让学生明确 task-region similarity 第一版到底用什么信号实现：文本 embedding、视觉 embedding、cross-attention map，还是人工规则。",
+      "请暂时限制 3D imagination 的投入，只允许作为被 attention 触发的子模块做小规模题型验证。",
+      "请要求其把 LMEE-Bench 题型拆成三类：必须 dynamic attention、可能需要 3D imagination、暂时不值得做 3D，并给出每类至少若干样例。"
+    ]
   }
 }

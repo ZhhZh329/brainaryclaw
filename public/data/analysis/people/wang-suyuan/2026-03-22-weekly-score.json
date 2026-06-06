@@ -1,54 +1,54 @@
 {
   "key": "person:wang-suyuan:2026-03-22:weekly-score",
-  "generatedAt": "2026-05-24T11:36:16.366Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "c41d5c1f1d7cd2f526220d8db4649539a93e50fe11b64dd501f600dadc3ccf50",
+  "generatedAt": "2026-06-06T13:13:00.011Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "b8ac361b66250ef77dffc9affbb54a076a5059259f589c5ff3aa3e0f1f982b56",
   "result": {
     "hardProgress": {
-      "score": 16,
-      "reason": "本周在任务一（GNN-LLM解释器）上完成了PrimeVul数据集上的效果测试和三种模型对比，发现空间锚点增强方法显著提升TPR和IoU，并完成了论文方法与实验部分的修改；任务二设计了分治-聚类-综合架构。硬进展扎实，但未提供具体的提升数值。",
-      "missingEvidence": "未提供TPR和IoU提升的具体数值及对比表格。"
+      "score": 15,
+      "reason": "本周有明确硬进展：完成 PrimeVul 数据集上的解释器与基线测试、对比三种开源模型、修改论文方法和实验部分、整理 Case；并提出“漏洞行号作为空间锚点”提升 TPR 和 IoU 的实验发现。第二个方向目前主要是方法构思，形成了 Map-Reduce Agent 架构，但还没有真实案例验证或原型实现。",
+      "missingEvidence": "缺少具体实验表格、TPR/IoU 提升幅度、三种模型名称、基线设置、Case 示例、论文修改后的版本链接；RCA Agent 缺少原型、输入输出样例和真实跨文件漏洞验证。"
     },
     "cognitiveIncrement": {
-      "score": 14,
-      "reason": "本周产生了两个明确的认知更新：①显式空间标记（行号+锚点）能极大收敛LLM的解空间；②LLM是噪音放大器，GNN图结构必须严格剪枝。二者均源自实验，对后续研究有指导意义。",
-      "missingEvidence": "认知更新2中“脏数据输入→幻觉输出”的案例或数据支撑未详细给出。"
+      "score": 12,
+      "reason": "认知增量较清楚：从一般 Prompt 无效推进到“行号+关键锚点”能收敛 LLM 解空间；从 LLM 作为推理器推进到 LLM 也是噪音放大器，因此 GNN 图结构需要剪枝。这些认知与本周实验和后续系统设计有直接关联。",
+      "missingEvidence": "缺少对比实验来证明是空间锚点而不是其他提示因素导致提升；缺少噪音剪枝前后对幻觉率、解释质量或定位准确率的量化对比。"
     },
     "cot2Depth": {
-      "score": 14,
-      "reason": "对认知更新进行了深层归因：CoT1从Transformer底层自注意力机制的空间信息丢失，解释了LLM处理图结构的困境；CoT2指出复杂RCA的中间态数据结构未被严谨定义。分析深入，触及本质缺陷。",
-      "missingEvidence": "CoT1关于Transformer空间位置信息丢失的理论分析未引用具体文献或实验证明。"
+      "score": 12,
+      "reason": "CoT’s CoT 有一定深度，尤其是把 LLM 处理代码图结构失败归因到图到序列转换导致拓扑语义丢失，而不是简单归因于模型能力弱；RCA 方向也从人工专家流程抽象出 Map-Reduce 分治范式。整体已超出表层经验总结，开始形成可沉淀的研究问题。",
+      "missingEvidence": "第一条虽然标为 A 级证据，但周报中没有展示实验细节；第二条明确是 C 级推测，缺少真实跨文件 CVE 的手工流转记录、失败案例和中间态 JSON 设计。"
     },
     "brainaryMapping": {
-      "score": 8,
-      "reason": "明确指出与Brainary的Cognitive Control、Workflow Management、Evaluator能力对应，并分析了未系统化的原因（RAG粒度粗，缺乏动态切换分析视角的Tool Orchestration）。关联清晰。",
-      "missingEvidence": "缺乏具体的Tool Orchestration设计草案或映射架构图。"
+      "score": 7,
+      "reason": "报告能把工作映射到 Brainary 的 Cognitive Control、Workflow Management、Evaluator，并指出当前 RAG 粒度过粗、缺乏针对漏洞类型动态切换分析视角的问题。也提出 RCA 可成为 Ground Truth 评测器、细分漏洞认知模块可成为 Agent Module。",
+      "missingEvidence": "缺少 Brainary 内部具体模块接口、memory schema 草案、workflow 节点定义、Evaluator 输入输出格式，以及这些能力如何接入现有 Brainary 系统的执行路径。"
     },
     "monetaryValue": {
-      "score": 8,
-      "reason": "对三个任务分别给出了1-3万、150万/年、1000万/年的价值估算，计算方法与参考依据合理，尤其突出了任务二、三的商业潜力。",
-      "missingEvidence": "任务二、三的市场规模或类似工具定价的数据未提供，但依据可接受。"
+      "score": 7,
+      "reason": "周报单独判断了三个题目的价值，并区分了过渡性论文工作、RCA Benchmark、细粒度漏洞认知 Agent。RCA 的人力替代估算和 Agent SaaS 估算有基本计算逻辑，能帮助判断哪些项目应继续投入、哪些应收尾停止。",
+      "missingEvidence": "商业估值缺少真实客户访谈、采购证据、竞品价格来源、愿付费场景验证；任务一的买单方描述不清；任务三的 1000 万 SaaS 收入推导较强假设，缺少转化率、部署成本、误报责任和合规成本估算。"
     },
     "projectManagement": {
-      "score": 13,
-      "reason": "提供了两个项目的详细管理信息，包含阶段、计划与实际对比、资源依赖、纠偏动作等，任务一进度符合预期，任务二明确了依赖刘老师团队并计划下周开会。",
-      "missingEvidence": "任务二未设定关键里程碑，时间规划较为粗略。"
+      "score": 12,
+      "reason": "项目管理信息较完整：列出了阶段、原计划与实际完成、投入时间、下周时间、关键截稿日期、资源、依赖、成本和纠偏动作。GNN-LLM 项目接近投稿，有明确 3 月 26 日 ASE 截稿；RCA 项目也识别出依赖刘老师团队基础 Agent 框架。",
+      "missingEvidence": "缺少论文投稿前的具体检查清单和风险缓冲；RCA 项目没有里程碑时间点；两个项目都没有定义完成标准；‘当前项目不是关键路径’与投稿临近之间存在管理判断不充分；项目字段有重复命名问题。"
     },
     "nextAction": {
-      "score": 9,
-      "reason": "下周行动明确具体：任务一完成投稿；任务二手工模拟2-3个跨文件案例验证逻辑；项目管理中计划约刘老师团队开会。动作可验证且与进度匹配。",
-      "missingEvidence": "任务二手工模拟的成功标准未定义。"
+      "score": 8,
+      "reason": "下周动作基本可执行：GNN-LLM 完成全稿打磨并投稿；RCA 方向梳理 2-3 个跨文件复杂漏洞 Case，手工模拟 Workflow；并计划约刘老师团队和雨涛学姐开会。这些动作能验证论文收尾和新方向闭环。",
+      "missingEvidence": "缺少具体日期、验收标准和输出物格式。例如投稿前应交付什么版本、手工模拟 Case 应产出什么表格或 JSON、会议希望达成什么决策。"
     },
     "evidenceQuality": {
-      "score": 4,
-      "reason": "关键认知更新（空间锚点）有实验/数据支撑（证据等级A），复杂RCA的架构仅处于推测期（等级C），整体证据链基本充分但实验细节未展示。",
-      "missingEvidence": "任务一的详细实验数据、对比图表未在周报中呈现。"
+      "score": 3,
+      "reason": "报告包含部分证据意识，明确给 CoT’s CoT 标注了 A/C 证据等级，也提到 PrimeVul 测试、三种开源模型、TPR 和 IoU 提升。但多数关键判断仍停留在文字总结，没有附带可复查数据。",
+      "missingEvidence": "缺少实验结果表、消融实验、指标定义、样本数量、模型配置、失败案例、论文或代码链接、相关论文清单、商业估值依据链接。"
     },
-    "totalScore": 86,
-    "tier": "A",
-    "oneLineJudgment": "本周在GNN-LLM解释器任务上取得实验突破并完成论文修改，认知增量深刻；但新提出的RCA框架尚处构思，证据细节不足，项目管理需加强里程碑设定。",
-    "professorFollowUp": "任务二强依赖刘老师团队资源，建议尽快安排跨组会议明确合作与框架，并督促学生补充实验对比数据以强化证据支撑。"
+    "totalScore": 76,
+    "tier": "B",
+    "oneLineJudgment": "这一周有真实论文收尾进展和较强的研究抽象，但关键实验数据、接口设计和新方向验证证据不足，整体属于有价值但尚未充分可审计的一周。",
+    "professorFollowUp": "老师最应该追问两件事：第一，要求学生给出空间锚点提升 TPR/IoU 的完整实验表和消融结果，确认论文投稿价值；第二，要求下周 RCA 方向必须交付 2-3 个跨文件 CVE 的手工 Map-Reduce 流转样例和中间态 JSON 草案，否则该方向仍只是概念判断。"
   }
 }

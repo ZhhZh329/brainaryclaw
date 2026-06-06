@@ -1,31 +1,199 @@
 {
   "key": "person:wu-zhangfa:2026-05-10:longitudinal",
-  "generatedAt": "2026-05-24T11:52:40.640Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "8ea4a56331ec0f95e2921d8f3e8cec58208991386423350101e0ea27fa0a9767",
+  "generatedAt": "2026-06-06T13:15:03.344Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "f03ef771429bbaacb44d2eccbe647cfa25a790530dc30e6ceed81bb53f951850",
   "result": {
-    "overallTrajectory": "学生从第1周的方法论收敛（RTSB+ambiguity-aware）开始，逐步深入到弱监督异常检测的具体模型设计与验证，第2周发现静态锚点污染和训练动力学问题，第3周通过实验删除不可靠分支并沉淀权限审计规则，第4周将工作明确拆分为两个独立实验系统（FlowS-SCAN对比平台和WASA鲁棒标签机制验证），并设计机制级消融实验。研究能力从选择主线到深入机制证明，认知从宏观世界观到微观权限边界，但核心卡点始终是‘组件是否真正有效’的实验验证不足，项目管理从单线发展为多线且能清晰区分。整体呈上升趋势，但仍需完成关键实验以突破验证瓶颈。",
-    "stageByWeek": {
-      "2026-04-19": "收敛主线，提出统一控制律，分离review位面，识别失败模式，但尚未实验验证。",
-      "2026-04-26": "审查模型适配性，修正训练动力学，发现静态锚点污染并形成审计意识，清理代码。",
-      "2026-05-03": "实验删除suspicious分支，明确核心保守PU逻辑，沉淀权限审计规则，计划多seed和消融。",
-      "2026-05-10": "拆分FlowS-SCAN和WASA两套实验系统，设计机制消融，提出具体Brainary Agent，细化行动。"
+    "overallTrajectory": "总体看，这名学生在最近四周不是单纯变忙，而是在从“堆模块、修代码、跑结果”转向“识别训练信号权限、失败模式、机制命题、实验协议和自动化沉淀”；但目前研究能力的主要增量仍集中在问题重构和实验设计，真正完成的多 seed、消融、baseline 主表等硬证据还不足，需要下一周把认知闭环转成结果闭环。",
+    "headline": "研究判断力在增强，但需要用完成的机制级实验把判断力落地。",
+    "overviewSentence": "他正在从工程推进者转向机制审计型研究者，但关键验证表和多 seed 证据仍缺口明显。",
+    "fourWeekTimeline": [
+      {
+        "week": "2026-04-19",
+        "metacognition": "这一周的元认知增量是能识别“review 冲突”其实来自审查位面不同，并能意识到多分支反复修补的根因是“方法世界观混杂”，不是单个 loss 或代码错误。",
+        "valueJudgment": "价值判断从“哪个分支能跑”提升到“哪个分支值得作为论文主线继续押”，并明确把 RTSB 骨架加 ambiguity-aware 控制作为主线，说明他开始区分工程可运行性和科研主线价值。",
+        "projectManagement": "项目管理上有明确收口动作和最小验证计划：固定 RTSB 骨架，对比 single-prior trainer 与 ambiguity-aware trainer，在 2%、5%、10% 异常率下各跑至少 3 个 seeds；但本周证据主要是设计和重构方案，未看到真实实验结果。",
+        "evidence": "报告写到“不再把 projector/core-set、semantic-midroute/NSTB、RTSB 三条路线混着修”，并计划比较 AUCPR、AUCROC、F1、prior 轨迹和污染相关指标。"
+      },
+      {
+        "week": "2026-04-26",
+        "metacognition": "这一周进一步识别到“静态锚点污染”这一更隐蔽的失败模式，说明他不只防动态伪标签自举，也开始审查 frozen seed、static summary、positive trust 等看似安全的固定规则。",
+        "valueJudgment": "他把方法定位为“保守、可审计的弱监督异常检测框架”，价值判断更偏向训练信号可靠性，而不是模块复杂度；这是科研价值判断的进步。",
+        "projectManagement": "有阶段化训练、encoder-space seed audit、代码清理和主线精简版三个可检查交付；下周动作也能对应 seed audit、staged training、threshold modes 三个验证问题。但缺少这些改动完成后的消融结果。",
+        "evidence": "报告列出 warmup only、main loss ramp-up、full main training，并新增 main_ramp_epochs、warmup_tail_weight、residual_gate freeze/unlock、pair-rank ramp 等机制。"
+      },
+      {
+        "week": "2026-05-03",
+        "metacognition": "这一周出现较强研究能力信号：他用实验发现 lambda_suspicious=0.0 最好，并据此删除 suspicious-unlabeled 牵引分支，把“少做一步”理解为更正确的训练权限控制。",
+        "valueJudgment": "价值判断从“模块是否合理”提升到“该信号是否拥有不该拥有的梯度权限、标签权限或写回权限”；他开始把负结果转化为方法边界和 Brainary 可自动化规则。",
+        "projectManagement": "有明确硬交付：删除 lambda_suspicious 相关配置、loss、日志字段，收敛为 positive trust、soft-core normal、structural energy 三类核心 loss；但多 seed、噪声比例、loss 消融仍是下周计划，尚未形成结果表。",
+        "evidence": "报告写到“λ_suspicious=0.0 时效果最好”，并提出“unlabeled high-score signal 默认不能进入正类 BCE”“只要参与 backward，也要视作训练权限”。"
+      },
+      {
+        "week": "2026-05-10",
+        "metacognition": "这一周的元认知从单个实验结果进一步提升到“机制命题才是实验最小单位”，并且能主动承认上一版周报把 FlowS-SCAN baseline 和 WASA 消融混写是管理问题。",
+        "valueJudgment": "价值判断更加清楚：FlowS-SCAN 的价值在公平、可复现的 baseline 协议；WASA 的价值在证明鲁棒弱监督标签机制和权限边界，而不是只追求单次 AUCPR/F1。",
+        "projectManagement": "项目拆分明显改善：FlowS-SCAN 有一键运行 DeepOD baseline、YAML 管理、result.json 和汇总 CSV；WASA 有 noisy_label_ratio、branch-level diagnostics 和消融矩阵。但大多数实验仍处于“正在跑/应重点跑”，主表和消融结论尚未交付。",
+        "evidence": "报告明确区分“FlowS-SCAN：外部 baseline 对比实验”和“WASA：鲁棒标签主体方法的机制消融实验”，并列出下周最小产出为 baseline 主表、result.json、汇总 CSV，以及 WASA 多 seed 与消融表。"
+      }
+    ],
+    "metacognitionChange": {
+      "summary": "元认知有连续上升：从 04-19 的分支收口和 review 位面分离，到 04-26 的静态锚点污染，再到 05-03 的训练权限和梯度权限审计，最后到 05-10 的机制命题驱动实验设计。这个变化说明他更能识别认知盲区、失败模式和证据边界；但他还需要把这些判断稳定地绑定到完成的实验表，而不是停留在计划和叙事层。",
+      "byWeek": [
+        {
+          "week": "2026-04-19",
+          "change": "能区分“工程闭环 review”和“论文假设 review”，并识别自己过去在多方法世界观之间来回补丁式迭代。"
+        },
+        {
+          "week": "2026-04-26",
+          "change": "从防动态伪标签污染扩展到防静态锚点污染，说明失败模式识别更细。"
+        },
+        {
+          "week": "2026-05-03",
+          "change": "开始用实验负结果修正方法边界，并把模块删除解释为训练权限降级，而不是失败。"
+        },
+        {
+          "week": "2026-05-10",
+          "change": "开始把实验组织单位从“结果”改为“机制命题”，并主动拆分 baseline comparison 与 main-method ablation。"
+        }
+      ],
+      "currentLevel": "当前接近“研究设计者”和“机制审计者”的水平：能提出假设、识别失败模式、定义最小验证动作和自动化沉淀点；但还没有充分展示“按计划完成验证并根据结果改写主张”的闭环能力。",
+      "strongestSignal": "最强信号是 05-03：他根据 suspicious-unlabeled traction 无正收益的实验结果删除分支，并抽象出“高能量未标注样本不能默认拥有正类训练权限”的规则。",
+      "nextLift": "下一步提升不是再提出新概念，而是把每个机制命题预注册成一张消融表：假设、对照、固定变量、判定指标、支持标准、失败后动作，并在下一周交付完成结果。"
     },
-    "trendScores": {
-      "topicFocus": 4,
-      "hardProgress": 4,
-      "cognitionDepth": 5,
-      "cotCOTMaturity": 5,
-      "brainaryMapping": 4,
-      "valueReasoning": 5,
-      "projectManagement": 4,
-      "nextActionQuality": 5
+    "valueGrowth": {
+      "summary": "科研/项目价值判断明显更清楚：他逐步从“可跑、复杂、模块多”转向“问题设定是否真实、训练信号是否可靠、机制是否可证、是否能沉淀为自动化科研能力”。价值判断的稳定核心正在形成，但仍需避免每周方法命名和项目边界漂移。",
+      "byWeek": [
+        {
+          "week": "2026-04-19",
+          "valueJudgment": "认为值得做的是统一 prior uncertainty 控制律，而不是继续堆不同代码分支；价值依据是它能统一 clean seed、nnPU、trust、refresh 等训练逻辑。"
+        },
+        {
+          "week": "2026-04-26",
+          "valueJudgment": "认为值得投入的是保守、可审计的弱监督异常检测框架；价值依据是能暴露 frozen seed、positive trust、normal candidate 等训练信号风险。"
+        },
+        {
+          "week": "2026-05-03",
+          "valueJudgment": "认为值得沉淀的是 Conservative Energy-based PU Learning 和 Training Signal Permission Auditor；价值依据是能把负结果转成方法边界、workflow、benchmark 和 Brainary memory。"
+        },
+        {
+          "week": "2026-05-10",
+          "valueJudgment": "认为 FlowS-SCAN 的价值是可信 benchmark 自动化，WASA 的价值是机制级鲁棒标签验证；价值判断比前几周更能区分项目层级和证据类型。"
+        }
+      ],
+      "currentValueFunction": "当前他的价值函数可以概括为：一个科研问题值得继续投入，当且仅当它对应清晰的问题设定，有可被消融验证的机制命题，有明确失败模式和证据边界，并且能沉淀为 Brainary 的可复用自动化能力；单次分数高、模块复杂或代码能跑都不足以证明值得。",
+      "improvementSignals": [
+        "开始把“能跑”和“值得投”分开。",
+        "开始把负结果视为方法边界，而不是无效工作。",
+        "开始把 baseline 公平性、训练权限审计、机制诊断表转成 Brainary agent 或 workflow。",
+        "开始主动区分 FlowS-SCAN 的评价协议价值和 WASA 的方法机制价值。"
+      ],
+      "nextValueQuestion": "下周需要回答：在完成最小消融后，WASA 最值得保留的核心机制到底是哪一个，FlowS-SCAN benchmark 自动化是否已经足以支撑论文主表，哪些分支应停止投入或降级为诊断工具？"
     },
-    "valueFunctionChange": "价值观函数变化：学生从最初认为‘方法论收敛+形成可复用资产’最有价值（价值体现在减少无效修补和未来复用），逐渐转变为‘可实验验证的机制命题+可自动化审计的规则+benchmark平台’更有价值。第2周开始引入金额估值，第3-4周估值保持3万元左右，但构成更具体，从整体方法论资产转向可拆分的实验系统、认知沉淀和自动化agent。学生认为值得做的事是：1) 构建公平baseline对比平台（节省人力，可复用）；2) 设计机制消融以证明方法有效（支撑论文，避免错误叙事）；3) 沉淀自动化规则和Brainary agent（节省未来研发时间）。价值函数随周次变得更加务实和模块化，从‘做出新方法’转向‘证明方法有效并使其可审计/自动化’。金额连接的是节省的人力成本，用户是未来科研人员（复用平台），通用能力是实验审计和权限管理，产物形式是代码库、YAML配置、诊断日志、agent设计，Brainary和自动化是直接目标。",
-    "repeatedBlockers": "学生反复遇到‘组件的实际有效性未经验证’这一卡点，从第1周的ambiguity-aware控制到第4周的anomaly branch，每周计划都包括实验验证，但始终是下一步动作，尚未拿出关键证据。这导致研究停留在逻辑自洽但缺乏经验支撑的状态。此外，第4周反映出之前存在将不同项目实验混写的问题，但已得到纠正。",
-    "professorShouldAsk": "如果anomaly branch消融结果不显著，你的论文叙事会如何调整？你是否已准备好备份方案（如将其降级为辅助模块）？以及，你计划何时完成这些关键消融实验并给出确定性结论？",
-    "nextBestIntervention": "建议学生优先完成anomaly branch消融和标签噪声消融这两组对WASA方法最关键的实验，限时在下周内产出结果，避免在多模型baseline上耗费过多时间。同时，要求生成一份清晰的实验汇报，区分FlowS-SCAN和WASA的结果，并明确每个实验对应的机制命题。"
+    "projectManagementReview": {
+      "summary": "项目管理质量在提升，尤其是 05-10 开始把两个项目拆开，并给出最小产出；但整体仍存在“计划很清楚、完成证据不足”的问题。老师最该关注的是：他是否能把每周提出的最小验证动作在下一周变成表格、日志、结论和下一步决策。",
+      "projects": [
+        {
+          "project": "WASA / 弱监督鲁棒标签异常检测方法",
+          "weeks": [
+            "2026-04-19",
+            "2026-04-26",
+            "2026-05-03",
+            "2026-05-10"
+          ],
+          "quality": "这是四周中持续性最强的主项目，从 ambiguity-aware trainer、静态锚点污染、保守 energy-based PU，到 WASA 机制消融，研究问题持续围绕低异常率、少量带噪正例、大量未标注样本展开。质量上的进步是从方法构想走向机制诊断和消融矩阵；不足是项目命名、模型骨架和核心叙事在四周中有变化，需要版本对齐。",
+          "whatWorked": "他持续推进了训练信号可靠性这一主线：04-19 收口到 RTSB + ambiguity-aware，04-26 加入 staged training 和 seed audit，05-03 删除 suspicious-unlabeled 分支，05-10 明确 WASA 的 anomaly bank、positive trust、soft-core PU、EMA teacher、branch-balanced alpha 等机制诊断。与 Brainary 相关的沉淀也比较具体，包括 Training Signal Permission Auditor、Weak-supervision Mechanism Agent、mechanism_diagnostics_table。",
+          "managementGap": "缺口是实际完成的验证证据不够连续。04-19 计划 single-prior vs ambiguity-aware 最小对比，但后续报告没有明确给出该实验结果；04-26 计划 seed audit 与 staged training 消融，后续也没有清楚报告结果；05-03 计划多 seed、噪声比例、loss 消融，05-10 仍主要是正在跑和应重点跑。需要把“上周计划—本周完成—结果是否支持假设—是否改路线”写成固定闭环。",
+          "nextConcreteMove": "下周冻结一个 WASA 版本号和实验矩阵，只完成三张最小表：完整模型 3–4 seeds 表、use_anomaly_bank True/False 消融表、noisy_label_ratio 0.00/0.10 鲁棒性表；每张表同时报告 AUCPR、AUROC、F1、branch_alpha、anomaly_contrib、pos2A、pos2Nmax、core2N、pos_trust，并写一句“支持/不支持哪个机制命题”。"
+        },
+        {
+          "project": "FlowS-SCAN DeepOD baseline benchmark",
+          "weeks": [
+            "2026-05-10"
+          ],
+          "quality": "这是 05-10 新清晰拆出的项目，当前质量主要体现在 benchmark 工程和协议管理上，而不是结果结论上。它有较好的可检查交付定义：一键跑 8 个 DeepOD baseline、YAML 参数管理、result.json、all_results_main_table.csv、all_results_summary.json。",
+          "whatWorked": "该项目已经从手动单模型运行推进到自动化 benchmark workflow，并开始沉淀为 Brainary 的 Baseline Protocol Agent 能力：统一 dataloader、统一指标口径、参数可审计、区分 official backbone 与 adapted baseline。",
+          "managementGap": "当前缺少最终 baseline 主表和失败模型错误日志，因此还不能判断 benchmark 是否真正稳定。报告中提到 auc 是 threshold 后 balanced accuracy、aupr 是 threshold 后 binary AP，这种命名与常规 AUC/AUPR 可能存在解释风险；需要老师确认论文中是否应改名或补充定义，避免指标同名不同义。",
+          "nextConcreteMove": "下周只做一个闭环：跑完 8 个主表模型，提交 all_results_main_table.csv、每个模型 result.json、失败日志、指标定义说明，并标注哪些 baseline 可进主表、哪些只能作为 adapted baseline 放补充材料。"
+        }
+      ],
+      "managementPattern": "他的管理模式正在从“多分支并行探索”转向“项目拆分、机制命题、最小验证动作和自动化表格”。但目前仍偏重设计表达，实际里程碑完成率证据不足；需要建立每周固定的计划追踪表，防止认知进步没有转化为可验收产出。",
+      "nextManagementMove": "老师可以要求他从下周开始每个项目只保留一个主目标、一个最小交付、一个判定标准和一个失败后动作；周报第一段必须说明上周承诺的最小动作完成了几项、哪些未完成、原因是什么、是否需要资源或老师介入。"
+    },
+    "repeatedBlockers": [
+      "多项关键验证停留在计划或正在跑：single-prior vs ambiguity-aware、seed audit、staged training、多 seed、loss 消融、baseline 主表都没有在后续周报中形成完整结果闭环。",
+      "方法命名和主线表达有漂移：04-19 是 RTSB + ambiguity-aware，05-03 是 Conservative Energy-based PU，05-10 是 WASA branch-balanced energy WSAD；需要明确它们是同一项目演化、子模块，还是不同论文方向。",
+      "训练信号可靠性仍是核心风险：frozen seed、positive trust、soft-core normal、anomaly prototype、EMA teacher 都可能引入污染或自确认，学生已识别风险，但证据还不足。",
+      "代码和配置复杂度仍可能影响可解释性：04-26 已指出配置项和诊断项偏多，05-10 又增加大量机制日志，需要区分主线参数、鲁棒性默认参数、消融参数和诊断参数。",
+      "指标协议存在潜在解释边界：FlowS-SCAN 中 auc/aupr 的定义被写成 threshold 后指标，证据显示学生意识到口径统一，但是否适合论文命名仍需确认。"
+    ],
+    "teacherQuestions": [
+      "你上周承诺的最小验证动作中，哪些已经完成？请直接给表格、日志路径和一句结论，不要先讲新设计。",
+      "RTSB + ambiguity-aware、Conservative Energy-based PU、WASA 三个名字之间是什么关系？它们是同一方法的版本演化，还是不同项目？论文里准备保留哪一个主叙事？",
+      "WASA 的每个消融分别验证哪个机制命题？请把 anomaly bank、positive trust、soft-core PU、EMA teacher、checkpoint mode 各自对应的支持标准写出来。",
+      "FlowS-SCAN 的 auc/aupr 指标定义是否会被审稿人误解为标准 AUC/AUPR？是否需要改名为 balanced accuracy、binary AP 或在表注中明确说明？",
+      "如果下周 anomaly bank 多 seed 不稳定，你准备如何改论文表述：删除、降级为辅助分支，还是保留但改变机制解释？"
+    ],
+    "nextIntervention": "建议老师下一次 meeting 不再听完整叙事，而是要求他提交一页“验证闭环表”：每行包含项目、上周承诺、实际完成、数据路径、核心结果、是否支持机制命题、下一步动作、需要老师决策的问题。老师重点介入两件事：第一，帮助他冻结 WASA 的主叙事和版本边界；第二，确认 FlowS-SCAN baseline 的指标命名和主表协议是否符合论文标准。",
+    "studentFeedback": {
+      "summary": "你最近四周的真实进步在于：你开始用失败模式、训练权限、机制命题和实验协议来组织研究，而不是只报告做了很多实验或改了很多模块。",
+      "whatImproved": [
+        "你能区分工程可运行性和论文主线价值。",
+        "你能把负结果转成方法边界，例如删除 suspicious-unlabeled 分支。",
+        "你能把弱监督异常检测里的标签权限、梯度权限、memory 权限显式化。",
+        "你能把 FlowS-SCAN baseline 和 WASA 机制消融拆成两个不同层级的项目。",
+        "你开始把经验沉淀为 Brainary 可执行的 workflow 或 agent。"
+      ],
+      "nextStep": "下一步不要再扩展概念。请用一周完成两个硬闭环：FlowS-SCAN 交付 8 个 baseline 主表和错误日志；WASA 交付完整模型多 seed、anomaly bank 消融、标签噪声消融三张表，并对每张表写明它支持或不支持哪个机制命题。"
+    },
+    "evidenceLinks": [
+      {
+        "week": "2026-04-19",
+        "claim": "学生开始识别方法分支混杂和 review 位面差异。",
+        "evidence": "报告写到“把多轮迭代里混杂的几条方法线彻底拆开”，以及“把两份 review 分解成工程闭环和模型假设两个审查对象”。"
+      },
+      {
+        "week": "2026-04-19",
+        "claim": "已有最小实验设计，但缺少后续完成证据。",
+        "evidence": "报告计划在 2%、5%、10% 异常比例下各跑至少 3 个 seeds，对比 single-prior trainer 与 ambiguity-aware trainer；后续周报未明确汇报该对比结果。"
+      },
+      {
+        "week": "2026-04-26",
+        "claim": "学生把静态锚点污染系统化为失败模式。",
+        "evidence": "报告写到 frozen seed 选错会导致 static novelty、positive trust、normal candidate、final boundary 连锁偏移，并命名为“静态锚点污染”。"
+      },
+      {
+        "week": "2026-04-26",
+        "claim": "有代码与训练流程交付。",
+        "evidence": "报告列出 staged training、encoder-space frozen seed soft audit、train.py/model.py/dataloader_MIL.py 主线精简版，以及删除过期接口和未引用函数。"
+      },
+      {
+        "week": "2026-05-03",
+        "claim": "学生能用实验负结果修正方法边界。",
+        "evidence": "报告写到“lambda_suspicious=0.0 时效果最好”，并删除 lambda_suspicious 相关配置、loss 和日志字段。"
+      },
+      {
+        "week": "2026-05-03",
+        "claim": "Brainary 沉淀开始从经验转向可执行规则。",
+        "evidence": "报告提出 Training Signal Permission Auditor，并写到 high-score unlabeled positive mining 分支必须先通过关闭实验、纯度诊断、score tail 分析和 hard-normal 检查。"
+      },
+      {
+        "week": "2026-05-10",
+        "claim": "学生改善了项目拆分和项目管理表达。",
+        "evidence": "报告明确区分 FlowS-SCAN 是 DeepOD baseline 对比实验，WASA 是鲁棒标签主体方法和机制消融实验。"
+      },
+      {
+        "week": "2026-05-10",
+        "claim": "FlowS-SCAN 有自动化 benchmark 交付雏形，但主表结果仍待完成。",
+        "evidence": "报告写到一键运行 od_train.py、每个模型独立 YAML、自动保存 result.json、汇总 all_results_main_table.csv；下周最小动作仍是“跑完主表 8 个 DeepOD baseline”。"
+      },
+      {
+        "week": "2026-05-10",
+        "claim": "WASA 已有机制诊断指标，但机制结论仍需消融证明。",
+        "evidence": "报告列出 branch_alpha、normal_contrib、anomaly_contrib、pos2A、pos2Nmax、core2N、pos_trust 等指标，并说明 anomaly branch 是否稳定有效还没完全证明。"
+      }
+    ]
   }
 }

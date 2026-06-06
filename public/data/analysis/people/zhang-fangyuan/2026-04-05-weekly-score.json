@@ -1,54 +1,103 @@
 {
   "key": "person:zhang-fangyuan:2026-04-05:weekly-score",
-  "generatedAt": "2026-05-24T11:36:29.024Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "60a58b184e8c711a6aa1263dc27b3d58892f4b4b708a3e971eb0a4d03ac79f0f",
+  "generatedAt": "2026-06-06T13:16:32.956Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "ee39b37678987d9035f443a08a5913c36c060401385d8f8dd28bce319d426575",
   "result": {
-    "hardProgress": {
-      "score": 18,
-      "reason": "本周完成了反事实验证框架的形式化定义与A/B实验验证，pipeline中新增了GumTree重构过滤和聚类细筛优化，给出了具体效果数据（precision从0.69到0.76，F1从0.79到0.84，LLM调用量预期减少40-60%），进展扎实且有数据支撑。",
-      "missingEvidence": "缺少重构过滤器和聚类细筛在实际运行中的定量评估（如FP减少数量、准确率变化），下周计划中的OpenSSL验证尚未执行。"
-    },
-    "cognitiveIncrement": {
-      "score": 12,
-      "reason": "提出了双条件反事实验证（consequence_reachable + invariant_restored）和基于Union-Find的聚类依赖跳过机制，体现了对安全补丁判定流程的认知深化，但核心思想本质是对现有安全分析逻辑的工程增强，理论新颖度有限。",
-      "missingEvidence": "未对双条件验证的失败案例进行深层次归因分析，也未讨论该方法在其他类型漏洞或代码库上的泛化认知。"
-    },
-    "cot2Depth": {
-      "score": 10,
-      "reason": "将两步LLM调用合并为一次CoT调用以减少成本，并利用PageRank高连通性优先排序，隐含有对推理链效率的思考，但缺少对CoT内部逻辑结构的设计或反思（如如何引导模型同时验证consequence和invariant），思维链的思维链深度不足。",
-      "missingEvidence": "未展示合并后的CoT prompt设计示例，未分析合并调用对模型推理质量的影响。"
-    },
-    "brainaryMapping": {
-      "score": 5,
-      "reason": "未明确引入跨领域概念或类比，GumTree和Union-Find属于常用工具，脑暴映射几乎为零。",
-      "missingEvidence": "未见任何跨学科隐喻、认知框架或创意联想，报告整体偏向工程实现。"
-    },
-    "monetaryValue": {
-      "score": 7,
-      "reason": "优化pipeline直接降低了LLM调用成本（预计减少40-60%），同时提升precision能减少人工审核开销，若下周成功运行并发现0.5-day漏洞，则具有较高商业价值。当前阶段价值体现在成本节约和潜在漏洞发现能力上。",
-      "missingEvidence": "未量化节省的具体金钱数额或时间成本，0.5-day漏洞发现尚未实现，价值仍为预期。"
-    },
-    "projectManagement": {
-      "score": 13,
-      "reason": "本周任务分解清晰：反事实验证框架形式化、A/B实验、重构过滤器、聚类细筛，每个模块有目标、方法和效果验证，下周计划明确（OpenSSL全量数据集验证），管理有序。",
-      "missingEvidence": "缺少总体时间线或里程碑设定，未提及资源需求或风险应对策略。"
-    },
-    "nextAction": {
-      "score": 9,
-      "reason": "下周计划具体：在OpenSSL 23个版本diff上验证所有优化效果，目标precision > 0.80，并持续运行发现0.5-day漏洞，行动可执行且与本周进展强关联。",
-      "missingEvidence": "未说明验证失败的预案或备选数据集，也未给出精确的实验设计（如如何衡量cost降低）。"
-    },
-    "evidenceQuality": {
-      "score": 4,
-      "reason": "提供了A/B实验的precision/recall/F1对比数据，重构过滤器的案例（ngx_http_range_filter_module.c 9个FP），及LLM调用量减少的预期值，证据相对具体可信。",
-      "missingEvidence": "缺少聚类细筛的消融实验数据，重构过滤器的精确量化效果（FP降低比例）未给出，未提供GumTree匹配准确率或实例截图。"
-    },
-    "totalScore": 78,
+    "week": "2026-04-05",
+    "name": "张方圆",
+    "totalScore": 74,
     "tier": "B",
-    "oneLineJudgment": "本周在反事实验证和pipeline成本优化上取得扎实工程进展，但理论深度和跨界创新不足，需加强元认知与泛化性探索。",
-    "professorFollowUp": "建议教授关注：1）下周OpenSSL验证结果是否能复现并超越Nginx上的效果；2）指导张方源补充理论分析，如双条件验证的完备性证明或失效模式研究；3）鼓励引入认知模型或经济分析增强brainaryMapping与monetaryValue。"
+    "dimensions": {
+      "hardProgress": {
+        "score": 16,
+        "reason": "本周有明确的硬进展：提出并形式化了双条件反事实验证框架；在 Nginx 数据集上给出 A/B 结果，precision 从 0.69 提升到 0.76，recall 保持 0.95，F1 从 0.79 提升到 0.84；实现或至少集成了基于 GumTree AST matching 的重构过滤器，并报告过滤了具体文件中的多个 FP。细筛阶段的 cluster-based fine screening 也给出了工程设计，但目前更多是方案和预期，尚未给出实测结果。",
+        "missingEvidence": [
+          "缺少 Nginx 数据集规模、样本数量、正负例定义和标注方式。",
+          "缺少 A/B 实验的完整配置、随机性控制、统计显著性或置信区间。",
+          "Cluster-based fine screening 只给出预期 LLM 调用量减少 40-60%，缺少实际运行数据。",
+          "缺少代码提交、实验日志、表格或可复现实验链接。"
+        ]
+      },
+      "cognitiveIncrement": {
+        "score": 13,
+        "reason": "认知增量较强。报告不是简单堆工程任务，而是把安全补丁识别拆成 consequence_reachable 与 invariant_restored 两个必要条件，明确解释了为什么单看 consequence 或单看安全模式都会产生误判。这体现了对漏洞可达性、安全不变量恢复、误报来源的结构化理解。新增的重构过滤器也反映出对 FP 类型的归因进步。",
+        "missingEvidence": [
+          "缺少对双条件框架失败案例的系统分析。",
+          "缺少该框架相对已有 vulnerability patch detection 方法的定位和差异说明。",
+          "缺少哪些认知假设被实验推翻或修正的记录。"
+        ]
+      },
+      "cot2Depth": {
+        "score": 11,
+        "reason": "有一定 CoT 的 CoT 深度：不仅描述了让模型判断安全补丁，还把判断过程进一步拆成前置漏洞后果是否可达、补丁是否恢复安全不变量，并说明两步各自排除什么类型的误报。Unified verification 也说明了将两步验证合并为一次 CoT 调用的工程取舍。不过报告仍主要停留在方法定义层面，对模型推理失败、提示词稳定性、反事实验证链条中的错误传播没有展开。",
+        "missingEvidence": [
+          "缺少 CoT prompt 或验证模板示例。",
+          "缺少模型在哪些 case 上推理错误、错误原因是什么。",
+          "缺少 consequence 与 invariant 两个子判断之间冲突时的处理规则。",
+          "缺少合并为一次 CoT 调用后是否损失判断质量的实证数据。"
+        ]
+      },
+      "brainaryMapping": {
+        "score": 7,
+        "reason": "报告把问题映射到了较清晰的结构：粗筛阶段用 GumTree AST 和重构过滤器处理非安全重构 FP，细筛阶段用 dependency overlap、Union-Find 聚类、PageRank 排序、dep-skip 和 per-cluster cap 降低成本，安全语义层用 consequence 和 invariant 表达。这说明已有模块化的知识图谱和 pipeline 映射。但没有显式说明 Brainary 中的概念节点、边、证据来源和更新机制。",
+        "missingEvidence": [
+          "缺少 Brainary mapping 的显式图谱或表格。",
+          "缺少 anchor、slice、dependency overlap、security invariant 等概念之间的正式关系定义。",
+          "缺少该映射如何被存储、复用、自动更新的说明。"
+        ]
+      },
+      "monetaryValue": {
+        "score": 6,
+        "reason": "项目价值方向明确：提高安全补丁识别 precision、降低 LLM 调用成本，并最终用于发现 0.5-day 漏洞。报告也给出预期 LLM 调用量减少 40-60%，这有潜在成本价值。但价值判断仍不够量化，没有换算成实际 API 成本、人工审计节省、可发现漏洞数量、商业或论文产出概率。",
+        "missingEvidence": [
+          "缺少当前每个版本 diff 的平均 LLM 调用量和成本。",
+          "缺少 40-60% 调用减少对应的金额、时间或吞吐提升。",
+          "缺少发现 0.5-day 漏洞的基线成功率和预期收益。",
+          "缺少 precision > 0.80 对后续人工验证成本的实际影响估算。"
+        ]
+      },
+      "projectManagement": {
+        "score": 10,
+        "reason": "项目管理有基本结构：本周分为反事实验证框架、pipeline 工程优化、下周计划；下周目标也写明 OpenSSL 全量 23 个版本 diff 和 precision > 0.80。但任务状态边界不够清楚，哪些已经完成、哪些只是设计、哪些已在 Nginx 跑通不够明确；也缺少风险、里程碑、验收标准和资源安排。",
+        "missingEvidence": [
+          "缺少每项任务的完成状态，例如已实现、已实验、待验证。",
+          "缺少代码实现进度和未解决 bug。",
+          "缺少风险项，例如 OpenSSL 代码复杂度、GumTree 匹配失败、LLM 判断不稳定。",
+          "缺少下周每日或阶段性里程碑。"
+        ]
+      },
+      "nextAction": {
+        "score": 8,
+        "reason": "下一步较清楚：在 OpenSSL 全量数据集 23 个版本 diff 上验证优化效果，目标 precision > 0.80，达标后持续运行 pipeline 发现 0.5-day 漏洞。这是可执行且有验收指标的计划。但执行粒度仍偏粗，没有说明先验证哪个模块、如何记录成本、如果 precision 未达标如何迭代。",
+        "missingEvidence": [
+          "缺少 OpenSSL 实验的具体评测 protocol。",
+          "缺少调用成本、recall、F1、运行时间等同步指标。",
+          "缺少 precision 不达标时的诊断路径。",
+          "缺少持续运行 pipeline 的触发条件和人工复核流程。"
+        ]
+      },
+      "evidenceQuality": {
+        "score": 3,
+        "reason": "证据质量中等偏上但不充分。报告提供了 Nginx A/B 的关键指标和一个具体 FP 来源文件案例，这比纯描述强。但缺少样本规模、标注依据、实验配置、对照组细节和可复现材料，因此还不能支撑强结论，尤其不能支撑跨项目泛化或成本降低结论。",
+        "missingEvidence": [
+          "缺少数据集大小和正负样本数量。",
+          "缺少人工标注标准和标注一致性。",
+          "缺少完整实验表格和错误案例列表。",
+          "缺少实际 cost reduction 的测量结果。",
+          "缺少仓库链接、commit ID 或实验脚本。"
+        ]
+      }
+    },
+    "oneLineJudgment": "本周的核心进展是把安全补丁识别从单条件匹配推进到双条件反事实验证，并在 Nginx 上显示 precision 提升；但工程优化和成本收益仍有较多预期性表述，证据链尚不足以证明可泛化。",
+    "professorFollowUp": [
+      "请学生补交 Nginx A/B 实验表：样本数、TP/FP/FN、precision/recall/F1、标注标准、具体版本范围。",
+      "要求区分已实现、已跑通、仅设计三类状态，尤其是 cluster-based fine screening 是否已有真实调用量统计。",
+      "下周 OpenSSL 实验不要只报 precision，还要同步报告 recall、F1、LLM 调用次数、单 diff 成本、运行时间和失败案例。",
+      "让学生给出 3 个双条件框架失败案例，说明 consequence_reachable 和 invariant_restored 哪一步错、为什么错、如何修。",
+      "如果目标是发现 0.5-day 漏洞，需要明确从 pipeline 命中到人工确认的复核流程和最低证据标准。"
+    ]
   }
 }

@@ -1,69 +1,225 @@
 {
   "key": "person:zhang-fangyuan:2026-04-19:longitudinal",
-  "generatedAt": "2026-05-24T11:53:07.142Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "e2b50868a500ad0914b60581b03899a331fe56b88b746413c3328c56d2821e32",
+  "generatedAt": "2026-06-06T13:17:31.614Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "92b78ef2d1ba2b008474d61da57cbb4de5700b21d1b56910a29797d5076fef62",
   "result": {
-    "overallTrajectory": "四周内，学生的研究从具体的成本优化与跨项目漏洞发现起步，逐步过渡到推理框架的形式化建设（反事实验证、结构化记忆），最终转向检索问题的底层理论重构。硬产出在第1-2周最为扎实（成本削减94.5%、precision 0.69→0.76），随后两周退化为纯设计与文献调研，缺少新的实验数据。认知层次持续攀升：从工程技巧到方法论抽象，再到认知架构层面的理论联结，显示出研究深度的显著增长，但存在脱离实证验证的风险。项目管理意识明显减弱，从有计划、有消耗到近乎停滞。价值观从“成本是上线约束”的产品落地思维，逐渐偏移向“方法论创新”与“理论突破”的学术追求，与金钱、用户的连接感弱化。总体而言，学生变得更有研究深度，但研究能力的系统性（实证驱动、价值闭环）出现下滑。",
-    "stageByWeek": {
-      "2026-03-22": {
-        "summary": "成本优化与跨项目初测阶段。利用程序依赖图实现94.5%的LLM调用削减，跨项目扫描发现7个CVE，但跨项目precision不足。明确成本优化与精度优化是同一问题。",
-        "cognition": "认识到结构化冗余消除是关键杠杆，而非prompt工程；失败根因是仅学正样本，缺乏负样本。",
-        "hardOutput": "成本削减94.5%，零回归；curl上7个CVE。"
+    "overallTrajectory": "这个学生总体上在变得更有研究能力，但进步不均衡：元认知和问题重构能力明显增强，已经能把成本、精度、Working Memory、retrieval 不稳定性提升为可研究的机制问题；但最近两周项目管理证据变弱，缺少对前一周实验目标的实际结果回填，存在从可验证实验转向概念重构后闭环不足的风险。",
+    "headline": "研究能力在提升，核心信号是从“优化 pipeline”转向“定义可验证机制”，但需要把理论重构重新压回每周可检查实验闭环。",
+    "overviewSentence": "他正在从忙于实现功能转向识别机制性问题，但最近两周需要补强实验回填、里程碑和最小验证动作。",
+    "fourWeekTimeline": [
+      {
+        "week": "2026-03-22周",
+        "metacognition": "能识别原先把成本优化看成工程问题的认知偏差，并提出“成本优化和精度优化是同一个问题”的新理解；也能指出 precision 瓶颈来自只学习正样本、缺少负样本和 refactoring filter。",
+        "valueJudgment": "价值判断较清楚：值得做的原因是大型软件 version diff 中安全修复和非安全变更混杂，人工审查和固定规则不可扩展；他把成本、precision、ground truth 覆盖视为能否持续运行和产生 CVE 发现价值的核心证据。",
+        "projectManagement": "项目管理信息较完整，写清了当前阶段、原计划与实际偏差、API 消耗、下周重点、阻塞项和最乐观时间线；但目标 precision ≥ 0.85、成本低于每版本 10 美元仍是计划，尚未在输入中看到达成证据。",
+        "evidence": "证据包括：PDG 依赖跳过带来 94.5% 调用削减且零回归；跨项目 6 个项目 50 个版本对初测；curl 找到 7 个已发布 CVE；提出 AttentionScheduler 作为 Brainary/tool orchestration 沉淀。"
       },
-      "2026-04-05": {
-        "summary": "反事实验证框架与工程优化阶段。形式化双条件验证逻辑，Nginx上precision 0.69→0.76，recall 0.95。引入refactoring filter与聚类调度，预期LLM调用再降40-60%。",
-        "cognition": "安全补丁判定的本质是反事实验证，而非模式匹配；成本控制可通过阶段内结构化调度实现。",
-        "hardOutput": "Nginx precision提升至0.76，F1 0.84；重构过滤器排除9个FP。"
+      {
+        "week": "2026-04-05周",
+        "metacognition": "从经验性 prompt/pipeline 优化推进到形式化验证条件：consequence_reachable 与 invariant_restored 缺一不可；能用 A/B 实验比较单条件与双条件方案，说明他开始用反事实验证定义判断边界。",
+        "valueJudgment": "价值判断从“能不能跑起来”推进到“什么证据证明安全补丁判定值得信任”：precision、recall、F1 和后续持续运行发现 0.5-day 漏洞成为项目价值证据。",
+        "projectManagement": "有明确交付：反事实验证框架、GumTree refactoring filter、cluster-based fine screening、unified verification；有下周目标：OpenSSL 23 个版本 diff，precision > 0.80。缺口是没有写资源消耗、依赖和如果不达标的备选路径。",
+        "evidence": "证据包括：Nginx 上 precision 从 0.69 提升到 0.76，recall 保持 0.95，F1 从 0.79 到 0.84；过滤 Nginx 数据集中多个重构型 FP；预期 LLM 调用量减少 40-60%。"
       },
-      "2026-04-12": {
-        "summary": "结构化工作记忆机制设计阶段。定义WM结构W=(A,H,B,C,G)，解决多阶段推理的信息退化。集成至prompt，对比纯文本WM的缺陷。",
-        "cognition": "纯文本WM存在信息衰减、判定模糊、假设耦合三大缺陷；结构化WM通过write-once, read-many保证无损传递、可验证性和假设隔离。",
-        "hardOutput": "无新增量化实验数据，完成WM集成设计与对比分析可视化。"
+      {
+        "week": "2026-04-12周",
+        "metacognition": "能把 LLM 多阶段推理中的信息退化问题分解为信息衰减、判定模糊、假设耦合，并提出结构化 Working Memory 的 write-once, read-many 机制；这是明显的 CoT 的 CoT 进步，即不仅改推理内容，也改推理状态的保存方式。",
+        "valueJudgment": "价值判断转向系统能力建设：结构化 WM 的价值在于可追溯、可程序检查、假设隔离，能支撑更稳定的科研 pipeline 和 Brainary 式能力沉淀；但本周没有明确说明该能力对最终安全补丁发现价值的量化影响。",
+        "projectManagement": "有实现交付：定义 W=(A,H,B,C,G)，集成到 fine screen 的 Region CoT prompt，并完成结构化 WM 与纯文本 WM 的对比分析可视化。缺口是没有回填上一周 OpenSSL 全量实验目标是否完成，也没有报告 precision、cost、runtime 或失败原因。",
+        "evidence": "证据包括：Anchor Set、Hypothesis Set、Binding Map、Constraint State、Grouping 的结构化设计；WM context 已集成到 fine screen prompt；完成方法图示所需的对比可视化。"
       },
-      "2026-04-19": {
-        "summary": "检索不稳定问题的理论重构阶段。将问题从“检索算法调优”重定义为“grounding：从WM激活程序性知识”。调研四个研究传统（ACT-R、Tool Selection、Abduction、Neural-Symbolic），未进行实验。",
-        "cognition": "declarative retrieval到procedural rule activation的视角转换，需要structured partial matching，而非整体文本相似度。",
-        "hardOutput": "纯文献调研，无实验或数据产出。"
+      {
+        "week": "2026-04-19周",
+        "metacognition": "能接受并内化老师关于 retrieval 不稳定性的重构：它不是检索算法调优，而是从 WM 状态激活 LTM 中 procedural knowledge 的 grounding 问题；并能把问题映射到认知架构、tool/skill selection、abduction、neural-symbolic 四个传统。",
+        "valueJudgment": "价值判断进一步抽象为：值得投入的不是单点 retrieval 调参，而是建立“结构化状态到程序性规则激活”的机制，因为这可能解决 Brainary/agent 系统中的通用 skill/spec 选择问题；但本周缺少判断该方向继续投入的实验证据、停止条件和与安全补丁 pipeline 指标的连接。",
+        "projectManagement": "本周主要是理论重构和文献调研，缺少可检查工程交付、实验结果、原计划对照、下周最小可验证动作、依赖资源和是否需要老师介入的信息；项目管理证据不足。",
+        "evidence": "证据包括：将 retrieval 从 declarative retrieval 改写为 procedural rule activation；总结 ACT-R/SOAR 的 production rule matching、Voyager skill library、ReAct iterative refinement、abductive reasoning、neural-symbolic integration。"
       }
+    ],
+    "metacognitionChange": {
+      "summary": "元认知呈上升趋势：他从报告“做了哪些优化”，逐步转向识别 pipeline 的失败模式、证据边界和机制层原因。最强变化是能把表面问题重构为更底层的问题：成本不是部署细节而是精度设计，precision 瓶颈不是简单 prompt 问题而是负样本与重构过滤不足，Working Memory 不是摘要问题而是状态持久化问题，retrieval 不稳定不是检索调参而是 grounding 与 procedural activation 问题。",
+      "byWeek": [
+        {
+          "week": "2026-03-22周",
+          "change": "识别到 cost optimization、precision、FP 是同一类“减少不值得看的候选”的问题，并指出跨项目失败根因是只学正样本。这里已经出现失败模式诊断和下一步验证标准。"
+        },
+        {
+          "week": "2026-04-05周",
+          "change": "用双条件反事实验证定义安全补丁判定边界，并通过 A/B 实验给出证据。这一周的元认知最接近科研闭环：提出机制、实现、对比、量化。"
+        },
+        {
+          "week": "2026-04-12周",
+          "change": "从 LLM 输出文本的表层质量转向推理状态管理，识别纯文本 Working Memory 的三种系统性缺陷，并提出结构化字段、布尔约束和假设隔离。"
+        },
+        {
+          "week": "2026-04-19周",
+          "change": "进一步上升到理论重构，把 retrieval 重新定义为 WM 到 LTM procedural knowledge 的 grounding；但这一周主要是概念和文献映射，缺少验证标准。"
+        }
+      ],
+      "currentLevel": "当前已经具备较强的问题重构能力和机制抽象能力，能形成 CoT 增量和 CoT 的 CoT；但研究能力是否继续提升，取决于能否把 2026-04-19 的理论重构转成一周内可验证的 retrieval/spec activation 实验，而不是停留在综述式理解。",
+      "strongestSignal": "最强信号是 2026-04-05 的双条件反事实验证：他不仅提出“为什么原方法错”，还用 Nginx A/B 实验展示 precision、recall、F1 的变化，这是从认知反思到证据闭环的完整链条。",
+      "nextLift": "下一步提升应是为每个重构建立明确验证标准：例如 retrieval grounding 的候选 spec top-k 命中率、错误激活类型、abduction 多假设枚举后的 precision/recall 变化、对 OpenSSL/curl 的跨项目迁移效果。"
     },
-    "trendScores": {
-      "researchDepth": [
-        4,
-        6,
-        7,
-        8
+    "valueGrowth": {
+      "summary": "科研/项目价值判断整体变清楚了：他越来越能把个人技术兴趣连接到项目价值、长期系统能力和 Brainary 能力建设。早期价值判断集中在安全补丁发现是否可规模化，后来延伸到结构化 Working Memory、AttentionScheduler、procedural rule activation 等可复用系统能力。但最近一周的价值判断偏理论化，缺少“什么证据证明这个方向值得继续投”的停止/继续标准。",
+      "byWeek": [
+        {
+          "week": "2026-03-22周",
+          "value": "价值判断较务实：precision、ground truth、运行成本决定系统能否持续扫描和发现 silent fix；他把成本视为研究问题，而非论文后的工程细节。"
+        },
+        {
+          "week": "2026-04-05周",
+          "value": "价值判断转向可信判定：安全补丁识别不能只看模式命中，必须验证漏洞后果可达和不变量恢复；项目是否值得继续由 precision、recall、F1 和可持续运行来证明。"
+        },
+        {
+          "week": "2026-04-12周",
+          "value": "价值判断开始连接 Brainary 能力建设：结构化 WM 不只是本项目 prompt 技巧，而是可沉淀为跨阶段推理状态管理、可验证约束和假设隔离能力。"
+        },
+        {
+          "week": "2026-04-19周",
+          "value": "价值判断进一步指向通用 agent/Brainary 能力：retrieval 应被看作从结构化状态激活程序性知识的机制问题，而不是文本相似度问题；但缺少项目层面的投入优先级和验证证据。"
+        }
       ],
-      "hardProgress": [
-        8,
-        7,
-        4,
-        2
+      "currentValueFunction": "当前隐含价值函数是：优先投入那些能同时提升安全补丁发现质量、降低人工/LLM 复核成本、可跨项目迁移、并能沉淀为 Brainary 自动化科研组件的机制；例如结构化调度、结构化 Working Memory、spec/rule activation。",
+      "improvementSignals": [
+        "能把成本、precision、ground truth 覆盖与持续运行价值连接起来，而不是只报告模型效果。",
+        "能从局部工程模块中抽象出可复用能力，如 AttentionScheduler、结构化 WM、procedural rule activation。",
+        "能识别哪些问题不值得继续按原方式做，例如把 retrieval 当文本相似度调参可能不是关键路径。",
+        "能把安全补丁发现、CVE 工作流、论文方法和自动化科研沉淀放在同一条价值链中。"
       ],
-      "cognitionLevel": [
-        3,
-        5,
-        7,
-        8
-      ],
-      "valueAlignment": [
-        9,
-        7,
-        5,
-        3
-      ],
-      "projectManagement": [
-        8,
-        7,
-        4,
-        2
-      ]
+      "nextValueQuestion": "现在最需要回答的价值问题是：在 refactoring filter、Working Memory、retrieval grounding 三条线中，哪一条对最终 precision、recall、cost 和跨项目迁移的边际贡献最大，什么一周实验结果足以证明它值得继续投入？"
     },
-    "valueFunctionChange": "第1周价值观明确：成本是决定系统能否上线的核心约束，成本优化本身即研究问题，直接关联产品化与商业价值（安全公司、CVE产出、金钱）。第2周转向以精度提升与通用框架设计为重心，虽仍隐含产品目标，但价值主张更多指向方法严谨性。第3周聚焦于方法论创新（结构化WM），认为可沉淀为通用记忆管理模块，但离金钱与用户的直接链路开始模糊。第4周完全沉浸于理论重构，探讨declarative vs procedural grounding，价值取向变为：“理解认知本质”比“立即提升指标”更重要。学生的价值函数从工具性、市场驱动的务实主义，逐渐偏移向学术性、理论驱动的认知主义，对通用能力和知识沉淀的看重上升，但对金额、用户的连接明显削弱。",
-    "repeatedBlockers": "precision/grounding根本问题从第1周起持续存在，但表现形式演变：最初是“跨项目FP比例高”，第2周发展为“非安全重构误判”，第3周变为“多阶段信息退化影响判定”，第4周抽象为“retrieval阶段缺乏区分度”。实际阻碍始终是：如何稳定、高精度地识别安全补丁，但学生尚未在一套数据上连续验证优化叠加效果。此外，成本控制在第2周提出预期40-60%降低后未再汇报实际数据，形成隐形卡点。",
-    "professorShouldAsk": "你计划如何在下周设计一个可量化的实验，直接比较基于structured grounding的检索方法与当前文本相似度检索的性能？如果两周内拿不到precision >0.80的数据，你将如何调整策略？",
-    "nextBestIntervention": "强制回归实证：要求学生在下一周结束前，就检索grounding问题实现一个最小可行原型（如基于ACT-R条件匹配的spec激活机制），并在OpenSSL或curl上运行A/B测试，提交检索步骤的精确率/召回率变化数据。同时，要求重新评估成本，给出叠加所有优化后单版本扫描的实际美元消耗。若无明确进展，应考虑暂停理论探索，先以‘可运行的0.5-day发现pipeline’为优先目标。"
+    "projectManagementReview": {
+      "summary": "项目管理质量从 2026-03-22 到 2026-04-05 较强，有阶段、指标、偏差和下周目标；2026-04-12 有实现交付但缺少上一周实验目标回填；2026-04-19 主要是理论调研，项目管理字段明显不足。总体问题不是没有做事，而是最近两周缺少“原计划—实际结果—偏差原因—下一步最小验证”的连续闭环。",
+      "projects": [
+        {
+          "project": "安全补丁识别与 LLM pipeline 精度/成本优化",
+          "weeks": [
+            "2026-03-22周",
+            "2026-04-05周",
+            "2026-04-12周",
+            "2026-04-19周"
+          ],
+          "quality": "主线持续存在，并且研究问题不断深化：从 PDG skip 和 cost optimization，到反事实验证、结构化 WM，再到 retrieval grounding。但从项目管理角度，最近两周没有充分回填 precision、cost、OpenSSL/curl 实验和持续运行状态。",
+          "whatWorked": "已经形成多个硬进展：PDG 依赖跳过减少 94.5% LLM 调用；Nginx 上双条件验证提升 F1；refactoring filter 针对重构型 FP；Working Memory 集成 fine screen prompt；retrieval 被重新定义为 procedural knowledge activation。这些都可能沉淀为 Brainary 的结构化调度、状态记忆和规则激活能力。",
+          "managementGap": "缺少连续指标表：2026-04-05 计划在 OpenSSL 23 个版本 diff 上验证 precision > 0.80，但 2026-04-12 和 2026-04-19 没有报告是否完成、结果如何、失败原因是什么。2026-04-19 没有给出 retrieval 重构后的实验设计、里程碑和资源需求。",
+          "nextConcreteMove": "下周应提交一个闭环表：在 OpenSSL 或 curl 上选择固定数据集，对比 baseline retrieval、文本相似度 retrieval、structured condition/spec activation 三种方案，报告 top-k spec 命中率、最终 precision/recall/F1、LLM 调用量、失败案例分类。"
+        },
+        {
+          "project": "跨项目 benchmark 与 partial ground truth 构建",
+          "weeks": [
+            "2026-03-22周",
+            "2026-04-05周"
+          ],
+          "quality": "早期推进较实，有 6 个项目 50 个版本对全量初测和 curl 7 个已发布 CVE 的 partial GT；但后两周没有继续报告该 benchmark 的维护、扩展或实验使用情况。",
+          "whatWorked": "benchmark 让他能发现跨项目迁移 precision 不足，并把 ground truth 覆盖不足作为上线阻塞项，而不是只在单项目上优化。",
+          "managementGap": "证据不足以判断 curl partial GT 是否完成、OpenSSL 23 个版本 diff 是否跑完、silent fix 疑似样本是否经过人工复核，也没有说明 benchmark 数据 schema 是否沉淀为可复用资产。",
+          "nextConcreteMove": "补一页 benchmark 状态：每个项目的版本对数量、已确认 CVE 数、疑似 silent fix 数、已复核数、可用于 precision/recall 的标签比例，以及本周用于哪个实验。"
+        },
+        {
+          "project": "Refactoring Filter 与负样本/非安全变更过滤",
+          "weeks": [
+            "2026-03-22周",
+            "2026-04-05周"
+          ],
+          "quality": "方向明确，针对 precision 瓶颈的失败模式；2026-04-05 有 GumTree AST matching 和 Nginx 重构型 FP 过滤案例，说明不是空泛调参。",
+          "whatWorked": "能把“只学正样本”的问题转成具体过滤策略：宏重命名、API rename、Extract Method、代码搬移等非安全变更应成为 negative exemplar 或 Phase 0 filter。",
+          "managementGap": "目前只看到 Nginx 个例和部分效果描述，没有看到跨项目定量效果、误杀安全补丁的 recall 风险、filter 前后候选数量变化。",
+          "nextConcreteMove": "在 curl、OpenSSL、Nginx 三个项目上各抽固定样本，报告 refactoring filter 的过滤数量、FP 减少数量、是否误杀 TP、对总 cost 的影响。"
+        },
+        {
+          "project": "结构化 Working Memory 机制",
+          "weeks": [
+            "2026-04-12周"
+          ],
+          "quality": "这是较强的系统能力建设交付：有清晰 schema、集成位置和论文图示产出，且直接对应 Brainary 中跨阶段状态管理和可验证推理记忆的能力。",
+          "whatWorked": "W=(A,H,B,C,G) 把锚点、假设、绑定、约束、分组固化，解决纯文本 WM 的信息衰减、判定模糊、假设耦合；已集成到 fine screen 的 Region CoT prompt。",
+          "managementGap": "缺少结构化 WM 对最终任务指标的实验证据，例如是否减少重复 LLM 推断、是否提升 precision、是否降低错误归因、是否降低 token/call 数。也没有说明它与 AttentionScheduler、retrieval grounding 的接口关系。",
+          "nextConcreteMove": "做结构化 WM 与纯文本 WM 的同数据集对照：报告 role binding 一致性、constraint 判定一致性、多假设干扰错误数、最终 precision/recall/F1 和 token 成本。"
+        },
+        {
+          "project": "Retrieval grounding 与 spec/procedural rule activation",
+          "weeks": [
+            "2026-04-19周"
+          ],
+          "quality": "研究重构质量高，但项目管理证据弱。本周产出主要是理论地图，不是可检查实验交付。",
+          "whatWorked": "把 retrieval 不稳定性定位为 WM state 到 LTM procedural knowledge 的 grounding 问题，并映射到 ACT-R/SOAR、LLM tool selection、abductive reasoning、neural-symbolic integration；这有潜力成为 Brainary 中“从结构化状态激活能力/规则”的核心模块。",
+          "managementGap": "没有定义 spec 存储格式、applicability condition schema、matching/ranking 算法、baseline、评价指标、实验数据和下周交付；也没有说明是否需要老师帮助缩小理论路线。",
+          "nextConcreteMove": "先实现最小版本：把 10-20 个 security spec 改写为结构化 applicability condition，用当前 WM slot-value 触发候选集，比较 embedding retrieval 与 condition matching 的 top-1/top-3 命中率，并列出失败案例。"
+        }
+      ],
+      "managementPattern": "他的管理模式是：早期能围绕 pipeline 指标做闭环，后来随着抽象层升高，报告开始偏机制解释和文献映射，实验结果回填减少。需要保持“每个理论重构都必须绑定一个可复现实验”的节奏。",
+      "nextManagementMove": "建立一张周更项目表，固定列为：本周假设、数据集、baseline、实际交付、指标变化、失败案例、下周最小可验证动作、依赖资源、需要老师决策的问题。"
+    },
+    "repeatedBlockers": [
+      "Precision 仍是主阻塞，但阻塞形态在变化：从重构/API rename 等非安全变更 FP，到 consequence/invariant 验证不足，再到 retrieval/spec 激活不稳定。",
+      "Ground truth 覆盖不足反复出现：2026-03-22 明确提出 curl partial GT，后续没有足够证据显示覆盖问题已解决。",
+      "跨项目迁移证据不足：有 6 个项目初测和 Nginx A/B，但缺少后续 OpenSSL/curl 全量实验回填。",
+      "成本与精度联动仍需闭环：有 94.5% 削减和预期 40-60% 减少调用，但缺少最近版本 pipeline 的总成本、每阶段成本和精度影响。",
+      "理论重构后的实验化不足：2026-04-19 的 grounding 重构有价值，但尚未转成可验证的算法和指标。"
+    ],
+    "teacherQuestions": [
+      "你在 2026-04-05 计划跑 OpenSSL 23 个版本 diff，实际结果是什么？precision、recall、F1、cost 分别是多少，没达标的主要错误类型是什么？",
+      "如果把 retrieval 重构为 procedural rule activation，下周最小实验是什么？spec 的 applicability condition 怎么写，top-k 命中率如何评估？",
+      "结构化 Working Memory 相比纯文本 WM，除了概念上更清楚，在哪个指标上已经或预计能提升？是 precision、token、错误绑定率，还是多假设干扰率？",
+      "现在 refactoring filter、Working Memory、retrieval grounding 三条线中，哪一条是当前关键路径？你用什么证据决定本周优先投哪条？",
+      "哪些部分已经能沉淀为 Brainary 的通用能力模块，接口输入输出是什么，哪些还只是当前安全补丁项目的临时实现？"
+    ],
+    "nextIntervention": "建议老师下一次 meeting 不主要讨论更多文献，而是要求他把 2026-04-19 的理论重构压缩成一个一周实验：固定数据集、固定 spec 库、两个 baseline、三个指标和失败案例分类。老师需要帮助他确定 spec activation 的最小 schema，并要求补交 OpenSSL/curl 实验回填，防止主线从可验证研究滑向概念扩展。",
+    "studentFeedback": {
+      "summary": "你最近的真实进步不是做得更多，而是越来越能把 pipeline 中的表面问题重构成机制问题；但研究能力的下一步，不是继续扩大理论地图，而是把每个重构变成可复现实验。",
+      "whatImproved": [
+        "你能识别失败模式，例如只学正样本、重构型 FP、纯文本 WM 信息衰减、retrieval 缺少 grounding。",
+        "你开始给出验证条件，而不是只说模型判断，例如 consequence_reachable 与 invariant_restored。",
+        "你能把局部模块沉淀为系统能力，例如 AttentionScheduler、结构化 Working Memory、procedural rule activation。",
+        "你的 CoT 增量从 prompt 技巧上升到 pipeline 结构、状态表示和知识激活机制。"
+      ],
+      "nextStep": "下周请只做一个最小闭环：选定一个数据集，比较当前 retrieval 与 structured procedural activation，报告 top-k spec 命中率、最终 precision/recall/F1、LLM 调用量和三类失败案例；同时回填 OpenSSL/curl 之前目标的实际完成情况。"
+    },
+    "evidenceLinks": [
+      {
+        "week": "2026-03-22周",
+        "claim": "成本优化与精度优化被统一为减少不必要候选的问题。",
+        "evidence": "周报写到“成本优化和精度优化是同一个问题：减少不必要的 LLM 调用 = 减少 FP = 识别不值得看的候选”。"
+      },
+      {
+        "week": "2026-03-22周",
+        "claim": "有硬进展但 precision 和 GT 仍是阻塞。",
+        "evidence": "周报写到 PDG 依赖跳过带来 94.5% 削减，curl 找到 7 个已发布 CVE，同时列出 precision 不够、ground truth 覆盖不足、运行成本偏高。"
+      },
+      {
+        "week": "2026-04-05周",
+        "claim": "反事实验证框架有量化证据。",
+        "evidence": "周报写到双条件验证在 Nginx 数据集上 precision 0.69→0.76，recall 保持 0.95，F1 0.79→0.84。"
+      },
+      {
+        "week": "2026-04-05周",
+        "claim": "Refactoring Filter 针对具体 FP 来源。",
+        "evidence": "周报写到使用 GumTree AST matching 检测代码搬移，并过滤 Nginx 中 ngx_http_range_filter_module.c 的 if→switch 重写产生的 9 个 FP。"
+      },
+      {
+        "week": "2026-04-12周",
+        "claim": "结构化 Working Memory 是 Brainary/自动化科研能力沉淀信号。",
+        "evidence": "周报写到 W=(A,H,B,C,G)，并说明锚点、假设、绑定、约束、分组可跨阶段读写，已集成到 fine screen 的 Region CoT prompt。"
+      },
+      {
+        "week": "2026-04-12周",
+        "claim": "本周缺少上一周实验目标回填。",
+        "evidence": "2026-04-05 计划在 OpenSSL 23 个版本 diff 上验证 precision > 0.80，但 2026-04-12 周报没有提供该实验结果。"
+      },
+      {
+        "week": "2026-04-19周",
+        "claim": "retrieval 问题被提升为 grounding 和 procedural knowledge activation。",
+        "evidence": "周报写到当前 retrieval 不稳定不是检索算法调优，而是如何从 WM 当前状态激活 LTM 中正确 procedural knowledge 的 grounding 问题。"
+      },
+      {
+        "week": "2026-04-19周",
+        "claim": "理论重构充分但项目管理证据不足。",
+        "evidence": "周报主要总结 ACT-R/SOAR、LLM Tool/Skill Selection、Abductive Reasoning、Neural-Symbolic Integration，没有写实验交付、指标、资源、里程碑或下周最小可验证动作。"
+      }
+    ]
   }
 }

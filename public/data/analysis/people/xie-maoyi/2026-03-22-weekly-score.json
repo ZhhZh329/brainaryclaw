@@ -1,54 +1,64 @@
 {
   "key": "person:xie-maoyi:2026-03-22:weekly-score",
-  "generatedAt": "2026-05-24T11:36:36.831Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "dd0edbc270668ec8779d788a0a5da6932917ab743dc9c1029385dff93145cde1",
+  "generatedAt": "2026-06-06T13:14:43.628Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "723d951f2e81eb32a47b3704397e5c2385db9c39c87aadd181e1fba040ccd541",
   "result": {
-    "hardProgress": {
-      "score": 17,
-      "reason": "本周硬进展扎实：对FLBench 250个bug完成系统分类，首次量化分布（crash 28%，non-crash 72%），提炼出8类failure pattern；FL⁺后处理框架实现并验证，Recall@1提升7-11%，Recall@10提升18-25%，成本仅增$0.04/bug；KernelLocator提出三个核心模块。进展数据清晰，具有明确技术增量。",
-      "missingEvidence": "Locator仍停留在概念设计，缺少原型或最小可行产品验证；FL⁺的precision波动未给出具体数值与失败案例归因。"
+    "week": "2026-03-22",
+    "name": "Xie Maoyi",
+    "scores": {
+      "hardProgress": {
+        "score": 17,
+        "reason": "本周有明确硬产出：对 250 个 FLBench bug 做了结构化分类，给出 crash/non-crash 比例和 8 类 failure pattern；实现了 LinuxFL⁺ 三阶段后处理框架，并报告了 Recall@1、Recall@10 的提升和单 bug 成本；还形成了 KernelLocator 的初步模块设计。硬进展覆盖数据分析、方法实现、实验结果和下一阶段设计。",
+        "missingEvidence": "缺少完整分类表、标注规则、一致性检查、实验设置、三个 agent 的具体名称、每个指标的原始数值、方差/显著性、失败样例列表和代码或复现实验链接。"
+      },
+      "cognitiveIncrement": {
+        "score": 12,
+        "reason": "认知增量较清楚：从“crash 定位”转向“logic/functional bug 是主流”；从“ranking 问题”转向“candidate generation / hypothesis space 问题”；并证伪了单纯多跑 agent 和 ensemble 的路径。这些判断能指导下一步研究方向。",
+        "missingEvidence": "缺少支撑这些认知更新的对照实验细节，尤其是 agent 多轮运行为何无提升、ensemble 上限如何计算、logic bug 主流是否来自一致标注。"
+      },
+      "cot2Depth": {
+        "score": 12,
+        "reason": "CoT’s CoT 部分不仅给出结论，还讨论了为什么该问题尚未被自动化科研吸收、可沉淀成什么形式、证据等级如何。尤其是将 candidate generation 与 benchmark protocol 分离，是较有研究管理价值的抽象。",
+        "missingEvidence": "两个 CoT’s CoT 都注明“老师原本不知道的吗：否”，说明新颖性相对有限；对“结构信息比语义信息更重要”的证据还停留在现象判断，缺少系统 ablation。"
+      },
+      "brainaryMapping": {
+        "score": 7,
+        "reason": "报告能把当前工作映射到 Brainary 的 reasoning、memory、tool orchestration、benchmark/evaluation，并指出可能沉淀为 agent module、workflow、benchmark、memory schema。这说明作者开始从单项目抽象到系统能力。",
+        "missingEvidence": "缺少 Brainary 接口层面的具体设计：memory schema 长什么样、KRDG 如何接入 reasoning、workflow 的输入输出协议、哪些模块可复用、哪些只是项目内实现。"
+      },
+      "monetaryValue": {
+        "score": 6,
+        "reason": "报告给出了潜在买单方、项目价值类型，以及三个任务的人民币估值，并且区分了 benchmark、pipeline、early idea 的价值。这比单纯技术描述更接近价值判断。",
+        "missingEvidence": "金额估算依据较弱，主要是类比判断；缺少市场规模、替代方案成本、用户痛点证据、开源/商业化路径、benchmark 采用概率、工具节省调试时间的量化。"
+      },
+      "projectManagement": {
+        "score": 13,
+        "reason": "项目管理信息较完整：当前阶段、原计划与实际完成、投入时间、下周预计、2 周和 4 周里程碑、资源依赖、成本、偏差原因和纠偏动作都有记录。能看出当前关键路径是从 FL⁺ 转向 KRDG prototype。",
+        "missingEvidence": "缺少更细的任务拆分、每个里程碑的验收标准、风险优先级、失败时的备选路径、数据/代码交付物位置，以及是否需要外部标注或系统知识支持。"
+      },
+      "nextAction": {
+        "score": 8,
+        "reason": "下周动作相对具体：把 8 类 failure 映射到 observable signal 和 dependency；对失败 case 做 error analysis；构建 function-level call + data dependency 的最小 KRDG，并在 10 个 bug 上验证是否缩小 search space。这些动作具备最小可验证性。",
+        "missingEvidence": "缺少量化验收门槛，例如 search space 至少缩小多少、recall/precision 如何变化、10 个 bug 如何抽样、error analysis 的分类表如何定义。"
+      },
+      "evidenceQuality": {
+        "score": 3,
+        "reason": "报告包含不少数字证据，如 250 个 bug、crash/non-crash 比例、Recall 提升幅度、kernel agent 性能下降、ensemble 上限和成本估算，说明不是纯主观总结。",
+        "missingEvidence": "证据仍然缺少可审计性：没有原始表格、实验配置、baseline 定义、统计显著性、失败样例、标注一致性和复现路径。"
+      }
     },
-    "cognitiveIncrement": {
-      "score": 12,
-      "reason": "明确了三个认知更新：kernel bug主流是无显式异常的行为错误；agent瓶颈在于搜索空间大与假设不足而非代码定位；后处理+假设扩展是有效路径。证伪了单纯多轮agent与ensemble上限，形成了清晰的认知迭代。",
-      "missingEvidence": "认知大多为老师已知，缺乏基于严格受控实验的因果推断，如未排除其他可能解释（例如数据泄漏或过拟合）。"
-    },
-    "cot2Depth": {
-      "score": 13,
-      "reason": "提出两个CoT's CoT：核心瓶颈从ranking转为candidate generation；大规模系统中结构信息优先级高于语义。给出了证据等级（A/B）、自动化潜力、沉淀路径，展现了超越当前实验的元思考。",
-      "missingEvidence": "CoT's CoT 2的证据仅来自现象观察，缺乏系统对照实验验证结构信息与语义信息的收益对比；自动化潜力评估缺少实施阻力分析。"
-    },
-    "brainaryMapping": {
-      "score": 8,
-      "reason": "清晰地将工作映射到Brainary的reasoning、memory、tool orchestration、benchmark能力，并指出当前agent是pipeline拼接、缺少统一架构，给出了可能的沉淀形式（module/workflow/benchmark/memory schema）。",
-      "missingEvidence": "映射未涉及Brainary的现有技术栈或接口留白，沉淀形式的可行性论证不足，例如未说明与现有Brainary组件的集成成本。"
-    },
-    "monetaryValue": {
-      "score": 8,
-      "reason": "对三项任务分别估价合计18万元，方法合理：参考类似benchmark构建、工具增强模块和早期idea，且FL⁺估价10万基于实际提升效果。",
-      "missingEvidence": "估值依赖主观类比，缺乏市场调研或成本核算，尤其FLBench目前仅为初步分析，商业化距离远。"
-    },
-    "projectManagement": {
-      "score": 14,
-      "reason": "项目管理信息完整：包含当前阶段、时间实际对比、投入工时、里程碑、依赖关系、进度偏差识别、纠偏动作、是否需要老师介入。对Locator进展慢有归因和应对。",
-      "missingEvidence": "缺少定量的进度跟踪指标（如燃尽图或任务完成百分比），风险预案仅限于认知纠偏，未考虑资源或外部依赖中断。"
-    },
-    "nextAction": {
-      "score": 9,
-      "reason": "下周动作明确可验证：将failure映射到可观测信号/依赖；对FL⁺失败case做error analysis；构建最小KRDG原型并验证。与本周卡点紧密衔接。",
-      "missingEvidence": "未给出可验证的成功标准或量化目标，例如error analysis需达到多少覆盖率，KRDG原型需在10个bug上缩小搜索空间的比例阈值。"
-    },
-    "evidenceQuality": {
-      "score": 4,
-      "reason": "提供了FLBench的分类数据（百分比）和FL⁺的召回提升数据，证据基本可靠，且CoT's CoT自评了证据等级。",
-      "missingEvidence": "实验未报告统计显著性检验、误差范围或重复次数；FL⁺结果仅展示了提升但未提供绝对召回数值，难以评估实际水平。"
-    },
-    "totalScore": 85,
-    "tier": "A",
-    "oneLineJudgment": "本周硬进展明显，FLBench量化分析奠定故障分类基础，FL⁺方法在召回上有效提升，项目管理详尽且认知迭代清晰，但locator仍为概念阶段，需加速原型验证。",
-    "professorFollowUp": "建议老师关注locator方向的结构化路线图，协助确定图粒度与验证标准，并讨论candidate generation benchmark的设计可行性。"
+    "totalScore": 78,
+    "tier": "B",
+    "oneLineJudgment": "这一周有实质硬进展和较好的研究抽象，但关键证据链尚未可审计，KernelLocator 仍停留在概念到原型的过渡阶段。",
+    "professorFollowUp": [
+      "要求学生提交 FLBench 250 个 bug 的分类表、标注规则和 8 类 failure pattern 的样例，确认 taxonomy 是否可靠。",
+      "要求补充 LinuxFL⁺ 实验表：三个 agent 的 baseline、FL⁺ 后的 Recall@1/10、precision、成本、样本量和失败 case。",
+      "追问 KernelLocator 的最小 KRDG 验收标准：10 个 bug 上 search space 缩小多少才算有效，是否必须保持或提升 recall。",
+      "要求把“candidate generation 比 ranking 更关键”拆成可实验验证的 protocol，而不是只作为认知结论。",
+      "建议下周不要继续扩展 heuristic，优先完成 KRDG prototype 和失败案例归因表。"
+    ]
   }
 }

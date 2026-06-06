@@ -1,44 +1,221 @@
 {
   "key": "person:wu-zhangfa:2026-05-24:longitudinal",
-  "generatedAt": "2026-05-24T11:52:13.573Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "f0413ecc4dafdc530ed1ca099fab7806e6319e1ace0aa150dfa9fe5991b33971",
+  "generatedAt": "2026-06-06T13:15:10.173Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "dd3f2f7cd7c21a21340d4c61c8ea662f4fa95217fa60c2262eebe15437a28773",
   "result": {
-    "overallTrajectory": "四周内，学生从对单一弱监督异常检测方法的理论辨析出发，逐步转向构建完整的防御鲁棒性评估体系。初期聚焦于方法内部机制的清理与确认（删除不可靠分支），随后将工作拆分为两套实验系统（FlowS-SCAN对比实验平台与WASA鲁棒标签验证），最后两周集中解决baseline适配、协议统一与实验可解释性问题，体现出从‘模型能跑’到‘方法可辩护’的研究成熟度提升。",
-    "stageByWeek": [
+    "overallTrajectory": "总体判断：这个学生在变得更有研究能力，而不只是更忙；最明显的变化是从“增加模块、跑实验”转向“审计训练信号权限、实验协议、baseline 方法身份、代码-论文一致性”，但当前短板是可检查实验结果仍少，很多判断还停留在协议设计和机制假设层，缺少多 seed、消融表、最终 baseline 表等硬证据闭环。",
+    "headline": "研究能力在提升：从模型堆叠转向机制验证、权限审计和可辩护实验协议，但下一步必须用结果表把这些判断落地。",
+    "overviewSentence": "近四周的主线显示他正在从执行型实验推进者转向能审计假设、定义证据标准、设计自动化科研 workflow 的研究者，但硬结果闭环仍不足。",
+    "fourWeekTimeline": [
       {
         "week": "2026-05-03",
-        "stage": "方法内省与边界确认",
-        "summary": "重新审视弱监督异常检测模型核心训练语义，通过实验确认‘suspicious-unlabeled牵引’无效并删除，将模型收敛为三类核心loss，形成保守能量式弱监督异常检测方法定位，并沉淀方法资产。"
+        "metacognition": "这一周的核心进步是能识别“看似合理的训练信号可能拥有不该有的梯度权限”，并把 suspicious-unlabeled traction 的失败从负结果转化为方法边界：未标注高能量尾部不能默认当作异常监督。相比只报告分数，他开始问“这个信号为什么有资格进入 loss、backward 或 memory”。",
+        "valueJudgment": "科研价值判断开始从“模型复杂度”转向“训练权限约束是否能减少自训练污染”。他认为值得做的问题是低异常率、弱监督、噪声正例场景下如何保守利用未标注数据，并能把该判断连接到可迁移 workflow 和 Brainary 的 Training Signal Permission Auditor。",
+        "projectManagement": "WASA/弱监督异常检测有较清楚的当前阶段：删除 suspicious 分支，收敛为 positive trust、soft-core normal、structure loss 三类核心信号；下周动作也具体，包括多 seed、噪声比例敏感性、loss 消融。但实际多 seed 和消融结果尚未提供，证据仍主要来自单项关闭实验和代码审查。",
+        "evidence": "报告中明确写到“λ_suspicious=0.0 时效果最好”“将 lambda_suspicious 及其相关配置、loss、日志字段全部删除”“下周至少跑 seed∈{2021,2022,2023,2024,2025}”。"
       },
       {
         "week": "2026-05-10",
-        "stage": "实验系统分化与机制验证准备",
-        "summary": "明确FlowS-SCAN对比实验与WASA鲁棒标签消融为两个不同层级的工作，完成DeepOD baseline一键运行框架，为WASA设计了机制级消融方案，强调实验必须验证机制命题而非仅追求分数。"
+        "metacognition": "这一周的认知增量是把 FlowS-SCAN baseline 对比和 WASA 主体机制消融区分开，说明他开始意识到不同实验服务不同科学命题，而不是把所有异常检测实验混写。更重要的是，他提出“机制命题才是实验最小单位”，这是明显的研究能力提升。",
+        "valueJudgment": "价值判断更清楚：FlowS-SCAN 的价值在可信 benchmark，WASA 的价值在证明鲁棒弱监督标签机制，而不是单纯追求 AUCPR/F1。他把个人实验推进与 Brainary 的 experiment_type_classifier、label_authority_checker、mechanism_diagnostics_table、benchmark_protocol_guard 连接起来。",
+        "projectManagement": "FlowS-SCAN 有一键跑 DeepOD baseline、YAML 管理、结果汇总 CSV/JSON 等交付；WASA 有 noisy_label_ratio、branch diagnostics、机制日志等交付。但报告中“正在跑”和“应重点跑”的内容很多，真正完成的结果表不足；下周最小动作写得较具体，包括跑完 8 个 DeepOD baseline、WASA 三组最小闭环。",
+        "evidence": "报告中列出 AnomalyTransformer、TimesNet、TranAD 等 baseline 已进入一键运行框架，并列出 WASA 的 branch_alpha、normal_contrib、anomaly_contrib、pos2A、coreW_active 等机制诊断项。"
       },
       {
         "week": "2026-05-17",
-        "stage": "baseline体系修缮与审稿风险防范",
-        "summary": "从审稿人视角系统性审查并修缮多个对抗防御baseline（COBRA、CertTA等），统一输入协议（固定前128包），纠正攻击命名与实现不一致，明确数据权限边界，将baseline适配升华为可审计的方法身份问题。"
+        "metacognition": "这一周从“baseline 能不能跑”升级为“baseline 是否可被审稿人追责”，体现出更强的证据边界意识。他开始模拟审稿人质疑，识别方法身份、数据权限、攻击命名、AutoAttack wrapper 等隐藏失败模式。",
+        "valueJudgment": "科研价值判断从模型内部机制扩展到论文可辩护性：值得投入的不是更多 baseline 数量，而是能防止未来返工和审稿风险的协议审计能力。他把 baseline adaptation 抽象为 Brainary 的 Baseline Adaptation Auditor、Data Authority Checker、Attack Protocol Normalizer，说明对系统能力建设的理解更成熟。",
+        "projectManagement": "COBRA-Flow、CertTA-Flow 有具体修缮项和命名判断，normal-only baseline 数据协议和攻击协议也被统一，这是硬进展。但项目列表开始横向扩张，baseline 包括 COBRA、CertTA、PANTS、PatchGuard、f-VAT、Kitsune/BARS 等，存在范围膨胀风险；下周动作要求固定最终 baseline 列表，说明他也意识到需要收敛。",
+        "evidence": "报告中写到“COBRA-Flow 可以作为主表 baseline，但论文中应命名为 COBRA-Flow Adapted”“不能把 -1 未标记样本直接当正常训练”“所谓 C&W 实际是 margin-loss PGD”。"
       },
       {
         "week": "2026-05-24",
-        "stage": "实验协议标准化与可解释性强化",
-        "summary": "整理FlowSCAN标准版与鲁棒版训练协议，形成五种对比算法的baseline矩阵，区分matched与stress攻击协议，并识别出train random-crop需被解释为temporal augmentation，推动窗口策略从实现细节变为实验设计组成部分。"
+        "metacognition": "这一周进一步提升到实验协议层：区分 matched protocol 和 stress protocol，识别 random crop 不是普通实现细节而是 flow-level label 到 window-level training signal 的弱标签转移。他开始用“效果最好→反查机制→补最小消融→决定是否进入主实验”的方式处理实验发现。",
+        "valueJudgment": "价值判断更稳定：FlowSCAN 标准版用于回答 clean 能力来源，鲁棒版用于回答对抗训练和一致性损失的贡献，baseline 不是按数量堆叠而是按防御范式组织。他把这些判断连接到 Brainary 的 Protocol Auditor、Baseline Matrix Builder、Window Policy Checker、Code-to-Experiment-Card Generator。",
+        "projectManagement": "FlowSCAN standard/robust 双模式、五个 baseline benchmark matrix、攻击协议分层、窗口策略消融设计都更成体系；但与 05-17 的“Train/Val/Test 全部固定前 128”存在解释变化，本周改为“Train random crop，Val/Test first-128”，需要用消融和论文表述统一。下周动作具体，但仍缺少已完成主表和 baseline 统一结果。",
+        "evidence": "报告中写到“FlowSCAN-Standard / FlowSCAN-Robust”“PGD-10 matched、PGD-20 matched、PGD-100 matched”“Training uses fixed-seed random contiguous 128-packet cropping... validation and testing use the first 128 packets”。"
       }
     ],
-    "trendScores": {
-      "硬进展趋势": "从单一方法内部修正（删除分支）到构建可复用实验框架（benchmark workflow），再到系统性baseline修缮和协议标准化，硬成果的复用性和系统化程度持续增强。",
-      "认知深度趋势": "认知从‘少做一步比多加模块更接近正确答案’的方法论，进化为‘机制命题是最小单位’的实验哲学，再上升到‘baseline是审稿声明’的论文辩护意识，最后将效果最优设置反向机制化，认知层次不断加深。",
-      "研究方法论严谨性": "初期通过实验删除不可靠信号，随后严格区分对比实验与消融实验，接着对baseline进行方法身份与数据权限审计，最后区分攻击协议层次并为实现细节提供机制解释，严谨性逐周递增。",
-      "项目管理能力": "从单任务推进逐渐学会拆解为并行工作流（FlowS-SCAN对比 vs WASA消融），明确各自目标和产出，避免混淆，后两周能聚焦阶段性重点，项目管理趋于成熟。",
-      "自动化科研意识": "从第一周提出将训练信号权限审计自动化，到后续陆续沉淀Baseline Adaptation Auditor、Data Authority Checker、Protocol Auditor等概念，对可自动化模块的抽象能力持续发展。"
+    "metacognitionChange": {
+      "summary": "元认知有连续提升：第一周识别训练信号权限边界，第二周把实验拆成机制命题，第三周把 baseline 适配看成审稿风险，第四周把鲁棒评估协议和窗口策略看成需要显式证明的实验机制。进步是真实的，因为他不断从“我做了什么”转向“这个设置凭什么成立、会被怎样质疑、需要什么诊断指标证明、能否沉淀为自动化检查”。不足是：很多元认知判断尚未通过完整结果表闭环。",
+      "byWeek": [
+        {
+          "week": "2026-05-03",
+          "change": "从增加模块转向删除不可靠训练权限，认识到参与 backward 的 unlabeled high-score signal 即使不是显式伪标签，也可能污染表示空间。"
+        },
+        {
+          "week": "2026-05-10",
+          "change": "从单结果验证转向机制命题验证，能区分 baseline comparison 与 main-method ablation，并要求每组消融对应一个机制假设。"
+        },
+        {
+          "week": "2026-05-17",
+          "change": "从代码运行转向方法声明可辩护性，能主动识别训练数据权限、攻击名称、baseline 身份和论文命名风险。"
+        },
+        {
+          "week": "2026-05-24",
+          "change": "从攻击数量转向协议层次，能区分 matched robustness、stress robustness、adaptive robustness、black-box/query robustness，并意识到窗口策略改变监督粒度。"
+        }
+      ],
+      "currentLevel": "当前处于“机制审计型研究者”的早期阶段：能发现盲区、定义验证标准、抽象 Brainary workflow，但还需要把这些标准转化为稳定结果表、消融结论和论文段落。",
+      "strongestSignal": "最强信号是他能把失败或细节问题转成方法资产，例如 suspicious 分支关闭被抽象为 Training Signal Permission Auditor，baseline 适配风险被抽象为 Baseline Adaptation Auditor，PGD 步长不一致被抽象为 Protocol Auditor。",
+      "nextLift": "下一步提升不是继续提出更多 auditor，而是每个 auditor 至少落到一个可检查 artifact：一张机制消融表、一张 baseline 适配说明表、一张攻击协议表、一份代码-论文一致性 experiment card。"
     },
-    "valueFunctionChange": "学生最初的价值判断基于方法资产和工程替代成本（如3-5万元），重点在可复用代码和工作流；随后认识到实验体系（benchmark与消融）的节省人力价值（约3万元）；第三周转向避免返工和审稿风险的成本计算（3000-20000元）；第四周则从可解释性和机制验证角度评估，并强调将‘效果最好’转化为可复用机制的价值。总体价值观从单纯代码资产估值，演变为兼顾风险防范、可解释性和可复用科研资产的多元价值体系。",
-    "repeatedBlockers": "1. baseline适配后方法身份是否仍可被认可为原方法；2. 主模型与normal-only baseline的公平比较条件（数据权限与监督信号差异）；3. 攻击协议的命名与实现不一致可能引发的审稿质疑；4. 弱监督设定下标签权限的隐性滥用风险（如将未标注样本误当正常）。",
-    "professorShouldAsk": "你计划如何将目前形成的baseline适配审计流程和实验协议整理，系统化输出为可自动化执行的规则，并嵌入到Brainary中？",
-    "nextBestIntervention": "建议与学生共同确定2-3个最可能被审稿人攻击的实验缺陷，并设计最小但关键的消融实验（如random-crop vs first-128、L_cons的鲁棒贡献）来提前封堵，同时指导其将当前零散的审计清单整合为论文附录或开源工具，以强化论文的可信度。"
+    "valueGrowth": {
+      "summary": "价值观提升明显，但需要从估值叙述转向科研命题优先级。四周中，他越来越清楚什么值得做：低异常率弱监督中的训练权限、鲁棒标签机制、可辩护 baseline、对抗评估协议、窗口策略解释，以及这些能否沉淀为 Brainary 的系统能力。价值判断逐渐稳定在“减少不可辩护假设、证明机制、形成可复用自动化科研 workflow”，而不是追求更多模型或更高单点分数。",
+      "byWeek": [
+        {
+          "week": "2026-05-03",
+          "valueSignal": "认为最有价值的是确认 high-energy unlabeled tail 不应默认进入异常监督，并把该边界转成弱监督异常检测的可迁移规则。"
+        },
+        {
+          "week": "2026-05-10",
+          "valueSignal": "认为 FlowS-SCAN 的价值是公平 benchmark，WASA 的价值是机制验证；开始按科研问题而不是代码文件组织项目。"
+        },
+        {
+          "week": "2026-05-17",
+          "valueSignal": "认为 baseline 修缮的价值在于减少论文不可辩护假设和审稿返工，而不是让更多方法能跑。"
+        },
+        {
+          "week": "2026-05-24",
+          "valueSignal": "认为鲁棒评估的价值在协议可解释性和范式覆盖，标准版与鲁棒版的比较用于拆解 clean 能力、对抗训练、L_cons、L_PMC 的贡献。"
+        }
+      ],
+      "currentValueFunction": "当前他的隐含价值函数是：优先投入那些能同时提升论文可辩护性、机制解释力、复现实验协议、Brainary 自动化能力的工作；单纯增加 baseline 数量、攻击名称或模块复杂度的优先级下降。",
+      "improvementSignals": [
+        "开始主动判断哪些实验属于主表、哪些应放附录或补充压力测试。",
+        "开始用“训练权限”“数据权限”“方法身份”“协议匹配”评价项目价值，而不是只看最终分数。",
+        "开始把个人实验经验抽象为 Brainary agent 能力，例如 label_authority_checker、Protocol Auditor、Code-to-Experiment-Card Generator。",
+        "开始承认效果最好不等于天然合理，需要机制解释和最小消融。"
+      ],
+      "nextValueQuestion": "下一次他需要回答：在 FlowSCAN/WASA/FlowS-SCAN 这些命名和任务之间，哪一个是当前论文主线，哪些只是服务主线的 benchmark 或机制工具；如果本周只能保留一个最能提高论文可信度的实验闭环，应该是哪一个，为什么？"
+    },
+    "projectManagementReview": {
+      "summary": "项目管理质量有进步：周报越来越能写清阶段、风险、下周最小动作和所需交付；但仍存在项目命名和范围切换较快、已完成结果表不足、原计划与实际完成对照不够硬的问题。最需要改进的是把每周计划闭环为“计划项—实际完成—证据文件—未完成原因—下周最小验证动作”。",
+      "projects": [
+        {
+          "project": "WASA / 弱监督鲁棒标签异常检测",
+          "weeks": [
+            "2026-05-03",
+            "2026-05-10"
+          ],
+          "quality": "研究问题清楚，机制假设较强，诊断指标设计充分；但后两周主线转向 baseline 和 FlowSCAN，WASA 是否继续推进缺少证据。",
+          "whatWorked": "完成 suspicious-unlabeled 分支删除，形成 positive trust、soft-core PU、EMA teacher、prototype geometry、branch-balanced alpha 等机制框架；诊断日志包括 branch_alpha、anomaly_contrib、pos2A、pos2Nmax、coreW_active 等，具备沉淀为 Brainary Weak-supervision Mechanism Agent 的基础。",
+          "managementGap": "缺少 05-03 计划中的 5 seed、噪声比例敏感性、loss 消融的完成证据；05-10 计划的完整模型多 seed、anomaly bank 消融、标签噪声消融也未在后续周报中闭环。",
+          "nextConcreteMove": "补一张 WASA 最小机制表：完整模型、多 seed、w/o anomaly bank、noisy_label_ratio 0.00/0.10、w/o positive trust，每项报告 AUCPR、F1、branch_alpha、anomaly_contrib、pos2A、pos2Nmax、coreW_active，并明确哪些机制命题被支持或未支持。"
+        },
+        {
+          "project": "FlowS-SCAN / DeepOD baseline benchmark",
+          "weeks": [
+            "2026-05-10"
+          ],
+          "quality": "工程自动化交付较明确，一键运行、YAML 参数、result.json、CSV 汇总都是可检查产物；但后续周报没有看到 8 个 DeepOD baseline 主表是否完成。",
+          "whatWorked": "将 DeepOD baseline 从手工运行整理为统一 dataloader、统一指标口径、独立 YAML、自动汇总的 benchmark workflow，可沉淀为 Brainary Baseline Protocol Agent。",
+          "managementGap": "缺少实际 all_results_main_table.csv 内容、失败模型日志、官方 backbone 与 adapted baseline 最终分类表；FlowS-SCAN 与后续 FlowSCAN 命名关系不清楚。",
+          "nextConcreteMove": "给老师一页 benchmark 状态表：每个 DeepOD baseline 的运行状态、是否成功、失败原因、result.json 路径、是否进入主表、是否只进附录。"
+        },
+        {
+          "project": "对抗防御 baseline 适配与审稿风险审计",
+          "weeks": [
+            "2026-05-17",
+            "2026-05-24"
+          ],
+          "quality": "这是近两周最成熟的项目管理线：有方法身份判断、数据权限规则、攻击协议审计和 baseline matrix；但 baseline 列表从 COBRA/CertTA/PANTS/Kitsune 等转向 FrameShield/f-VAT/PANTS/WFA2D/WSCAT，范围变化需要解释。",
+          "whatWorked": "COBRA-Flow、CertTA-Flow 的修缮项具体；normal-only baseline 的数据权限被明确；攻击命名和 AutoAttack wrapper 被审计；五个 baseline 被按方法范式组织，具备沉淀为 Brainary Baseline Adaptation Auditor、Data Authority Checker、Attack Protocol Normalizer 的条件。",
+          "managementGap": "未看到统一 sanity test 的结果；05-17 暂定主表方法与 05-24 五个 baseline 不完全一致，需要说明替换理由；每个 baseline 的资源依赖、是否需 GPU、是否有不支持攻击、是否完成训练没有列成状态表。",
+          "nextConcreteMove": "冻结一版 baseline 主表候选，建立表格字段：方法、原始任务、保留组件、替换组件、训练数据权限、支持攻击、当前状态、结果文件、进入主表/附录理由、未完成依赖。"
+        },
+        {
+          "project": "FlowSCAN standard/robust 主模型与鲁棒评估",
+          "weeks": [
+            "2026-05-24"
+          ],
+          "quality": "框架定义清楚，standard/robust 的对照逻辑和消融入口有研究价值；但目前更像实验设计完成，硬结果尚未出现。",
+          "whatWorked": "把 FlowSCAN-Standard 与 FlowSCAN-Robust 区分开，明确 L_rank、L_cons、L_adv、L_PMC 的作用，并提出 w/o L_cons、w/o L_PMC、w/o adversarial training 等消融；这能沉淀为 Brainary Standard-vs-Robust Delta Reporter。",
+          "managementGap": "缺少标准版与鲁棒版在 Clean、PGD-20、PGD-100、AutoAttack 下的实际对比；L_cons 的贡献仍是待验证假设；FlowSCAN 与前两周 WASA/FlowS-SCAN 的关系没有说明，可能造成主线混乱。",
+          "nextConcreteMove": "先只跑两行主表：FlowSCAN-Standard 与 FlowSCAN-Robust，在同一 split、同一 threshold、同一 matched PGD/AutoAttack 下报告 Clean AUPR、PGD-20 AUPR、PGD-100 AUPR、AutoAttack AUPR、Clean F1、Robust F1。"
+        },
+        {
+          "project": "窗口策略与数据协议",
+          "weeks": [
+            "2026-05-17",
+            "2026-05-24"
+          ],
+          "quality": "他能发现 dataloader 细节的论文含义，这是研究能力信号；但两周之间存在协议表述变化，必须尽快统一。",
+          "whatWorked": "05-17 识别随机截取 128 与固定前 128 的公平性风险；05-24 进一步把 Train random-crop / Val-Test first-128 解释为 temporal crop augmentation，并提出最小消融。",
+          "managementGap": "05-17 说应统一为 Train/Val/Test 全部固定前 128，05-24 又说当前实际逻辑是 Train random contiguous crop、Val/Test first-128 且效果最好；这不是错误，但需要明确是计划变化、实验证据变化，还是前一周理解修正。",
+          "nextConcreteMove": "做两组最小窗口消融：A 为 Train random-crop 128、Val/Test first-128；B 为 Train/Val/Test all first-128；报告 clean 与 robust 指标，并在论文中固定唯一表述。"
+        },
+        {
+          "project": "Brainary 自动化科研能力沉淀",
+          "weeks": [
+            "2026-05-03",
+            "2026-05-10",
+            "2026-05-17",
+            "2026-05-24"
+          ],
+          "quality": "抽象能力持续增强，且不是空泛概念，基本都来自具体失败模式或协议风险；但目前多为概念级 agent，缺少实际 checklist、脚本或报告模板交付。",
+          "whatWorked": "连续提出 Training Signal Permission Auditor、experiment_type_classifier、label_authority_checker、Baseline Adaptation Auditor、Data Authority Checker、Attack Protocol Normalizer、Protocol Auditor、Baseline Matrix Builder、Code-to-Experiment-Card Generator 等能力，并能说明输入输出。",
+          "managementGap": "Brainary 组件没有独立交付物，例如没有一个可运行的审计脚本、统一 YAML schema、自动生成 experiment card 的模板或示例输出。",
+          "nextConcreteMove": "选一个最直接服务当前论文的 Brainary 能力先落地，例如 Protocol Auditor：输入训练攻击和测试攻击配置，输出 matched/stress/adaptive 分类、命名风险和论文表述建议。"
+        }
+      ],
+      "managementPattern": "他的管理模式正在从“多项目并行推进”转向“用协议和机制组织项目”，这是好变化；但仍容易在 WASA、FlowS-SCAN、FlowSCAN、鲁棒 baseline 之间切换，导致教授难以判断哪条是主论文关键路径。最缺的是跨周闭环和状态看板。",
+      "nextManagementMove": "下一周要求提交一张总控表：项目、当前阶段、上周计划、实际完成、证据文件、阻塞、下周最小动作、是否需要老师决策；并冻结当前论文主线命名和 baseline 范围。"
+    },
+    "repeatedBlockers": [
+      "硬结果闭环不足：多次提出多 seed、消融、baseline 主表、攻击协议主表，但后续周报没有系统回收结果。",
+      "项目命名和主线切换较快：WASA、FlowS-SCAN、FlowSCAN、COBRA/CertTA baseline、五个新 baseline 之间关系需要统一。",
+      "协议表述存在跨周不一致：05-17 倾向全部 first-128，05-24 改为 train random-crop、val/test first-128，需要用实验和论文表述闭环。",
+      "Brainary 抽象很多，但可运行或可检查的自动化产物较少。",
+      "baseline 范围有膨胀风险，需要冻结主表、附录、放弃项。"
+    ],
+    "teacherQuestions": [
+      "你现在的主论文主线到底是 WASA、FlowS-SCAN 还是 FlowSCAN？请用一句话定义主方法，其余项目分别服务哪个实验章节？",
+      "05-03 和 05-10 计划的 WASA 多 seed、anomaly bank 消融、标签噪声消融完成了吗？如果没有，阻塞是算力、代码、优先级还是结果不好解释？",
+      "05-17 说统一前 128，05-24 说 train random-crop 效果最好：这是新实验发现还是前一周理解修正？你准备用哪组消融证明窗口策略合理？",
+      "五个最终 baseline 为什么是 FrameShield、f-VAT、PANTS、WFA2D、WSCAT，而不是上一周列出的 COBRA、CertTA、Kitsune/BARS 等？每个进入主表的标准是什么？",
+      "你能否下周交付一个最小 Brainary Protocol Auditor 示例：输入训练/测试攻击配置，输出 matched/stress 分类和论文命名风险？"
+    ],
+    "nextIntervention": "老师下一次 meeting 应该强制学生做“收敛而非扩展”：先冻结一个主线名称、一个主表 baseline 列表、一个攻击协议、一个窗口策略消融和一个最小 Brainary 交付。不要继续允许新增 baseline 或新增 agent 概念，除非已有主表和消融结果完成。",
+    "studentFeedback": {
+      "summary": "你这四周的进步不是更忙，而是更像研究者：你开始主动审计训练信号、数据权限、baseline 身份、攻击协议和代码-论文一致性，并能把这些经验抽象成 Brainary 能力。",
+      "whatImproved": [
+        "你从“模块是否有用”提升到“这个训练信号是否有监督权限、梯度权限、memory 权限”。",
+        "你从“跑 baseline”提升到“baseline 是否公平、是否保留方法身份、是否能被审稿人接受”。",
+        "你从“攻击越多越好”提升到“matched protocol、stress protocol、adaptive attack、black-box attack 要分层解释”。",
+        "你从“效果最好就保留”提升到“效果最好需要机制解释和最小消融”。"
+      ],
+      "nextStep": "下一步最关键的是把研究判断变成证据闭环：少写新概念，多交付表格。下周至少交一张 FlowSCAN standard vs robust 主表、一张 baseline 状态表、一张窗口策略消融表，外加一个最小 Protocol Auditor 或 experiment card 示例。"
+    },
+    "evidenceLinks": [
+      {
+        "week": "2026-05-03",
+        "evidence": "“suspicious-unlabeled traction 对当前问题没有正收益，最佳配置是关闭该分支”；“任何来自 unlabeled high-score tail 的信号，如果参与 backward，就必须被视为 potential self-training path”。",
+        "interpretation": "这是元认知从模块增减转向训练权限审计的证据。"
+      },
+      {
+        "week": "2026-05-10",
+        "evidence": "“实验结果不是最小单位，机制命题才是最小单位”；“FlowS-SCAN 的问题是如何建立可信 baseline 对比；WASA 的问题是如何证明鲁棒标签机制真的有效”。",
+        "interpretation": "这是从任务混写转向实验类型分类和机制验证的证据。"
+      },
+      {
+        "week": "2026-05-17",
+        "evidence": "“baseline 不是跑出来的数字，而是可以被审稿人追责的方法声明”；“Fair baseline = 数据权限一致 + 攻击协议一致 + 方法身份一致”。",
+        "interpretation": "这是价值判断从工程可运行转向论文可辩护性的证据。"
+      },
+      {
+        "week": "2026-05-24",
+        "evidence": "“对抗鲁棒实验不是攻击越强越好，而是要区分 matched protocol 和 stress protocol”；“random crop 在 flow-level label 下不是普通增强，而是弱标签转移”。",
+        "interpretation": "这是能识别实验协议边界和监督粒度变化的证据。"
+      },
+      {
+        "week": "跨周证据不足",
+        "evidence": "报告没有提供完整多 seed 结果、WASA 消融结果、DeepOD baseline 主表、五个 baseline 统一 sanity test 结果或 FlowSCAN standard/robust 主表。",
+        "interpretation": "因此只能判断研究设计和元认知在提升，不能完全判断实验结论已经被证实。"
+      }
+    ]
   }
 }

@@ -1,54 +1,105 @@
 {
   "key": "person:wang-suyuan:2026-04-19:weekly-score",
-  "generatedAt": "2026-05-24T11:35:52.941Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "b74e5d264399dc7f91a05fa56aba783e9f8777b369c636b757e37cff9c7a46a0",
+  "generatedAt": "2026-06-06T13:13:11.122Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "7e5a9231f6889d79a762dee64225c50b00792ecf76d7139d993c3c99cbc8509c",
   "result": {
     "hardProgress": {
-      "score": 18,
-      "reason": "本周新增多项可验证硬进展：完成静态分析与LLM推理开销实验、大参数量模型对比实验、全面的分类指标统计与人工核验，并成功在本地跑通SecVerifier框架。证据充分，成果扎实。",
-      "missingEvidence": "实验数据的原始数值、可视化图表未随报告附上；SecVerifier运行的成功日志或截图未提供。"
+      "score": 15,
+      "reason": "本周有明确硬进展：AdvTaint 补充了开销实验、模型规模对比实验、Precision/Recall/F1 统计和人工核验；SecVerifier 已在本地跑通基本流程。这些都属于实质性推进。但周报没有给出任何关键实验数值、样本规模、对比对象、运行日志或产出文件，因此只能判断“做了”，不能判断“做到什么程度”。",
+      "missingEvidence": [
+        "开销实验的具体时间、空间、Token 成本数据",
+        "大模型 scale-up 对比的模型列表、指标表和结论幅度",
+        "人工核验的样本数、判定标准、TP/FP/FN 明细",
+        "Rebuttal 当前版本或核心 argument 草稿",
+        "SecVerifier 本地跑通的命令、日志、成功案例截图或结果文件"
+      ]
     },
     "cognitiveIncrement": {
-      "score": 13,
-      "reason": "两个认知更新均有实验支撑，揭示了扩大参数规模的收益天花板和传统指标的幻觉掩盖问题，具有实际指导意义。",
-      "missingEvidence": "更新1的量化天花板数值（例如具体Token开销或F1收益递减点）未在报告中列出；更新2的典型幻觉Case样本未展示。"
+      "score": 12,
+      "reason": "认知增量较清楚：一是模型规模扩大存在边际收益天花板，二是传统分类指标会掩盖 RCA 幻觉。这些认知与本周实验和人工核验直接相关，且能改变后续研究策略。但表述仍偏结论化，没有用具体数据说明“天花板”从哪里开始、传统指标失真比例有多大。",
+      "missingEvidence": [
+        "不同模型规模下性能提升的具体边际变化",
+        "传统 True Positive 中 RCA 幻觉案例的比例",
+        "人工核验中代表性错误案例的最小证据链",
+        "哪些上下文压缩策略真正导致了认知更新"
+      ]
     },
     "cot2Depth": {
-      "score": 14,
-      "reason": "两个CoT's CoT立足自身实验，层次清晰：一是评估体系必须转向物理验证，二是静态分析应作为高效剪枝器。均有A级实证，思考深度高。",
-      "missingEvidence": "CoT 1中SecVerifier与现有流派的集成雏形或接口构想未体现；CoT 2中开销实验的详细数据对比（如全量上下文与裁剪上下文的Token数、时延差异）未附。"
+      "score": 12,
+      "reason": "CoT's CoT 部分有较好的二阶反思：从分类指标失效推到执行验证的必要性，从静态分析提取器推到剪枝器，并进一步提出 LLM 只做最后语义判断的分工。这已经超出普通进展汇报，具有方法论价值。但其证据等级自评为 A，周报中没有展示支撑数据，因此深度可信度被削弱。",
+      "missingEvidence": [
+        "证明分类指标失效的人工核验统计表",
+        "证明 SecVerifier 更可靠的实际复现实验结果",
+        "证明“静态分析做 90%，LLM 做 10%”的量化依据",
+        "全量上下文与裁剪上下文在成本和效果上的对照实验"
+      ]
     },
     "brainaryMapping": {
-      "score": 9,
-      "reason": "明确将SecVerifier映射为Brainary的Benchmark/Evaluator能力，并指出当前系统缺失动态沙盒验证器，沉淀路径清晰。",
-      "missingEvidence": "将SecVerifier抽象为Brainary Evaluator节点的架构草图或接口定义尚未给出。"
+      "score": 8,
+      "reason": "Brainary 映射明确指向 Benchmark/Evaluator，并说明了组内当前缺少动态沙盒验证器，未来可作为裁决 Agent 生成质量的 Evaluator 节点。映射方向合理，且与 SecVerifier 复现任务一致。扣分点是接口形态、输入输出协议、接入位置和最小系统闭环尚未具体化。",
+      "missingEvidence": [
+        "Brainary 中该 Evaluator 的具体输入输出定义",
+        "与现有 Agent 或漏洞检测流程的接口草图",
+        "一个最小闭环示例：Agent 输出、SecVerifier 验证、反馈回写",
+        "与现有静态 Evaluator 的差异表"
+      ]
     },
     "monetaryValue": {
-      "score": 9,
-      "reason": "对两项任务给出了具体估值与计算方法（顶会论文支撑百万级基金，基建节省约15万人力成本），逻辑合理。",
-      "missingEvidence": "估值依据的基金项目平均额度、中级测试工程师薪资等市场数据的引用或出处未提供。"
+      "score": 6,
+      "reason": "周报尝试给出货币价值判断，并区分了顶会论文价值和基础设施节省的人力成本，这符合模板要求。但 100 万人民币的论文估值主要基于间接科研绩效和基金支撑，缺乏更稳健的概率折算；SecVerifier 的 15 万/年估值也缺少实际节省工时、复用频率和维护成本估算。",
+      "missingEvidence": [
+        "USENIX Security rebuttal 成功概率及对应期望价值折算",
+        "顶会论文对基金申请贡献的可比案例或历史数据",
+        "SecVerifier 若自研所需人月的拆分估算",
+        "该 Evaluator 未来一年预计被多少项目复用",
+        "维护 SecVerifier 环境依赖的成本估计"
+      ]
     },
     "projectManagement": {
-      "score": 13,
-      "reason": "两个项目均明确了阶段、时间投入、卡点与下周动作，进度符合预期，主任务处于关键路径并得到高强度投入，管理清晰。",
-      "missingEvidence": "未给出项目时间线或甘特图，API额度等资源消耗具体数字未说明。"
+      "score": 11,
+      "reason": "项目管理信息较完整：列出了项目阶段、时间投入、下周投入、资源消耗和进度判断；AdvTaint 被识别为关键路径，SecVerifier 处于原型阶段。但缺少明确截止日期、风险缓解方案、验收标准、任务拆解和优先级冲突处理。尤其是 rebuttal 一页纸压缩问题是关键风险，但没有给出取舍策略。",
+      "missingEvidence": [
+        "USENIX rebuttal 的准确截止时间和提交检查清单",
+        "一页 rebuttal 中各实验结论的优先级排序",
+        "如果篇幅不足，哪些数据保留、哪些放弃的决策规则",
+        "SecVerifier 下周可行性报告的验收标准",
+        "大模型 API 成本、额度消耗和是否影响后续实验"
+      ]
     },
     "nextAction": {
       "score": 8,
-      "reason": "给出了可直接执行的下周动作：Rebuttal定稿提交、SecVerifier可行性评估报告输出，具体可验证。",
-      "missingEvidence": "Rebuttal定稿的最终检查清单或截稿时间点未明确；可行性报告的结构大纲未提供。"
+      "reason": "下周动作清楚：完成 rebuttal 定稿提交，SecVerifier 在小型 C/C++ 漏洞项目上跑通并输出可行性报告，之后尝试封装 Python Module。这些动作具备可验证性。但仍缺少具体项目列表、通过标准、报告结构和时间节点。",
+      "missingEvidence": [
+        "下周要跑通的具体 C/C++ 漏洞项目名称",
+        "SecVerifier 跑通的成功判据",
+        "可行性评估报告应包含哪些指标",
+        "Python Module 的最小接口和完成定义",
+        "Rebuttal 提交前最终校验人和校验流程"
+      ]
     },
     "evidenceQuality": {
-      "score": 4,
-      "reason": "CoT's CoT均标注为A级证据，且源于本周自己的实验，整体可信度较高。",
-      "missingEvidence": "未随周报附上直接证据材料（如实验数据文件、对比图表、运行日志截图等）。"
+      "score": 2,
+      "reason": "证据质量是本周主要短板。周报声称有大量实验、人工核验和复现结果，但没有展示核心数据、表格、日志、链接、截图或案例。当前证据更多是叙述性证据，不能充分支撑 A 级证据等级。",
+      "missingEvidence": [
+        "实验结果表",
+        "人工核验样例",
+        "SecVerifier 运行日志",
+        "Rebuttal 草稿或核心段落",
+        "代码提交记录或复现实验配置"
+      ]
     },
-    "totalScore": 88,
-    "tier": "A",
-    "oneLineJudgment": "本周硬进展扎实，认知深度突出，项目执行有力，但在证据附件和计划细节上略有不足。",
-    "professorFollowUp": "建议老师关注：1) 将CoT’s CoT 2中关于静态分析剪枝的量化结论形成内部技术规范；2) 推动SecVerifier与现有系统的集成方案设计，尽快抽象为Brainary的Evaluator模块。"
+    "totalScore": 74,
+    "tier": "B",
+    "oneLineJudgment": "本周确有较强实质推进和有价值的方法论反思，但关键实验数据和复现证据缺失，使得报告的可信度与可决策性停留在中上水平。",
+    "professorFollowUp": [
+      "要求学生下次直接附上 AdvTaint 四张核心表：开销拆解、模型 scale-up、传统指标、人工核验统计。",
+      "要求学生用 3 到 5 个具体 case 证明传统 TP 中 RCA 幻觉的问题，而不是只给抽象判断。",
+      "要求学生提交 rebuttal 一页纸的最终版本或核心 argument skeleton，便于判断哪些数据真正进入审稿人视野。",
+      "要求学生给出 SecVerifier 接入 Brainary 的最小接口定义：输入是什么、输出是什么、失败如何反馈给 Agent。",
+      "要求学生把“静态分析做 90%，LLM 做 10%”转化为可实验验证的假设，而不是停留在经验性表述。"
+    ]
   }
 }

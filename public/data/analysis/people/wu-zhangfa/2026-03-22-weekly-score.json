@@ -1,56 +1,100 @@
 {
   "key": "person:wu-zhangfa:2026-03-22:weekly-score",
-  "generatedAt": "2026-05-24T11:35:59.985Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "b669a470a48413d8e6a3af274610d69fcec957c07b5545c98621e9c29b487a11",
+  "generatedAt": "2026-06-06T13:14:09.838Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "8243323297612fce83c634834a5bfa29f9b7cbe47e1dbe50a10063da61047371",
   "result": {
-    "dimensions": {
-      "hardProgress": {
-        "score": 15,
-        "reason": "完成了代码级重构，包括删除融合链路、拆分语义变量、新增几何均值损失和攻击审计，定位了两类失败模式，但缺少实验数据或指标对比作为直接证据。",
-        "missingEvidence": "消融实验的量化结果、训练曲线或指标对比表。"
-      },
-      "cognitiveIncrement": {
-        "score": 13,
-        "reason": "提炼出一体化损失的分层设计原则，明确了变量语义污染和池化掩盖的认知盲区，并提出了审计应独立于训练的观点，认知增量具体且可迁移。",
-        "missingEvidence": "老师原本认知基线的明确描述，以支撑‘新增’的判定。"
-      },
-      "cot2Depth": {
-        "score": 12,
-        "reason": "对研究方法的上层思考触及了自动化缺失的结构审计器、变量语义检查等元问题，但尚未抽象出更通用的原则或方法模板。",
-        "missingEvidence": "由具体案例抽象出的自动化科研规则或框架。"
-      },
-      "brainaryMapping": {
-        "score": 9,
-        "reason": "清晰映射到研究结构审计、变量语义审计和失败模式基准构建三个能力，并区分了老师已知与未知的部分，映射具体且直接关联本周产出。",
-        "missingEvidence": "能力映射对应的 Brainary 文件或模板引用。"
-      },
-      "monetaryValue": {
-        "score": 4,
-        "reason": "未明确说明工作的货币转化路径或成本节约，但通过系统稳健性提升间接降低了后期调试与验证成本，有一定潜在价值。",
-        "missingEvidence": "时间节省、算力成本或实验效率的量化估计。"
-      },
-      "projectManagement": {
-        "score": 13,
-        "reason": "主线任务、硬进展、卡点、下周动作四段式清晰，任务分解与优先级合理，最小可验证动作设计到位，但缺少时间里程碑或资源需求说明。",
-        "missingEvidence": "具体的时间规划或资源依赖。"
-      },
-      "nextAction": {
-        "score": 9,
-        "reason": "下周计划包含三组针对性消融实验、固定评估指标和输出交付物，动作可验证且直接卡住当前核心矛盾。",
-        "missingEvidence": "实验可能失败的备选预案。"
-      },
-      "evidenceQuality": {
-        "score": 2,
-        "reason": "无代码片段、日志截图、实验记录链接等可查验证据，仅凭文字描述难以核实硬进展的真实性。",
-        "missingEvidence": "代码提交链接、实验日志文件、或指标截图。"
-      }
+    "week": "2026-03-22",
+    "name": "吴章发",
+    "hardProgress": {
+      "score": 16,
+      "reason": "本周有明确的代码级硬进展：删除 FusionHead、fused score、fusion loss、orth loss，拆分 attack_prob_pre 与 attack_prob_post，重写 defense loss，修复 projector 原地写入导致的 autograd 问题，并新增 attacked-positive audit。进展不是停留在叙事层，而是覆盖训练目标、推理链路、评估逻辑和 checkpoint 选择逻辑。但目前仍缺少实验结果证明这些改动带来性能或稳定性提升，因此不能给满分。",
+      "missingEvidence": [
+        "缺少 commit hash、PR 链接或关键 diff 摘要，无法外部核验代码改动是否已合入。",
+        "缺少训练是否跑通的日志、loss 曲线、显存/耗时变化。",
+        "缺少新旧版本的定量对比结果。",
+        "缺少修复 projector 问题前后的复现实例或报错栈。"
+      ]
     },
-    "totalScore": 77,
-    "tier": "B",
-    "oneLineJudgment": "本周对框架进行了系统性重构，提出了明确的认知增量，但缺乏实验数据支撑硬进展。",
-    "professorFollowUp": "请提供三组消融实验的原始结果数据和代码提交记录，需重点验证几何均值防御是否在最少超参数下稳定优于旧版加权防御，并附上 token-level 与 bag-level 的 AUPR 对比。"
+    "cognitiveIncrement": {
+      "score": 14,
+      "reason": "认知增量较强。周报不只是说做了重构，而是明确提出从多 loss 拼盘转向职责分层：结构解决什么、监控解决什么、训练目标保留什么；同时识别出同名变量语义污染、bag-level pooling 掩盖 token drift、评估侧 audit 不应进入训练 loss 等方法论判断。这些属于对研究系统因果结构的上层增量。",
+      "missingEvidence": [
+        "缺少说明这些认知是如何从具体失败实验或调试现象中推导出来的。",
+        "缺少反例：哪些原有解释被证伪，哪些只是重新命名。",
+        "缺少对几何均值 defense 为什么优于其他一体化表达的理论或经验依据。"
+      ]
+    },
+    "cot2Depth": {
+      "score": 13,
+      "reason": "CoT’s CoT 部分较完整，覆盖了方法论、变量语义、失败模式、评估审计和自动化科研边界，并且尝试判断老师是否已知、信息差在哪里、为什么尚未自动化。深度主要体现在把具体工程问题上升为可复用的科研审计能力。不过部分判断仍是主观推断，例如“老师大概率不知道”，缺少与老师已有知识或项目文档的对照。",
+      "missingEvidence": [
+        "缺少老师此前是否已知这些问题的直接证据。",
+        "缺少从本周具体观察到上层原则的推理链条细节。",
+        "缺少哪些 CoT 可以被固化成检查清单、脚本或自动化流程的具体形式。"
+      ]
+    },
+    "brainaryMapping": {
+      "score": 9,
+      "reason": "Brainary 映射清晰，明确提出 Research-structure critic、Semantic variable auditor、Failure-mode benchmark builder 三类能力，并分别对应本周的新意和未系统化原因。这不是泛泛对应，而是能落到 loss 结构审计、变量消费链审计、保护性 audit benchmark 等具体能力。但还没有给出这些能力的输入、输出、触发条件和最小自动化原型。",
+      "missingEvidence": [
+        "缺少 Brainary 能力模块的接口定义或流程图。",
+        "缺少本周产物如何沉淀为可复用模板的文件或示例。",
+        "缺少自动化优先级：先做静态扫描、指标审计，还是 benchmark 生成器。"
+      ]
+    },
+    "monetaryValue": {
+      "score": 5,
+      "reason": "周报体现了一定项目价值：降低 reviewer 质疑风险、减少自由超参数、提升系统叙事一致性，并把问题转化为可自动化科研资产。但没有直接讨论论文收益、发表概率、算力节省、复用价值、团队效率或潜在商业/资金价值。因此这一维只能给中等偏低分。",
+      "missingEvidence": [
+        "缺少该重构对论文命中率、审稿风险或项目里程碑的具体影响判断。",
+        "缺少算力成本、调参成本、实验周期是否下降的估计。",
+        "缺少该方法资产能复用于哪些后续项目或模块的价值评估。",
+        "缺少如果三组消融失败，本周重构是否仍有保留价值的判断。"
+      ]
+    },
+    "projectManagement": {
+      "score": 13,
+      "reason": "项目管理结构较好：主线任务清楚，硬进展和卡点分离，能识别当前风险从“能否训练”转为“能否用更少自由度获得可重复胜利”，并把下周工作压缩为最小消融集合。checkpoint 选择改为 det-only 也体现了目标收口。但仍缺少时间安排、实验资源、负责人、完成标准和风险预案。",
+      "missingEvidence": [
+        "缺少下周三组消融的预计运行时间、seed 数、数据切分方案。",
+        "缺少每项任务的完成判据，例如提升多少才算成立。",
+        "缺少失败预案：如果几何均值 defense 不优于旧版 weighted defense，下一步如何决策。",
+        "缺少当前代码是否已稳定、是否需要回滚点的信息。"
+      ]
+    },
+    "nextAction": {
+      "score": 9,
+      "reason": "下周动作具体且可验证：三组最小消融、统一 det-only 指标、一页式 benchmark 表和失败模式表，能直接回答新版是否在更少超参数下仍保持稳定收益。指标也比较完整，包括 AUPR_det、AUROC_det、F1_det、attack_prob_pre/post 和 audit_pos_delta_det。扣分点在于缺少统计稳定性设计和明确阈值。",
+      "missingEvidence": [
+        "缺少 seed 数量和置信区间或方差报告要求。",
+        "缺少数据集、切分、攻击强度、训练预算的固定方案。",
+        "缺少成功/失败阈值，例如 AUPR_det 持平是否可接受，audit_pos_delta_det 改善多少算有效。",
+        "缺少实验优先级：如果只能跑一组，先跑哪一组。"
+      ]
+    },
+    "evidenceQuality": {
+      "score": 2,
+      "reason": "周报的信息密度高，但证据质量偏弱。多数内容是自述式代码改动和方法判断，没有附带实验表、日志、截图、commit、错误栈、benchmark 输出或可复现实验配置。因此可以判断方向和计划，但无法判断改动是否真实完成、是否稳定、是否有效。",
+      "missingEvidence": [
+        "缺少代码提交证据。",
+        "缺少实验结果证据。",
+        "缺少训练日志和评估日志。",
+        "缺少失败模式定位的复现材料。",
+        "缺少 audit 指标的样例输出。"
+      ]
+    },
+    "totalScore": 81,
+    "tier": "A",
+    "oneLineJudgment": "本周是一次高质量的研究结构收口与代码语义清理，但仍处在“方法重构已发生、有效性尚未被实验证明”的阶段。",
+    "professorFollowUp": [
+      "请学生下周必须给出三组消融的定量表，并至少包含均值、方差或多 seed 结果。",
+      "要求附上关键 commit 或 diff 摘要，证明 FusionHead 删除、pre/post 拆分、token-level defense 和 audit 指标已经真实落地。",
+      "重点追问：几何均值 defense 如果没有优于旧版 weighted defense，是否仍因更少超参数和更清晰叙事而值得保留。",
+      "让学生把“变量语义审计”整理成一页检查清单，这是本周最可能沉淀为 Brainary 自动化能力的资产。",
+      "教授本周最应该学到的一点：该项目的核心风险已从模型能否运行，转为研究变量语义、loss 职责和评估审计是否一致；下一步必须用最小消融证明这种结构收口不是叙事优化，而是可重复的实验收益。"
+    ]
   }
 }

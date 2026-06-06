@@ -1,64 +1,103 @@
 {
   "key": "person:qiao-wei:2026-04-19:weekly-score",
-  "generatedAt": "2026-06-05T18:07:06.728Z",
+  "generatedAt": "2026-06-06T13:10:21.353Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
-  "inputHash": "56b50a50b8ac9fd983b33a17ee2ad52039655713e48369fe31e030754f2feffb",
+  "inputHash": "bbc2635b25c30736416bdb8d0589fd2272bd0bced228679e1e91db2b67367740",
   "result": {
     "week": "2026-04-19",
     "name": "乔伟",
     "scores": {
       "hardProgress": {
         "score": 15,
-        "reason": "本周有可计量硬进展：完成了 System 1 第一轮 behavioral evaluation，并报告了场景级 4/4 命中、attack-day precision/recall/F1 均为 1.0，以及节点级 precision 0.9286、recall 0.5132、F1 0.6611。方案层也从模块堆叠收敛为快思考触发、慢思考校准、经验回写的闭环主线。但硬进展主要集中在 System 1，小样本场景级结果说服力有限；System 2 和经验回写尚未跑通，最小闭环协议也未形成。",
-        "missingEvidence": "缺少实验数据规模、攻击场景具体名称、节点总数、正负样本分布、评估脚本或可复现链接；缺少 System 2 最小样例、回写机制实验、端到端闭环结果。"
+        "reason": "本周有明确硬进展：完成了 System 1 第一轮 behavioral evaluation，并给出场景级和节点级 precision、recall、F1；同时把方案主线从模块堆叠收敛为“快思考触发—慢思考校准—经验回写”的闭环。但硬进展仍主要停留在小规模评估和方案收敛，System 2 尚未跑通，闭环也还没有最小可复现实验。",
+        "missingEvidence": [
+          "缺少评估数据规模、攻击场景具体名称、节点总数、正负样本数量。",
+          "缺少评估脚本、实验配置、阈值设置和可复现路径。",
+          "缺少 System 2 最小样例和经验回写的实际运行结果。",
+          "缺少与 baseline 或替代方法的对比。"
+        ]
       },
       "cognitiveIncrement": {
         "score": 12,
-        "reason": "认知增量较明确：将 System 1 从完整检测器重新定位为低成本触发层，将 System 2 定位为多角度慢思考与校准层，并提出分层系统必须分层定义成功。这一增量能直接影响后续评估指标和实验设计。但部分内容仍偏概念化，例如“AGI 式认知系统原型”“像人脑一样”等表述尚未转化为可操作定义。",
-        "missingEvidence": "缺少新旧方案对照表；缺少分层评价指标的正式定义；缺少说明这些认知更新如何改变具体实验协议的证据。"
+        "reason": "认知增量较清楚：把 System 1 的成功标准从“完整恢复攻击链”调整为“低成本触发值得慢思考的样例”，并提出分层系统应分层评价。这是有实验结果支撑的概念更新。扣分点是这些认知还没有完全转化成可执行评价协议和系统设计约束。",
+        "missingEvidence": [
+          "缺少明确的分层评价指标定义，例如触发层最低 recall、允许误报率、成本约束。",
+          "缺少认知更新如何改变下周实验设计的具体规则。",
+          "缺少 System 2 校准质量的可测量指标。"
+        ]
       },
       "cot2Depth": {
         "score": 11,
-        "reason": "CoT's CoT 有两条较完整反思：第一条围绕快系统评价标准，有实验指标支撑，价值较高；第二条围绕研究设计清晰度，能解释为什么不继续堆模块。但深度仍主要停留在方法论抽象，对失败模式、反例、边界条件、可证伪条件讨论不足。“老师原本不知道”的判断没有外部证据，只能视为作者自述。",
-        "missingEvidence": "缺少反例分析，例如什么情况下 System 1 不能只作为触发层；缺少 System 2 慢思考导致幻觉或错误校准的风险分析；缺少可验证的 CoT's CoT 产物，如 evaluation protocol 草案。"
+        "reason": "CoT's CoT 有较完整结构，包含信息差、新增认知、自动化潜力和证据等级。第一条关于触发层评价标准有实验指标支撑，深度较好。第二条关于研究设计清晰度更多是方法论总结，证据相对软。整体仍有部分表述把“老师原本不知道”作为自我判断，缺少外部验证。",
+        "missingEvidence": [
+          "缺少 CoT's CoT 如何转化为 evaluation protocol 的具体条目。",
+          "缺少判断“老师原本不知道”的客观依据。",
+          "缺少对失败可能性的二阶反思，例如 System 1 场景级全中是否可能来自样本过小。"
+        ]
       },
       "brainaryMapping": {
-        "score": 7,
-        "reason": "Brainary 映射覆盖了 risk modeling、reasoning、calibration、cognitive control、workflow management、benchmark/evaluation、long-term memory，并能把 System 1、System 2、经验回写分别对应到能力层。映射方向清楚，但仍是概念层 mapping，尚未落到 Brainary 中的具体对象、接口、数据结构、记忆 schema 或 evaluator 规格。",
-        "missingEvidence": "缺少 Brainary 能力模块的输入输出定义；缺少 trigger benchmark、deliberation workflow、memory schema 的草案；缺少说明该工作如何接入现有 Brainary 流程的证据。"
+        "score": 8,
+        "reason": "Brainary 映射较具体，能把 System 1 对应到 risk modeling 和 benchmark/evaluation，把 System 2 对应到 reasoning、calibration、cognitive control，把回写对应到 long-term memory 和 workflow management。扣分点是映射仍是能力标签级，尚未给出接口、数据结构、模块边界或可沉淀资产的规格。",
+        "missingEvidence": [
+          "缺少 Brainary 各能力之间的数据流图或接口定义。",
+          "缺少 memory schema 的字段设计。",
+          "缺少 evaluator 的输入、输出、评分规则。",
+          "缺少 cognitive control module 的最小功能定义。"
+        ]
       },
       "monetaryValue": {
-        "score": 3,
-        "reason": "报告给出了 300 万和 150 万人民币的估值，并尝试从减少无效实验、SOC 初筛成本、可复用 benchmark 等角度解释价值。但估值明显偏主观，没有市场规模、客户付费意愿、替代成本、节省人时、转化概率或风险折扣计算。当前更适合作为潜在价值叙事，而不是可信货币估值。",
-        "missingEvidence": "缺少具体客户场景、SOC/MDR/XDR 的成本基准、节省人力测算、产品化路径、竞品对比、转化概率和折现假设；缺少为什么本周进展可单独对应数百万元价值的量化依据。"
+        "score": 5,
+        "reason": "报告说明了潜在买单方和研究价值，也判断该题目不是单纯安全检测，而是通用双系统风险判断能力。但 300 万和 150 万人民币估值缺乏可核算依据，更多是主观资产估计，没有市场价格、节省人力、转化概率或产品收入模型支撑。",
+        "missingEvidence": [
+          "缺少估值公式中的具体人力单价、节省时间、转化概率。",
+          "缺少 SOC、MDR、XDR 场景下的真实成本或采购数据。",
+          "缺少同类系统、论文或产品的价值参照。",
+          "缺少当前成果距离论文、产品特性或 benchmark 发布的风险折扣。"
+        ]
       },
       "projectManagement": {
         "score": 12,
-        "reason": "项目管理信息较完整：列出了两个项目的阶段、原计划与实际完成、投入时间、下周时间、关键路径、依赖关系、资源需求、token/API 消耗、进度偏差和纠偏动作。能看出当前瓶颈是从叙事到可复现 protocol，以及节点级 recall 偏低。但里程碑仍偏宽泛，例如“下周内冻结方案描述”“完成 false negative 分析”缺少验收标准。",
-        "missingEvidence": "缺少具体交付物清单、验收标准、截止日期到天、风险优先级、实验负责人以外的协作安排；缺少 false negative 分析模板和 System 2 协议冻结标准。"
+        "reason": "项目管理信息较完整：列出了阶段、原计划与实际完成、投入时间、下周时间、依赖关系、关键路径、token 成本、偏差原因和纠偏动作。主要不足是里程碑验收标准还不够硬，很多计划仍是“说清”“冻结描述”“完成分析”，缺少可检查交付物。",
+        "missingEvidence": [
+          "缺少每个里程碑的验收标准，例如什么叫 System 2 最小样例跑通。",
+          "缺少风险优先级和备选路线。",
+          "缺少任务拆分到具体日期或具体产物。",
+          "缺少实验失败时的决策门槛。"
+        ]
       },
       "nextAction": {
         "score": 8,
-        "reason": "下周动作比较清楚：固定 1 个最小案例，串联 System 1 触发、System 2 多角度推演、结果回写；对 false negative node 做误差分析，区分骨架覆盖、本体映射、阈值或匹配策略问题；冻结方案描述并请老师确认 System 2 第一阶段保留哪些思考角度。这些动作与当前卡点匹配。但仍缺少最小实验协议的具体输入、输出、成功标准和失败判定。",
-        "missingEvidence": "缺少下周最小闭环案例的选择标准；缺少 System 2 多角度 prompt 的候选列表；缺少回写格式；缺少 false negative 分类后的决策规则。"
+        "reason": "下周动作比较明确：固定一个最小案例，串起 System 1 触发、System 2 多角度推演和结果回写；对 false negative node 做误差分析，并检查阈值敏感性。这些动作能直接降低当前最大不确定性。扣分点是还没有定义完成标准、输入样例、输出格式和评测指标。",
+        "missingEvidence": [
+          "缺少最小案例的选择标准。",
+          "缺少 System 2 多角度推演的固定 prompt 或协议。",
+          "缺少 false negative 分类表模板。",
+          "缺少下周交付物清单和验收指标。"
+        ]
       },
       "evidenceQuality": {
         "score": 3,
-        "reason": "证据质量中等偏低。优点是有定量指标，且区分了场景级与节点级结果，能支撑 System 1 作为触发层的初步判断。问题是样本仅报告 4 个攻击场景，未提供数据规模、统计细节、负样本数量、阈值设置、实验脚本、置信区间或复现实验材料；方案收敛、Brainary 映射、货币价值主要是自述。",
-        "missingEvidence": "缺少完整 confusion matrix、样本分布、false positive/false negative 明细、评估代码、数据版本、可复现实验记录、对照基线和消融实验。"
+        "reason": "有一定证据质量，因为报告给出了具体实验指标，且区分了场景级和节点级结果，也承认节点级 recall 偏低。但证据仍不充分：样本量很小，只说明 4/4 攻击场景命中；没有 baseline、置信区间、错误案例、评估脚本或数据明细。",
+        "missingEvidence": [
+          "缺少完整实验表格。",
+          "缺少 false positive、false negative 的具体样例。",
+          "缺少 baseline 对比。",
+          "缺少实验可复现材料。",
+          "缺少对 4 个攻击场景是否代表充分的说明。"
+        ]
       }
     },
-    "totalScore": 71,
+    "totalScore": 74,
     "tier": "B",
-    "oneLineJudgment": "本周有真实实验推进和清晰认知收敛，但核心仍停在 System 1 初步验证与方案叙事层，System 2、经验回写和端到端闭环尚未形成可复现证据。",
+    "oneLineJudgment": "本周有真实实验进展和清晰认知收敛，但核心闭环尚未跑通，价值估算证据偏软，下一步必须把叙事压缩成可复现 protocol。",
     "professorFollowUp": [
-      "要求学生下周必须提交一个最小闭环 protocol：输入样例、System 1 触发规则、System 2 思考角度、输出格式、回写 schema、成功/失败标准。",
-      "要求补齐 System 1 实验证据：数据规模、正负样本数、攻击场景说明、节点级 confusion matrix、false negative 分类、阈值敏感性结果。",
-      "帮助学生收缩 System 2 第一阶段 scope，建议只保留 2 到 3 个最关键思考角度，例如攻击解释、正常业务解释、证据充分性校准，避免继续扩叙事。",
-      "要求重做货币价值部分：不要使用 300 万、150 万这类无依据估值，改为按节省人时、可复用资产、产品化概率和风险折扣进行保守测算。",
-      "下周最重要的检查点不是方案写得更完整，而是是否跑出一条可复现的 System 1 到 System 2 到 memory 回写的最小链路。"
+      "要求他下周不要继续扩展叙事，必须交付一个最小闭环样例：System 1 触发、System 2 多角度推理、结论回写三步都要有输入输出。",
+      "让他补一张 System 1 评估表：场景、节点数、TP、FP、FN、precision、recall、F1、阈值、错误类型。",
+      "要求他定义 System 2 第一阶段只保留哪些思考角度，避免慢系统变成无限扩展的角色堆叠。",
+      "追问节点级 recall 只有 0.5132 时，System 1 作为触发层的最低可接受 recall 是多少，以及漏掉节点会不会导致慢系统根本看不到关键证据。",
+      "要求他把 300 万和 150 万估值暂时降级为假设，除非能给出人力节省、产品转化或论文资产的可核算模型。"
     ]
   }
 }

@@ -1,0 +1,147 @@
+{
+  "key": "person:xie-maoyi:2026-04-19:horizontal",
+  "generatedAt": "2026-06-06T13:15:25.712Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "1e7a149969119122f90ecf58a79755fe746f596868c1701846fa2e9b84502c2c",
+  "result": {
+    "overallLevel": "特别值得读",
+    "headline": "本周从“加 calltree 是否有用”推进到“何时加、怎样引导 LLM 用”的论文级判断",
+    "overviewSentence": "按本周研究管理标准，这份周报属于特别值得优先阅读的一类，因为它同时给出了硬实验增量、被证伪路径、适用边界和下一步方法转向。",
+    "shortRead": "这份周报最值得老师读的点是：学生不只是报告了性能提升，而是把 kernel fault localization 拆成“信息是否可见”和“候选空间中如何推理”两个子问题，并用 RC-in-BT、RC-not-in-BT、calltree、bug-type prompt 的对比实验支持了这一判断。最关键的结果是，在 27 个 RC-in-calltree bugs 上，baseline Top-10 为 1/27，Phased CT 为 5/27，而 Bug-Type Final 达到 16/27；同时在 RC-in-BT 子集上，calltree 基本无增益甚至略降，由此形成了清晰的适用边界：calltree 不是通用增强，而是条件性信息补充。下一次 meeting 应重点追问：结构化 reasoning module 如何从 heuristic prompt 变成可复现实验方法，以及样本口径、pipeline、失败 case 分析如何固化到论文证据链中。",
+    "levelRationale": {
+      "level": "特别值得读",
+      "why": "本周同时具备四类高价值信号：第一，有明确硬进展和可量化结果，覆盖 baseline、Flat CT、Phased CT、Bug-Type prompt、RC-in-BT 子集等多组对照；第二，有认知增量，不再停留在“加更多 trace”，而是提出 coverage 与 reasoning 的拆分；第三，有价值判断，明确 calltree 的条件性价值和 bug-type reasoning 的核心价值；第四，有项目管理动作，已经从 pipeline 搭建转向方法验证，并给出下周最小可验证动作。",
+      "mainCaveat": "目前方法仍主要以 bug-type specific prompt 的 heuristic 形式呈现，结构化推理机制、样本口径统一、失败 case 归因和 clean pipeline 还需要继续固化，才能从强实验信号推进为稳定论文贡献。"
+    },
+    "sameWeekPosition": "按本周研究管理标准，这份周报属于较值得老师优先阅读的一类；它的优势不是工作量本身，而是形成了可用于决策的研究判断：哪些信息有用、何时有用、为什么单纯增加 calltree 不够、下一步应转向何种 reasoning 机制。",
+    "highlightedSignals": [
+      {
+        "level": "特别值得读",
+        "signal": "硬进展密度高：报告给出了多个明确对照结果，包括 baseline、Flat CT、Phased CT、Bug-Type Final，以及 RC-in-BT 与 RC-not-in-BT 的分组分析。"
+      },
+      {
+        "level": "特别值得读",
+        "signal": "认知增量清晰：从“LLM 推理能力是否足够”转为“根因信息是否可见”和“候选空间中如何选择”的二段式理解。"
+      },
+      {
+        "level": "非常好",
+        "signal": "价值判断有边界：学生没有把 calltree 包装成普遍有效，而是指出它只在 RC 不在 BT 时有条件价值。"
+      },
+      {
+        "level": "非常好",
+        "signal": "金额价值自估有主次：任务 4 Bug-Type prompt 被标为 15 万，明显高于其他任务，和实验提升幅度一致；任务 6 未给金额价值，后续可补上数据质量工作的论文价值。"
+      },
+      {
+        "level": "很好",
+        "signal": "自动化沉淀方向明确：benchmark、decision module、candidate pruning、structured reasoning 都已被识别，但还需要落成更具体的模块接口和评估方式。"
+      }
+    ],
+    "focusDimensions": {
+      "valueJudgment": {
+        "read": "非常好。学生本周最强的价值判断是识别出 calltree 的“条件性价值”：它不是对所有 crash report 都有帮助，而是在 RC 不在 backtrace 时提供缺失信息；进一步又判断出真正带来性能跃升的是 bug-type aware reasoning，而不是 calltree 本身。",
+        "evidence": [
+          "在 27 个 RC-in-calltree bugs 上，baseline Top-10 为 1/27，Phased CT 为 5/27，Bug-Type Final 为 16/27。",
+          "在 56 个 RC-in-BT bugs 上，baseline Top-10 为 85.7%，加入 calltree 后基本无提升甚至略降。",
+          "报告中明确写到：calltree 的价值是提供 BT 中不可见的信息，而不是普遍提升 FL。"
+        ],
+        "nextLift": "下周应把“何时使用 calltree、何时不使用 calltree”的 decision rule 写成可执行判定流程，并说明这个规则依赖哪些输入信号，例如 RC 是否可能在 BT、calltree 长度、phase 覆盖、bug type。"
+      },
+      "projectManagement": {
+        "read": "非常好。周报呈现出清楚的阶段推进：从 pipeline 搭建进入方法验证；每个任务都包含本周做了什么、新增硬进展、当前卡点和下周最小可验证动作，便于老师判断项目是否继续投入。",
+        "evidence": [
+          "报告写明当前阶段已从“pipeline 搭建”转向“方法验证”。",
+          "本周投入约 40 小时，并标出关键里程碑：Bug-Type 方法验证已完成，reasoning 结构化待推进。",
+          "下周动作包括聚焦 27 个 RC-not-in-BT 子集、调整 MAX_PHASES、分析 6 个未命中 case、构建 decision rule、固化 clean pipeline。"
+        ],
+        "nextLift": "下周可以把多个动作收敛成一张优先级表：第一优先是 6 个未命中 case 的归因，第二优先是 decision rule，第三优先是 clean pipeline；每项给出验收标准，例如 Top-10 是否提升、RC 保留率是否提升、是否消除 RC 信息泄露。"
+      },
+      "metacognition": {
+        "read": "特别值得读。学生本周的元认知变化很明显：他没有停留在“实验跑出提升”，而是反思哪些路径被证伪，哪些变量才是真正因果相关，并把 CoT’s CoT 提炼为 coverage、reasoning、selection 三个更高层问题。",
+        "evidence": [
+          "报告明确写到被证伪路径：“只要给 calltree 就会提升”和“更多 trace = 更好效果”。",
+          "CoT’s CoT 1 将 fault localization 拆成信息是否可见和如何在候选空间中推理两个问题。",
+          "CoT’s CoT 3 指出 LLM 的主要问题是在大 search space 中做 selection，而不是简单理解代码。"
+        ],
+        "nextLift": "下周应把元认知进一步转化为方法定义：例如将 bug-type reasoning 拆成输入、候选生成、候选压缩、证据打分、最终排序五个步骤，这样可以从 prompt 经验升级为可复现机制。"
+      }
+    },
+    "growthOpportunities": [
+      {
+        "area": "样本口径统一",
+        "suggestion": "周报同时出现“65 个 kernel crash bugs”和“128 个 crash bugs 整体分析”，建议下周明确两者关系：哪个是本周整理集、哪个是整体数据集、哪些实验对应哪个子集。"
+      },
+      {
+        "area": "结构化 reasoning",
+        "suggestion": "目前 Bug-Type prompt 已有强信号，但仍需要从 heuristic prompt 转为结构化机制。建议下周输出一个 reasoning module 草图，而不仅是继续调 prompt。"
+      },
+      {
+        "area": "证据可复现",
+        "suggestion": "报告给出了关键指标，但缺少 case-level 表格、prompt 版本、calltree 长度分布、6 个未命中 case 的具体类型。建议将这些作为论文证据链的最小材料。"
+      },
+      {
+        "area": "自动化沉淀",
+        "suggestion": "已经识别出 benchmark、decision module、candidate pruning 等方向；下一步可定义自动化接口，例如输入 crash report 与 calltree，输出是否使用 CT、候选函数列表、bug-type reasoning 轨迹和排序结果。"
+      }
+    ],
+    "teacherAction": {
+      "readOriginal": true,
+      "meetingQuestions": [
+        "你认为 Bug-Type Final 从 5/27 提升到 16/27 的核心机制是什么？是 bug type 标签本身、prompt 结构、候选空间缩小，还是排序准则变化？",
+        "27 个 RC-in-calltree bugs 中仍有 6 个未命中 case，它们分别属于哪类原因：RC 被上下文淹没、bug type 判断不准、calltree 结构不合适，还是 prompt 没有表达关键语义？",
+        "RC-in-BT 子集里 calltree 基本无增益甚至略降，这个结论如何变成 decision rule？规则的输入、输出和评估指标是什么？",
+        "65 个 bugs 与 128 个 crash bugs 的样本口径如何对应？论文中准备如何划分 benchmark、ablation set 和 final evaluation set？",
+        "如何把 bug-type specific prompt 从 heuristic 写法升级为 structured reasoning module？能否画出模块流程图和每一步的可替换组件？",
+        "clean pipeline 如何证明没有 RC 信息泄露？需要哪些自动检查或日志来支撑这个结论？"
+      ],
+      "nextWeekWatch": [
+        "是否完成 6 个未命中 case 的逐案归因，而不只是继续调 prompt。",
+        "是否产出 calltree decision rule 的第一版，并在 RC-in-BT 与 RC-not-in-BT 两类上分别验证。",
+        "是否统一 65、128、56、27 等样本口径，形成可放入论文的实验表。",
+        "是否把 Bug-Type prompt 抽象成 reasoning module，而不仅是若干提示词模板。",
+        "是否固化 clean pipeline，包括无 RC 泄露约束、subsystem filter、噪声过滤和日志记录。"
+      ]
+    },
+    "studentFeedback": {
+      "summary": "你本周做得最好的地方，是把实验结果上升成了一个清楚的研究判断：calltree 不是通用增强，真正有效的是在信息可见的基础上引导 LLM 做 bug-type aware reasoning。",
+      "whatYouDidWell": [
+        "你给出了多组硬对照结果，尤其是 baseline、Phased CT、Bug-Type Final 在 27 个 RC-in-CT bugs 上的 Top-10 对比，让本周结论有数据支撑。",
+        "你没有只报告正向结果，也写出了 RC-in-BT 子集里 calltree 基本无增益这一边界，这对论文贡献定位很重要。",
+        "你的 CoT’s CoT 有明显提升，已经把问题拆成 coverage、reasoning、selection，而不是停留在“多给 trace 是否更好”。"
+      ],
+      "nextStep": [
+        "下周优先分析 6 个 RC 在 calltree 中但 GPT 未命中的 case，把原因分成可操作类别，并对应到 prompt、candidate pruning 或 calltree 构建的改法。",
+        "把 bug-type prompt 抽象成结构化 reasoning module，至少写清楚输入、推理步骤、候选打分依据和输出格式。",
+        "统一样本口径，解释 65、128、56、27 这些数字分别对应什么数据集和实验子集，方便老师和论文读者快速理解。"
+      ],
+      "suggestedRewrite": "下周周报可以这样写得更清楚：本周我聚焦 27 个 RC-not-in-BT 且 RC-in-CT 的 bugs，对 6 个 Bug-Type Final 未命中的 case 做逐案归因；其中 2 个是 calltree 过长导致候选稀释，2 个是 bug type 语义提示不足，1 个是 phase 截断丢失关键上下文，1 个是噪声过滤误删相关函数。基于此，我将 reasoning module 拆成 bug-type 判断、候选函数筛选、证据句抽取、排序四步，并用同一批 27 个 bugs 验证 Top-10 是否继续提升。"
+    },
+    "evidenceLinks": [
+      {
+        "claim": "硬进展充分",
+        "evidence": "报告列出 65 个 kernel crash bugs 的整理，并在整体分析中给出 RC 在 BT 中 56 个、RC 不在 BT 27 个等分组结果；同时完成 baseline、Flat CT、Phased CT、Bug-Type prompt 等对照。"
+      },
+      {
+        "claim": "核心实验信号强",
+        "evidence": "在 27 个 RC-in-CT bugs 上，baseline Top-10 为 1/27，Phased CT 为 5/27，Bug-Type Final 为 16/27，Top-5 为 40.7%，Top-1 为 18.5%。"
+      },
+      {
+        "claim": "价值边界清楚",
+        "evidence": "在 56 个 RC-in-BT bugs 上，baseline Top-10 为 85.7%，加入 calltree 后基本无提升甚至略降；报告据此判断 calltree 在 RC 已在 BT 中时更像噪声。"
+      },
+      {
+        "claim": "CoT 增量明确",
+        "evidence": "报告写到 LLM 在 kernel FL 中的瓶颈不是推理能力本身，而是信息是否可见；calltree 的作用是补充 BT 中缺失的信息；性能提升关键是 bug-type aware reasoning。"
+      },
+      {
+        "claim": "Brainary 映射已出现原型",
+        "evidence": "报告将本周工作对应到 reasoning、cognitive control、tool orchestration，并指出已有 Bug-Type prompt prototype，潜在沉淀为 reasoning module 和 decision policy。"
+      },
+      {
+        "claim": "证据仍需补齐",
+        "evidence": "报告没有提供 case-level 明细表、prompt 具体版本、calltree 长度分布、6 个未命中 case 的逐案归因，也没有解释 65 个 bugs 与 128 个 crash bugs 的口径关系。"
+      }
+    ]
+  }
+}

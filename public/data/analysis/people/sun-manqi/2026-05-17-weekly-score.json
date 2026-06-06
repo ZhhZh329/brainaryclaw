@@ -1,54 +1,60 @@
 {
   "key": "person:sun-manqi:2026-05-17:weekly-score",
-  "generatedAt": "2026-05-24T11:35:54.293Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "6aff0f53bc1288910d2d56c6ff1cbcbdaa2ce2ffe78b1d2684ec4604c564c0f9",
+  "generatedAt": "2026-06-06T13:11:55.756Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "8e9af63e80ea377a2e0f4f3acb12d45a9786bfc6c273b7668f5933061613a0e6",
   "result": {
     "hardProgress": {
       "score": 17,
-      "reason": "本周在 TERRACOTTA 家族实现了从真实 Android APK 提取 IOC，完成从 Migration Spec 到 DevEco 工程和 mock C2 服务器的全链路生成，并在 HarmonyOS 6.0 模拟器中跑通 Step 0-10 行为链，HiLog 和 mock server 均输出预期结果。同时为 15 个家族建立了 key_pattern_v2 和 IOC 来源分层机制。进展扎实，但尚未批量覆盖所有家族。",
-      "missingEvidence": "未提供 HiLog 日志或 mock server 终端的实际运行截图，也未展示批量生成其余 13 个样本的状态。"
+      "reason": "本周有明确硬产出：为15个family生成或更新key_pattern_v2.json，建立REAL_ANDROID_IOC、MOCK_RUNTIME_FIELD、NEED_APK_EXTRACTION分层；基于TERRACOTTA的2个真实Android APK提取4个共同.top C2域名和2个真实包名；完成Migration Spec、HarmonyOS Design、ArkTS Code、DevEco工程和Python mock C2 server；样本已在HarmonyOS 6.0模拟器启动，HiLog输出Step 0–10，mock server收到register并返回accepted=True。硬进展较实，但15个样本的批量扩展仍是计划而非已完成。",
+      "missingEvidence": "缺少key_pattern_v2.json样例或路径、TERRACOTTA APK哈希、4个C2域名清单、HiLog日志截图或文本、mock server终端记录、DevEco工程提交记录。"
     },
     "cognitiveIncrement": {
       "score": 13,
-      "reason": "认知明确从“按 pattern 生成 Demo”升级为“基于真实 IOC 驱动的安全行为复现”，并清晰定义了 defanged evidence chain 的四个验证维度，认知增量直接指导了本周工程实践。",
-      "missingEvidence": "未对比已有的恶意样本生成方法，未能说明此认知相比学界/业界常识具体突破在哪。"
+      "reason": "认知增量清楚：从pattern-guided demo生成转向真实IOC驱动的defanged behavior replay，并明确静态IOC保留、运行时mock复现、HiLog与server日志验证之间的证据链关系。这是对研究目标和验收标准的实质升级。但报告也承认这不是老师原本不知道的内容，因此更多是学生自身判断框架变清晰，而不是产生新的研究理论。",
+      "missingEvidence": "缺少一个前后对照例子，说明旧pattern-guided样本在哪些验收项上失败，新IOC-grounded样本如何补足。"
     },
     "cot2Depth": {
-      "score": 13,
-      "reason": "对从 pattern-guided 到 IOC-grounded 的转变进行了深度反思，识别出自动化生成中普遍忽略的 IOC 来源、静态证据、mock C2 闭环等关键环节，并提炼出可沉淀的 Pipeline，触及方法学本质。",
-      "missingEvidence": "未给出该 Pipeline 的自动化设计方案或伪代码，缺少具体的抽象层级描述。"
+      "score": 12,
+      "reason": "CoT’s CoT部分解释了为什么要从生成代码转向证据链闭环，并指出自动化生成工作通常忽略真实IOC来源、静态可扫描证据、mock C2协议交互和运行时日志验证的闭环。这一层已经接近方法论沉淀。但深度仍主要停留在流程归纳，缺少对失败模式、边界条件、协议差异处理策略、可规模化标准的进一步拆解。",
+      "missingEvidence": "缺少对TERRACOTTA与JsMiner在协议、状态机、IOC类型上的差异分析；缺少自动化流水线中哪些环节可规则化、哪些环节仍需人工判断的分解。"
     },
     "brainaryMapping": {
       "score": 8,
-      "reason": "明确将工作定位于跨生态恶意行为对齐基准的“真实证据接地能力”，并分析了当前未形成系统的原因，关联清晰。",
-      "missingEvidence": "未指明对应 Brainary 中的具体模块或算子名称，缺少可直接嵌入的接口说明。"
+      "reason": "报告能把本周工作映射到Brainary中的跨生态恶意行为对齐基准能力，即Android真实IOC、C2、package、权限和行为入口到HarmonyOS可扫描、可运行、可审计defanged样本的迁移能力。也说明了系统化障碍：APK来源不稳定、AndroZoo覆盖不足、不同family协议差异大。但映射仍偏概念，尚未给出Brainary中具体模块、接口、数据结构或评测指标。",
+      "missingEvidence": "缺少Brainary模块级映射，例如输入输出schema、样本生成模块接口、IOC字段规范、验证器设计、benchmark评价指标。"
     },
     "monetaryValue": {
-      "score": 8,
-      "reason": "给出 1500 元人民币的估值并拆分为标准沉淀、分层机制、APK 提取和样本工程化四项，计算依据合理，与本周产出匹配。",
-      "missingEvidence": "未说明每一项工作的市场对标价值或收益乘数，估值主观性较强。"
+      "score": 6,
+      "reason": "报告给出1500元估值，并拆分为JsMiner标准沉淀、IOC分层机制、APK提取状态报告、TERRACOTTA工程化四部分。优点是有分项估算；不足是金额依据主要来自主观工作量价值，没有说明对项目交付、论文、华为验收、数据集资产或自动化复用的实际经济贡献。",
+      "missingEvidence": "缺少估值基准，例如按可复用样本单价、节省人工时间、客户交付价值、论文实验资产价值或后续自动化模块价值进行计算。"
     },
     "projectManagement": {
-      "score": 12,
-      "reason": "准确判断出从半自动到 IOC 接地验证的阶段转换，明确当前进度稍慢，并提出周日批量修改的纠偏措施，时间投入清晰。",
-      "missingEvidence": "未解释进度稍慢的根本原因（如 APK 下载受阻、C2 协议差异等），也未给出如果批量修改不成功的备选方案。"
+      "score": 11,
+      "reason": "项目管理信息较完整：给出项目名称、阶段变化、实际投入50小时、下周预计50小时、进度稍慢、纠偏动作和是否需要老师介入。问题是计划粒度不够，'周日批量化修改完15个恶意样本'过于笼统，没有里程碑、验收标准、风险清单、优先级排序，也没有说明50小时主要消耗在哪些任务上。",
+      "missingEvidence": "缺少任务拆分表、15个family的状态矩阵、完成定义、风险项、阻塞项、预计完成时间和每个样本的验收标准。"
     },
     "nextAction": {
-      "score": 6,
-      "reason": "报告只提及周日批量修改 15 个样本，未规划下周的具体任务分解（如协议适配、异常处理、验收标准等），较模糊。",
-      "missingEvidence": "缺少下周的 To-do List、优先级排序及预计产出里程碑。"
+      "score": 7,
+      "reason": "下一步方向明确：把TERRACOTTA和JsMiner的IOC-grounded修改扩展到15个样本，并推进IOC-grounded Sample Generation Module。但行动描述仍偏结果导向，缺少可执行步骤，例如先处理哪些family、如何处理NEED_APK_EXTRACTION、如何验证每个样本、失败时如何降级。",
+      "missingEvidence": "缺少下周具体行动清单，包括15个样本优先级、每个样本的APK获取状态、IOC提取方法、mock协议实现计划、HiLog验收项和产物提交路径。"
     },
     "evidenceQuality": {
       "score": 3,
-      "reason": "报告自述证据等级 A- 并列举了 JsMiner 运行结果、key_pattern 等附件，但均以文字描述形式呈现，无实际文件或链接佐证。",
-      "missingEvidence": "缺少 JsMiner v3.1 日志片段、TERRACOTTA 工程目录截图、HiLog 输出样例等直接证据。"
+      "reason": "报告中的证据等级自评为A-，并列出了一批应存在的证据：JsMiner v3.1运行结果、15个key_pattern_v2.json、IOC_Summary.md、TERRACOTTA真实IOC提取报告、HarmonyOS工程、mock server运行记录。文本描述具体，可信度中上。但当前周报没有直接附上日志、截图、哈希、文件路径、commit、实验命令或可复现实验记录，因此证据质量不能按A-完全采信。",
+      "missingEvidence": "缺少可核验材料：Git commit链接、文件路径、APK sha256、IOC提取脚本输出、HiLog完整日志、mock server日志、DevEco运行截图、Step 0–10对应行为说明。"
     },
-    "totalScore": 80,
+    "totalScore": 77,
     "tier": "B",
-    "oneLineJudgment": "本周在 TERRACOTTA 上打通了 IOC 接地到安全复现的完整证据链，认知和方法均有实质性提升，但批量化和自动化路径尚未走通，项目管理需更精细。",
-    "professorFollowUp": "请检查 TERRACOTTA 样本的 HiLog 和 mock server 日志，确认证据链闭环质量；评估 key_pattern_v2 的 IOC 分层是否有遗漏；指导如何将当前手动提取 APK IOC 的步骤半自动化。"
+    "oneLineJudgment": "本周从概念Demo推进到真实IOC接地的HarmonyOS defanged行为复现，硬进展明显，但证据可核验性、批量化计划和项目管理颗粒度还不足以评为A。",
+    "professorFollowUp": [
+      "要求学生下周提交15个family的状态矩阵：APK是否获取、真实IOC数量、mock字段数量、NEED_APK_EXTRACTION项、HarmonyOS工程状态、运行验证状态。",
+      "要求补充TERRACOTTA的最小可复现实验证据包：APK sha256、提取出的4个C2域名和2个包名、ArkTS关键代码路径、HiLog Step 0–10日志、mock server accepted=True日志。",
+      "追问每个样本的验收标准：静态扫描能看到什么IOC，运行时必须完成哪些状态转移，哪些行为只允许mock，哪些字段必须保留真实来源。",
+      "要求把'IOC-grounded Sample Generation Module'拆成可自动化流程图：输入、处理、输出、人工介入点、失败降级策略。",
+      "重点判断15个family批量扩展是否真实可行，而不是只完成两个家族的手工工程化复刻。"
+    ]
   }
 }

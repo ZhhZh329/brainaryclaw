@@ -1,57 +1,54 @@
 {
   "key": "person:zhang-fangyuan:2026-04-12:weekly-score",
-  "generatedAt": "2026-05-24T11:36:33.786Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "a6a7e0a4196d26e39b77f917dace25ce547e58371192b6700c0be9b3cd8882a5",
+  "generatedAt": "2026-06-06T13:16:25.475Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "4419dfb2078cade55cad380a584bf729a2fe982748fa86db9320dab0be820222",
   "result": {
-    "week": "2026-04-12",
-    "name": "Zhang Fangyuan",
-    "userId": "8777512411",
-    "totalScore": 66,
-    "tier": "C",
-    "oneLineJudgment": "本周在结构化Working Memory设计上取得实质进展，认知提升明确，但缺失量化结果与下一步行动，项目管理不足。",
-    "professorFollowUp": "请补充性能对比数据与后续实验计划。",
     "hardProgress": {
       "score": 17,
-      "reason": "设计并实现了形式化的Working Memory结构，完成了WM上下文集成到prompt以及可视化对比，但未提供任何量化性能指标（如准确率、召回率）或实验数据来验证有效性。",
-      "missingEvidence": "缺少消融实验数据、性能对比表格或案例分析，无法判断改进是否带来实际收益。"
+      "reason": "本周有明确的工程产出：设计并实现了结构化 Working Memory 机制 W=(A,H,B,C,G)，覆盖 Anchor Set、Hypothesis Set、Binding Map、Constraint State、Grouping，并已集成到 fine screen 的 Region CoT prompt 中；还完成了结构化 WM 与纯文本 WM 的对比可视化。进展属于实质性系统改造，不是单纯阅读或构想。",
+      "missingEvidence": "缺少代码提交链接、模块接口说明、运行样例、测试结果、是否已在完整 Online Pipeline 中跑通、以及该改造对准确率/稳定性/成本的量化影响。"
     },
     "cognitiveIncrement": {
       "score": 13,
-      "reason": "清晰总结了纯文本WM的三大缺陷与结构化WM的三大性质，并将该认知直接用于prompt设计，认知增量明确；但未深入反思该认知的局限性或适用范围。",
-      "missingEvidence": "缺少对所学内容在更广泛场景下的适用性讨论，或对可能反例的分析。"
+      "reason": "认知增量较强。周报清楚区分了纯文本 WM 与结构化 WM 的机制差异，并总结出信息衰减、判定模糊、假设耦合三个系统性缺陷；进一步提炼出结构化 WM 的无损传递、可验证性、假设隔离三个优势，且这些认知直接反馈到 prompt 设计中。",
+      "missingEvidence": "缺少与具体论文或已有方法的对照引用，缺少失败案例前后对比，缺少证明这些认知确实来自实验而非理论推断的证据。"
     },
     "cot2Depth": {
-      "score": 12,
-      "reason": "对LLM多阶段推理的信息退化问题进行了分析，并设计了WM结构作为解决方案，有一定反思深度；但未对设计本身进行批判性思考（如WM容量限制、维护成本等）。",
-      "missingEvidence": "缺少对WM设计原理的深度反思、替代方案的比较或设计存在的潜在风险。"
+      "score": 13,
+      "reason": "对 CoT 的二阶理解较好：不是只优化单次推理，而是分析多阶段 CoT 之间的信息传递、角色绑定、约束验证和假设隔离问题，并用结构化 WM 改造推理链的中间状态。这体现了对“CoT 如何被组织、保存、复用和校验”的元层设计。",
+      "missingEvidence": "缺少具体 prompt 片段、单个样例的完整推理轨迹、结构化 WM 如何减少错误推理的案例对比，以及不同阶段 CoT 失败模式的统计分析。"
     },
     "brainaryMapping": {
-      "score": 9,
-      "reason": "将认知中发现的信息衰减、判定模糊、假设耦合等问题准确地映射到WM的五个组件（锚点、假设隔离、绑定映射、约束状态、分组），映射关系具体且可操作。",
-      "missingEvidence": "缺少映射有效性的直接证据（如通过案例展示映射如何解决对应问题）。"
+      "score": 8,
+      "reason": "报告把任务中的关键认知对象映射为较清晰的结构：锚点、假设、角色绑定、约束状态、分组，并说明这些字段如何跨阶段传递和复用。这个映射有助于把 LLM 自然语言推理转为可持久化、可追溯、可复现的状态机式表示。",
+      "missingEvidence": "缺少显式 Brainary 图谱或表格，缺少每个字段的 schema 示例，缺少不同模块之间的读写权限、生命周期和异常处理规则。"
     },
     "monetaryValue": {
-      "score": 5,
-      "reason": "工作涉及安全补丁分解自动化，可能节省人工分析成本，但未估算任何经济指标（如节省工时、错误率降低带来的价值），也未说明应用场景的规模。",
-      "missingEvidence": "缺少成本分析、市场规模估计或效率提升的量化预估。"
+      "score": 4,
+      "reason": "该工作具有研究价值和潜在工程价值，尤其适合支撑论文 methodology 和提升 security patch untangling pipeline 的可靠性；但周报没有说明该机制能带来什么可衡量收益，例如减少人工审查成本、降低误报漏报、提升 benchmark 表现或支持某个交付目标。",
+      "missingEvidence": "缺少商业/项目价值判断，缺少目标用户、应用场景、成本收益估计、准确率提升、人工节省时间、算力成本变化或论文贡献定位的量化说明。"
     },
     "projectManagement": {
       "score": 8,
-      "reason": "本周任务聚焦单一，但未提及整体项目里程碑、时间节点或资源安排，也未说明本次进展在项目中的位置。",
-      "missingEvidence": "缺少项目甘特图、关键路径上的依赖关系或对论文投稿计划的推进说明。"
+      "reason": "报告列出了本周完成的模块和设计点，但项目管理信息不足。可以看出有从设计到集成再到可视化的推进，但没有说明任务优先级、完成标准、风险、阻塞、依赖、时间分配和验收状态。",
+      "missingEvidence": "缺少本周计划与实际完成对照，缺少里程碑、issue/PR 状态、测试清单、风险清单、阻塞项、下游依赖和是否合入主线的说明。"
     },
     "nextAction": {
-      "score": 0,
-      "reason": "报告完全未列出后续工作计划、行动项或实验规划，无法判断下一步方向。",
-      "missingEvidence": "缺失明确的下一步行动列表，如待进行的实验、需要收集的数据或拟撰写的论文章节。"
+      "score": 3,
+      "reason": "报告中只隐含提到对比可视化将用于后续论文 methodology，但没有形成明确的下一步行动计划。对于一个系统改造类工作，下一周应该明确是做 ablation、benchmark、error analysis、prompt 固化、schema 文档还是论文写作。",
+      "missingEvidence": "缺少下周具体目标、优先级、可验收产物、预计实验、数据集、指标、截止时间和可能风险。"
     },
     "evidenceQuality": {
-      "score": 2,
-      "reason": "仅有文字描述，未提供任何截图、数据日志、代码链接或实验记录佐证工作进展。",
-      "missingEvidence": "缺少可视化对比图的实际文件、prompt修改前后的示例输出或WM数据结构的示例序列。"
-    }
+      "score": 3,
+      "reason": "文本内部细节较充分，能够看出作者确实理解并推进了系统设计；但证据主要是描述性陈述，没有外部可核验材料和量化结果。因此证据质量中等偏弱。",
+      "missingEvidence": "缺少 commit、实验日志、运行截图、prompt diff、schema 文件、样例输入输出、对比实验表格、错误案例和可复现实验配置。"
+    },
+    "totalScore": 69,
+    "tier": "C",
+    "oneLineJudgment": "本周有较强的结构化推理系统设计和实现进展，但缺少量化验证、项目管理闭环和下一步实验计划，当前更像方法雏形完成而非已被证明有效的研究结果。",
+    "professorFollowUp": "建议教授重点追问四件事：第一，要求展示代码提交、WM schema、prompt diff 和一个端到端样例；第二，要求用同一批 security patch untangling 样例比较纯文本 WM 与结构化 WM 的准确率、误报漏报、推理稳定性和 token 成本；第三，要求给出至少 3 个结构化 WM 修复原 pipeline 错误的具体案例；第四，要求补充下周计划，明确 ablation、benchmark、论文 methodology 图和 error analysis 的交付时间。"
   }
 }

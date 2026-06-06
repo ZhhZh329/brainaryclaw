@@ -1,59 +1,103 @@
 {
   "key": "person:wan-wenyuan:2026-05-24:weekly-score",
-  "generatedAt": "2026-05-24T12:25:00.595Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "45efb0ac2af2689428e654119cc4264d740e2475863d91e49a139fb4484dda91",
+  "generatedAt": "2026-06-06T13:12:46.860Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "d2ed90c6bab47601129927a912e4be3e7dc585bddcf2749f36722947b250558d",
   "result": {
-    "week": "2026-05-24",
-    "name": "Wan Wenyuan",
-    "userId": "8666270683",
-    "totalScore": 80,
-    "tier": "A",
-    "oneLineJudgment": "本周在从文本记忆到按题型选择视觉证据的路线上取得了重要认知增量，明确了不同证据形式的副作用，但缺少定量实验验证，方向有价值，需尽快完成规则版路由实验。",
-    "professorFollowUp": "请确认本周的 external attention 走 task-type visual router 的路线是否符合 Brainary 设计，并讨论 internal attention 的 adapter/router 训练是否应等规则版 router 结果稳定后再启动。",
-    "scores": {
-      "hardProgress": {
-        "score": 12,
-        "reason": "本周形成了明确的判断（视觉证据需按任务类型选择而非无条件加入），拆分出五类可控视觉证据，并制定了一版初步的题型路由规则，但尚未完成全量定量验证，因此扣分。",
-        "missingEvidence": "缺少 LMEE-Bench 全量数据集下规则版 router 的定量结果，目前主要基于样例观察。"
-      },
-      "cognitiveIncrement": {
-        "score": 13,
-        "reason": "本周清除了‘视觉证据越多越好’的错误路径，更新了认识：不同证据形式对模型的干预强度不同且存在副作用，支持‘先外部路由再内部学习’的新路线，认知增量明确且重要。",
-        "missingEvidence": "缺少不同题型下证据干扰效应的定量统计。"
-      },
-      "cot2Depth": {
-        "score": 12,
-        "reason": "三个 CoT's CoT 分别从认知干预、题型控制、内外注意分工进行深度反思，并指出了自动化科研仍未吸收的原因和转化潜力，但证据等级不高（B/C），受限于尚未完成的实验。",
-        "missingEvidence": "缺乏规则版路由的系统实验结果来支撑 CoT 二的深度判断。"
-      },
-      "brainaryMapping": {
-        "score": 9,
-        "reason": "将本周工作映射到 Brainary 的 memory、reasoning、calibration、cognitive control 等六项能力，并指出了当前系统缺少中间层的原因，沉淀形式明确。",
-        "missingEvidence": "无"
-      },
-      "monetaryValue": {
-        "score": 8,
-        "reason": "对三个子任务分别估算了 40 万、70 万、80 万，并给出了基于人力、复用价值的计算方法，虽为估算但符合模板要求。",
-        "missingEvidence": "货币价值估算未引用外部市场数据或内部财务参考。"
-      },
-      "projectManagement": {
-        "score": 14,
-        "reason": "项目管理部分详细，包括时间规划、里程碑、资源需求、依赖关系、进度偏差分析和纠偏动作，整体健康。",
-        "missingEvidence": "无"
-      },
-      "nextAction": {
-        "score": 9,
-        "reason": "下周动作具体、可验证：实现规则版 visual router，进行三组轻量对比实验，符合最小可验证动作原则。",
-        "missingEvidence": "无"
-      },
-      "evidenceQuality": {
-        "score": 3,
-        "reason": "基于上周 ablation 和本周样例观察，证据等级为 B 或 C，但本周自身缺乏新的定量实验数据，因此证据质量中等。",
-        "missingEvidence": "本周未提供新的量化结果，仅有定性分析和路线规划。"
-      }
-    }
+    "hardProgress": {
+      "score": 12,
+      "reason": "本周有明确的工程与研究推进：从无条件加入 bbox/text memory 转向按题型选择视觉证据，拆出了 object、bbox、crop、marked image、structured memory 等证据类型，并形成了 visual router 的初步规则。但主要进展仍是样例观察、规则设计和路线收敛，没有完成本周最关键的 full-set 定量验证，也没有给出新的实验表格、准确率变化或可复现实验结果。",
+      "missingEvidence": [
+        "缺少 LMEE-Bench 本周新一轮 full-set 定量结果。",
+        "缺少不同 evidence 形式在各题型上的准确率、提升/下降幅度。",
+        "缺少具体失败样例、样例数量和筛选标准。",
+        "缺少 visual router 的实际实现结果或代码状态。"
+      ]
+    },
+    "cognitiveIncrement": {
+      "score": 13,
+      "reason": "认知增量比较清楚：核心判断从“有没有视觉证据”推进到“该不该给、给哪种、对哪类任务给”。报告明确削弱了无条件加入 bbox 或画框图像的路线，支持 task-type visual router，并指出 Attribute、Counting、Relationship 等题型对 evidence 的需求不同。这是对研究问题边界和方法选择的实质性更新。",
+      "missingEvidence": [
+        "缺少足够的定量证据证明不同题型确实对应不同最优 evidence。",
+        "缺少对题型分类错误时认知路线是否仍稳健的验证。",
+        "缺少与已有方法或 baseline 的系统对照。"
+      ]
+    },
+    "cot2Depth": {
+      "score": 12,
+      "reason": "CoT's CoT 部分覆盖了 evidence 作为认知干预、题型作为运行时控制变量、external attention 到 internal attention 的转化链路，并且主动标注证据等级 B/C。它不只是复述实验现象，而是在讨论为什么还没有自动化、应沉淀成什么模块、如何进入 workflow。但深度仍受限于本周缺少新系统实验，部分判断还是路线推演。",
+      "missingEvidence": [
+        "缺少 visual router 跑通后的反事实证据。",
+        "缺少 evidence applicability layer 的最小原型或接口定义。",
+        "缺少 external evidence 如何转成 adapter/router 训练样本的具体数据格式。",
+        "缺少自动化科研 workflow 的实际闭环验证。"
+      ]
+    },
+    "brainaryMapping": {
+      "score": 8,
+      "reason": "Brainary 映射较完整，覆盖 memory、reasoning、calibration、cognitive control、workflow management、benchmark/evaluation，并提出 visual evidence router、structured visual memory schema、relevance selector、evaluator 等可沉淀对象。映射与本周研究内容一致，能说明该工作在 Brainary 中的位置。扣分点是目前仍停留在概念映射和模块设想，没有实际接入 Brainary 流程或定义可执行接口。",
+      "missingEvidence": [
+        "缺少 Brainary 中现有 memory/perception/reasoning 接口的对接方案。",
+        "缺少 visual router 在 Brainary workflow 中的输入输出 schema。",
+        "缺少 Brainary 侧 evaluator 的具体指标。",
+        "缺少模块落地优先级和验收标准。"
+      ]
+    },
+    "monetaryValue": {
+      "score": 5,
+      "reason": "报告给出了三个任务的人民币估值，并说明了研发成本、复用价值、减少试错等依据。但这些估值主要是主观成本类估算，缺少真实客户需求、节省时间的实测数据、对比方案成本、产品化路径或商业转化证据。价值判断方向合理，但金额可信度一般。",
+      "missingEvidence": [
+        "缺少真实用户或团队会为该能力付费的证据。",
+        "缺少 visual router 相比 baseline 节省多少人工/GPU/token 成本的量化。",
+        "缺少产品化场景中的使用频率和收益估计。",
+        "缺少竞品或替代方案成本比较。",
+        "缺少估值中 40 万、70 万、80 万的可验证计算明细。"
+      ]
+    },
+    "projectManagement": {
+      "score": 12,
+      "reason": "项目管理部分较完整：写清楚项目阶段、原计划与实际完成、投入时间、下周时间、里程碑、依赖关系、资源、成本瓶颈、延期影响和纠偏动作。也明确提出需要老师和 Chunhan 的支持。主要不足是任务验收标准还不够量化，例如规则版 router 何为成功、需要跑多少样本、提升多少才进入 adapter/router 训练。",
+      "missingEvidence": [
+        "缺少下周实验的具体样本规模和数据切分。",
+        "缺少成功/失败阈值，例如准确率提升多少算 router 有效。",
+        "缺少风险缓解方案，例如题型分类错误时如何处理。",
+        "缺少脚本、数据、日志的交付物定义。",
+        "缺少如果 Chunhan 检测/分割结果延迟时的替代路径。"
+      ]
+    },
+    "nextAction": {
+      "score": 8,
+      "reason": "下周动作比较明确：在 LMEE-Bench 上实现规则版 visual router，对比 no-memory、structured memory、selected crop、marked image，并测试 bbox 区域 attention 增强。也提出暂不训练新模块，先验证 external attention 规则的策略，路径合理且最小可验证。但仍缺少具体实验矩阵、执行顺序、评价指标和预期判据。",
+      "missingEvidence": [
+        "缺少每个题型对应的具体 router 规则表。",
+        "缺少 baseline 和实验组的完整矩阵。",
+        "缺少评价指标，如 overall accuracy、per-type accuracy、answer change rate、harm rate。",
+        "缺少最小样本量和预计完成时间点。",
+        "缺少失败后如何调整 router 的决策树。"
+      ]
+    },
+    "evidenceQuality": {
+      "score": 2,
+      "reason": "报告很诚实地区分了样例观察、路线判断和未完成的 full-set 定量验证，也没有编造新的 accuracy。但从证据质量看，本周核心结论主要来自样例观察和对上周 ablation 的引用，当前周没有提供新数据表、实验日志、样例截图、错误分布或可复现结果，因此证据等级偏低。",
+      "missingEvidence": [
+        "缺少本周新增实验结果。",
+        "缺少定量表格。",
+        "缺少代表性成功/失败案例。",
+        "缺少样例观察的数量、来源和选择标准。",
+        "缺少代码、日志或可复现实验配置。"
+      ]
+    },
+    "totalScore": 72,
+    "tier": "B",
+    "oneLineJudgment": "本周最大的价值是把研究问题从“增加视觉证据”纠偏为“按任务类型路由视觉证据”，认知推进明显，但硬证据仍停留在样例观察和方案设计，下一周必须用 full-set 定量实验决定是否继续投入。",
+    "professorFollowUp": [
+      "请确认是否认可 external attention 先走 task-type visual evidence router，而不是继续扩大无条件 bbox memory。",
+      "要求学生下周提交按题型拆分的实验表：no-memory、structured memory、selected crop、marked image、bbox attention 至少四组对比。",
+      "要求定义 router 成功阈值，例如 overall accuracy、per-type accuracy、harm rate、answer change rate 分别达到什么标准才进入下一阶段。",
+      "要求补充 3 到 5 个具体失败样例，说明 marked image 或 bbox text 如何把原本正确的答案带偏。",
+      "暂缓 internal attention adapter/router 训练，直到 external router 的稳定收益和失败边界被定量证明。"
+    ]
   }
 }

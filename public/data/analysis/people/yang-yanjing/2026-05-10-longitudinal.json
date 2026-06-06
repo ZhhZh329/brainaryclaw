@@ -1,71 +1,213 @@
 {
   "key": "person:yang-yanjing:2026-05-10:longitudinal",
-  "generatedAt": "2026-05-24T11:53:25.005Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "972f2c92b8dcb6b3e30f5e2a054310fdf7b3d9ceba81f6ddf7094f12209208fa",
+  "generatedAt": "2026-06-06T13:16:41.801Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "4286f498124b5d98ee932f626838592a1dc799b6255e3ac492424f5269bbf3b3",
   "result": {
-    "overallTrajectory": "学生从宽泛探索API知识库（AKB）的价值验证，逐步聚焦到关系敏感任务建模，并通过实验验证了知识库在约束候选空间中的作用。初期工作围绕选型任务与逆向工具展开，中期扩展实验基线并联系恶意API分析，后期在与导师对齐后，将问题重构为需求→候选库→API组合的分层决策框架，从而收缩目标至最关键的库匹配问题。硬进展持续产出，但多次遭遇数据与评测缺失的重复卡点。认知深度与CoT成熟度明显提升，研究能力确有增长，体现为对任务本质的深化理解和实验驱动的问题重构，而非仅是忙碌。",
-    "stageByWeek": [
+    "overallTrajectory": "总体看，这名学生不是单纯变忙，而是在研究能力上有可见增量：他从“扩数据、接工具、跑 baseline”逐步转向识别任务结构、失败发生层级、评测边界和系统沉淀路径；但目前证据仍主要来自定性实验与路线重构，缺少可复核的规模、指标、结果表和交付物链接，因此还不能判断其已经进入稳定产出阶段。",
+    "headline": "研究能力在提升，最强信号是能把 API 推荐从单阶段检索问题重构为“需求→候选库→API组合→使用方案”的分层决策问题。",
+    "overviewSentence": "该学生近四次周报显示出从执行型推进转向问题建模与评测设计的进步，但项目管理仍需补齐可检查交付、量化指标和下周最小验证闭环。",
+    "fourWeekTimeline": [
       {
         "week": "2026-04-12",
-        "researchCapabilityJudgement": "初步建立关系敏感任务意识，实验基础薄弱，但已开始定义关键筛选标准。",
-        "mainChanges": "提出relation-sensitive task筛选标准，认识到AKB价值在于API关系建模而非单点描述；发现公开数据集缺乏关系信息。",
-        "valueJudgement": "视题目通用且值得做，预期由IDE、代码助手等买单，但尚缺实验证据。"
+        "metacognition": "开始明确 AKB 的价值边界：不是所有 API 推荐任务都能验证知识库，只有包含替代、组合、依赖等 API 关系的 relation-sensitive task 才能体现 AKB 作用；这是从“做数据集筛查”上升到“判断什么任务能证明方法价值”。",
+        "valueJudgment": "价值判断集中在 API relation memory、relation benchmark、reverse engineering agent 等可沉淀能力上，认为 AKB 的核心竞争力应从 API 信息积累转向 API 关系建模；判断方向清楚，但缺少任务规模、评测指标和结果证据。",
+        "projectManagement": "推进了三个方向：开源选型 benchmark 筛查、CLI-everything 接入、AKB 元认知结构完善；每项都有下周最小动作，但多为设计或启动，缺少已交付的数据样本数、过滤规则版本、人工评测协议。",
+        "evidence": "报告中写到“完成一轮开源选型 benchmark 数据集筛查与任务形式分类”“初步形成 relation-sensitive task 的筛选标准”“CLI-everything 初步接入”“启动 API relation accuracy 小规模人工评测”。"
       },
       {
         "week": "2026-04-19",
-        "researchCapabilityJudgement": "构建了初步实验闭环（数据集+基线+逆向补充），并尝试连接恶意API场景，研究能力有所提升。",
-        "mainChanges": "扩展数据集并实现LLM baseline，形成统一实验框架；提出恶意API可视为异常关系模式，扩展了知识库应用视角。",
-        "valueJudgement": "价值判断巩固，强调知识库价值取决于任务结构，可同时支持推荐与异常检测，但商业化连接依旧笼统。"
+        "metacognition": "进一步把价值验证条件说清楚：知识库价值取决于任务结构和 baseline 对比，而不是引入知识库本身；同时把 CLI-everything 从抽取工具重新理解为关系发现的数据来源。",
+        "valueJudgment": "价值判断扩展到“API 关系既可用于推荐，也可用于异常检测”，尝试把恶意 API/skill 建模为异常关系模式；这是有外延扩展，但与主线 AKB 选型任务的优先级关系还不够清楚。",
+        "projectManagement": "主线形成“数据集 + baseline + 逆向补充”的实验框架，硬进展比上一周更接近实验闭环；但恶意 API 调研仍处于概念纳入阶段，没有数据、指标或验证计划。",
+        "evidence": "报告中写到“扩展开源选型数据集规模与覆盖范围”“完成一版 LLM-based baseline 并跑通实验流程”“将 CLI-everything 接入数据获取流程”“relation-sensitive 数据占比仍然不足”。"
       },
       {
         "week": "2026-04-26",
-        "researchCapabilityJudgement": "获得初步实验证据，验证了知识库在关系敏感任务上的增益，但规模与稳定性不足，仍处于探索阶段。",
-        "mainChanges": "跑通LLM baseline并初步证实AKB在关系决策任务中的效益；关键认知升级为“候选空间约束”。",
-        "valueJudgement": "实验开始支撑价值，认为通用能力并有买单方，但更强调需要进一步验证。"
+        "metacognition": "从“关系敏感任务重要”进一步推进到“开源选型不是找 API，而是在多个合理候选中做结构化决策”；能识别 LLM baseline 的失败模式主要在复杂组合和候选约束，而不是简单命中。",
+        "valueJudgment": "价值判断更聚焦：题目值得做是因为它解决 LLM 在 API 选型决策中的不稳定问题，并可能沉淀为 benchmark、evaluator、cognitive control module；与 Brainary 的 cognitive control 能力连接更明确。",
+        "projectManagement": "跑通了一轮初步实验，开始验证 AKB relation knowledge 的作用点；但仍缺 relation-sensitive benchmark 规模、统计结论和 execution-based evaluation，因此尚未形成可被老师独立检查的结论。",
+        "evidence": "报告中写到“完成一轮开源选型初步实验测试”“跑通 LLM-based baseline”“当前结果初步支持：知识库对关系敏感任务有帮助，但仍需进一步系统验证”“下周补 execution-based evaluation”。"
       },
       {
         "week": "2026-05-10",
-        "researchCapabilityJudgement": "与导师对齐后，认知发生质变，将问题重构为分层决策，并精准定位瓶颈于库匹配，研究能力趋于成熟。",
-        "mainChanges": "明确拆分为需求→候选库→API组合两阶段，发现问题根源在库选择；收缩目标优先解决复杂需求的库匹配。",
-        "valueJudgement": "价值函数更加务实：不再追求宽泛推荐，而是聚焦可验证的子问题；依然认定通用、有商业前景，并开始规划具体算法路径。"
+        "metacognition": "出现本窗口最强的元认知增量：他不再把问题抽象为 relation-sensitive API 推荐，而是定位到复杂需求下错误主要发生在库选择阶段，并提出先做 library-level routing 再做 API-level recommendation。",
+        "valueJudgment": "价值判断变得更有取舍：不再泛化推进所有 AKB 能力，而是收缩近期目标到“复杂需求到候选库精准匹配”；理由是库选错后 API 推荐不可恢复，这比前几周更接近关键路径判断。",
+        "projectManagement": "完成路线调整和任务拆分，明确下周要构建需求→候选库测试集与 baseline；但本周更多是定义重构，缺少新的实验结果、数据规模、指标和 artifact，且 2026-05-03 周报缺失，连续推进证据不完整。",
+        "evidence": "报告中写到“明确 API 开源选型应拆成两个阶段”“复杂需求下，错误主要出现在库选择阶段”“一旦库选错，后续 API 推荐基本不可恢复”“下周构建需求→候选库测试集与 baseline”。"
       }
     ],
-    "trendScores": {
-      "hardProgressTrend": {
-        "score": 7,
-        "description": "硬进展持续产出，从数据集筛查、基线构建、实验运行到路线重构，但第四周更多是认知调整而非硬数据积累，整体斜率偏缓。"
-      },
-      "cognitionDepthTrend": {
-        "score": 8,
-        "description": "认知深度明显递增，从API关系意识到任务结构决定知识价值，再到分层决策框架，反映出较强的抽象与问题重构能力。"
-      },
-      "cotMaturityTrend": {
-        "score": 9,
-        "description": "CoT's CoT逐渐深刻，从benchmark必须包含relation，到关系推理任务的重新定义，最终形成分层决策的理论框架，成熟度大幅提升。"
-      },
-      "brainaryMaturityTrend": {
-        "score": 6,
-        "description": "对Brainary的能力映射越来越具体（memory, reasoning, cognitive control, tool orchestration），但尚未形成稳定系统，仍主要停留在概念关联。"
-      },
-      "valueReasoningTrend": {
-        "score": 7,
-        "description": "价值推理从泛化走向务实，始终连接通用能力、商业买单和可沉淀产物，但缺乏具体金额或用户数论证；第四周收缩后更强调可验证步骤。"
-      },
-      "projectManagementTrend": {
-        "score": 7,
-        "description": "前三周多线推进（选型、逆向、恶意API），第四周与导师对齐后收缩并聚焦于库匹配，项目管理能力改善，但试验节奏偏慢。"
-      },
-      "actionQualityTrend": {
-        "score": 7,
-        "description": "下一步动作质量逐步优化，从“构建relation-sensitive子任务”到“构建需求→候选库测试集”，更具操作性和针对性。"
-      }
+    "metacognitionChange": {
+      "summary": "元认知有明显进步：学生从早期关注 API 关系信息，逐步识别出任务是否能验证知识库、baseline 在哪里失败、RAG 偏差的根因、以及必须分层评测的原因；这说明他在从“做了什么”转向“什么证据能证明这个方向有效”。不足是仍缺少可量化验证标准，例如样本规模、指标定义、显著性、人工标注一致性、execution-based correctness。",
+      "byWeek": [
+        {
+          "week": "2026-04-12",
+          "change": "识别了 relation-sensitive 与 relation-insensitive task 的边界，开始建立“什么任务能证明 AKB 价值”的判断框架。"
+        },
+        {
+          "week": "2026-04-19",
+          "change": "把知识库价值绑定到任务结构与 baseline 对比，说明他开始理解实验设计中的反事实基线。"
+        },
+        {
+          "week": "2026-04-26",
+          "change": "将 API 推荐从信息检索问题改写为候选空间约束和关系决策问题，开始关注失败模式和推理空间控制。"
+        },
+        {
+          "week": "2026-05-10",
+          "change": "进一步定位复杂需求失败发生在库选择阶段，提出分层决策流程，这是本窗口最清楚的 CoT 增量。"
+        }
+      ],
+      "currentLevel": "当前处于“能提出研究建模假设并设计验证路径”的阶段，尚未完全进入“用稳定实验结果反复证伪/证实假设”的阶段。",
+      "strongestSignal": "最强信号是 2026-05-10 将任务拆成“需求→候选库→API 组合与使用方案”，并明确“库选错后后续 API 推荐基本不可恢复”；这表明他能定位关键失败层级，而不只是继续堆 RAG 或扩数据。",
+      "nextLift": "下一步提升应从认知框架转向可检验证据：为 library-level routing 定义数据格式、正负例、评价指标、baseline、错误分类和通过标准；否则分层决策仍停留在合理叙述而非研究结论。"
     },
-    "valueFunctionChange": "学生的价值函数从最初的“AKB价值在于API关系建模”演化到“价值在于候选空间约束与结构化决策”，最终明确为“价值在于分层决策能力，优先解决库匹配”。始终认为该题目能解决通用问题（LLM在复杂需求下的不稳定），有明确买单方（IDE、代码助手、企业平台等），并可沉淀为论文、benchmark和模块，但缺乏具体金额或用户连接。随周次推进，价值判断更加务实：从追求宽泛能力转向聚焦可验证子问题，并强调实验证据和算法路径。对Brainary映射和自动化转化的意识逐渐增强，表明学生认为值得的事是能沉淀为系统能力且存在经济前景的，且该认知随实验反馈和导师对齐而深化。",
-    "repeatedBlockers": "重复卡点主要包括：1) 关系敏感型（relation-sensitive）基准数据集规模不足，多次提及缺乏包含API依赖/替代关系的数据；2) 缺少统一的评测体系（benchmark）和评价指标，尤其是对库级别选择和API组合使用的评估；3) 逆向工具（CLI-everything）输出噪声高，虽然后期不再成为主要卡点，但早期反复出现；4) 认知层面从数据缺失演进到算法路径不明确，缺少分层决策的总体方案。",
-    "professorShouldAsk": "请询问学生：你计划如何构建需求到候选库的评测数据集？有没有具体的数据源或标注方案？如何设计实验来证明两阶段分层决策相比端到端方法的必要性？目前的AKB知识结构是否已初步具备库级推理能力？",
-    "nextBestIntervention": "建议要求学生下周提交一份需求→候选库基准测试集的构建方案，包括数据来源、标注预算和初步实验计划，并尽快完成小规模对比实验（分层vs.端到端）以形成可发表的中间成果。同时推动其与张义然老师确定明确的评测指标和时间节点。"
+    "valueGrowth": {
+      "summary": "价值观提升主要体现在科研/项目价值判断变得更清楚：他逐渐认为值得投入的不是泛泛的 API 知识库，而是能在复杂需求中进行候选约束、关系推理、库级路由和 API 组合规划的系统能力；这一判断与 Brainary 的 memory、reasoning、cognitive control、benchmark/evaluation 能力有持续连接。需要补强的是：哪些子问题先做、做到什么证据强度才值得继续扩展，目前仍需要老师帮助压实。",
+      "byWeek": [
+        {
+          "week": "2026-04-12",
+          "valueJudgment": "认为 AKB 价值在 API 关系建模而非 API 单点描述，提出 relation benchmark、relation memory schema、reverse engineering agent 的沉淀方向。"
+        },
+        {
+          "week": "2026-04-19",
+          "valueJudgment": "认为关系结构不仅支持推荐，也可能支持异常 API/skill 检测；价值外延扩大，但主线优先级证据不足。"
+        },
+        {
+          "week": "2026-04-26",
+          "valueJudgment": "把价值聚焦为解决 LLM 在 API 选型决策中的不稳定，并将其连接到 cognitive control 和 constrained reasoning workflow。"
+        },
+        {
+          "week": "2026-05-10",
+          "valueJudgment": "明确近期应收缩目标，优先解决复杂需求到候选库精准匹配，因为库级错误是关键路径且不可恢复；这是更成熟的项目取舍。"
+        }
+      ],
+      "currentValueFunction": "当前隐含的价值函数是：一个子问题如果满足“复杂需求真实存在、LLM/RAG baseline 会稳定失败、AKB 的关系或分层知识能提供可测增益、可沉淀为 benchmark/evaluator/reasoning module/cognitive control policy”，就值得继续投入；否则应暂缓扩展。",
+      "improvementSignals": [
+        "不再只问“知识库有没有用”，而是问“什么任务结构下知识库才有用”。",
+        "不再只关注 API 命中率，而是关注候选库选择、API 组合、使用方案是否合理。",
+        "能把个人推进的 AKB 工作映射到 Brainary 的 memory、reasoning、cognitive control 和 evaluation 能力建设。",
+        "2026-05-10 明确收缩到 library-level candidate matching，体现出比前几周更强的取舍意识。"
+      ],
+      "nextValueQuestion": "如果只能选择一个最值得做成论文/系统模块的切口，他应回答：为什么“需求→候选库匹配”比“API relation accuracy”“CLI 逆向关系抽取”“恶意 API 异常关系”更值得本月优先做；需要用失败率、可标注性、可评测性、对 Brainary cognitive control 的沉淀价值来证明。"
+    },
+    "projectManagementReview": {
+      "summary": "项目管理有持续推进，但还偏“研究叙述型”，没有完全达到“工程/实验可检查型”。主线 AKB 每周都有推进和认知增量；CLI-everything 与恶意 API 方向有启发但连续性较弱；Brainary 相关能力多次被映射到 memory、reasoning、cognitive control、benchmark/evaluation，但尚未看到稳定 schema、module、workflow 或 evaluator 的实际交付。",
+      "projects": [
+        {
+          "project": "API 开源选型 / AKB 主线",
+          "weeks": [
+            "2026-04-12",
+            "2026-04-19",
+            "2026-04-26",
+            "2026-05-10"
+          ],
+          "quality": "这是连续性最强、研究能力增量最明显的项目。四次周报从 relation-sensitive benchmark、LLM baseline、初步实验，推进到分层决策路线调整；但缺少具体数据规模、实验表格、指标、错误案例和代码/数据交付物，导致当前结论仍偏方向性。",
+          "whatWorked": "能持续围绕 AKB 价值验证推进，并逐步把 Brainary 的 memory、reasoning、cognitive control、benchmark/evaluation 映射到具体研究问题；尤其 2026-05-10 将任务拆为库级选择和 API 级组合，是可沉淀为 reasoning workflow 或 cognitive control policy 的明确方向。",
+          "managementGap": "原计划与实际完成的对照不够硬：4月26日提出下周扩大 relation-sensitive 测试集并补 execution-based evaluation，但 5月10日报告转为路线调整，未说明 execution evaluation 是否完成、为何调整、原计划是否放弃或延期。当前阶段、里程碑、数据规模、baseline 指标、关键路径依赖仍不完整。",
+          "nextConcreteMove": "下周应交付一个最小可验证包：不少于一个明确格式的“复杂需求→候选库”测试集样例集合、LLM/RAG baseline、库命中率或 top-k accuracy、至少 10 个错误案例分类，以及判断是否继续推进 library-level routing 的通过标准。"
+        },
+        {
+          "project": "CLI-everything 逆向分析链路 / API 关系抽取",
+          "weeks": [
+            "2026-04-12",
+            "2026-04-19"
+          ],
+          "quality": "前两周有接入和初步运行，发现其价值不是 API 数量而是关系恢复入口；但后两次周报没有继续报告过滤规则、结构化处理、准确率评测或并入 AKB 的结果，因此持续推进证据不足。",
+          "whatWorked": "完成初步接入并获得软件级 API 调用数据；在认知上把工具价值从覆盖率转向 relation recovery quality，这与 Brainary 的 tool orchestration 和 API relation memory 有潜在连接。",
+          "managementGap": "4月12日计划设计第一版 API 调用过滤规则，4月19日仍报告噪声高，但没有看到过滤规则版本、噪声下降指标、人工评测结果或 relation accuracy；之后主线转向 library-level routing，CLI-everything 是否仍在关键路径上不清楚。",
+          "nextConcreteMove": "明确 CLI-everything 是否服务于当前 library-level routing。如果服务，应定义它能补充哪些 library/API relation 特征；如果暂不服务，应冻结为后续模块，并记录已有样本、噪声类型和未完成评测。"
+        },
+        {
+          "project": "恶意 API / 恶意 skill 关系模式调研",
+          "weeks": [
+            "2026-04-19"
+          ],
+          "quality": "这是一个有概念价值的扩展方向，但目前只有一次调研记录，未形成可执行计划或交付，不宜与主线并行消耗过多注意力。",
+          "whatWorked": "提出可将恶意 API/skill 视为异常 API 关系结构，这与 AKB 的 relation pattern 和 Brainary 的 risk modeling 能力有潜在连接。",
+          "managementGap": "没有数据来源、任务定义、评测方式、与主线开源选型的依赖关系；4月19日计划分析是否纳入 relation-based framework，但后续周报没有追踪。",
+          "nextConcreteMove": "本阶段建议只保留为 future work 或一页问题定义，不进入本月关键路径；除非能证明它直接帮助 relation benchmark 或 library/API relation schema。"
+        },
+        {
+          "project": "Brainary 能力沉淀：relation memory、reasoning、cognitive control、benchmark/evaluation",
+          "weeks": [
+            "2026-04-12",
+            "2026-04-19",
+            "2026-04-26",
+            "2026-05-10"
+          ],
+          "quality": "Brainary 映射连续出现，说明学生能把研究问题连接到系统能力；但目前主要是能力标签和未来可能沉淀，尚未看到独立可复用的 schema、policy、workflow、evaluator 或 agent module。",
+          "whatWorked": "每周都能把 AKB 工作映射到 memory、reasoning、cognitive control 和 benchmark/evaluation，且映射越来越具体：从 API relation memory 到候选空间约束，再到 library routing 与 API retrieval 的分层策略。",
+          "managementGap": "缺少“从周报概念到系统资产”的转化动作。例如没有定义 relation memory schema 的字段，没有 cognitive control policy 的输入输出，没有 evaluator 的指标接口，也没有说明哪些部分可自动化。",
+          "nextConcreteMove": "选择一个最小 Brainary 资产交付：例如“复杂需求禁止直接 API retrieval，必须先 library routing”的 agent policy 草案，包含触发条件、输入、输出、baseline、失败回退和评测指标。"
+        }
+      ],
+      "managementPattern": "学生每周能提出最小可验证动作，但常出现下一周未显式回收上一周承诺的问题；研究判断在进步，项目闭环还不足。当前更像在形成正确问题，而不是已经形成稳定实验管线。",
+      "nextManagementMove": "建立一张四列表：上周承诺、实际完成、证据链接、未完成原因；同时每个项目只保留一个本周关键路径动作，避免 relation benchmark、CLI 逆向、恶意 API、library routing 同时发散。"
+    },
+    "repeatedBlockers": [
+      "relation-sensitive benchmark 规模不足，且缺少样本数量、标注标准和覆盖范围证据。",
+      "CLI-everything 输出噪声高，过滤规则、结构化处理和准确率评测尚未形成可检查结果。",
+      "baseline 已跑通但缺少具体指标、对比表、错误案例和统计结论。",
+      "execution-based evaluation 被提出但未在后续周报中交代完成情况。",
+      "Brainary 映射清楚，但从能力映射到 schema、workflow、module、evaluator 的自动化沉淀证据不足。",
+      "2026-05-03 周报缺失，导致从 4月26日实验计划到 5月10日路线调整之间的连续推进证据不足。"
+    ],
+    "teacherQuestions": [
+      "你现在认为本月唯一关键路径是“需求→候选库匹配”吗？如果是，CLI-everything 和恶意 API 调研本月是否暂停？",
+      "请给出一个最小 benchmark 规格：多少条复杂需求、每条几个候选库、正例如何标注、top-k 命中率怎么算、什么结果算 AKB 有增益？",
+      "你说复杂需求下错误主要发生在库选择阶段，这个判断来自多少个案例？能否展示 5 个库选错后 API 推荐不可恢复的具体例子？",
+      "4月26日计划的 execution-based evaluation 是否做了？如果没有，是因为路线改变、数据不够，还是评测定义不清？",
+      "如果要沉淀到 Brainary，本周能交付的最小系统资产是什么：library routing policy、relation memory schema，还是分层 evaluator？"
+    ],
+    "nextIntervention": "老师下一次 meeting 最应做的干预是把他的正确认知压成一个两周可验收实验：只做“复杂需求→候选库”最小 benchmark 和 baseline，对照 LLM/RAG 与 AKB-supported routing，输出指标、错误分类和是否继续投入的决策标准。老师需要学到的一件事是：当前 API 开源选型的关键失败不一定在 API 生成，而在库级候选空间没有先被正确约束；一旦库选错，后续 API 推荐很难恢复。",
+    "studentFeedback": {
+      "summary": "你这四次周报的进步不在于做了更多任务，而在于越来越能识别什么任务能证明 AKB 的价值、baseline 为什么失败、以及问题应如何拆层。下一步要把这些判断变成可复核的实验资产。",
+      "whatImproved": [
+        "你从 API 信息积累转向 API 关系建模，再转向库级和 API 级分层决策，问题建模更清楚了。",
+        "你开始关注 baseline、任务结构、候选空间约束和评测协议，而不是只报告工具接入或数据扩展。",
+        "你能把研究方向和 Brainary 的 memory、reasoning、cognitive control、evaluation 能力连接起来。"
+      ],
+      "nextStep": "下周不要再扩太多方向，先交付“需求→候选库”测试集、baseline、指标和错误案例；用这个最小闭环证明你的分层决策判断是否成立。"
+    },
+    "evidenceLinks": [
+      {
+        "week": "2026-04-12",
+        "evidence": "“明确发现现有主流数据集多数缺乏 API 关系信息”“初步形成 relation-sensitive task 的筛选标准”“CLI-everything 能够较快发现软件中的 API 调用入口，但输出结果偏粗粒度”。"
+      },
+      {
+        "week": "2026-04-12",
+        "evidence": "“AKB 的核心竞争力正在从 API 信息积累，转向 API 关系建模能力”“建议沉淀形式：benchmark / task taxonomy / evaluation protocol”。"
+      },
+      {
+        "week": "2026-04-19",
+        "evidence": "“完成一版 LLM-based baseline 并跑通实验流程”“初步形成‘数据集 + baseline + 逆向补充’的统一实验框架”。"
+      },
+      {
+        "week": "2026-04-19",
+        "evidence": "“知识库的价值取决于任务结构 + baseline 对比，而不是知识本身”“恶意 API / skill 可以统一建模为异常 API 关系模式”。"
+      },
+      {
+        "week": "2026-04-26",
+        "evidence": "“完成一轮开源选型初步实验测试”“当前结果初步支持：知识库对关系敏感任务有帮助，但仍需进一步系统验证”。"
+      },
+      {
+        "week": "2026-04-26",
+        "evidence": "“开源选型任务的难点不是‘找 API’，而是‘在多个合理候选中做结构化决策’”“知识库增强的关键作用并非知识补充，而是缩小合理候选空间”。"
+      },
+      {
+        "week": "2026-05-10",
+        "evidence": "“明确 API 开源选型应拆成两个阶段：需求→开源库推荐；库内 API 综合推荐与使用方案生成”。"
+      },
+      {
+        "week": "2026-05-10",
+        "evidence": "“复杂需求下，错误主要出现在‘库选择阶段’，而不是 API 生成阶段”“一旦库选错，后续 API 推荐基本不可恢复”。"
+      },
+      {
+        "week": "2026-05-10",
+        "evidence": "“近期优先解决‘复杂需求到候选库精准匹配’问题”“缺少需求→library candidate 的标注与评测数据”。"
+      }
+    ]
   }
 }

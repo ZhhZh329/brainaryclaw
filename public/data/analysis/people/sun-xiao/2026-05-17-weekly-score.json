@@ -1,59 +1,94 @@
 {
   "key": "person:sun-xiao:2026-05-17:weekly-score",
-  "generatedAt": "2026-05-24T11:35:36.873Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "6550d9da4bc4606f596aa73c8407e8c9b06bf388c48ad3488d56420860c8a8cc",
+  "generatedAt": "2026-06-06T13:12:15.567Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "5bce14c8cd0757bd536004328c6b535cbe13eb4141044e22c4ca5111a20ea3cf",
   "result": {
     "week": "2026-05-17",
-    "name": "Sun Xiao",
-    "userId": "8606017399",
-    "totalScore": 92,
-    "tier": "S",
-    "oneLineJudgment": "本周硬进展明显，将 action selection 推进到结构化比较与验证，认知深度高，但缺少正式实验结论。",
-    "professorFollowUp": "下周需重点验收 comparison-based selector 在 GPT-4o-mini 上的稳定性，以及是否真正改善 action 分布与轨迹坍缩。",
-    "dimensions": {
+    "name": "孙晓",
+    "scores": {
       "hardProgress": {
         "score": 18,
-        "reason": "完成了 action-first runtime 的全面清理，通过 12family 小规模回归暴露了 action 分布不均与轨迹坍缩等真实瓶颈，并将方法从单轮直接选 action 推进到 all-action comparison + semantic fill alignment 的可验证决策结构，沉淀了新方法资产，硬进展突出。",
-        "missingEvidence": "尚未完成 comparison-based selector 的 smoke 测试和正式 12family seeded 回归，缺少最终分布改善的定量证据。"
+        "reason": "本周有明确硬进展：完成 action-first runtime 多处边界清理，删除 communication 主路径中的 source-grounding、availability 等旧逻辑；完成 12family × 1case × 13 communication 的 156 cells 小规模回归并进入全部 completed；新增 visible_action_state_digest、selection diagnostic fields、all-action comparison、selection_context、semantic fill alignment 等模块或验收材料。进展不是停留在想法层，而是推进到 runtime、validator、repair、回归数据和失败模式诊断。",
+        "missingEvidence": [
+          "缺少具体代码提交、文件路径或 diff 摘要。",
+          "缺少 156 cells 回归的原始日志、失败修复前后对比表。",
+          "缺少 action 分布不均和 trajectory collapse 的完整数值表，只给了若干例子。"
+        ]
       },
       "cognitiveIncrement": {
         "score": 14,
-        "reason": "本周新增 5 条重要认知更新，核心是 action schema 应被视为离散决策空间而非主题标签、communication history 作为 visible evidence、以及必须通过 validator 将 digest 转化为决策约束，认识深刻且紧扣实验现象。",
-        "missingEvidence": "虽然认知更新有逻辑推导，但缺少实验数据直接验证这些认知更新，例如 comparison-based selector 是否真正改善了 action 分布。"
+        "reason": "认知增量清晰：从“prompt 写得更细”转向“必须把 action schema 显式变成离散比较空间”；认识到 state digest 只有进入 validator 约束才有效；认识到 prior utterance 是后续 action selection 的 visible evidence，而不是语言背景。这些判断直接改变了实验结构和下周路径。",
+        "missingEvidence": [
+          "缺少对哪些旧假设被证伪的更系统列表。",
+          "缺少 comparison-based selector 相比 diagnostic-field-only selector 的初步实测对照，因为 smoke 尚未完成。"
+        ]
       },
       "cot2Depth": {
         "score": 14,
-        "reason": "CoT's CoT 部分深入分析了 action selection 任务形态的重构本质，以及 communication utterance 作为 visible evidence 的关键作用，并剖析了当前方法未被吸收的系统性原因，自动化潜力高，证据等级 A。",
-        "missingEvidence": "两个核心 CoT's CoT 仍未在实际 smoke 测试中验证，缺少对 comparison-based selector 在 GPT-4o-mini 上的运行证据。"
+        "reason": "CoT’s CoT 部分不只是复述工作，而是解释了为什么该问题没有被现有 agent benchmark 自动吸收：多数系统默认 LLM 会正确使用 schema，缺少 comparison 输出、validator、selection-to-fill 数据传递和 trajectory diagnostics。也给出了可沉淀模块：AllActionComparisonSelector、SelectionAlignedSemanticFiller、ComparisonValidator、VisibleCommunicationEvidenceSummary。深度较高。",
+        "missingEvidence": [
+          "证据等级标为 A，但周报没有给出支撑 A 级证据的外部对照或完整实验表。",
+          "尚未证明这些模块在实际运行中比原方案显著改善 action collapse。"
+        ]
       },
       "brainaryMapping": {
         "score": 9,
-        "reason": "四个核心工作项清晰地映射到 Brainary 的基础设施、决策过程设计、语义接地的可验证性等能力，并给出了可沉淀的具体模块，映射合理且完整。",
-        "missingEvidence": "映射合理，但缺少更具体的 Brainary 内部能力匹配的量化或引用。"
+        "reason": "Brainary 映射具体，能把本周工作分别对应到 benchmark infrastructure、causal traceability、decision procedure design、representation grounding、semantic grounding、workflow reliability、pragmatic reasoning 等能力，并指出可能沉淀的组件。映射不是泛泛贴标签，而是和 runtime、selector、filler、communication evidence 的模块边界一致。",
+        "missingEvidence": [
+          "缺少 Brainary 现有能力图谱中的正式节点编号或与既有模块的接口关系。",
+          "缺少优先级判断：哪些沉淀应先进入 Brainary，哪些只是项目内工具。"
+        ]
       },
       "monetaryValue": {
-        "score": 9,
-        "reason": "准确阐述了解决 communication effect 归因问题的价值，受益方明确，且方案通用不限于单 family，具备转化为基准基础设施的潜力，价值显著。",
-        "missingEvidence": "缺少市场调研或实际需求规模的证据，但基于当前 agent benchmark 需求，价值明确。"
+        "score": 8,
+        "reason": "价值判断较完整：指出该题目解决 multi-agent benchmark 中 communication effect 难以归因的问题，潜在买单方包括 agent benchmark、workflow intelligence、多智能体协作、企业流程 agent、AI evaluation/safety 团队。也说明这是通用 benchmark 基建能力，不是单 family 的局部优化。",
+        "missingEvidence": [
+          "缺少具体客户、使用场景或付费路径验证。",
+          "缺少与现有 evaluation/agent workflow 工具相比的差异化商业定位。",
+          "缺少成本收益估算，例如减少多少人工标注、调试或评估成本。"
+        ]
       },
       "projectManagement": {
         "score": 14,
-        "reason": "分两条主线进行管理，给出了清晰的项目阶段、时间与资源规划、依赖路径、进度判断和纠偏动作，管理细致且实际可操作。",
-        "missingEvidence": "时间规划给出粗估小时数，但缺少更具体的里程碑日期和交付物清单。"
+        "reason": "项目管理结构好：拆成 action-first runtime 与 comparison-based selector 验收主线、communication strategy influence 主线；给出当前阶段、投入时间、资源、依赖关系、关键路径、token/成本规划、纠偏动作。特别是明确下周不要同时大改 schema 和 communication prompt，先做 comparison smoke，体现了风险控制。",
+        "missingEvidence": [
+          "缺少具体里程碑日期和完成判据阈值，例如 collapse 降到多少算通过。",
+          "缺少多 seed 正式实验的资源预算上限。",
+          "缺少如果 smoke 失败的备选路径排序。"
+        ]
       },
       "nextAction": {
-        "score": 10,
-        "reason": "下周行动计划具体、可验证，包括补齐 validator 缺口、跑 smoke 测试、验证 comparison 稳定性和 fill 对齐，步骤清晰且风险可控。",
-        "missingEvidence": "无"
+        "score": 9,
+        "reason": "下周动作非常具体：先补 duplicate action_id validator，再跑 1 family × 1 case × 2 strategies smoke，检查 action_comparison 覆盖、selected item 对齐、semantic fill selection_alignment、repair loop、JSON truncation/token 成本；通过后再跑 seeded 12family × 1case × 13 strategies。动作具备最小可验证性。",
+        "missingEvidence": [
+          "缺少 smoke 通过/失败的量化门槛。",
+          "缺少预先指定的 family 和 case 选择标准。",
+          "缺少输出物清单，例如必须提交哪些表、图、日志或 zip。"
+        ]
       },
       "evidenceQuality": {
         "score": 4,
-        "reason": "提供了代码验收材料、rollout 数据、诊断字段等证据，且识别了新的失败模式，证据链条初步完整。",
-        "missingEvidence": "本周提供的证据主要是代码验收材料和初步分布数据，缺少经过统计检验的对比图表。"
+        "reason": "证据质量中上：周报提供了实验规模、156 cells completed、失败模式、模块名、数据资产、典型 action collapse 现象和下周验证方案，足以判断本周确有推进。但多数证据仍是文字汇报，缺少原始日志、表格、链接、commit、具体统计分布和可复现实验记录。",
+        "missingEvidence": [
+          "缺少原始 rollout zip 的路径或摘要索引。",
+          "缺少 action count / trajectory summary 的具体表格。",
+          "缺少 repair count、fallback count、used actions / total actions 的完整数值。",
+          "缺少代码版本、运行命令、模型参数和随机种子记录。"
+        ]
       }
-    }
+    },
+    "totalScore": 90,
+    "tier": "S",
+    "oneLineJudgment": "本周是高质量的结构性推进：从 runtime 跑通转向 selector 可验证决策结构，但正式结论仍不能成立，关键证据要等 comparison-based smoke 和 seeded 回归。",
+    "professorFollowUp": [
+      "要求下周优先提交 comparison-based selector smoke 的原始日志、action_comparison 完整率、repair 次数、JSON parse 失败率、selected/action_comparison 对齐率和 semantic fill alignment 失败率。",
+      "要求给出 diagnostic-field-only 版本与 all-action-comparison 版本的同 case 对照，至少比较 action 分布、unique trajectory count、top action percentage。",
+      "暂时不要让学生大规模重写 schema 或 communication prompt；先证明 collapse 是 selector 结构问题还是 schema-case alignment 问题。",
+      "要求明确 smoke 通过门槛，例如 comparison 覆盖率、唯一 selected 合法率、fill 对齐率、无无限 repair 的最低标准。",
+      "老师本周最应该学习的一点是：communication effect 的可信测量前提不是 utterance 生成得好，而是 action selector 必须把 schema 当成离散决策空间并接受结构化验证。"
+    ]
   }
 }

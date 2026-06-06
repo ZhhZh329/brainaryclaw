@@ -1,60 +1,104 @@
 {
   "key": "person:wang-suyuan:2026-05-24:weekly-score",
-  "generatedAt": "2026-05-24T11:36:25.102Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "fa94a67bcbb378042d7efb6559bfdc77f958ee15c24123abd44b9cc81695bf6b",
+  "generatedAt": "2026-06-06T13:13:15.732Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "14be8239f3b4d3f7f17ccddb9d9391ace8156a27e8ad7643afb1dfedf15557cb",
   "result": {
     "week": "2026-05-24",
     "name": "Wang Suyuan",
-    "userId": "7752141282",
-    "submittedAt": "2026-05-24T16:01:00+08:00",
-    "scoring": {
+    "totalScore": 78,
+    "tier": "B",
+    "dimensions": {
       "hardProgress": {
-        "score": 15,
-        "reason": "本周在 AdvTaint 上补充了 82 个 2026 年新 CVE 数据并建立深度调参管线，证实方法泛化性；在 Agent 任务上发现纯文本反馈的局限并构思覆盖率机制。进展扎实，但受算力资源限制，关键图表与对照组实验尚未完成。",
-        "missingEvidence": "深度-成本-准确率量化图表仍未产出；覆盖率注入实验尚未进行。"
+        "score": 16,
+        "reason": "本周有明确硬进展：完成约 82 个 2026 年新 CVE 数据集的跑测，建立 Depth 与检测成功率、Token 成本的对照评估管线，并在 Agent 方向识别出纯文本反馈无法触达核心触发点的失败模式。硬进展主要集中在 AdvTaint rebuttal 实验；Agent 方向仍以观察、构思和小规模尝试为主，覆盖率反馈尚未真正完成闭环验证。",
+        "missingEvidence": [
+          "缺少 82 个 CVE 的具体实验表格、召回率、误报率、成功率等指标。",
+          "缺少与原数据集“高度一致”的量化对比。",
+          "Depth 调参管线已建立，但缺少本周已产出的具体曲线或中间结果。",
+          "Agent 方向缺少具体漏洞样例、模型名称、迭代轮数、失败日志和 PoC 变化证据。"
+        ]
       },
       "cognitiveIncrement": {
-        "score": 12,
-        "reason": "明确认识到中间粒度上下文对复杂漏洞审计的核心价值，并发现纯文本反思存在天花板，需引入物理覆盖率信息。认知增量清晰，但覆盖率需求的认知可能部分来自先前知识，尚待实验验证。",
-        "missingEvidence": "覆盖率反馈能否实际帮助开源模型跨越触发障碍未有实验数据。"
+        "score": 13,
+        "reason": "认知增量比较清晰：一是确认中间粒度上下文对 LLM 漏洞审计的价值，二是从文本 Reflection 转向 Coverage 物理反馈，三是提出 Failure Memory 应压缩为 Boundary 而不是直接追加到 Prompt。这些认知与本周实验和失败观察相关，能影响后续系统设计。但部分认知仍偏理论化，尚未被充分实验量化。",
+        "missingEvidence": [
+          "缺少证明 Coverage 反馈优于文本反馈的对照实验。",
+          "缺少中间粒度上下文相对长上下文、短上下文的定量优势。",
+          "缺少 Boundary 机制在真实 Agent 流程中减少无效搜索的实证结果。"
+        ]
       },
       "cot2Depth": {
-        "score": 14,
-        "reason": "两个 CoT's CoT 极具深度：失败经验应抽象为 Boundary 而非直接指导（等级 B），调用链深度存在边际成本爆炸与准确率侵蚀效应（等级 A）。清晰揭示自动化科研盲区，并给出自动化路径。",
-        "missingEvidence": "CoT1 仅有案例与讨论，缺乏可复现的 Boundary 生成协议；CoT2 虽基于实验但未展示量化转折点图表。"
+        "score": 12,
+        "reason": "CoT’s CoT 能从失败现象上升到架构层抽象，尤其是把失败经验从直接指导改造为 Boundary 生成，这比一般周报的经验总结更深。Depth ROI 拐点也抓住了成本、噪音、准确率之间的结构性矛盾。但两个 CoT’s CoT 的证据还不够闭合：第一个主要来自观察和讨论，第二个声称有真实数据支撑，但报告没有呈现数据本身。",
+        "missingEvidence": [
+          "Boundary 机制缺少具体 schema、字段设计或可执行示例。",
+          "Depth ROI 拐点缺少具体拐点位置、成本变化倍数、准确率变化趋势。",
+          "缺少失败经验如何被自动编译为 Boundary 的样例链路。",
+          "证据等级虽有标注，但没有附对应实验记录或数据摘要。"
+        ]
       },
       "brainaryMapping": {
         "score": 8,
-        "reason": "提出覆盖率引导的漏洞边界生成器，与 Brainary 的 Self-evolution/Cognitive control 能力明确关联，并指出跨模态降维基建的缺失，但缺乏与现有系统的具体对接方案。",
-        "missingEvidence": "未给出 Boundary 生成器与 Brainary 记忆或评估模块的接口设计。"
+        "reason": "报告能把 Coverage-Guided Boundary Generator 映射到 Brainary 的 Self-evolution、Cognitive control、Evaluator 能力，并指出当前缺少静态分析与动态沙盒执行之间的标准化翻译层。映射方向合理，且与自动化科研系统有关。但 Brainary 关联只有一个主要条目，尚未拆到模块接口、输入输出、状态存储和评估协议。",
+        "missingEvidence": [
+          "缺少 Coverage 数据到 Boundary 文本的具体转换格式。",
+          "缺少该模块在 Brainary 系统中的调用位置和上下游依赖。",
+          "缺少 Memory Schema 的字段草案。",
+          "缺少 Evaluator 如何判定 Boundary 有效的指标。"
+        ]
       },
       "monetaryValue": {
-        "score": 7,
-        "reason": "任务一估算避免 20 万沉没成本与 100 万学术资产，任务二估计 200 万/年的企业降本，有计算思路与行业参考，但估算较为粗略，缺乏详细分解与支撑数据。",
-        "missingEvidence": "任务一的人力/算力折算明细，任务二的 API 消耗量与真实企业案例支撑。"
+        "score": 6,
+        "reason": "报告尝试进行了价值判断，区分了 AdvTaint 的顶会资产价值和 Agent 覆盖率反馈机制的企业降本价值，也指出了潜在买单方。但金额估算偏粗，尤其是 200 万人民币每年的企业价值主要基于推断，没有提供 API 消耗量、人工成本、替代率、部署成本和转化概率的计算链条。",
+        "missingEvidence": [
+          "缺少 AdvTaint 顶会资产估值与实际收益之间的转化假设。",
+          "缺少企业级安全场景中 API 年度消耗的具体数据来源。",
+          "缺少开源模型通过 Coverage 反馈替代商业模型的成功率假设。",
+          "缺少研发成本、维护成本和落地风险折算。"
+        ]
       },
       "projectManagement": {
-        "score": 11,
-        "reason": "两个项目均明确阶段、资源依赖与偏差，纠偏动作合理（护网期间拆分任务、手工验证新思路），但进度已受资源影响，且欠缺更具体的时间线与里程碑。",
-        "missingEvidence": "未设定具体的图表完成日、覆盖率验证的规模与成功标准。"
+        "score": 12,
+        "reason": "项目管理部分覆盖了阶段、依赖、资源约束、成本规划、进度偏差和纠偏动作。对华科服务器受限这一风险有明确解释，也提出白天跑重任务、夜间分析日志和推进云端 GPT-5 的安排。Agent 项目也从盲目空转调整为手工注入 Coverage 验证链路。短板是缺少精确时间表、完成标准、备选算力方案和风险优先级。",
+        "missingEvidence": [
+          "缺少下周每日或阶段性排期。",
+          "缺少 GPT-5 对照组预计完成时间和剩余任务量。",
+          "缺少服务器受限情况下的替代资源方案。",
+          "缺少 Agent 小规模测试集规模、样本选择标准和验收指标。"
+        ]
       },
       "nextAction": {
         "score": 8,
-        "reason": "下周动作具体：任务一完成 ROI 拐点图表与 GPT-5 汇总，任务二手工注入覆盖率验证。动作可执行，但任务一的产出去向和任务二的验证环境尚未细化。",
-        "missingEvidence": "未指定图表将以何种形式交付或用于下一步决策；覆盖率验证的小规模测试集、成功判据未定义。"
+        "reason": "下周动作相对具体：产出深度-成本-准确率 ROI 拐点图，完成 GPT-5 对照组汇总，在小规模测试集上手工注入 Coverage 反馈，并写一版 Boundary 提炼 Prompt。这些动作可验证，且能直接解除当前关键不确定性。但还缺少量化验收线，例如成功率提升多少才算有效、ROI 拐点如何判定。",
+        "missingEvidence": [
+          "缺少 ROI 图表的具体指标定义。",
+          "缺少 GPT-5 对照组完成后的比较基线。",
+          "缺少 Coverage 反馈实验的最小样本数。",
+          "缺少 Boundary Prompt 的评估标准。"
+        ]
       },
       "evidenceQuality": {
-        "score": 4,
-        "reason": "CoT's CoT 中一个达到 A 级（有实验数据），一个 B 级（有现象与讨论），总体证据可信，但任务一的深度实验数据尚未整理为可展示证据，任务二停留在现象级。",
-        "missingEvidence": "任务一的跨 CVE 检测成功率对比、深度-成本-准确率拐点图；任务二的覆盖率注入前后效果对比。"
+        "score": 3,
+        "reason": "证据质量中等偏弱。周报有数据集规模、证据等级和实验方向，但缺少可复核的数字结果、图表、日志、失败案例和对照组。许多判断使用了‘高度一致’、‘强有力证明’、‘极高价值’等结论性表述，但没有在周报中给出支撑数据。",
+        "missingEvidence": [
+          "缺少实验结果表。",
+          "缺少核心指标数值。",
+          "缺少失败案例日志。",
+          "缺少成本统计。",
+          "缺少对照组结果。"
+        ]
       }
     },
-    "totalScore": 79,
-    "tier": "B",
-    "oneLineJudgment": "本周在 AdvTaint 泛化性证明与 Agent 方法论跃迁上取得关键认知，但受资源掣肘，硬产出仍缺量化图表与闭环实验，需尽快补齐以支撑后续冲刺。",
-    "professorFollowUp": "请关注“深度-成本-准确率”拐点能否验证上下文压缩策略，并推动覆盖率反馈实验以确认其能否成为开源模型突破验证天花板的关键开关。"
+    "oneLineJudgment": "这是一份研究方向和系统抽象都较强的周报，但当前最大问题是关键结论的数据证据没有展开，导致很多高价值判断还停留在可信但不可复核的层面。",
+    "professorFollowUp": [
+      "请他下周必须交出 AdvTaint 的 82 个新 CVE 结果表，包括原数据集对比、召回率、误报率、Token 成本和失败样例。",
+      "请他把 Depth ROI 拐点具体量化：哪一个 Depth 开始成本爆炸，哪一个 Depth 开始准确率下降。",
+      "请他给出一个 Coverage 到 Boundary 的最小可执行样例，包含原始覆盖率信息、提炼后的 Boundary、Agent 下一步行为变化。",
+      "请他明确 Agent 小规模验证实验的样本数、模型、成功判据和对照组，否则无法判断 Coverage 反馈是否真的有效。",
+      "老师本周最应该关注的一点是：Failure Memory 不应只是追加文本记忆，而应被转化为可执行的边界约束；但这个想法现在必须尽快从概念变成 schema 和实验闭环。"
+    ]
   }
 }

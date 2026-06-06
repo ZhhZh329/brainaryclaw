@@ -1,15 +1,15 @@
 {
   "key": "week:2026-04-19:horizontal",
-  "generatedAt": "2026-05-24T12:06:45.344Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "4f7de72ebe0a9d425fc84ec8ac3b0f55e5647ab0dd4d7d1265dc8ec679f778f1",
+  "generatedAt": "2026-06-06T13:20:37.707Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "9fb41b0f2e5cb55a97d4d5ac0bf947eac6c04115b7c6b8b4f18256ed8fe41c5f",
   "result": {
     "submissionStatus": {
-      "total": 60,
-      "submitted": 48,
-      "missing": 12,
+      "summary": "本周应交 66 人，已提交 54 人，缺交 12 人；缺交率约 18.2%。所有已提交记录均在截止时间前，但有 3 份存在明显时间/周次陈旧风险。",
+      "submittedCount": "54",
+      "missingCount": "12",
       "missingNames": [
         "Cao Zong",
         "Gong Peiliang",
@@ -23,167 +23,491 @@
         "Wang Chong",
         "Zhang Jingyao",
         "Zhao Xuanyue"
+      ],
+      "staleOrPotentiallyStale": [
+        "Lyu Mengyao：提交时间为 2026-04-12，早于本周大多数提交，需确认是否为本周有效周报。",
+        "Wang Zhou：提交时间为 2026-04-14，内容为 Brainary ASIC 化方向，需确认是否覆盖本周完整进展。",
+        "Zhou Ziyang：周次写 2026-04-12，可能不是本周完整报告。"
+      ],
+      "formatIssues": [
+        "Zhang Fangyuan：报告在神经符号 integration 部分后截断，缺少项目管理、价值判断、下一步等完整信息。",
+        "Guo Wenbo、Yang Bo、Sun Yuqiang、Ke Changbo 等报告信息密度偏低，模板项不完整。",
+        "部分报告金额估值明显高于证据支撑，例如数百万到数十亿级估值但缺少可验证市场或实验依据。"
       ]
     },
-    "overallRead": "本周共48人提交报告，整体硬进展密度较高，多个方向出现方法学层面的认知突破。高信号集中在：将具体任务中的观察上升为可复用的方法论（如evaluator选择对策略收敛的影响、RCA跨层外推、GEO两阶段框架、下游任务驱动上游设计的必备校验）；通过实证验证了关键假设（如kernel FL的bug-type推理、长时记忆的动态选择机制、双系统架构的分层评价）；以及具有重大商业或平台价值的方向收敛（如GEO、game testing）。共性问题包括API资源不足、部分方向缺乏最小验证闭环、以及多条研究线并行时的优先级焦虑。下周需关注：将高质量认知增量尽快沉淀为benchmark/workflow/evaluator等可复用资产，并对资源瓶颈（算力、API、人力）做出明确调配。",
+    "overallRead": {
+      "oneSentence": "本周最强研究信号来自“有真实实验/真实系统闭环并能改变研究判断”的报告，而不是最长或概念最多的报告。",
+      "mainJudgment": "优先关注 Xie Maoyi、Cao Yue、Hu Lianyu、Qiao Wei、Qian Jiayu、Wang Suyuan、Feng Yebo、Sun Xiao、Chen Huabao、Guo Yaoqi 等人的工作；这些报告要么有明确数值提升，要么形成了可转 evaluator / protocol / module 的结构化研究资产。",
+      "whatTeacherShouldLearn": "本周最值得老师吸收的一条跨项目信号是：很多项目的瓶颈已经不是“模型更强”，而是“什么时候引入结构化中间表示、什么时候用 evaluator 选择信号、什么时候用 workflow 控制失败模式”。也就是说，Brainary 的核心增量正在从单点 agent 能力转向可审计的评测、记忆、控制和归因基础设施。",
+      "evidenceDistribution": "A 级证据主要集中在有对照实验、真实数据或系统运行日志的项目；B 级集中在架构实现、demo、方案收敛但缺大规模评测的项目；C 级集中在纯方法类比、方向判断和未验证商业叙事。",
+      "projectManagementRead": "多数高质量报告能写清楚阶段、偏差、纠偏动作和是否需要老师介入；低质量报告常见问题是只有方向陈述，没有最小可验证动作、没有失败模式、没有证据等级或金额依据。",
+      "automationRead": "最适合立即沉淀的资产不是大而全系统，而是五类小资产：评测协议、失败模式日志、checkpoint 选择器、memory/operator schema、workflow checklist。"
+    },
     "ranking": [
       {
-        "name": "谢茂义",
-        "userId": "6269517202",
-        "signalStrength": "极高",
-        "reason": "硬进展突出：bug-type specific prompt将kernel fault localization的Top-10从3.7%大幅提升至59.3%，实证数据强（证据A）。认知增量深刻：calltree本身提升有限，真正有效的是“如何引导LLM理解bug”，且将问题拆解为信息可见性与推理两个正交维度。下一步动作清楚：分析失败case并精化prompt，可迅速转化为方法论资产。"
+        "rank": "1",
+        "name": "Xie Maoyi",
+        "signal": "Kernel fault localization 出现强实证突破：bug-type reasoning 使 RC-not-in-BT 子集 Top-10 从 3.7% 提升到 59.3%，并明确 calltree 只在 RC 不在 backtrace 时有条件价值。",
+        "whyRankedHere": "硬进展、证据等级、边界识别和下一步动作都很强；同时有负结果和适用条件，不是单纯报涨点。",
+        "evidenceLevel": "A",
+        "BrainaryRelevance": "对应 reasoning、cognitive control、tool orchestration、benchmark/evaluation；可沉淀为 BT/CT 决策模块与 bug-type reasoning module。",
+        "decisionForTeacher": "应要求其下周把 6 个失败 case 做结构化归因，并开始把 heuristic prompt 转成可复用 reasoning schema。",
+        "mainRisk": "当前核心方法仍偏 prompt heuristic，若不结构化，论文上限会受限。"
       },
       {
-        "name": "郭耀奇",
-        "userId": "8745283141",
-        "signalStrength": "极高",
-        "reason": "方法论外推意义重大：将RCA从代码bug定位提升为跨抽象层级的因果归因范式，并落实到Agent层调试Agent，展现出“RCA原语”的潜力。CoT's CoT深度高，对Brainary的自我归因能力有直接贡献。项目处于实现完成待评测状态，下周最小闭环动作清晰。"
+        "rank": "2",
+        "name": "Cao Yue",
+        "signal": "Meta-Cognition Attack Framework 通过 LLaVA 与 GPT-5 evaluator 对比，发现 evaluator 感知能力会反向塑造攻击策略，且过度退化为单词会破坏实体-属性绑定。",
+        "whyRankedHere": "这是对 meta-cognition 边界的实证扩展：反思对象不只是攻击策略，还隐式包含信号来源模型。该信号对 Brainary 的 evaluator selection、risk modeling、cognitive control 都有直接价值。",
+        "evidenceLevel": "A",
+        "BrainaryRelevance": "可沉淀为 evaluator 能力匹配度评估、跨 evaluator 迁移性评测 protocol、信号来源风险建模模块。",
+        "decisionForTeacher": "应推动其把 evaluator mismatch 定义成独立实验矩阵，而不是只继续观察运行效果。",
+        "mainRisk": "当前还缺 evaluator 与目标模型能力匹配度的系统性量化定义。"
       },
       {
-        "name": "李文珂",
-        "userId": "8628282471",
-        "signalStrength": "极高",
-        "reason": "研究问题重新定义：将GEO拆解为必须两阶段串联（先SEO进候选池，再GEO新增层被引用），并创造性地提出情报池探测作为黑盒分析手段。商业估值逻辑清晰（对标广告基础设施），四阶段路线图可落地。对Brainary的“网络信息理解”能力有基础设施级贡献。下周动作最小可验证。"
+        "rank": "3",
+        "name": "Hu Lianyu",
+        "signal": "多形式长时记忆视觉理解模块已实现并完成对比实验，动态知识表达选择带来 7%-8% 精度提升，强制单一形式最高损失 12%。",
+        "whyRankedHere": "硬实验、模块、数据和失败模式都清楚；直接验证动态认知控制在 memory 使用中的价值。",
+        "evidenceLevel": "A",
+        "BrainaryRelevance": "对应 memory schema、cognitive control module、evaluation protocol。",
+        "decisionForTeacher": "应要求其补充误判样本分析和跨任务泛化测试，避免只在单一视觉数据集上成立。",
+        "mainRisk": "动态选择模块可解释性不足，跨任务适配尚未验证。"
       },
       {
-        "name": "冯业博",
-        "userId": "581354334",
-        "signalStrength": "高",
-        "reason": "多项目硬进展密集：Trading survey收尾至90%，Quant-Agent工程硬化解决真实边界问题，Skills-security切换到真实数据并跑通初稿。多条CoT's CoT获A/B级证据，特别是“真实数据切换必须配套全文数字一致性扫描”可直接转化为自动化workflow。项目管理中USENIX APT rebuttal存在延期风险但已定位。"
+        "rank": "4",
+        "name": "Qiao Wei",
+        "signal": "MAC-APT 双系统方案完成 System 1 behavioral evaluation：4/4 攻击场景命中，attack-day precision/recall/F1 均为 1.0，节点级 precision 0.9286、recall 0.5132。",
+        "whyRankedHere": "把快系统定位为低成本触发层而非完整 detector，形成分层评价原则；有清楚的误差分析下一步。",
+        "evidenceLevel": "A",
+        "BrainaryRelevance": "对应 risk modeling、calibration、cognitive control、trigger benchmark、long-term memory。",
+        "decisionForTeacher": "应帮其确认 System 2 第一阶段保留哪些慢思考角度，避免多角色慢思考过度扩张。",
+        "mainRisk": "节点级召回偏低，System 2 最小闭环尚未跑通。"
       },
       {
-        "name": "张晓雨",
-        "userId": "6396090520",
-        "signalStrength": "高",
-        "reason": "全局管理能力突出：autoresearch/MAS security/GEO poisoning/game testing等多条高价值线同步推进，并形成“条件性增益”等跨项目认知。CoT's CoT 3（熵减/abstract方法应作为条件化模块）有实验支撑。周报中项目管理维度齐全，资源、偏差、纠偏动作清晰。适合作为团队枢纽。"
+        "rank": "5",
+        "name": "Qian Jiayu",
+        "signal": "DeepTumorVQA Stage 1a 高可信知识注入已接入 VQA 并产生稳定正向增益；softslots 的能力边界被明确为 clean/recognition 提升，而非 hardest tasks 提升。",
+        "whyRankedHere": "该报告价值在于从“知识是否注入”推进到“知识是否被 benchmark 调用”，并形成 per-epoch family summary 的决策接口。",
+        "evidenceLevel": "A",
+        "BrainaryRelevance": "对应 knowledge grounding、benchmark-aware adaptation、checkpoint selection、domain evaluator。",
+        "decisionForTeacher": "应在 Stage 1b 设计前介入一次，要求 supervision schema 直接瞄准 hardest subtypes，而不是继续扩 source。",
+        "mainRisk": "softslots 可能变成局部涨点模块，若不改善 LongTail/Medical Reasoning，不应作为主线 claim。"
       },
       {
-        "name": "曹越",
-        "userId": "8329996337",
-        "signalStrength": "高",
-        "reason": "实证揭示框架隐式行为：通过LLaVA与GPT-5对比，证明meta-cognition攻击框架无需显式建模即可自动适配evaluator感知边界，是框架的结构性属性。CoT's CoT 1证据A级，对Brainary的cognitive control和risk modeling有直接启发。下一步持续观测即可，项目健康。"
+        "rank": "6",
+        "name": "Wang Suyuan",
+        "signal": "AdvTaint rebuttal 补齐开销、scale-up、人工核验实验，并复现 SecVerifier；明确分类指标会掩盖 RCA 幻觉，执行验证应成为漏洞检测 evaluator。",
+        "whyRankedHere": "硬实验与评测基建信号强，且形成“静态分析做 90% 剪枝，LLM 做 10% 语义判断”的可迁移原则。",
+        "evidenceLevel": "A",
+        "BrainaryRelevance": "对应 benchmark/evaluator、tool orchestration、physical grounding、preprocessing module。",
+        "decisionForTeacher": "应鼓励其在 rebuttal 后把 SecVerifier 包成组内统一 evaluator 接口。",
+        "mainRisk": "SecVerifier 环境依赖重，短期可能卡在工程稳定性。"
       },
       {
-        "name": "陈华宝",
-        "userId": "8021306120",
-        "signalStrength": "高",
-        "reason": "提出可复用的方法论原则：建模方案评价必须锚定下游任务可操作性；下游数据驱动上游设计时必须校验数据分布的代表性。这两点均可转化为workflow checklist。实验对比充分（时序建模方案A/B，临床问句分布交叉验证），证据A/B级，对知识图谱构建有通用指导价值。"
+        "rank": "7",
+        "name": "Feng Yebo",
+        "signal": "同时推进 Trading Survey、Quant-Agent 生产化硬化、KDD rebuttal、Skills-Security CCS、USENIX APT rebuttal；其中 Skills-Security 切换到 500 个真实 ClawHub skills 和 Sepolia testnet 是强硬进展。",
+        "whyRankedHere": "硬进展密度极高，尤其真实数据、testnet、工程 failure mode 和 rebuttal 方法论都有信号；但项目过多，注意力风险显著。",
+        "evidenceLevel": "A/B 混合",
+        "BrainaryRelevance": "对应 reflective CoT、tool failure registry、writing evaluator、trust modeling、数字一致性扫描 workflow。",
+        "decisionForTeacher": "应优先介入 USENIX APT rebuttal 资源分配，并要求 Skills-Security 先统一 threat model 和全文数字一致性。",
+        "mainRisk": "并行项目过载；Quant-Agent 仍未产生真实成交闭环；USENIX rebuttal 明确不符合预期且需要老师介入。"
       },
       {
-        "name": "胡连宇",
-        "userId": "8558791940",
-        "signalStrength": "高",
-        "reason": "长时记忆方向实现重大验证：多形式知识存储+动态选择机制带来7-8%精度提升，且明确知识图谱是核心载体，证据等级A。对Brainary的memory与cognitive control模块有可落地的实现范式，下周动作（优化误判）收敛性强。"
+        "rank": "8",
+        "name": "Sun Xiao",
+        "signal": "交互式 agent benchmark 从 family-level grounding 收敛到 case-specific substrate，并建立 factorized non-comm/comm 评测单元和 source-alignment audit。",
+        "whyRankedHere": "虽然真实 rollout 仍不足，但方法学收敛强，直接解决 benchmark 把 action/talk/substrate 混在一起导致归因失真的问题。",
+        "evidenceLevel": "A-/A",
+        "BrainaryRelevance": "对应 benchmark harness、substrate compiler、source-alignment audit、trajectory-level evaluator。",
+        "decisionForTeacher": "应要求其下周只跑 WORK 与 RESOURCE/BARGAIN 的少量闭环，不要继续扩 family。",
+        "mainRisk": "success/legality/utility 还未完全 case-native，真实 rollout 区分度未充分验证。"
       },
       {
-        "name": "李凯旋",
-        "userId": "5422578057",
-        "signalStrength": "高",
-        "reason": "多项目完成实验收敛，同时形成方法论转向：刻意减少LLM依赖，强调结构化约束（Fuzz driver → 约束建模，PoC migration → SMT验证），证据A/B级，对Brainary的meta-reasoning有验证价值。TOSEM录用更添背书。"
+        "rank": "9",
+        "name": "Chen Huabao",
+        "signal": "肝胆 CT KG 时序建模完成方案 A/B 对比，采用第 9 类 temporal_progression；临床报告问句显示关系型问题占比高于 DeepTumorVQA，公开 VQA 低估鉴别诊断需求。",
+        "whyRankedHere": "有方案对比、有路径长度指标、有临床数据交叉校验，能直接改变 KG 设计投入方向。",
+        "evidenceLevel": "A/B",
+        "BrainaryRelevance": "对应 calibration、risk modeling、representativeness check、KG 设计 workflow。",
+        "decisionForTeacher": "应让 Li Qiankun 尽快确认 progresses_to 与 temporal_progression 边界，并推动 20 个高频实体全量实例化。",
+        "mainRisk": "临床报告样本少且单院来源，代表性仍不足。"
       },
       {
-        "name": "吕梦瑶",
-        "userId": "8378078830",
-        "signalStrength": "高",
-        "reason": "Taxonomy方向收敛到“知识压缩表示”这一基础层，并横跨paper study/VLA/skills等场景，愿景宏大；Communication方向明确以可信评测为优先，两者均指向Brainary核心中间层。硬件进展中等但认知框架强，需加速最小验证闭环。"
+        "rank": "10",
+        "name": "Guo Yaoqi",
+        "signal": "Unified Repair Agent 中实现结构化/层级检索升级和独立 Debugging Agent，把 RCA 从代码层外推到 agent 层失败归因。",
+        "whyRankedHere": "跨层 RCA 作为通用因果归因原语的认知增量强；但本周以实现为主，缺端到端评测数字。",
+        "evidenceLevel": "L2/L3，约等于 B-",
+        "BrainaryRelevance": "对应 cognitive control、自我归因原语、structured retrieval workflow、failure memory schema。",
+        "decisionForTeacher": "应要求其下周必须交付 50 case fail-to-pass 新数字和调试 Agent 归因分布，否则暂缓方法论拔高。",
+        "mainRisk": "调试 Agent 可能只做到 post-hoc 日志解释，未必比人工 diff 有增益。"
       },
       {
-        "name": "马思远",
-        "userId": "8773753207",
-        "signalStrength": "高",
-        "reason": "科学发现导向清晰，将项目从“做大atlas”重新锚定为“高功能状态不可达性悖论”，实验主链闭环，并桥接至human genomics，提升期刊层次定位。CoT's CoT关于科学单位的新概念有深度。下一步叙事压缩动作精准。"
+        "rank": "11",
+        "name": "Li Kaixuan",
+        "signal": "Fuzz Driver 和 PoC Migration 都收敛到“弱化 LLM、强化约束/solver”的技术路线，并有 TOSEM 录用作为结构化 program analysis 路线背书。",
+        "whyRankedHere": "跨项目形成清晰方法论：可形式化问题应优先 solver/constraint，而不是让 LLM 做核心决策。",
+        "evidenceLevel": "A/B",
+        "BrainaryRelevance": "对应 constraint modeling、program synthesis、solver module、system design meta-reasoning。",
+        "decisionForTeacher": "应要求其把 Fuzz Driver 的约束 schema 和 PoC Migration 的 SMT abstraction 写成可复用接口，而不只是论文叙事。",
+        "mainRisk": "报告缺少本周新增实验的具体数字，证据强度主要来自其自述。"
       },
       {
-        "name": "乔伟",
-        "userId": "6937514610",
-        "signalStrength": "高",
-        "reason": "双系统MAC-APT方案从设计走向实验验证，System 1的场景级F1=1.0证明其作为快触发层的可行性，并明确提出分层评价标准（成功不应以完整恢复为准），证据A。方案收敛为“快筛+慢思考+经验回写”闭环，对Brainary的安全认知控制模块有原型支撑。"
+        "rank": "12",
+        "name": "Ma Siyuan",
+        "signal": "Cell Genomics 主实验闭环完成，项目从系统建设收束为发现导向，核心命题是高功能终点存在但局部路径不可达，并接上 ClinVar/gnomAD/VUS human bridge。",
+        "whyRankedHere": "科学叙事收敛信号强，已从模型/atlas 转向 discovery claim；但报告缺少关键数值和图表证据。",
+        "evidenceLevel": "B",
+        "BrainaryRelevance": "对应 scientific claim selection、多层证据组织、结果取舍、discovery workflow。",
+        "decisionForTeacher": "应要求其下周只交付摘要、主图排序和标题候选，检查是否真能支撑 Cell Genomics 级主发现。",
+        "mainRisk": "当前最危险不是缺实验，而是把文章写成 atlas+model+bridge 拼盘。"
       },
       {
-        "name": "孙晓",
-        "userId": "8606017399",
-        "signalStrength": "高",
-        "reason": "复杂benchmark方法学收敛：将因子评测、case-specific substrate、开源对齐审计、轨迹级指标融为统一协议，CoT's CoT证据A级。工程上已完成substrate编译器并与策略接线，对Brainary的benchmark/evaluation能力建设至关重要。"
+        "rank": "13",
+        "name": "Sun Manqi",
+        "signal": "鸿蒙意图-行为对齐完成 62 个样本端到端测试，30 个恶意样本 100% 检出，并用 29 个 FP 推动 Taxonomy 2.0 豁免机制。",
+        "whyRankedHere": "有完整样本、错误分析和框架修正；从 prompt-only 转向 Python 确定性逻辑 + LLM 语义理解。",
+        "evidenceLevel": "A",
+        "BrainaryRelevance": "对应 neuro-symbolic alignment、risk modeling、cross-platform malware blueprint generator。",
+        "decisionForTeacher": "应要求其下周重点做鸿蒙 API 映射的可验证原型，不要只停留在 Android 特征迁移。",
+        "mainRisk": "良性 SDK 噪声导致误报仍高，100% 恶意召回不能单独说明系统实用。"
       },
       {
-        "name": "黄亦坦",
-        "userId": "8329017256",
-        "signalStrength": "中高",
-        "reason": "跨层语义不一致诊断的叙事创新：将BAC从“检测”重新定义为“诊断”问题，并设计Multi-Agent工作流，Demo验证4类CVE检测正确。CoT's CoT若干，虽证据大多B级但方向差异化强。下一步需精读MOCGuard并跑通真实应用原型。"
+        "rank": "14",
+        "name": "Huang Yitan",
+        "signal": "ConformAgent 完成 5 Agent + Orchestrator 研究计划，并实现 950 行 demo，验证 4 类跨层 BAC/CVE gap 检测逻辑。",
+        "whyRankedHere": "从计划到可运行 demo，有明确 taxonomy、实验设计和竞品撞题分析；但真实代码解析和 HTTP 验证尚未完成。",
+        "evidenceLevel": "B",
+        "BrainaryRelevance": "对应 tool orchestration、workflow management、cross-layer memory schema、diagnostic evaluator。",
+        "decisionForTeacher": "应要求其尽快从模拟数据转向真实 Spring Boot 应用，否则诊断叙事证据不足。",
+        "mainRisk": "当前 demo 可能证明的是规则逻辑可写，而不是真实跨层诊断能力。"
       },
       {
-        "name": "马晓宇",
-        "userId": "1051527908",
-        "signalStrength": "中高",
-        "reason": "episodic memory模块完成工程化：重要性打分+遗忘机制，并明确从working→episodic→semantic的连续转化。CoT's CoT（记忆本质是价值筛选）证据A，直接对应Brainary的memory架构。受限于API token，下周最小验证动作明确。"
+        "rank": "15",
+        "name": "Li Wenke",
+        "signal": "GEO 被重构为两阶段问题：SEO/Retrieval 进入候选池，Generation Layer 再决定是否被摘要和引用；情报池探测成为必要前置。",
+        "whyRankedHere": "认知结构清楚，Brainary 网络信息生态理解价值高；但本周尚未启动情报池 benchmark 实验。",
+        "evidenceLevel": "B",
+        "BrainaryRelevance": "对应 source credibility memory、information probing workflow、risk modeling、calibration。",
+        "decisionForTeacher": "应让其下周必须产出 2-3 个领域的 citation domain matrix，先验证情报池差异是否真实。",
+        "mainRisk": "金额价值推理过度宏大，5亿到5000亿估值没有当前实验支撑。"
+      },
+      {
+        "rank": "16",
+        "name": "Xu Yijia",
+        "signal": "从 ARIS 案例中抽出自动化科研 evaluator 四维结构：task completion、execution fidelity、repair ability、human intervention ratio，并提出 review/repair gate 是优先控制层。",
+        "whyRankedHere": "对 Brainary 自动化科研很有基础设施价值；但证据主要来自少数案例，尚未模板化验证。",
+        "evidenceLevel": "A/B",
+        "BrainaryRelevance": "对应 evaluator、workflow management、calibration、cognitive control。",
+        "decisionForTeacher": "应审查其一页式 evaluator 模板，重点看 human intervention ratio 是否可操作。",
+        "mainRisk": "如果不尽快用更多案例填表，会停留在合理但未验证的控制哲学。"
+      },
+      {
+        "rank": "17",
+        "name": "Liao Jie",
+        "signal": "OpenClaw 法律行为数据集生成从 final answer benchmark 重构为 working memory snapshot + expected tool chain + risk judgment 的行为 benchmark。",
+        "whyRankedHere": "样本最小单元设计有明确 Brainary 价值，适合沉淀为高风险 agent benchmark；但尚无 20-50 条样本实证。",
+        "evidenceLevel": "B",
+        "BrainaryRelevance": "对应 memory、tool orchestration、risk modeling、benchmark/evaluation、calibration。",
+        "decisionForTeacher": "应要求其下周冻结 schema，并做 prompt 直出 vs operator 驱动的 20-50 条对比。",
+        "mainRisk": "法律 taxonomy 与 evaluator 未定，可能导致样本扩展前噪声放大。"
+      },
+      {
+        "rank": "18",
+        "name": "Ma Xiaoyu",
+        "signal": "Episodic memory 核心模块实现，包括 value-aware scoring、time decay、usage reinforcement，并明确 working→episodic→semantic 转化链。",
+        "whyRankedHere": "是 Brainary memory 工程化关键模块；但还缺任务级验证和 value function 权重标定。",
+        "evidenceLevel": "A-",
+        "BrainaryRelevance": "对应 episodic memory module、forgetting module、streaming memory workflow。",
+        "decisionForTeacher": "应要求其用简单任务验证高价值事件筛选是否真能驱动 semantic abstraction。",
+        "mainRisk": "估值 800 万缺少实验收益支撑；当前只是模块实现，不是性能验证。"
+      },
+      {
+        "rank": "19",
+        "name": "Zhang Jiayi",
+        "signal": "ICSE 现场观察到 SE 社区 agentic narrative cascade，并识别 Pradel 专用 agent 路线对通用 agent framework 叙事的反声。",
+        "whyRankedHere": "这是战略定位信号，不是实验信号；对 Brainary 是否走通用框架还是专用 agent infra 有决策价值。",
+        "evidenceLevel": "B",
+        "BrainaryRelevance": "对应 target disambiguation、ecosystem situational awareness、explore/exploit metacognitive control。",
+        "decisionForTeacher": "应让其下周完成 ICSE research track agent paper 占比 audit，校准现场叙事是否被放大。",
+        "mainRisk": "TestAgent 已延迟两周，会议观察必须尽快转回硬实现。"
+      },
+      {
+        "rank": "20",
+        "name": "Kan Shuangxiang",
+        "signal": "SE Problem Space Taxonomy 第一版完成，并提出 taxonomy 层级 × 论文密度的 coverage-guided idea discovery。",
+        "whyRankedHere": "对自动选题和 blind spot discovery 有方法论价值；但还没有论文映射实验和 idea quality oracle。",
+        "evidenceLevel": "B/C",
+        "BrainaryRelevance": "对应 problem-space memory、hierarchical coverage map、idea discovery workflow。",
+        "decisionForTeacher": "面谈应重点压三个问题：taxonomy 粒度、coverage 与价值映射、idea oracle 怎么定义。",
+        "mainRisk": "若不能打通文献 API→自动归类→coverage map，方法会停留在选题类比。"
+      },
+      {
+        "rank": "21",
+        "name": "Li Qiankun",
+        "signal": "两篇 npj 技术审查清障、前瞻队列任务收官、千条子刊数据交接给 Auto Taxonomy，病理 LTM V2 冲刺 NeurIPS。",
+        "whyRankedHere": "硬交付和项目管理信号强，尤其跨团队数据流转；但周报研究机制细节少。",
+        "evidenceLevel": "B",
+        "BrainaryRelevance": "对应 automated scientific discovery pipeline、数据飞轮、跨团队 KG 协作。",
+        "decisionForTeacher": "应要求其优先 review 陈华宝 CT KG V1 baseline，避免双模态主线被弱 baseline 拖慢。",
+        "mainRisk": "报告偏管理总览，缺少关键实验数字和失败分析。"
+      },
+      {
+        "rank": "22",
+        "name": "Liang Ruichao",
+        "signal": "Self-run system 从 desire→motivation→goal 线性链条扩展为六层控制结构，并实现 memory operator，指出遗忘机制是一等公民。",
+        "whyRankedHere": "对 Brainary 上层控制和 memory 生命周期有启发；但哲学层概念多，缺 toy scenario 验证。",
+        "evidenceLevel": "B",
+        "BrainaryRelevance": "对应 cognitive control、memory operator、runtime meta-cognition、真/善监控。",
+        "decisionForTeacher": "应要求其下周只做两件事：六层 schema 最小化、时间衰减遗忘机制小测试。",
+        "mainRisk": "概念面过宽，容易把 self-run、memory、MAS attack 三条线都做浅。"
+      },
+      {
+        "rank": "23",
+        "name": "Sun Kairan",
+        "signal": "Auto research working memory operators 收敛到 Node/Edge/Field 底层对象，并将 research-specific 知识放入 schema 而非 operator。",
+        "whyRankedHere": "抽象边界判断对 Brainary WM 架构重要；但尚无可运行最小闭环。",
+        "evidenceLevel": "B",
+        "BrainaryRelevance": "对应 WM operator framework、schema-driven memory system、memory governance module。",
+        "decisionForTeacher": "应提供 CC/算力资源前，先要求其画出最小闭环 API 和验证任务，避免资源投入后仍停留在概念层。",
+        "mainRisk": "实现与 evaluation 尚未展开。"
+      },
+      {
+        "rank": "24",
+        "name": "Lyu Mengyao",
+        "signal": "Taxonomy 被定义为 research object 的中间层，communication 线指出 evaluator/chat model 能力上限会污染结论。",
+        "whyRankedHere": "认知质量高，能连接 memory schema、workflow、evaluation interface；但提交时间疑似陈旧，且资源瓶颈未解决。",
+        "evidenceLevel": "B",
+        "BrainaryRelevance": "对应 taxonomy memory schema、communication evaluation protocol、资源感知项目管理。",
+        "decisionForTeacher": "若这是本周有效报告，应优先给 communication 线一次强模型小规模复核资源；否则要求补交本周版。",
+        "mainRisk": "API/人手瓶颈直接影响结论可靠性；报告可能不是本周新稿。"
+      },
+      {
+        "rank": "25",
+        "name": "Zhang Xiaoyu",
+        "signal": "从组合管理角度统筹 autoresearch、MAS security、GEO poisoning、game testing、intention、problem solving/CL abstract 等多线，并提出熵减/abstract 是条件性增益模块。",
+        "whyRankedHere": "高层 portfolio 判断有价值，尤其条件性增益视角；但项目过多，很多方向仍处定义阶段。",
+        "evidenceLevel": "A/B 混合",
+        "BrainaryRelevance": "对应 research portfolio meta-cognition、risk modeling、benchmark/evaluator、routing policy。",
+        "decisionForTeacher": "应要求其把高价值新方向压成 MVP/threat model，不要让 GEO poisoning 和 game testing 只停留在融资叙事。",
+        "mainRisk": "范围过宽，硬实验多依赖学生，需防止方向性周报替代实际交付。"
       }
     ],
     "topSignals": [
       {
-        "signal": "Evaluator的感知能力通过训练信号反向塑造攻击策略，无需显式告知模型架构，meta-cognition框架就能自动适配被攻击模型的能力边界——这是框架的结构性行为，不是超参问题。",
-        "from": "曹越"
+        "theme": "评测协议正在成为 Brainary 的第一基础设施",
+        "evidence": "Xie Maoyi 的 BT/CT 分层评测、Wang Suyuan 的 SecVerifier、Sun Xiao 的 trajectory-level 指标、Xu Yijia 的 ARIS evaluator、Qian Jiayu 的 per-epoch family summary 都指向同一件事：没有 evaluator，agent 能力无法被可靠归因。",
+        "teacherTakeaway": "老师应优先推动一批小 evaluator，而不是先推动大一统 agent。"
       },
       {
-        "signal": "在kernel故障定位中，单纯提供更多trace信息效果有限，真正关键的突破来自于bug-type aware reasoning：引导LLM按漏洞类型推理可将Top-10准确率从3.7%提升至59.3%。这揭示了LLM在复杂推理任务中的主要瓶颈是搜索空间的选择，而非理解代码。",
-        "from": "谢茂义"
+        "theme": "结构化中间表示比更强模型更关键",
+        "evidence": "Wang Suyuan 发现静态分析上下文压缩比 scale-up 更重要；Li Kaixuan 将 LLM 降级为 hint/辅助，强调 solver/constraint；Qian Jiayu 区分知识注入与 hardest-task knowledge use；Liao Jie 和 Sun Kairan 都把 working memory schema 作为核心。",
+        "teacherTakeaway": "Brainary 的研究优先级应从 prompt 能力转向 schema、operator、constraint、evaluator 的组合。"
       },
       {
-        "signal": "GEO（生成引擎优化）的本质是下一代广告基础设施，其研究必须遵循两阶段框架：先解决SEO问题确保内容进入候选池，再通过GEO新增层被引用。情报池探测是破解第一阶段黑盒的可操作手段，这一方法论可沉淀为Brainary的网络信息理解模块。",
-        "from": "李文珂"
+        "theme": "Meta-cognition 的边界在扩展到信号来源、时间和外部观察者",
+        "evidence": "Cao Yue 发现 evaluator 即隐式模型建模；Feng Yebo 提出 CoT decay 和 reviewer quality calibration；Guo Yaoqi 提出外置 Debugging Agent；Qiao Wei 将 System 1/2 分层评价。",
+        "teacherTakeaway": "Meta-cognition 不应只定义为 agent 自我反思，还应包括信号源校准、历史 CoT 时效、外部观察者归因和分层成功标准。"
       },
       {
-        "signal": "RCA（根因分析）方法论是跨抽象层级的因果归因范式，不仅仅适用于代码bug定位。将其外推到Agent层实现的调试Agent，证明了同一个“hypothesis→test→observe→update”骨架可以复用于任何多步过程的失败归因。这为Brainary提供了自我归因原语。",
-        "from": "郭耀奇"
+        "theme": "医学 KG/Memory 线开始从静态知识转向任务可调用知识",
+        "evidence": "Chen Huabao 用临床问句纠偏 DeepTumorVQA 分布；Qian Jiayu 验证 Stage1a 必须接入 VQA 才能证明价值；Li Qiankun 管理医学 KG 与 Auto Taxonomy 数据飞轮；Wu Junhao 反思医学 KG 应从器官实体图走向状态演化图。",
+        "teacherTakeaway": "医学 KG 的关键不是知识量，而是能否被具体 benchmark、clinical question 和状态演化任务调用。"
       },
       {
-        "signal": "当下游任务反向驱动上游知识结构设计时，必须增加一道校验：下游数据集的分布是否代表真实目标场景？否则，像VQA数据集会系统性低估关系推理需求，导致知识图谱低配建设。该原则可固化为workflow checklist。",
-        "from": "陈华宝"
+        "theme": "安全方向最强信号来自可复现实验对象和失败模式结构化",
+        "evidence": "Xie Maoyi 的 kernel FL 子集划分、Sun Manqi 的 FP 反推 taxonomy、Wang Suyuan 的人工核验与 SecVerifier、Huang Yitan 的跨层诊断 demo、Ge Mengmeng 的 APT reconstruction 评测框架都在做这个方向。",
+        "teacherTakeaway": "安全方向应要求每个项目都输出 failure mode→root cause→patch/evaluator 的三元组资产。"
       },
       {
-        "signal": "长时记忆辅助视觉理解中，知识图谱是最核心的知识表达形式，动态选择机制可带来7-8%精度增益，强制单一表达则损害性能。这验证了Brainary中根据任务和输入动态选择记忆形式的认知控制思路。",
-        "from": "胡连宇"
-      },
-      {
-        "signal": "Fuzz driver生成和PoC迁移等研究的关键突破，在于将问题从“LLM主导生成”重定位为“约束满足”，让LLM降级为语义提示。这种弱化模型依赖、强调结构化方法的方向，正是Brainary构建可靠系统能力的基石。",
-        "from": "李凯旋"
-      },
-      {
-        "signal": "高质量研究数据（如种子知识图谱节点）具有杠杆效应：精细化50个核心节点的语义对齐，远比粗放收集5000个模糊节点更能防御认知越狱并稳定Agent推理。这一“先精后广”策略适用于所有依赖知识注入的监控系统。",
-        "from": "眭浩"
+        "theme": "金额价值推理普遍需要降噪",
+        "evidence": "Li Wenke 的 GEO 广告基础设施估值、Wang Zhou 的 4 亿美元 ASIC 估值、Lyu Mengyao 的千万元 taxonomy 估值、Ma Xiaoyu 的 800 万 episodic memory 估值等都明显高于当前证据等级。",
+        "teacherTakeaway": "价值估算应按证据等级折扣：无实验或无客户验证的估值只能作为愿景，不应进入资源决策。"
       }
     ],
     "commonRisks": [
-      "多个方向出现API/算力资源瓶颈，拖延最小验证闭环，如马晓宇（video agent）、周振宏（数据选择agent）均自费或等待token，影响实验推进。",
-      "部分高价值方法论仍停留在认知/架构层，尚未落地为可复用资产（如吕梦瑶的taxonomy、阚双祥的coverage map），存在“道理都对但转化速度慢”的风险。",
-      "项目管理上，多条并行研究线缺乏明确优先级和收口，如张晓雨处多方向推进可能导致精力分散；冯业博的USENIX APT rebuttal因精力被Skills-security吸走而延期。",
-      "部分实验结论受限于评测模型能力（如吕梦瑶的Communication用gpt-4o-mini），结果可信度存疑，可能误导后续决策。"
+      {
+        "risk": "概念强、实验弱",
+        "details": "不少报告能提出 framework、schema、taxonomy、workflow，但没有最小闭环实验。例如 working memory、self-run、taxonomy、KG-world model 等线需要更快进入小样本验证。"
+      },
+      {
+        "risk": "证据等级自评偏高",
+        "details": "部分报告将设计推演或少量案例标为 A。老师应要求 A 级必须有对照实验、真实数据、系统日志或可复现代码。"
+      },
+      {
+        "risk": "金额估值和证据脱节",
+        "details": "多份报告给出百万、千万甚至数十亿估值，但缺少客户、市场、实验增益或替代成本的直接依据。建议统一用“当前资产价值”和“愿景市场价值”分栏。"
+      },
+      {
+        "risk": "项目过载与注意力稀释",
+        "details": "Feng Yebo、Zhang Xiaoyu、Liao Zeqin、Ge Mengmeng 等并行项目很多，信号丰富但关键路径容易被稀释。老师需要问每人下周唯一不可失败的动作是什么。"
+      },
+      {
+        "risk": "下一步动作仍偏泛",
+        "details": "高质量报告能写 20-50 条样本、50 case、1 个 pilot case、3 seeds 等；低质量报告只写“继续推进”“完善实验”“调研”。"
+      },
+      {
+        "risk": "资源瓶颈影响研究判断",
+        "details": "Lyu Mengyao、Sun Kairan、Zhou Zhenhong、Qian Jiayu、Zhang Xiaoyu 等提到 API、CC 账号、算力或经费资源；若不统一管理，会导致研究结论受低配模型或自费调用污染。"
+      },
+      {
+        "risk": "数据/benchmark 代表性不足",
+        "details": "Chen Huabao 临床报告单院小样本；Li Wenke GEO 情报池尚未采样；Sun Manqi 62 样本仍小；Qiao Wei 4 个攻击场景场景级表现强但节点级召回不足。"
+      },
+      {
+        "risk": "把工程可跑误判为科学贡献",
+        "details": "多个项目已有 demo 或代码，但需要区分“能跑”“有效”“可解释”“能写成论文主 claim”。Wu Zhangfa 的 review 位面分离对此有提醒价值。"
+      }
     ],
     "collaborationCandidates": [
       {
-        "participants": "陈华宝 + 李乾坤",
-        "topic": "肝胆影像KG的实体全量实例化、关系类型分工界定，以及V2策略统一。"
+        "group": "漏洞检测 / 安全 evaluator 组",
+        "members": [
+          "Xie Maoyi",
+          "Wang Suyuan",
+          "Huang Yitan",
+          "Ge Mengmeng",
+          "Qiao Wei",
+          "Hu Zhichao"
+        ],
+        "collaborationValue": "共同沉淀安全方向统一 evaluator：BT/CT 信息可见性、SecVerifier 动态验证、跨层语义诊断、APT reconstruction、双系统触发评价。",
+        "teacherAction": "组织一次 60 分钟方法会，只讨论“安全任务的统一失败模式与 evaluator schema”。"
       },
       {
-        "participants": "张晓雨 + 刘成越",
-        "topic": "AI testing agent接入autoresearch主链路，共建测试/验证基础设施。"
+        "group": "Brainary memory / working memory 架构组",
+        "members": [
+          "Ma Xiaoyu",
+          "Sun Kairan",
+          "Kong Ziqiao",
+          "Dang Wenjing",
+          "Liang Ruichao",
+          "Xu Yijia",
+          "Liao Jie"
+        ],
+        "collaborationValue": "这些人都在从不同角度处理 memory schema、operator、KG、控制层、evaluator。需要统一术语，避免重复造概念。",
+        "teacherAction": "要求每人用同一模板写：memory 对象、operator、写入条件、遗忘条件、评价指标。"
       },
       {
-        "participants": "吕梦瑶 + 李乾坤",
-        "topic": "千条子刊数据的Auto Taxonomy处理及分类模块优化，推动知识引擎闭环。"
+        "group": "医学 KG / 医学 LTM / Auto Taxonomy 组",
+        "members": [
+          "Li Qiankun",
+          "Chen Huabao",
+          "Qian Jiayu",
+          "Wu Junhao",
+          "Ma Siyuan",
+          "Lyu Mengyao"
+        ],
+        "collaborationValue": "Chen 的 CT KG、Qian 的 Stage1a/Stage2、Li 的数据飞轮、Wu 的状态演化 KG、Ma 的 human genomics bridge 之间存在可对齐的医学知识调用问题。",
+        "teacherAction": "要求形成一页“医学知识如何从 source pack/KG 进入 benchmark 决策”的共同图。"
       },
       {
-        "participants": "孙晓 + 周振宏",
-        "topic": "将因子评测协议应用于OpenClaw价值排行或项目评估，形成决策benchmark。"
+        "group": "Agent skill / OpenClaw / 法律与文化治理组",
+        "members": [
+          "Jia Xiaojun",
+          "Sui Hao",
+          "Liao Jie",
+          "Sun Manqi",
+          "Yang Yanjing",
+          "Ge Mengmeng"
+        ],
+        "collaborationValue": "SkillJect、文化 KG、法律行为 benchmark、意图-行为对齐、API relation memory 都在处理 agent 行为边界和安全治理。",
+        "teacherAction": "统一定义“行为级 benchmark”的最小样本：context、tool/skill chain、risk label、evidence、expected violation。"
+      },
+      {
+        "group": "自动化科研 evaluator / project routing 组",
+        "members": [
+          "Xu Yijia",
+          "Zhou Zhenhong",
+          "Zhang Xiaoyu",
+          "Guo Yaoqi",
+          "Feng Yebo",
+          "Sun Xiao"
+        ],
+        "collaborationValue": "ARIS evaluator、数据选择 agent、project routing、debugging agent、数字一致性扫描、source-alignment audit 都可组成自动化科研的控制面。",
+        "teacherAction": "让他们共建一个“研究 workflow 是否真推进”的 evaluation checklist。"
+      },
+      {
+        "group": "GEO / 网络信息生态 / 治理组",
+        "members": [
+          "Li Wenke",
+          "Zhang Xiaoyu"
+        ],
+        "collaborationValue": "Li Wenke 的 GEO 两阶段框架与 Zhang Xiaoyu 的 GEO poisoning 治理方向天然衔接：前者做情报池探测，后者做污染 threat model。",
+        "teacherAction": "先要求共同产出 threat model + 情报池探测协议，避免一个偏营销、一个偏治理而脱节。"
+      },
+      {
+        "group": "参会与领域信号结构化组",
+        "members": [
+          "Zhang Jiayi",
+          "Zhang Yiran"
+        ],
+        "collaborationValue": "两人都从 ICSE 获得 field-level signal；可沉淀 conference connection → research opportunity tracking workflow。",
+        "teacherAction": "要求二人把会议观察转成具体 TODO、潜在合作人、竞争态势、项目定位四列表。"
       }
     ],
     "teacherChecklist": [
-      "优先解决高优先级项目的API/算力资源瓶颈（尤其是马晓宇video agent、周振宏数据选择agent），避免因资源卡点拖慢关键路径。",
-      "推动曹越的隐式建模发现、郭耀奇的RCA原语、陈华宝的下游校验原则等高质量认知增量尽快沉淀为workflow、benchmark或evaluation protocol，纳入Brainary体系。",
-      "针对李文珂的GEO四阶段路线图，确认其资源需求和论文发表节奏，把握该方向的时间窗口。",
-      "对冯业博的USENIX APT rebuttal项目给予补实验的人力支持决策，并确认Skills-security投稿定位。",
-      "组织一次关于“统一agent framework vs 任务专用agent”的专题讨论，结合张嘉怡的ICSE观察，为Brainary架构设计收敛提供输入。",
-      "关注谢茂义的bug-type reasoning方法，探讨其自动化沉淀为reasoning module的可能性，并评估对其他bug localization项目的迁移价值。",
-      "加强跨项目知识流：将乔伟的分层评价思想、孙晓的benchmark审计协议引入其他agent评测任务，提升实验严谨性。"
+      {
+        "priority": "最高",
+        "item": "要求 Xie Maoyi 下周提交 6 个失败 case 的结构化归因表",
+        "why": "这是当前最接近论文核心方法升级的项目；需要从 bug-type prompt 走向结构化 reasoning。"
+      },
+      {
+        "priority": "最高",
+        "item": "介入 Feng Yebo 的 USENIX APT rebuttal 资源分配",
+        "why": "报告明确写到不符合预期、需要学生协同、需判断必补实验和可答复项。"
+      },
+      {
+        "priority": "最高",
+        "item": "要求 Cao Yue 把 evaluator mismatch 扩展成正式实验矩阵",
+        "why": "这是本周对 meta-cognition 最有新意的实证信号，应尽快变成 protocol 而非观察。"
+      },
+      {
+        "priority": "高",
+        "item": "让 Qian Jiayu 和 Chen Huabao 对齐医学 KG/知识注入的 hardest-task 评价标准",
+        "why": "Qian 的结果说明 clean/recognition 涨点不足以支撑医学 reasoning；Chen 的临床问句显示公开 VQA 分布有偏。"
+      },
+      {
+        "priority": "高",
+        "item": "审查 Xu Yijia 的 ARIS evaluator 一页模板",
+        "why": "自动化科研最需要先有 evaluator，而不是先堆 skills；该模板可成为组内共用资产。"
+      },
+      {
+        "priority": "高",
+        "item": "让 Sun Xiao 只做 2-4 个 pilot case 的真实 rollout",
+        "why": "其方法学很强，但必须用真实 rollout 验证 action/talk/substrate 的区分度。"
+      },
+      {
+        "priority": "高",
+        "item": "要求 Ma Siyuan 下周交主图排序、摘要和标题候选",
+        "why": "其实验已完成，当前最大风险是发现链不够尖，必须尽快判断是否达到 Cell Genomics 叙事。"
+      },
+      {
+        "priority": "中高",
+        "item": "给 Lyu Mengyao 的 communication 线一次强模型小规模复核资源，前提是确认其报告为本周有效",
+        "why": "其结论可靠性直接受 evaluator/chat model 能力上限影响。"
+      },
+      {
+        "priority": "中高",
+        "item": "要求 Li Wenke 下周交 GEO 情报池 domain matrix",
+        "why": "其两阶段框架有价值，但必须通过真实 query 采样验证。"
+      },
+      {
+        "priority": "中高",
+        "item": "统一金额估值规范",
+        "why": "当前金额推理噪声大。建议所有人分为：当前已形成资产价值、若论文接收价值、若产品化愿景价值，并标证据等级折扣。"
+      },
+      {
+        "priority": "中",
+        "item": "对缺交 12 人和疑似旧稿 3 人进行提醒",
+        "why": "周报是项目管理输入，缺失会影响资源分配判断。"
+      },
+      {
+        "priority": "中",
+        "item": "要求所有概念型项目下周必须给出一个最小可验证动作，格式为对象、样本数、指标、通过阈值",
+        "why": "避免 working memory、taxonomy、self-run、world model 等方向长期停留在抽象层。"
+      }
     ]
   }
 }

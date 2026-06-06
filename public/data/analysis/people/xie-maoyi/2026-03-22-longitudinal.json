@@ -1,42 +1,202 @@
 {
   "key": "person:xie-maoyi:2026-03-22:longitudinal",
-  "generatedAt": "2026-05-24T11:52:27.834Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "fa81921d88b16e821c79811612cf929375985e86c7889334c9ce0095014fec16",
+  "generatedAt": "2026-06-06T13:15:40.033Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "5381d4964bd49078f76bca9876d8353101b819797aab4698905bea341b919bf8",
   "result": {
-    "overallTrajectory": "基于两周报告，研究能力显著提升，从技术实现转向问题分析与系统思考。第一周聚焦原型搭建与数据集构建，处于方法实现的初期；第二周转向问题结构剖析（failure taxonomy）、基线增强（LinuxFL⁺）以及明确瓶颈（假设空间生成），并系统化价值判断与项目管理。认知从“做什么”进入“为什么这么做”的层次，元认知与CoT's CoT初显成熟，研究能力提高而非单纯更忙。",
-    "stageByWeek": [
+    "overallTrajectory": "研究能力呈上升趋势，但目前更明显的进步来自“问题分解、失败模式识别、证据等级意识和下一步验证标准”，而不是已经形成稳定可复用的研究系统；关键风险是 KernelLocator/KRDG 的原型状态在两周报告中表述不一致，需要用可运行交付物澄清。",
+    "headline": "从“调研并搭原型”进步到“量化失败模式、识别方法瓶颈、提出证据等级和最小验证动作”，但下一步必须把 taxonomy、KRDG 和 Brainary 能力沉淀落到可检查实验与接口上。",
+    "overviewSentence": "这个学生本周比上周更像在做研究判断而不是堆任务，但 KernelLocator 的真实工程进度、可计算结构和验证闭环仍需老师追问。",
+    "fourWeekTimeline": [
       {
         "week": "2026-03-15",
-        "stage": "原型构建与基线建立",
-        "mainProgress": "完成KernelLocator的KRDG图构建、bug report解析、两阶段引擎及评估框架；构建50个bug的评估子集并整理6组baseline结果。",
-        "cognitiveGain": "深入理解LLM-based fault localization方法，明确迁移到kernel场景的可行性。",
-        "deficits": "缺乏对问题本质的深度分析；项目管理粗略；无明确价值判断。"
+        "metacognition": "主要表现为任务型推进：完成相关工作调研、benchmark 选择、GraphLocator 分析、50 个 bug 子集和 KernelLocator 原型模块描述；有方法迁移意识，但对失败模式、证据边界、被证伪路径、下一步验证标准写得较少。",
+        "valueJudgment": "价值判断集中在选题合理性和基准选择：识别 LinuxFLBench 中 logic/functional bug 占比高，说明 kernel logic bug RCA 有研究空间；但尚未明确什么证据能证明 KernelLocator 值得继续投入，也没有把 benchmark、workflow、Brainary 能力建设连接起来。",
+        "projectManagement": "交付物较多，包括 50 bug 子集、6 组 baseline 结果整理、KRDG 构建模块、bug report 结构化解析、两阶段定位引擎和评估框架；但缺少原计划与实际偏差、阶段定义、资源依赖、里程碑和风险说明。Conti/Logickaller 有持续推进与 3 个 bug 复现，但没有写清交付形式和下周验证动作。",
+        "evidence": [
+          "报告写到“确定以 LinuxFLBench（2025）作为评估基准：250个真实内核bug，其中logic/functional bug占72%”。",
+          "报告写到“从LinuxFLBench 250个bug中构建了50个bug的评估子集”。",
+          "报告写到“已完成：KRDG图构建模块、Bug Report结构化解析、两阶段定位引擎、评估框架”。",
+          "报告写到“下周计划：下载对应版本kernel源码，跑通KRDG图构建+dry-run测试；在5-10个bug上接入LLM做端到端验证”。"
+        ]
       },
       {
         "week": "2026-03-22",
-        "stage": "问题结构剖析与基线增强",
-        "mainProgress": "系统分类250个bug，得出8类failure pattern并量化分布；实现LinuxFL⁺后处理框架，recall提升7%-25%；提出KernelLocator三模块设计并明确下一步从heuristic转向graph-based。",
-        "cognitiveGain": "识别出核心瓶颈是假设空间生成而非ranking；认识到结构信息（图）比语义更重要；提出“扩展假设空间比优化决策更重要”的元认知见解。",
-        "deficits": "failure taxonomy仍为描述性，未转为可计算结构；LinuxFL⁺仍偏heuristic，无法解释全部失败case；KRDG仅概念设计。"
+        "metacognition": "明显从“做了什么”转向“为什么失败、瓶颈是什么、证据等级如何、下一步如何验证”。他识别出 taxonomy 仍是描述性、FL+ 是 heuristic、precision 不稳定、Locator 仍 conceptual，并提出 error analysis、最小 KRDG、10 个 bug 缩小搜索空间验证等标准。",
+        "valueJudgment": "价值判断更清楚：他认为核心价值不在多跑 agent 或 ranking，而在 hypothesis space generation、candidate generation、结构化 causal graph 和大规模系统 FL；同时承认“价值还不完全清晰，需要看 Locator 是否显著超越 FL+”。这比上一周更有取舍。",
+        "projectManagement": "项目管理显著进步：按任务列出硬进展、卡点、最小可验证动作、阶段、投入、资源、依赖、成本、偏差和纠偏动作。Brainary 相关能力被映射到 reasoning、memory、tool orchestration、benchmark/evaluation，但仍未形成统一接口或可检查系统交付。",
+        "evidence": [
+          "报告写到“目前 taxonomy 只是描述性，没有转成可计算结构；还没有 linking 到 FL 方法设计”。",
+          "报告写到“Recall@1：+7%~+11%；Recall@10：+18%~+25%；每 bug +$0.04”。",
+          "报告写到“被证伪的路径：单纯依赖 agent 多跑几轮 → 无明显提升；ensemble → 上限明显（~58%）”。",
+          "报告写到“当前 FL 的核心瓶颈不是 ranking，而是 candidate generation”。",
+          "报告写到“价值还不完全清晰，需要看 Locator 是否显著超越 FL+”。",
+          "报告写到“Brainary 对应能力：reasoning、memory、tool orchestration、benchmark/evaluation”。"
+        ]
       }
     ],
-    "trendScores": {
-      "hardProgress": "上升（4/5）——从原型搭建到产生可量化提升（recall+7%以上）和系统数据分析",
-      "cognitiveDepth": "上升（4/5）——从技术调研上升到问题本质认知（瓶颈在假设空间生成）和可证伪路径识别",
-      "cotsCotsMaturity": "上升（3/5）——从无到有，带证据等级与沉淀建议，但仅限于问题分析阶段",
-      "brainaryMapping": "上升（3/5）——从无明确对接到明确指出与reasoning、memory、tool编排的映射及可能产物",
-      "valueReasoning": "上升（3/5）——从无价值评估到任务级估价且关联用户/能力/产物，但整体价值仍待验证",
-      "projectManagement": "上升（3/5）——从简单计划到结构化阶段管理、偏差识别与纠偏动作"
+    "metacognitionChange": {
+      "summary": "两周内元认知有实质提升：第一周偏执行和方案堆叠，第二周开始主动区分 observation、heuristic、conceptual design、证据等级和最小验证动作；他能说出哪些路径被证伪、哪些判断只有 B 级证据、哪些交付还停留在概念层。但进步尚未完全闭环，因为 KernelLocator/KRDG 的“已完成原型”与“仍是 conceptual”之间存在报告口径冲突，需要用代码、运行日志和实验结果澄清。",
+      "byWeek": [
+        {
+          "week": "2026-03-15",
+          "assessment": "元认知处于“研究执行者”阶段：能从文献、benchmark、baseline 和原型模块搭起研究框架，但失败模式、证据等级、判断错误和验证标准没有展开。下周计划有可验证动作，但没有说明为什么这些动作能证伪或支持方法假设。"
+        },
+        {
+          "week": "2026-03-22",
+          "assessment": "元认知进入“研究判断者”阶段：能识别主流 kernel bug 不是 crash、现有 agent 的瓶颈不是简单找代码而是假设空间不足、FL+ 虽有效但仍是 heuristic、Locator 价值取决于是否超越 FL+；还开始使用 CoT 增量、CoT’s CoT、证据等级、自动化科研转化路径。"
+        }
+      ],
+      "currentLevel": "当前约处于“能提出研究假设并设计最小验证，但系统沉淀和证据闭环尚不稳定”的阶段。强于一般任务执行，弱于成熟研究者的地方是：关键概念尚未完全可计算化，核心原型状态不清，失败分析还未产出定量结论。",
+      "strongestSignal": "最强信号是他在 2026-03-22 明确写出“当前 FL 的核心瓶颈不是 ranking，而是 candidate generation”，并能给出证据等级 A、被证伪路径、自动化沉淀形式和下周最小验证动作。",
+      "nextLift": "下一步提升不是继续增加任务量，而是把每个判断变成可证伪实验：例如把 8 类 failure taxonomy 映射到可观测 signal、可推理 dependency 和预期可提升的指标；把 KRDG 的 graph granularity、节点边类型、coverage、失败原因分类写成实验协议；用 10 个 bug 的结果说明 Locator 是否真的缩小 search space。"
     },
-    "valueFunctionChange": "价值观从模糊快速走向系统化：第一周行动隐式认为“kernel bug的RCA值得做”，但无明确评估。第二周显式为三个任务估价（5万/10万/3万），并关联买单方（OS厂商、云厂商、fuzzing平台）、通用能力（大规模系统FL）、产物形式（benchmark/workflow/module）以及Brainary映射。价值函数变为“能否显著超越已有基线（FL⁺→Locator）”，且区分了heuristic增强（暂时价值）与结构性突破（高价值）。学生意识到当前价值仍需关键验证，因此主动调整优先级——不再扩展heuristic，而先做最小图原型。随周次变化，价值判断从“做出东西”转向“做出可衡量、可推广、有区分度的成果”。",
+    "valueGrowth": {
+      "summary": "科研/项目价值判断比上一周清楚：他从“这个题目有 benchmark 和方法空间”推进到“这个题目的核心价值在开放 candidate generation、构建结构化 causal graph、把 large-scale system FL 转成可复用 workflow/benchmark/module”。更重要的是，他没有把价值完全等同于做出工具，而是承认 Locator 价值未定，需要看是否显著超越 FL+。不足是价值函数仍需从文字判断转成持续投入标准。",
+      "byWeek": [
+        {
+          "week": "2026-03-15",
+          "assessment": "价值判断主要隐含在选题和基准选择中：LinuxFLBench 的 logic/functional bug 占比高，说明现有 crash-oriented 方法覆盖不足；GraphLocator 可迁移到 C/kernel 场景，说明有方法改造空间。但缺少明确取舍：为什么先做 KRDG 而不是继续强化 baseline？什么结果说明继续投入？"
+        },
+        {
+          "week": "2026-03-22",
+          "assessment": "价值判断显著外显：他认为 FL+ 有短期价值，因为低成本提升 recall；但长期价值在 KernelLocator/KRDG，因为 heuristic 后处理不能解释完全失败 case，也不能形成结构化 causal reasoning。他还把能力沉淀指向 benchmark、workflow、agent module、memory schema。"
+        }
+      ],
+      "currentValueFunction": "当前隐含价值函数是：如果一个方向能解释 kernel logic bug 的主流失败模式、开放 candidate generation 而不只是 ranking、可在 LinuxFLBench 上相对 FL+ 有显著增益、并能沉淀为 Brainary 的 reasoning/memory/tool orchestration/evaluation 能力，则值得继续投入；如果只是 heuristic recall 提升但 precision 不稳且不可解释，则只能作为短期 baseline 或 pipeline 资产。",
+      "improvementSignals": [
+        "他开始区分短期有效的 FL+ 与长期可能更有系统价值的 Locator。",
+        "他明确说“价值还不完全清晰，需要看 Locator 是否显著超越 FL+”，说明已经有停止或转向条件的意识。",
+        "他把研究价值连接到 benchmark、workflow、evaluation protocol、graph builder、memory schema、agent module，而不只是单篇论文或单次实验。",
+        "他识别“单纯依赖 agent 多跑几轮”和“ensemble”不是高价值路径，因为实验显示提升有限或上限明显。"
+      ],
+      "nextValueQuestion": "下周应回答：KernelLocator 相比 FL+ 的不可替代价值是什么？是更高 Recall@k、更高 precision、更强可解释性、更低成本，还是能定位 FL+ 完全失败的 case？如果 10 个 bug 的最小实验不能体现其中至少一项，是否应暂缓 Locator 扩展，先把 FLBench evaluation protocol 和 failure taxonomy 做成稳定资产？"
+    },
+    "projectManagementReview": {
+      "summary": "项目管理从第一周的“列成果和下周计划”提升到第二周的“阶段、硬进展、卡点、最小验证、资源、偏差、纠偏”结构，质量明显提高。当前最大管理问题不是忙不忙，而是关键路径上的交付定义仍需更硬：KRDG 到底有没有可运行 prototype，taxonomy 如何转为可计算 schema，Brainary 映射如何从概念变成接口和模块。",
+      "projects": [
+        {
+          "project": "FLBench 数据集结构化分析与 failure taxonomy",
+          "weeks": [
+            "2026-03-15",
+            "2026-03-22"
+          ],
+          "quality": "持续推进且有硬进展。第一周确定 LinuxFLBench 为评估基准并构建 50 bug 子集；第二周扩展到 250 个 bug 的系统分类，量化 crash 与 non-crash 比例，并拆出 8 类 non-crash failure pattern。项目已从数据选择推进到问题结构化，但尚未转成可计算评估协议。",
+          "whatWorked": "有效的部分是用数据挑战默认假设：logic/functional bug 是主流，现有 FL 方法主要覆盖 crash 场景不足。这为后续 Brainary 的 benchmark/evaluation 能力沉淀提供了素材：可以形成开放 candidate generation 的 benchmark、failure taxonomy 和 evaluation protocol。",
+          "managementGap": "当前 taxonomy 仍是描述性，没有转成机器可用 schema；还没有把每类 failure pattern 对应到可观测 signal、可推理 dependency、适用工具和预期指标变化。缺少版本化交付物，例如 taxonomy 表、标注规范、样例 bug、互标一致性或质量检查。",
+          "nextConcreteMove": "下周提交一个最小 taxonomy schema：8 类 failure pattern 每类至少包含定义、2 个样例、可观测 signal、可推理 dependency、可能失败的 FL 方法、预期 Locator 需要利用的结构信息；并在 10 个 bug 上试标，报告是否能指导 search space 缩小。"
+        },
+        {
+          "project": "LinuxFL+ 后处理框架",
+          "weeks": [
+            "2026-03-15",
+            "2026-03-22"
+          ],
+          "quality": "推进质量较高。第一周整理 6 组 baseline 预测结果；第二周实现 Directory-aware expansion、Hypothesis expansion、RRF + LLM re-rank，并报告三个 agent 上 Recall@1 和 Recall@10 稳定提升以及单 bug 成本。已具备可检查实验结果。",
+          "whatWorked": "这个项目体现了较好的短期研究资产价值：低成本提升 recall，且模块可沉淀为 workflow。它也为 Brainary 的 tool orchestration 和 workflow 能力提供了候选模块：generate → expand → rank 的流程可以被标准化。",
+          "managementGap": "precision 不稳定、方法偏 heuristic、无法解释完全失败 case。当前缺少失败 case 的系统 error analysis，也没有把 candidate generation 与 ranking 分开评估，因此难判断提升来自目录补全、语义假设扩展还是 LLM rerank。",
+          "nextConcreteMove": "下周做 ablation 和 error analysis：分别关闭 directory expansion、hypothesis expansion、RRF、LLM rerank；把失败 case 分成 graph missing、hypothesis space 不够、ranking 错误、benchmark label 问题四类；给出每类数量和代表样例。"
+        },
+        {
+          "project": "KernelLocator / KRDG / graph-guided causal reasoning",
+          "weeks": [
+            "2026-03-15",
+            "2026-03-22"
+          ],
+          "quality": "这是最关键但状态最需要澄清的项目。2026-03-15 报告称已完成 KRDG 图构建模块、bug report 结构化解析、两阶段定位引擎和评估框架；但 2026-03-22 又写“KRDG 仍是 conceptual，没有 prototype”。这不是简单进度慢，而是交付定义可能不一致：可能第一周是代码草稿或设计，第二周按可运行端到端标准判断仍未成型。",
+          "whatWorked": "方向判断变清楚：他认识到 FL+ 的瓶颈是没有结构化 causal graph，下一步应从 heuristic 转向 graph-based。Brainary 相关能力也较明确，包括 causal reasoning、kernel subsystem memory、LKML memory、graph-guided navigation 和 benchmark/evaluation。",
+          "managementGap": "缺少可检查交付边界：KRDG prototype 的定义、节点/边类型、graph granularity、覆盖范围、运行输入输出、是否能在真实 kernel 源码上构图、是否能接入 LLM 做因果扩展都未明确。Brainary 映射目前是能力清单，不是可复用接口或模块。",
+          "nextConcreteMove": "下周必须用一个可运行最小版本澄清状态：输入 10 个 bug 的 bug report 和对应 kernel 源码，输出 function-level call/data dependency 子图、候选文件/函数列表、search space 缩小比例、Recall@k/MRR、以及 3 个失败样例分析；同时提交 KRDG schema，包括节点、边、属性、构建工具、已知缺失。"
+        },
+        {
+          "project": "Conti / Logickaller / Kernel fuzzing RCA 集成",
+          "weeks": [
+            "2026-03-15"
+          ],
+          "quality": "证据不足以判断是否持续推进。2026-03-15 提到根据 Praveen 需求持续推进 kernel fuzzing、正在将 RCA 组件集成到 Logickaller、复现 3 个 kernel bug；2026-03-22 没有继续报告该项目。",
+          "whatWorked": "已有工作说明他参与了实际 kernel bug 复现和 RCA 集成，这可能为 Locator 的真实问题来源提供场景支持。",
+          "managementGap": "缺少当前阶段、集成接口、复现 bug 列表、成功标准、依赖人、是否阻塞 FL/Locator 主线、下周动作。由于后一周没有更新，无法判断是否暂停、完成还是被主线项目替代。",
+          "nextConcreteMove": "下次周报需要明确该项目状态：继续、暂停或已交付；若继续，列出 Logickaller 中 RCA 组件的接口、已集成部分、剩余阻塞、Praveen 的验收标准和下周最小交付。"
+        }
+      ],
+      "managementPattern": "他的管理模式正在从“宽线并行推进”转向“围绕核心瓶颈收敛”。积极信号是第二周主动说“不再扩展 heuristic”，把关键路径放到最小 graph prototype；不足是仍同时维护 FLBench、FL+、Locator、Brainary 映射和 Conti 线索，容易出现关键交付口径不清。",
+      "nextManagementMove": "建立一页式周度实验看板：每个项目只保留一个本周最小可验证交付、一个指标、一个失败判据、一个依赖和一个需要老师决策的问题。尤其对 KernelLocator，先冻结两周目标为“10 bug 最小 KRDG 验证”，不要继续扩展新模块。"
+    },
     "repeatedBlockers": [
-      "图相关结构构建困难：第一周KRDG刚实现，第二周KRDG仍停留在概念设计，未能快速原型化；",
-      "从描述/启发式到可计算建模的转变缓慢：第一周方法基于图但未验证，第二周failure taxonomy仍为描述性，LinuxFL⁺仍是heuristic。"
+      "结构化不足：taxonomy、KRDG、causal reasoning 都已被识别为关键，但还没有完全转成可计算 schema、接口和实验协议。",
+      "解释性不足：FL+ 有 recall 提升，但 precision 不稳定，也无法解释完全失败 case；这会影响继续投入价值判断。",
+      "关键原型状态不清：2026-03-15 称 KRDG 等模块已完成，2026-03-22 称 KRDG conceptual、没有 prototype，需要统一交付标准。",
+      "Brainary 沉淀仍偏概念：已经能映射到 reasoning、memory、tool orchestration、benchmark/evaluation，但缺少模块接口、数据结构和复用路径。",
+      "Conti/Logickaller 线索缺少连续更新：无法判断其是否仍占用资源、是否服务于 Locator 主线。"
     ],
-    "professorShouldAsk": "你如何将描述性的failure taxonomy转化为可计算的图或规则，以便直接驱动Locator的假设生成？",
-    "nextBestIntervention": "推动学生立即交付最小KRDG原型（哪怕只包含function级调用）并在10个logic bug上验证它是否能有效缩小搜索空间，用实验结果决定后续投入方向，避免继续在heuristic层面积累。"
+    "teacherQuestions": [
+      "你在 3 月 15 日说 KRDG、两阶段定位引擎和评估框架已完成，但 3 月 22 日说 KRDG 仍是 conceptual、没有 prototype；请你按“可运行代码、真实 kernel 输入、输出候选、可复现实验”四个标准重新定义当前到底完成了什么。",
+      "如果下周只允许验证一个核心假设，你会验证“candidate generation 比 ranking 更关键”，还是验证“KRDG 能缩小 kernel bug search space”？对应的失败判据是什么？",
+      "8 类 failure taxonomy 如何变成可计算结构？每一类对应哪些 log/state/event signal 和 call/data/config dependency？请给 2 个具体 bug 样例。",
+      "LinuxFL+ 的 recall 提升中，directory expansion、hypothesis expansion、RRF 和 LLM rerank 分别贡献多少？有没有 ablation 计划证明不是某一个简单 heuristic 在起作用？",
+      "Brainary 里你最想沉淀的第一个可复用能力是什么：benchmark/evaluation、FL workflow、KRDG graph builder、kernel memory schema，还是 graph-guided reasoning agent？为什么先做它？"
+    ],
+    "nextIntervention": "老师下一次 meeting 最有效的介入不是给新方向，而是要求学生用 30 分钟展示一个“10 bug 最小验证协议”：输入、输出、指标、失败分类、KRDG schema、FL+ 对照组、预期决策。若他无法展示可运行证据，则先冻结 KernelLocator 扩展，改为一周内补齐 taxonomy schema、ablation 和原型状态说明；若能展示，则批准两周内推进 KRDG prototype，并要求每周报告 search space 缩小比例和失败 case 分类。",
+    "studentFeedback": {
+      "summary": "你这两周的进步不只是做得更多，而是开始像研究者一样判断：什么是假设，什么是证据，什么是瓶颈，什么路径被证伪，什么结果才能说明值得继续做。",
+      "whatImproved": [
+        "你从文献调研和原型搭建，推进到对 FLBench 250 个 bug 的结构化分析，能量化 logic bug 是主流这一关键事实。",
+        "你开始识别 FL+ 的边界：有 recall 提升，但仍是 heuristic，precision 不稳，不能解释完全失败 case。",
+        "你提出了更有研究价值的判断：fault localization 的核心瓶颈可能不是 ranking，而是 hypothesis space 或 candidate generation。",
+        "你开始把工作连接到 Brainary 的 reasoning、memory、tool orchestration、benchmark/evaluation，而不是只做一次性实验。",
+        "你在项目管理上补充了阶段、投入、资源、依赖、偏差和纠偏动作，这是明显进步。"
+      ],
+      "nextStep": "下一步要把判断变成可复现实验。请优先完成三件事：第一，澄清 KRDG 当前真实状态，给出可运行最小 demo；第二，把 8 类 taxonomy 转成可计算 schema；第三，对 FL+ 做 ablation 和失败 case 分类。只要这三件事完成，你的研究判断就会从“合理推测”升级为“有证据支撑的方向选择”。"
+    },
+    "evidenceLinks": [
+      {
+        "claim": "学生元认知从任务执行转向研究判断。",
+        "evidence": [
+          "2026-03-22 报告中列出“当前卡点：taxonomy 只是描述性，没有转成可计算结构”。",
+          "2026-03-22 报告中列出“方法仍然是 heuristic + LLM，不是结构性建模”。",
+          "2026-03-22 报告中列出“被证伪的路径：单纯依赖 agent 多跑几轮 → 无明显提升；ensemble → 上限明显”。"
+        ]
+      },
+      {
+        "claim": "价值判断更集中到 candidate generation、结构化 causal graph 和系统能力沉淀。",
+        "evidence": [
+          "2026-03-22 报告中写到“当前 FL 的核心瓶颈不是 ranking，而是 candidate generation”。",
+          "2026-03-22 报告中写到“明确 LinuxFL+ 的瓶颈：没有结构化 causal graph”。",
+          "2026-03-22 报告中写到“最终可能沉淀成：agent module、workflow、benchmark、memory schema”。"
+        ]
+      },
+      {
+        "claim": "LinuxFL+ 有可检查进展，但解释性和 precision 是下一步问题。",
+        "evidence": [
+          "2026-03-22 报告中写到“Recall@1：+7% ~ +11%；Recall@10：+18% ~ +25%”。",
+          "2026-03-22 报告中写到“成本控制：每 bug +$0.04”。",
+          "2026-03-22 报告中写到“recall 提升，但 precision 不稳定；无法解释为什么某些 bug 完全失败”。"
+        ]
+      },
+      {
+        "claim": "KernelLocator/KRDG 是关键路径，但交付状态证据存在不一致。",
+        "evidence": [
+          "2026-03-15 报告中写到“已完成：KRDG图构建模块、Bug Report结构化解析、两阶段定位引擎、评估框架”。",
+          "2026-03-22 报告中写到“KRDG 仍是 conceptual，没有 prototype”。",
+          "2026-03-22 报告中写到“2 周内：KRDG prototype；4 周内：初步实验”。"
+        ]
+      },
+      {
+        "claim": "Brainary 映射已经出现，但还不是系统交付。",
+        "evidence": [
+          "2026-03-22 报告中写到“对应能力：reasoning、memory、tool orchestration、benchmark/evaluation”。",
+          "2026-03-22 报告中写到“当前 agent 是 pipeline 拼接，而不是统一架构；memory/reasoning/graph 没有统一接口”。"
+        ]
+      },
+      {
+        "claim": "Conti/Logickaller 项目缺少连续证据。",
+        "evidence": [
+          "2026-03-15 报告中写到“Kernel fuzzing持续推进，正在将RCA组件集成到Logickaller中；复现3个Kernel bug”。",
+          "2026-03-22 报告未继续更新 Conti、Logickaller 或 kernel fuzzing 项目状态。"
+        ]
+      }
+    ]
   }
 }

@@ -1,54 +1,104 @@
 {
   "key": "person:li-wenke:2026-03-15:weekly-score",
-  "generatedAt": "2026-06-06T02:04:51.520Z",
+  "generatedAt": "2026-06-06T13:07:05.778Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
-  "inputHash": "10e8f0665d39d072272c16c2fcacaed393c97e6dde3f5714efe51bbdcecad3f8",
+  "inputHash": "1b50dde28b2ae9bf0ce79215369d96db685a9d093b0b0c8831fbf64ae5097273",
   "result": {
     "hardProgress": {
-      "score": 9,
-      "reason": "本周形成了 problem scheme 的五类正交维度，并描述了新 problem 插入 KG 时的 field 匹配、合并、分层机制。这属于明确的结构设计进展。但周报没有提供代码实现、KG schema 样例、PQL 查询样例、插入前后案例、实验结果或可运行 demo，因此硬进展主要停留在方案层。",
-      "missingEvidence": "缺少具体产物证据：schema 文件、KG 样例、problem 插入流程图、PQL 查询案例、代码链接、实验日志、对比结果。"
+      "score": 12,
+      "reason": "本周有明确的研究对象推进：围绕 problem scheme 设计与 problem 插入，提出了 phase、component、type、environment、observability 五类正交维度，并描述了新 problem 与 KG 既有 field 的匹配、合并、分层机制。这属于方案结构层面的实质进展。但周报没有证明该 scheme 已经实现、接入 KG、跑通 PQL 查询，或在具体软件使用任务中验证效果，因此 hard progress 主要停留在设计与机制描述。",
+      "missingEvidence": [
+        "缺少代码、原型、流程图或 KG schema 示例",
+        "缺少至少一个 problem 插入 KG 的完整样例",
+        "缺少 PQL 查询前后效果对比",
+        "缺少本周实际完成物的链接、截图或实验记录"
+      ]
     },
     "cognitiveIncrement": {
       "score": 12,
-      "reason": "CoT 增量较清楚：从 problem space 到 solution space 的关键瓶颈被定位为 problem scheme / taxonomy，并提出 phase、component、type、environment、observability 五个维度。相比泛泛讨论 agent self-evolution，本周有明确的认知对象和结构化抽象。",
-      "missingEvidence": "缺少说明这五个维度为什么正交、是否覆盖真实 problem、是否经过样本验证，以及与已有 taxonomy 方法的差异。"
+      "reason": "CoT 增量较清楚：从静态 field 调整推进到 problem scheme / taxonomy 对 KG 插入和 PQL 检索的决定性作用，认识到 scheme 应随 problem space 扩大而动态调整。这是有效的认知增量，且与 agent self-evolution 文献形成了方法论对比。但该认知还缺少形式化定义，例如何时触发 scheme 调整、如何判断 field 过载、如何避免 taxonomy 膨胀。",
+      "missingEvidence": [
+        "缺少 scheme 动态调整的触发条件",
+        "缺少 problem space 变大后检索失效的具体案例",
+        "缺少与 autoskill、skillrl 的具体技术差异表格或引用",
+        "缺少该认知如何转化为系统模块的说明"
+      ]
     },
     "cot2Depth": {
       "score": 11,
-      "reason": "有较好的 CoT²：反思了此前只做 field 动态调整是不够的，进一步认识到 scheme 本身也应随 problem space 动态调整；同时识别出相同 field 下 problem 过多导致 PQL 检索失效的二阶问题。这个反思有真实纠错价值。但还没有形成可验证的判断标准或算法假设。",
-      "missingEvidence": "缺少失败尝试的具体过程、失败样例、为什么 field 动态调整不足的实证案例，以及 auto-scheme generation 的判定准则。"
+      "reason": "CoT² 有一定深度，能反思此前错误尝试，并指出自己原来只停留在 field 动态调整，现在认识到 scheme 本身也需要动态调整；同时提出最后一公里问题：多个 field 下仍有过多 problem 时，是否仍需 similar-based retrieval。这说明学生在反思自身推理框架，而不是只汇报结论。但 CoT² 还没有进一步拆解失败原因、替代假设、验证路径和决策标准，因此深度尚未完全展开。",
+      "missingEvidence": [
+        "缺少错误尝试的具体内容、失败现象和失败原因",
+        "缺少 static scheme、dynamic field、dynamic scheme 三者的对比分析",
+        "缺少对 similar-based retrieval 与 auto-scheme generation 的取舍标准",
+        "缺少可证伪的假设与实验设计"
+      ]
     },
     "brainaryMapping": {
-      "score": 6,
-      "reason": "周报将工作映射到 Brainary 的 self-evolution 功能：从历史数据提取 experience，并指出除了 field，scheme 也需要动态调整以提升 PQL 效率和准确性。这个映射方向是成立的。但与 Brainary 的具体模块、数据结构、接口、自动化闭环关系仍然较抽象。",
-      "missingEvidence": "缺少 Brainary 中对应的模块位置、输入输出格式、如何 agent 化、如何接入历史数据、如何验证对 self-evolution 的贡献。"
+      "score": 7,
+      "reason": "周报将当前工作映射到 Brainary 的 self-evolution：从历史数据中提取 experience，并进一步提出不仅 field，scheme 也要根据 problem space 动态调整。这与 Brainary 的记忆、经验组织、agent 自演化有较强关联。但映射仍偏概念化，没有说明 Brainary 中具体对应哪个模块、接口、数据结构、更新机制，也没有说明该工作如何进入 Brainary 的自动化闭环。",
+      "missingEvidence": [
+        "缺少 Brainary 模块级映射，例如 memory、KG、PQL、agent loop 的对应关系",
+        "缺少 scheme 动态调整在 Brainary 中的输入、输出和触发机制",
+        "缺少 agent 化测试的具体进度与结果",
+        "缺少该贡献相对 Brainary 现有能力的增量边界"
+      ]
     },
     "monetaryValue": {
-      "score": 4,
-      "reason": "周报给出了商业场景：bug/vulnerability 修复 SaaS 或 devsecops 流水线，并估算中型企业每年节省 50 万成本、按 10% 定价为每年 5 万。价值方向清楚，但金额估算缺乏来源，且没有说明目标客户、付费方、替代方案、ROI 计算依据和产品化路径。",
-      "missingEvidence": "缺少市场数据、客户访谈、bug/CVE 处理成本来源、竞品价格、节省比例依据、愿付价格证据。"
+      "score": 5,
+      "reason": "价值判断有商业化意识，提出可包装为 bug/vulnerability 修复 SaaS 或 devsecops 流水线，并给出中型企业每年 500 个 bug/CVE、节省 50 万成本、按 10% 定价为每年 5 万的估算。但这些数字没有来源、没有客户画像、没有竞品对比、没有成本结构，也没有证明当前技术能力能支撑该价值主张。因此 monetary value 有方向，但证据较弱。",
+      "missingEvidence": [
+        "缺少 500 个 bug/CVE 和 50 万成本的来源",
+        "缺少目标客户、购买方和使用场景定义",
+        "缺少竞品或替代方案对比",
+        "缺少从技术指标到商业节省的因果链",
+        "缺少 SaaS 或 devsecops 产品形态的最小可行方案"
+      ]
     },
     "projectManagement": {
       "score": 7,
-      "reason": "周报包含本周任务、阻碍和下周计划，能够看出项目正在围绕 PQL 检索失效和 auto-scheme generation 推进。但项目管理粒度不足：没有本周目标完成度、具体交付物、时间分配、风险优先级、验收标准或里程碑。",
-      "missingEvidence": "缺少任务清单、完成/未完成状态、关键风险、量化指标、下周交付物定义、实验排期。"
+      "reason": "周报识别了当前阻碍：同一 field 下 problem 过多导致 KG 检索不足，并提出两条候选路线：similar-based retrieval 与 auto-scheme generation。下周选择先做 auto-scheme generation，说明有一定项目管理意识。但缺少本周计划完成度、任务拆解、时间安排、验收标准、风险管理和优先级判断，项目推进仍偏研究随想。",
+      "missingEvidence": [
+        "缺少本周原计划与实际完成情况对照",
+        "缺少任务粒度拆解和完成状态",
+        "缺少下周 auto-scheme generation 的验收指标",
+        "缺少风险、依赖和备选方案",
+        "缺少项目里程碑和交付物定义"
+      ]
     },
     "nextAction": {
       "score": 6,
-      "reason": "下周行动明确选择 auto-scheme generation 路线，方向与本周发现的问题一致。但行动仍停留在“先试试落地效果”，没有具体实验设计、输入数据规模、生成方法、评价指标或失败备选方案。",
-      "missingEvidence": "缺少下周要完成的最小可验证实验、样本集、算法候选、评价指标，例如 PQL 命中率、检索精度、field/problem 密度下降程度。"
+      "reason": "下周行动方向明确：优先尝试 auto-scheme generation，并验证 scheme taxonomy 是否能随 problem space 弹性调整。这是合理的下一步。但行动还不够可执行，没有说明要用多少样本、如何生成新 scheme、如何评价检索效率和准确性、何时判断路线失败或成功。",
+      "missingEvidence": [
+        "缺少 auto-scheme generation 的具体算法或流程",
+        "缺少实验数据集或 problem 样本规模",
+        "缺少评价指标，例如 PQL 命中率、检索精度、人工审核成本",
+        "缺少下周可交付物，例如 demo、报告、代码模块或实验表格",
+        "缺少成功/失败判定阈值"
+      ]
     },
     "evidenceQuality": {
-      "score": 2,
-      "reason": "周报有阅读参考和概念推理，但证据质量偏弱。没有实验数据、案例、图表、代码、引用细节或可复现实证。对 autoskill、skillrl 的比较也主要是判断性结论，缺少具体论文机制对照。",
-      "missingEvidence": "缺少论文引用信息、实验样例、真实 problem 集、KG 检索结果、baseline 对比、失败案例记录。"
+      "score": 1.5,
+      "reason": "证据质量较低。周报主要是概念、判断和方向性推理，虽然提到阅读 autoskill、skillrl，也提到正在 agent 化、测试可行性，但没有提供论文细节、实验数据、实现证据、截图、日志、指标或案例。因此大部分结论目前只能视为研究假设，不能视为已验证结果。",
+      "missingEvidence": [
+        "缺少论文阅读笔记或关键技术对比",
+        "缺少实验数据和评测指标",
+        "缺少系统运行证据",
+        "缺少具体案例",
+        "缺少失败尝试的原始记录"
+      ]
     },
-    "totalScore": 57,
-    "tier": "Risk",
-    "oneLineJudgment": "本周认知增量较强，抓住了 dynamic scheme 这个关键问题，但硬产出和证据不足，尚未证明方案能真正提升 PQL 检索或 Brainary self-evolution。",
-    "professorFollowUp": "老师最应该追问：请用 20 到 50 个真实 software-use problem 构建一个最小 KG，展示固定 scheme 与 auto-scheme generation 在 PQL 检索命中率、歧义率、人工干预次数上的差异；否则 dynamic scheme 仍只是一个合理但未验证的想法。"
+    "totalScore": 61.5,
+    "tier": "C",
+    "oneLineJudgment": "本周有较好的概念推进和 CoT² 反思，核心增量是从 field 动态调整上升到 scheme 动态调整，但缺少实现、实验和可验收交付物，因此仍属于中等偏概念型进展。",
+    "professorFollowUp": [
+      "教授最应该关注的一点是：学生提出的关键新假设是“problem scheme 本身必须随 problem space 动态演化”，这可能是 Brainary self-evolution 中记忆结构升级的一个重要方向，但目前尚未被实验验证。",
+      "建议追问：请给出一个具体 problem 插入 KG 的样例，展示静态 scheme 为什么失败、动态 scheme 如何修复。",
+      "建议追问：auto-scheme generation 的触发条件是什么？是 field 下 problem 数量、语义方差、PQL 失败率，还是人工反馈？",
+      "建议追问：如何证明 dynamic scheme 优于 similar-based retrieval？请设计一个最小实验，比较检索准确率、召回率、延迟和人工维护成本。",
+      "建议要求下周交付：一个可运行的 auto-scheme generation 原型、至少 20 个 problem 样本、静态 scheme 与动态 scheme 的查询效果对比表。"
+    ]
   }
 }

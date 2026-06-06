@@ -1,35 +1,210 @@
 {
   "key": "person:sun-xiao:2026-05-17:longitudinal",
-  "generatedAt": "2026-05-24T11:51:31.307Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "9960d62b3d2d8849495d8b8bb95ed611d4dc86c734961f3a55a6ae37ccd44c65",
+  "generatedAt": "2026-06-06T13:13:05.020Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "6687ff8d4b350495b431f95f7750b8f2af1a1ab598e4ea81d1ebd69869d8bf89",
   "result": {
-    "overallTrajectory": "学生四周硬进展明显，研究能力显著提升，不仅完成了数据底座、action schema 定版、在线接入和回归测试，更重要的是认知从‘做对的事’进化到‘把事做对且可验证’。项目从手工 schema 设计走向基于原生轨迹的归纳，再进入严苛的 action/communication 分离，最终将 action selection 强制为离散比较，每一步都推动 benchmark 基建更可信。价值观从消除输入偏差逐步聚焦到可审计的因果验证，已具备独立研究者的深入与严谨。",
-    "stageByWeek": {
-      "2026-04-26": "建立 450 原生 case 数据底座，用 UnifiedDSI 抽取 family 决策维度，固定 action-first 在线接口，开启 action schema 编译。这一步的核心是让后续 schema 设计绑定到数据而非人工臆想，为项目奠定客观基础。",
-      "2026-05-03": "完成 strict non-comm action schema v4 定版，严格区分 action 与 communication，并设计 Plan-and-Act/ToM 对照实验框架。工作重心从 schema 生成正式转向 agent 实验，试图测量 communication 对 action trajectory 的因果影响。",
-      "2026-05-10": "将 strict action schema 接入 runtime，并重构 communication 为 source-grounded content-selection strategy，形成可验收的 action-first contract 和 communication intervention 规格。项目从设计文档走向可执行的基准测试协议。",
-      "2026-05-17": "通过 12family 回归暴露 action selection 坍缩问题，进而将 action 选择改造为 all-action comparison + selection-aligned semantic fill，强制 LLM 显式比较全部 schema action。同时清理 runtime 边界，将 prior utterance 确认为 action 决策的 visible evidence。这一步使 benchmark 从‘能跑’升格为‘可解释’。"
-    },
-    "trendScores": {
-      "概念严谨性": "持续上升，从模糊的 action 标签到 strict non-comm action，再到离散比较空间，定义越来越锐利。",
-      "工程可靠性": "稳步增强，从离线数据到在线 runtime 清理，再到 trace 可验证性，工程债务逐步清理。",
-      "实验设计成熟度": "显著提升，从数据归纳到对照实验，再到变量控制和诊断指标，实验思维逐渐闭环。",
-      "认知深度": "深化明显，从任务执行到因果结构理解，再到决策过程重构，对问题本质的洞察逐周精进。",
-      "自动化准备度": "走高，从手工 pipeline 到 contract + validator + registry，组件越来越模块化和可自动化。",
-      "价值清晰度": "不断聚焦，从‘做正确的事’到‘可验证的正确’，始终围绕基准测试的可信性与可复现性，价值判断越来越务实。"
-    },
-    "valueFunctionChange": "价值函数经历了多阶段的收束：初期认为‘基于原生数据建立 schema 比人工想象更有价值’，重点在消除输入偏差；第二周发现‘action/communication 边界不清会导致比较无效’，因而强调严格分离，以支撑因果推断；第三周将价值锚定在‘可验收的 runtime 链路’，认为只有干净的工程实现才能保证实验纯净；第四周则进一步认识到‘必须让 LLM 显式比较 action schema，否则所有 communication effect 都会被选择坍缩掩盖’，价值最终落在决策过程的透明性和可审计性。整个演变中，学生始终将此项工作视为通用 benchmark 基建，受益者是 agent 评测、多智能体、流程自动化等团队，虽然未直接谈金额，但反复提及‘谁会买单’，且价值判断越来越回归可验证的因果分析这一科研内核，而非表面的工程完成度。",
-    "repeatedBlockers": [
-      "工程旧路径残留（如 PDDL、旧 candidate 生成、旧 summary 字段）不易彻底清除，多次在 runtime 验收和回归中重新暴露。",
-      "LLM 倾向于将 action schema 看作是主题标签而非离散决策空间，导致 action 分布严重不均和轨迹坍缩，即使 prompt 中加入诊断字段也无法根治。",
-      "Communication 变量难以纯粹化，早期被误设为 style 或 action 复述，后虽改为 content-selection strategy，但仍面临 source grounding 或 utterance 质量波动。",
-      "Action selection 与 semantic fill 之间的一致性难以保证，selector 和 filler 的数值/主体冲突引发轨迹污染。",
-      "小规模回归通过后，全 family 扩展时常出现新的边界 case 或 schema-case 不贴合，阻碍结论泛化。"
+    "overallTrajectory": "总体看，这名学生在最近四周不是单纯变忙，而是在从“产出 schema/跑通流程”逐步转向“证明流程是否可信、变量是否可归因、错误是否可诊断”的研究能力升级。最强信号是：他连续把问题从数据资产、schema 定义、runtime contract、communication intervention，推进到 action selection comparison 与 semantic fill alignment，且每周都能识别上一周成果的证据边界。但目前仍未进入正式结果结论阶段，核心能力瓶颈从工程跑通转为：能否用可复现的小规模验收证明 selector 改造确实改善 action 分布、trajectory collapse 和 schema-case mismatch。",
+    "headline": "研究能力在增强：从做出 schema，进步到设计可审计的因果边界与决策验证链；下一步必须用最小回归证明这些结构真的改善结果。",
+    "overviewSentence": "Sun Xiao 最近四周的进步主要体现在研究判断和验证标准变清楚，而不是工作量增加；但正式结论仍缺少 comparison-based selector 通过回归后的证据。",
+    "fourWeekTimeline": [
+      {
+        "week": "2026-04-26",
+        "metacognition": "从“手写 action schema”转向意识到 schema 必须来自原生轨迹证据，识别出 environment 文本发明动作、离线归纳与在线执行混合、过早宣称 schema 稳定等失败模式。",
+        "valueJudgment": "价值判断集中在 benchmark 输入定义的可信性：认为值得做的不是更多 prompt，而是把原生 case 轨迹转成 family 决策维度，再编译成 action schema，使后续 agent 比较不被输入定义污染。",
+        "projectManagement": "完成 12 family × 450 case 原生轨迹归档、UnifiedDSI family-batch 初版维度抽取、action-first 接口收敛；但 action_schema 仍在 pilot 编译前，尚未端到端接入策略。",
+        "evidence": "周报写明“原生 450 case 数据资产已经形成”“UnifiedDSI 的 family-batch 维度抽取默认按计划完成”“真正的 action_schema 编译仍留在下周的 pilot family 上继续验证”。"
+      },
+      {
+        "week": "2026-05-03",
+        "metacognition": "从“schema 编译准备”推进到定义层纠偏：明确 action 不能混入 request/propose/apologize 等 speech act，否则无法研究 communication 对 action 的影响。",
+        "valueJudgment": "价值判断更聚焦于因果可解释性：项目值得做的原因变成清理 communication/action 边界，并用同一 non-comm action space 比较 communication 是否改变后续 trajectory。",
+        "projectManagement": "完成 strict non-communicative external action schema v4、turn-action assignments 同步重写、schema adjudication report；Plan-and-Act/Adaptive-ToM 接入仍处于设计和最小 loop 准备阶段。",
+        "evidence": "周报写明“12 个 family 均已形成 flat action-selection candidate set”“下周先完成一个最小 runnable loop”。"
+      },
+      {
+        "week": "2026-05-10",
+        "metacognition": "从“有 v4 schema”进一步认识到运行时可能仍被旧路径污染，提出必须用 trace 证明 loader、prompt、apply、summary、branch 都读取同一 strict schema。",
+        "valueJudgment": "价值判断从 action schema 扩展到 communication 变量本身：认为 communication 不应是 style/persona 或 action 复述，而应是 source-grounded content-selection intervention，用于影响 partner belief、commitment、risk/cost 和 next-action tendency。",
+        "projectManagement": "将 strict schema 接入要求压到代码验收粒度，设计 13 个 general communication strategies；但正式 benchmark 结果尚未产出，处于 BPT 1 case 最小验收前。",
+        "evidence": "周报写明“当前更合适的定位是完成了 runtime 与 communication intervention 的验收规格”“下周先跑 BARGAINING_PRICE_TERMS 的 1 个 case”。"
+      },
+      {
+        "week": "2026-05-17",
+        "metacognition": "从“runtime 能跑通”进一步识别出 LLM 可能把 action_name 当 topic label，并为错误 action 生成合理化解释；因此转向 all-action comparison、selection validator 和 semantic fill alignment。",
+        "valueJudgment": "价值判断更加稳定：项目价值不在于马上产出漂亮结果，而在于先保证 communication effect 的归因基础，避免被 action selection collapse、selector/filler inconsistency 或 schema-case mismatch 掩盖。",
+        "projectManagement": "完成 12 family × 1 case × 13 communication 小规模回归，156 cells 全部 completed，并定位 action 分布不均、trajectory collapse、selector/filler 不一致；下周计划先做 1 family × 1 case × 2 strategies smoke，再扩 seeded 12family。",
+        "evidence": "周报写明“156 cells 全部 completed”“本周尚未把这些结果包装为正式 benchmark 结论”“下周先补齐 validator 小缺口，然后跑 smoke”。"
+      }
     ],
-    "professorShouldAsk": "如果 comparison-based selector 仍然在某些 family 出现坍缩，我们如何判断是 current action schema 的区分度本身不足，还是 LLM 固有局限？是否准备了一套 schema-case alignment audit 的标准化流程来决定是否需要修订 schema，而不是反复试错？另外，在 action selection 稳定前，communication 影响实验的结论会不会仍然是空中楼阁？",
-    "nextBestIntervention": "建议学生暂缓全 12family 扩展和 communication 策略质量的微调，先聚焦 2-3 个最具区分难度的 family，用 comparison-based selector 多次 smoke 并加固 validator/repair 逻辑，直到这些 family 的 action 分布均匀且 trajectories 多样化。然后再用该稳定配置重新跑 communication 对照，确保任何 trajectory 差异都可归因于策略干预而非选择器噪音。同时，将 all-action-comparison 模块独立沉淀为可复用组件，避免未来重构。"
+    "metacognitionChange": {
+      "summary": "元认知有明显纵向提升。四周内，他的关注点从“我做了哪些数据和 schema”转为“这些 schema 是否来自证据、是否能隔离变量、运行时是否真的遵守、selector 是否真的理解决策空间”。这不是简单工作量增加，而是反复把自己的上一阶段成果放到更严格的证据边界下重新审查。",
+      "byWeek": [
+        {
+          "week": "2026-04-26",
+          "change": "识别出原先直接从 environment 文本发明 action 的盲区，提出原生轨迹才是 schema 设计主证据；能区分离线 utterance-first 归纳与在线 action-first 执行。"
+        },
+        {
+          "week": "2026-05-03",
+          "change": "识别出 communication/action 混淆会破坏因果问题本身，开始以 strict non-comm external action 作为实验变量隔离条件。"
+        },
+        {
+          "week": "2026-05-10",
+          "change": "识别出“schema 文件定版”不等于“runtime 遵守 schema”，提出 trace proof、diagnostic summary、CLI、branch 等运行证据作为验收标准。"
+        },
+        {
+          "week": "2026-05-17",
+          "change": "识别出 LLM 选择 action 的失败模式不是 prompt 不够长，而是没有被迫比较完整 action set；因此把认知问题改写成 comparison-based decision procedure。"
+        }
+      ],
+      "currentLevel": "当前处于较强的研究型工程判断阶段：能提出问题定义、失败模式、证据边界和下一步最小验证动作；但还没有完成 comparison-based selector 的实证验收，因此尚不能说已经完成结果层面的研究闭环。",
+      "strongestSignal": "最强信号是 2026-05-17 的判断：不把 156 cells completed 包装成成果，而是把它作为暴露 action distribution、trajectory collapse、selector/filler inconsistency 的诊断材料，并据此改造 selector 任务形态。",
+      "nextLift": "下一步提升不是继续增加模块，而是把每个认知判断转成可判定的验收指标：例如 top action percentage 是否下降、unique trajectory count 是否上升、repair count 是否可控、selection_alignment 错误是否减少、schema-case mismatch 是否可定位。"
+    },
+    "valueGrowth": {
+      "summary": "科研/项目价值判断在变清楚且更稳定。最初价值判断是“从原生轨迹归纳 schema 可减少主观输入定义”；随后变成“清理 action/communication 边界才能研究 communication effect”；再进一步变成“runtime trace 和 comparison-based selector 是可信归因的必要条件”。这说明他逐渐能把个人技术兴趣连接到 benchmark 基建、Brainary 能力沉淀、自动化科研工作流和长期可复用模块。",
+      "byWeek": [
+        {
+          "week": "2026-04-26",
+          "valueJudgment": "认为值得做的是 family schema induction pipeline、operator compiler 和 benchmark input contract；核心价值是让 agent 比较建立在 case-native 决策空间上。"
+        },
+        {
+          "week": "2026-05-03",
+          "valueJudgment": "认为值得继续的是 strict non-comm action schema 与 communication intervention 实验，因为不清理 speech act 与 external action 的边界，communication effect 无法解释。"
+        },
+        {
+          "week": "2026-05-10",
+          "valueJudgment": "认为值得做的是 strict action schema runtime verifier、CommunicationStrategyRegistry 和 strategy-level branch evaluator；价值判断从 schema 资产转向可控干预和可审计运行链。"
+        },
+        {
+          "week": "2026-05-17",
+          "valueJudgment": "认为值得做的是 AllActionComparisonSelector、SelectionAlignedSemanticFiller 和 trajectory diagnostics，因为工程跑通后真正决定项目可信度的是 action selection 是否稳定理解 schema。"
+        }
+      ],
+      "currentValueFunction": "当前的价值函数可以概括为：优先投入能提高 communication effect 可归因性的系统能力，而不是追求更多 family、更多 prompt 或更快结论；具体表现为 strict schema、runtime trace、communication strategy registry、comparison selector、semantic fill alignment 和 trajectory diagnostics。",
+      "improvementSignals": [
+        "能持续区分“看起来能跑”和“结果可解释”的差别。",
+        "能把 Brainary 相关能力映射到具体系统沉淀：representation grounding、benchmark infrastructure、causal traceability、decision procedure design、verifier-guided LLM control、semantic grounding、partner modeling。",
+        "能反复压缩变量：先固定 action-first，再固定 strict action schema，再固定 communication content-selection strategy，再固定 comparison-based action selection。",
+        "能主动推迟正式结论，说明他知道项目价值不是来自一次 completed run，而是来自可复查的因果链路。"
+      ],
+      "nextValueQuestion": "下周最需要回答的价值判断问题是：comparison-based selector 如果只带来更高成本和更长输出，但不能显著改善 action distribution、trajectory diversity 或 selector/filler consistency，它是否仍值得作为主线？需要用最小 smoke 和 seeded 12family 回归给出取舍依据。"
+    },
+    "projectManagementReview": {
+      "summary": "项目管理质量总体在提升：每周都有明确主线、阶段判断、当前卡点、下周最小可验证动作和资源/成本意识。主要不足是项目卡片命名和边界有时重复，2026-05-10 的项目管理段落出现项目 A/B 标题混杂；此外多个关键交付仍停在“规格/验收设计/小规模回归”层，距离正式 benchmark 结果还有一步。",
+      "projects": [
+        {
+          "project": "strict non-comm action schema 与 family schema induction",
+          "weeks": [
+            "2026-04-26",
+            "2026-05-03",
+            "2026-05-10",
+            "2026-05-17"
+          ],
+          "quality": "持续推进，且从数据底座、schema induction、v4 定版、runtime 接入，推进到 selector 诊断。可检查交付包括 450 case 原生轨迹、12 family decision-dimension 初版表、strict non-comm v4 schema、family_turn_action_assignments、strict_noncomm_v4_full runtime 路径、12family rollout zip。",
+          "whatWorked": "最大进展是把 schema 从手工想象转为数据证据，再转为 strict non-comm external action，并进入 runtime；这对应 Brainary 的 representation grounding、benchmark infrastructure 和 causal traceability 能力沉淀。",
+          "managementGap": "目前证据链还没有完成最终闭环：v4 schema 是否足够贴合随机 case、哪些 family 存在 schema-case mismatch、哪些 action definition 需要修订，仍未完成系统 audit。",
+          "nextConcreteMove": "在 comparison-based selector smoke 通过后，跑 seeded 12family × 1case × 13 strategy，并输出每个 family 的 schema-case alignment audit：包括 near-miss actions、top action collapse、unsupported selected action、fill mismatch 和是否需要修改 schema。"
+        },
+        {
+          "project": "action-first runtime contract 与 direct action pipeline",
+          "weeks": [
+            "2026-04-26",
+            "2026-05-03",
+            "2026-05-10",
+            "2026-05-17"
+          ],
+          "quality": "推进路径清楚：先定 action-first 在线接口，再接入 Plan-and-Act/ToM，再清理旧 PDDL/candidate/mask 路径，最后通过 12family 小规模回归进入 completed 状态。",
+          "whatWorked": "交付从规格进入运行证据：action_schema_source/path、selected_action_id/name、argument_slots、semantic_payload、apply adapter、diagnostic summary、public history builder、visible_action_state_digest 都被纳入验收链。这可沉淀为 Brainary 的 runtime diagnostic verifier 和 workflow reliability 组件。",
+          "managementGap": "目前 completed 只证明工程运行成功，不证明 action decision 质量成功；学生已识别这一点，但还缺少正式前后对比数据来证明 comparison-based 改造有效。",
+          "nextConcreteMove": "先跑 1 family × 1 case × 2 communication strategies smoke，检查 comparison 完整性、repair loop、JSON 长度、selection_context 传递和 semantic fill alignment；通过后再跑 12family seeded 回归，不要直接进入多 seed。"
+        },
+        {
+          "project": "communication strategy intervention 与 trajectory influence",
+          "weeks": [
+            "2026-05-03",
+            "2026-05-10",
+            "2026-05-17"
+          ],
+          "quality": "从 communication-on/off 设计推进到 13 个 general content-selection strategies，再到 prior utterance 作为 visible evidence 进入后续 action selection。方向稳定，但正式影响结论尚缺证据。",
+          "whatWorked": "2026-05-10 明确 communication 不是 style/persona/action verbalization，而是 source-grounded content-selection intervention；2026-05-17 又进一步把 prior utterance 定义为后续 action decision evidence。该项目涉及 Brainary 的 pragmatic reasoning、partner modeling 和 trajectory influence diagnostics。",
+          "managementGap": "13 个 strategy 的质量尚未系统验收：周报说明本周没有完成全部 strategy prompt 质量改写，也没有证明各 strategy 在不同 family 中产生可区分但不越界的 utterance。",
+          "nextConcreteMove": "固定 communication strategy registry，不要同时大改 communication 与 selector；在 selector smoke 通过后，检查 13 strategy 的 utterance 可区分性、越界率、fallback count、communication_evidence_summary 是否被 action comparison 使用。"
+        },
+        {
+          "project": "comparison-based action selector 与 selection-aligned semantic filler",
+          "weeks": [
+            "2026-05-17"
+          ],
+          "quality": "这是最新且最关键的研究能力增量：从 prompt-only action selection 转为 all-action comparison、validator、repair 和 semantic fill alignment。当前处于代码验收和 smoke 前，尚无效果证据。",
+          "whatWorked": "问题定义非常具体：LLM 不应只输出 selected action，而应解释 visible history、比较所有 schema action、选择唯一 current-stage move，并让 filler 与 selection_context 对齐。该能力可沉淀为 Brainary 的 AllActionComparisonSelector、ComparisonValidator、SelectionAlignedSemanticFiller。",
+          "managementGap": "证据仍停在设计和代码验收材料；尚未证明它在 gpt-4o-mini 上稳定、不会无限 repair、不会因输出变长导致 parse/truncation，也未证明能改善 action collapse。",
+          "nextConcreteMove": "补齐 duplicate action_id validator 后，先运行 smoke；记录 comparison coverage、unique selected item、repair count、parse failure、fill alignment mismatch、top action percentage 和 unique trajectory count。"
+        },
+        {
+          "project": "Plan-and-Act / Adaptive-ToM 对照接入",
+          "weeks": [
+            "2026-04-26",
+            "2026-05-03",
+            "2026-05-10",
+            "2026-05-17"
+          ],
+          "quality": "作为对照策略框架持续存在，但最近两周主线更多转向 runtime 和 selector 验收，Plan-and-Act/ToM 的独立实验结果证据不足。",
+          "whatWorked": "早期明确了 Plan-and-Act 的 planner/executor 分离价值和 Adaptive-ToM 的 partner-action prediction 价值，并把 patom0/patom0 用于 12family 小规模回归。",
+          "managementGap": "缺少清楚说明 ToM0/ToM1/ToM2 是否均已接入、各自运行状态如何、partner prediction hook 是否真实影响 action trajectory；目前证据主要集中在 patom0/patom0 小规模回归。",
+          "nextConcreteMove": "在 action selector 稳定前，不建议扩 ToM 对照；稳定后再逐个打开 ToM1/ToM2，并单独报告 partner prediction 是否改变 selection comparison 的判断项。"
+        }
+      ],
+      "managementPattern": "管理模式从“按任务推进”逐渐转为“按可验收链路推进”：数据资产 → schema 定义 → runtime source proof → communication intervention → selector comparison → trajectory diagnostics。这个模式适合研究型工程，但需要防止每周新增验证层导致正式结果持续后移。",
+      "nextManagementMove": "下周管理上只抓一个关键路径：comparison-based selector smoke 是否通过。若通过，再跑 seeded 12family；若不通过，先修 selector/validator，不同时修改 communication strategy 或 schema definition。老师可要求学生用一页表格报告：预期指标、实际指标、是否进入下一阶段。"
+    },
+    "repeatedBlockers": [
+      "旧路径残留反复出现：旧 candidate/mask/PDDL、旧 communication schema id、旧 summary 字段、旧 source/availability 逻辑都曾影响实验边界。",
+      "action/communication 变量边界需要持续防守：从 speech act 混入 action，到 communication 被做成 style 或 source proof，再到 prior utterance 如何作为 evidence，边界一直是主风险。",
+      "工程 completed 与研究有效之间存在间隙：2026-05-17 已有 156 cells completed，但 action 分布不均、trajectory collapse 和 selector/filler inconsistency 仍存在。",
+      "LLM 使用 schema 的方式不可靠：模型可能把 action_name 当 topic label，并用 diagnostic fields 为错误选择合理化。",
+      "正式结果被不断后移：每周都有合理的验收前置，但目前仍缺少 comparison-based selector 改造前后的定量对照结果。"
+    ],
+    "teacherQuestions": [
+      "你下周判断 comparison-based selector 成功的三个硬指标是什么？请给出阈值，例如 top action percentage、unique trajectory count、repair count 或 fill mismatch rate。",
+      "如果 smoke 显示 all-action comparison 成本高且仍然 collapse，你会优先改 selector、改 schema action_definition，还是缩小 family/case 范围？取舍标准是什么？",
+      "12family 小规模回归中，哪些 family 的 schema-case mismatch 最严重？这些是 schema 问题、case 抽样问题，还是 selector 理解问题？",
+      "prior utterance 作为 visible evidence 进入 action selection 后，你如何证明 communication strategy 影响的是后续 action，而不是 prompt 长度、history 格式或 repair 行为？",
+      "Plan-and-Act/ToM 对照现在是否仍在关键路径上？ToM1/ToM2 的最小可验证贡献是什么，还是应等 selector 稳定后再恢复？"
+    ],
+    "nextIntervention": "老师下一次 meeting 最应介入的是收敛验证标准，而不是新增方向。建议要求学生在下周只提交一个核心验收包：1 family smoke 和 seeded 12family 回归的对比表，包含 comparison coverage、repair count、parse failure、selected-item alignment、semantic fill mismatch、top action percentage、unique trajectory count、每个 family 的主要 collapse 类型。若这些指标没有改善，就暂停扩大 communication strategy 或 ToM，对 selector/schema-case alignment 做根因分析。",
+    "studentFeedback": {
+      "summary": "你最近四周的进步不只是更忙，而是更能把研究对象拆成可验证的因果边界：schema 来自什么证据、runtime 是否真的遵守、communication 是否是可控干预、selector 是否真的理解 action 空间。",
+      "whatImproved": "最明显的提升是你开始主动推迟“正式结论”，用失败模式和 trace 证据约束自己的判断。2026-05-17 能把 156 cells completed 解释为诊断材料，而不是成果包装，这是研究能力上升的信号。",
+      "nextStep": "下一步请把 comparison-based selector 的价值用最小数据证明出来：先 smoke，再 seeded 12family；每一步都用指标决定是否前进。不要同时改 schema、communication、ToM 和 selector，否则下周仍然无法判断哪一项真正有效。"
+    },
+    "evidenceLinks": [
+      {
+        "claim": "学生从数据资产推进到证据型 schema 设计",
+        "evidence": "2026-04-26 报告写明“12 family × 450 case 的原生 utterance / turn 轨迹”“UnifiedDSI family-batch 输入与输出通路”“schema 设计第一次真正绑定到原始轨迹而不是手工想象”。"
+      },
+      {
+        "claim": "学生识别并修正 communication/action 混淆",
+        "evidence": "2026-05-03 报告写明 final schema 不再把 request/propose/accept verbally/apologize 等话语行为当作 action，而是限定为 non-communicative external task/environment state update。"
+      },
+      {
+        "claim": "学生从 schema 定版推进到 runtime trace 验收",
+        "evidence": "2026-05-10 报告写明必须通过 --help、rollout_record、diagnostic_summary、branch_evaluation 和 llm_io 验证旧 schema/candidate/mask 是否仍出现。"
+      },
+      {
+        "claim": "学生没有把工程跑通误认为研究结论",
+        "evidence": "2026-05-17 报告写明 156 cells 全部 completed，但 action 分布不均、trajectory collapse、selector/filler 数值不一致和 schema-case mismatch 仍然存在。"
+      },
+      {
+        "claim": "学生提出新的可沉淀 Brainary 能力模块",
+        "evidence": "2026-05-17 报告将工作沉淀为 AllActionComparisonSelector、structural comparison validator、SelectionContext → SemanticFillAlignment、VisibleCommunicationEvidenceSummary。"
+      },
+      {
+        "claim": "正式效果证据仍不足",
+        "evidence": "2026-05-17 报告写明 comparison-based selector 仍处于 smoke 前，需要验证 gpt-4o-mini 是否稳定输出完整 comparison，不会无限 repair 或输出过长导致 parse 问题。"
+      }
+    ]
   }
 }

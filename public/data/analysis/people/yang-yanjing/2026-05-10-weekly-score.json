@@ -1,54 +1,102 @@
 {
   "key": "person:yang-yanjing:2026-05-10:weekly-score",
-  "generatedAt": "2026-05-24T11:36:21.000Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "e1393cc8a94d8ec6b61f7d485d0e2a39890680d45aab530af11119973038850d",
+  "generatedAt": "2026-06-06T13:15:53.912Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "90b6fff64da254c6225ef1748dd061c354eb556ac78ce5865348b81dccd17362",
   "result": {
     "hardProgress": {
-      "score": 14,
-      "reason": "本周明确了 API 开源选型应拆分为需求→库推荐和库内 API 综合推荐两个阶段，通过实验发现复杂需求下错误主因在库选择阶段，并确定了优先解决复杂需求到候选库的精准匹配问题，属于可验证的硬进展。",
-      "missingEvidence": "缺少具体测试集构建进度或基准实验结果。"
+      "score": 11,
+      "reason": "本周有明确的任务重构进展：把“需求到 API 推荐”拆成“需求到候选库”和“库内 API 组合与使用方案”两个阶段，并定位复杂需求失败主要发生在库选择阶段。但硬进展主要停留在任务定义、路线调整和问题诊断，没有提交新的数据集、baseline、实验表格、代码模块或可复现实验结果。",
+      "missingEvidence": [
+        "缺少复杂需求实验的样例、数量、评价指标和错误案例。",
+        "缺少“简单需求可命中、复杂需求库选择失败”的定量对比。",
+        "缺少本周实际产出的文件、代码、数据集或评测脚本链接。",
+        "缺少与老师对齐后的具体决策记录。"
+      ]
     },
     "cognitiveIncrement": {
       "score": 12,
-      "reason": "本周最重要的认知更新是 API 开源选型本质是多阶段候选空间约束问题，而非单阶段推荐，并揭示了 RAG 偏差源于未先做库级候选收缩，对任务本质的理解有显著提升。",
-      "missingEvidence": "缺少该认知更新如何改变具体做法的实例。"
+      "reason": "认知增量较清晰：从单阶段 RAG/API 检索问题，转向多阶段候选空间约束问题；并明确 AKB 需要从 API 知识组织扩展到 library-level reasoning 和 usage planning。这是有效的研究建模增量。",
+      "missingEvidence": [
+        "缺少该认知如何由具体实验结果推导出来的证据链。",
+        "缺少与已有 API 推荐或 library recommendation 工作的差异对照。",
+        "缺少该分层建模是否优于端到端 RAG 的初步验证。"
+      ]
     },
     "cot2Depth": {
-      "score": 13,
-      "reason": "CoT's CoT 1 明确指出老师原本不知道的分层推理结构，并解释了信息差，证据等级 A；CoT's CoT 2 反思了已知价值未自动化的原因，逻辑清晰，深度较好。",
-      "missingEvidence": "缺少对 CoT's CoT 2 的进一步实验验证计划。"
+      "score": 10,
+      "reason": "CoT's CoT 有尝试回答“老师是否原本不知道”“信息差在哪里”“为什么还未自动化吸收”“可沉淀形式”等问题，符合模板要求。但深度仍偏概念化，证据等级 A/B 多为自评，没有足够实验证据支撑；对算法路径、失败机制和可自动化边界的拆解还不够细。",
+      "missingEvidence": [
+        "缺少支持 CoT's CoT 1 证据等级为 A 的实验数据。",
+        "缺少分层推理中每一层的输入、输出、判断标准和失败恢复机制。",
+        "缺少为什么“库选错后不可恢复”的具体案例。",
+        "缺少与老师已有认知之间的真实差异记录。"
+      ]
     },
     "brainaryMapping": {
-      "score": 8,
-      "reason": "将当前工作映射到 reasoning、memory、cognitive control 等多个 Brainary 能力模块，并指出了缺失的 library-level benchmark 和分层 evaluation protocol，映射清晰。",
-      "missingEvidence": "缺少具体如何将当前进展融入 Brainary 系统的路径细节。"
+      "score": 7,
+      "reason": "Brainary 映射覆盖 reasoning、memory、cognitive control、tool orchestration、benchmark/evaluation，方向基本完整，也能对应到 library recommendation benchmark、API selection agent、usage planning module。但映射仍是能力标签级别，没有进一步说明 Brainary 中应新增什么 schema、module、workflow 或 memory structure。",
+      "missingEvidence": [
+        "缺少 library-level memory schema 的具体字段设计。",
+        "缺少 reasoning workflow 的节点定义。",
+        "缺少 evaluator 如何分别评价库命中、API 命中和使用方案质量。",
+        "缺少与现有 Brainary 组件的接口关系。"
+      ]
     },
     "monetaryValue": {
-      "score": 8,
-      "reason": "指出了 IDE、AI coding assistant 等明确的买单方，且该能力具有通用性，但未量化市场规模。",
-      "missingEvidence": "缺少具体市场规模估算或潜在客户反馈。"
+      "score": 6,
+      "reason": "报告指出潜在买单方包括 IDE、AI coding assistant、企业开发平台和自动化软件工程工具，并判断这是通用能力，不只是局部优化。价值判断方向合理，但商业价值仍停留在推断层面，没有用户场景、痛点强度、替代方案、集成方式或市场验证。",
+      "missingEvidence": [
+        "缺少具体用户角色和使用场景。",
+        "缺少现有 IDE 或 coding assistant 在该问题上的失败案例。",
+        "缺少该能力能降低多少开发成本或错误率的估算。",
+        "缺少产品化路径中的最小可交付形态。"
+      ]
     },
     "projectManagement": {
-      "score": 13,
-      "reason": "本周完成了任务重新拆分、路线调整、卡点识别，并制定了明确的阶段目标，项目管理动作到位。",
-      "missingEvidence": "缺少时间线或资源需求估计。"
+      "score": 9,
+      "reason": "项目管理上明确了当前卡点、近期优先级和协作对象，并能把目标收缩到“复杂需求到候选库精准匹配”。但仍缺少周级里程碑、验收标准、任务拆分、风险管理和资源需求，因此执行可控性一般。",
+      "missingEvidence": [
+        "缺少下周要构建多少条测试集、覆盖哪些库、由谁标注。",
+        "缺少 baseline 选择方案和完成时间点。",
+        "缺少评测指标，例如 top-k library accuracy、MRR、failure taxonomy。",
+        "缺少风险预案，例如标注分歧、候选库边界不清、数据来源不足。"
+      ]
     },
     "nextAction": {
-      "score": 9,
-      "reason": "下周最小可验证动作是构建需求→候选库测试集与 baseline，验证库匹配准确率，目标具体、可执行，且直接针对核心卡点。",
-      "missingEvidence": "缺少对 baseline 的具体定义或测试集构建标准。"
+      "score": 7,
+      "reason": "下周动作明确为构建“需求到候选库”测试集与 baseline，并验证复杂需求下库匹配准确率，属于可验证动作。但该动作还不够最小化和工程化，缺少数据规模、任务边界、baseline 类型、验收阈值和交付物形式。",
+      "missingEvidence": [
+        "缺少测试集规模，例如 30 条、100 条或更多。",
+        "缺少候选库范围，例如 Python、JavaScript、机器学习库或通用开发库。",
+        "缺少 baseline 方案，例如 BM25、embedding、LLM zero-shot、RAG。",
+        "缺少成功标准，例如 top-1 或 top-3 准确率达到多少。",
+        "缺少下周可交付物清单。"
+      ]
     },
     "evidenceQuality": {
-      "score": 4,
-      "reason": "报告中声称有实验发现作为证据，且 CoT's CoT 1 证据等级为 A，CoT's CoT 2 为 B，但未提供具体数据和样本量。",
-      "missingEvidence": "缺少具体实验数据、样本量及统计显著性。"
+      "score": 2,
+      "reason": "报告多次提到实验发现和 RAG 偏差，但没有给出实验设置、数据量、指标、对照组、样例或错误分析。证据质量偏弱，目前更像研究判断和路线假设，而不是已被充分验证的结论。",
+      "missingEvidence": [
+        "缺少实验表格。",
+        "缺少输入需求、检索结果、错误库、正确库的具体案例。",
+        "缺少不同方法的指标对比。",
+        "缺少人工标注标准和一致性说明。",
+        "缺少证据等级 A/B 的判定依据。"
+      ]
     },
-    "totalScore": 81,
-    "tier": "A",
-    "oneLineJudgment": "本周核心进展是明确了开源选型任务的分层决策结构，并识别出复杂需求下库选择是瓶颈，下周计划针对性强。",
-    "professorFollowUp": "建议关注需求→候选库测试集的构建标准和 baseline 选择，确保评测能直接验证分层假设，并尽快形成可复现的基准。"
+    "totalScore": 64,
+    "tier": "C",
+    "oneLineJudgment": "本周最大的价值是把 API 推荐问题重新建模为“先选库、再选 API、再生成使用方案”的分层决策，但当前主要是认知和路线进展，缺少可复现实验与硬交付。",
+    "oneThingProfessorShouldLearn": "教授本周应重点吸收的一点是：复杂 API 开源选型的首要瓶颈可能不是 API 检索，而是 library-level candidate routing；如果库选择错误，后续 API 推荐很难补救。",
+    "professorFollowUp": [
+      "要求学生下周提交一个最小 benchmark：明确需求条数、候选库范围、标注标准和 top-k library accuracy。",
+      "要求补充 3 到 5 个复杂需求失败案例，展示端到端 RAG 为什么选错库，以及正确库应如何判断。",
+      "要求把 AKB 的 library-level schema 画出来，至少包括库功能边界、典型任务、核心 API、依赖关系和适用/不适用场景。",
+      "要求明确 baseline：至少包含 LLM zero-shot、embedding retrieval、RAG 三类对照。",
+      "要求把证据等级 A/B 改成可审计标准，不能只做主观标注。"
+    ]
   }
 }

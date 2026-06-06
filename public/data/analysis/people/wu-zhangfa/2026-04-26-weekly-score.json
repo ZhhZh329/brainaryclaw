@@ -1,54 +1,98 @@
 {
   "key": "person:wu-zhangfa:2026-04-26:weekly-score",
-  "generatedAt": "2026-05-24T11:36:14.393Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "aa55d7021bf065a12f5b5bf32a7f8e60804e75b5b3761df0d8dd8af5a1317757",
+  "generatedAt": "2026-06-06T13:14:06.404Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "1e76214607f4e131378dd8425cdc59290cbe35bd2034ec70fdd1072e49638a8a",
   "result": {
     "hardProgress": {
-      "score": 14,
-      "reason": "本周明确了“静态锚点污染”风险，并进行了训练阶段化改造、encoder-space frozen seed 软审计和代码精简，这些均是可验证的方法层硬进展，但均缺乏消融实验或定量指标的支撑，因此未达满分。",
-      "missingEvidence": "缺少消融实验数据（如AUC-PR、FPR@95R等）、训练阶段化前后的指标对比、seed audit 的定量有效性证明。"
+      "score": 15,
+      "reason": "本周有明确的硬进展：提出并命名“静态锚点污染”风险；将训练流程从硬切换改为阶段化 ramp；新增 encoder-space frozen seed soft audit；清理过期接口并形成 train.py、model.py、dataloader_MIL.py 的主线精简版。这些都属于方法和工程层面的实质推进。但周报没有给出实验结果、指标变化、commit、运行日志或消融数据，因此硬进展仍主要停留在机制设计和代码修改层面，尚未证明有效。",
+      "missingEvidence": [
+        "缺少阶段化训练前后的定量指标对比",
+        "缺少 seed audit 对污染风险或性能改善的实验结果",
+        "缺少代码提交记录、关键 diff 或运行日志",
+        "缺少当前主线版本在数据集上的基线结果"
+      ]
     },
     "cognitiveIncrement": {
       "score": 13,
-      "reason": "认知提升显著：将异常检测的风险从动态伪标签污染扩展至更隐蔽的静态锚点污染，并系统化为审查项，体现了对问题本质的深化理解。",
-      "missingEvidence": "尚未给出该认知增量如何直接导致方法改进的量化分析，或与现有文献的对比讨论。"
+      "reason": "认知增量较强。周报从“动态伪标签污染”推进到“静态锚点污染”，指出即使不使用模型自举伪标签，frozen seed、static novelty、positive trust、normal candidate 等静态规则也可能系统性带偏训练。这是对弱监督异常检测风险结构的实质性抽象，并能反向指导训练、审计和消融设计。扣分点是该认知尚未通过案例、失败实验或数据现象验证。",
+      "missingEvidence": [
+        "缺少一个具体样本或数据集案例说明静态锚点污染如何发生",
+        "缺少污染链条中各环节的量化诊断指标",
+        "缺少与动态伪标签污染的实证差异比较"
+      ]
     },
     "cot2Depth": {
-      "score": 12,
-      "reason": "专门设节阐述“老师原本不知道的内容”及原因，从 workflow 总结的缺失切入，揭示了静态污染的系统性风险，元思考层次清晰，但延伸不够，未进一步抽象到更通用的原则。",
-      "missingEvidence": "缺少对静态锚点污染与动态污染的影响程度模拟对比，或将其纳入更大理论框架的尝试。"
+      "score": 11,
+      "reason": "周报有 CoT’s CoT 意识，能够说明老师本周应该新增理解：危险不只是动态污染，还有静态污染；也解释了为什么过去容易忽略，因为这些规则看起来比模型自举更安全。它不只是复述工作，而是在反思问题框架。但输入文本在 CoT’s CoT 第二部分后被截断，缺少完整的“为什么”“如何改变判断”“下一步如何验证认知”的闭环，因此深度不足满分。",
+      "missingEvidence": [
+        "CoT’s CoT 部分文本不完整",
+        "缺少对原假设被如何推翻或修正的完整说明",
+        "缺少这一认知如何改变论文方法、实验设计或项目优先级的明确推导"
+      ]
     },
     "brainaryMapping": {
-      "score": 9,
-      "reason": "成功将隐性的污染风险映射为“静态锚点污染”这一明确概念，并沿着 frozen seed → static novelty → final boundary 绘制了清晰的污染传播链，映射质量高。",
-      "missingEvidence": "缺少可视化的流程映射图或风险传播网络示意图，使映射更直观。"
+      "score": 5,
+      "reason": "周报隐含了一些结构映射，例如 frozen seed、positive trust、normal candidate、ranking loss、residual scorer、threshold modes 之间的风险链条，也把训练流程拆成 warmup、main ramp、full main。但没有明确给出 Brainary 式的概念节点、因果边、证据节点、风险节点和可验证动作之间的映射，因此只能算部分具备结构化认知，而不是完整 Brainary mapping。",
+      "missingEvidence": [
+        "缺少显式的概念图或节点-边关系",
+        "缺少每个模块对应的假设、风险、证据和验证动作映射",
+        "缺少从问题场景到方法组件再到实验指标的完整 Brainary 结构"
+      ]
     },
     "monetaryValue": {
-      "score": 3,
-      "reason": "周报完全未提及商业价值、应用场景、预期成本节约或落地可能性，仅聚焦于技术方法，故本维度得分极低。",
-      "missingEvidence": "缺少目标行业场景、潜在经济效益、异常检测对业务指标的影响预估等商业论证。"
+      "score": 7,
+      "reason": "项目价值判断较清楚：当前方法被定位为“保守、可审计的弱监督异常检测框架”，适用于少量带噪异常标签、大量无标签样本、低异常率场景。这个定位有研究价值，也有工程部署价值，因为它强调安全性、审计性和阈值协议稳定性，而不是单纯追指标。但周报没有说明该方向相对现有方法的论文贡献边界、应用场景收益、失败成本或可发表性判断，因此商业/科研价值仍未充分论证。",
+      "missingEvidence": [
+        "缺少与现有弱监督异常检测方法的差异和优势证据",
+        "缺少潜在应用场景、用户收益或部署约束分析",
+        "缺少论文贡献点是否足够成立的判断标准",
+        "缺少如果方法失败，项目应如何止损或转向的价值判断"
+      ]
     },
     "projectManagement": {
-      "score": 14,
-      "reason": "主线任务拆解合理，硬进展与卡点形成闭环，下周最小可验证动作具体且适配当前阶段，代码清理体现工程管理意识，项目管理严谨。",
-      "missingEvidence": "未提供任务时间估计、资源需求或风险预案，计划稍显乐观。"
+      "score": 12,
+      "reason": "项目管理较好。周报明确列出三条主线、四个核心卡点、下周三个最小可验证动作，并区分方法层、训练机制、审计机制和代码工程进展。卡点不是泛泛而谈，而是围绕 positive trust、frozen seed、normal candidate、代码复杂度展开，和主线目标一致。扣分点是缺少时间预算、完成标准、优先级排序、风险应对和实验资源安排。",
+      "missingEvidence": [
+        "缺少下周动作的优先级排序",
+        "缺少每个实验预计耗时和资源需求",
+        "缺少成功/失败判定阈值",
+        "缺少如果消融结果不支持当前设计时的备选路径"
+      ]
     },
     "nextAction": {
-      "score": 10,
-      "reason": "三个下一步动作均为最小可验证动作，对比实验设计清晰，观察指标明确（AUC-PR、FPR@95R、seed_weight 分布等），可直接执行，完全满足要求。",
-      "missingEvidence": "无"
+      "score": 9,
+      "reason": "下周动作非常具体，且具有最小可验证性：分别验证 seed audit、staged training、threshold modes，并列出对照组和观察指标，如 AUC-PR、FPR@95R、seed_weight 分布、residual_to_evidence_ratio、val_aucpr 等。这些动作能直接检验本周新增机制是否有效。扣 1 分是因为没有明确每个实验的通过标准，例如指标提升多少才算有效、波动降低多少才算稳定。",
+      "missingEvidence": [
+        "缺少每个实验的成功阈值",
+        "缺少实验优先级",
+        "缺少预期负结果及对应决策",
+        "缺少固定随机种子、重复次数或统计显著性安排"
+      ]
     },
     "evidenceQuality": {
       "score": 2,
-      "reason": "本周周报以理论分析和设计调整为主，文本逻辑严谨，但未提供任何实验数据、图表或定量证据，故证据质量偏低。",
-      "missingEvidence": "缺少实验运行的客观结果日志、性能曲线、数据分布图等实证材料。"
+      "reason": "证据质量偏弱。周报提供了较多机制描述、风险链条和计划指标，但几乎没有实际实验结果、表格、日志、图、代码链接、commit 信息或失败案例。当前证据主要是研究者自述和设计推理，适合说明思路，不足以证明方法有效或代码已经稳定。",
+      "missingEvidence": [
+        "缺少任何实验数值结果",
+        "缺少训练曲线或诊断日志",
+        "缺少代码仓库 commit 或 diff 证据",
+        "缺少消融表",
+        "缺少失败样例或案例分析"
+      ]
     },
-    "totalScore": 77,
+    "totalScore": 74,
     "tier": "B",
-    "oneLineJudgment": "技术认知与项目管理突出，但缺乏实验证据和商业视野，是一份高质量的理论探索周报。",
-    "professorFollowUp": "请关注下周消融实验能否验证静态锚点污染的定量影响，以及 seed audit 是否真的降低了污染风险；同时思考该方法在工业低异常率场景中的潜在投入产出比。"
+    "oneLineJudgment": "本周在问题抽象、训练机制和代码主线化上有实质推进，最有价值的是提出“静态锚点污染”，但目前证据仍停留在设计与自述阶段，尚未用实验确认这些机制真的有效。",
+    "professorFollowUp": [
+      "请优先要求他下周给出 seed audit 和 staged training 的最小消融结果，而不是继续加机制。",
+      "重点追问：静态锚点污染是否已经在真实数据中观察到，还是目前只是理论风险。",
+      "要求他为每个下周实验设定明确成功标准，例如 AUC-PR、FPR@95R、residual_to_evidence_ratio 的可接受变化范围。",
+      "要求他画出 frozen seed → positive trust → normal candidate → boundary 的风险链条，并标注每个节点的诊断指标。",
+      "如果实验不能证明 seed audit 或 staged training 有用，应要求他删除或降级对应模块，避免方法变成规则堆叠。"
+    ]
   }
 }

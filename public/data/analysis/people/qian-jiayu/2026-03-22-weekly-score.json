@@ -1,99 +1,54 @@
 {
   "key": "person:qian-jiayu:2026-03-22:weekly-score",
-  "generatedAt": "2026-06-05T18:06:56.792Z",
+  "generatedAt": "2026-06-06T13:10:05.121Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
-  "inputHash": "141592b07aea475872af74aa6dffa6cbb5e14b0bb1a88b81a3e3e05f82630c44",
+  "inputHash": "fba893c65614fe21a885004498ce1b24e8a29836eea25317fa7a87f176a6b7a7",
   "result": {
-    "week": "2026-03-22",
-    "name": "Qian Jiayu",
     "hardProgress": {
       "score": 15,
-      "reason": "本周有明确硬进展：完成 benchmark、LLaMA-Factory 数据格式转换、SFT 核心实验，并通过定量复盘发现 Case-SFT 将 case_consistency_rate 提升到 0.928、但 l2_recall 从 0.559 暴跌到 0.207 的关键失败模式。这不是泛泛思考，而是基于实验结果形成技术转向。但原计划中的“解决一致性问题”和“扩展至 9 个数据集”未完成，GRPO 也尚未跑通，因此硬交付仍停留在诊断和方案设计阶段。",
-      "missingEvidence": [
-        "缺少 benchmark 的完整表格、数据集名称、样本量、指标定义和对照模型列表。",
-        "缺少 Flat-SFT、Case-SFT、zero-shot baseline、merged_models 的完整结果对比。",
-        "缺少实验配置，例如模型规模、训练步数、学习率、数据量、随机种子和显卡使用情况。",
-        "尚未提供 GRPO 或 DPO 的实际实验结果。"
-      ]
+      "reason": "本周有明确硬进展：完成 benchmark、LLaMA-Factory 数据格式转换、SFT 核心实验，并通过定量复盘发现 Case-SFT 将 case_consistency_rate 从 0.701 提升到 0.928，但 l2_recall 从 0.559 暴跌到 0.207，形成了可驱动技术路线调整的实验结论。同时提出了 ICDR 逻辑冲突惩罚和漏诊惩罚的 Reward 设计雏形。但原计划中的“解决一致性问题”和“扩展至 9 个数据集”未完成，GRPO 也尚未跑通，因此硬产出仍停留在失败诊断与方案设计阶段。",
+      "missingEvidence": "缺少完整实验表格、数据集规模、训练配置、随机种子、模型 checkpoint、代码提交记录、benchmark 具体指标明细，以及 Flat-SFT 与 Case-SFT 的完整对照结果。"
     },
     "cognitiveIncrement": {
-      "score": 14,
-      "reason": "认知增量很强。本周最重要的增量是把“形式一致性”和“临床安全性”明确区分开，并用 l2_recall 断崖式下降证明单纯追求一致性会诱发保守偏置。另一个有效增量是认识到 SFT 的交叉熵目标对临床严重程度不敏感，必须把 SFT 的格式/语义对齐与 GRPO 的硬规则约束解耦。这些判断直接改变了技术路线，而不是停留在概念层。",
-      "missingEvidence": [
-        "对“Case-SFT 劣化来自长上下文噪声 + 答案模式塌缩”的归因还缺少消融实验。",
-        "对“Flat-SFT 更优”的说法缺少对应定量结果。",
-        "对“临床导向重采样有效”的判断目前仍是待验证推断。"
-      ]
+      "score": 13,
+      "reason": "认知增量较强，核心更新不是泛泛而谈，而是由本周实验结果触发：一致性不等于临床安全性；SFT 的交叉熵目标无法表达临床漏诊代价；长 CoT 可能提升文本连贯性但掩盖视觉忠实度断裂；医疗 VQA 应被建模为 L1-L4 临床推理图谱。这些判断直接改变了技术路线，从继续 SFT 调参转向临床风险感知的 GRPO/RL 约束。",
+      "missingEvidence": "缺少对这些认知更新的反例检验，例如是否所有 Case-SFT 都导致保守偏置、是否不同数据比例或 prompt 格式可缓解该问题、Flat-SFT 的优势是否有稳定统计证据。"
     },
     "cot2Depth": {
       "score": 13,
-      "reason": "CoT’s CoT 深度较好，能从单周实验失败上升到目标函数错配、规则内化、视觉忠实度与语言连贯性错位等更高层问题，并且能说明为什么这些问题尚未被自动化科研 workflow 吸收。两个 CoT’s CoT 都给出了证据等级和自动化沉淀方向，符合模板要求。但部分表述仍偏宏观，例如“唯一解”“核心基建”等判断需要更多实验或市场证据支撑。",
-      "missingEvidence": [
-        "缺少对 GRPO reward 设计可行性的最小原型验证。",
-        "缺少对 Faithfulness 问题的系统性评估，例如反事实遮挡、attention map、病灶区域干预或 FUR 类实验。",
-        "缺少把 ICDR 指南自动编译为 reward function 的具体接口、输入输出样例和失败案例。"
-      ]
+      "reason": "CoT’s CoT 有较高深度：不仅总结实验现象，还上升到目标函数错配、规则内化、Coherence 掩盖 Faithfulness、自动化 reward compiler、视觉锚定 evaluator 等层面；并区分了证据等级 A/B，说明哪些是直接数据支撑，哪些只是现象观察。它已经从单个医学任务抽象到垂直领域硬逻辑对齐的通用问题。",
+      "missingEvidence": "缺少与已有 RLHF、GRPO、医学 VLM faithfulness、counterfactual evaluation 文献的具体对照；缺少可执行的 CoT’s CoT 验证实验设计，例如 attention/box 约束如何量化、FUR 如何落到本项目。"
     },
     "brainaryMapping": {
       "score": 8,
-      "reason": "Brainary 映射比较清楚，能够对应到 risk modeling 和 cognitive control，并进一步提出 Guideline Compiler Agent、Safety-Aligned VLM Workflow、Introspection Validator 等可能模块。映射不是简单贴标签，而是能解释从自然语言指南到 reward engine 的中间件价值。但目前仍缺少 Brainary 内部能力边界、模块调用关系和最小可实现版本的定义。",
-      "missingEvidence": [
-        "缺少 Brainary 模块图或系统架构图。",
-        "缺少 Guideline Compiler Agent 的最小输入输出样例。",
-        "缺少该模块与现有 Brainary workflow 如何集成的具体说明。"
-      ]
+      "reason": "Brainary 映射比较清楚，指出对应 risk modeling 与 cognitive control，并提出 Guideline Compiler Agent、Safety-Aligned VLM Workflow、Introspection Validator 等可沉淀模块。映射不是停留在标签层，而是把医学指南转 reward、指南转数据编译两个方向都写出来了。",
+      "missingEvidence": "缺少 Brainary 现有架构中的具体接口位置、输入输出 schema、模块边界、与现有 agent/workflow 的复用关系，以及最小可行版本的实现拆分。"
     },
     "monetaryValue": {
       "score": 7,
-      "reason": "金额计算比一般周报具体，分别估算了 SaMD 管线 150 万人民币授权价值和每万条医疗 CoT 数据约 40 万人民币节省价值，并给出了人力、审批延误、医生复核成本等计算路径。问题是这些估算主要基于合理推演，缺少真实客户访谈、报价单、采购案例、NMPA 打回成本案例或医疗标注公司的正式报价，因此商业价值方向可信，但金额精度不足。",
-      "missingEvidence": [
-        "缺少医疗 AI 企业真实采购预算或授权费案例。",
-        "缺少 NMPA/FDA 审批延误成本的公开或一手依据。",
-        "缺少医生标注费、审核费的正式报价或访谈记录。",
-        "缺少潜在客户愿意为该能力付费的验证。"
-      ]
+      "reason": "价值判断有商业场景、买单方和金额计算：SaMD 管线授权约 150 万、每万条医疗 CoT 数据节省约 40 万，并解释了监管审批、医生复核、专家标注成本等来源。判断方向合理，能说明为什么该项目不是单纯刷榜。但金额仍主要基于推算，缺少真实报价、客户访谈或合同级证据。",
+      "missingEvidence": "缺少医疗 AI 企业真实采购预算、NMPA 打回案例成本、标注公司报价单、医生审核效率实测、医院复核流程数据，以及潜在客户对该能力的明确需求验证。"
     },
     "projectManagement": {
       "score": 13,
-      "reason": "项目管理信息完整：写明当前阶段、原计划、实际完成、未完成项、投入时间、下周投入、关键里程碑、资源需求、依赖关系、成本规划、进度偏差和纠偏动作。尤其是能承认原计划未完成，并把偏差原因定位为技术路线误判，这是有效项目管理。但下周计划还可以进一步量化成功标准，例如召回率恢复到多少、一致性至少保持多少、需要跑哪些 ablation。",
-      "missingEvidence": [
-        "缺少下周 GRPO 实验的具体验收指标，例如 l2_recall、case_consistency_rate、l3_macro_f1 的目标阈值。",
-        "缺少任务拆分到天的执行计划。",
-        "缺少风险预案，例如 GRPO 不收敛、reward hacking、召回率提升但特异性崩溃时如何处理。",
-        "缺少论文/benchmark/agent 三条线的优先级排序。"
-      ]
+      "reason": "项目管理信息完整：写明原计划、实际完成、未完成项、投入时间、下周投入、关键节点、资源需求、算力情况、依赖关系、进度偏差、偏差原因和纠偏动作。尤其是承认当前进度不符合预期，并把偏差定位为技术路线认知错误，而不是外部借口。下周转向 GRPO reward 引擎的纠偏方向明确。",
+      "missingEvidence": "缺少下周任务拆成日粒度或实验粒度的排期；缺少成功/失败判定阈值，例如 l2_recall 至少恢复到多少、case_consistency_rate 最低保留多少；缺少如果 GRPO 不生效的备选路线。"
     },
     "nextAction": {
       "score": 8,
-      "reason": "下一步动作明确：停止 SFT 盲调，转向 DPO/GRPO；先写 ICDR Reward 规则引擎，在单个数据集上跑通逻辑惩罚机制，验证能否修复漏诊。这个行动与本周发现的失败模式直接对应，方向正确。但还不够工程化，缺少 reward 项权重搜索、对照组、失败判据和实验排期。",
-      "missingEvidence": [
-        "缺少 GRPO reward 函数的完整公式和权重设置计划。",
-        "缺少单数据集试验的具体数据集名称和样本规模。",
-        "缺少对照实验设计，例如 SFT、重采样 SFT、DPO、GRPO、GRPO+重采样。",
-        "缺少明确的 go/no-go 判据。"
-      ]
+      "reason": "下一步动作明确：停止盲目 SFT 调参，写出基于 ICDR 的 Reward 规则引擎，在单个数据集上跑通逻辑惩罚机制，并在 3 月 30 日前验证召回率修复效果。该动作与本周发现的问题直接对应，优先级正确。",
+      "missingEvidence": "缺少具体实验矩阵、验收指标、对照组设置、预期风险和回滚方案。例如没有说明 GRPO 对照哪些 baseline、reward 权重如何扫、是否同时监控 specificity 与 l3_macro_f1。"
     },
     "evidenceQuality": {
       "score": 4,
-      "reason": "证据质量总体较好，因为报告中提供了关键定量指标变化，并区分了 A 级证据和 B 级现象证据。尤其 l2_recall 从 0.559 到 0.207、case_consistency_rate 从 0.701 到 0.928 的组合很有解释力。但证据展示不完整，缺少完整实验表、统计显著性、样本量、错误案例和可复现实验配置，因此不能给满分。",
-      "missingEvidence": [
-        "缺少完整指标矩阵和置信区间。",
-        "缺少典型失败案例截图或输出样例。",
-        "缺少数据划分、样本量、类别分布和 hard cases 定义。",
-        "缺少实验日志、代码提交或配置文件引用。"
-      ]
+      "reason": "报告提供了关键定量证据，尤其是 case_consistency_rate 与 l2_recall 的变化，并对不同结论标注 A/B 证据等级。证据足以支撑“当前 SFT 路线存在严重风险”这一判断。但证据呈现仍是摘要式，缺少可复核材料。",
+      "missingEvidence": "缺少完整指标表、样本量、置信区间、错误案例截图、混淆矩阵、实验日志、数据划分说明、代码版本和可复现实验链接。"
     },
-    "totalScore": 82,
+    "totalScore": 81,
     "tier": "A",
-    "oneLineJudgment": "这一周的核心价值是用实验失败识别出“SFT 一致性提升但临床召回崩溃”的关键问题，并形成 GRPO 风险约束路线；不足是目前仍缺少可复现实验表和下一阶段原型结果。",
-    "professorFollowUp": [
-      "请学生下周必须提交一张完整对照表：zero-shot、Flat-SFT、Case-SFT、重采样 SFT、GRPO 的 l2_recall、specificity、l3_macro_f1、case_consistency_rate。",
-      "请学生明确 GRPO reward 的三类项：ICDR 逻辑冲突惩罚、假阴性惩罚、格式/可读性奖励，并给出权重搜索范围。",
-      "请学生优先在单数据集上做最小闭环，不要先扩展 9 个数据集；只有当 l2_recall 修复且一致性不崩时再横向扩展。",
-      "请学生提供 5 个典型失败案例，证明保守偏置、视觉锚定断裂和 L2-L3 逻辑冲突确实存在。",
-      "老师本周最应该学到的一点是：在多层级医疗 VLM 中，SFT 可以制造形式一致性幻觉，但不能保证临床安全；真正的问题必须在目标函数层面引入风险敏感 reward。"
-    ]
+    "oneLineJudgment": "这是一次高质量的失败诊断周：硬进展没有完成原计划扩展，但通过实验证据发现了 SFT 一致性路线的临床安全缺陷，并形成了转向 GRPO 风险约束的清晰技术判断。",
+    "professorFollowUp": "老师最应该追问三件事：第一，Case-SFT 导致 l2_recall 暴跌是否可由完整混淆矩阵和错误样例复核；第二，下周 GRPO 的成功阈值是什么，例如召回率恢复到多少且一致性不低于多少；第三，Guideline Compiler Agent 先做最小可行版本时，究竟先自动化 reward 编译，还是先自动化 Hierarchical CoT 数据编译。"
   }
 }
