@@ -18,7 +18,7 @@ function route() {
   if (path === "/person-analysis") return renderPersonAnalysisHub();
   if (path === "/person-horizontal") return renderPersonHorizontal(params().get("week"));
   if (path === "/person-horizontal-detail") return renderPersonHorizontalDetail(params().get("week"), params().get("slug"));
-  if (path === "/person-longitudinal") return renderPersonLongitudinalHub();
+  if (path === "/person-longitudinal") return renderPersonLongitudinalHub(params().get("week"));
   if (path === "/person-longitudinal-detail") return renderPersonLongitudinalDetail(params().get("week"), params().get("slug"));
   if (path === "/people") return renderPeople();
   if (path === "/person") return renderPerson(params().get("slug"));
@@ -512,32 +512,121 @@ function renderPersonAnalysisHub() {
       <a class="briefing-card feature" href="#/person-longitudinal">
         <span class="badge">跨周轨迹</span>
         <strong>个人纵向</strong>
-        <span class="muted">进入个人页面，按周查看截至该周的 4 周纵向分析和原文。</span>
+        <span class="muted">按周查看每个人截至该周的 4 周纵向卡片，重点看元认知、价值观和项目管理。</span>
       </a>
     </section>
   `;
 }
 
-function renderPersonLongitudinalHub() {
+function personLongitudinalWeeks() {
+  const keys = Object.keys(analysisManifest?.items || {});
+  return state.weeks
+    .filter((week) => week.pastDeadline && keys.some((key) => key.endsWith(`:${week.week}:longitudinal`)))
+    .slice()
+    .sort((a, b) => a.week.localeCompare(b.week));
+}
+
+function personLongitudinalWeekControls(currentWeek) {
+  const weeks = personLongitudinalWeeks();
+  const index = Math.max(0, weeks.findIndex((week) => week.week === currentWeek));
+  const previous = weeks[Math.max(0, index - 1)]?.week || currentWeek;
+  const next = weeks[Math.min(weeks.length - 1, index + 1)]?.week || currentWeek;
+  return `
+    <span class="week-controls inline-week-controls">
+      <a class="button" href="#/person-longitudinal?week=${encodeURIComponent(previous)}" title="上一周">‹</a>
+      <select data-person-longitudinal-week-select>
+        ${weeks.slice().reverse().map((week) => `<option value="${esc(week.week)}" ${week.week === currentWeek ? "selected" : ""}>${esc(week.week)}</option>`).join("")}
+      </select>
+      <a class="button" href="#/person-longitudinal?week=${encodeURIComponent(next)}" title="下一周">›</a>
+    </span>
+  `;
+}
+
+function bindPersonLongitudinalWeekPicker() {
+  document.querySelectorAll("[data-person-longitudinal-week-select]").forEach((select) => {
+    select.addEventListener("change", () => {
+      location.hash = `#/person-longitudinal?week=${encodeURIComponent(select.value)}`;
+    });
+  });
+}
+
+function isStructuredLongitudinal(payload) {
+  const result = payload?.result || {};
+  return Boolean(result.metacognitionChange && result.valueGrowth && result.projectManagementReview);
+}
+
+async function renderPersonLongitudinalHub(weekId) {
+  const weeks = personLongitudinalWeeks();
+  const selectedWeek = weeks.find((item) => item.week === weekId) || weeks.at(-1);
+  if (!selectedWeek) {
+    app.innerHTML = html`
+      <section class="hero">
+        <div>
+          <h1>个人纵向</h1>
+          <p class="muted">还没有生成新版个人纵向分析。</p>
+        </div>
+        <a class="button" href="#/person-analysis">返回个人分析</a>
+      </section>
+    `;
+    return;
+  }
+  app.innerHTML = `<section class="panel"><h1>${esc(selectedWeek.week)} 个人纵向</h1><p class="muted">正在加载个人纵向卡片...</p></section>`;
+  const people = state.people.filter((person) => person.weeks.includes(selectedWeek.week));
+  const payloads = await Promise.all(people.map(async (person) => ({
+    person,
+    payload: await loadAnalysisByKey(personLongitudinalKey(person, selectedWeek.week))
+  })));
+  const available = payloads.filter((item) => isStructuredLongitudinal(item.payload));
   app.innerHTML = html`
     <section class="hero">
       <div>
-        <h1>个人纵向</h1>
-        <p class="muted">选择一个人，进入后可按周查看纵向分析、评分和对应周报原文。</p>
+        <h1>${esc(selectedWeek.week)} 个人纵向</h1>
+        <p class="muted">按周查看每个人截至该周的 4 周轨迹；只展示新版纵向分析结果。</p>
       </div>
       <div class="toolbar">
+        ${personLongitudinalWeekControls(selectedWeek.week)}
         <a class="button" href="#/person-analysis">返回个人分析</a>
       </div>
     </section>
-    <section class="cards">
-      ${state.people.map((person) => `
-        <a class="card" href="#/person-longitudinal-detail?week=${encodeURIComponent(person.latestWeek || "")}&slug=${encodeURIComponent(person.slug)}">
-          <strong>${esc(person.name)}</strong>
-          <span class="muted">${person.count} 份周报</span>
-          <span class="badge">最新 ${esc(person.latestWeek || "无")}</span>
-        </a>
-      `).join("")}
+    <section class="stats">
+      <div class="stat"><strong>${available.length}</strong><span>新版纵向</span></div>
+      <div class="stat"><strong>${people.length}</strong><span>本周提交者</span></div>
+      <div class="stat"><strong>${selectedWeek.submitted}</strong><span>已交</span></div>
+      <div class="stat"><strong>${selectedWeek.reportCount || selectedWeek.submitted}</strong><span>原件</span></div>
     </section>
+    <section class="person-horizontal-grid">
+      ${available.length ? available.map(({ person, payload }) => personLongitudinalCard(person, selectedWeek.week, payload)).join("") : `<article class="panel"><p class="muted">这一周还没有新版个人纵向分析文件。</p></article>`}
+    </section>
+  `;
+  bindPersonLongitudinalWeekPicker();
+}
+
+function personLongitudinalCard(person, week, payload) {
+  const result = payload.result || {};
+  const meta = result.metacognitionChange || {};
+  const value = result.valueGrowth || {};
+  const management = result.projectManagementReview || {};
+  const overview = plainText(result.overviewSentence || result.headline || result.overallTrajectory || "已生成个人纵向分析");
+  return html`
+    <a class="person-horizontal-card longitudinal-summary-card" href="#/person-longitudinal-detail?week=${encodeURIComponent(week)}&slug=${encodeURIComponent(person.slug)}">
+      <div class="person-horizontal-head">
+        <div>
+          <strong>${esc(person.name)}</strong>
+          <span class="muted">${esc(week)} · 最近 4 周</span>
+        </div>
+        <span class="level-pill">纵向</span>
+      </div>
+      <p class="overview-line">${esc(overview)}</p>
+      <div class="mini-dimensions">
+        <span><strong>元认知：</strong>${esc(plainText(meta.summary || meta.currentLevel || ""))}</span>
+        <span><strong>价值观：</strong>${esc(plainText(value.summary || value.currentValueFunction || ""))}</span>
+        <span><strong>项目管理：</strong>${esc(plainText(management.summary || management.managementPattern || ""))}</span>
+      </div>
+      <div class="person-horizontal-foot">
+        <span class="badge">查看纵向详情</span>
+        <span class="muted">${esc(payload.model || "")}</span>
+      </div>
+    </a>
   `;
 }
 
@@ -556,7 +645,7 @@ async function renderPersonLongitudinalDetail(weekId, slugValue) {
         <h1>${esc(person.name)} 个人纵向</h1>
         <p class="muted">${esc(week)} 的个人纵向分析还没有生成。</p>
         <div class="toolbar">
-          <a class="button" href="#/person-longitudinal">返回个人纵向</a>
+          <a class="button" href="#/person-longitudinal?week=${encodeURIComponent(week)}">返回个人纵向</a>
           <a class="button" href="#/person?slug=${encodeURIComponent(person.slug)}">个人原文</a>
         </div>
       </section>
@@ -582,7 +671,7 @@ async function renderPersonLongitudinalDetail(weekId, slugValue) {
           <button data-longitudinal-week-step="1" title="下一周">›</button>
         </span>
         <a class="button" href="#/person?slug=${encodeURIComponent(person.slug)}">个人原文</a>
-        <a class="button" href="#/person-longitudinal">返回列表</a>
+        <a class="button" href="#/person-longitudinal?week=${encodeURIComponent(week)}">返回列表</a>
       </div>
     </section>
     <section class="longitudinal-hero">
