@@ -654,7 +654,7 @@ async function renderPersonHorizontalDetail(weekId, slugValue) {
     return;
   }
   const result = payload.result || {};
-  const action = result.bossAction || {};
+  const action = result.teacherAction || {};
   const feedback = result.studentFeedback || {};
   app.innerHTML = html`
     <section class="hero">
@@ -674,8 +674,8 @@ async function renderPersonHorizontalDetail(weekId, slugValue) {
         <h2>${esc(plainText(result.shortRead || result.sameWeekPosition || ""))}</h2>
         <p>${esc(plainText(result.sameWeekPosition || ""))}</p>
       </div>
-      <div class="boss-box">
-        <strong>老板动作</strong>
+      <div class="teacher-box">
+        <strong>老师动作</strong>
         <p>${action.readOriginal ? "建议优先读原文。" : "可以按需阅读原文。"}</p>
         ${analysisList(action.meetingQuestions, "meeting-questions")}
       </div>

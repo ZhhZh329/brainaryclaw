@@ -119,7 +119,7 @@ Return JSON only:
       "reason": "why they should sync"
     }
   ],
-  "bossChecklist": [
+  "teacherChecklist": [
     "specific item to follow up"
   ]
 }
