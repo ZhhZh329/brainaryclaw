@@ -1,0 +1,64 @@
+{
+  "key": "person:huang-xun:2026-06-07:weekly-score",
+  "generatedAt": "2026-06-06T17:00:43.970Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "552843a3132c6c9f85a9de7606411b9a4d8171a2464b633c4bdf880653d6aed7",
+  "result": {
+    "week": "2026-06-07",
+    "name": "Huang Xun",
+    "scores": {
+      "hardProgress": {
+        "score": 18,
+        "reason": "本周有较强硬进展：SafeClaw 完成 google-workspace、code-execution、malicious-skills 三个场景的 Universal Skill 与 LLM Router 对比评测，并重写 SKILL.md、创建 universal 版 AGENTS.md；动态红队系统完成 v2 架构升级，实现 5 个攻击维度、28 个策略、Thompson Sampling、NLI 场景判定，并对 DeepSeek V4 Pro 与 Mimo V2.5 Pro 跑通 50 objective × 10 variant 的全量测试。进展不仅是代码修改，也产生了新失败模式和新数据。",
+        "missingEvidence": "缺少完整实验表格、每个场景的混淆矩阵、样本明细、运行配置、commit 链接、日志链接；Claude 基线缺失，SafeClaw 横向对齐未闭环。"
+      },
+      "cognitiveIncrement": {
+        "score": 12,
+        "reason": "认知增量清楚：一是工具调用意愿会被场景宽泛度和指令明确性影响，Universal 规则在 google-workspace 中导致路由率坍塌；二是红队攻击应从单一 prompt 变异走向多维度动态组合，以暴露模型的维度性短板。这些认知与本周数据有直接关联。",
+        "missingEvidence": "对“执行偷懒”“维度塌陷”的机制解释仍主要来自行为观察，缺少消融实验，例如不同 AGENTS.md 指令强度、不同领域粒度、不同模型的对照。"
+      },
+      "cot2Depth": {
+        "score": 12,
+        "reason": "CoT’s CoT 部分不只是复述结果，而是提炼出两个更上层问题：高置信 Agent 可能绕过工具流程，以及空响应的安全语义难以自动判定。第一个判断有明确实验反差支撑，第二个判断也能导向 evaluation protocol。但部分表述把行为现象直接归因为模型内部置信度，因果链还不够扎实。",
+        "missingEvidence": "缺少证明“内部置信度导致工具依从性下降”的直接证据，例如置信度代理指标、prompt 消融、强制工具调用对照、不同模型复现；空响应也缺少编码异常与安全拒答的剥离测试。"
+      },
+      "brainaryMapping": {
+        "score": 7,
+        "reason": "报告将工作映射到 Brainary 的 tool orchestration 与 risk modeling，并提出可沉淀为 workflow、memory 结构和维度级成功率记录矩阵，方向合理，能看出从单次实验到系统能力的迁移意识。",
+        "missingEvidence": "缺少更具体的 Brainary 组件定义，例如输入输出接口、状态记忆格式、路由劫持协议的执行流程、与现有 Brainary 模块的依赖关系。"
+      },
+      "monetaryValue": {
+        "score": 6,
+        "reason": "价值判断有明确对象：AI 应用合规团队、大模型安全实验室；也给出任务一 40 万、任务二 50 万的估值和计算口径。问题是商业估值主要基于类比和人工替代，尚未证明客户愿意为当前形态付费，也未区分研究原型、内部工具、可交付产品之间的价值差异。",
+        "missingEvidence": "缺少真实客户访谈、竞品价格证据、交付边界、ROI 计算、可复用程度评估，以及从实验结果到商业服务报价之间的转化链条。"
+      },
+      "projectManagement": {
+        "score": 13,
+        "reason": "项目管理部分较完整：写明当前阶段、投入时间、下周时间规划、关键时间点、资源瓶颈、依赖关系、Token 成本、进度偏差和纠偏动作。尤其明确指出 Anthropic API 是关键路径资源，JSON 健壮性是工程损耗来源。",
+        "missingEvidence": "缺少验收标准，例如周三 JSON 模块修复到什么错误率、周五全量对比结果包含哪些模型和指标；也缺少风险优先级、备用方案、API 获取失败时的替代路径。"
+      },
+      "nextAction": {
+        "score": 8,
+        "reason": "下周动作较具体且可验证：调整 AGENTS.md 指令强度、分析提示注入失败 case、配置 Anthropic API、运行 2000 个 cosmetic mutation、增加截断 JSON 修复、比较 Mimo user_only 与 natural 模式、验证 Thompson Sampling 分布优势。这些动作直接对应当前卡点。",
+        "missingEvidence": "多数动作还缺少量化成功标准，例如路由率要从 12% 提升到多少、JSON 修复后解析失败率降到多少、Mimo 空响应判定采用什么分类规则。"
+      },
+      "evidenceQuality": {
+        "score": 3,
+        "reason": "报告提供了若干关键量化证据，如 100 cases、33 seeds、42 skills、code-execution 超 90% 准确率、google-workspace 23% 准确率与 12% 路由率、DeepSeek 100% objective 级越狱率、Mimo 56% 越狱率和 178 次空响应。证据能支撑方向性判断，但目前仍是摘要级证据。",
+        "missingEvidence": "缺少原始数据、统计口径、置信区间、样本分布、失败样例、评测脚本、judge 一致性、人工复核比例、不同模型版本和参数配置。"
+      }
+    },
+    "totalScore": 79,
+    "tier": "A",
+    "oneLineJudgment": "这是一个硬进展充足、认知增量明确的高质量单周周报，但核心结论中关于“内部置信度导致路由坍塌”的因果证据仍不足，商业估值和 Brainary 沉淀也还偏概念化。",
+    "professorFollowUp": [
+      "优先解决 Anthropic API 权限，否则 SafeClaw 横向基线无法闭环，影响论文或系统结论可信度。",
+      "要求学生下周把 google-workspace 12% 路由率问题做成可复现实验表：不同 AGENTS.md 指令强度、不同任务域粒度、是否强制工具调用三组消融。",
+      "要求把“高置信导致不调工具”从解释性假设改成可检验假设，设计代理指标或对照实验，不要只凭现象下结论。",
+      "要求动态红队系统补充完整评测产物：objective 级结果表、维度成功率矩阵、空响应分类协议、JSON 解析失败率。",
+      "本周老师最该学习的一点是：Universal 安全规则在高智能 Agent 中可能不是更稳，而可能因模型自行判决导致工具路由率灾难性下降；这一点值得作为 SafeClaw 后续研究的核心问题。"
+    ]
+  }
+}
