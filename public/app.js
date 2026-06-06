@@ -521,7 +521,7 @@ function renderPersonAnalysisHub() {
 function personLongitudinalWeeks() {
   const keys = Object.keys(analysisManifest?.items || {});
   return state.weeks
-    .filter((week) => week.pastDeadline && keys.some((key) => key.endsWith(`:${week.week}:longitudinal`)))
+    .filter((week) => keys.some((key) => key.endsWith(`:${week.week}:longitudinal`)))
     .slice()
     .sort((a, b) => a.week.localeCompare(b.week));
 }
