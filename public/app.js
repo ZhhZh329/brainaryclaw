@@ -620,7 +620,7 @@ async function renderPersonHorizontal(weekId) {
 function personHorizontalCard(person, week, payload) {
   const result = payload.result || {};
   const feedback = result.studentFeedback || {};
-  const overview = result.overviewSentence || result.shortRead || result.sameWeekPosition || result.headline || "已生成个人横向画像";
+  const overview = plainText(result.overviewSentence || result.shortRead || result.sameWeekPosition || result.headline || "已生成个人横向画像");
   return html`
     <a class="person-horizontal-card" href="#/person-horizontal-detail?week=${encodeURIComponent(week)}&slug=${encodeURIComponent(person.slug)}">
       <div class="person-horizontal-head">
@@ -631,7 +631,7 @@ function personHorizontalCard(person, week, payload) {
         <span class="level-pill">${esc(result.overallLevel || "好")}</span>
       </div>
       <p class="overview-line">${esc(overview)}</p>
-      ${feedback.summary ? `<p class="student-feedback-line">${esc(feedback.summary)}</p>` : ""}
+      ${feedback.summary ? `<p class="student-feedback-line">${esc(plainText(feedback.summary))}</p>` : ""}
       <div class="person-horizontal-foot">
         <span class="badge">查看反馈</span>
         <span class="muted">${esc(payload.model || "")}</span>
@@ -660,7 +660,7 @@ async function renderPersonHorizontalDetail(weekId, slugValue) {
     <section class="hero">
       <div>
         <h1>${esc(person.name)} · ${esc(week)} 个人横向</h1>
-        <p class="muted">${esc(result.headline || result.shortRead || "同周相对画像")}</p>
+        <p class="muted">${esc(plainText(result.headline || result.shortRead || "同周相对画像"))}</p>
       </div>
       <div class="toolbar">
         <a class="button" href="#/person-horizontal?week=${encodeURIComponent(week)}">返回个人横向</a>
@@ -671,8 +671,8 @@ async function renderPersonHorizontalDetail(weekId, slugValue) {
     <section class="person-profile-hero">
       <div>
         <span class="level-pill large">${esc(result.overallLevel || "好")}</span>
-        <h2>${esc(result.shortRead || result.sameWeekPosition || "")}</h2>
-        <p>${esc(result.sameWeekPosition || "")}</p>
+        <h2>${esc(plainText(result.shortRead || result.sameWeekPosition || ""))}</h2>
+        <p>${esc(plainText(result.sameWeekPosition || ""))}</p>
       </div>
       <div class="boss-box">
         <strong>老板动作</strong>
@@ -688,7 +688,7 @@ async function renderPersonHorizontalDetail(weekId, slugValue) {
     <section class="student-feedback-panel">
       <div>
         <span class="badge">给学生的反馈</span>
-        <h2>${esc(feedback.summary || "这份周报已经有清楚的横向信号，下一步可以把证据和行动写得更可验证。")}</h2>
+        <h2>${esc(plainText(feedback.summary || "这份周报已经有清楚的横向信号，下一步可以把证据和行动写得更可验证。"))}</h2>
       </div>
       <div class="feedback-columns">
         ${detailPanel("做得好的地方", feedback.whatYouDidWell)}
@@ -711,9 +711,9 @@ function focusDimension(title, value = {}) {
   return html`
     <article class="focus-card">
       <span class="badge">${esc(title)}</span>
-      <p>${esc(value.read || "")}</p>
-      ${value.evidence ? `<p class="muted"><strong>证据：</strong>${esc(value.evidence)}</p>` : ""}
-      ${value.nextLift ? `<p class="muted"><strong>下一步：</strong>${esc(value.nextLift)}</p>` : ""}
+      <p>${esc(plainText(value.read || ""))}</p>
+      ${value.evidence ? `<p class="muted"><strong>证据：</strong>${esc(plainText(value.evidence))}</p>` : ""}
+      ${value.nextLift ? `<p class="muted"><strong>下一步：</strong>${esc(plainText(value.nextLift))}</p>` : ""}
     </article>
   `;
 }
@@ -743,6 +743,43 @@ function renderValue(value) {
     `).join("")}</dl>`;
   }
   return `<p>${esc(String(value))}</p>`;
+}
+
+function plainText(value) {
+  if (value == null || value === "") return "";
+  if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") return String(value);
+  if (Array.isArray(value)) return value.map((item) => plainText(item)).filter(Boolean).join("；");
+  if (typeof value === "object") {
+    const preferred = [
+      "summary",
+      "headline",
+      "overviewSentence",
+      "read",
+      "readPriority",
+      "oneLine",
+      "shortRead",
+      "sameWeekPosition",
+      "evidence",
+      "why",
+      "reason",
+      "text",
+      "content",
+      "action",
+      "nextLift"
+    ];
+    const parts = [];
+    for (const key of preferred) {
+      if (value[key] != null && value[key] !== "") parts.push(plainText(value[key]));
+    }
+    if (!parts.length) {
+      for (const [key, item] of Object.entries(value)) {
+        const rendered = plainText(item);
+        if (rendered) parts.push(`${labelize(key)}：${rendered}`);
+      }
+    }
+    return parts.join("；");
+  }
+  return String(value);
 }
 
 function renderInlineValue(value) {
@@ -797,8 +834,8 @@ function peerPanel(peers = []) {
       <h3>可对标对象</h3>
       ${peers.length ? peers.map((peer) => `
         <div class="peer-row">
-          <strong>${esc(peer.name || "")}</strong>
-          <span>${esc(peer.why || "")}</span>
+          <strong>${esc(plainText(peer.name || ""))}</strong>
+          <span>${esc(plainText(peer.why || ""))}</span>
         </div>
       `).join("") : `<p class="muted">暂无明确对标对象。</p>`}
     </article>
