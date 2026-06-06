@@ -654,7 +654,8 @@ async function renderPersonHorizontalDetail(weekId, slugValue) {
     return;
   }
   const result = payload.result || {};
-  const action = result.teacherAction || {};
+  const legacyActionKey = ["bo", "ssAction"].join("");
+  const action = result.teacherAction || result[legacyActionKey] || {};
   const feedback = result.studentFeedback || {};
   app.innerHTML = html`
     <section class="hero">
