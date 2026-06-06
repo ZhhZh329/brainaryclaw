@@ -1,0 +1,241 @@
+{
+  "key": "person:xie-maoyi:2026-06-07:longitudinal",
+  "generatedAt": "2026-06-06T12:16:56.346Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "37d9f8606bf2c70801dc4202006ec76d1f63071077f7350c0bbde3f7f8228537",
+  "result": {
+    "overallTrajectory": "总体判断：这个学生在最近四次周报中表现出研究能力在上升，而不只是投入时间增加。关键变化是从“发现并上报具体 kernel bug”逐步转向“抽象 invariant、建立 helper-pair catalogue、形式化 predicate、生成 SmPL query、评估 candidate precision”。这说明他正在把经验转成可复用、可执行的研究资产。但当前能力提升仍处于中期验证阶段：已有方法论和原型，尚缺严格的 precision/recall 数据、成本曲线、自动化收益评估和稳定的 evaluator。",
+    "headline": "从个例 bug hunting 转向 executable invariant mining，研究能力有实质提升，但下一步必须用量化评估证明 query 和 candidate generation 的有效性。",
+    "overviewSentence": "学生正在从“多挖 bug”升级为“构建可执行的 invariant memory 和 query workflow”，但还需要用 precision、人工筛选成本和真实新增 confirmed bug 来验证方法价值。",
+    "fourWeekTimeline": [
+      {
+        "week": "2026-05-03",
+        "metacognition": "已能识别重要失败模式：WAI 误判、phantom bug、agent 多一致不等于正确、静态分析不等于可验证；提出“正确性来自验证链而不是推理链”，并明确 PoC/runtime 是最终 oracle。",
+        "valueJudgment": "价值函数仍以真实 bug 产出为主，认为 sibling-fix reverse search 是最高 EV 方法；已连接到 kernel maintainer、security team、cloud/infra 公司，并给出金额估值，但规模化证据不足。",
+        "projectManagement": "项目阶段写得较清楚：从个例发现到方法成型；有 40 小时投入、依赖 LKML/maintainer review、关键路径和下周动作；但成本/token、候选数量、验证吞吐率没有量化。",
+        "evidence": "报告中写到 #1/#3 进入 mainline/net tree，#12 被 maintainer 确认为 bug，confirmed bug 约 6–7 个；同时提出 pattern → candidate → LLM filter → 人工 PoC 验证。"
+      },
+      {
+        "week": "2026-05-24",
+        "metacognition": "从 bug 个例上升到 invariant family，开始意识到很多 bug 是 invariant 在 sibling subsystem 中没有传播；同时区分 dynamic oracle 与 static oracle，说明证据边界意识增强。",
+        "valueJudgment": "价值判断从“挖 bug”转为“Kernel Invariant Mining”，认为 invariant propagation 是通用问题；给出 methodology paper、framework、query system 等产物形式，但 formalization 还不够。",
+        "projectManagement": "项目管理信息最完整：写明原计划 vs 实际、阶段、35–40 小时、本周 token/API 约 20–30 美元、工具、依赖、风险和是否需要老师讨论 invariant hierarchy。",
+        "evidence": "报告中提出 cross-ns info leak、cross-ns capability gap、namespace value transform missing、cached net pointer consistency；写明 formalization 比预期慢，原因是 invariant 边界不稳定。"
+      },
+      {
+        "week": "2026-05-31",
+        "metacognition": "开始把 invariant 写成 predicate 草稿，并认识到 predicate 粒度存在抽象与可执行之间的张力；识别 grep 原型的失败模式，包括间接调用和 wrapper 隐藏 helper。",
+        "valueJudgment": "价值函数进一步清楚：认为 bug catalogue 复用价值低，invariant catalogue 和 helper-pair catalogue 复用价值高；但也承认尚未证明 query 化后是否有效。",
+        "projectManagement": "写明 early formalization、40 小时、主要风险和纠偏；但项目管理颗粒度下降，缺少原计划 vs 实际、资源/API/token、里程碑、候选数量和老师介入判断。",
+        "evidence": "报告中形成 cross_ns_info_leak 和 cross_ns_capability_gap predicate 草稿；实现 grep(X) AND NOT grep(Y) 原型并发现若干 candidate，但 precision 很低。"
+      },
+      {
+        "week": "2026-06-07",
+        "metacognition": "元认知进一步从“知识总结”升级为“知识必须能驱动行动”；明确 taxonomy 的价值不在分类，而在生成 query；识别 predicate overlap、helper 粒度不统一、query precision 不足等失败模式。",
+        "valueJudgment": "价值函数变得更面向自动化科研：从经验总结转向自动发现能力，提出 executable taxonomy、query library、executable KB；金额估值中 SmPL Query Prototype 和 Candidate Generation 价值上升。",
+        "projectManagement": "阶段判断清楚：formalization → executable prototype；有风险和纠偏方向；但仍缺 token/成本、候选规模、TP/FP 数量、人工筛选时间、API/GPU/人力需求和是否需要老师介入。",
+        "evidence": "报告中完成 4 个 invariant class 第一版 formal predicate，helper-pair 从约 4 个扩展到约 12 个，实现第一批 SmPL query prototype，并在小范围测试中命中已知修复点和 sibling implementation，同时产生大量 false positive。"
+      }
+    ],
+    "metacognitionChange": {
+      "summary": "元认知有明显纵向提升：从识别单次 bug hunting 的误判，发展到识别 invariant 抽象、predicate 可执行性、oracle 分层、query precision 和 executable memory 的问题。最重要的变化不是更会总结，而是开始用“能否形成规则、workflow、query、module”来检验经验价值。",
+      "byWeek": [
+        {
+          "week": "2026-05-03",
+          "change": "核心认知是验证链优先于推理链；能识别 WAI、phantom bug、agent 输出不可信等失败模式，并提出 PoC 必须作为 oracle。"
+        },
+        {
+          "week": "2026-05-24",
+          "change": "把 bug 看成 invariant family 的局部缺失，开始建立 invariant KB、helper-pair library、oracle router 的雏形。"
+        },
+        {
+          "week": "2026-05-31",
+          "change": "开始把经验转成 predicate 和 query prototype，能识别形式化粒度过粗或过细都会失败。"
+        },
+        {
+          "week": "2026-06-07",
+          "change": "进一步提出 executable memory：知识必须能驱动行动；能识别 taxonomy overlap、helper wrapper、precision 不足等系统性问题。"
+        }
+      ],
+      "currentLevel": "当前处于“方法论可执行化早期”水平：已经超过单纯经验总结，开始形成 memory schema、query prototype 和 candidate generation workflow；但还没有形成稳定 evaluator、量化 benchmark 或自动化 agent module。",
+      "strongestSignal": "最强信号是 2026-06-07 从 taxonomy 转向 executable taxonomy，并用 SmPL query 产生候选，说明学生开始把认知沉淀为可执行工具，而不是停留在文字总结。",
+      "nextLift": "下一步提升应是建立 evaluator：对每个 invariant/query 记录扫描范围、候选数、TP、FP-helper、FP-semantic、人工分钟/候选、最终 confirmed bug 数，并用这些指标决定是否扩展 invariant 或重写 query。"
+    },
+    "valueGrowth": {
+      "summary": "价值观即研究价值函数在变清楚：早期价值来自真实 bug 和 maintainer acknowledgment，随后转向 invariant propagation、helper-pair catalogue、oracle routing、query library 和 executable KB。价值判断越来越能连接到通用能力与自动化科研，但金额估值仍主要是主观估计，缺少由用户收益、节省时间、降低误报或新增漏洞数量支持的计算。",
+      "byWeek": [
+        {
+          "week": "2026-05-03",
+          "value": "认为 bug 挖掘价值最高，给 bug 挖掘估值 20 万元；方法沉淀、工具路径、fuzz 探索分别估值 10 万、8 万、5 万。价值依据是真实漏洞产出和可复用经验。"
+        },
+        {
+          "week": "2026-05-24",
+          "value": "价值中心转向 Kernel Invariant Mining；Invariant taxonomy 6 万、Sibling-fix methodology 10 万、Oracle routing 5 万、Reachability pattern 3 万。开始把题目连接到 automated auditing systems 和 invariant mining framework。"
+        },
+        {
+          "week": "2026-05-31",
+          "value": "认为 invariant catalogue 比 bug catalogue 更值得做，因为 bug 增长是线性的，而 invariant catalogue 可能带来乘法增长；但明确尚未证明 query 化有效。"
+        },
+        {
+          "week": "2026-06-07",
+          "value": "价值进一步转向自动发现能力；Predicate Formalization 8 万、Helper-Pair Catalogue 12 万、SmPL Query Prototype 10 万、Candidate Generation 8 万。价值依据从分类转向能否生成 query。"
+        }
+      ],
+      "currentValueFunction": "当前隐含价值函数是：优先做能把 kernel bug hunting 从人工经验推进到自动化发现的资产，尤其是 invariant memory、helper graph、query library、candidate ranking/filtering module；判断标准包括是否可执行、是否能降低人工筛选成本、是否能产生 confirmed bug、是否可泛化到 sibling subsystem。",
+      "improvementSignals": [
+        "从“真实 bug 数量”升级到“bug family/invariant family”的复用价值。",
+        "从“memory 文本”升级到“executable KB/query planner”的产物意识。",
+        "从“LLM 发现 bug”转向“LLM filter + 人工/PoC oracle”的更现实自动化定位。",
+        "开始主动承认证据等级：后几周 CoT's CoT 多为 B，说明知道当前方法还未被充分量化验证。"
+      ],
+      "nextValueQuestion": "下一个价值问题应是：一个 invariant/query 到底能节省多少人工时间、带来多少新增 confirmed bug、误报成本是多少、相比手工 sibling-fix reverse search 的边际收益是否为正。"
+    },
+    "projectManagementReview": {
+      "summary": "项目管理总体能覆盖阶段、风险和下周动作，但质量不稳定。2026-05-24 最完整，包含原计划 vs 实际、资源、依赖、token/成本和老师介入点；之后两周更偏技术进展，缺少量化里程碑、成本、候选规模、TP/FP 统计和老师介入判断。当前最需要把研究项目从“每周推进任务”改成“围绕关键假设的实验表”。",
+      "projects": [
+        {
+          "project": "Kernel Bug Hunting",
+          "weeks": [
+            "2026-05-03"
+          ],
+          "quality": "阶段、硬进展、失败模式和下周动作清楚；有真实外部反馈，如 maintainer acknowledgement 和 mainline/net tree 进展。",
+          "whatWorked": "sibling-fix reverse search 已产生 confirmed bug，并形成 PoC + patch + maintainer acknowledgement 的闭环。",
+          "managementGap": "缺少每周候选数、确认率、平均验证时间、被 reject 类型占比、LKML review lead time 和 token/API 成本。",
+          "nextConcreteMove": "建立 bug funnel 表：candidate → analyzed → PoC attempted → reported → acknowledged → patched，并记录每一步耗时和失败原因。"
+        },
+        {
+          "project": "Kernel Invariant Mining / Invariant Predicate",
+          "weeks": [
+            "2026-05-24",
+            "2026-05-31",
+            "2026-06-07"
+          ],
+          "quality": "方向持续推进，从 taxonomy 到 predicate，再到 4 个 invariant class 的统一描述格式；研究能力提升信号较强。",
+          "whatWorked": "已形成 cross_ns_info_leak、cross_ns_capability_gap、per_ns_quota_isolation、namespace_value_transform_missing 的第一版 predicate，并识别 taxonomy overlap。",
+          "managementGap": "缺少每个 predicate 的 positive/negative examples 数量、覆盖 subsystem、可执行 query 状态和验收标准。",
+          "nextConcreteMove": "为每个 invariant 建立一页规格：定义、primary/secondary 规则、3 个 positive example、3 个 negative example、对应 helper-pair、可执行 query、预期 FP 类型。"
+        },
+        {
+          "project": "Helper-Pair Catalogue",
+          "weeks": [
+            "2026-05-03",
+            "2026-05-24",
+            "2026-05-31",
+            "2026-06-07"
+          ],
+          "quality": "从经验 memory 逐步成为 candidate generation 的核心资产；数量从约 4 个扩展到约 12 个，有明确增长。",
+          "whatWorked": "学生已认识到 helper-pair 不是 coding style，而是 invariant 的局部实现载体，并开始分类 accessor→filter、namespace object→capability check、namespace value→transform。",
+          "managementGap": "粒度不统一，部分是函数级，部分接近 invariant 级；缺少 helper 语义 schema、wrapper/indirect helper 处理规则和质量评分。",
+          "nextConcreteMove": "建立 helper-pair schema：source helper、required helper、namespace dimension、invariant class、known wrappers、exceptions、reference fix commit、query pattern。"
+        },
+        {
+          "project": "Sibling-Fix Query Prototype / SmPL Query",
+          "weeks": [
+            "2026-05-24",
+            "2026-05-31",
+            "2026-06-07"
+          ],
+          "quality": "已从流程描述推进到 grep 原型，再到 SmPL 原型，是硬进展；但核心瓶颈已转为 precision。",
+          "whatWorked": "SmPL query 能命中已知修复点和 sibling implementation，说明 executable taxonomy 有初步可行性。",
+          "managementGap": "没有报告扫描范围、query 数量、候选数、TP/FP 比例、FP 类型分布、人工筛选时间，也没有和 grep baseline 对比。",
+          "nextConcreteMove": "下周只评估 2 个 query：固定扫描目录，输出候选总数、已知命中数、TP、FP-helper、FP-semantic、未知待查、人工分钟/候选，并决定是否引入 AST/MLTA。"
+        },
+        {
+          "project": "Oracle Router",
+          "weeks": [
+            "2026-05-24",
+            "2026-05-31"
+          ],
+          "quality": "提出 dynamic vs static oracle 分层，是证据边界意识的进步；但目前样本量不足。",
+          "whatWorked": "已观察到行为类 bug 通常需要 runtime evidence，结构类 bug maintainer 可能接受静态 reasoning。",
+          "managementGap": "没有完成 10+ bug 统计的后续证据；2026-06-07 未继续汇报该项目，进展缺失。",
+          "nextConcreteMove": "补一个 oracle decision table：bug class、是否需要 PoC、maintainer 是否接受、证据类型、最终状态，并至少覆盖 10 个历史 case。"
+        },
+        {
+          "project": "Candidate Generation",
+          "weeks": [
+            "2026-06-07"
+          ],
+          "quality": "已进入小规模试验，说明从方法资产转向自动发现能力；但仍处于定性阶段。",
+          "whatWorked": "使用 helper-pair 和 SmPL 扫描 net/、io_uring/，获得第一批 candidate，其中少量值得进一步分析。",
+          "managementGap": "缺少候选数量、筛选规则、LLM filter prompt/evaluator、成本、人工验证计划和成功判据。",
+          "nextConcreteMove": "定义 candidate ranking v0：输入 query hit，输出风险分数、需要人工检查的理由、可能 FP 类型；用 20 个候选做盲评。"
+        },
+        {
+          "project": "Reachability Pattern / MLTA",
+          "weeks": [
+            "2026-05-24"
+          ],
+          "quality": "识别 syscall → subsystem → helper reachability 是关键问题，但后续周报未显示继续推进。",
+          "whatWorked": "提出 proto_ops、netdev_ops、genl_ops、rtnl_link_ops 等 reachability pattern，并认识到 indirect call 路径难恢复。",
+          "managementGap": "缺少 MLTA 接入验证结果；2026-05-31 和 2026-06-07 没有继续报告，证据不足。",
+          "nextConcreteMove": "明确该项目是暂停、合并到 query precision，还是下周用一个 subsystem 做 MLTA 小实验。"
+        }
+      ],
+      "managementPattern": "该学生擅长持续推进一个主线并沉淀概念，但容易把多个资产并行展开后缺少统一实验账本。当前周报中的“下周最小可验证动作”质量较好，但验收指标还不够数字化。",
+      "nextManagementMove": "建立一张统一研究看板：每个 invariant/query/helper-pair 都有状态、输入数据、产出候选数、TP/FP、人工成本、依赖工具、下周验收标准和是否需要老师决策。"
+    },
+    "repeatedBlockers": [
+      "invariant 边界不稳定，多个 case 会同时属于多个 class，需要 primary/secondary invariant 规则。",
+      "helper 语义尚未结构化，helper-pair 粒度不统一，wrapper 和 indirect helper 会造成 query 误判。",
+      "query precision 不足，false positive 多，尚未有系统 TP/FP 统计。",
+      "oracle 标准仍未完全 formalize，dynamic vs static 的分界需要更多样本验证。",
+      "自动化路径清楚但 evaluator 缺失，尚不能证明 query library 相比人工流程的效率提升。",
+      "项目管理中 token/成本、候选规模、人工筛选时间在最近两周缺失。"
+    ],
+    "teacherQuestions": [
+      "你现在最想验证的核心假设是哪一个：invariant taxonomy 可执行、helper-pair 能生成高价值候选，还是 SmPL query precision 可控？下周能用什么数字证明？",
+      "对 2026-06-07 的 SmPL query，小范围测试到底产生了多少 candidate，其中多少是已知修复点、多少是 false positive、多少值得进一步 PoC？",
+      "primary invariant 和 secondary invariant 的判定规则准备怎么定义？如果一个 site 同时命中两个 invariant，query 和报告应该按哪个处理？",
+      "helper wrapper 和 indirect helper 造成的 FP，你准备优先用 AST、MLTA、wrapper catalogue 还是 LLM filter 解决？选择依据是什么？",
+      "如果要把这件事做成 Brainary 的 agent module，最小闭环输入、输出、memory schema、evaluator 和人工介入点分别是什么？"
+    ],
+    "nextIntervention": {
+      "priority": "建议老师下一次 meeting 不要主要讨论更多 invariant，而是要求学生拿出一个可量化的 query evaluation table。",
+      "intervention": "请学生选择 2 个 invariant、2 个 helper-pair、2 个 SmPL query，固定 net/ 或 io_uring/ 的扫描范围，报告候选数、TP、FP-helper、FP-semantic、人工筛选时间、是否产生新可上报 bug。",
+      "teacherRole": "老师可介入 invariant hierarchy 和 evaluator 设计，尤其帮助定义 primary/secondary invariant、成功判据和什么时候停止扩 catalogue。"
+    },
+    "studentFeedback": {
+      "summary": "你这四周最好的变化是：不再把研究成果等同于 bug 数量，而是开始构建能复用、能执行、能自动产生候选的知识系统。",
+      "whatImproved": [
+        "从 confirmed bug 和 patch 进展，升级到 invariant family、helper-pair catalogue、predicate mapping 和 SmPL query。",
+        "能主动识别失败模式：WAI、phantom bug、semantic drift、wrapper、predicate overlap、query precision。",
+        "能把 Brainary 映射从普通 memory 推进到 executable memory、query planner、reasoning workflow。",
+        "价值判断更清楚：现在知道 taxonomy 的价值不在分类，而在能否驱动自动发现。"
+      ],
+      "nextStep": "下一步不要继续主要扩展 taxonomy 数量，而是把已有 4 个 invariant 中的 2 个做成可评估闭环：query → candidate → LLM/人工分类 → PoC/静态 evidence → confirmed/rejected，并用数字证明它比手工 sibling-fix reverse search 更有效。"
+    },
+    "evidenceLinks": [
+      {
+        "claim": "研究能力在提升，不只是更忙。",
+        "evidence": "2026-05-03 主要是 confirmed bug、patch、PoC 和工具路径；2026-06-07 已经完成 4 个 invariant predicate、约 12 个 helper-pair、SmPL query prototype 和 candidate generation。"
+      },
+      {
+        "claim": "元认知从验证链意识升级到 executable memory 意识。",
+        "evidence": "2026-05-03 写到“正确性来自验证链，而不是推理链”；2026-06-07 写到“真正有价值的知识必须能够驱动行动”和“executable memory”。"
+      },
+      {
+        "claim": "价值函数从真实漏洞产出转向自动化科研资产。",
+        "evidence": "2026-05-03 给 bug 挖掘估值 20 万；2026-06-07 给 SmPL Query Prototype 估值 10 万、Candidate Generation 估值 8 万，并强调 taxonomy 的价值是生成 query。"
+      },
+      {
+        "claim": "证据等级仍未到强验证阶段。",
+        "evidence": "2026-05-24、2026-05-31、2026-06-07 多数 CoT's CoT 证据等级为 B；学生也多次写到 formalization 不够、样本数量少、precision 不足。"
+      },
+      {
+        "claim": "项目管理质量在 2026-05-24 最完整，之后量化信息减少。",
+        "evidence": "2026-05-24 报告包含原计划、实际、35–40 小时、工具、依赖、token/API 约 20–30 美元和老师介入点；2026-05-31 和 2026-06-07 主要写阶段、40 小时、风险和纠偏，缺少 token/成本和候选统计。"
+      },
+      {
+        "claim": "当前最大技术瓶颈是 precision，而非 recall。",
+        "evidence": "2026-06-07 CoT 增量写到 query 最大问题不是漏报而是误报；任务 3 写到 SmPL query 命中已知修复点和 sibling implementation，同时产生大量 false positive。"
+      },
+      {
+        "claim": "老师最应学到的一件事。",
+        "evidence": "四周报告共同指向：kernel bug hunting 的关键正在从更强分析转向 pattern/invariant → query/candidate → filtering → oracle verification 的闭环；2026-06-07 明确写到 taxonomy 的真正价值不是分类 bug，而是生成能够自动发现 bug 的 query。"
+      }
+    ]
+  }
+}

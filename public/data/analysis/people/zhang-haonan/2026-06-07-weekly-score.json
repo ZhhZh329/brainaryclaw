@@ -1,0 +1,60 @@
+{
+  "key": "person:zhang-haonan:2026-06-07:weekly-score",
+  "generatedAt": "2026-06-06T12:15:56.625Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "cafe1ab7807f3ada73b6950ad216e4e7e79ff18dd7bfae530fadc450e11b2f78",
+  "result": {
+    "hardProgress": {
+      "score": 17,
+      "reason": "本周有明确硬进展：完成语法 v0、打通可运行原型、实现可插拔 LLM 后端、工具自动转 TST、建立 baseline vs Tree 的 BFCL 小样本对照，并获得 simple 与 multiple 的首批结果。尤其是发现 entity-only 退化和 multiple 坍塌两个失败模式，说明不是只停留在设计层。但实验规模仍小，multiple 目前远低于 baseline，方法有效性尚未成立。",
+      "missingEvidence": "缺少完整实验表格、每个提示变体的具体配置、BFCL simple/multiple 的样本选择方式、失败案例明细、代码或运行日志链接。"
+    },
+    "cognitiveIncrement": {
+      "score": 13,
+      "reason": "认知增量较实：从“语法是瓶颈”推进到“阶段间耦合才是瓶颈”，并识别 simple 成功可能只是 entity 词表缩小搜索空间造成的假强度。对 negative result 的解释有机制推断，不只是报数。meta-cognition 中提出优先跑证伪型对照，也能反向改进实验策略。",
+      "missingEvidence": "缺少对 multiple 坍塌的更细粒度归因证据，例如是意图分解错误、匹配排序错误、槽位冲突还是 prompt 输出格式漂移。"
+    },
+    "cot2Depth": {
+      "score": 12,
+      "reason": "CoT's CoT 有两层有效反思：第一层指出“意图树由大模型生成”并未真正解决可信性，只是转移不可信点；第二层指出多阶段管线的局部修复会破坏下游输入假设。第二点有直接实验支撑，较强。第一点更像概念性风险识别，尚未量化。两点都标注为老师原本不一定不知道，说明新颖性有限，但对项目取舍有决策价值。",
+      "missingEvidence": "缺少“意图树错误率 vs 直接工具调用错误率”的量化对照；缺少阶段间耦合的自动监控指标定义和实际样例。"
+    },
+    "brainaryMapping": {
+      "score": 8,
+      "reason": "Brainary 映射较完整，覆盖 tool orchestration、risk modeling、benchmark/evaluation、cognitive control、memory，并能说明可能沉淀为中间层模块、可信性增益评测协议和阶段耦合 benchmark。映射不是泛泛而谈，和当前技术资产对应较紧。",
+      "missingEvidence": "缺少 Brainary 现有架构中的具体接入点、接口形态、与已有 tool orchestration 模块的差异、以及 memory/cache 如何落地的具体方案。"
+    },
+    "monetaryValue": {
+      "score": 6,
+      "reason": "报告明确给出买单方、场景和估值逻辑，认为可插拔工具调用安全中间层约 100 万人民币，并区分安全检测模块和带 cache/评测协议的增强版本。价值判断方向合理，但商业证据仍偏推断，引用 Amazon、Microsoft 等企业风险关注并不等于有采购证据或明确预算。",
+      "missingEvidence": "缺少真实客户访谈、竞品价格、采购预算、企业合规场景的具体痛点案例、可量化降本比例、工具调用错误率降低带来的经济收益测算。"
+    },
+    "projectManagement": {
+      "score": 14,
+      "reason": "项目管理信息充分：有阶段、原计划与实际完成对比、投入时间、下周投入、里程碑调整、资源需求、外部支持诉求、依赖关系、成本规划、关键路径和纠偏动作。对 multiple 坍塌的风险也没有掩盖。扣分点是下周修复路径仍偏粗，缺少拆成可执行 debug 子任务的日级计划。",
+      "missingEvidence": "缺少更细的下周排期，例如分别验证匹配排序、意图分解、slot 对齐、prompt 输出格式的实验顺序；缺少完成标准之外的停止条件和备选路线。"
+    },
+    "nextAction": {
+      "score": 8,
+      "reason": "下周最小可验证动作清楚：定位并修复 BFCL multiple 多工具匹配坍塌，使 Tree 方法在 multiple 上至少不低于 baseline。该目标有明确指标和项目关键路径意义。纠偏动作也给出两种可能路径：若是匹配排序问题则修匹配，若是意图分解问题则改 prompt/生成顺序。",
+      "missingEvidence": "缺少具体 debug protocol，例如需要先抽样多少个 multiple 失败案例、如何标注失败类型、每类失败对应什么修复实验、达到什么置信度才算修复。"
+    },
+    "evidenceQuality": {
+      "score": 3,
+      "reason": "证据质量中等偏低。优点是有 benchmark、baseline、指标和 n=20 小样本对照，且 negative result 被纳入分析。缺点是样本量小，缺少统计置信度、原始结果、prompt、代码、失败样例和跨模型验证。当前证据足以支持“发现问题”，不足以支持“方法有效”。",
+      "missingEvidence": "缺少原始实验日志、完整指标表、置信区间、随机种子、多次重复实验、跨模型结果、失败案例分类和可复现实验配置。"
+    },
+    "totalScore": 81,
+    "tier": "A",
+    "oneLineJudgment": "本周是高质量的小规模原型与证伪周：硬进展真实，负结果有价值，但方法有效性尚未成立，关键风险集中在 multiple 坍塌和意图树可信性未量化。",
+    "professorFollowUp": [
+      "要求学生下周先做 multiple 失败案例归因表，把错误拆成意图分解、工具排序、entity 对齐、slot 对齐、输出格式五类，而不是直接改 prompt。",
+      "要求补一张完整实验表：baseline、tree-naive、entity-only、slot-only、entity+slot 在 simple 和 multiple 上的工具准确率、参数精确匹配率、样本数和失败数。",
+      "要求把可信性论证收缩为可测问题：意图树错误率相对于直接工具调用到底降低了什么错误、增加了什么错误。",
+      "可以讨论是否继续走“LLM 生成意图树”路线；如果继续，必须把中间层价值定义为可解释定位和阶段约束，而不是端到端可信。",
+      "下周的最低通过线应是：multiple Tree 至少达到 baseline，并能解释此前 5% 坍塌的主因。"
+    ]
+  }
+}
