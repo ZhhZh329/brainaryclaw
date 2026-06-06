@@ -719,15 +719,76 @@ function focusDimension(title, value = {}) {
 }
 
 function detailPanel(title, value) {
-  const body = Array.isArray(value)
-    ? `<ul>${value.map((item) => `<li>${esc(item)}</li>`).join("")}</ul>`
-    : `<p>${esc(value || "暂无")}</p>`;
   return html`
     <article class="detail-panel">
       <h3>${esc(title)}</h3>
-      ${body}
+      ${renderValue(value)}
     </article>
   `;
+}
+
+function renderValue(value) {
+  if (value == null || value === "") return `<p class="muted">暂无</p>`;
+  if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+    return `<p>${esc(value)}</p>`;
+  }
+  if (Array.isArray(value)) {
+    if (!value.length) return `<p class="muted">暂无</p>`;
+    return `<ul>${value.map((item) => `<li>${renderInlineValue(item)}</li>`).join("")}</ul>`;
+  }
+  if (typeof value === "object") {
+    return `<dl class="analysis-kv">${Object.entries(value).map(([key, item]) => `
+      <dt>${esc(labelize(key))}</dt>
+      <dd>${renderInlineValue(item)}</dd>
+    `).join("")}</dl>`;
+  }
+  return `<p>${esc(String(value))}</p>`;
+}
+
+function renderInlineValue(value) {
+  if (value == null || value === "") return `<span class="muted">暂无</span>`;
+  if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") return esc(value);
+  if (Array.isArray(value)) {
+    return value.map((item) => renderInlineValue(item)).join("；");
+  }
+  if (typeof value === "object") {
+    const preferred = ["title", "name", "week", "evidence", "why", "reason", "action", "read", "text", "summary", "content"];
+    const parts = [];
+    for (const key of preferred) {
+      if (value[key] != null && value[key] !== "") parts.push(`${labelize(key)}：${renderInlineValue(value[key])}`);
+    }
+    if (!parts.length) {
+      for (const [key, item] of Object.entries(value)) {
+        if (item != null && item !== "") parts.push(`${labelize(key)}：${renderInlineValue(item)}`);
+      }
+    }
+    return parts.join("；");
+  }
+  return esc(String(value));
+}
+
+function labelize(key) {
+  const labels = {
+    title: "标题",
+    name: "姓名",
+    week: "周次",
+    evidence: "证据",
+    why: "原因",
+    reason: "原因",
+    action: "动作",
+    read: "读法",
+    text: "内容",
+    summary: "摘要",
+    content: "内容",
+    source: "来源",
+    section: "部分",
+    quote: "原文",
+    nextLift: "下一步",
+    suggestedRewrite: "改写示例",
+    whatYouDidWell: "做得好的地方",
+    nextStep: "下一步"
+  };
+  return labels[key] || String(key).replace(/([A-Z])/g, " $1").replace(/^./, (char) => char.toUpperCase());
 }
 
 function peerPanel(peers = []) {
