@@ -1,0 +1,146 @@
+{
+  "key": "person:wu-zhangfa:2026-05-31:horizontal",
+  "generatedAt": "2026-06-06T10:59:36.721Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "b8c6f509039062c84f5930082b1c299504c5974a33438bdaf56fa4632dbdb8a7",
+  "result": {
+    "overallLevel": "特别值得读",
+    "headline": "这份周报的独特价值不在新增实验结果，而在把 FlowSCAN 的真实训练目标、代码生效路径、论文公式和方法叙事重新对齐，是本周同伴中较少见的“代码—公式—论文可信闭环”型进展。",
+    "shortRead": "建议老师优先读原文。它能帮助老师快速判断：当前 FlowSCAN 正式版到底在训练什么、哪些历史模块应退出主方法、论文方法部分该如何重写。相对同周多数周报，这份报告的强信号是方法收敛、死代码审计、loss 系数追踪和元认知规则沉淀；需要下周补上的，是正式精简版实验结果与最小消融数据。",
+    "levelRationale": {
+      "whyThisLevel": "本周属于较值得优先阅读的一类。报告给出了具体代码路径、loss 公式、参数生效关系、删除模块清单、论文表述修正和下周最小消融计划，信息密度高，且直接影响论文可信度。",
+      "hardProgress": "硬进展主要是审计并精简 FlowSCAN 训练脚本：确认真实 loss 为 ranking supervision、adversarial score consistency、anomaly-side adversarial margin protection；删除 PMC、异常增强、未生效参数和相关 CLI；将 ADV_CONS_LAMBDA 从实际 2.0 调整到 0.2。",
+      "evidenceLevel": "证据质量很好，来自逐行代码审查、具体变量名、代码片段和删除清单；但正式精简版的主实验、消融结果和系数对比尚未在本周报告中出现，因此实验层证据仍需下周补齐。",
+      "topicValue": "主题价值很好：核心问题是鲁棒训练方法是否真实、简洁、可解释，以及论文公式是否能被代码支持。这对审稿可信度和方法主线收敛都有直接价值。",
+      "monetaryValue": "报告自估本周新增科研资产为 6000–9000 元人民币，估算较保守，主要来自代码审计、正式精简版整理、机制解释、消融规划和 Brainary workflow 抽象。",
+      "oneThingProfessorShouldLearn": "老师本周最该从这份周报学到的是：论文方法里的每个模块，都必须能追踪到真实生效路径，即是否被调用、是否进入 loss、是否参与 backward、最终系数是多少。"
+    },
+    "sameWeekPosition": {
+      "readPriority": "在同周 46 份有效周报中，这份属于“应优先读原文”的一类，尤其适合老师判断论文方法是否已经收敛到可投稿表达。",
+      "relativeProfile": "相对同伴，它不是以新 benchmark 数字或大规模实验取胜，而是以“审计真实机制、删除历史包袱、校正论文叙事”形成独特信号。和有端到端实验结果的同伴相比，它的实验结果需要下周兑现；和偏概念设计的同伴相比，它的代码证据和项目收口更具体。",
+      "distinctiveSignal": "本周最独特的信号是把“代码中存在的变量”与“实验中真实生效的机制”明确分开，并将其上升为可自动化的 Dead-Code-to-Method Auditor 和 Loss Coefficient Tracer。",
+      "relativeToPeers": "同周有不少同伴在做接口契约、working memory、tool orchestration、安全评测和实验闭环；Wu Zhangfa 的相对独特点是把这些自动化科研思想落在一个具体论文方法的代码真实性审计上，直接减少方法表述和实现脱节的可能。"
+    },
+    "highlightedSignals": [
+      {
+        "signal": "硬进展：训练目标被重新确认并精简",
+        "evidence": "报告明确当前实际 loss 是 L_rank + λ_cons L_cons_adv + λ_adv L_adv，并指出 l_cons 实际是 ADV_CONS_LAMBDA * MSE(s_pgd, s_orig)，不是 clean consistency。"
+      },
+      {
+        "signal": "价值判断：主动删除贡献不明显的模块",
+        "evidence": "报告决定将 L_PMC 从正式主版本删除，只保留为历史消融项；理由是 PMC 只约束 reliable negative prototype compactness，不直接拉开异常和正常分数，也可能压缩正常流量多模态结构。"
+      },
+      {
+        "signal": "项目管理：下周动作具备最小验证结构",
+        "evidence": "下周计划包括正式精简版主实验、formal / w/o cons / w/o adv 三组最小消融、λ_cons 系数对比、论文方法部分同步修改、算法伪代码与代码一致性检查。"
+      },
+      {
+        "signal": "元认知变化：从模块堆叠转向最小有效机制",
+        "evidence": "报告明确提出复杂训练系统最终应回到最小有效机制，并把当前核心收敛为 clean ranking + adversarial score consistency + anomaly-side margin protection。"
+      },
+      {
+        "signal": "Brainary 映射：从一次项目审计抽象为可复用 agent",
+        "evidence": "报告提出 Dead-Code-to-Method Auditor、Loss Coefficient Tracer、Defense-Mechanism Explainer 三个可自动化能力。"
+      }
+    ],
+    "focusDimensions": {
+      "valueJudgment": {
+        "read": "非常好。价值判断的关键不在“加了更多模块”，而在能判断哪些模块应退出正式方法。报告把 PMC、异常增强、clean consistency schedule 从正式叙事中剥离，让创新点集中到 selective authorization-based asymmetric adversarial defense。",
+        "evidence": "报告指出 PMC 开关前后表现接近，有时带来性能下降；异常增强虽然有参数和函数，但主训练路径没有调用；CONS_LAMBDA_START / END 没有进入当前 loss。",
+        "nextLift": "下周需要用正式精简版实验和最小消融支撑这次价值判断，尤其要证明删除 PMC 与异常增强后 clean 和 robust 指标仍保持稳定。"
+      },
+      "projectManagement": {
+        "read": "很好。报告体现了从代码审计、脚本清理、论文口径调整到下周实验设计的闭环管理。下周动作不是泛泛继续做，而是围绕正式版、消融、论文方法、伪代码一致性四条线推进。",
+        "evidence": "报告列出删除 PMC、删除异常增强、删除死参数、删除 CLI 开关等具体清理项；下周明确跑 Clean AUC / AUPR / F1、PGD-20、PGD-100、AutoAttack、fixed threshold Precision / Recall / FPR。",
+        "nextLift": "建议把下周计划再压成一张实验矩阵：每组实验的目的、预期观察、通过条件、如果结果不符合预期时的处理动作。这样 meeting 时老师能更快判断是否进入论文主表。"
+      },
+      "metacognition": {
+        "read": "非常好。元认知增量清晰：不能看代码里有没有变量，而要追踪 config → function call → loss term → optimizer update；不能按记忆解释系数，而要按最终 total loss 的真实表达式解释。",
+        "evidence": "报告用 AUGMENT_ANOMALY、CONS_LAMBDA_START、PMC_LAMBDA、augment_batch 等例子说明“存在的变量”不等于“生效的机制”；并把每个 loss 项追踪到最终 total loss 的实际系数作为代码审计规则。",
+        "nextLift": "可以把这套元认知规则进一步固化为项目检查表：每个论文模块必须对应代码入口、调用路径、loss 入口、梯度路径、最终系数、消融位置六项。"
+      }
+    },
+    "peerReferences": [
+      {
+        "name": "Feng Yebo",
+        "why": "同周也体现了代码审计和系统硬化，但 Feng Yebo 的审计落在实盘 quant-agent 的真实 bug、测试增长和多 Agent 重扫上；Wu Zhangfa 的独特点是把审计落在论文方法真实性与 loss 生效路径上。"
+      },
+      {
+        "name": "Guo Yaoqi",
+        "why": "Guo Yaoqi 本周做的是两条研究线合并、working memory 适配和 benchmark 假设显式化；可作为 Wu Zhangfa 后续把 FlowSCAN 精简版接成端到端实验主线的项目管理参照。"
+      },
+      {
+        "name": "Hou Xinmeng",
+        "why": "Hou Xinmeng 有完整 train/val/test 流程和 MathVista 数字结果，实验层证据更充分；Wu Zhangfa 当前更强在方法审计和论文一致性，下周需要补上类似的定量结果闭环。"
+      },
+      {
+        "name": "Qian Jiayu",
+        "why": "Qian Jiayu 把 Tumor 项目整理成 evidence package、claim-evidence relation 和 mechanism diagnostics；这对 Wu Zhangfa 下周把 Formal、w/o cons、w/o adv 结果转成论文证据链很有参照意义。"
+      },
+      {
+        "name": "Lyuye Zhang",
+        "why": "Lyuye Zhang 把管理学概念蒸馏成自动化实验闭环并给出量化对比；Wu Zhangfa 已提出 Dead-Code-to-Method Auditor 等 agent 想法，下一步可参考这种方式把审计规则变成可运行 workflow。"
+      },
+      {
+        "name": "Wang Suyuan",
+        "why": "Wang Suyuan 的周报有具体安全实验数字和证据等级；Wu Zhangfa 的报告在代码证据上很好，但实验数字尚未出现，可借鉴其‘机制判断 + 控制变量实验’的表达方式。"
+      }
+    ],
+    "growthOpportunities": [
+      "把正式精简版的实验结果尽快补齐，尤其是 clean 与 robust 指标的同步变化，避免方法收敛只停留在逻辑层。",
+      "对 ADV_CONS_LAMBDA = 0.0 / 0.2 / 1.0 做最小系数对比，明确 0.2 是否真是合适强度，而不是仅由代码系数纠偏推出。",
+      "删除 PMC 后，需要把论文创新点重新写成一个主贡献链：授权样本选择、非对称攻击方向、adversarial score consistency、异常侧 margin preservation。",
+      "Brainary 映射已经很清楚，但还停留在 agent 设想；建议下周至少产出一个审计 checklist 或脚本雏形，用一份代码自动输出“生效 loss 清单”。",
+      "金额估算较保守且有分项依据，下一步可以把它和可复用资产绑定，例如代码审计 checklist、正式训练脚本、论文方法重写段落、消融表模板。"
+    ],
+    "bossAction": {
+      "readOriginal": true,
+      "meetingQuestions": [
+        "你现在能否用一张图说明 FlowSCAN 正式版从输入样本到 total loss 的完整生效路径？请标出哪些样本进入 PGD，哪些样本进入 consistency，哪些样本进入 anomaly margin。",
+        "删除 PMC 后，论文的核心创新句应该怎么写？请给出一版摘要级表述和一版方法部分表述。",
+        "ADV_CONS_LAMBDA 从 2.0 改为 0.2 的依据目前是代码系数纠偏。下周实验中你准备看哪三个指标来判断它是否合适？",
+        "如果 w/o cons 和 Formal 结果接近，你会如何处理 adversarial score consistency 在论文中的地位？",
+        "你提出的 Dead-Code-to-Method Auditor 最小版本能否先做成 checklist 或静态脚本？输入一个训练脚本，至少输出哪些 config 真正进入 total loss。"
+      ],
+      "nextWeekWatch": [
+        "正式精简版主实验是否完成，并覆盖 Clean、PGD-20、PGD-100、AutoAttack 和 fixed threshold 指标。",
+        "formal / w/o cons / w/o adv 三组最小消融是否能支撑当前方法主线。",
+        "λ_cons = 0.0 / 0.2 / 1.0 的结果是否说明 0.2 是合理选择。",
+        "论文方法、公式、算法伪代码是否全部删除 PMC 核心地位和 clean consistency 默认描述。",
+        "是否产出代码审计规则的可复用版本，而不仅是本次人工审计记录。"
+      ]
+    },
+    "evidenceLinks": [
+      {
+        "claim": "真实训练目标被确认",
+        "evidence": "原文第一部分写明当前实际生效训练目标为 L_rank + λ_cons L_cons_adv + λ_adv L_adv，并说明 L_cons 是 adversarial consistency。"
+      },
+      {
+        "claim": "PMC 被移出正式方法",
+        "evidence": "原文第一部分第二条说明 L_PMC 只对 reliable negative 做 prototype compactness，新增信息有限，最终决定正式主版本删除。"
+      },
+      {
+        "claim": "代码清理已发生",
+        "evidence": "原文列出删除 L_PMC、PMC_LAMBDA、USE_PMC_LOSS、异常增强代码、AUGMENT_ANOMALY、CONS_LAMBDA_START / END、use-pmc CLI 开关等。"
+      },
+      {
+        "claim": "系数理解被纠正",
+        "evidence": "原文第二部分说明实际 l_cons = ADV_CONS_LAMBDA * MSE(s_pgd, s_orig)，CONS_LAMBDA_START 未参与 loss，因此 ADV_CONS_LAMBDA = 2.0 实际就是 2.0。"
+      },
+      {
+        "claim": "下周实验路径明确",
+        "evidence": "原文第四部分提出正式精简版主实验、formal / w/o cons / w/o adv 最小消融、λ_cons 对比、论文方法同步修改和算法伪代码一致性检查。"
+      },
+      {
+        "claim": "Brainary 自动化路径明确",
+        "evidence": "原文第六部分提出 Dead-Code-to-Method Auditor、Loss Coefficient Tracer、Defense-Mechanism Explainer 三个 Brainary agent 能力。"
+      },
+      {
+        "claim": "实验结果证据仍需下周补齐",
+        "evidence": "原文当前没有给出正式精简版的 Clean、PGD、AutoAttack 或消融实验数值，只给出了下周将要跑的指标和实验组。"
+      }
+    ]
+  }
+}
