@@ -1,102 +1,65 @@
 {
   "key": "person:hou-xinmeng:2026-05-24:weekly-score",
-  "generatedAt": "2026-06-06T02:02:12.210Z",
+  "generatedAt": "2026-06-06T08:02:08.431Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "a9fe46c0fdf3c9c7b220fc0b8f3ce0040741def0ad5e73863b2da92fac054901",
   "result": {
-    "hardProgress": {
-      "score": 17,
-      "reason": "本周有明确硬产出：完成 MARS 到 MIRAGE 的概念映射，跑通 train→val→test 端到端流程，得到 ASR 20.5%、相对原始 combined attack 基线 +8.5% 的结果，生成 4800 行带 angle 标签的数据，并形成三段式 pipeline、三个 agent、策略库和 ASB 对比协议。还识别了 B1 改写导致 25.2% 样本无 observation 的具体失败模式。扣分点是完整 baseline 对比矩阵尚未完成，当前结果只在一个 victim 和一个 attack generator 设置下成立，离“方法有效性被充分证明”还有距离。",
-      "missingEvidence": [
-        "缺少完整主表：5 条 baseline、多个 victim、多个 attack generator、多个 defense 的对比尚未完成。",
-        "缺少 ASR 20.5% 的置信区间、重复实验方差或显著性检验。",
-        "缺少实验日志、样本划分、随机种子、失败样例等可复核材料。",
-        "未量化与 AutoHijacker、AdapTools 等 SOTA 的差距。"
-      ]
+    "week": "2026-05-24",
+    "name": "Hou Xinmeng",
+    "scores": {
+      "hardProgress": {
+        "score": 17,
+        "reason": "本周有明确硬进展：完成 MARS 到 MIRAGE 的结构迁移，跑通 train 5 轮、val 选 angle、test 黑盒应用的端到端流程；产出 4800 行带 angle 标签的分析数据；形成三段式 pipeline 和三个 agent；报告了 ASR 从 12% 到 20.5% 的绝对提升 8.5 个点，并识别出 B1 改写导致 25.2% 样本无 observation 的具体失败模式。扣分点是完整 baseline 对比矩阵尚未完成，SOTA 差距尚未量化，PAIR/TAP 等 baseline 只完成部分，当前硬结果仍是小规模首轮实验。",
+        "missingEvidence": "缺少完整实验表、各 baseline 的同样协议结果、置信区间或显著性检验、随机种子、样本划分细节、ASR 计算脚本或日志链接。"
+      },
+      "cognitiveIncrement": {
+        "score": 14,
+        "reason": "认知增量强。报告不仅复述 MARS，而是将其抽象为“稀疏反馈下的群体级模式抽取器”，并提出攻击优化是“半收敛任务”的判断，解释了为什么有明显增益但绝对 ASR 不高；还提出 meta-cognition 是“反馈稀疏度放大器”而非反馈替代品。这些判断直接服务于方法边界、实验设计和 Brainary 模块化方向。扣分点是部分结论仍来自单组 ASB 实验，外推到通用 sparse-feedback 任务还需要更多任务验证。",
+        "missingEvidence": "缺少对“半收敛任务”判断的可操作定义，缺少 base signal entropy 或 signal ceiling 的实际估计，缺少不同 group_key 的对照实验。"
+      },
+      "cot2Depth": {
+        "score": 14,
+        "reason": "CoT's CoT 写得深入，三条都包含内容、老师是否原本知道、信息差、新增认知、自动化潜力、沉淀形式和证据等级。尤其是把 Hybrid validation 抽象为任务异质性的显式分区，以及把对抗任务反思扩展为 self/opponent 双视角，具备方法论价值。扣分点是 CoT's CoT 1 和 3 的证据等级为 B，且第三条 asymmetric two-view reflection 目前主要由 Joint angle 选中率 60% 间接支持，尚无单视角 vs 双视角消融。",
+        "missingEvidence": "缺少 defender_analysis 去除实验、single-view 与 dual-view 的直接对比、不同异质性强度任务上的 hybrid 增益曲线、CoT's CoT 结论对应的反例分析。"
+      },
+      "brainaryMapping": {
+        "score": 9,
+        "reason": "Brainary 映射清楚，分别落到 Memory + Reasoning、Cognitive Control、Risk Modeling 三层，并提出 GroupAggregatedMemory、SparseFeedbackReflector、HeterogeneityProbe、HybridRouter、AsymmetricReflectionPair 等可沉淀模块。映射不是泛泛而谈，而是指出 Brainary 当前 memory 偏 per-instance、缺少 group-aggregated 层，risk modeling 偏单 agent 视角。扣 1 分是因为接口规格、与现有 Brainary schema 的兼容方式、落地优先级还不够工程化。",
+        "missingEvidence": "缺少 Brainary 当前 memory schema 的具体对照，缺少拟新增模块的输入输出 JSON/schema，缺少最小集成 demo 或调用链设计。"
+      },
+      "monetaryValue": {
+        "score": 6,
+        "reason": "报告给出了三个金额估算：MIRAGE 攻击方法 30 万、SparseFeedbackReflector 80 万、HeterogeneityProbe + HybridRouter 20 万，并说明了参考对象和计算逻辑。优点是有金额、有拆分、有商业对象。但估值较多依赖类比和主观折算，缺少真实客户访谈、采购预算、替代方案成本、license 可售边界和 IP 风险评估；“本周产出 130 万”中 80 万依赖未来模块复用，不能等同于当前已实现价值。",
+        "missingEvidence": "缺少潜在买方访谈、竞品实际报价证据、可交付物定义、license 范围、合规风险、客户愿意付费的验证、从研究原型到产品的工程成本估算。"
+      },
+      "projectManagement": {
+        "score": 13,
+        "reason": "项目管理信息完整：有项目阶段、原计划与实际完成、时间投入、下周时间、里程碑、资源、算力、API 成本、依赖关系、关键路径、延期影响、进度偏差和纠偏动作。尤其明确承认 baseline 对比慢了约 3 天，并将原因归为 ASB adapter 工程化预估不足。扣分点是下周 12 组对比加 5 条 baseline 的计划较紧，风险缓冲不足；6/1 完成所有矩阵的可行性需要进一步拆分到每日任务和验收标准。",
+        "missingEvidence": "缺少每日排期、baseline adapter 的完成状态列表、失败回滚方案、实验队列优先级、如果 gpt-3.5 或 gpt-4o-mini 调用受限时的替代计划。"
+      },
+      "nextAction": {
+        "score": 9,
+        "reason": "下周动作具体且可验证：跑完 3 victim × 2 attack generator × 2 defense 的 12 组对比，并与 5 条 baseline 出主表；对 Joint angle 60% 选中率做消融，去掉 Defender angle 重跑以判断是否冗余。这两个动作都直接对应当前最大不确定性：外部竞争力和双视角反思是否必要。扣 1 分是因为动作量偏大，且没有明确最低验收标准，例如若只跑完部分矩阵，优先级如何排序。",
+        "missingEvidence": "缺少每组实验的预计耗时、优先级排序、成功/失败判据、消融所需样本量、如果结果不显著时的决策规则。"
+      },
+      "evidenceQuality": {
+        "score": 4,
+        "reason": "证据质量较好但未满分。报告提供了关键数字：ASR 20.5%、基线 12%、Baseline 1 为 12.5%、4800 行数据、30 个簇、Joint angle 约 60%、B1 无 observation 25.2%、token 和 API 成本等；也主动标注 CoT's CoT 证据等级。扣分主要因为这些数字以文字报告形式出现，缺少可复核材料、实验表格、日志、统计显著性和完整 baseline 结果。",
+        "missingEvidence": "缺少原始 CSV 样例、实验配置文件、运行日志、seed、ASB adapter patch 说明、主结果表、错误案例、显著性检验、baseline 复现实验记录。"
+      }
     },
-    "cognitiveIncrement": {
-      "score": 13,
-      "reason": "认知增量较强。报告不只是描述实验，而是提炼出 MARS 的核心机制是“稀疏反馈下的群体级模式抽取”，并进一步判断攻击优化是“半收敛任务”：工具调用成功与否是收敛部分，prompt 写法是发散部分，因此能解释为什么 ASR 有明显提升但绝对值仍不高。对 meta-cognition 的边界也有清楚认识，即它是反馈稀疏度的放大器，不是能力生成器。扣分点是部分认知仍是合理解释而非严格验证，例如“半收敛任务”与 ASR 增量之间的因果关系还没有实验支撑。",
-      "missingEvidence": [
-        "缺少用不同反馈稀疏度任务验证“稀疏反馈放大器”判断的实验。",
-        "缺少对“半收敛任务”定义的可操作指标。",
-        "缺少 base signal entropy 或 signal ceiling 的实际估计结果。",
-        "关于小模型元认知反思具备跨任务 robustness 的判断，目前只有一组 MIRAGE 实验支撑。"
-      ]
-    },
-    "cot2Depth": {
-      "score": 13,
-      "reason": "CoT's CoT 部分质量高，三条都超过普通实验总结：第一条把 MARS 从教育叙事抽象为 SparseFeedbackReflector；第二条把 Hybrid validation 抽象为任务异质性显式分区；第三条提出对抗任务需要 self/opponent 非对称双视角反思。每条都写了信息差、老师是否原本不知道、自动化沉淀形式和证据等级。扣分点是“老师原本不知道”的判断有时偏主观，且第三条 dual-view reflection 的证据还停留在 Joint angle 选中率，缺少直接消融。",
-      "missingEvidence": [
-        "缺少 single-view 与 dual-view reflection 的 ablation。",
-        "缺少不同 group_key 下策略质量和 ASR 的对照实验。",
-        "缺少 Hybrid validation 对异质性越高增益越大的直接 MIRAGE 内部验证。",
-        "部分引用 MARS 原文统计结果，但周报未提供对应表格或出处片段。"
-      ]
-    },
-    "brainaryMapping": {
-      "score": 9,
-      "reason": "Brainary 映射具体且有模块化方向：GroupAggregatedMemory、SparseFeedbackReflector、HeterogeneityProbe、HybridRouter、AsymmetricReflectionPair 都对应到 Brainary 的 memory、cognitive control、risk modeling 层。报告明确指出当前 Brainary memory 偏 per-instance，缺少 group-aggregated schema，这对系统设计有直接启发。扣 1 分是因为接口仍停留在概念层，尚未给出 Brainary 中可落地的数据结构、调用时机和评估指标。",
-      "missingEvidence": [
-        "缺少 Brainary memory layer 的具体 schema 修改草案。",
-        "缺少模块输入输出字段的正式定义和示例。",
-        "缺少这些模块接入 Brainary 后的评估协议。",
-        "缺少与 Brainary 主线团队的集成计划确认。"
-      ]
-    },
-    "monetaryValue": {
-      "score": 7,
-      "reason": "金额估算比普通周报更具体，拆成 MIRAGE 攻击方法本体、SparseFeedbackReflector 模块、HeterogeneityProbe/HybridRouter 三项，并给出 30 万、80 万、20 万人民币的估值逻辑。价值来源也区分了红队评测、防御数据、Brainary 横向模块。扣分主要因为商业证据较弱：引用的企业报价和融资估值没有直接证明该模块能卖到对应价格，且 130 万合计价值中很大部分依赖未来复用，当前本周产出尚未达到可销售状态。",
-      "missingEvidence": [
-        "缺少真实客户访谈、采购意向或需求验证。",
-        "缺少与现有 red-team 工具在成本、成功率、部署难度上的量化比较。",
-        "缺少 benchmark license 定价的可核查来源。",
-        "缺少 Brainary 模块对整体估值贡献的实际财务模型。",
-        "未区分当前已实现资产价值与未来潜在产品价值。"
-      ]
-    },
-    "projectManagement": {
-      "score": 13,
-      "reason": "项目管理信息完整：写清楚阶段、原计划、实际完成、投入时间、下周时间、里程碑、资源、算力、数据、API 成本、依赖关系、关键路径、延误原因和纠偏动作。尤其是承认 baseline 对比慢了约 3 天，并定位为工程化预估不足。扣分点是下周计划较激进：12 组对比加 5 条 baseline 并行完成，且 adapter 合并只预估 1 天，风险可能被低估。",
-      "missingEvidence": [
-        "缺少 baseline adapter 当前完成度的具体列表。",
-        "缺少每条 baseline 跑完所需时间和失败风险估计。",
-        "缺少 6/1 前未完成时的降级方案。",
-        "缺少论文 draft 的章节分工或最小可投稿版本定义。"
-      ]
-    },
-    "nextAction": {
-      "score": 9,
-      "reason": "下周动作非常具体且可验证：跑完 3 victim × 2 attack generator × 2 defense 的 12 组对比，形成与 5 条 baseline 并列的主表；对 Joint angle 60% 选中率做去掉 Defender angle 的消融。这两个动作都直接打在当前最大不确定性上：方法是否能超过 SOTA、Defender angle 是否冗余。扣 1 分是因为没有给出如果算力、API 或 baseline 工程阻塞时的优先级排序。",
-      "missingEvidence": [
-        "缺少 12 组实验的优先级顺序。",
-        "缺少最小可发表主表的定义。",
-        "缺少消融实验的判定阈值，例如 ASR 下降多少才算 Defender angle 有价值。",
-        "缺少失败时的备用路径。"
-      ]
-    },
-    "evidenceQuality": {
-      "score": 4,
-      "reason": "证据质量中上。报告提供了关键数字：ASR 20.5%、基线 12%、Baseline 1 为 12.5%、4800 行数据、30 个簇、Joint angle 约 60%、无 observation 25.2%。这些数字能支持当前周的阶段性判断。但证据还不是论文级：缺少完整表格、统计显著性、重复实验、样本级审计和 baseline 全量结果。",
-      "missingEvidence": [
-        "缺少原始实验结果表。",
-        "缺少重复运行和方差。",
-        "缺少统计显著性检验。",
-        "缺少失败案例和成功案例的样本展示。",
-        "缺少 baseline 实现正确性的验证材料。"
-      ]
-    },
-    "totalScore": 85,
+    "totalScore": 86,
     "tier": "A",
-    "oneLineJudgment": "这是一个高质量的原型突破周：方法迁移、端到端实验、认知抽象和 Brainary 映射都成立，但距离 S 级还差完整 baseline 矩阵、关键消融和可复核证据。",
+    "oneLineJudgment": "这是一个高质量的单周进展：已经从范式迁移、端到端实验、认知抽象、Brainary 模块化和项目管理上形成闭环，但当前仍受限于完整 baseline 对比和消融证据不足，尚不能按 S 级结论处理。",
     "professorFollowUp": [
-      "优先追问：ASR 20.5% 相比 AutoHijacker、AdapTools 到底处于什么位置；没有这张主表前，不要接受“SOTA 之一”的判断。",
-      "要求下周必须交付一张最小主表：至少包含当前 MIRAGE、combined attack 原始基线、Baseline 1、PAIR、TAP，以及 AutoHijacker/AdapTools 中至少一条可比结果。",
-      "要求做 Defender angle 消融：如果去掉 Defender angle 后 ASR 不下降，应立刻压缩策略库并把论文叙事从“双视角必要”改为“Joint synthesis 可能有效”。",
-      "要求补一个 group_key 消融：比较按 agent、按 topic、按 agent+topic 聚类的效果，否则“grouping function 是核心杠杆”的结论证据不足。",
-      "老师本周最应该学到的一点：MARS/MIRAGE 的真正可迁移价值不是让 agent 反思更久，而是让系统自动发现能压实稀疏反馈的 group_key；Brainary 下一步应优先考虑 AutoGrouper 或 GroupAggregatedMemory。"
+      "优先追问：20.5% ASR 的结果是否在相同 200 sample、相同 victim、相同 attack generator、相同 defense 设置下与所有 baseline 可比？请下周必须给出主表。",
+      "要求补一个最关键消融：去掉 defender_analysis 或 Defender angle 后，ASR 是否下降？这决定 asymmetric two-view reflection 是真贡献还是叙事包装。",
+      "要求补 group_key 对照：至少比较 (agent, topic)、(agent, tool)、(attack_type, tool) 三种聚类方式，否则“grouping function 是核心杠杆”的结论证据还不够。",
+      "要求把 SparseFeedbackReflector 写成最小接口规格：输入字段、输出字段、训练/验证/测试调用流程，以及如何接 Brainary memory layer。",
+      "提醒估值部分暂时只能作为机会规模，不应作为已实现商业价值；下周若继续写金额，需要区分“当前可交付价值”和“未来复用期权价值”。",
+      "教授本周最该学到的一件事：MARS 的可迁移价值可能不在“像人类一样反思”，而在“为稀疏反馈任务找到正确 group_key 并做群体级策略抽取”；Brainary 下一步应关注 AutoGrouper，而不是单纯加深单实例反思。"
     ]
   }
 }

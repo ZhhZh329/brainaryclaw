@@ -1,59 +1,58 @@
 {
   "key": "person:guo-yaoqi:2026-04-12:weekly-score",
-  "generatedAt": "2026-06-06T06:01:26.806Z",
+  "generatedAt": "2026-06-06T08:01:30.102Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "18d60da6608f9990b25b514e4f2bd278a3569512c927800482673a7e1e8aba25",
   "result": {
-    "hardProgress": {
-      "score": 14,
-      "reason": "本周有明确硬进展：完成了 RCA-to-Repair 接入，做了不同 RCA 信息粒度对 Repair 成功率影响的消融实验，发现“过细粒度信息反而降低修复效果”的失败模式，并确认端到端链路已打平 Baseline。进展不是停留在想法层面，而是围绕自动化修复闭环做了联调和对照实验。但硬进展仍受限于结果未超过 Baseline，且 Reproduction Test 方法横向对比只被提到，没有给出具体方法、数据和结论。",
-      "missingEvidence": "缺少 Benchmark 名称、样本量、Baseline 数值、各粒度设置下的修复成功率、横向对比实验表格、失败案例数量、统计显著性和具体复现实验配置。"
+    "week": "2026-04-12",
+    "name": "Guo Yaoqi",
+    "scores": {
+      "hardProgress": {
+        "score": 14,
+        "reason": "本周有明确硬进展：完成了 Reproduction Test Generation 方法横向对比，跑通 RCA Agent 到 Repair Agent 的端到端链路，并做了 RCA 信息粒度对 Repair 成功率影响的消融实验。关键结果是发现过细粒度 RCA 会降低 Repair 表现，目前端到端效果打平 Baseline。但报告没有给出具体 benchmark 名称、样本数、成功率数值、各粒度配置结果表，因此硬进展可信但不可复核。",
+        "missingEvidence": "缺少横向对比实验表、不同粒度条件下的修复成功率、Baseline 数值、benchmark 规模、失败案例、prompt/context 配置、实验重复次数。"
+      },
+      "cognitiveIncrement": {
+        "score": 12,
+        "reason": "认知增量清楚：RCA 在自动修复流水线中的定位不是 Solution Provider，而是 Localization Pointer；并且验证了“RCA 越详细越好”是错误假设。这是对方法设计有直接指导意义的认知更新。扣分点在于该结论目前主要由报告叙述支撑，缺少可量化证据来说明信息粒度与修复率之间的关系曲线。",
+        "missingEvidence": "缺少证明“block-level 优于 line-level/伪代码级”的数据对比；缺少哪些任务中被过细 RCA 带偏的具体示例。"
+      },
+      "cot2Depth": {
+        "score": 12,
+        "reason": "CoT's CoT 有较强抽象深度，提出了“信息粒度陷阱”“认知束缚”“模块间接口是注意力塑造”等机制性判断，并能上升到多智能体协作中的信息压缩策略。第二条关于 Reproduction Test、RCA、Repair 的反馈耦合较合理，但报告也承认不是老师原本不知道的内容，因此新颖性较弱。整体深度好，但还没有形成可验证的机制模型或边界条件。",
+        "missingEvidence": "缺少信息粒度阈值的定义、不同任务类型下是否成立的边界、如何区分信息过载与 RCA 本身错误导致失败的证据。"
+      },
+      "brainaryMapping": {
+        "score": 7,
+        "reason": "报告能把本周发现映射到 Brainary 的 cognitive control 和 workflow management，并提出可沉淀为 RCA-to-Repair Context Filter 模块与 Workflow 协议。这一映射方向明确，和自动化科研系统相关。但仍停留在概念层，缺少模块接口、输入输出 schema、调度策略、评价指标等工程化细节。",
+        "missingEvidence": "缺少 Context Filter 的具体设计、Brainary 中现有模块如何接入、协议字段、自动调节粒度的控制逻辑。"
+      },
+      "monetaryValue": {
+        "score": 4,
+        "reason": "题目本身具有潜在商业价值，因为自动代码修复若成功可节省工程成本。但本周 $40,000 的估值主要来自“$2M 年化增益 × 2% 研发权重”，属于主观分摊，缺少与实际性能提升、节省人力、客户需求或论文/产品转化概率挂钩的计算。尤其当前效果只是打平 Baseline，货币价值需要明显折扣。",
+        "missingEvidence": "缺少 $2M 年化增益来源、2% 权重依据、成功率提升对应的经济价值、潜在用户场景、替代方案成本、商业化路径。"
+      },
+      "projectManagement": {
+        "score": 11,
+        "reason": "项目管理信息较完整：写明本周投入约 40 小时、下周预计 40 小时、API 成本约 50 SGD、当前进度不符合预期、偏差原因、纠偏动作和是否需要老师介入。优点是能承认未超过 Baseline，并把卡点定位到 RCA-to-Repair 的信息粒度。扣分点是下周计划仍偏粗，没有具体实验矩阵、时间拆分、成功/失败判据和风险预案。",
+        "missingEvidence": "缺少每日/阶段任务拆解、消融变量列表、预期样本量、停止条件、若下周仍不超过 Baseline 的备选路线。"
+      },
+      "nextAction": {
+        "score": 7,
+        "reason": "下周最小可验证动作是测试 RCA 信息粒度动态调节策略，寻找最佳 prompt/context 组合，并在 Benchmark 上超过 Baseline。方向与本周卡点一致，具备验证性。但行动描述还不够最小化和操作化，缺少具体配置组合、评价指标、预期提升幅度和决策规则。",
+        "missingEvidence": "缺少要测试的粒度等级、prompt 模板数量、benchmark 名称、超过 Baseline 的最低阈值、实验完成后如何选择最优策略。"
+      },
+      "evidenceQuality": {
+        "score": 2,
+        "reason": "报告中有实验性语言和部分数值线索，例如 94% 行级定位、端到端打平 Baseline、证据等级 L3。但证据没有展开，无法复核。没有表格、日志、样例、统计显著性或失败案例，因此证据质量偏弱。",
+        "missingEvidence": "缺少原始实验结果、成功率表、样本规模、任务列表、baseline 定义、失败案例、prompt 版本、实验日志链接。"
+      }
     },
-    "cognitiveIncrement": {
-      "score": 13,
-      "reason": "认知增量清晰：将 RCA 的角色从“Solution Provider”重新定义为“Localization Pointer”，并通过实验否定了“RCA 越详细越好”的直觉。这是对多 Agent 自动修复工作流中信息传递机制的有效更新，能够影响后续系统设计。",
-      "missingEvidence": "缺少能够支撑该认知转变的具体实验对照数据，例如 block-level、line-level、伪代码级提示分别导致多少成功或失败。"
-    },
-    "cot2Depth": {
-      "score": 13,
-      "reason": "CoT's CoT 有较好深度，提出了“信息粒度陷阱”“认知束缚”“模块间接口是注意力塑造”等二阶认知，并能解释为什么上游高精度诊断不一定转化为下游修复成功。第二条也意识到 Reproduction Test、RCA、Repair 是耦合反馈系统，指出需要动态调节智能体之间的信任权重。整体不是简单总结，而是在抽象工作流机制。",
-      "missingEvidence": "缺少对“信息粒度陷阱”的边界条件说明，例如哪些任务类型、哪些代码缺陷、哪些模型上成立；也缺少对“信任权重机制”如何形式化的初步设计。"
-    },
-    "brainaryMapping": {
-      "score": 8,
-      "reason": "与 Brainary 的映射较明确：对应 cognitive control 和 workflow management，并提出可沉淀为 RCA-to-Repair Context Filter 模块与 Workflow 协议。该映射能连接到自动化科研系统中的模块通信和上下文控制问题。",
-      "missingEvidence": "缺少 Brainary 现有能力接口的具体对应关系，例如该模块应接入哪个节点、输入输出 schema 是什么、如何被系统复用、如何评价该能力是否真正进入 Brainary。"
-    },
-    "monetaryValue": {
-      "score": 5,
-      "reason": "报告给出了 $40,000 的估值和计算方式，但主要依赖“成熟 Unified Repair Agent 年化增益 $2M × 2%”的假设。当前本周成果仍处于打平 Baseline 和识别失败模式阶段，尚未证明能带来可量化性能提升或成本下降。因此题目价值可能较高，但本周货币价值证据偏弱。",
-      "missingEvidence": "缺少 $2M 年化增益来源、2% 研发权重依据、修复成功率提升对应的经济价值、节省人工时间或 API 成本的量化数据，以及与现有工具相比的商业收益估算。"
-    },
-    "projectManagement": {
-      "score": 11,
-      "reason": "项目管理信息较完整：说明了本周投入约 40 小时、下周预计 40 小时、API 成本约 50 SGD、无费用瓶颈、当前进度不符合预期、偏差原因和纠偏动作。能够诚实识别当前卡在打平 Baseline，并将下周重点聚焦在 RCA output 到 Repair input 的粒度调节上。但里程碑仍偏结果导向，缺少可执行拆分。",
-      "missingEvidence": "缺少具体实验排期、每日任务拆分、风险预案、成功/失败判定阈值、Benchmark 规模计划、如果下周仍无法超过 Baseline 时的备选路线。"
-    },
-    "nextAction": {
-      "score": 7,
-      "reason": "下周行动方向明确：完成 RCA 信息粒度动态调节策略测试，做 Coarse-to-Fine 消融实验，寻找最佳 prompt/context 组合，并力争在 Benchmark 上超过 Baseline。这是围绕当前卡点设计的合理最小验证动作。",
-      "missingEvidence": "缺少具体实验矩阵，例如要测试几种粒度、每种粒度的 prompt 模板、评价指标、样本数量、预期提升幅度和停止条件。'实现实质性超越 Baseline'作为一周目标偏大，需要更小的阶段性判定标准。"
-    },
-    "evidenceQuality": {
-      "score": 3,
-      "reason": "有一定证据意识：报告提到 L3 证据、对照实验、94% 行级定位分析、端到端效果打平 Baseline、消融实验和失败模式。但证据基本以文字陈述呈现，缺少可核查数据，因此只能支持方向性判断，不能充分支持强结论。",
-      "missingEvidence": "缺少原始实验表、成功率数值、失败案例、对照组设置、模型版本、prompt 版本、运行次数、置信区间、Benchmark 名称和代码或日志链接。"
-    },
-    "totalScore": 74,
-    "tier": "B",
-    "oneLineJudgment": "本周有真实系统联调和有价值的二阶认知增量，但核心结果仍只是打平 Baseline，且关键结论缺少可核查实验数据支撑。",
-    "professorFollowUp": [
-      "要求学生下周提交一张最小实验表：RCA 信息粒度类型、样本量、Repair 成功率、失败模式、Token 成本、相对 Baseline 差值。",
-      "追问“94% 行级定位准确率”如何定义、在哪个 Benchmark 上测得、是否与最终修复成功率相关。",
-      "要求把“RCA 是 Localization Pointer 而不是 Solution Provider”转成可执行接口规范：RCA 输出哪些字段、禁止输出哪些字段、Repair 如何使用。",
-      "如果下周仍未超过 Baseline，应要求学生说明是信息粒度问题、Repair Agent 能力问题，还是 Reproduction Test 质量问题。"
-    ]
+    "totalScore": 69,
+    "tier": "C",
+    "oneLineJudgment": "本周有真实方法推进和重要认知增量，但关键结论仍缺少可复核实验数据支撑，当前仍处于“发现卡点并打平 Baseline”的阶段，不能按突破性进展计分。",
+    "professorFollowUp": "老师最应该追问一件事：请学生下周提交一张 RCA 信息粒度消融表，至少包含粒度等级、prompt/context 内容摘要、benchmark 样本数、Repair 成功率、相对 Baseline 差值和典型失败案例；否则“信息粒度陷阱”只能作为有价值假说，不能作为已验证结论。"
   }
 }

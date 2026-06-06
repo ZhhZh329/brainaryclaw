@@ -1,105 +1,103 @@
 {
   "key": "person:guo-yaoqi:2026-03-29:weekly-score",
-  "generatedAt": "2026-06-06T06:01:32.795Z",
+  "generatedAt": "2026-06-06T08:01:36.533Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "87c1b2471eceb10333ac79cf70efbebd8f7c8b3fc95ab2797cf1f6b63655c685",
   "result": {
     "week": "2026-03-29",
-    "name": "Guo Yaoqi",
+    "name": "郭尧琪",
     "scores": {
       "hardProgress": {
-        "score": 18,
-        "reason": "本周有明确硬产出：实现了 Root Cause Analysis Agent 主体，将执行引擎封装为 hypothesis → test → observe → update 的 Agent loop，并在 SWE-bench Pro 50 个 case 上报告 47/50 的函数行级精准定位结果。还识别出 3 个失败 case 均涉及新文件创建，形成了可操作的失败模式分类。扣分点在于：当前结果依赖人工提供准确 test case，尚未形成全自动闭环；周报未提供实验日志、case 列表、定位判定标准和复现实验入口。",
+        "score": 17,
+        "reason": "本周有明确硬进展：实现了 Root Cause Analysis Agent 主体，并在 SWE-bench Pro 50 个 case 上报告了 47/50 的函数行级定位结果，且识别出 3 个失败 case 均与新文件创建相关。这已经超过一般概念验证，属于可验证系统进展。但该结果依赖人工提供准确 test case，尚未接入 reproduction test 自动生成，因此还不是端到端自动化能力。",
         "missingEvidence": [
-          "缺少 50 个 SWE-bench Pro case 的具体列表",
-          "缺少 47/50 定位成功的原始输出或日志",
-          "缺少 line-level localization 的判定标准",
-          "缺少 RCA Agent 代码、接口或运行截图",
-          "缺少与静态 baseline 或已有方法的直接对比"
+          "缺少 50 个 case 的具体列表、case ID、成功/失败明细。",
+          "缺少 line-level localization 的评测定义，例如命中标准、允许范围、是否多行、多函数如何判定。",
+          "缺少实验日志、运行脚本、prompt/config、模型版本和重复实验结果。",
+          "缺少与纯静态方法或现有 baseline 的同集对比。"
         ]
       },
       "cognitiveIncrement": {
         "score": 13,
-        "reason": "认知增量清楚：性能瓶颈从 Agent 推理能力转移到 test case 质量；失败模式从一般执行失败上升为“可观测状态空间边界”问题；研究节奏上从追求表面闭环转为先夯实 RCA 精度。这些判断直接改变下周优先级和系统架构路径。扣分点是对 test case 质量如何量化、如何影响端到端上限还没有实验拆解。",
+        "reason": "认知增量清楚：瓶颈从 Agent 推理能力转移到 test case 质量；新文件类 bug 被识别为动态 RCA 的结构性边界；并且对原计划偏差做出了合理解释，即先夯实 RCA 精度再接闭环。这些判断直接影响后续研发优先级。",
         "missingEvidence": [
-          "缺少 test case 质量与 RCA 准确率之间的敏感性分析",
-          "缺少人工准确 test case 与自动生成 test case 的预期差距估计",
-          "缺少对 3 个失败 case 的详细归因材料"
+          "缺少对 test case 质量如何影响定位率的定量敏感性分析。",
+          "缺少不同失败类型的完整分类，当前只报告了 3 个失败 case 的归因。",
+          "缺少证明“Agent 已经足够好”的反事实实验，例如弱 test case、噪声 test case、无 test case 条件下的表现。"
         ]
       },
       "cot2Depth": {
-        "score": 13,
-        "reason": "CoT's CoT 有较强深度：没有停留在“Agent 做得好”或“失败了 3 个”层面，而是抽象出“可观测状态空间决定推理上限”这一系统性判断，并给出未来 Unified Repair Agent 需要为新文件类 bug 设计独立路径的架构含义。该结论与实验结果有对应关系。扣分点是证据等级自称 L4，但周报内没有足够材料支撑读者独立验证这个归因。",
+        "score": 12,
+        "reason": "CoT's CoT 抽象到了“可观测状态空间决定推理上限”，这是比普通失败分析更深一层的系统性判断，并且能导出未来 Unified Repair Agent 需要新文件专用分支的设计结论。但该结论主要来自 3 个失败样本，证据强度不足以支撑普遍化。",
         "missingEvidence": [
-          "缺少 3 个新文件失败 case 的逐例分析",
-          "缺少证明失败确实不是推理能力问题的反事实实验",
-          "缺少新文件类 bug 在 SWE-bench Pro 中总体占比的统计"
+          "缺少 3 个新文件失败 case 的详细因果链，无法确认是否完全不是推理能力问题。",
+          "缺少更多 benchmark 或更大样本来验证“新文件创建”是否稳定构成独立边界。",
+          "缺少对其他可能边界的排除，例如跨文件长程依赖、隐式配置、环境问题、测试不完备。"
         ]
       },
       "brainaryMapping": {
         "score": 8,
-        "reason": "Brainary 映射较完整，覆盖 reasoning、tool orchestration、calibration、cognitive control、benchmark/evaluation，并指出 calibration 和 cognitive control 目前没有被显式模块化，是系统缺口。该映射对 Brainary 的模块设计和 benchmark 分层有实际意义。扣分点是仍偏概念层，缺少具体接口、状态变量、监控指标或模块边界设计。",
+        "reason": "报告将工作映射到 reasoning、tool orchestration、calibration、cognitive control、benchmark/evaluation，并指出 calibration 与 cognitive control 目前缺少显式模块。这与 Brainary 能力栈有关联，也给出了短期 RCA module 和长期诊断层的沉淀方向。但映射仍偏概念层，缺少具体接口、状态变量、模块边界和可监控指标。",
         "missingEvidence": [
-          "缺少 RCA Agent 与 Brainary 现有模块的接口映射",
-          "缺少 calibration 和 cognitive control 的可观测指标定义",
-          "缺少 benchmark 分层标注的具体 schema"
+          "缺少 RCA Agent 与 Brainary 现有模块的接口定义。",
+          "缺少 calibration 和 cognitive control 的可观测指标，例如停止条件、置信度估计、探索预算。",
+          "缺少如何把失败模式分类接入 Brainary benchmark 的具体数据结构。"
         ]
       },
       "monetaryValue": {
-        "score": 5,
-        "reason": "周报给出了 $100,000 的价值估算，并说明其基于成熟 Unified Repair Agent 年化 $2M 增益、当前节点占 5% 权重。这个估算有框架，但商业假设较强，缺少市场、客户、竞品或付费场景证据。当前更可靠的价值是技术里程碑价值和对外展示的 benchmark 叙事价值，而不是已验证的货币价值。",
+        "score": 4,
+        "reason": "报告给出了 $100,000 的价值估算，并尝试用 Unified Repair Agent 年化价值和里程碑权重计算。但商业价值假设高度主观：$2M 年化增益、5% 权重、10–12 个里程碑均缺少外部证据或内部财务模型支撑。当前更可靠的价值是技术风险下降和对外展示材料增强，而不是已实现的货币价值。",
         "missingEvidence": [
-          "缺少 $2M 年化商业价值假设的来源",
-          "缺少 5% 里程碑权重的客观依据",
-          "缺少与 Cursor、Claude Code 或其他 repair 工具的量化商业对标",
-          "缺少潜在用户、付费意愿或成本节省测算",
-          "缺少端到端自动化前的真实可售卖形态"
+          "缺少市场规模、客户痛点、付费意愿或竞品对标数据。",
+          "缺少 RCA 定位精度提升如何转化为 repair 成功率、开发者节省时间或收入的量化链条。",
+          "缺少 $2M 年化商业价值和 5% 里程碑权重的依据。",
+          "缺少融资、销售、用户试用或集成场景证据。"
         ]
       },
       "projectManagement": {
         "score": 12,
-        "reason": "项目管理信息较充分：报告了本周投入 40–50 小时、下周预计 40 小时、资源依赖、API 成本、Claude Code 权限瓶颈、当前进度与上周目标偏差，并给出纠偏方向。对“为什么没有接 test case 生成模块”有解释。扣分点是下周 reproduction test 自动生成的实现路线、成功标准、风险缓冲和评估指标还不够具体。",
+        "reason": "项目管理信息较完整：说明了本周投入时间、下周预计投入、资源诉求、API 成本、quota 瓶颈、偏差原因和纠偏动作。对延期一周的原因解释为先解决 RCA 精度，逻辑成立。但下周计划仍缺少明确验收指标、风险缓冲和任务拆分。",
         "missingEvidence": [
-          "缺少下周 reproduction test 生成的技术路线拆解",
-          "缺少端到端测试成功标准，例如生成率、通过率、定位率",
-          "缺少资源受限时的备选计划",
-          "缺少对 Claude Code 权限延迟的风险影响评估",
-          "缺少更细粒度的任务排期"
+          "缺少下周 reproduction test 自动生成的成功标准，例如生成率、可执行率、覆盖率、端到端定位率。",
+          "缺少任务分解和时间分配，例如调研、实现、评测、失败分析各占多少。",
+          "缺少如果 Claude Code 权限继续不到位的备用实验方案。",
+          "缺少当前代码完成度、测试覆盖、可复现实验环境说明。"
         ]
       },
       "nextAction": {
         "score": 8,
-        "reason": "下周动作明确：跑通 reproduction test 自动生成第一个版本，并在 SWE-bench Pro 50 个 case 上做端到端测试。该动作正对当前瓶颈，且具备可验证性。扣分点是没有定义最低通过门槛，也没有说明如果 test generation 质量不足，将如何分诊是生成失败、执行失败还是 RCA 失败。",
+        "reason": "下周最小可验证动作明确：跑通 reproduction test 自动生成第一个版本，并在 SWE-bench Pro 50 个 case 上做端到端测试。这是当前瓶颈的直接攻击点，动作可验证。但计划没有定义最低可接受指标，也没有说明基于哪些前人方法、如何比较、失败后如何分流。",
         "missingEvidence": [
-          "缺少下周最小成功标准",
-          "缺少端到端 pipeline 的分阶段验收指标",
-          "缺少失败 case 的分类记录模板",
-          "缺少是否继续使用同一 50 个 case 或扩展 benchmark 的说明"
+          "缺少端到端测试的验收指标，例如 reproduction test 生成成功率和最终 localization 准确率。",
+          "缺少候选 reproduction test 生成方法列表和选择理由。",
+          "缺少失败 case 的调试流程，例如生成失败、测试不可运行、测试不定位三类如何区分。",
+          "缺少自动化闭环的具体输入输出格式。"
         ]
       },
       "evidenceQuality": {
         "score": 3,
-        "reason": "证据质量中等偏上：有具体 benchmark、样本量 50、成功数 47、准确率 94%、失败模式 3/50，并明确前提是人工准确 test case。但证据主要是周报自述，缺少可复核材料、实验协议、baseline、消融和原始日志，因此不能给高分。",
+        "reason": "报告提供了一个强信号数字：SWE-bench Pro 47/50、94% 行级定位率，并给出失败模式归因。但证据仍停留在自述层面，没有实验表格、日志、case 明细、baseline、重复性和评测协议，因此只能算中等证据质量，不能直接作为对外结论使用。",
         "missingEvidence": [
-          "缺少实验复现命令或代码版本",
-          "缺少原始运行日志",
-          "缺少 benchmark case 列表",
-          "缺少失败样例详情",
-          "缺少 baseline 对照和消融实验"
+          "缺少可复现实验材料。",
+          "缺少 case-by-case 结果表。",
+          "缺少 baseline 对比。",
+          "缺少失败归因证据。",
+          "缺少人工准确 test case 的来源和质量说明。"
         ]
       }
     },
-    "totalScore": 80,
-    "tier": "A",
-    "oneLineJudgment": "这是一个有硬实验数字和架构认知增量的高质量周进展，但当前价值仍受限于人工 test case 前提和证据不可复核，真正的关键验证在下周自动 reproduction test 接入后的端到端衰减幅度。",
+    "totalScore": 77,
+    "tier": "B",
+    "oneLineJudgment": "本周是有实质技术突破的一周：RCA Agent 在给定准确 test case 时显示出高定位潜力，但端到端自动化尚未成立，当前最大风险已从定位 Agent 转移到 reproduction test 生成与证据可复现性。",
+    "oneThingProfessorShouldLearn": "教授本周最该学到的一点是：动态 RCA Agent 的关键边界不是一般意义上的推理能力，而是可观测状态空间；涉及新文件创建的 bug 可能需要独立于动态探测的意图推理路径。",
     "professorFollowUp": [
-      "要求学生提交 50 个 SWE-bench Pro case 的列表、47 个成功样例输出、3 个失败样例分析和定位判定标准。",
-      "重点追问：94% 是在什么 test case 条件下得到的，若 test case 自动生成质量下降，line-level localization 会衰减到多少。",
-      "要求下周端到端实验至少报告四个指标：test 生成成功率、生成 test 的有效性、RCA 定位准确率、整体闭环成功率。",
-      "要求把“涉及新文件创建”失败模式做成明确 benchmark 标签，统计其占比，并说明该类 case 的独立处理分支设计。",
-      "不应优先讨论 $100,000 估值，应先确认该 RCA Agent 是否可复现、可自动化、可在无人工 test case 条件下保持有效。"
+      "要求学生下周提交 50 个 SWE-bench Pro case 的逐例结果表，包括 case ID、是否成功、定位行、真实修复行、失败原因和是否涉及新文件。",
+      "要求明确 reproduction test 自动生成的下周验收线：例如生成可执行测试的比例、测试能复现 bug 的比例、端到端 line-level localization 准确率。",
+      "要求补一个 baseline：同一批 50 个 case 上，纯静态方法或非 Agent 执行引擎的定位准确率是多少。",
+      "要求把“新文件类 bug”做成显式 benchmark 标签，而不是只在文字中描述。",
+      "如果 Claude Code 权限继续延迟，要求给出 OpenAI API 小规模实验的备用设计，避免资源等待成为进度阻塞。"
     ]
   }
 }

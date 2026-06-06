@@ -1,277 +1,255 @@
 {
   "key": "person:guo-yaoqi:2026-05-10:longitudinal",
-  "generatedAt": "2026-06-06T02:02:45.585Z",
+  "generatedAt": "2026-06-06T08:02:45.162Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "9316f7b357ce8bc7ac41763b078012aa816f80aadeccfb2a3bcad2fdbba3fe15",
   "result": {
     "overallTrajectory": {
-      "judgment": "学生在这四周不是单纯变忙，而是研究能力有实质上升：从“实现新模块但缺评测”推进到“用反事实基线、ablation、中间指标和置信度协议来决定工程方向”。最关键的能力增量是：能发现 pipeline 低于 baseline 的反常识失败，能把失败归因为接口/校准问题，而不是盲目堆模型或堆信息。",
-      "mainTrajectory": "题目轨迹从 Unified Repair Agent 的三段式 pipeline，逐步收敛到“自动修复系统的证据接口与认知控制”：先是 RCA 跨层复用，再是 calibration-first 的 stage-to-stage 协议，再到 PDB/差分证据/双源 memory。题目没有漂移，但焦点从功能实现转向可验证的系统能力。",
-      "researchAbilityChange": "研究能力明显增强，表现为三点：第一，开始用 baseline 净增益而非自我 solve rate 判断价值；第二，开始用 ablation 和独立定位指标拆解黑盒结果；第三，开始能把工程发现抽象成 Brainary 的 calibration、memory、cognitive control、evaluation 组件。弱点是关键验证经常顺延，尤其是 Enricher 开关、49 paired regression on/off、22 条 both-fail 二轮归因反复成为下周任务。",
-      "notJustBusyEvidence": "不是只忙的证据包括：2026-04-26 发现 v1 低于 baseline 并据此重构 v2；2026-05-10 用 5 路 ablation 关闭 rich_related_non_code；开始将定位准确性独立评估为文件级 Hit 100%、函数级 Hit 59.2%。这些是能改变决策的证据，不只是代码量。",
-      "mainRisk": "主要风险是“新架构假设推进速度快于验证闭环”。差分链路、regression_test_agent、K+critic、两阶段探针等概念很强，但截至 2026-05-10，49 实例 paired 评测缺失，因此差分是否真的提升 solve rate 仍未被证明。",
-      "oneThingProfessorShouldLearn": "老师最该学到的一件事是：这个学生真正有价值的增量不是某个 repair agent 多修了几题，而是他把多阶段 LLM pipeline 的核心问题从“给更多信息”改写成“给可校准、可降级、可回溯、可对照的证据”。这对 Brainary 的 memory、calibration 和 cognitive control 都有通用价值。"
+      "judgment": "这个学生在 4 周内确实变得更有研究能力，不只是更忙。关键变化是：从“实现模块并等待评测”逐步转向“用 baseline、paired eval、ablation、中间指标和置信度协议来约束研究判断”。但能力提升不均匀：4月26日是最明确的研究能力跃迁；5月3日有过度前瞻和数字口径偏松；5月10日又把口径校准回来，说明其元认知和证据纪律在恢复并增强。",
+      "mainTrajectory": "题目轨迹从 Unified Repair Agent 的三段 pipeline，逐步收敛到一个更有研究价值的核心命题：多阶段 LLM 修复系统的真正瓶颈不是单个 Agent 更聪明，而是 stage-to-stage 接口如何携带证据、置信度、使用权限、对照关系和可验证中间指标。",
+      "researchCapabilitySignal": [
+        "硬进展不是简单堆模块：4月26日做出了 v1 < baseline 的反事实归因，并把系统改到 v2 > baseline；这是研究能力强信号。",
+        "开始主动拆解黑盒 solve rate：5月10日首次给出文件级 Hit、函数级 Hit、5 路 ablation，这比只报端到端数字更像研究。",
+        "能把失败转成设计原则：错锚点、空 hint、权威语气、non-code 噪音、单轨 trace 孤岛，都被转成协议或模块约束。",
+        "能纠正自己的数字口径：5月3日称接近 60%，5月10日回归到 28/49、+8.16pp，并承认 regression paired eval 未跑。这是正向元认知。"
+      ],
+      "notJustBusyEvidence": [
+        "有明确反事实：v1 21/49 vs baseline 24/49，v2 约 26–27/49，后续 ablation 上界 28/49。",
+        "有负结果吸收：rich_related_non_code 关闭后从 27/49 到 28/49，直接转为永久工程决策。",
+        "有接口抽象：从 evidence-not-verdict 到 {value, source, confidence, evidence_refs}，再到 BRT/regression 双源对照对象。",
+        "有自动化路径：workflow、memory schema、agent module、evaluator 的沉淀对象越来越具体。"
+      ],
+      "remainingConcern": [
+        "最大重复问题是经常在关键评测未完成前继续加新结构：4月19日评测未跑，5月10日 regression paired eval 未跑。",
+        "5月3日的报告中性能提升和差分价值的证据不足，更多是推断；5月10日才部分纠正。",
+        "monetary value 仍偏主观，虽然有权重和保守情景，但与真实用户、付费场景、节省成本之间的连接仍主要是假设。"
+      ],
+      "oneThingProfessorShouldLearn": "这 4 周最值得老师学到的一点不是某个模块，而是：LLM pipeline 的研究价值主要来自“接口可信度工程”——每个 stage 输出的不只是内容，而必须带证据、置信度、使用权限、provenance、对照关系和可独立评测的中间指标；否则 pipeline 很容易低于 baseline。"
     },
     "stageByWeek": [
       {
         "week": "2026-04-19",
-        "stage": "方法外推与模块搭建期",
-        "topicTrajectory": "主线仍是 Unified Repair Agent，但关注点放在 Reproduction Test Agent 的检索升级和 Debugging Agent。题目还偏“把 RCA 方法迁移到 Agent 层”。",
-        "hardProgress": "完成结构化/层级检索模块和 Debugging Agent 主体实现，但没有完整评测。硬进展是模块级，不是效果级。",
-        "evidenceLevel": "主要是 L2 到 L3：有架构推演和实现观察，缺少端到端数据。",
-        "cognitionTrend": "核心认知是 RCA 不只是代码 bug 定位，而是跨抽象层级的因果归因范式；元认知可以外置为观察者 Agent。",
-        "cotCotMaturity": "中等偏上。能抽象出通用 RCA 原语，但证据还停留在实现同构和推演，缺少多任务验证。",
-        "brainaryMapping": "映射到 cognitive control、reasoning、tool orchestration、benchmark，但还偏概念映射，缺少可复用接口定义。",
-        "valueReasoning": "估值 50,000 美元，依据是成熟系统年化 2,000,000 美元的假设和 2.5% 权重。问题是金额锚点没有用户、客户、节省成本或收入证据支撑。",
-        "projectManagement": "下周动作明确：跑 50 case 评测并输出 fail-to-pass 与失败归因分布。执行计划合理，但评测被顺延。",
-        "nextStepQuality": "质量较好，因为是最小可验证动作；但当周未完成评测，说明执行闭环还不够硬。"
+        "stage": "方法外推与模块实现期",
+        "topicTrajectory": "主线仍是 Unified Repair Agent，重点在 Reproduction Test Agent 的检索升级和把 RCA 外推为 Agent 层 Debugging Agent。题目从单点 RCA 开始上升到“通用因果归因原语”。",
+        "hardProgress": "完成结构化/层级检索模块和 Debugging Agent 主体实现，但没有完整评测。硬进展是代码和架构，不是效果。",
+        "cognitiveTrend": "认知增量主要是 RCA 可跨抽象层复用，以及元认知可以外置为观察者 Agent。这是概念质量较高的抽象，但证据仍偏实现观察。",
+        "cotCotMaturity": "中等偏高。能说明老师未知点、信息差、自动化潜力和沉淀形式；但证据等级 L2–L3，缺少端到端数据。",
+        "brainaryMapping": "映射到 cognitive control、reasoning、tool orchestration、benchmark/evaluation。成熟度中等：能力名准确，但尚未有可复用 schema 的实证。",
+        "valueReasoning": "价值函数偏“方法论杠杆”和长期复用，金额 $50,000。问题是没有评测数据，2.5% 权重主要来自假设，货币化依据偏弱。",
+        "projectManagement": "能列出下周 50 case 评测作为最小动作，但本周实现挤占评测，存在“先建再测”的风险。",
+        "nextActionQuality": "较好。下周动作明确指向 fail-to-pass 新数字、失败归因分布、优化入口。",
+        "evidenceLevel": "中低。实现证据充分，效果证据缺失。",
+        "risk": "容易把架构同构误认为实际有效性；需要尽快用评测压住概念外推。"
       },
       {
         "week": "2026-04-26",
-        "stage": "反事实验证与架构重构期",
-        "topicTrajectory": "从“实现 pipeline”转为“证明 pipeline 必须优于 baseline”。这是题目成熟的重要拐点。",
-        "hardProgress": "完成 v1 回归归因，发现 v1 为 21/49、低于 baseline 24/49；重构 v2 三阶段并跑完 49 条，约 26–27/49，首次 pipeline 高于 baseline。",
-        "evidenceLevel": "最高达到 L4。v1 低于 baseline 与 v2 高于 baseline 的 49 条反事实，是四周里最强证据。",
-        "cognitionTrend": "认知从“让 RCA 更准”转为“低置信度信息必须降级使用”。提出 evidence-not-verdict、字段级 provenance、三路降级渲染。",
-        "cotCotMaturity": "显著成熟。CoT's CoT 不再只是概念外推，而是有 49 条数据支撑，并能解释为什么 prompt 接口的使用权限比信息本身更关键。",
-        "brainaryMapping": "Brainary 映射从 reasoning 扩展到 calibration，并且提出 calibration 应与 reasoning 同级。这是强增量。",
-        "valueReasoning": "估值 120,000 美元，分为架构重构、benchmark 正增益、calibration 方法资产三项。比上周更合理，因为有 benchmark 数据；但仍缺外部用户价值和真实商业转化证据。",
-        "projectManagement": "项目管理强：有 v1 归因、v2 设计、评测、保守情形和下周 Enricher 对比计划。风险是 Enricher 未实现、both-fail 二轮归因未完成。",
-        "nextStepQuality": "质量高。Enricher 开关对比、22 条 both-fail 归因、dual-run 决策都是能改变方向的动作。"
+        "stage": "反事实评测与架构重构期",
+        "topicTrajectory": "题目从“让 pipeline 变强”转成“证明 pipeline 相对 baseline 有净增益”。这是研究题目质量的一次明显提升。",
+        "hardProgress": "v1 21/49 低于 baseline 24/49；完成 H1–H3 归因；重构 v2 三阶段；49 条全量评测达到约 26–27/49，首次 pipeline > baseline。硬进展最扎实。",
+        "cognitiveTrend": "从“更多信息更好”转向“错误信息加权威语气会伤害系统”；从精度叙事转向 calibration 叙事。认知增量强且有反事实支撑。",
+        "cotCotMaturity": "高。CoT's CoT 1 有 L4 证据，能把 v1 负增益解释为接口契约问题，并提出字段 + provenance + 使用权限。其余关于 action space 和 evidence gating 是 L3。",
+        "brainaryMapping": "成熟度高。calibration 被提升到与 reasoning 同级，并落到 prompt 组装器、memory schema、evidence-gated agent、净增益 evaluator。",
+        "valueReasoning": "价值函数从“长期模块价值”转为“benchmark 净增益 + 方法论复用”。$120,000 的估值有 49 条数据支撑，但仍需区分增益来自去错锚点还是新证据。",
+        "projectManagement": "强。能承认 v1 失败，快速归因，重构，评测，和老师对齐。下周 Enricher 开关实验也能直接验证 ROI。",
+        "nextActionQuality": "高。Enricher 开/关、both-fail 22 条归因、dual-run 兜底决策都能减少不确定性。",
+        "evidenceLevel": "高。49 条全量端到端数字、H1–H3、模块测试和 smoke 共同支撑。",
+        "risk": "可能对 v2 的正增益过度归因于新模块，而不是降级协议和去误导；学生自己已识别这个风险。"
       },
       {
         "week": "2026-05-03",
-        "stage": "性能压榨与新假设提出期",
-        "topicTrajectory": "主线进入 PDB Working Memory、Harness、Task-aware Router，并提出 Regression vs Reproduction 差分定位。",
-        "hardProgress": "报告称 solve rate 相对 baseline 提升 8–10%、接近 60%，并完成 PDB working memory、Harness Controller、Task-aware Router。但具体 49 条明细、ablation 和 paired 证据在本周报告里不足。",
-        "evidenceLevel": "中等，约 L2 到 L3。报告有性能声明，但证据颗粒度不如 2026-04-26；下一周又把该数字校准为 28/49，说明本周存在预估或口径偏乐观。",
-        "cognitionTrend": "提出“定位复杂 bug 的本质不是找错误，而是找成功轨与失败轨的偏差”。这是有价值的研究假设。",
-        "cotCotMaturity": "概念成熟度高，但实证成熟度不足。Differential Execution Analysis 的论述有潜力，但本周还没有 paired 实验支持。",
-        "brainaryMapping": "映射到 Memory、Cognitive Control、Reasoning、Tool Orchestration，方向正确；但还没有把双源 memory schema 落成可评估产物。",
-        "valueReasoning": "估值仍为 120,000 美元，理由从已验证增益转向“性能突破和差分护城河”。这里有过度前瞻风险，因为 regression 差分尚未落地验证。",
-        "projectManagement": "主动决定暂缓成文、继续攻差分链路，研究判断有进取性。但也显露风险：在上一周 Enricher 和 both-fail 归因还未完全闭环时，又开了新方向。",
-        "nextStepQuality": "下周动作清楚：接入 Regression Test、跑双轨差分 Trace、评估 RCA 准确率。但该动作工程量大，容易再次推迟核心评测。"
+        "stage": "性能压榨与新范式前瞻期",
+        "topicTrajectory": "题目继续沿 pipeline 优化推进，但开始转向 Regression vs Reproduction 的差分调试。方向有潜力，但本周部分判断超前于证据。",
+        "hardProgress": "报告称 PDB Working Memory、Harness Controller、Task-aware Router 落地，并称相对 baseline 提升 8–10%、solve rate 接近 60%。但缺少像 4月26日那样的具体 49 条数字、ablation 表和模块测试细节；5月10日又把口径校准为 28/49。",
+        "cognitiveTrend": "认知增量是“高密度信息必须配强 Harness”“规划要异构”“定位复杂 bug 要找 divergence”。这些概念合理，但本周证据弱于表达强度。",
+        "cotCotMaturity": "中等。差分执行分析的 CoT's CoT 有潜力，但证据多为推演；没有证据等级标注，缺少 paired eval。",
+        "brainaryMapping": "映射到 Memory、Cognitive Control、Reasoning & Tool Orchestration。方向清楚，但沉淀对象还偏概念，如 Differential Diagnostic Agent 尚未跑出数据。",
+        "valueReasoning": "价值函数开始强调“护城河”和“长期定义架构”，金额仍为 $120,000。相较 4月26日，货币化更依赖预期而非已验证结果，估值纪律下降。",
+        "projectManagement": "主动暂缓论文、转攻差分链路，战略上可能正确；但在还未完成差分验证前扩大目标，存在 scope creep。",
+        "nextActionQuality": "中高。引入 regression test 和双轨 PDB 差分是可验证动作，但动作规模偏大，不是最小实验。",
+        "evidenceLevel": "中等偏低。方向证据来自性能口径和失败归因，但报告中缺少详细对照。",
+        "risk": "这一周最像“变忙”的风险：模块、概念和愿景很多，但证据闭环不足。好在下一周有校准。"
       },
       {
         "week": "2026-05-10",
-        "stage": "差分链路落地与评测意识增强期",
-        "topicTrajectory": "上周的差分设想落到 joint_runner、differential_localizer、regression_test_agent，并把 memory 从单源 trace 推进到双源对照对象。",
-        "hardProgress": "完成 PDB 持续在线探针、6 个零 LLM enricher pass、Differential SBFL 三件套、Stage 2 到 Stage 3 差分字段、5 路 ablation、独立定位指标。硬进展扎实。",
-        "evidenceLevel": "混合证据：ablation 上界 28/49、定位文件级 Hit 100%、函数级 Hit 59.2% 是实证；但差分链路只有 1-instance smoke，49 paired on/off 缺失，因此差分增益仍未证实。",
-        "cognitionTrend": "认知从“加信息”进一步升级为“只采集能暴露分歧的信息”。提出事前、事中、事后三层元认知，是四周里最完整的 meta-cognition 框架。",
-        "cotCotMaturity": "成熟但更诚实。学生能标注 L3/L2/L2，并承认缺 paired 评测；这比 2026-05-03 更像研究者，而不是只做工程的人。",
-        "brainaryMapping": "Brainary 映射最成熟：memory 被定义为存对照关系，calibration 协议第二次实例化，cognitive control 包含 PDB session、conclusion_validator、两阶段探针。",
-        "valueReasoning": "估值降为 100,000 美元，并给出保守和激进情景。这是价值函数变得更诚实的信号：未跑 paired 评测则不把差分增益全额计价。",
-        "projectManagement": "能承认原计划 paired 评测未完成，并说明工程深度被低估。下周承诺不加新 feature，先跑 paired 评测，这是正确纠偏。",
-        "nextStepQuality": "质量高但必须强制执行。49 paired 评测、22 条 both-fail 二轮归因、差分字段降级协议是当前唯一应做动作。"
+        "stage": "证据校准与差分链路落地期",
+        "topicTrajectory": "题目收敛为“从嫌疑词到差分证据”的 stage-to-stage 接口范式，并把 Brainary memory 从单源记忆推进到双源对照对象。",
+        "hardProgress": "PDB 持续在线探针、6 个 enricher pass、Differential SBFL 三件套、Stage 2→3 差分字段、定位指标、5 路 ablation 都已落地。端到端上界 28/49，相对 baseline +8.16pp；但 regression on/off paired eval 未完成。",
+        "cognitiveTrend": "从 5月3日的愿景回到证据纪律：明确承认差分增益未证，区分链路通了和效果证实。这是研究能力正信号。",
+        "cotCotMaturity": "高但未满。CoT's CoT 能区分 L3、L2，能说明接口消费模式、两阶段探针侵入性、K+critic+极性校验；但核心差分增益仍缺 paired eval。",
+        "brainaryMapping": "成熟度高。memory 被具体化为 BRT/regression 双源对照对象；calibration、reasoning、cognitive control、benchmark 都有可实现沉淀。",
+        "valueReasoning": "价值函数比 5月3日更稳健：$100,000，并给出如果 paired eval 显著或不显著的回追/下调情景。仍缺真实商业用户和成本节省计算。",
+        "projectManagement": "较强。承认工程深度低估，设定下周不加新 feature、优先 paired eval。成本规划也更具体。",
+        "nextActionQuality": "高。49 实例 regression on/off paired eval、22 条 both-fail 第二轮归因、差分字段降级协议，都是能决定 go/no-go 的动作。",
+        "evidenceLevel": "中高。已有 ablation 和中间指标，但差分主张的关键因果证据缺失。",
+        "risk": "如果 paired eval 不显著，差分三件套可能只是复杂化 pipeline；当前最薄弱环节是 regression_test_agent 的契约覆盖质量。"
       }
     ],
     "trendScores": {
-      "scale": "1 表示弱，5 表示强；分数基于周报内证据，不基于外部信息。",
+      "scale": "1 到 5 分，5 表示强；评分只基于周报证据，不代表外部真实效果。",
       "hardProgress": {
-        "scores": [
-          3,
-          5,
-          4,
-          5
-        ],
-        "trend": "总体上升。2026-04-26 和 2026-05-10 的硬进展最强，因为都有全量数据或 ablation；2026-05-03 的硬进展有声明但证据颗粒度偏弱。"
+        "score": 4,
+        "trend": "上升但有波动。4月19日是实现无评测；4月26日最强，有反事实和端到端数字；5月3日硬进展表达强但证据展示不足；5月10日通过 ablation 和中间指标恢复扎实度。"
       },
-      "researchRigor": {
-        "scores": [
-          2,
-          5,
-          3,
-          4
-        ],
-        "trend": "从缺评测到反事实 baseline，再到 ablation 和中间指标。2026-05-03 因性能口径偏预估而回落；2026-05-10 因承认 paired 缺失而回升。"
+      "researchAbility": {
+        "score": 4,
+        "trend": "明显增强。核心证据是从实现导向转向 baseline 对照、失败归因、降级协议、ablation 和 paired eval 计划。不是单纯忙碌。"
+      },
+      "evidenceDiscipline": {
+        "score": 3.5,
+        "trend": "4月26日高，5月3日下降，5月10日回升。学生能自我校准，但仍有在验证前扩大架构的倾向。"
       },
       "cotIncrement": {
-        "scores": [
-          4,
-          5,
-          4,
-          5
-        ],
-        "trend": "持续强。学生每周都有真正的认知增量，不只是复述工作量。最强的是 calibration-first 和差分证据两个转向。"
+        "score": 4,
+        "trend": "持续有增量：RCA 跨层复用 → calibration-first → differential debugging → 双源对照 memory。增量不是重复旧话。"
       },
       "cotCotMaturity": {
-        "scores": [
-          3,
-          5,
-          4,
-          4
-        ],
-        "trend": "从概念外推走向带证据等级的可迁移原则。成熟度上升，但 2026-05-10 的差分 CoT's CoT 仍受限于 paired 证据缺失。"
+        "score": 4,
+        "trend": "从 L2/L3 概念推演发展到 L4 反事实证据，再到明确标注未证实部分。成熟点在于能讲清老师未知、自动化门槛和沉淀形式。"
       },
-      "brainaryMappingMaturity": {
-        "scores": [
-          3,
-          5,
-          4,
-          5
-        ],
-        "trend": "从能力标签映射，发展到 calibration、双源 memory、cognitive control、evaluation protocol 的可落地组件映射。"
-      },
-      "metaCognition": {
-        "scores": [
-          4,
-          5,
-          5,
-          5
-        ],
-        "trend": "很强。元认知从外置观察者，到字段级 confidence，再到主动索取参照组，最后形成事前采集策略、事中校准、事后归因三层结构。"
+      "brainaryMapping": {
+        "score": 4,
+        "trend": "逐周变具体。早期是能力名映射；后期能落到 calibration-aware prompt、evidence-gated agent、双源 memory schema、中间产物 evaluator。"
       },
       "valueReasoning": {
-        "scores": [
-          2,
-          4,
-          3,
-          4
-        ],
-        "trend": "内部价值推理变成熟，但商业价值仍薄。金额估算逐步更保守、更证据驱动；缺口是没有用户、收入、节省成本、竞争替代方案的外部证据。"
+        "score": 3.5,
+        "trend": "从模块 ROI 假设变成 baseline 净增益和 ablation 驱动，但 monetary value 仍主要围绕 $2M 年化假设分权重，缺少用户、价格、节省人工、部署场景的外部证据。"
       },
       "projectManagement": {
-        "scores": [
-          3,
-          5,
-          3,
-          4
-        ],
-        "trend": "能规划、能纠偏、能说明偏差原因。重复问题是关键评测常被顺延，且在未完成旧验证时提出新 feature。"
+        "score": 4,
+        "trend": "能设里程碑、记录成本、识别偏差、做纠偏。主要短板是关键评测经常顺延，且新 feature 会在评测前插入。"
       },
       "automationPath": {
-        "scores": [
-          3,
-          5,
-          4,
-          5
-        ],
-        "trend": "自动化转化路径越来越清晰：workflow、memory schema、agent module、evaluator 都被反复沉淀。仍需跨任务或跨语言验证，否则会停留在 SWE-bench Python only 的硬编码。"
+        "score": 4,
+        "trend": "越来越清晰：workflow、memory schema、agent policy、evaluator 都被反复实例化。下一步需要跨语言或跨任务验证，不然仍是 Python SWE-bench 特化实现。"
       },
-      "nextStepActionQuality": {
-        "scores": [
-          4,
-          5,
-          4,
-          5
-        ],
-        "trend": "提出的下一步普遍可验证。但教授应关注执行纪律：下一步质量高不等于一定被完成。"
+      "nextStepQuality": {
+        "score": 4,
+        "trend": "4月19日和4月26日的下一步都很可验证；5月3日动作偏大；5月10日重新收敛到 paired eval 和 both-fail 归因，质量较高。"
       }
     },
     "valueFunctionChange": {
-      "weekByWeek": [
+      "summary": "学生的价值函数从“做出可复用模块和方法论资产”逐渐升级为“用 baseline 净增益、证据质量、接口可校准性、中间指标和自动化沉淀来判断是否值得做”。这是正向变化。但金额估算仍没有真正连接到用户付费、节省工时、产品形态或部署转化，只是在 $2M 年化假设上分配权重。",
+      "byWeek": [
         {
           "week": "2026-04-19",
-          "valueFunction": "认为值得做的事是“跨层复用 RCA 方法论”和“提高 Reproduction Test 检索”。价值来自方法杠杆和未来自动化潜力，金额为 50,000 美元。",
-          "limitations": "价值主要按内部架构资产估算，缺少效果数据，也缺少用户或收入连接。"
+          "whatStudentValued": "跨层复用的 RCA 方法论、结构化检索、Debug Agent 模块。",
+          "whyValuable": "认为同一套 RCA 骨架可服务代码层、Agent 层和未来 workflow 层，因此有长期杠杆。",
+          "moneyLogic": "$2M 年化价值 × 2.5% = $50,000。权重来自检索改进 1% 和跨层方法论 1.5%。",
+          "connectionQuality": "连接到 Brainary 和自动化较好，连接到 benchmark 和用户价值较弱，因为尚未评测。"
         },
         {
           "week": "2026-04-26",
-          "valueFunction": "价值函数发生关键升级：不再默认复杂 pipeline 有价值，而是用相对 baseline 的净增益判断是否值得。校准、降级、provenance 被视为和 reasoning 同级的价值来源，金额升至 120,000 美元。",
-          "limitations": "商业金额仍依赖 2,000,000 美元年化假设，外部证据缺失；但内部证据质量显著提高。"
+          "whatStudentValued": "pipeline 相对 baseline 的净增益、calibration、evidence-not-verdict、三路降级协议。",
+          "whyValuable": "因为 v1 证明 pipeline 会低于 baseline，v2 证明通过接口校准可以变成正增益。",
+          "moneyLogic": "$2M × 6% = $120,000，分为三阶段重构、49 条评测正增益、calibration 方法论。",
+          "connectionQuality": "价值函数明显成熟：金额和 benchmark、方法资产、Brainary calibration 连接起来。"
         },
         {
           "week": "2026-05-03",
-          "valueFunction": "价值函数转向“继续深挖长期护城河，而不是立刻写论文”。学生认为差分调试可能定义自动化修复架构，因此愿意牺牲短期论文进度。",
-          "limitations": "这是战略判断，但当周差分尚未落地，估值中包含较多期权价值。"
+          "whatStudentValued": "逼近 60% solve rate、强 Harness、Task-aware Router、Regression vs Reproduction 差分调试。",
+          "whyValuable": "认为差分对比可能突破复杂逻辑 bug 定位盲区，形成长期护城河。",
+          "moneyLogic": "$2M × 6% = $120,000，主要给性能突破和差分认知升级。",
+          "connectionQuality": "长期价值想象强，但证据连接变弱；金额更像对未来潜力定价，而非本周已验证成果。"
         },
         {
           "week": "2026-05-10",
-          "valueFunction": "价值函数变得更证据化和保守：把未完成 paired 评测的差分链路按较低权重计价，同时为显著增益和不显著增益给出上下界。开始把 ablation 驱动的工程决策也计入价值。",
-          "limitations": "仍未连接真实用户、付费场景、部署成本、替代产品或论文接受概率。金额是内部项目估值，不是市场估值。"
+          "whatStudentValued": "差分证据生成链路、定位中间指标、ablation 驱动工程决策、双源对照 memory。",
+          "whyValuable": "认为从嫌疑词到差分证据会改变 LLM 的消费模式，并且中间指标能指导后续优化。",
+          "moneyLogic": "$2M × 5% = $100,000，并给出 paired eval 后上调或下调情景。",
+          "connectionQuality": "价值函数更审慎：明确区分链路落地和效果未证，能根据下周数据调整估值。"
         }
       ],
-      "overallChange": "学生的价值观从“新模块和新方法值得做”，进化为“能相对 baseline 产生净增益、能降低错误信息伤害、能沉淀为 Brainary 可复用协议、能被 ablation 证伪的东西才值得做”。这是研究能力提升的重要证据。",
-      "connectionToMoney": "金额连接有进步但仍不充分。周报持续用 2,000,000 美元成熟系统年化价值乘以权重，但没有说明 2,000,000 美元来自哪个客户、用户规模、节省人时、SWE-bench 到真实工程的转化率，证据缺失。",
-      "connectionToUsers": "用户连接基本缺失。报告没有说明最终用户是软件工程师、企业代码维护团队、开源项目维护者还是内部自动化科研系统，也没有用户痛点量化。",
-      "connectionToGeneralCapability": "连接较强。学生能把局部模块抽象为 calibration、双源 memory、evidence gating、差分证据、侵入性递进采集等通用能力。",
-      "connectionToProductForm": "产物形式逐渐清楚：agent module、workflow、memory schema、evaluator、agent policy。但还没有明确最小产品形态和接口边界。",
-      "connectionToBrainary": "连接越来越成熟。最重要变化是 Brainary 不再只是 reasoning 系统，而是需要 calibration、对照型 memory、cognitive control 和中间产物评测。",
-      "connectionToAutomation": "自动化路径强，但仍需验证通用性。当前多数模块仍绑定 SWE-bench Pro Python only，下一步需要跨语言或跨任务证明不是任务特化。"
+      "currentValueFunction": [
+        "优先做能相对 baseline 产生净增益的系统改动。",
+        "优先保留有 ablation 支撑的 lever，关闭没有贡献或负贡献的信息源。",
+        "重视可复用的接口协议：provenance、confidence、evidence_refs、使用权降级。",
+        "重视 Brainary 可沉淀对象：workflow、memory schema、agent policy、evaluator。",
+        "开始重视中间产物质量，而不只看最终 solve rate。"
+      ],
+      "valueFunctionMaturity": "中高。学生已经不再只看忙碌和模块数量，而是在用反事实、ablation、协议复用和 benchmark 来定价。但商业价值仍是研究内部估值，缺少真实市场约束。",
+      "blindSpots": [
+        "金额估算仍以 $2M 成熟系统年化价值为固定锚，缺少这个锚本身的证据。",
+        "没有明确说明目标用户是谁、愿意为哪种产物付多少钱、节省多少工程师时间。",
+        "自动化沉淀路径多，但还缺少“最小可交付产品形态”：是库、Agent 服务、评测工具、还是 Brainary 内部模块。",
+        "成本从 50 SGD 到 200 SGD，再到预计 250 SGD，价值函数里还没有系统性纳入单位增益成本。"
+      ]
     },
     "repeatedBlockers": [
       {
-        "blocker": "关键评测反复顺延",
-        "evidence": "2026-04-19 未跑完升级检索和 Debugging Agent 评测；2026-04-26 Enricher 未实现且 both-fail 二轮归因未做；2026-05-10 49 paired regression on/off 未跑。",
-        "whyItMatters": "这会让研究叙事领先于证据，增加误判方向的风险。"
+        "blocker": "关键评测顺延",
+        "evidence": "4月19日升级检索和 Debug Agent 未跑完整评测；5月10日 regression on/off paired eval 未跑，只完成 1-instance smoke。",
+        "impact": "会导致架构判断领先于证据，增加无效复杂度风险。",
+        "professorInterpretation": "这不是单纯拖延，而是学生容易在工程复杂度上低估评测成本；需要强制先关核心不确定性。"
       },
       {
-        "blocker": "both-fail 22 条结构化归因反复未闭环",
-        "evidence": "2026-04-26 提出 both-fail 22 条第二轮归因；2026-05-10 仍列为未完成。",
-        "whyItMatters": "不完成这一步，就不知道下一轮优化应投向跨文件结构性问题、contract break、行级 bug、regression 质量还是 repair 策略。"
+        "blocker": "在验证前继续加模块",
+        "evidence": "从 Enricher、PDB Harness、Task-aware Router 到 Differential SBFL，模块推进很快，但部分核心增益没有及时被 paired/ablation 拆开。",
+        "impact": "可能把多个变量混在一起，导致 solve rate 变化无法归因。",
+        "professorInterpretation": "研究能力在增强，但需要更严格的实验设计节奏。"
       },
       {
-        "blocker": "新 feature 容易抢在验证前进入主线",
-        "evidence": "Enricher、PDB Harness、Task-aware Router、Regression Test、Differential SBFL 都在短时间内引入；其中部分增益尚未做开关对照。",
-        "whyItMatters": "会增加系统复杂度，使得每个增益的归因变难。"
+        "blocker": "regression_test_agent 候选质量是差分链路天花板",
+        "evidence": "5月10日明确承认 critic 只校验极性和路径重叠，对关键契约覆盖没有强约束。",
+        "impact": "如果 regression test 没覆盖根因附近，Differential SBFL 会退化成 BRT 覆盖排序。",
+        "professorInterpretation": "这是下周最关键技术风险，而不是再加差分字段。"
       },
       {
-        "blocker": "regression_test_agent 的候选质量是未量化瓶颈",
-        "evidence": "2026-05-10 明确承认 critic 只校验极性和路径重叠，对“是否测到关键契约”没有强约束。",
-        "whyItMatters": "如果 regression test 没覆盖根因附近，差分 SBFL 会退化为普通失败覆盖排序，差分链路的理论价值无法兑现。"
+        "blocker": "大仓跨文件结构性问题仍未解决",
+        "evidence": "4月26日和5月10日都提到 both-fail 22 条中 ansible/openlibrary 等大仓跨文件结构性问题突出，第二轮归因尚未完成。",
+        "impact": "可能限制 solve rate 从 28/49 到 30/49 以上的突破。",
+        "professorInterpretation": "需要单独判断这些 case 是当前方法可解，还是需要新的跨文件 contract/propagation 建模。"
       },
       {
-        "blocker": "商业价值证据缺失",
-        "evidence": "四周估值均基于 2,000,000 美元成熟系统年化价值假设，但没有用户、市场、付费、节省成本或部署证据。",
-        "whyItMatters": "这会让金额更像内部激励数字，而不是投资或产品决策数字。"
-      },
-      {
-        "blocker": "跨项目通用性尚未证明",
-        "evidence": "自动化路径多次提到需要 2–3 个场景、另一语言或另一归因任务验证；截至 2026-05-10 仍主要是 SWE-bench Pro Python only。",
-        "whyItMatters": "如果不跨场景，Brainary 映射可能只是漂亮命名，不一定是通用能力。"
+        "blocker": "货币价值与真实用户连接不足",
+        "evidence": "四周均以 $2M 年化商业价值假设乘权重定价，但没有用户、价格、部署、节省工时的证据。",
+        "impact": "价值判断在研究内部合理，但商业优先级仍不稳。",
+        "professorInterpretation": "如果项目进入产品化或论文定位，需要补真实价值论证。"
       }
     ],
     "professorShouldAsk": [
       {
-        "question": "下周能否承诺不加任何新 feature，只交付 49 实例 regression on/off paired 评测？",
-        "reason": "这是判断差分链路是否真有价值的关键证据；没有它，当前最强的新叙事仍停留在架构假设。"
+        "question": "下周只允许做一个实验，你会选哪一个？为什么不是继续加 feature？",
+        "expectedGoodAnswer": "49 实例 × regression on/off paired eval，因为它直接回答差分链路是否有用；在这个问题回答前不加新 feature。"
       },
       {
-        "question": "28/49 的 ablation 上界中，每一题相对 baseline 的 win/loss/tie 表是什么？",
-        "reason": "只看总数不够，需要知道新增模块修好了哪些题、弄坏了哪些题，是否存在特定仓库或问题类型偏差。"
+        "question": "28/49 的提升中，哪些 lever 有独立贡献？哪些只是共同出现？",
+        "expectedGoodAnswer": "应能列出 5 路 ablation 的贡献，尤其是 atomization 掉到 21/49、drop_all_levers 持平 baseline、drop_non_code 到 28/49；同时承认 differential regression 的独立贡献未测。"
       },
       {
-        "question": "函数级 Hit 59.2% 与端到端 solve rate 28/49 的关系是什么？",
-        "reason": "需要判断瓶颈在定位、patch 生成、测试质量还是 prompt 接口。中间指标必须能解释最终指标。"
+        "question": "如果 paired eval 只提升 +0 或 +1，你下一步会砍掉什么、保留什么？",
+        "expectedGoodAnswer": "保留 PDB enricher、conclusion_validator、ablation 证实的 atomization；暂停或重写 regression_test_agent critic，先提高契约覆盖率，而不是继续堆差分字段。"
       },
       {
-        "question": "regression_test_agent 的 critic 如何衡量“关键契约覆盖率”，而不仅是 passes_on_buggy 和 path_overlap？",
-        "reason": "这是差分链路最薄的一环。若 regression 不是正确参照物，差分证据会变成高置信度噪音。"
+        "question": "regression test 的质量指标是什么？不看最终 solve rate，如何判断它覆盖了关键契约？",
+        "expectedGoodAnswer": "需要提出契约覆盖率、与 BRT 的路径重叠但非同质性、根因邻近覆盖、state divergence 有效率等中间指标；目前报告只做到极性和 Jaccard，仍不足。"
       },
       {
-        "question": "22 条 both-fail 能否按跨文件结构性问题、单文件逻辑错误、contract break、测试生成失败、repair 失败五类给出分布？",
-        "reason": "没有失败分布，就无法决定下一步是加强 regression、SBFL、repair router 还是跨文件 propagation。"
+        "question": "你的 Brainary 抽象里，哪些是 SWE-bench Python 特化，哪些可以跨任务复用？",
+        "expectedGoodAnswer": "应区分 pytest/pdb/Ochiai 是 Python/SWE-bench 特化，{value, source, confidence, evidence_refs}、双源对照 memory、evidence gating、侵入性递进采集是可复用抽象。"
       },
       {
-        "question": "如果 paired 评测只带来 0 到 1 题提升，差分路线的停止条件是什么？",
-        "reason": "需要提前设定 kill criteria，避免因 sunk cost 继续扩复杂度。"
-      },
-      {
-        "question": "2,000,000 美元年化价值假设来自哪里？最小付费用户是谁？",
-        "reason": "当前价值金额有内部一致性，但缺少外部商业证据。"
-      },
-      {
-        "question": "哪一个模块最应该先抽象给 Brainary：三路降级渲染、evidence gating、双源 memory，还是中间指标 evaluator？",
-        "reason": "学生提出很多可沉淀资产，教授需要帮助其选择最小、最高复用、最低耦合的抽象化切入点。"
+        "question": "你的 $100K 或 $120K 估值如果换成真实用户，谁会付费？为哪个产物付费？",
+        "expectedGoodAnswer": "需要从研究内部权重转向用户场景，例如自动修复服务、debug evidence API、pipeline evaluator、Brainary memory/calibration 模块，并估算节省的人时或提高的修复率。"
       }
     ],
     "nextBestIntervention": {
-      "primaryIntervention": "设定一周硬门禁：在 49 paired regression on/off、22 条 both-fail 二轮归因、win/loss/tie 表完成前，不允许新增 feature。",
-      "why": "学生已经证明能高强度实现和抽象，但现在最稀缺的是验证闭环。教授的介入重点不是给新想法，而是压住范围，逼出因果证据。",
-      "requiredDeliverablesNextWeek": [
-        "49 实例 paired 评测表：regression on/off 的 solve rate、函数级 Hit、文件级 Hit、每题 win/loss/tie。",
-        "差分链路增益归因：哪些题因 differential_sbfl_top_k 或 state_divergence 变好，哪些题变坏。",
-        "22 条 both-fail 二轮分类分布，并给出每类下一步策略。",
-        "regression_test_agent 质量报告：K 候选通过率、passes_on_buggy、path_overlap、疑似关键契约覆盖率；如果关键契约覆盖率无法定义，也要明确说证据缺失。",
-        "一个停止条件：如果差分增益小于预设阈值，下一步转向哪个瓶颈。"
+      "intervention": "强制进入一周“证据冻结期”：不允许新增 feature，只跑 paired eval、both-fail 归因和最小必要 ablation。",
+      "why": "学生已经证明能快速构建和抽象，现在最大的边际收益不是更多模块，而是把差分主张的因果证据补齐。否则会从研究能力提升滑回工程忙碌。",
+      "concretePlan": [
+        "第一优先级：完成 49 实例 × regression on/off paired eval，报告 solve rate、文件 Hit、函数 Hit、state_divergence 有效率、成本。",
+        "第二优先级：对 22 条 both-fail 做结构化归因，至少分成跨文件传播、契约缺失、定位错、patch 策略错、测试质量错。",
+        "第三优先级：对 regression_test_agent 做质量审计，不先优化生成模型，而是先定义契约覆盖指标。",
+        "第四优先级：如果差分显著有效，再补差分字段的使用权降级协议；如果不显著，暂停差分扩展，回到 critic 和契约覆盖。"
       ],
-      "suggestedDecisionRule": "如果 paired 评测让 solve rate 至少提升 2 题或函数级 Hit 提升超过 5 个百分点，则继续差分路线并补差分字段降级协议；如果只提升 0 到 1 题，则优先加强 regression critic 或回到 both-fail 分类中最大的一类；如果出现负增益，立即把差分字段降级为弱证据，不进入主 repair prompt。",
-      "professorRole": "教授应做一次短会，只问证据、停止条件和抽象边界，不再扩展新技术路线。",
-      "automationPathRecommendation": "最先沉淀的应是三路降级渲染协议加 {value, source, confidence, evidence_refs} schema，因为它已有 2026-04-26 的 L4 证据；差分双源 memory 等 paired 评测完成后再抽象。",
-      "commercialValueIntervention": "要求学生把 2,000,000 美元年化价值拆成用户、人时节省、修复成功率提升、部署成本和可付费场景；若证据缺失，应在估值中明确标注为假设。"
+      "successCriterion": [
+        "paired eval 给出清晰结论：差分是否带来超过噪声的提升。",
+        "至少一个中间指标能解释 solve rate 变化，而不是只报最终 28/49 或 30/49。",
+        "能明确砍掉或降级一个无效模块，证明学生不是只会加复杂度。",
+        "形成一个可复用 artifact：双源对照 memory schema 或 paired eval protocol，而不只是项目内代码。"
+      ],
+      "professorAction": "建议老师下周开一次短会，但不要讨论新方向；只审问 paired eval 设计、回归测试质量指标和如果结果不显著时的砍模块决策。"
     }
   }
 }
