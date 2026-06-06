@@ -1,60 +1,100 @@
 {
   "key": "person:liao-jie:2026-04-26:weekly-score",
-  "generatedAt": "2026-06-05T18:05:27.267Z",
+  "generatedAt": "2026-06-06T00:06:24.655Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "b94733c3f33e648925725b0d178f6c07874a205a735ad4c037e260ea85f79066",
   "result": {
+    "week": "2026-04-26",
+    "name": "Liao Jie",
     "hardProgress": {
       "score": 16,
-      "reason": "本周有明确硬进展：法律行为数据集生成从整体式生成升级为字段级算子流水线，包含 plan_tool_chain、classify_violation、judge_result、assemble_kg_subgraph、代码层 guardrail 和 Layer A 一致性规则；同时完成了一次基于代码复原的 skill scanner 攻击验证。进展属于可运行原型和结构性升级，不只是想法。但报告没有展示具体运行样例、代码提交、生成样本数量、失败率变化或 v1/v2 对比结果，因此不能给满分。",
-      "missingEvidence": "缺少代码链接、提交记录、运行日志、样本示例、v1/v2 量化对比、guardrail 命中案例、攻击复现实验记录。"
+      "reason": "本周有明确工程产出：完成可运行的 v2 字段级算子流水线，新增 plan_tool_chain、classify_violation、judge_result、assemble_kg_subgraph、代码 guardrail 和 Layer A 一致性规则；另完成一次基于代码复原的 skill scanner 攻击验证。硬进展不是停留在想法层面，而是有模块化结构升级和攻击原型。但周报没有给出实际生成样本数、运行日志、失败率变化、对比结果或代码提交证据，因此不能满分。",
+      "missingEvidence": [
+        "缺少 v2 流水线的实际运行样例、输入输出样本或截图",
+        "缺少 v1 与 v2 的稳定性、正确率、失败率对比数据",
+        "缺少代码提交、模块接口、测试结果或运行日志",
+        "skill scanner 攻击只说明完成一次验证，缺少攻击步骤、成功判据和复现实例"
+      ]
     },
     "cognitiveIncrement": {
       "score": 13,
-      "reason": "认知增量较清楚：从“大 prompt 优化”转向“字段级有偏序的小算子流水线”；从内部一致性转向需要现实数据校准；明确了 tool planning、classification、judgment 的顺序约束。这些不是泛泛总结，而是直接来自本周工程失败模式和系统设计。但部分认知仍停留在方法判断，没有用实验数据证明其增量幅度。",
-      "missingEvidence": "缺少具体失败案例前后对照、顺序错误导致反向合理化的实证样例、现实数据校准前后的质量差异。"
+      "reason": "认知增量较强，核心更新是把 sample 生成从整体式 prompt 转为字段级有偏序的小算子流水线，并明确 tool planning、classification、judgment 的顺序会影响证据与结论关系；还提出内部一致性只能证明自洽，现实数据才能校准真实性。这些判断能直接改变系统设计和验证方式。扣分点是部分认知仍偏工程常识，尚未通过实验结果证明其增量幅度。",
+      "missingEvidence": [
+        "缺少具体失败案例证明字段顺序错误会导致反向合理化证据",
+        "缺少现实数据校准前后的差异案例",
+        "缺少说明这些认知如何改变后续实验设计的具体验收标准"
+      ]
     },
     "cot2Depth": {
       "score": 12,
-      "reason": "CoT’s CoT 写出了四条较高层抽象，并包含是否老师原本不知道、为什么未自动化、自动化潜力、沉淀形式和证据等级。尤其是把中间状态、prompt 作为系统接口、现实数据验证、skill recoverability 作为攻击面等抽象提炼出来，符合模板要求。但证据等级 A/B 多为自评，缺少支撑材料；“老师原本不知道吗”的判断也主要是主观判断。",
-      "missingEvidence": "缺少支持每条 CoT’s CoT 的实验片段、失败样例、外部数据、可复现 evaluator 或 benchmark 草案；缺少说明为什么证据等级为 A 或 B 的客观标准。"
+      "reason": "CoT’s CoT 写出了四条可沉淀的二阶结论，覆盖中间状态设计、prompt 作为系统接口、外部现实数据验证、skill 可恢复性攻击面，并标注自动化潜力、沉淀形式和证据等级。深度较好，能从单周任务抽象到 workflow、evaluator、benchmark。但有些判断仍是概念抽象，缺少反例、边界条件和可证伪指标；且多条写明‘老师原本不知道的吗：否’，说明对教授的信息增量有限。",
+      "missingEvidence": [
+        "缺少每条 CoT’s CoT 对应的实验证据或观察样本",
+        "缺少为什么证据等级为 A 或 B 的判定依据",
+        "缺少可自动化的具体接口、输入输出和评价指标",
+        "缺少边界条件：在哪些任务上字段级流水线不一定优于整体生成"
+      ]
     },
     "brainaryMapping": {
-      "score": 7,
-      "reason": "报告把两个任务映射到 memory、reasoning、calibration、cognitive control、tool orchestration、benchmark/evaluation、risk modeling 等 Brainary 能力，并说明可能沉淀为 module、workflow、benchmark、evaluator、red-team workflow。映射方向合理，但仍偏标签化，缺少具体到 Brainary 内部结构、接口、数据对象、评测闭环或可复用模块边界。",
-      "missingEvidence": "缺少 Brainary 中对应模块的具体位置、输入输出定义、接口草图、复用路径、与现有 Brainary 组件的差异和集成计划。"
+      "score": 8,
+      "reason": "报告把数据集生成 agent 映射到 memory、reasoning、calibration、cognitive control、tool orchestration、benchmark/evaluation，把 skill scanner 映射到 risk modeling、cognitive control、benchmark/evaluation，并说明可能沉淀为模块、workflow、benchmark、evaluator。映射方向合理，且能连接 Brainary 的系统能力建设。扣分点是映射仍较粗，没有说明每个能力对应的具体数据结构、模块接口、评价函数或在 Brainary 中的落点。",
+      "missingEvidence": [
+        "缺少 Brainary 中具体模块、表结构、接口或能力节点的对应关系",
+        "缺少 memory、calibration、cognitive control 分别如何被 v2 流水线实现的细化说明",
+        "缺少从当前原型进入 Brainary 系统的集成路径和验收标准"
+      ]
     },
     "monetaryValue": {
       "score": 6,
-      "reason": "报告给出了两个任务的人民币估值：数据集生成 agent 约 15 万，skill scanner 攻击约 5 万，并说明主要按研发人力成本和原型价值估算。优点是没有过度声称商业化收入，也承认目前更多是研究验证价值。但估值主要基于成本法，不是市场法或收益法；买单方仍模糊，缺少真实客户、预算场景、替代方案成本或产品化路径。",
-      "missingEvidence": "缺少潜在客户访谈、采购场景、竞品或替代方案价格、节省成本测算、可交付资产清单、商业转化里程碑。"
+      "reason": "报告给出了两个任务的人民币估值：字段级法律行为数据集生成 agent 估值 15 万，skill scanner 攻击估值 5 万，并解释主要按原型研发人力成本估算。这比泛泛说有价值更好。但货币价值主要基于投入成本，而非客户支付意愿、替代成本、商业落地路径或可复用资产价值；买单方也明确承认还不清晰，因此商业价值证据偏弱。",
+      "missingEvidence": [
+        "缺少真实或潜在客户、使用方、付费场景",
+        "缺少同类工具、外包成本或市场价格对照",
+        "缺少原型能节省多少人工、减少多少错误或提高多少评测效率的数据",
+        "缺少从研究价值转为产品价值的时间表和关键门槛"
+      ]
     },
     "projectManagement": {
       "score": 12,
-      "reason": "项目管理部分覆盖当前阶段、时间投入、下周预计投入、资源需求、依赖关系、关键路径、Token/API 成本、进度判断和纠偏动作。对两个项目的主次关系也交代清楚。主要不足是时间和成本仍较粗，例如“20 小时的主要部分”“API 消耗高”不可精确管理；没有明确里程碑验收标准、风险优先级、数据获取计划和延期触发条件。",
-      "missingEvidence": "缺少具体工时拆分、API 成本数字、样本产出目标、验收指标、风险列表、里程碑日期、数据源获取计划。"
+      "reason": "项目管理信息较完整：列出阶段、投入时间、下周预计投入、资源需求、依赖关系、关键路径、token/API 成本、费用瓶颈、偏差和纠偏动作。能看出两个项目的优先级不同，主线是字段级法律行为数据集生成，skill scanner 是次线。扣分点是缺少明确里程碑、验收指标、风险优先级、样本量目标和本周计划完成率；‘20 小时的主要部分’也不够精确。",
+      "missingEvidence": [
+        "缺少本周原计划与实际完成的逐项对照",
+        "缺少具体里程碑日期和验收标准",
+        "缺少 token/API 消耗的实际数值和预算上限",
+        "缺少任务拆分后的优先级、风险等级和阻塞项处理计划"
+      ]
     },
     "nextAction": {
       "score": 9,
-      "reason": "下周动作非常接近最小可验证实验：选择 3–5 个高价值 taxonomy leaf、收集现实案例、用 v2 生成样本、用现实数据 judge violation class、final judgment、关键事实一致性，并和 v1/auto 对比。skill scanner 也有 threat model、补 2–3 个 case、输出防护建议。动作具体、可验证、能直接解决当前卡点。唯一不足是缺少明确评价指标和成功/失败阈值。",
-      "missingEvidence": "缺少高价值 taxonomy leaf 的选择标准、现实案例来源、v1/v2 对比指标、通过阈值、每个 case 的验收格式。"
+      "reason": "下周动作具体且可验证：选择 3–5 个高价值 taxonomy leaf，收集现实案例或数据，让 v2 agent 生成样本，用现实数据判断 violation class、final judgment、关键事实一致性，并对比 v1/auto 与 v2。skill scanner 也提出固定 threat model、补 2–3 个 case、输出防护建议。动作从结构升级自然推进到外部验证，是正确关键路径。扣分点是还缺少每个动作的完成定义、样本量最低要求和量化指标。",
+      "missingEvidence": [
+        "缺少 3–5 个 taxonomy leaf 的选择标准",
+        "缺少现实案例数据来源和最小样本数",
+        "缺少 v1/auto 与 v2 对比的评价指标",
+        "缺少 skill scanner 的 threat model 模板和防护建议输出格式"
+      ]
     },
     "evidenceQuality": {
       "score": 3,
-      "reason": "报告提供了较多结构化自述、模块名、失败模式和下一步计划，但证据主要是叙述性证据。没有附样本、日志、截图、代码链接、实验表格、benchmark 结果或外部现实数据验证。因此可以判断方向和工作量，但难以独立确认效果。",
-      "missingEvidence": "缺少原始产物、运行证据、定量结果、外部验证数据、攻击复现材料、失败样例库。"
+      "reason": "报告中有较多结构化自述，包括模块名称、失败模式、阶段判断、证据等级和下一步验证计划，说明作者对工作过程有记录。但证据主要是文字描述和自评，缺少外部可核验材料、实验数据、运行结果、样例、代码、日志、benchmark 或第三方现实案例。因此证据质量中等偏低。",
+      "missingEvidence": [
+        "缺少可复现代码或提交记录",
+        "缺少实验表格、样本输出、错误案例和统计结果",
+        "缺少外部现实数据来源",
+        "缺少攻击验证的复现实录或成功率"
+      ]
     },
-    "totalScore": 78,
+    "totalScore": 79,
     "tier": "B",
-    "oneLineJudgment": "本周是有实质原型升级和清晰认知增量的一周，但核心效果尚未被现实数据和量化对比验证，仍处于强原型、弱证据阶段。",
+    "oneLineJudgment": "本周是高质量的原型结构升级周，硬进展和认知增量都明显，但目前仍停在自述型证据阶段，尚未用现实数据、指标和可复现实验把价值坐实。",
     "professorFollowUp": [
-      "请要求他下周必须交付一个 v1/auto/v2 的小规模对比表，至少包含 3–5 个 taxonomy leaf、每类现实案例、生成样本、violation class 准确性、final judgment 合理性和事实一致性。",
-      "请追问 v2 字段级流水线的最小可复现产物在哪里：代码、输入样例、输出样例、guardrail 规则和一次完整运行日志。",
-      "请要求他把 CoT’s CoT 3 的“现实数据 judge”具体化为 evaluator 设计，而不只是原则判断。",
-      "请要求 skill scanner 攻击从单点演示变成 2–3 个标准化 case，并给出 threat model、风险分类和可恢复性指标。",
-      "老师本周最应该学到的一点是：这个项目的真正进展不是 prompt 变好了，而是生成过程被拆成可审计、可修复、可外部校准的中间状态流水线；但它是否有效，必须靠现实数据对齐实验来证明。"
+      "要求学生下周必须提交 v1/auto 与 v2 的对比表，至少包含样本数、violation class 合理率、final judgment 合理率、关键事实一致率和典型失败案例。",
+      "要求学生给出 3–5 个 taxonomy leaf 的选择理由，以及每个 leaf 对应的现实案例数据来源。",
+      "要求学生展示一个完整 v2 样本的字段级生成链路：plan_tool_chain、classify_violation、judge_result、assemble_kg_subgraph 的输入输出和 guardrail 触发情况。",
+      "对 skill scanner 项目，要求先固定 threat model 和 recoverability 指标，否则不要继续扩展 case。",
+      "教授本周最应该学到的一件事是：字段级有偏序的小算子流水线只有在接入现实数据验证后，才能从‘结构自洽的生成系统’变成‘可信的生成系统’。"
     ]
   }
 }

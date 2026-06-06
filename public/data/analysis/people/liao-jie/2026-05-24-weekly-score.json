@@ -1,6 +1,6 @@
 {
   "key": "person:liao-jie:2026-05-24:weekly-score",
-  "generatedAt": "2026-06-05T18:05:26.266Z",
+  "generatedAt": "2026-06-06T00:06:25.141Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
@@ -8,53 +8,94 @@
   "result": {
     "hardProgress": {
       "score": 11,
-      "reason": "本周有两个明确推进：论文从实验整理转入问题链条与方法框架写作；scanner 从静态 KG 表示推进到状态机式行为建模雏形。但硬产出仍偏少：没有新增大规模实验、没有新增数据、没有 benchmark、没有可展示表格、没有状态机 schema 定稿，也没有 scanner 对比结果。",
-      "missingEvidence": "缺少 introduction/method 初稿片段、方法框架图、已有实验结果表、状态机 schema 示例、具体 skill case 抽取样例、KG scanner 与状态机 scanner 的对比数据。"
+      "reason": "本周有两个明确推进：论文从实验转入写作框架，scanner 从静态 KG 思路推进到状态机行为建模雏形。但硬进展主要停留在叙事框架和表示方向，缺少新增实验、数据、benchmark、可运行模块或可检查 artifact。状态机 schema 仍未稳定，论文也尚未形成核心章节或主表。",
+      "missingEvidence": [
+        "论文 introduction、method 初稿文本或目录版本缺失",
+        "已有实验结果的具体数量、指标、样例缺失",
+        "状态机 schema 的具体字段定义缺失",
+        "5–10 个 skill 的实际抽取结果尚未完成",
+        "KG scanner 与状态机 scanner 的覆盖差异尚无实验结果"
+      ]
     },
     "cognitiveIncrement": {
-      "score": 12,
-      "reason": "认知增量比较清楚：从“攻击 scanner 是否成功”上升到“scanner 的表示盲区是什么”；从“静态 KG 描述对象”转向“状态、触发条件、转移路径、风险演化”。这对题目定位和后续方法设计有实际价值。",
-      "missingEvidence": "缺少用具体 case 证明这些认知如何改变实验设计或论文结构；缺少前后方案对比，例如原 KG 表示遗漏了哪些风险、状态机表示补上了哪些风险。"
+      "score": 11,
+      "reason": "认知增量较清楚：从‘检测恶意字段/代码片段’转向‘检测触发条件、状态转移和跨步骤风险累积’，并将攻击 scanner 的意义提升为暴露表示盲区。这是有效的研究问题重构。但这些增量目前更多是概念层面的判断，还没有被具体实验、反例或定量差异支撑。",
+      "missingEvidence": [
+        "具体说明哪些 case 证明静态 KG 会漏检动态风险",
+        "缺少一个从自然语言指令到风险代码生成的完整链路案例",
+        "缺少状态机表示相对 KG 表示提升的实际对比"
+      ]
     },
     "cot2Depth": {
       "score": 10,
-      "reason": "CoT’s CoT 能回答为什么现有自动化科研尚未吸收该认知，并提出 workflow、agent module、benchmark、memory schema 等沉淀方向，深度中等偏上。但两条都标注为“老师原本不知道：否”，说明新颖性主要来自重新组织和工程化，而不是新的理论洞察；同时自动化路径还停留在概念层。",
-      "missingEvidence": "缺少可执行的中间表示定义、自动归纳 scanner blind spot 的流程草案、agent module 输入输出接口、benchmark 题目结构。证据等级自评为 B，但没有附原始 case 或失败日志。"
+      "reason": "CoT’s CoT 能够解释为什么已有自动化科研没有吸收这些洞察，并提出 workflow、agent module、benchmark、memory schema 等沉淀方向，符合模板要求。问题是分析仍偏抽象，例如‘缺少稳定中间表示’、‘缺少 blind spot 归纳机制’都合理，但没有拆到可执行的自动化模块接口、输入输出、失败判据和评测协议。",
+      "missingEvidence": [
+        "缺少状态机中间表示的最小字段和示例",
+        "缺少 blind spot 自动归纳机制的流程图或伪代码",
+        "缺少判断自动化潜力为高的具体依据",
+        "证据等级 B 的支撑材料没有列出"
+      ]
     },
     "brainaryMapping": {
-      "score": 7,
-      "reason": "能把工作映射到 Brainary 的 risk modeling、reasoning、benchmark/evaluation 三类能力，并说明为什么尚未系统化：风险常被当作标签而不是动态变量，reasoning 尚未用于推演 tool/skill 行为路径。这些关联合理。",
-      "missingEvidence": "缺少 Brainary 现有模块对接点、具体 memory schema 字段、risk reasoning module 的最小接口、与已有 Brainary workflow 的差异说明。"
+      "score": 8,
+      "reason": "Brainary 映射较完整，覆盖 risk modeling、reasoning、benchmark/evaluation，并能说明可能沉淀为 risk-state schema、scanner evaluator、reasoning workflow、failure-mode evaluation protocol。主要不足是映射还没有落到 Brainary 内部可复用对象的边界，例如 memory schema 如何存、agent module 如何调、evaluator 如何评分。",
+      "missingEvidence": [
+        "缺少 Brainary 中具体 module 或 workflow 的接口定义",
+        "缺少 risk-state schema 的示例实例",
+        "缺少 benchmark/evaluator 的样本格式和评分指标"
+      ]
     },
     "monetaryValue": {
       "score": 5,
-      "reason": "报告给出了两个任务的估值：论文 30 万、scanner 优化 50 万，并说明按研究资产、人工替代、企业风控模块价值估算。但估值依据仍较粗，没有对应客户、采购场景、节省成本公式、竞品价格或复用次数假设。当前更像潜在价值陈述，而不是可验证商业价值。",
-      "missingEvidence": "缺少市场参照、企业安全团队真实需求、agent 平台/skill marketplace 的预算证据、人工审计基线成本、scanner 原型可降低多少误报/漏报的数据。"
+      "reason": "给出了两个任务的金额估计和粗略计算依据，能把论文资产、scanner 原型、评测集、schema 与人工替代成本联系起来。但金额高度主观，缺少市场价格、真实买方需求、部署场景、节省成本测算或商业转化路径验证。30 万和 50 万的估值目前更像研究价值估算，不是可验证的货币价值。",
+      "missingEvidence": [
+        "缺少潜在客户或使用方的明确需求证据",
+        "缺少与现有安全审计工具或 agent 平台风控模块的价格对比",
+        "缺少人工审计成本的具体基准",
+        "缺少该 scanner 能降低多少漏检率或人工时间的证据"
+      ]
     },
     "projectManagement": {
       "score": 12,
-      "reason": "项目管理信息完整：阶段、投入时间、下周时间、关键里程碑、依赖、资源、瓶颈、纠偏动作都有覆盖。两个项目均识别为关键路径，并说明延期影响。主要不足是里程碑仍偏文字化，缺少验收标准和产物定义。",
-      "missingEvidence": "缺少明确验收口径，例如 introduction/method 初稿多少页、主表包含哪些指标、5–10 个 skill 如何选择、状态机 schema 完成标准、scanner 覆盖率对比的度量方式。"
+      "reason": "项目管理信息较完整，包括阶段、计划、实际完成、投入时间、依赖关系、关键路径、资源需求、瓶颈、偏差原因和纠偏动作。尤其能区分论文写作项目和 scanner 原型项目。主要问题是里程碑仍偏软，例如‘形成 schema’和‘完成对比分析’没有明确验收标准、文件产物、指标或截止日期粒度。",
+      "missingEvidence": [
+        "缺少每个里程碑的可验收产物名称",
+        "缺少 scanner 对比实验的指标定义",
+        "缺少论文初稿完成度的量化标准",
+        "缺少风险缓冲计划，例如如果状态机 schema 不稳定怎么办"
+      ]
     },
     "nextAction": {
       "score": 8,
-      "reason": "下周动作相对具体且可验证：完成 introduction + method 初稿，整理 1 个主表和 1 个失败案例分析；选 5–10 个 skill 手工抽取状态机，并对比 KG scanner 与状态机 scanner 的风险路径覆盖差异。这些动作能直接降低当前不确定性。",
-      "missingEvidence": "缺少下周交付物格式、样本选择标准、对比实验指标、失败案例分析模板、完成后的决策规则，例如如果状态机没有提升覆盖率是否回退。"
+      "reason": "下周动作相对具体：完成 introduction + method 初稿、整理 1 个主表和 1 个失败案例；选 5–10 个 skill 手工抽取状态机，并对比 KG scanner 与状态机 scanner 的风险路径覆盖差异。这些动作具备最小可验证性。扣分点是还没有说明样本选择标准、主表字段、失败案例结构、覆盖差异的计算方式。",
+      "missingEvidence": [
+        "缺少 5–10 个 skill 的选择标准",
+        "缺少主表应包含哪些指标",
+        "缺少失败案例分析模板",
+        "缺少风险路径覆盖差异的量化方法"
+      ]
     },
     "evidenceQuality": {
       "score": 2,
-      "reason": "证据质量偏弱。报告主要是自述性进展和方法判断，虽然提到已有 case、攻击样例、scanner 失败现象，但没有展示任何原始样例、实验日志、表格、截图、指标或仓库产物。证据等级自评 B，但支撑材料没有进入周报。",
-      "missingEvidence": "缺少实验数据、scanner 输出、攻击样例、skill 样本、状态机抽取结果、论文草稿链接、benchmark 草案、失败模式统计。"
+      "reason": "证据质量偏弱。周报多次承认没有新增大规模实验、没有新增数据、benchmark 未形成、状态机 schema 不稳定。虽然有 case 和建模现象的自述，但没有提供具体样例、日志、表格、指标、代码链接或文档片段。当前证据足以支持‘方向值得探索’，不足以支持‘方法有效’。",
+      "missingEvidence": [
+        "缺少实验表格",
+        "缺少具体恶意 skill case",
+        "缺少 scanner 失败日志",
+        "缺少状态机抽取样例",
+        "缺少论文草稿或方法框架文档",
+        "缺少可复现实验设置"
+      ]
     },
     "totalScore": 67,
     "tier": "C",
-    "oneLineJudgment": "本周认知推进明显，但硬产出和证据不足，核心风险是状态机 scanner 仍停留在表示想法，尚未被实验或样例表格验证。",
+    "oneLineJudgment": "本周最大价值是把 scanner 问题从静态 KG 推进到动态状态机风险建模，但硬证据和可验收产物不足，仍处在概念成型到小样本验证之间。",
     "professorFollowUp": [
-      "请他下周必须交付一个具体状态机 schema，至少包含 state、action、trigger、transition、risk condition、evidence source 六类字段。",
-      "要求他拿 5–10 个 skill 做手工 gold 抽取，并给出 KG scanner 漏掉但状态机能表达的风险路径清单。",
-      "论文方向需要先固定主贡献句：到底是自然语言到代码重建攻击，还是 coding agent 风险代码生成的 scanner blind spot 评测。",
-      "要求把已有小规模实验整理成一张主表，否则论文写作会继续停留在叙事层。",
-      "商业价值部分暂不需要继续扩写，优先用漏报率、覆盖率、可复现样本数证明技术价值。"
+      "要求下周必须提交一个最小状态机 schema，包括 state、transition、trigger、risk condition、evidence source 五类字段，并用至少 5 个 skill 填表。",
+      "要求论文项目下周交付 introduction + method 的实际文本，而不只是框架描述。",
+      "要求把‘KG scanner 漏掉什么、状态机 scanner 多覆盖什么’定义成一个可计算指标，例如风险路径覆盖率、触发条件识别率或跨步骤依赖识别率。",
+      "要求提供至少 1 个完整失败案例：自然语言指令、生成代码、隐藏风险、scanner 输出、漏检原因、状态机如何表示。",
+      "老师本周应重点吸收的一点是：这个方向的关键不在于再做一个 KG，而在于建立可复用的动态风险状态表示；如果下周不能产出 schema 和小样本对比，当前认知增量会停留在口号层面。"
     ]
   }
 }

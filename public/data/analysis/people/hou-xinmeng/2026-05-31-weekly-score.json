@@ -1,6 +1,6 @@
 {
   "key": "person:hou-xinmeng:2026-05-31:weekly-score",
-  "generatedAt": "2026-06-05T23:02:16.063Z",
+  "generatedAt": "2026-06-06T00:02:25.302Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
@@ -8,47 +8,53 @@
   "result": {
     "hardProgress": {
       "score": 17,
-      "reason": "本周有明确硬进展：完成 MARS 到 PRISM 的结构迁移，提出 Salience Gate，跑通 train/val/test 三阶段流程，并给出 MathVista testmini 上 Base、朴素稠密反思、PRISM 的对照结果；还产出 15000 条带三键标签的反思 CSV、三个 agent 和分层增益/失败模式统计。扣分点是目前核心实验只在 MathVista 上一次性验证，Salience Gate 阈值手调，modality_locus 归因未人工校验，结果还未形成可复现实验包。",
-      "missingEvidence": "缺少实验日志、随机种子、显著性检验、重复实验、代码或表格截图；缺少 MMVP 结果的具体数值；缺少 15000 条 CSV 的样例与质量统计。"
+      "reason": "本周有明确硬进展：完成 MARS 到 PRISM 的结构迁移，提出 Salience Gate，跑通 train-val-test 三阶段流程，并给出 MathVista testmini 上 Base、朴素稠密反思、PRISM 的对照结果；还产出 15000 条带三键标签的反思 CSV 和三个 agent 的 pipeline。扣分点是实验目前主要是一次端到端结果，跨模型、跨数据集、阈值敏感性和人工校验都还没完成。",
+      "missingEvidence": "缺少实验表格、代码链接、运行日志、随机种子、重复实验方差、token 成本计算方式、15000 条数据样例或数据质量抽检。"
     },
     "cognitiveIncrement": {
       "score": 13,
-      "reason": "认知增量较强：把 MARS 在稀疏反馈中的 aggregation 杠杆，推进到稠密反馈中的 attribution + gating 杠杆，形成“反馈密度决定反思操作”的新抽象；同时提出多模态任务中感知侧与推理侧可反思性不同，解释了 perception-bottleneck 和 reasoning-bottleneck 的增益差异。这不是简单复述方法，而是从实验结果中抽象出设计原则。",
-      "missingEvidence": "缺少中间反馈密度任务的验证，因此“反馈密度轴”目前只由稀疏端与稠密端两点支撑；缺少跨 benchmark、跨模型结果来证明该认知不是 MathVista/Qwen2.5-VL 特例。"
+      "reason": "认知增量清楚：把 MARS 在稀疏反馈中的核心杠杆从 grouping 推广到反馈密度轴，提出稀疏反馈靠 aggregation、稠密反馈靠 attribution + gating；同时指出多模态任务中感知侧与推理侧的可反思性不同。这不是简单复述方法，而是把方法适用条件重新抽象了一层。",
+      "missingEvidence": "缺少中间反馈密度任务的验证，因此“反馈密度是第一性参数”目前还主要由稀疏端和稠密端两个点支撑。"
     },
     "cot2Depth": {
-      "score": 13,
-      "reason": "CoT's CoT 写出了二阶判断：MARS 表面杠杆是 grouping，但其适用条件是稀疏反馈；稠密反馈下主要矛盾变为冗余成本和误归因，因此需要 Salience Gate。报告还明确说明老师原本可能不知道什么、为什么不知道、信息差在哪里、如何自动化沉淀，这符合高质量 CoT's CoT 要求。",
-      "missingEvidence": "证据等级自评为 B 是合理的，但还缺少反例分析：哪些稠密任务不适合 gating，哪些稀疏任务仍需要 attribution；缺少对 Salience Gate 失败边界的系统说明。"
+      "score": 14,
+      "reason": "CoT's CoT 写到了较深层：说明老师原本可能误把 grouping 当作元认知反思本质，而本周发现 grouping 只是稀疏反馈条件下的最优操作；进一步提出 DensityAwareReflector 的自动化方向，并给出证据等级 B。第二个 CoT's CoT 也抓住了稠密反思独有的冗余成本和噪声注入问题。",
+      "missingEvidence": "缺少对反例的讨论，例如哪些稠密任务仍可能需要 grouping，哪些稀疏任务也可能需要 attribution；也缺少更严格的因果证据证明 Salience Gate 提升来自过滤有害反思，而不只是减少 token 或改变采样。"
     },
     "brainaryMapping": {
-      "score": 8,
-      "reason": "报告完成了较清晰的 Brainary 式映射：MARS 五元组被迁移为 visual_skill、modality_locus、error_type、perceptual_cause、reasoning_cause；MARS 的 grouping、enhancement、hybrid validation 分别映射到 PRISM 的双层聚合、三种 reflection mode 和 Stage 2 validation；还形成了可复用的策略库结构。",
-      "missingEvidence": "缺少正式 schema、字段定义、样例条目、策略库调用方式和与原 MARS 结构的一一对应表；Brainary 资产是否可被其他项目直接复用尚未证明。"
+      "score": 7,
+      "reason": "报告有较强的概念映射：MARS 五元组到 PRISM 五元组、grouping 到 visual_skill/modality_locus 双层结构、enhancement 到 reflection mode、Hybrid validation 到 Stage 2，并提出 strategy library 与 DensityAwareReflector。作为 Brainary 知识沉淀已有雏形。",
+      "missingEvidence": "没有明确给出 Brainary 节点、边、可复用卡片、输入输出 schema、检索键、与已有知识库条目的连接方式；目前更像方法映射，而不是已经完成 Brainary 化。"
     },
     "monetaryValue": {
       "score": 4,
-      "reason": "报告涉及 token 成本，指出朴素稠密反思 5.2× 成本而 PRISM 1.6× 成本，说明有计算成本优化价值；但没有进一步转化为金钱价值、算力节省、产品价值、论文价值或数据资产价值。当前 monetary value 主要是隐含的成本效率，而非明确商业或资源收益。",
-      "missingEvidence": "缺少每 1000 题 token 数、推理耗时、GPU/接口成本、相对 baseline 的成本收益曲线、潜在应用场景和可发表/可复用资产的价值估计。"
+      "reason": "报告量化了 token 成本：朴素稠密反思 5.2×，PRISM 1.6×，这对推理成本有直接价值；也提到策略库可迁移到其他 VLM，具备潜在资产价值。但没有把成本节省换算成 GPU/API 金额，也没有说明该方法能服务什么产品、客户、论文收益或商业化场景。",
+      "missingEvidence": "缺少每 1000 样本的实际推理成本、GPU 时间、API 成本、与 baseline 的成本收益比、潜在用户场景、商业价值路径或论文投稿价值判断。"
     },
     "projectManagement": {
-      "score": 12,
-      "reason": "项目管理较清楚：报告列出当前卡点，包括 k 阈值手调、confabulation 未按 skill 归因、modality_locus 归因可靠性未验证；下周计划也覆盖模型、benchmark、baseline、k 敏感性和人工一致性检验。说明作者知道下一步该验证哪些关键假设。",
-      "missingEvidence": "缺少任务优先级、时间预算、算力预算、失败时的降级方案；下周矩阵较大，是否能一周完成没有资源约束说明。"
+      "score": 13,
+      "reason": "项目管理较清楚：主线任务、已完成模块、核心结果、当前卡点和下周最小可验证动作都有明确列出；风险也具体，包括 Salience Gate 阈值手调、re-grounding confabulation 未按 skill 归因、modality_locus 自动标注未人工校验。扣分点是缺少时间预算、优先级排序、失败退出条件和资源约束。",
+      "missingEvidence": "缺少任务拆解到天的计划、每个实验预计耗时、算力预算、如果 κ 不达标或跨模型不复现时的替代路线。"
     },
     "nextAction": {
       "score": 9,
-      "reason": "下周最小可验证动作具体且可验收：3 个 VLM × 2 个 benchmark × Salience Gate 有无的对照矩阵，加入 4 条 baseline；做 k ∈ {1,3,5,all} 的成本-增益曲线；做 200 条人工标注一致性检验并设定 κ > 0.6 目标。这些动作直接对应当前最关键的不确定性。",
-      "missingEvidence": "缺少每个动作的优先级排序；如果算力不足，应该先跑哪个模型/benchmark；缺少主表预期格式和最低可接受结果标准。"
+      "reason": "下周动作具体且可验证：3 个 base VLM × 2 个 benchmark × 是否使用 Salience Gate 的对照矩阵，和 Self-Refine、Reflexion、Volcano、CCoT 并列主表；同时做 k ∈ {1,3,5,all} 的成本-增益曲线，以及 200 条人工标注一致性检验。行动能直接验证本周核心假设。",
+      "missingEvidence": "缺少实验优先级和最小失败判据，例如如果只来得及做一部分，应该先跑哪一组；也缺少目标指标阈值，例如 PRISM 至少要超过 baseline 多少才算成立。"
     },
     "evidenceQuality": {
       "score": 3,
-      "reason": "报告给出了较多定量结果，包括准确率、增益、成本倍率、confabulation 比例和子集增益，证据比纯概念报告强。但证据仍主要是单次实验自述，缺少可复现材料、置信区间、统计显著性、人工校验和跨模型验证。",
-      "missingEvidence": "缺少原始实验记录、样本划分、prompt、代码版本、token 计算方法、错误样例、人工标注协议、baseline 实现细节。"
+      "reason": "有定量结果、分层增益、成本倍率和失败率，证据比纯概念周报强。但证据仍处于单次实验和内部统计层面，缺少可复现材料、统计显著性、人工校验和跨 benchmark 支撑。报告自己也承认核心阈值手调、自动归因未验证。",
+      "missingEvidence": "缺少重复实验、置信区间、显著性检验、错误样例、人工标注协议、κ 检验结果、代码或日志、数据划分细节。"
     },
-    "totalScore": 79,
-    "tier": "B",
-    "oneLineJudgment": "这是一个有实质方法推进和二阶认知增量的周报，但当前证据仍停留在单模型单 benchmark 的初步验证，且 monetary value 与可复现性不足。",
-    "professorFollowUp": "老师最应该追问一件事：PRISM 的真正贡献是否是一个普适的“反馈密度路由器”原则，而不只是 MathVista 上的 Salience Gate 技巧；下周应优先要求跨模型、跨 benchmark、k 敏感性和人工归因一致性四项证据。"
+    "totalScore": 80,
+    "tier": "A",
+    "oneLineJudgment": "这周不是概念空转，而是把 MARS 推到稠密多模态反馈后形成了可实验验证的 PRISM，但当前证据仍停留在单模型单主数据集的一次性结果，最大风险是自动归因和 Salience Gate 的有效性尚未被独立校验。",
+    "professorFollowUp": [
+      "要求学生下周优先证明 Salience Gate 不是手调阈值带来的偶然收益：必须提交 k 曲线和成本-性能帕累托图。",
+      "要求补 200 条 modality_locus 人工标注一致性检验；如果 κ < 0.6，PRISM 的归因机制需要降级为启发式工程，而不能作为方法核心主张。",
+      "要求把 re-grounding confabulation 按 visual_skill 拆开，判断视觉幻觉主要来自 OCR、counting、spatial 还是 attribute。",
+      "要求把 token 成本换算成真实推理成本，否则 monetary value 只能算工程效率，不能算经济价值。",
+      "老师本周最应该学到的一点：元认知反思的核心杠杆可能不是固定的 grouping，而是由反馈密度决定；稀疏反馈需要聚合，稠密反馈需要归因与门控。"
+    ]
   }
 }

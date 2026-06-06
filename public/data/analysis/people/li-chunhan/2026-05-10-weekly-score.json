@@ -1,6 +1,6 @@
 {
   "key": "person:li-chunhan:2026-05-10:weekly-score",
-  "generatedAt": "2026-06-05T23:04:53.029Z",
+  "generatedAt": "2026-06-06T00:05:02.821Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
@@ -8,98 +8,51 @@
   "result": {
     "week": "2026-05-10",
     "name": "Li Chunhan",
-    "dimensions": {
+    "scores": {
       "hardProgress": {
         "score": 15,
-        "reason": "本周有明确硬进展：跑通 RynnBrain-2B 基线，在 LMEE-Bench 上完成第一版 failure case 分类，并给出 Counting、Location、Relationship、State、Attribute 五类失败数量与部分错误模式；同时形成了 perception、memory、evaluation 的初步闭环判断。但多模态 RAG 仍是下周计划，不能计入本周已完成成果；与王文渊对齐 pipeline 的结果也没有形成可验证产物。",
-        "missingEvidence": [
-          "缺少 LMEE-Bench 总样本数、总准确率、各类别准确率或失败率",
-          "缺少实验配置、模型 checkpoint、prompt、评测脚本、日志或结果表",
-          "缺少与王文渊对齐后的技术方案文档或具体接口定义",
-          "多模态 RAG 本周是否已有可运行雏形证据不足"
-        ]
+        "reason": "本周有明确硬进展：跑通了 RynnBrain-2B 在 LMEE-Bench 上的基线，并给出了 Counting、Location、Relationship、State、Attribute 五类 failure case 的数量、典型错误模式和初步归因。这比只写方案推进更实。但多模态 RAG 仍主要停留在方案和下周计划，报告中没有证明其已经端到端接入完成；“RAG 雏形”与“下周接入 RAG”之间存在表述不一致。",
+        "missingEvidence": "缺少完整实验表格、总样本数、总体准确率、各类别准确率、运行配置、模型 checkpoint、prompt 设置、评测脚本链接、失败样本原始列表；缺少与王文渊对齐后的具体 pipeline 文档或结论记录；缺少多模态 RAG 已跑通的可验证证据。"
       },
       "cognitiveIncrement": {
         "score": 12,
-        "reason": "CoT 增量较清楚：先测 base vision encoder 能力边界，再决定是否外挂 detector/depth/color；把 memory 粒度拆成自然语言摘要、JSON tree、知识图谱；按任务时间尺度区分 long-term memory 与 short-term memory。这些判断能直接影响实验路径，属于有效认知增量。但部分内容仍偏常识性工程策略，尚未通过本周实验结果形成强约束。",
-        "missingEvidence": [
-          "缺少 base encoder 具体在哪些能力边界上不足的定量证据",
-          "缺少 memory 三层粒度各自对应哪些 query 类型的实际样例",
-          "缺少 long-term 与 short-term memory 划分对具体任务收益的实验验证"
-        ]
+        "reason": "认知增量较清楚：先用 base 模型测能力边界，再决定是否外挂 detector、depth、relation 或 textual 模块；memory 从自然语言摘要、JSON tree、知识图谱三个粒度理解 attention 输入；按任务时间尺度区分 long-term memory 与 short-term memory。这些判断能影响后续技术路线。但部分内容仍是合理工程常识，尚未完全由本周数据强驱动。",
+        "missingEvidence": "缺少本周实验如何具体改变原先方案的对照说明；缺少对不同 memory 粒度在样例 query 上的具体输入输出示例；缺少为什么暂不外挂 encoder 的量化依据。"
       },
       "cot2Depth": {
         "score": 12,
-        "reason": "CoT's CoT 写出了三条较有价值的二阶判断：failure-driven architecture search、多模态 RAG 先于知识图谱、failure mode 到脑通路再到工程模块的映射。每条都包含内容、是否新、为什么未被自动化科研吸收、自动化潜力、沉淀形式和证据等级，符合模板要求。主要问题是证据等级多为 B/C，且‘为什么没被自动化科研吸收’仍偏推测。",
-        "missingEvidence": [
-          "缺少 failure-driven architecture search 的实际自动分类准确率或模块选择案例",
-          "缺少多模态 RAG 与知识图谱路线的对照实验",
-          "缺少跨 benchmark 验证 failure mode 到工程模块映射的稳定性",
-          "缺少自动化 agent 的输入、输出、评价指标定义"
-        ]
+        "reason": "CoT's CoT 结构完整，覆盖了内容、老师是否已知、为什么未被自动化科研吸收、自动化潜力、沉淀形式和证据等级。尤其是 failure-driven architecture search、RAG-trace 到 graph-schema-induction、failure mode 到脑通路再到工程模块的链条，有一定二阶思考深度。问题是证据等级多为 B/C，关键结论仍依赖单一 bench 和概念映射。",
+        "missingEvidence": "缺少 failure 类别下降率作为模块评价主指标的实际验证；缺少 multimodal RAG 与直接图结构的对照；缺少 failure mode 到脑通路再到工程模块映射的可证伪实验设计。"
       },
       "brainaryMapping": {
         "score": 7,
-        "reason": "报告把本周工作映射到 Brainary 的 perception、memory、evaluation 三块，并进一步把 Counting、Location、Relationship、State、Attribute 映射到 PPC 数感、背侧流、海马 relational binding、时间整合、IT 物体识别。这有助于从 failure mode 推导模块拆分。但 Brainary 映射仍是概念层，缺少 Brainary 内部模块、数据结构、接口和闭环流程的明确对应。",
-        "missingEvidence": [
-          "缺少 Brainary perception、memory、evaluation 的具体模块定义",
-          "缺少 failure 类别如何触发 Brainary 内部模块选择的规则",
-          "缺少脑区类比到工程实现的可证伪指标",
-          "缺少 Brainary mapping 的系统图或三栏对照表成品"
-        ]
+        "reason": "报告把本周工作映射到 Brainary 的 perception、memory、evaluation 三块，并进一步把 Counting、Location、Relationship、State、Attribute 对应到 PPC 数感、背侧流、海马 relational binding、时间整合、IT 物体识别。这能为 Brainary 的模块拆分提供启发。但映射目前偏概念层，尚未转化为 Brainary 中具体模块接口、数据结构或训练/推理流程。",
+        "missingEvidence": "缺少 Brainary 架构图中的具体落点；缺少每类 failure 对应哪个工程模块、输入输出、触发条件、评价指标的表格；缺少该脑区映射能提升系统性能的实验证据。"
       },
       "monetaryValue": {
         "score": 5,
-        "reason": "报告尝试估算本周成果价值：端到端评测链路约 120 万、failure-case 归档约 40 万。这个方向有商业和研发复用潜力，但估值主要基于人力成本类比，缺少可交付资产、复用次数、节省周期、替代成本和外部需求证据。因此货币价值判断目前偏高估，可信度中低。",
-        "missingEvidence": [
-          "缺少可复用代码、评测流水线或数据资产的链接与状态",
-          "缺少下游项目会实际复用该链路的证据",
-          "缺少与外部同类 benchmark pipeline 搭建成本的对比",
-          "缺少本周成果能节省多少未来实验时间的可量化测算"
-        ]
+        "reason": "报告尝试给出 120 万和 40 万人民币的估值，并用工程人月成本解释价值来源，这符合模板要求。但估值主要基于替代成本假设，而不是已交付资产的复用证明、节省成本记录或外部需求验证。由于 RAG 接入尚未完成，端到端链路价值也被高估的风险较大。",
+        "missingEvidence": "缺少可复用代码、bench pipeline、数据归档、文档、下游实验复用记录；缺少与真实工业成本或外部团队报价的对照；缺少证明本周产物能节省 80–150 万成本的交付物清单。"
       },
       "projectManagement": {
         "score": 11,
-        "reason": "项目管理信息较完整：说明当前阶段为原型到实验，列出本周完成项、下周计划、投入时间，并提出三档对比实验。计划方向明确，能支撑教授判断下一步。但管理粒度仍不足，缺少明确验收标准、风险、依赖、优先级、任务拆分和时间节点。",
-        "missingEvidence": [
-          "缺少下周每项任务的完成标准，例如 RAG 接入成功的判定条件",
-          "缺少实验风险，例如检索噪声、caption 质量、显存或评测耗时",
-          "缺少任务优先级和预计完成日期",
-          "缺少代码、数据、实验记录的管理路径",
-          "缺少与合作者的分工"
-        ]
+        "reason": "项目管理信息较完整：写明当前阶段为原型到实验，本周完成 RynnBrain 跑通、LMEE-Bench、failure case 归档，下周计划投入 30 小时并完成三档对比。任务优先级也比较清楚。但缺少更细的里程碑、验收标准、风险项和依赖项，且“本周完成 RAG 雏形”与“下周接入 RAG”存在范围不清。",
+        "missingEvidence": "缺少每项任务的完成定义、预计完成日期、风险与阻塞、代码/数据位置、协作者分工；缺少 benchmark 运行成本和资源使用情况；缺少如果 RAG 接入失败的备选计划。"
       },
       "nextAction": {
         "score": 8,
-        "reason": "下周行动具体：接入多模态 RAG，区分 long-term 与 short-term memory，在 LMEE-Bench 上比较无 memory、多模态 RAG、RAG+轻量图结构，并重点观察 Counting、Location、Relationship 三类 failure 是否下降。动作与本周发现直接衔接，较可执行。问题是缺少量化目标和失败后的备选路线。",
-        "missingEvidence": [
-          "缺少预期提升阈值，例如三类 failure 至少下降多少才算有效",
-          "缺少检索 top-k、caption 生成方式、embedding 模型等关键参数",
-          "缺少如果 RAG 无提升时的诊断流程",
-          "缺少是否继续保留 State、Attribute 两类 failure 的处理计划"
-        ]
+        "reason": "下周行动明确：接入多模态 RAG，按 Alfred 时间尺度拆 long-term 与 short-term memory，在 LMEE-Bench 上重跑无 memory、多模态 RAG、RAG+轻量图结构三档对比，并重点观察 Counting、Location、Relationship 是否下降。这是可执行的实验路径。扣分点在于缺少量化成功标准和最小可交付版本定义。",
+        "missingEvidence": "缺少每个实验的成功阈值，例如各 failure 类别下降多少算有效；缺少样本量、统计显著性、baseline 固定方式；缺少具体到天的执行顺序和失败时的调整策略。"
       },
       "evidenceQuality": {
         "score": 3,
-        "reason": "证据质量中等偏弱。优点是给出了 LMEE-Bench 五类失败数量、部分百分比和具体错误例子，并主动标注 CoT's CoT 证据等级。缺点是没有总样本规模、基线准确率、统计表、原始记录、可复现实验设置，也没有跨 benchmark 或消融验证。因此能支持方向判断，但不足以支持强结论或高估值。",
-        "missingEvidence": [
-          "缺少完整结果表和原始预测样例",
-          "缺少总样本数与每类问题样本数",
-          "缺少随机种子、评测协议和模型版本",
-          "缺少与其他模型或无 memory 条件的对比",
-          "缺少失败分类的一致性检验，例如人工复核或多标注者一致率"
-        ]
+        "reason": "报告提供了 failure case 分类数量和多个具体错误例子，证据质量高于纯主观判断。但仍缺少完整实验协议和可复核数据，因此只能支持初步结论，不能支持强结论或高估值。",
+        "missingEvidence": "缺少总题数、正确数、各类 failure 的定义标准、人工标注一致性、样本抽取方式、原始预测文件、评测脚本、随机种子和环境配置。"
       }
     },
     "totalScore": 73,
     "tier": "B",
-    "oneLineJudgment": "本周是一个有效的基线与 failure taxonomy 周，方向判断和下一步实验设计有价值，但证据链、复现性和货币价值支撑不足，尚不能算强实验周。",
-    "professorFollowUp": [
-      "要求学生下周提交一张完整实验表：总样本数、总准确率、五类 failure 的样本数、失败率、典型样例、评测脚本版本。",
-      "要求把多模态 RAG 实验设为可判定的三档对照：无 memory、多模态 RAG、RAG+轻量图结构，并预先定义 Counting、Location、Relationship 的最低有效下降阈值。",
-      "要求把 failure mode 到工程模块的映射做成三栏表：失败类型、脑/认知类比、可实现模块与接口；否则 Brainary mapping 仍停留在概念层。",
-      "要求压低或重算货币价值：只有当评测链路可复用、可交付、有代码和下游使用证据时，才支持百万级估值。",
-      "教授本周最应学习的一点是：感知模块不应先验堆叠，而应先用基线模型在 benchmark 上暴露系统性 failure，再按 failure 类型决定加 detector、relation、memory 或 texture/attribute 模块。"
-    ]
+    "oneLineJudgment": "本周有真实实验推进和有价值的 failure-driven 模块化思考，但证据链仍停留在单一 benchmark 的初步错误归档，RAG 与 Brainary 系统沉淀尚未形成可验证交付物。",
+    "professorFollowUp": "老师最应该追问三件事：第一，要求学生提交 LMEE-Bench 完整结果表、总样本数、准确率和原始 failure 列表；第二，要求把五类 failure 到工程模块的映射写成可执行实验矩阵，而不是停留在脑区类比；第三，下周必须用无 memory、多模态 RAG、RAG+轻量图结构三档对比给出 Counting、Location、Relationship 的下降率，否则当前的 memory 路线价值仍无法被证实。"
   }
 }

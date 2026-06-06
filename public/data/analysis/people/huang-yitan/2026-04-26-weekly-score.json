@@ -1,54 +1,64 @@
 {
   "key": "person:huang-yitan:2026-04-26:weekly-score",
-  "generatedAt": "2026-06-05T23:03:20.192Z",
+  "generatedAt": "2026-06-06T00:03:34.268Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "9f1a54a7edcaa970d4d32938d614be5e69fd1fe9b1d9627d8d049a3e1d88e721",
   "result": {
-    "hardProgress": {
-      "score": 14,
-      "reason": "本周有可计数的硬进展：定义了 3 类 benchmark，筛选 25 个候选 CVE，其中 11 个确认可跑通；完成 Brainary-guided 单 agent 架构设计文档，并确定 LangGraph + MCP 技术路线。但关键可交付物仍未闭环：新架构 Demo 尚未端到端跑通，零日挖掘无 confirmed finding，变异植入尚未实施。",
-      "missingEvidence": "缺少 25 个 CVE 清单、11 个可跑通 CVE 的复现记录、agent_design.md 原文或链接、Demo 当前运行截图或日志。"
+    "week": "2026-04-26",
+    "name": "Huang Yitan",
+    "scores": {
+      "hardProgress": {
+        "score": 14,
+        "reason": "本周有实质性产出：明确了三个 benchmark 集的定位，筛选 25 个候选 CVE，并确认 11 个可复现；同时完成 Brainary-guided 单 agent 架构设计文档，并确定 LangGraph + MCP 技术路线。但关键可运行成果仍未闭环：新架构 Demo 未跑通，零日挖掘没有 confirmed finding，变异植入尚未实施，CVE 可用集规模仍偏小。",
+        "missingEvidence": "缺少 25 个候选 CVE 清单、11 个已跑通 CVE 的复现记录、环境配置、失败原因分类、agent_design.md 链接或摘要、Demo 当前运行截图或日志。"
+      },
+      "cognitiveIncrement": {
+        "score": 12,
+        "reason": "认知增量较明确：从 multi-agent workflow 转向单 agent 内部认知模块，识别 benchmark 构建瓶颈在可复现性而非漏洞发现，并提出变异植入是 ground truth 的可靠来源。这些判断对研究路线有实际影响。但部分认知仍停留在定性总结，尚未被实验或系统对比充分验证。",
+        "missingEvidence": "缺少 multi-agent Demo 的具体失败案例、对比指标、失败日志；缺少 CVE 不可复现原因的结构化统计；缺少变异植入优于其他 ground truth 来源的实证论证。"
+      },
+      "cot2Depth": {
+        "score": 11,
+        "reason": "CoT's CoT 有追问“为什么还没被自动化科研吸收”以及“如何沉淀为 workflow / agent module / benchmark”，符合模板要求。第二个 CoT's CoT 有 25/11 的数据支撑，较扎实。第一个关于 multi-agent 局限的分析有方向价值，但证据等级只是 B，且没有系统性架构对比实验，因此深度尚未完全转化为可验证科研结论。",
+        "missingEvidence": "缺少单 agent 与 multi-agent 的实验设计、评价指标、失败模式归因；缺少对 MOCGuard/BACScan 等相关系统是否真的未反思架构问题的文献证据。"
+      },
+      "brainaryMapping": {
+        "score": 8,
+        "reason": "Brainary 映射比较清楚，分别对应 Self-ability Understanding、Target Understanding、Confidence、Monitoring，并且给出四维置信向量、短板驱动决策、Capability Profile、证据链闭环等系统设计元素。扣分点在于这些映射目前主要是架构设计，还没有运行结果证明这些模块真的改善安全分析效果。",
+        "missingEvidence": "缺少每个 Brainary 能力模块的输入输出定义、状态机图、接口样例、在真实应用上的决策轨迹，以及 Confidence 四维向量如何改变分析路径的案例。"
+      },
+      "monetaryValue": {
+        "score": 6,
+        "reason": "报告按模板给出了金额：Benchmark 估值 3 万人民币，Agent 架构重构估值 4 万人民币，并解释了数据资产、引用价值、方法论贡献等依据。问题是估值主要来自主观类比，缺少可交易对象、使用者支付意愿、替代成本、复用次数、节省时间或潜在论文收益的量化支撑。",
+        "missingEvidence": "缺少 benchmark 构建的人力成本明细、同类数据集真实引用或使用情况、企业或研究团队需求证据、agent module 可复用场景清单、金额估算公式中的关键参数。"
+      },
+      "projectManagement": {
+        "score": 12,
+        "reason": "项目管理信息较完整：有当前阶段、原计划与实际偏差、投入时间、下周投入、关键里程碑、资源需求、依赖关系、token 成本和纠偏动作。能看出项目处于原型阶段且关键路径明确。扣分点是里程碑验收标准还不够硬，风险管理不足，对原计划 Phase 0 未完成部分如何处理交代不够。",
+        "missingEvidence": "缺少每个里程碑的验收定义，例如 Demo 跑通的日志标准、benchmark 可用的判定标准、E1-E4 实验的具体指标；缺少风险列表、优先级、备用方案；缺少任务拆分到日级或 issue 级的执行计划。"
+      },
+      "nextAction": {
+        "score": 9,
+        "reason": "下周动作具体且可验证：将 CVE 可用集扩大到 15+，在 1-2 个 Java Web 应用上做首轮零日挖掘，确定变异植入应用和策略，跑通新架构 Demo 的 init → self_assess → target_understanding → hypothesis，并在 1 个真实应用上验证 Confidence 四维向量。动作与当前卡点高度对应。",
+        "missingEvidence": "缺少具体候选应用名称、优先级、每日计划、验收产物格式，以及如果无法达到 15+ CVE 或 Demo 未跑通时的降级方案。"
+      },
+      "evidenceQuality": {
+        "score": 3,
+        "reason": "报告中有少量可量化证据，例如 25 个候选 CVE、11 个可用、约 44% 通过率、20 小时投入、25000 tokens 消耗。但多数关键结论依赖自述，没有附清单、日志、代码、文档链接或实验记录。证据质量足以支持方向判断，但不足以支持强结论。",
+        "missingEvidence": "缺少 CVE 表格、复现脚本、Docker 配置、测试日志、agent_design.md、Demo 仓库链接、失败样例、实验对比数据、token 消耗记录。"
+      }
     },
-    "cognitiveIncrement": {
-      "score": 12,
-      "reason": "认知增量较明确：从 multi-agent workflow 转向单 agent 内部认知模块；认识到 benchmark 难点在可复现性而非漏洞数量；将变异植入定位为 ground truth 的可靠来源。这些认知与当前项目决策直接相关，能改变架构和数据集路线。但部分判断仍停留在经验归纳，尚未通过对比实验验证。",
-      "missingEvidence": "缺少 multi-agent demo 失败案例的具体日志、对比指标，以及 CVE 不可复现原因的分类统计。"
-    },
-    "cot2Depth": {
-      "score": 11,
-      "reason": "CoT's CoT 有两条，均回答了‘老师是否原本不知道’、为什么未被自动化科研吸收、可沉淀为何种模块或 workflow，并给出证据等级。深度中等偏好，尤其第二条有 25/11 的直接数据支撑。弱点是第一条关于 multi-agent 根本局限的论证仍主要来自单次 Demo 经验，缺少系统性消融或反例边界。",
-      "missingEvidence": "缺少架构对比实验设计、失败样例、任务复杂度与 agent 架构选择之间的形式化标准。"
-    },
-    "brainaryMapping": {
-      "score": 8,
-      "reason": "Brainary 映射具体，覆盖 Self-ability Understanding、Target Understanding、Confidence、Monitoring，并将其落到 Capability Profile、四维置信向量、证据链闭环和状态机设计上。该部分不是泛泛贴标签，已经进入系统架构层。但目前仍是设计映射，未证明这些模块在真实应用中产生决策收益。",
-      "missingEvidence": "缺少四维置信向量在真实应用上的决策样例、各 Brainary 模块的输入输出格式、状态机执行 trace。"
-    },
-    "monetaryValue": {
-      "score": 5,
-      "reason": "周报按模板给出了金额：Benchmark 估值 3 万人民币，Agent 架构估值 4 万人民币，也说明了大致依据。但估值主要是主观类比 MOCGuard/BACScan 的学术影响和人工构造成本，没有实际市场支付证据、引用转化模型、人工成本明细或可售产品形态。因此金额存在，但商业可信度一般。",
-      "missingEvidence": "缺少具体成本拆分、潜在用户访谈、同类 benchmark 或 agent module 的实际价格、企业安全团队愿付费证据。"
-    },
-    "projectManagement": {
-      "score": 12,
-      "reason": "项目管理信息较完整：阶段、原计划与实际、投入时间、下周投入、关键里程碑、资源、依赖、token 成本、偏差和纠偏动作都有。尤其说明了原计划 Phase 0 与实际工作发生偏移，并解释为基础工作调整。扣分点在于：偏差是否合理缺少外部证据；关键路径风险没有量化；‘无需老师介入’与当前 Demo 未跑通、benchmark 规模不足之间存在张力。",
-      "missingEvidence": "缺少甘特式任务拆分、每个里程碑的验收标准、风险优先级、如果下周 Demo 仍未跑通的备选方案。"
-    },
-    "nextAction": {
-      "score": 9,
-      "reason": "下周动作清晰且可验证：可用 CVE 扩大到 15+，在 1-2 个 Java Web 应用做零日挖掘首轮尝试，确定变异植入应用和策略，跑通新架构 Demo 的核心流程，并在 1 个真实应用上验证 Confidence 四维向量。这些动作有数量、有对象、有验收边界。",
-      "missingEvidence": "缺少下周优先级排序，以及如果 15+ CVE 目标无法达成时是否转向变异植入的决策规则。"
-    },
-    "evidenceQuality": {
-      "score": 3,
-      "reason": "证据质量中等。优点是有直接数字：25 个候选、11 个可用、约 44% 通过率；有明确证据等级 A/B。缺点是所有证据均以文字陈述存在，没有附上可审计 artifact、日志、列表、commit、文档链接或实验记录。对于架构重构的证据尤其不足。",
-      "missingEvidence": "缺少 CVE 表格、复现日志、Docker 环境记录、agent_design.md、Demo 测试结果、不可复现 CVE 的失败原因表。"
-    },
-    "totalScore": 74,
+    "totalScore": 75,
     "tier": "B",
-    "oneLineJudgment": "本周有真实方向性推进和可计数数据资产，但核心系统尚未跑通，benchmark 仍未形成闭环，证据多为自述，属于‘路线变清楚但结果未闭合’的一周。",
-    "professorFollowUp": "老师最该追问三件事：第一，要求提交 25 个候选 CVE 与 11 个可复现 CVE 的表格和复现证据；第二，要求下周必须给出新单 agent Demo 的最小可运行 trace，而不仅是架构文档；第三，确认是否优先把变异植入 ground truth 提前启动，因为这可能比继续扩 CVE 更能支撑论文评测。"
+    "oneLineJudgment": "本周方向判断和架构重构有明显认知增量，benchmark 也有初步硬数据，但核心系统与实验尚未闭环，当前更像高质量原型规划周，而不是强交付周。",
+    "professorFollowUp": [
+      "要求学生下周提交 25 个候选 CVE 与 11 个可复现 CVE 的表格，包括项目、版本、advisory、修复 commit、复现状态和失败原因。",
+      "要求学生把 agent_design.md 和新 Demo 的最小运行日志交出来，重点检查 Confidence 四维向量是否真的参与决策，而不是只存在于设计文档中。",
+      "追问 multi-agent 被放弃的证据：至少给出 2-3 个 Demo 失败案例，并说明为什么这些失败不能通过普通工程修补解决。",
+      "要求下周把变异植入方案具体化为一个应用、三类 mutation、每类预期触发的跨层不一致，以及 ground truth 标注格式。",
+      "提醒学生区分论文贡献：benchmark、诊断系统、Brainary-guided agent 架构三者都可做贡献，但下周必须判断哪个是主贡献，避免项目发散。"
+    ]
   }
 }

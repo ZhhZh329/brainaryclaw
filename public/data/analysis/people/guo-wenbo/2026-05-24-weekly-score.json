@@ -1,6 +1,6 @@
 {
   "key": "person:guo-wenbo:2026-05-24:weekly-score",
-  "generatedAt": "2026-06-05T23:01:28.798Z",
+  "generatedAt": "2026-06-06T00:01:34.683Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
@@ -10,55 +10,91 @@
     "name": "郭文博",
     "scores": {
       "hardProgress": {
-        "score": 12,
-        "reason": "本周有明确的架构抽象进展：提出了用户任务层、Agent orchestration、Skill capability、Tool/Memory/Workflow 基础设施层，并梳理了 Skill → Agent 的最小执行路径。Skill Guard 也启动了恶意 Skill 检测、baseline 分析和 SkillBench 兼容性验证。但硬产出仍偏弱：没有提交 schema 文档、demo、实验结果、代码链接、检测指标或 benchmark 草案。多数进展停留在设计和判断层。",
-        "missingEvidence": "缺少架构图、Skill schema 初稿、可运行 demo、实验日志、Skill Guard 检测结果、baseline 指标、失败案例、代码或数据链接。"
+        "score": 13,
+        "reason": "本周有明确的架构抽象进展，包括数字员工分层结构、Skill 到 Agent 的最小执行路径、Skill Guard 从独立扫描器转向运行期防护模块的定位。但硬产出仍以设计和判断为主，Skill schema、可运行 demo、workflow-level 检测实验结果都尚未完成。",
+        "missingEvidence": [
+          "缺少架构图、接口文档或 Skill schema 草案。",
+          "缺少 Skill 到 Agent demo 的运行记录、代码链接或截图。",
+          "Skill Guard 仅说明启动测试，缺少实验结果、样本数量、检测指标和失败案例。"
+        ]
       },
       "cognitiveIncrement": {
-        "score": 11,
-        "reason": "认知增量比较清楚：从 Skill repository 转向 Agent orchestration infrastructure，从单点 Skill 风险转向 workflow-level 风险建模，从知识库定位转向任务执行基础设施。这些判断对 Brainary 和数字员工方向有一定增量。但部分判断属于行业共识或老师已知内容，报告中也承认若干点不是老师原本不知道的，因此新增认知的独特性有限。",
-        "missingEvidence": "缺少与已有系统或论文的具体对比，缺少为什么当前判断优于其他架构路线的证据，缺少被推翻的旧假设及其验证过程。"
+        "score": 12,
+        "reason": "认知增量较清晰：从 Skill repository 转向 Agent orchestration infrastructure，从单 Skill 安全转向 workflow-level 风险建模，从模型能力评测转向执行过程评测。这些判断对 Brainary 的系统定位有实际影响。",
+        "missingEvidence": [
+          "缺少这些认知如何改变已有设计决策的具体对比。",
+          "缺少对反例或替代路线的分析，例如为什么 Skill repository 价值下降而不是仍然必要。",
+          "缺少基于实验或用户任务的验证。"
+        ]
       },
       "cot2Depth": {
-        "score": 10,
-        "reason": "CoT's CoT 有按照模板回答：内容、老师是否已知、为什么未被自动化科研吸收、自动化潜力、沉淀形式和证据等级。最有价值的是把安全问题定义为 execution chain 中的动态组合风险。但深度仍不够：没有给出具体机制模型、边界条件、反例、可检验假设，也没有说明 workflow-level 风险如何形式化计算。",
-        "missingEvidence": "缺少风险传播机制的形式化定义，缺少 benign Skill 组合成危险能力的具体案例，缺少可验证假设、实验设计、评价指标和失败模式分类。"
+        "score": 11,
+        "reason": "CoT’s CoT 覆盖了老师是否已知、为什么未被自动化科研吸收、信息差、自动化潜力和沉淀形式，结构符合模板。较有价值的是把安全问题表述为“认知调度风险”。不足是推理仍偏概念层，证据等级为 B，但没有给出支撑 B 级的具体实验现象或外部案例。",
+        "missingEvidence": [
+          "缺少具体实验观察来支撑 workflow-level 风险建模。",
+          "缺少可证伪假设，例如什么结果会推翻“orchestration layer 是核心”。",
+          "缺少不同 CoT 之间的依赖关系和优先级判断。"
+        ]
       },
       "brainaryMapping": {
         "score": 8,
-        "reason": "与 Brainary 的映射较完整：数字员工对应 workflow management、tool orchestration、reasoning、memory；Skill Guard 对应 risk modeling、cognitive control、runtime monitoring、benchmark/evaluation。也指出 Brainary 应从知识库转向 Agent-native infrastructure。问题是映射仍偏模块名罗列，尚未说明这些模块之间的接口、数据流、优先级和落地路径。",
-        "missingEvidence": "缺少 Brainary 现有能力与新增模块的差距分析，缺少接口定义、系统架构图、数据流图、模块优先级和集成计划。"
+        "reason": "报告较好地把数字员工架构映射到 workflow management、tool orchestration、reasoning、memory，把 Skill Guard 映射到 risk modeling、cognitive control、runtime monitoring 和 benchmark。也说明了可能沉淀为 agent runtime、workflow engine、skill scheduler、runtime evaluator 等模块。",
+        "missingEvidence": [
+          "缺少这些模块在 Brainary 现有架构中的位置图。",
+          "缺少模块边界、输入输出协议和依赖关系。",
+          "缺少本周实际进入 Brainary 系统的代码、配置或设计文档证据。"
+        ]
       },
       "monetaryValue": {
         "score": 5,
-        "reason": "报告给出了数字员工架构 300万–1000万人民币、Skill Guard 100万–500万人民币的估值，并引用 AutoGen、CrewAI、Devin、企业 workflow automation、AI 安全模块作为参考。但估值方法较粗，没有客户画像、付费场景、竞品价格、市场规模、转化路径或销售周期。货币价值判断方向合理，但证据不足。",
-        "missingEvidence": "缺少目标客户访谈、真实需求证据、竞品定价、市场规模估算、采购预算、商业模式、MVP 付费路径和成本收益测算。"
+        "reason": "报告给出了数字员工架构 300万到1000万人民币、Skill Guard 100万到500万人民币的估值，并引用 AutoGen、CrewAI、Devin、企业 workflow automation、AI 安全检测作为参照。但计算方法过粗，缺少客户画像、付费场景、价格模型、竞争差异和商业化路径。",
+        "missingEvidence": [
+          "缺少潜在客户或使用者访谈证据。",
+          "缺少具体定价模型，例如按席位、按调用量、按企业部署收费。",
+          "缺少竞品功能对比和替代成本分析。",
+          "缺少为什么本项目能捕获该价值的证据。"
+        ]
       },
       "projectManagement": {
-        "score": 10,
-        "reason": "项目管理信息较完整：写明了当前阶段、原计划、实际完成、本周投入、下周预计、资源需求、关键路径、偏差原因和纠偏动作。数字员工项目的纠偏动作是先跑通 demo，Skill Guard 也承认实验结果尚未产出。缺点是缺少里程碑验收标准、具体排期、负责人分工、风险优先级和阻塞条件；时间投入与产出之间的对应关系也不清楚。",
-        "missingEvidence": "缺少甘特式里程碑、每项任务的完成定义、demo 验收标准、实验完成标准、风险清单、依赖关系、代码仓库状态和每日/阶段性产出。"
+        "score": 11,
+        "reason": "项目管理信息较完整，包含阶段、原计划、实际完成、本周投入、下周投入、资源需求、关键路径、偏差原因和纠偏动作。数字员工项目进度基本符合预期，Skill Guard 明确存在实验结果未产出的偏差。问题是里程碑仍偏描述性，缺少可验收标准和风险优先级。",
+        "missingEvidence": [
+          "缺少每个项目的明确交付物清单和验收标准。",
+          "缺少具体时间表，例如下周哪一天完成 schema，哪一天跑 demo。",
+          "缺少资源缺口是否会阻塞进度的判断。",
+          "缺少任务负责人分工，虽然提到与卓满联合梳理，但没有说明具体责任边界。"
+        ]
       },
       "nextAction": {
         "score": 8,
-        "reason": "下周动作相对具体：完成 Skill schema、跑通 Skill → Agent demo、验证多 Skill workflow 调度稳定性、加入 execution trace、测试动态上下文对检测结果的影响、设计 Agent execution benchmark。这些动作能推动从概念进入验证。但仍缺少量化成功标准，例如 demo 要覆盖几个 Skill、稳定性如何衡量、检测效果看哪些指标。",
-        "missingEvidence": "缺少每个 next action 的验收标准、截止时间、输入输出物、最低可接受指标、失败后的替代方案。"
+        "reason": "下周动作较具体，包括完成 Skill schema、跑通 Skill 到 Agent demo、验证多 Skill workflow 调度稳定性、加入 execution trace 分析、设计 Agent execution benchmark。这些动作具备较强可验证性。扣分点在于缺少成功标准，例如 demo 跑通的任务类型、稳定性的量化指标、检测验证的评价指标。",
+        "missingEvidence": [
+          "缺少每个下周动作的验收指标。",
+          "缺少优先级排序，多个方向同时推进可能分散。",
+          "缺少如果 demo 或实验失败时的备选路径。"
+        ]
       },
       "evidenceQuality": {
         "score": 2,
-        "reason": "证据质量偏低。报告主要是判断、架构抽象和方向性结论；虽标注 CoT 证据等级为 B，但没有提供支撑材料。Skill Guard 只说实验启动和初步验证静态规则不足，没有给出实验设置、样本数、结果表或案例。数字员工架构也没有可检查工件。",
-        "missingEvidence": "缺少实验数据、指标、截图、日志、代码、数据集使用说明、样例 workflow、失败案例、对比基线和第三方资料引用。"
+        "reason": "报告的证据质量偏弱。虽然自评证据等级为 B，并说明有行业趋势、初步实验现象和实践支撑，但正文没有提供实验数据、日志、样本、指标、代码、截图、文档链接或具体案例。当前主要是概念推理和项目判断。",
+        "missingEvidence": [
+          "缺少 Skill Guard 测试数据与结果。",
+          "缺少 baseline 行为分析结果。",
+          "缺少 SkillBench 兼容性验证记录。",
+          "缺少架构设计产物和 demo 证据。",
+          "缺少 benchmark 设计草案或 failure mode 样例。"
+        ]
       }
     },
-    "totalScore": 66,
-    "tier": "C",
-    "oneLineJudgment": "本周的方向判断和 Brainary 映射有价值，但主要停留在架构认知与规划层，缺少可验证硬产出和实验数据，尚不能证明路线有效。",
+    "totalScore": 70,
+    "tier": "B",
+    "oneLineJudgment": "本周最大价值是把 Brainary 的重点从知识库和单 Skill 推进到 Agent 执行基础设施与 workflow-level 风险建模，但硬实验和可验收产物不足，仍处在概念架构向原型验证过渡阶段。",
     "professorFollowUp": [
-      "要求下周必须交付一个可运行的 Skill → Agent 最小 demo，而不是继续扩展概念框架。",
-      "要求提交 Skill schema 初稿，并说明输入、输出、权限、工具依赖、风险标签和 memory 更新协议。",
-      "要求 Skill Guard 至少给出一个 benign Skill 组合产生 workflow-level 风险的具体案例，包括 execution trace 和检测失败原因。",
-      "要求把 Agent execution benchmark 收敛成 3 到 5 个可测指标，例如 workflow 完成率、工具误用率、memory consistency、risk propagation、failure recovery。",
-      "教授本周最应该学习的一点是：Agent 安全的核心风险可能不是单个 Skill 是否恶意，而是多个看似正常的 Skill 在 workflow orchestration 下动态组合出危险能力。"
+      "要求他下周必须交付一个可运行的 Skill 到 Agent 最小 demo，并明确输入任务、调用的 Skill、workflow trace、执行结果和失败点。",
+      "要求他提交 Skill schema 的第一版，不要只描述方向，需要包含字段定义、输入输出协议、权限声明、风险标签和调用约束。",
+      "追问 Skill Guard 的实验设计：测试多少个 Skill、恶意类型如何定义、baseline 是什么、指标是准确率还是召回率、workflow-level 风险如何标注。",
+      "要求他把“benign Skill 组合成危险能力”给出至少一个具体可复现实例，否则这个判断仍只是概念。",
+      "让他把 Brainary 自动化科研转化路径收敛成一个优先级：先做 workflow engine、benchmark、evaluator 还是 runtime monitor，并说明为什么。"
     ]
   }
 }

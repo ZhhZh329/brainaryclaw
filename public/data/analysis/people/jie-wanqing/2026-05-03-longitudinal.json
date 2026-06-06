@@ -1,254 +1,230 @@
 {
   "key": "person:jie-wanqing:2026-05-03:longitudinal",
-  "generatedAt": "2026-06-05T23:04:52.939Z",
+  "generatedAt": "2026-06-06T00:04:54.170Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "7c0859c024eefbe3e8580bf997aeef9acf714fe85252c2cb8acc9b9d6adb5826",
   "result": {
     "overallTrajectory": {
-      "judgment": "学生的研究能力在提升，不只是变忙；提升主要体现在从“包装一个看似有效的方法”转向“承认非 SOTA、排查评估口径、做根因归因、拆成单假设实验”。但硬进展尚未同步跟上认知进展：最近两周更多是诊断和实验设计，缺少已完成的新实验结果、量化收益和明确产物。",
-      "mainShift": "纵向看，4月12日和4月19日仍以论文叙事、方法定型、图示表达和结构化证据路线的正向解释为主；4月26日出现关键转折，发现标准测试集真实性能落后于 Smart-LLaMA-DPO，并开始从 SOTA 叙事退回到可归因实验；5月3日进一步把优化拆成 reentrancy、integeroverflow、timestamp 的类型化因果证据问题。",
-      "researchCapabilityChange": "能力提升最明显的部分是元认知和实验归因：学生开始意识到多增强耦合会导致不可解释退化，也开始要求每个实验有失败假设、输入改动和可观测指标。能力仍不足的部分是项目闭环：Verification Phase1、Structured Trace、Selected Type-RAG 连续出现但未报告完成结果；还没有形成可交付的自动化管线或稳定指标改善。",
-      "risk": "当前最大风险是进入“高质量反思但低产出验证”的状态：理论上知道要单假设、可消融、可验证，但下一步如果仍停留在设计层面，研究能力提升会被项目执行不足抵消。",
-      "evidenceLevel": "中等。周报提供了清晰的认知变化和问题定位证据，但缺少每周具体实验表格、指标数值、代码提交、消融结果、失败样例数量和产物链接。"
+      "judgment": "该学生在这 4 周里表现出一定研究能力提升，不只是变忙。关键证据不是工作量增加，而是从“整理一个看似有效的方法并准备论文叙事”，转向“复核评估口径、发现真实性能不达 SOTA、承认路线不足、重构为单假设可归因实验”。这是研究能力中的负反馈吸收、证据优先和可消融设计能力的提升。",
+      "mainConcern": "硬进展仍偏弱。4 周内主要产出是论文叙事、结果复核、根因分析和实验设计；真正完成的新优化闭环、完整 Verification Phase1 结果、Structured Trace 最小实现、selected Type-RAG 实验结果尚未在周报中出现。也就是说，认知质量在上升，但实验交付速度和闭环密度不足。",
+      "researchCapabilityChange": "从第 1-2 周的“证明结构化证据有效”叙事，变成第 3-4 周的“先验证真实性能，再定位结构化证据与判定逻辑未对齐的因果缺口”。这是明显的研究范式升级：由结果包装转向机制验证和失败归因。",
+      "notJustBusyEvidence": [
+        "第 3 周主动进行标准测试集对齐、数据泄露排查和指标复核，并推翻了此前较乐观的 SOTA 叙事。",
+        "第 3-4 周明确反对多增强耦合式优化，转向单假设、可归因、可消融实验。",
+        "对 reentrancy、integeroverflow、timestamp 的错误原因从泛泛规则不足，细化到执行顺序、共享状态、保护机制、编译器版本、unchecked、SafeMath、业务逻辑参与等判定条件。"
+      ],
+      "stillBusyNotEnoughEvidence": [
+        "下周计划多次重复出现：Verification Phase1、reentrancy Structured Trace、Type-RAG selected routing，但报告中没有显示这些任务已经完成。",
+        "没有报告具体指标变化、样本级错误分析数量、消融结果表、实验日志链接或可复现实验产物。",
+        "Brainary 价值判断逐渐成熟，但缺少用户、金额、部署场景、自动化流水线和可交付产品形态的明确连接。"
+      ]
     },
     "stageByWeek": [
       {
         "week": "2026-04-12",
-        "stage": "方法收敛与论文叙事强化阶段",
-        "topicTrajectory": "聚焦 Struct-LLM 用于智能合约漏洞检测，主线是结构化证据组织优于函数级 OR 聚合和原始合约直接输入。",
-        "hardProgress": "报告了 TOSEM 论文提纲、核心论点压缩、实验叙事统一、方法总览图和中间表示图打磨。但缺少具体实验新增结果、指标变化和代码产物证据。",
-        "CoTIncrement": "能把工作从实验结果提升到论文论证结构，说明其开始考虑审稿人如何理解贡献。",
-        "CoTsCoT": "将优势归纳为信噪比、OR 聚合误报、跨函数上下文、SFT 稳定性、可解释性五点，但这一周基本是正向归因，尚未检验这些归因是否真实。",
-        "BrainaryMapping": "把 Brainary 从“代码检索”映射到“可信中间证据表示”，方向合理但较抽象。",
-        "valueReasoning": "价值函数偏论文价值和方法叙事价值：认为值得做的是把方法包装成 TOSEM/ISSTA 可理解的贡献。缺少金额、用户、安全审计场景中的成本收益、自动化路径。",
-        "projectManagement": "计划包括定稿图、写正文、补消融。计划方向正确，但没有明确完成标准和优先级。",
-        "evidenceLevel": "偏低到中等。更多是叙事整理证据，不是硬实验证据。"
+        "stage": "论文叙事收束阶段",
+        "topicTrajectory": "主题聚焦在 Struct-LLM 用于智能合约漏洞检测，强调结构化证据组织优于函数级 OR 聚合和原始合约直接输入。",
+        "hardProgress": "完成 TOSEM 论文提纲、核心论点压缩、实验叙事统一、方法图和中间表示图的表达打磨。缺少具体新增实验结果和数值证据。",
+        "cognitiveTrend": "认知重点是解释为什么实验效果显著，提出信噪比、合约级推理、跨函数上下文、SFT 简化和可追溯解释五个原因。",
+        "cotCotMaturity": "较强，但偏正向归因，主要在为已有好结果建立解释，还没有充分处理反证或失败条件。",
+        "brainaryMapping": "将 Brainary 从检索扩展到可信中间证据表示，这是较重要的抽象提升。",
+        "valueReasoning": "价值函数以论文发表、检测精度、可解释性和 Brainary 技术路线为主。没有连接金额、用户、商业审计场景或自动化部署。",
+        "projectManagement": "计划包括图定稿、正文初稿、关键消融和稳健性分析，方向合理但缺少优先级、验收标准和时间盒。",
+        "nextActionQuality": "中等偏好。知道要补消融，但没有明确每个消融验证哪个失败假设。"
       },
       {
         "week": "2026-04-19",
-        "stage": "方法定型与边界问题暴露阶段",
-        "topicTrajectory": "继续 Struct-LLM，开始从整体效果转向边界补强，特别是 delegatecall 假阴性、公平性和任务预简化质疑。",
-        "hardProgress": "报告了前期实验结果复核与标准测试集对齐，但没有给出对齐后的数值。硬进展比上一周稍实，但仍未形成可审计结果。",
-        "CoTIncrement": "主题更集中，知道论文需要回应结构化证据是否等价于任务预简化、对比是否公平。",
-        "CoTsCoT": "优势来源从五点压缩为三点，说明叙事更收束；但仍主要是解释已有方法优点，还没有真正负向验证。",
-        "BrainaryMapping": "Brainary 关联基本重复上一周：可信中间证据表示、降低噪声、提高可解释性。成熟度没有明显增量。",
-        "valueReasoning": "价值仍主要围绕论文说服力和方法合理性。开始出现公平对比意识，这是研究价值判断变好的信号，但仍未连接用户、金额或产品形态。",
-        "projectManagement": "计划包括 delegatecall 规则补强、方法与实验部分草稿、关键消融。动作较具体，但仍缺少时间盒、指标阈值和失败退出条件。",
-        "evidenceLevel": "中等偏低。出现具体错误类型 delegatecall，但缺少样例数量和错误分布。"
+        "stage": "方法定型与边界补强阶段",
+        "topicTrajectory": "继续维持 Struct-LLM 主线，重点从论文叙事转到标准测试集对齐、结果复核和公平性问题。",
+        "hardProgress": "复核前期实验结果并对齐标准测试集。报告没有给出复核后的具体性能指标。",
+        "cognitiveTrend": "优势来源从五点压缩为三点，说明主线更简洁，但对方法风险的认识开始出现：delegatecall 假阴性、公平性、预简化质疑。",
+        "cotCotMaturity": "有所成熟，开始识别审稿人可能攻击的问题，但仍未真正推翻自己的假设。",
+        "brainaryMapping": "延续上一周观点：Brainary 的核心不是找代码，而是压缩为可信中间证据表示。映射稳定，但新信息较少。",
+        "valueReasoning": "价值仍以论文论证、检测性能和可信解释为主。开始考虑公平对比，这是学术价值判断变成熟的迹象。",
+        "projectManagement": "计划包含 delegatecall 规则补强、论文方法与实验草稿、关键消融。任务仍偏并行，缺少哪一个决定路线去留的主实验。",
+        "nextActionQuality": "中等。能指向具体漏洞类型和消融模块，但还没有清楚的停止条件。"
       },
       {
         "week": "2026-04-26",
-        "stage": "关键现实校准与非 SOTA 根因分析阶段",
-        "topicTrajectory": "研究轨迹发生实质转折：从“结构化证据路线正在收敛”转为“真实性能落后于 Smart-LLaMA-DPO，需要重构优化路线”。",
-        "hardProgress": "这是四周里最重要的硬进展：重新进行标准测试集对齐、潜在数据泄露排查和指标复核，并发现方法真实性能距离 SOTA 有明显差距。但仍缺少具体指标和复核过程细节。",
-        "CoTIncrement": "从论文推进转向评估可信度和优化路线重构，这是研究能力提升的核心证据。",
-        "CoTsCoT": "明显成熟：学生认识到瓶颈不是单一 prompt 或超参数，而是结构化证据、训练范式和合约级判决之间没有形成稳定闭环。开始识别 reentrancy、integeroverflow、timestamp 各自需要不同证据。",
-        "BrainaryMapping": "Brainary 映射从抽象的可信中间层推进到“证据质量”和“判定逻辑对齐”。这是更接近系统能力沉淀的表述。",
-        "valueReasoning": "价值函数发生重要变化：从追求 SOTA/论文叙事转向追求可验证、可消融、能支撑最终判定的证据。学生开始认为‘可归因失败’比‘堆叠增强’更值得做。",
-        "projectManagement": "提出 Verification Phase1、reentrancy Structured Trace、Selected Type-RAG 三条线。方向合理，但三线并行有范围膨胀风险；需要教授压缩为一个主实验。",
-        "evidenceLevel": "中等。发现非 SOTA 是强证据，但缺失具体数值使判断受限。"
+        "stage": "证据校正与路线重构阶段",
+        "topicTrajectory": "发生关键转折：从 Struct-LLM 方法收束转向实验结果复核与优化路线重构。发现真实性能距离 Smart-LLaMA-DPO 有明显差距。",
+        "hardProgress": "完成标准测试集对齐、潜在数据泄露排查和指标复核，并得到非 SOTA 结论。这是本窗口最重要的硬进展，因为它改变了研究判断。",
+        "cognitiveTrend": "从正向叙事进入失败归因：结构化证据、训练范式和合约级判决没有形成稳定闭环。认识到多增强耦合优化不可取，应改为单假设、可归因、可消融实验。",
+        "cotCotMaturity": "显著提升。能够用失败结果修正方法论，并把错误类型映射到缺失因果信息，而不是归咎于 prompt 或超参数。",
+        "brainaryMapping": "Brainary 映射从可信中间表示进一步升级为证据质量和判定逻辑对齐，开始接近可工程化能力定义。",
+        "valueReasoning": "价值函数从“论文能否讲通、效果是否领先”转向“真实性能、可验证证据、可消融因果链”。这是健康变化。",
+        "projectManagement": "开始提出 Verification Phase1、reentrancy Structured Trace、Selected Type-RAG 三条路径，但三条仍同时推进，存在分散风险。",
+        "nextActionQuality": "较高。计划中有测试集规模 3,542、具体证据字段、类型选择策略，动作比前两周更可检验。"
       },
       {
         "week": "2026-05-03",
-        "stage": "单假设实验设计与因果证据字段化阶段",
-        "topicTrajectory": "继续沿着 4月26日的失败分析推进，把主要错误来源拆成 reentrancy、integeroverflow、timestamp，并强调低耦合实验。",
-        "hardProgress": "本周硬进展偏弱：主要是实验设计和优化拆解，没有报告 Verification Phase1 是否完成，也没有报告 Structured Trace 或 Selected Type-RAG 的初步结果。",
-        "CoTIncrement": "能够把实验设计要求明确为失败假设、输入改动、可观测指标，说明研究过程意识提升。",
-        "CoTsCoT": "进一步成熟：不是简单增加规则或 prompt，而是要求结构化证据贴近漏洞判定的关键因果链，例如 external call 与 state write 顺序、共享状态依赖、CEI、nonReentrant、编译器版本、unchecked、SafeMath、timestamp 是否参与关键业务逻辑。",
-        "BrainaryMapping": "Brainary 映射更具体：证据质量控制、判定逻辑对齐、类型化安全推理。仍缺少如何沉淀为 Brainary 模块、接口、数据结构或自动化流程。",
-        "valueReasoning": "价值函数继续从‘结果领先’转向‘可靠审计’：认为高价值安全审计任务需要可验证、可消融、可追踪的中间证据。但金额价值、真实用户、审计节省成本、误报漏报商业代价仍缺失。",
-        "projectManagement": "下一步计划质量比早期高，因为动作更具体；但连续两周重复 Verification Phase1 和 Structured Trace，说明执行闭环不足。",
-        "evidenceLevel": "中等偏低。认知证据强，执行证据不足。"
+        "stage": "单假设实验设计阶段",
+        "topicTrajectory": "继续围绕非 SOTA 根因，拆解 reentrancy、integeroverflow、timestamp 的主要错误来源，准备低耦合优化实验。",
+        "hardProgress": "主要是实验设计和错误来源梳理。没有报告 Verification Phase1 完整结果、Structured Trace 实现结果或 Type-RAG 实验结果，因此硬产出低于第 3 周。",
+        "cognitiveTrend": "稳定延续第 3 周的研究范式：每个实验需要失败假设、输入改动和可观测指标。认识到证据充分性与规则噪声之间的张力。",
+        "cotCotMaturity": "继续成熟，尤其是把规则增强的风险理解为负迁移，而不是默认更多规则更好。",
+        "brainaryMapping": "将 Brainary 能力表述为可验证、可消融、可追踪的中间证据，以及类型化安全推理。映射比第 1 周更接近平台能力，但仍缺少自动化路径细节。",
+        "valueReasoning": "开始提到高价值安全审计任务，但没有说明具体用户是谁、愿意为哪类错误减少付费、金额如何估算、产物如何交付。",
+        "projectManagement": "计划质量较好，但与上一周高度重复，说明执行闭环尚未发生或未被报告。",
+        "nextActionQuality": "中等偏高。动作具体，但教授应要求其把三项计划压缩成一个最小闭环主实验，避免继续停留在设计层。"
       }
     ],
     "trendScores": {
       "hardProgress": {
         "score": 3,
-        "trend": "先弱后强再停滞",
-        "rationale": "4月26日的评估口径复核和发现非 SOTA 是实质硬进展；但5月3日没有报告新实验完成，硬进展没有持续兑现。"
+        "trend": "先升后停滞",
+        "rationale": "第 3 周的评估口径校正和非 SOTA 发现是实质硬进展；第 4 周主要是设计，没有看到新实验完成。论文图和叙事是进展，但对研究有效性的增量有限。"
       },
-      "CoTIncrement": {
+      "cotIncrement": {
         "score": 4,
         "trend": "持续上升",
-        "rationale": "从论文叙事统一，发展到评估真实性、根因分析、单假设实验设计。"
+        "rationale": "从方法叙事到错误类型、证据字段、实验假设的拆解，CoT 增量明显增强。"
       },
-      "CoTsCoT": {
+      "cotCotMaturity": {
         "score": 4,
-        "trend": "明显成熟",
-        "rationale": "学生开始追问为什么有效、为什么失败、哪些证据字段与最终判定因果相关，而不是只描述方法效果。"
+        "trend": "第 3 周显著跃迁，第 4 周稳定",
+        "rationale": "能反思为什么此前判断过于乐观，并明确多增强耦合导致不可归因，这是较成熟的研究元认知。"
       },
-      "BrainaryMappingMaturity": {
-        "score": 3,
-        "trend": "从抽象到半具体",
-        "rationale": "从‘可信中间证据表示’推进到‘证据质量控制、判定逻辑对齐、类型化安全推理’；但还未形成 Brainary 的模块边界、接口、自动化流水线或可复用资产。"
+      "brainaryMappingMaturity": {
+        "score": 4,
+        "trend": "从概念映射走向能力定义",
+        "rationale": "Brainary 被映射为可信中间证据、证据质量控制、判定逻辑对齐、类型化安全推理。缺口是还没有具体自动化模块、接口、数据流和产品边界。"
       },
       "metaCognition": {
         "score": 4,
-        "trend": "显著上升",
-        "rationale": "能承认原先结构化证据路线不足，识别多增强耦合的归因问题，并主动转向可消融实验。"
+        "trend": "明显增强",
+        "rationale": "能够承认结构化证据路线当前不足，并将失败视为路线能力定义的反馈，而不是简单否定方向。"
       },
       "topicValue": {
         "score": 4,
-        "trend": "稳定较高",
-        "rationale": "智能合约漏洞检测、代码安全审计和 Agent Code Retrieve 都有高研究价值；但周报没有证明该具体方法相对现有 SOTA 的独特价值已经成立。"
+        "trend": "稳定偏高",
+        "rationale": "智能合约漏洞检测本身具备高价值，且与 Agent Code Retrieve 和 Brainary 有技术相关性。报告没有提供用户痛点或市场证据。"
       },
       "monetaryValueReasoning": {
         "score": 1,
-        "trend": "基本缺失",
-        "rationale": "没有讨论安全审计客户、节省人力、误报漏报成本、商业化交付形态、付费场景或金额估算。"
+        "trend": "几乎缺失",
+        "rationale": "只出现“高价值安全审计任务”的表述，没有金额、客户、付费场景、节省成本、降低损失或商业化路径。"
       },
       "evidenceLevel": {
         "score": 3,
-        "trend": "4月26日提升，5月3日未继续提升",
-        "rationale": "有标准测试集、数据泄露排查、指标复核等证据意识；但没有给出数值、表格、样例、统计显著性或消融结果。"
+        "trend": "第 3 周提升，第 4 周未继续闭环",
+        "rationale": "有标准测试集、数据泄露排查、指标复核和 3,542 合约评估计划，但缺少具体指标、表格、日志、样本级证据。"
       },
       "projectManagement": {
         "score": 3,
-        "trend": "计划质量提升，闭环不足",
-        "rationale": "计划越来越具体，但 Verification Phase1、Structured Trace、Type-RAG 多次滚动出现，说明完成定义和节奏控制不足。"
+        "trend": "计划更科学，但执行闭环不足",
+        "rationale": "已经知道要做单假设和可消融，但多条路线同时推进，且下周计划重复，说明项目管理需要更强的优先级和交付定义。"
       },
       "automationPath": {
         "score": 2,
-        "trend": "概念存在，路径缺失",
-        "rationale": "提到构造可验证、可追踪中间证据，但没有说明自动抽取字段、评估脚本、错误归因工具、CI 流水线或 Brainary 集成方式。"
+        "trend": "概念存在，路径不足",
+        "rationale": "提到 Agent Code Retrieve、结构化中间证据和语义仲裁，但没有说明如何自动生成证据、如何验证证据、如何接入审计流程、如何形成可复用工具链。"
       },
       "nextStepQuality": {
         "score": 3,
-        "trend": "方向变好但仍需收敛",
-        "rationale": "下一步动作从写论文转为最小实现、完整评估、selected routing，质量提升；但仍并行三线，缺少优先级和成功/失败阈值。"
+        "trend": "从泛化补强变为具体实验，但仍需压缩",
+        "rationale": "下一步动作包含具体字段和实验方向，但同时做 Verification、Structured Trace、Type-RAG，容易继续分散。"
       }
     },
     "valueFunctionChange": {
-      "summary": "学生的价值函数从“方法看起来有效、论文能讲清楚、图和叙事能说服审稿人”逐渐转向“评估可信、证据可消融、失败可归因、证据与漏洞因果链对齐”。这是研究价值观的正向变化。",
-      "weekByWeek": [
+      "summary": "学生的价值函数在 4 周内从“方法看起来有效、论文叙事能成立、结果领先”逐渐转向“真实性能、因果证据、可归因实验、Brainary 可沉淀能力”。这是正向变化。但价值函数仍主要是学术和技术内部价值，尚未充分连接到用户、金额、产品和自动化。",
+      "byPhase": [
         {
-          "week": "2026-04-12",
-          "whatSeemsWorthDoing": "值得做的是把 Struct-LLM 包装成 TOSEM/ISSTA 风格的完整论文贡献，强调结构化证据组织带来的精度和可解释性。",
-          "why": "因为学生认为结构化证据能让审稿人快速理解方法贡献，并把结果领先转化为结构设计合理和证据链清晰。",
-          "missingValueLinks": "没有连接金额、用户、商业安全审计、自动化产物或可复用 Brainary 模块。"
+          "phase": "第 1-2 周",
+          "whatIsWorthDoing": "值得做的是把 Struct-LLM 论文主线讲清楚，证明结构化证据优于函数级 OR 聚合和原始合约输入，并形成 TOSEM/ISSTA 风格表达。",
+          "whyWorthDoing": "因为它能提升漏洞检测精度、可解释性和论文说服力，也能支撑 Brainary 的 Agent Code Retrieve 路线。",
+          "missingValueLinks": "缺少金额、用户、真实审计工作流、产品形态和自动化部署路径。"
         },
         {
-          "week": "2026-04-19",
-          "whatSeemsWorthDoing": "值得做的是补强边界和公平性论证，例如 delegatecall 假阴性、任务预简化质疑、对比公平性。",
-          "why": "因为学生开始意识到论文不仅要讲优势，还要能防住审稿质疑。",
-          "missingValueLinks": "仍主要是论文价值，没有用户价值和金额价值。"
+          "phase": "第 3 周",
+          "whatIsWorthDoing": "值得做的是重新验证结果真实性，排查数据泄露和指标口径，并把失败原因拆成可消融问题。",
+          "whyWorthDoing": "因为不真实的 SOTA 叙事没有研究价值；只有可验证、可归因的证据链才能支撑后续方法优化和论文可信度。",
+          "missingValueLinks": "虽然学术价值函数变成熟，但仍没有说明该能力对安全审计客户能产生多少经济价值。"
         },
         {
-          "week": "2026-04-26",
-          "whatSeemsWorthDoing": "值得做的是重新校准评估口径、排查数据泄露、承认非 SOTA、寻找真实瓶颈。",
-          "why": "因为学生认识到不可归因的增强堆叠没有研究价值，只有可验证、可消融、能支撑判定的证据才值得继续投入。",
-          "missingValueLinks": "开始连接 Brainary 的证据质量和判定逻辑，但还没有连接自动化系统或产品形态。"
-        },
-        {
-          "week": "2026-05-03",
-          "whatSeemsWorthDoing": "值得做的是围绕漏洞因果链设计最小证据字段，并用单假设实验验证字段是否有效。",
-          "why": "因为学生认为可靠的 Agent Code Retrieve 应该先把复杂代码压缩成与漏洞因果链对齐的证据结构，再由模型裁决。",
-          "missingValueLinks": "依旧缺少金额、真实用户、审计工作流、交付产物、自动化管线和 Brainary 接口定义。"
+          "phase": "第 4 周",
+          "whatIsWorthDoing": "值得做的是构造与漏洞因果链对齐的结构化证据，尤其是 reentrancy 的执行顺序、共享状态和保护机制，以及 integeroverflow、timestamp 的类型化条件。",
+          "whyWorthDoing": "因为模型需要这些证据才能区分真实漏洞与形式相似的安全代码，同时避免规则注入带来的负迁移。",
+          "missingValueLinks": "已经提到高价值安全审计，但仍未落到用户、金额、产物形式、自动化接口和上线评估指标。"
         }
       ],
-      "maturityAssessment": "价值判断已从‘追论文结果’进化到‘追可信证据和可归因机制’，这是研究能力提升的强信号；但价值函数仍偏学术内部，没有完成从研究价值到用户价值、货币价值和系统资产价值的映射。",
-      "professorAttention": "教授应要求学生把‘结构化证据值得做’翻译成三个层次：一是相对 SOTA 的指标收益，二是对安全审计用户减少误报/漏报的收益，三是沉淀到 Brainary 后可复用的自动化模块。"
+      "connectionToBrainary": "Brainary 映射逐渐从“检索代码”升级为“把复杂代码压缩成可信、可消融、可追踪、与判定逻辑对齐的中间证据”。这是有研究价值的抽象。",
+      "connectionToAutomation": "目前只有方向性连接：Agent 自动构造中间证据并辅助语义裁决。缺少明确自动化路径，例如证据抽取器、证据校验器、类型路由器、verification prompt、错误回流训练、审计报告生成等模块之间的流水线定义。",
+      "connectionToMoneyAndUsers": "证据缺失。报告没有说明目标用户是审计公司、协议开发者、交易所、保险方还是安全平台；也没有说明每减少一个假阴性或误报能带来多少经济价值。"
     },
     "repeatedBlockers": [
       {
-        "blocker": "结构化证据与最终漏洞判定之间对齐不稳定",
+        "blocker": "结构化证据与最终漏洞判定之间没有稳定对齐",
         "appearsInWeeks": [
           "2026-04-26",
           "2026-05-03"
         ],
-        "analysis": "这是当前核心技术卡点。学生已经识别出证据过粗无法区分真实漏洞与形式相似的安全代码，但还没有报告字段级实验结果。"
+        "impact": "导致模型难以区分真实漏洞与形式相似但安全的代码，是非 SOTA 的核心原因。"
       },
       {
-        "blocker": "reentrancy 需要执行顺序、共享状态依赖和保护机制信息",
+        "blocker": "reentrancy 证据缺少关键因果链",
         "appearsInWeeks": [
           "2026-04-26",
           "2026-05-03"
         ],
-        "analysis": "学生连续两周提到 external call、state write、CEI、nonReentrant，说明问题定位稳定；但如果下周仍只是计划而无最小实现，就会变成执行卡点。"
+        "impact": "缺少 external call 与 state write 顺序、共享状态依赖、CEI 模式、nonReentrant 保护机制等信息，直接影响复杂漏洞判断。"
       },
       {
-        "blocker": "规则增强和 Type-RAG 有负迁移风险",
+        "blocker": "规则增强和 Type-RAG 存在负迁移",
         "appearsInWeeks": [
           "2026-04-26",
           "2026-05-03"
         ],
-        "analysis": "学生已意识到全类型注入规则会伤害其他漏洞类型，因此提出 selected routing。需要用类型级指标验证，而不是继续凭直觉选择。"
+        "impact": "简单堆叠领域规则不能稳定提升整体性能，可能损害其他漏洞类型。"
       },
       {
-        "blocker": "Verification Phase1 未形成闭环",
+        "blocker": "计划重复但完成证据不足",
         "appearsInWeeks": [
           "2026-04-26",
           "2026-05-03"
         ],
-        "analysis": "4月26日计划完成 3,542 个合约标准测试集完整评估，5月3日仍说完成或复核，说明交付状态不清。教授需要追问是否完成、结果是什么、是否继续。"
+        "impact": "Verification Phase1、Structured Trace、selected Type-RAG 连续出现在计划中，但尚未报告完成结果，说明执行闭环需要加强。"
       },
       {
-        "blocker": "缺少量化证据和完成定义",
+        "blocker": "价值推理缺少外部约束",
         "appearsInWeeks": [
           "2026-04-12",
           "2026-04-19",
           "2026-04-26",
           "2026-05-03"
         ],
-        "analysis": "四周周报都很会讲方法逻辑，但几乎没有具体指标、样例数量、错误分布、代码产物或实验表。"
-      },
-      {
-        "blocker": "Brainary 映射停留在概念层",
-        "appearsInWeeks": [
-          "2026-04-12",
-          "2026-04-19",
-          "2026-04-26",
-          "2026-05-03"
-        ],
-        "analysis": "Brainary 关联逐渐具体，但仍没有接口、数据结构、自动化流程、评估组件或可复用模块定义。"
+        "impact": "学生能说明学术和方法价值，但不能说明用户为什么会用、愿意为哪种能力付费、最终产物如何进入安全审计流程。"
       }
     ],
     "professorShouldAsk": [
-      {
-        "question": "Verification Phase1 到底完成了吗？在 3,542 个合约上的 Accuracy、Precision、Recall、F1、每类漏洞指标、相对 Smart-LLaMA-DPO 的差距分别是多少？",
-        "why": "这是判断 verification prompt 路线是否继续的硬门槛。当前证据缺失。"
-      },
-      {
-        "question": "请拿出 reentrancy 的 20 个假阳性和 20 个假阴性样例，逐个标注缺失的是 external call 顺序、state write 顺序、共享状态依赖、CEI 还是 nonReentrant。",
-        "why": "防止 Structured Trace 字段设计停留在理论正确，而不是由错误样例驱动。"
-      },
-      {
-        "question": "下周只能做一个主实验：你选择 Verification、reentrancy Structured Trace 还是 Selected Type-RAG？成功阈值和停止阈值是什么？",
-        "why": "当前三条线并行，容易继续忙但不闭环。"
-      },
-      {
-        "question": "如果 Structured Trace 有效，它会作为 Brainary 的哪个模块沉淀？输入、输出 JSON schema、自动抽取方式、评估脚本是什么？",
-        "why": "迫使学生把 Brainary 映射从概念变成系统资产。"
-      },
-      {
-        "question": "这个方向的用户是谁？是审计公司、智能合约开发者、交易所风控还是研究论文审稿人？他们为减少一个漏报或误报愿意付出什么成本？",
-        "why": "当前价值函数缺少金额和用户维度。"
-      },
-      {
-        "question": "结构化证据路线如果无法超过 Smart-LLaMA-DPO，它仍然有什么可发表或可产品化价值？是可解释性、低成本、可追踪审计报告，还是作为 DPO 数据生成器？",
-        "why": "避免把唯一价值绑定在 SOTA 指标上。"
-      },
-      {
-        "question": "上周计划中哪些完成了，哪些没有完成，为什么没有完成？",
-        "why": "周报显示计划滚动重复，教授需要建立执行闭环。"
-      }
+      "请给出第 3 周复核后 Struct-LLM 与 Smart-LLaMA-DPO 的完整指标差距，包括每个漏洞类型的 precision、recall、F1、假阳性和假阴性数量。",
+      "Verification Phase1 在 3,542 个合约上的完整结果是什么？如果还没完成，具体卡在数据、脚本、推理成本、评估口径还是结果解释？",
+      "reentrancy Structured Trace 的最小字段集是什么？每个字段分别验证哪个失败假设？如果只能保留 4 个字段，保留哪些，为什么？",
+      "请拿 20 个 reentrancy 错误样本做表格：原始模型判断、缺失证据、加入 Structured Trace 后预期变化、实际变化。没有这个表之前，不要继续扩展更多规则。",
+      "selected Type-RAG 的路由条件是什么？如何证明它只在 integeroverflow 等收益明确的类型启用，而不会污染其他类型？",
+      "当前论文主张是否应从‘达到 SOTA’改为‘结构化证据路线的边界与可归因优化框架’？如果不改，证据在哪里？",
+      "Brainary 里这个工作最终沉淀成什么模块：证据抽取器、漏洞类型路由器、verification agent、审计报告生成器，还是 benchmark？每个模块的输入输出是什么？",
+      "这个方向的用户是谁？智能合约审计公司或协议开发者最愿意为降低哪类错误付费：假阴性、误报、解释成本还是审计时间？",
+      "下周只能做一个实验时，哪个实验最能决定路线去留？验收标准是什么？失败后停止什么，成功后扩展什么？"
     ],
     "nextBestIntervention": {
-      "intervention": "把下周压缩成一个一周封闭实验，不允许三线并行。建议优先做 reentrancy Structured Trace 的最小可验证闭环。",
-      "reason": "reentrancy 是学生反复识别的关键错误来源，且最能检验‘证据必须对齐漏洞因果链’这一核心假设。它也最适合沉淀为 Brainary 的结构化证据模块。",
-      "requiredOutputByNextWeek": [
-        "一个固定测试子集：至少说明样本来源、样本数、正负例比例、是否来自 3,542 标准测试集。",
-        "一个 Structured Trace 最小 schema：必须包含 external call、state write、顺序关系、共享状态依赖、CEI、nonReentrant 六类字段。",
-        "一个自动或半自动抽取脚本：即使规则很粗，也要能批量生成证据，而不是手工写解释。",
-        "一个对照实验表：baseline Struct-LLM、加入 Structured Trace 后的结果、至少按 Precision、Recall、F1、假阳性、假阴性报告。",
-        "一个错误归因表：新增证据修复了哪些错误，又引入了哪些错误。",
-        "一个 go/no-go 判断：如果 reentrancy F1 或 Recall 没有达到预设提升，是否停止该路线或改字段。"
+      "intervention": "把接下来一周压缩成一个最小可闭环实验：只做 reentrancy Structured Trace，不同时推进 Type-RAG 和论文扩写。",
+      "why": "reentrancy 是学生已经识别出的关键错误来源，也是最能检验“结构化证据是否必须覆盖漏洞因果链”的核心假设。如果这个实验无法带来可解释收益，继续扩展 Brainary 叙事和更多规则都缺乏基础。",
+      "requiredDeliverables": [
+        "一个 50-100 个 reentrancy 样本的错误分析表，区分缺少顺序信息、共享状态依赖、保护机制、CEI 判断等类别。",
+        "Structured Trace 最小字段定义，包括字段名、抽取规则、示例、可能错误来源。",
+        "加入 Structured Trace 前后的同一测试子集指标变化，至少报告 precision、recall、F1、假阳性、假阴性。",
+        "3-5 个样本级案例，展示模型判断为什么改变或为什么没有改变。",
+        "明确结论：该证据字段是否值得进入 Brainary 的通用中间证据层。"
       ],
-      "successCriteria": "下周不以‘完成设计’为成功，而以‘产生可复核实验表和失败样例分析’为成功。即使指标没有提升，只要能明确哪个证据字段无效，也算研究进展。",
-      "automationPath": "把 Structured Trace 作为 Brainary 的候选中间证据接口：原始合约输入，自动抽取调用-状态更新-保护机制证据，输出结构化 JSON，再接 LLM 判定和评估脚本。当前周报没有证明这条自动化路径已经实现，需要下周补证据。",
-      "oneThingProfessorShouldLearn": "这个学生真正的进步不是更会写 Struct-LLM 的正向故事，而是开始能推翻自己的 SOTA 叙事、承认评估差距，并把问题降解为可归因的因果证据实验；教授现在要防止其停在高质量反思层面，必须用一周闭环实验把认知进步转化为硬结果。"
+      "stopDoingForNow": [
+        "暂缓继续美化 TOSEM 叙事，除非核心实验结论已经稳定。",
+        "暂缓全类型 Type-RAG 或多增强耦合实验。",
+        "暂缓泛泛讨论 Brainary 高价值，先用一个可复用证据模块证明价值。"
+      ],
+      "professorOneThingToLearn": "这个学生的关键变化不是更勤奋，而是开始能用负结果重构研究假设。教授最应该推动的是把这种认知进步转化为一周一个硬闭环的实验产物，否则学生可能停留在高质量反思和计划中，无法形成可发表、可复用、可自动化的研究结果。"
     }
   }
 }

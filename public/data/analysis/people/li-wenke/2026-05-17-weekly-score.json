@@ -1,60 +1,64 @@
 {
   "key": "person:li-wenke:2026-05-17:weekly-score",
-  "generatedAt": "2026-06-05T23:05:30.230Z",
+  "generatedAt": "2026-06-06T00:05:34.137Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "4122a053ca5face7d7b111a13e552cc54f43128df299c9001291804706e6c754",
   "result": {
-    "hardProgress": {
-      "score": 17,
-      "reason": "本周硬进展较强，主要不是概念推进，而是明确落到了系统工程：多平台 WEB 端观测框架、账号池、游客池、Admin 后台、API Key、限流冷却、压测脚本、日志统计、平台状态接口、代理与 cloakbrowser 集成等，均对应周报模板中“真实可运行系统”和“可运维能力”的要求。尤其是把成功口径从“返回回答”修正为“触发 Web Search 并捕获来源”，属于工程指标层面的实质进展。但这些进展大多是文字陈述，缺少运行结果、代码提交、接口样例和成功率数据，因此不能给满分。",
-      "missingEvidence": "缺少 commit hash、代码目录截图、Admin 面板截图、接口返回样例、压测结果表、多平台实际采集样本、失败日志样例和各平台来源抽取的准确率验证。"
-    },
-    "cognitiveIncrement": {
-      "score": 13,
-      "reason": "CoT 增量清楚地从工程实践中抽象出了新认知：GEO WEB 端采集的核心指标是 Web Search 触发率和来源捕获率；账号池本质是平台状态管理系统；游客模式有容量和兜底价值；用户意图不应只从 query 开始。这些认知不是泛泛而谈，而是能改变系统设计、评测口径和后续研究路径。扣分点在于部分认知仍停留在定性判断，尚未用实验矩阵或数据量化证明。",
-      "missingEvidence": "缺少不同账号/IP/浏览器条件下触发率对比，缺少游客模式与正式账号模式的可用性数据，缺少从社交平台意图生成 query 后提升 GEO 观测价值的实验证据。"
-    },
-    "cot2Depth": {
-      "score": 13,
-      "reason": "CoT’s CoT 部分有较好深度，能够说明“老师原本不知道什么”“信息差在哪里”“新增认知是什么”“可沉淀为什么自动化形式”。第一条关于 WEB 端 LLM Search 是观测系统而非普通爬虫，深度较高，能直接指导 Brainary 的 harness、evaluator 和 memory schema。第二条关于用户意图价值由内容、互动和传播结构共同决定，也有方法论价值。扣分点是“老师原本不知道”这一判断主要是作者推测，缺少外部对比或反例；第二条还没有完成闭环验证，证据等级自评为 B。",
-      "missingEvidence": "缺少可复现的观测系统架构图、状态机定义、evaluator 规则；缺少一个真实行业样本证明互动结构确实能改变意图价值排序；缺少与传统 query intent 分类方法的效果对比。"
-    },
-    "brainaryMapping": {
-      "score": 8,
-      "reason": "Brainary 映射比较明确：WEB 端观测系统被映射到 tool orchestration、risk modeling、benchmark/evaluation；用户意图价值排序被映射到 memory、calibration、cognitive control。报告也给出了可能沉淀的模块，如平台状态 memory、账号风险模型、intent memory schema、ranking module、query generation agent。扣分点是映射仍偏框架化，缺少 Brainary 内部具体接口、数据结构字段、调度策略或 agent policy 的实现草案。",
-      "missingEvidence": "缺少 Brainary memory schema 的字段设计，缺少 tool orchestration 的调用流程，缺少 cognitive control 如何根据意图价值改变采样频率的具体规则，缺少 benchmark 指标定义和阈值。"
-    },
-    "monetaryValue": {
-      "score": 7,
-      "reason": "货币价值部分给出了三个模块的估值：WEB probe 500 万、多账号/反自动化 200 万、用户意图排序 300 万，并尝试用客户数、月费、替代人工成本、工程壁垒进行估算。这比单纯说“有商业价值”更好。但估值仍较粗，客户数、付费意愿、客单价、销售周期、竞品价格和成本结构都没有实证支撑，且三个估值之间可能存在重复计算。",
-      "missingEvidence": "缺少真实客户访谈、竞品定价、目标客户数量、转化率假设、获客成本、毛利率、维护成本、平台账号和代理成本，以及是否已有付费或试用需求。"
-    },
-    "projectManagement": {
-      "score": 13,
-      "reason": "项目管理部分完整度较高，覆盖了阶段判断、里程碑、计划与实际偏差、时间投入、下周资源规划、依赖关系、关键路径、成本规划、风险和纠偏动作。尤其是明确指出工程进度快于预期但稳定性风险高于预期，并把下周重点收缩到稳定性矩阵实验和一个垂直领域闭环，体现出较好的项目控制。扣分点在于仍缺少验收标准、负责人边界、具体时间节点和失败退出条件。",
-      "missingEvidence": "缺少每个里程碑的验收指标，例如最低 Web Search 触发率、来源捕获率、可接受限流率、单账号容量阈值；缺少下周每日安排；缺少如果 ChatGPT 稳定性达不到要求时的替代方案。"
-    },
-    "nextAction": {
-      "score": 8,
-      "reason": "下周动作较具体，包括 ChatGPT 四种运行条件比较、多平台同批问题采集、账号容量模型、一个垂直领域的意图层次树和价值排序表、Top 意图转化为 GEO query 并跑多平台观测。这些动作符合“最小可验证动作”的要求，也能直接验证本周核心假设。扣分点是缺少样本量、评测阈值、输出格式和优先级排序，导致可执行性还可以更强。",
-      "missingEvidence": "缺少计划测试多少个 query、每个平台重复多少次、每种运行条件跑多少轮、成功率达到多少算可用、选择哪个垂直行业、抽取多少条社交内容、人工标注一致性如何保证。"
-    },
-    "evidenceQuality": {
-      "score": 3,
-      "reason": "证据质量中等偏弱。报告自称有 commit history、模块落地、工程中遇到限流和 Web Search 不触发等直接经验，也对 CoT’s CoT 给了 A/B 证据等级。但实际周报没有附任何可检查证据，包括数据表、日志片段、截图、代码链接、实验结果或样本输出。因此读者只能相信描述，无法独立判断系统是否稳定、覆盖是否真实、指标是否改善。",
-      "missingEvidence": "缺少代码提交记录、运行日志、压测数据、平台采集样本、错误截图、Admin 统计截图、接口返回 JSON、实验配置、数据集链接和人工验证结果。"
+    "week": "2026-05-17",
+    "name": "Li Wenke",
+    "dimensions": {
+      "hardProgress": {
+        "score": 17,
+        "reason": "本周有明确工程推进：从单平台原型扩展到多平台 llm_web_probe，新增账号池、游客池、Admin、日志、压测、代理、cloakbrowser、平台状态接口等能力；同时用户意图方向形成了从内容平台意图资产到 GEO query 的方法路线。但这些进展主要是自述，缺少实际运行数据、截图、接口样例、commit 链接或压测结果，因此不能给满分。",
+        "missingEvidence": "缺少代码提交记录、系统截图、接口返回样例、各平台实际成功率、Web Search 触发率、来源捕获率、压测曲线、失败样本和账号池运行日志。"
+      },
+      "cognitiveIncrement": {
+        "score": 13,
+        "reason": "认知增量清楚：把成功率口径从‘回答成功’修正为‘Web Search 触发率和来源捕获率’，把账号池理解为平台状态管理系统，把 query 生成前置到真实内容平台意图发现。这些都直接改变后续系统设计和实验口径。扣分点是部分认知仍未被量化验证，尤其游客模式价值和意图资产到 LLM 排名稳定性的关系。",
+        "missingEvidence": "缺少新旧指标对比、未触发搜索样本比例、游客池与正式账号池的实测差异，以及内容平台意图映射到 GEO query 后的验证数据。"
+      },
+      "cot2Depth": {
+        "score": 12,
+        "reason": "CoT’s CoT 有两层较清晰的抽象：一是 WEB 端 LLM Search 不是普通爬虫而是观测系统，二是用户意图价值由内容、互动、传播结构共同决定。它们都能反推 workflow、agent module、memory schema 和 evaluator。但‘老师原本不知道’的判断基本是自判，缺少与老师已有认知的边界；第二个 CoT’s CoT 仍偏方法论，没有完成闭环验证。",
+        "missingEvidence": "缺少具体失败案例拆解、平台状态日志样本、不同触发状态下的观测差异；也缺少一个垂直领域中意图分类、价值排序、GEO 观测之间的实证链条。"
+      },
+      "brainaryMapping": {
+        "score": 8,
+        "reason": "Brainary 映射比较完整，覆盖 tool orchestration、risk modeling、benchmark/evaluation、memory、calibration、cognitive control，并能落到 probe module、平台状态 memory、账号风险模型、intent memory schema 等产物。扣分点是映射仍偏概念，没有定义具体 schema 字段、agent policy 输入输出和 evaluator 判定规则。",
+        "missingEvidence": "缺少 Brainary memory schema 草案、平台状态画像字段、账号风险评分规则、意图价值 ranking module 的输入输出定义，以及 evaluator 的可执行判定标准。"
+      },
+      "monetaryValue": {
+        "score": 7,
+        "reason": "报告给出了三个价值估计：WEB 端观测系统 500 万、多账号/反自动化能力 200 万、意图排序方法论 300 万，并提供了客户数、月费、研发替代成本等计算口径。优点是有商业对象和收入假设，不只是泛泛说有价值。主要问题是估值仍是内部假设，缺少真实客户访谈、竞品价格、转化率、付费意愿、交付成本和合规风险评估。",
+        "missingEvidence": "缺少潜在客户名单、访谈记录、竞品报价、实际销售线索、客户愿意为 WEB 端真实观测多付多少钱的证据，以及账号/IP/代理维护成本对毛利的影响测算。"
+      },
+      "projectManagement": {
+        "score": 13,
+        "reason": "项目管理结构较完整：列出里程碑、计划与实际偏差、时间投入、下周资源规划、依赖关系、关键路径、成本规划和纠偏动作。能识别 ChatGPT 稳定性为关键风险，并提出不盲目堆并发、先做稳定性矩阵实验。扣分点是缺少明确验收阈值和实际进度数据，部分‘超预期’判断没有量化依据。",
+        "missingEvidence": "缺少每个里程碑的验收标准、实际完成截图或链接、压测基线、稳定性目标值、下周实验样本量、资源预算上限，以及风险触发后的决策规则。"
+      },
+      "nextAction": {
+        "score": 9,
+        "reason": "下周动作具体且可验证：比较正式账号池、游客池、代理、cloakbrowser 四种条件；用同一批品牌/行业问题跑五个平台；整理账号容量模型；选一个垂直领域做意图树和价值排序闭环。这些动作能直接降低当前最大不确定性。扣分点是尚未给出样本量、成功阈值和优先级排序。",
+        "missingEvidence": "缺少实验矩阵的具体组合数、每组 query 数量、账号数量、代理数量、成功率阈值、判定生产默认策略的标准，以及垂直领域选择依据。"
+      },
+      "evidenceQuality": {
+        "score": 3,
+        "reason": "报告内部证据链较强，能说明做了哪些模块、遇到哪些限制、下一步怎么验证；但证据主要停留在文字自述，没有附可检查的运行结果。CoT’s CoT 1 声称有 commit history 支撑，但输入中没有提供 commit、日志或指标。CoT’s CoT 2 明确承认只有 B 级证据，这是合理的。",
+        "missingEvidence": "缺少原始 commit、日志、截图、压测报告、真实 query 结果、来源 URL 样本、失败截图、Admin 统计页面，以及 Search Arena 或社交平台样本分析文件。"
+      }
     },
     "totalScore": 82,
     "tier": "A",
-    "oneLineJudgment": "这是一个工程硬进展很强、认知增量清楚、项目管理完整的周报，但最大短板是缺少可审计数据，尤其缺少触发率、来源捕获率、限流率和压测结果。",
+    "oneLineJudgment": "这是工程推进和认知框架都较强的一周，但当前最大短板是缺少可审计的实测指标，尤其是 Web Search 触发率、来源捕获率和账号容量模型。",
     "professorFollowUp": [
-      "请先让学生补一张最小证据表：按平台列出请求数、成功回答数、Web Search 触发数、来源捕获数、限流数、平均耗时和失败原因。",
-      "请确认下周优先行业样例，避免用户意图方向同时铺太多行业；建议只选一个高商业价值垂直领域做闭环。",
-      "请要求学生定义生产可用阈值，例如 ChatGPT 默认策略至少需要达到多少 Web Search 触发率和来源捕获率。",
-      "请追问账号池、游客池、代理、cloakbrowser 四种条件的实验设计：样本量、重复次数、IP 控制、账号冷却规则和统计口径。",
-      "请要求把 Brainary 沉淀从概念映射推进到具体 schema：平台状态画像、账号风险画像、行业意图树和来源域名情报池至少应有第一版字段。"
+      "要求他下周必须交一张稳定性矩阵表：正式账号池、游客池、代理、cloakbrowser 各组合下的请求成功率、Web Search 触发率、来源捕获率、限流率和平均耗时。",
+      "要求他给出‘有效 GEO 观测’的最小判定标准，例如必须包含 answer、cited_urls 或 source_urls、平台状态、账号状态和失败原因。",
+      "请老师确认一个优先垂直领域，例如新能源汽车、雅思培训或本地服务，否则意图价值排序闭环会继续停留在方法论。",
+      "要求他附至少 5 条真实多平台 query 的结构化输出样本，用来判断 llm_web_probe 是否已经从 demo 进入可评测系统。",
+      "暂时不要扩大平台数量，优先把 ChatGPT 的稳定性、账号/IP 风险和‘未触发搜索’统计跑清楚。"
     ]
   }
 }

@@ -1,200 +1,149 @@
 {
   "key": "person:huang-xun:2026-05-10:longitudinal",
-  "generatedAt": "2026-06-05T23:03:54.942Z",
+  "generatedAt": "2026-06-06T00:03:43.514Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "83fcaff61c66fac290670a42fcd5c7e6e5ceec3807a7593440c2ea742d75ad58",
   "result": {
     "overallTrajectory": {
-      "longitudinalJudgment": "输入中实际只有 2026-05-10 一周周报，无法严格判断“多周是否变得更有研究能力”。只能判断本周呈现出的研究能力状态：不是单纯变忙，已有从跑实验转向拆误差来源、实验层级、机制变量和可复用产物的迹象；但纵向能力增量证据缺失。",
-      "researchCapabilitySignal": "本周较强的信号是：学生能把 SafeClaw-R 从“能不能跑”推进到“accuracy 差异来自哪里”，把 DARWIN 从“ASR 高低”推进到“strategy pool 质量与选择机制”，把新语言规则从“造语言”重新定义为“protocol-conditioned red team”。这些是研究判断，不只是执行量。",
-      "busyVsResearch": "执行量确实较大：SafeClaw-R 1971 条、DARWIN 100 条、新语言规则 40 条遵循测试和 50 条 red team 初测。但更关键的是每条线都有指标、误差、边界和下一步对照设计。因此本周不是纯忙碌。不过三条线并行导致每条线都还停在原型或小规模实验阶段，尚未形成一个可发表或可交付的闭环。",
-      "mainRisk": "最大风险是项目组合过宽：三个方向都能讲出价值，但都缺关键验证。SafeClaw-R 缺完整 runtime workflow 与论文设置对齐；DARWIN 缺 strategy pool ablation；新语言规则缺三组对照和稳定性验证。若下周继续平均用力，会变成多个半成品。",
-      "professorOneThingToLearn": "老师最应该从本周学到的是：DARWIN 这类自演化 red team 的瓶颈可能不是 evolution loop 本身，而是 strategy pool 是否被当作可评分、可追踪、可失活、可恢复的 memory object 来管理。这个判断比单纯比较 ASR 更有机制价值。"
+      "judgment": "无法可靠判断“多周纵向变强”，因为输入中只有 2026-05-10 一周周报。就这一周而言，学生表现出从执行复现转向实验边界、失败归因、价值估计和自动化沉淀的研究意识；但这只能说明本周研究能力质量较高，不能证明能力随周次提升。",
+      "isMoreResearchCapableNotJustBusier": "暂不能下结论。证据支持他不是单纯更忙：他给出了样本量、准确率、ASR、错误类型、风险类型差异、baseline 对照、证据等级、价值估计和下一步最小动作。但缺少前几周报告，无法判断这些能力是新增、稳定，还是本来就有。",
+      "hardProgress": "本周硬进展较实：SafeClaw-R 完成 1971 条评测并得到 88.64% accuracy；DARWIN 完成 100 条 DeepSeek-V4-Pro 实验并与 baseline 对比；新语言规则 red team 完成 40 条规则遵循测试和 50 条 sub AdvBench 初测。三条线都有数据，但都还处在复现、初测或 workflow 原型阶段。",
+      "cognitiveIncrement": "认知增量主要体现在三个层面：第一，安全评测要区分 classification、runtime mock gating、real API execution；第二，自演化 red team 的瓶颈可能在 strategy pool 质量与选择机制，而不只是 evolution loop；第三，复杂语言规则可能同时影响安全边界和正常回答质量。",
+      "mainRisk": "项目线较多，三条线都声称值得做且都计划继续推进，存在注意力分散风险。当前还没有明确哪一条是主线产物，哪一条只是探索线；价值估计虽有金额，但还没有转成优先级决策。"
     },
     "stageByWeek": [
       {
         "week": "2026-05-10",
-        "stage": "多项目小规模实验到机制拆解阶段",
-        "topicTrajectory": "题目轨迹从三个执行型任务转向三个可抽象能力：SafeClaw-R 收缩为 tool-use safety evaluation；DARWIN 收缩为 strategy memory / red team agent 机制分析；新语言规则收缩为 protocol-conditioned red team benchmark。",
-        "hardProgress": [
-          "SafeClaw-R 完成 1971 条 Google Workspace 安全分类评测，SafeClaw-R accuracy = 88.64%，regex baseline 约 64%，并记录 117 个 false negatives、99 个 false positives、8 个 missing。",
-          "SafeClaw-R 已初步完成 runtime mock，观察到 OpenClaw 能在部分 Google Workspace 操作执行前触发 BLOCK / CONFIRM 门控。",
-          "DARWIN 完成 DeepSeek-V4-Pro 上 100 条样本实验，无缺失、无重复，ASR = 81.00%，平均 query number = 3.450；baseline ASR = 100.00%，平均 query number = 2.170。",
-          "新语言规则项目完成 40 条规则遵循测试，并在 50 条 sub AdvBench 初测中观察到 2 条 jailbreak，ASR = 4%，同时观察到回复明显变短。"
-        ],
-        "cognitiveTrendWithinWeek": "认知上有明显从结果指标转向实验边界和因果归因的趋势：SafeClaw-R 区分 classification、runtime mock gating、real API execution；DARWIN 不再把低 ASR 简单归因于进化轮数，而转向策略池质量；新语言规则不只看 jailbreak 成功率，也开始看规则遵循率、拒答率、回复长度和信息密度。",
-        "cotIncrement": "CoT 增量有效，主要体现在三个方面：一是意识到总体 accuracy 不足以解释 risk type 差异；二是意识到 ASR 不是复现成功的充分解释，需要策略来源、状态变化和 query 效率；三是意识到复杂规则可能同时改变安全边界和正常能力。",
-        "cotsCotMaturity": "CoT's CoT 成熟度中等偏高。学生不只是总结实验，还提出了可迁移的元规则：安全评测必须显式区分实验层级；自演化 red team 需要把 strategy pool 当成 memory object；red team 不应只测 prompt，也应测试规则约束下的行为变化。弱点是这些元规则大多标注为老师原本可能已知，原创增量需要进一步用系统实验支撑。",
-        "brainaryMappingMaturity": "Brainary 映射成熟度中等。学生能把项目映射到 risk modeling、tool orchestration、memory、reasoning、calibration、benchmark、workflow management 等能力，也能提出 evaluator、workflow、memory schema、protocol-conditioned benchmark 等沉淀形式。弱点是目前仍偏概念映射，缺少实际 schema 字段、接口设计和自动化原型。",
-        "valueReasoning": "价值推理比普通周报更完整：每个题目都说明真实问题、谁会买单、通用能力还是局部优化、可能沉淀成什么，以及人民币估值。当前价值函数偏向“可复用 workflow / benchmark / evaluator / memory schema”，而不是单个实验结果。",
-        "monetaryValueQuality": "金额估计有意识地区分研究原型和成熟产品，SafeClaw-R 估 5–15 万，DARWIN 估 8–20 万，新语言规则估 3–8 万。但这些估值主要来自节省人工时间的内部价值，缺少外部客户愿付费、替代方案成本、交付边界和复用次数证据，因此只能算粗估。",
-        "evidenceLevel": "证据等级分化清楚：SafeClaw-R 的 CoT's CoT 证据为 A，因为有 1971 条评测和 runtime mock；DARWIN 为 B，因为只有 100 条现象且无 strategy pool ablation；新语言规则为 B，因为只有 50 条初测且缺对照实验。这个证据自评较合理。",
-        "projectManagement": "项目管理结构清楚，记录了阶段、计划与实际、投入时间、下周投入、里程碑、资源、依赖、偏差和纠偏。但风险是三个项目都被标为值得继续做，缺少优先级裁剪；SafeClaw-R 和 DARWIN 都是关键路径，新语言规则是探索线，实际下周应减少探索线资源。",
-        "automationPath": "自动化路径明确但尚未落地：SafeClaw-R 走 workflow + benchmark + evaluator；DARWIN 走 memory schema + strategy evaluator + attack workflow；新语言规则走 checklist + protocol-conditioned benchmark + response quality evaluator。当前瓶颈是 schema 尚未具体化，自动化对象还停留在计划层。",
-        "nextActionQuality": "下一步动作质量总体较好，因为多为可验证动作：SafeClaw-R 要跑通 OpenClaw runtime enforcement workflow；DARWIN 要抽样检查策略有效性和重复度、复查 active / silent 状态；新语言规则要做三组对照并记录多指标。问题是动作数量偏多，下周若全部做，可能再次分散。"
+        "topicTrajectory": "题目从单纯复现扩展为三条安全评测线：tool-use safety 复现、self-evolving jailbreak 复现、protocol-conditioned red team 探索。共同主题是 agent / LLM safety evaluation，但聚焦尚未收敛。",
+        "stage": "小规模实验到 workflow 原型之间。SafeClaw-R 最接近可沉淀 workflow；DARWIN 处在失败归因前夜；新语言规则 red team 仍是探索性信号验证。",
+        "hardProgress": "有实测数据：1971 条 SafeClaw-R case、100 条 DARWIN case、50 条 red team case。不是只写想法。但实验结论多数仍依赖下一步 ablation 或对照实验确认。",
+        "cognition": "本周报告能区分结果、边界、归因和下一步验证，研究思维比单纯跑实验更强。尤其能主动指出 runtime mock 不等于真实 API 执行、ASR 低不能直接归因于进化轮数、4% ASR 不能外推。",
+        "cotCotMaturity": "中等偏高。学生不只写自己学到了什么，还能抽象出 schema、workflow、memory object、benchmark、evaluator 等可自动化对象；但三个 CoT's CoT 都承认老师可能已知，因此新颖性不足，贡献更偏工程化整理。",
+        "brainaryMappingMaturity": "中等。能把任务映射到 Brainary 的 risk modeling、tool orchestration、memory、reasoning、calibration、benchmark、workflow management 等能力；但仍主要是概念映射，缺少具体接口、数据结构、模块边界和自动化闭环。",
+        "valueReasoning": "较成熟但仍粗。学生开始连接真实用户、买单方、通用能力、产物形式和人民币估值；但估值依据主要按节省人工时间估算，缺少明确客户场景、交付标准、价格锚点和验证路径。",
+        "projectManagement": "较清楚。每个项目有当前阶段、原计划、实际结果、投入时间、下周投入、里程碑、资源需求、依赖、偏差、纠偏动作。但三条线并行导致资源分配是否合理仍不清楚。",
+        "nextStepQuality": "下一步动作大多是可执行的：SafeClaw-R 建 workflow，DARWIN 做 strategy pool 抽样和状态复查，新语言规则做三组对照并记录多指标。质量较高的问题是动作仍偏多，缺少一周内必须交付的单一优先产物。"
       }
     ],
     "trendScores": {
-      "note": "由于只有一周报告，以下分数是当前周能力读数，不是可靠纵向趋势。trend 字段均只能标记为证据不足。",
-      "hardProgress": {
-        "currentScore": 4,
-        "trend": "证据不足",
-        "reason": "有明确实验数量、指标和错误类型；但还没有形成完整闭环或跨周提升证据。"
+      "evidenceForLongitudinalTrend": {
+        "score": 1,
+        "rationale": "只有一周周报，不能做真正多周趋势判断。"
       },
-      "researchJudgment": {
-        "currentScore": 4,
-        "trend": "证据不足",
-        "reason": "能从结果转向误差归因、实验层级、机制变量和对照设计，显示研究判断；但缺少前几周对比。"
+      "hardProgressTrend": {
+        "score": 4,
+        "rationale": "本周硬进展强，有多组实验数字和 baseline；但无法判断相比前几周是否提升。"
       },
-      "cotIncrement": {
-        "currentScore": 4,
-        "trend": "证据不足",
-        "reason": "CoT 增量具体且和实验结果绑定，不只是泛泛反思。"
+      "cognitiveTrend": {
+        "score": 4,
+        "rationale": "本周认知层次较好，能做边界澄清和失败归因；但缺少历史周报，不能判断认知是否变成熟。"
       },
-      "cotsCotMaturity": {
-        "currentScore": 3.5,
-        "trend": "证据不足",
-        "reason": "能形成元规则和自动化沉淀方向，但原创性和系统验证还不足。"
+      "cotCotMaturity": {
+        "score": 4,
+        "rationale": "能从实验现象抽象出 evaluation protocol、strategy memory、protocol-conditioned benchmark 等二阶产物；不足是新颖性和自动化实现证据还不充分。"
       },
-      "brainaryMapping": {
-        "currentScore": 3.5,
-        "trend": "证据不足",
-        "reason": "映射到 Brainary 能力较完整，但还没有具体 schema、模块接口或自动化实现。"
+      "brainaryMappingMaturity": {
+        "score": 3,
+        "rationale": "映射方向正确，但多为能力标签级映射，尚未落到 schema、API、状态机或自动执行流程。"
       },
-      "valueReasoning": {
-        "currentScore": 4,
-        "trend": "证据不足",
-        "reason": "能连接真实用户、通用能力、产物形式和金额，但金额仍主要是内部节省人工的估算。"
+      "valueReasoningMaturity": {
+        "score": 3,
+        "rationale": "已经连接金额、用户、通用能力和产物形式，这是好信号；但估值仍是粗估，没有客户验证、竞品参照或实际付费证据。"
       },
-      "evidenceDiscipline": {
-        "currentScore": 4,
-        "trend": "证据不足",
-        "reason": "能区分 A/B 证据等级，并承认新语言规则样本量和对照不足。"
+      "projectManagementMaturity": {
+        "score": 4,
+        "rationale": "计划、偏差、依赖、里程碑、资源和纠偏动作都写得比较完整；主要问题是项目组合优先级不够硬。"
       },
-      "projectManagement": {
-        "currentScore": 3.5,
-        "trend": "证据不足",
-        "reason": "计划、偏差和纠偏清楚；但项目过多，优先级和停止条件不够硬。"
+      "automationPathClarity": {
+        "score": 3,
+        "rationale": "能说出 workflow、benchmark、evaluator、memory schema 等转化路径；但还缺最小自动化闭环和具体验收指标。"
       },
-      "automationPath": {
-        "currentScore": 3.5,
-        "trend": "证据不足",
-        "reason": "自动化方向清楚，但尚未交付可复用 schema 或脚本级原型。"
+      "topicFocus": {
+        "score": 2,
+        "rationale": "三条线都有价值，但同时推进会稀释产出。当前缺少明确主线：到底优先做 tool-use safety evaluator、strategy memory，还是 protocol-conditioned red team benchmark。"
       },
-      "nextStepQuality": {
-        "currentScore": 4,
-        "trend": "证据不足",
-        "reason": "下一步大多是可测动作和对照实验；但总量偏大，需要压缩为一条主线闭环。"
+      "nextActionQuality": {
+        "score": 4,
+        "rationale": "下一步动作具体、可执行、与当前证据缺口匹配；但需要压缩为一个主交付物加两个次级动作。"
       }
     },
     "valueFunctionChange": {
-      "longitudinalChange": "无法判断价值观是否随周次变化，因为输入只有一周。当前只能描述本周的价值函数。",
-      "currentValueFunction": "学生当前认为值得做的事有四个条件：第一，能对应真实安全或 agent 使用问题；第二，能沉淀为 workflow、benchmark、evaluator、memory schema 等可复用产物；第三，能映射到 Brainary 的 memory、reasoning、calibration、tool orchestration、workflow management 等通用能力；第四，能用节省人工时间或服务内部评测项目来估算金额。",
-      "whatStudentNowValues": [
-        "比单个 accuracy 或 ASR 更重视误差来源和机制解释。",
-        "比复现论文结果更重视把实验转成可复用评测协议或系统模块。",
-        "比收集更多策略更重视策略池质量、重复度、迁移性和状态维护。",
-        "比单纯 jailbreak 成功率更重视安全风险与正常能力损耗的共同评估。",
-        "比概念有趣更重视是否能连接到用户、金额、通用能力和自动化路径。"
+      "longitudinalChange": "无法判断价值观是否随周次变化，因为只有一周数据。",
+      "currentValueFunction": "学生当前认为值得做的事有三类：第一，能转成通用安全评测 workflow / benchmark / evaluator 的复现实验；第二，能解释 red team agent 失败来源的 strategy memory 和策略池分析；第三，能揭示复杂规则导致安全边界漂移的低成本探索实验。",
+      "whatStudentThinksWorthDoing": [
+        "值得做可复用的 tool-use safety evaluation，因为企业 agent、办公自动化 agent、Google Workspace / Microsoft 365 agent 都需要工具执行前的 ALLOW / CONFIRM / BLOCK 安全门控。",
+        "值得做 DARWIN 的 strategy pool 机制分析，因为 red team agent 的价值不只是提高 ASR，而是自动发现、维护和选择有效攻击策略。",
+        "值得小规模继续做新语言规则 red team，因为复杂通信规则可能改变拒答边界并降低正常回答质量。"
       ],
-      "connectionToMoney": "已有金额估计，但主要是内部劳动节省模型：SafeClaw-R 5–15 万，DARWIN 8–20 万，新语言规则 3–8 万。缺失的是外部购买方预算、具体交付形态、复用频次、与竞品或人工流程的成本对比。",
-      "connectionToUsers": "用户识别较清楚：企业 agent 团队、办公自动化 agent 团队、AI safety team、模型评测公司、企业安全评估团队、多语言或编码规则场景的 agent 产品团队。但没有访谈、需求验证或购买意愿证据。",
-      "connectionToGeneralCapability": "通用能力连接较强：SafeClaw-R 指向 tool-use safety evaluation；DARWIN 指向 strategy memory 和 red team agent；新语言规则指向 protocol-conditioned evaluation。这里体现了从单点实验到通用能力的价值迁移。",
-      "connectionToArtifact": "产物形式明确，包括 evaluation protocol、benchmark schema、runtime safety workflow、failure taxonomy、strategy memory schema、active strategy selector、protocol-conditioned red team benchmark、response quality evaluator。缺口是还没有展示最小可运行产物。",
-      "connectionToBrainary": "Brainary 映射合理，但还停留在能力标签层。下一步应要求学生提交一个具体 Brainary schema：字段、输入、输出、日志、评估指标、失败归因和自动化触发条件。",
-      "connectionToAutomation": "自动化意识强，三条线都提出 workflow、evaluator 或 memory schema。但自动化路径还缺优先级：最适合先自动化的是 SafeClaw-R 的实验层级 schema 和 DARWIN 的 strategy pool tracker，而不是同时做三条完整系统。"
+      "whyWorthDoing": "他的理由从“能不能复现论文结果”上升到“能否沉淀可复用评测资产、自动化工作流、策略记忆结构和安全漂移评估器”。这说明价值函数不只看实验跑通，也看是否能成为通用能力和可交付产物。",
+      "connectionToMoney": "本周已有人民币估值：SafeClaw-R 5–15 万，DARWIN 8–20 万，新语言规则 red team 3–8 万。估值方式主要基于节省人工复现、评测和调参时间，而不是基于真实客户付费或产品收入。",
+      "connectionToUsers": "用户画像写得比较明确：企业 agent 团队、办公自动化 agent 团队、AI safety team、模型评测公司、企业安全评估团队、多语言或编码规则 agent 产品团队。",
+      "connectionToGeneralCapability": "他把局部实验提升为通用能力：tool-use safety、strategy memory、red team agent、protocol-conditioned evaluation、response quality evaluator。这是研究能力信号。",
+      "connectionToArtifacts": "产物形式清楚，包括 benchmark、runtime safety workflow、tool-use safety evaluator、strategy memory schema、attack workflow、jailbreak strategy evaluator、rule-following evaluator、safety drift evaluator。",
+      "connectionToBrainary": "Brainary 连接覆盖 risk modeling、tool orchestration、memory、reasoning、calibration、benchmark / evaluation、workflow management、cognitive control。但当前仍是映射表述，缺少具体 Brainary 模块如何调用这些产物的设计。",
+      "connectionToAutomation": "自动化路径有雏形：把实验层级写入 schema、把 strategy pool 变成可评分 memory object、把 communication rule 作为 benchmark 变量。但还没有一个已完成的自动化闭环。",
+      "weakness": "价值估计还没有成为取舍机制。三条线都被判断为值得做，金额区间也都给了，但没有据此决定本周应砍掉、暂停或主攻哪一条。教授应要求他把价值函数转成优先级函数。"
     },
     "repeatedBlockers": [
       {
-        "blocker": "纵向证据缺失",
-        "whereItAppears": "整体分析层面",
-        "impact": "无法判断学生是否比前几周更有研究能力，只能判断本周能力状态。",
-        "neededEvidence": "至少需要前 3 周周报中的题目选择、实验计划、执行结果、认知变化和价值判断。"
+        "blocker": "缺少多周数据，无法判断能力趋势。",
+        "evidence": "输入只有 2026-05-10 一周报告。",
+        "impact": "不能判断学生是否纵向变强，只能评价本周报告质量。"
       },
       {
-        "blocker": "实验层级和 schema 尚未固化",
-        "whereItAppears": "SafeClaw-R",
-        "impact": "classification、runtime mock gating、real API execution 容易混淆，影响论文复现差距归因。",
-        "neededEvidence": "统一实验 schema，明确每条 case 的层级、side-effect level、prompt、verdict parsing、runtime policy 和 expected behavior。"
+        "blocker": "实验层级容易混淆。",
+        "evidence": "SafeClaw-R 中学生反复强调 classification、runtime mock gating、real API execution 必须区分。",
+        "impact": "如果不解决，accuracy、PASS / FAIL 和真实工具执行安全会被误读，影响论文复现判断和 benchmark 设计。"
       },
       {
-        "blocker": "策略池仍未结构化",
-        "whereItAppears": "DARWIN",
-        "impact": "无法判断 ASR 低于 baseline 的原因是策略池质量、策略选择、剪枝机制、query budget，还是 evolution loop 本身。",
-        "neededEvidence": "strategy pool ablation、重复度统计、来源有效性、迁移性评分、active / silent 状态变化、失败计数和剪枝阈值日志。"
+        "blocker": "DARWIN 失败归因不足。",
+        "evidence": "已有 ASR 81% 低于 baseline 100%，但 strategy pool ablation、重复度、迁移性、active / silent 状态复查尚未完成。",
+        "impact": "无法判断问题来自策略池质量、选择机制、剪枝机制、query budget，还是 evolution loop 本身。"
       },
       {
-        "blocker": "对照实验不足",
-        "whereItAppears": "新语言规则 red team",
-        "impact": "4% ASR 可能是稳定风险，也可能是小样本噪声；回复变短也缺少统计定义。",
-        "neededEvidence": "原始英文 AdvBench、单纯语言规则、语言规则 + 简单 jailbreak 三组对照；同时记录规则遵循率、拒答率、回复长度、信息密度和 ASR。"
+        "blocker": "新语言规则 red team 样本量和对照不足。",
+        "evidence": "当前只有 50 条 sub AdvBench，2 条 jailbreak，ASR 4%；三组对照尚未完成。",
+        "impact": "不能判断 4% ASR 是稳定信号还是偶然噪声。"
       },
       {
-        "blocker": "项目组合过宽",
-        "whereItAppears": "三条线共同存在",
-        "impact": "每条线都有价值叙事，但都还没完成关键验证，容易形成忙碌而非闭环产出。",
-        "neededEvidence": "下周必须给出主线、次线、暂停线，以及每条线的停止条件和交付物定义。"
+        "blocker": "Brainary 映射还停留在概念层。",
+        "evidence": "报告列出了 risk modeling、memory、calibration、workflow management 等对应能力，但没有模块接口、输入输出 schema、自动运行方式。",
+        "impact": "难以从研究报告进入系统建设。"
       },
       {
-        "blocker": "金额估计缺少市场证据",
-        "whereItAppears": "价值估计部分",
-        "impact": "当前人民币估值只能说明内部研究资产价值，不能证明真实商业价值。",
-        "neededEvidence": "具体买方场景、现有人工流程成本、可替代工具、交付规格、复用次数和愿付费假设。"
+        "blocker": "价值判断没有形成优先级约束。",
+        "evidence": "三条线都被判定值得做，并各自分配 10 小时左右下周投入。",
+        "impact": "可能导致学生很忙但主产物不收敛。"
       }
     ],
     "professorShouldAsk": [
-      {
-        "question": "下周三条线只能选一条作为主线，你选哪条？为什么不是另外两条？",
-        "whyAsk": "测试学生是否能从“都值得做”进化到“按证据、价值和关键路径排序”。"
-      },
-      {
-        "question": "SafeClaw-R 的 1D、2C、5C、6A 低分，你能否给出前 20 个错误样本的 failure taxonomy，而不是只报 accuracy？",
-        "whyAsk": "把复现从指标汇报推进到错误机制和评测协议修正。"
-      },
-      {
-        "question": "DARWIN 如果 strategy pool 是核心，你下周能否交付一个最小 strategy memory schema？字段包括来源、语义簇、成功率、失败类型、迁移性、状态、被剪枝原因。",
-        "whyAsk": "逼迫其把 CoT's CoT 转成 Brainary 可用结构，而不是停留在概念判断。"
-      },
-      {
-        "question": "DARWIN baseline ASR 100%、avg query 2.17，而 DARWIN ASR 81%、avg query 3.45，这是否说明当前 DARWIN 不是增强器而是成本放大器？需要什么实验才能反驳？",
-        "whyAsk": "测试学生是否敢于承认负结果，并设计能区分机制失败与实现偏差的实验。"
-      },
-      {
-        "question": "新语言规则项目的 4% ASR，最小可发表或可沉淀的证据门槛是什么？样本量、模型数、对照组和统计指标分别是多少？",
-        "whyAsk": "防止探索线因为有趣而无限扩张。"
-      },
-      {
-        "question": "你给出的 5–15 万、8–20 万、3–8 万估值，分别对应什么交付物？谁会在什么场景下付钱或节省这笔钱？",
-        "whyAsk": "把价值推理从内部感觉转成可验证的经济假设。"
-      },
-      {
-        "question": "本周哪个认知是老师原本不知道、且有证据支持的？如果没有，哪个认知最值得变成自动化系统？",
-        "whyAsk": "提升 CoT's CoT 的原创增量要求，避免把已知常识重新包装。"
-      }
+      "如果下周只能交付一个可复用产物，你会选 SafeClaw-R workflow、DARWIN strategy memory schema，还是新语言规则 benchmark？选择依据是什么？",
+      "SafeClaw-R 的 88.64% accuracy 距离论文差距具体来自哪一层：prompt、verdict parsing、ground truth、runtime policy，还是 risk type 分布？你能否给出错误归因表？",
+      "runtime mock gating 的验收标准是什么？每个 case 需要记录哪些字段，才能避免和真实 API execution 混淆？",
+      "DARWIN 低于 baseline 时，你会先做哪三个 ablation？每个 ablation 要证明或排除什么假设？",
+      "strategy pool 如果要成为 Brainary memory object，最小 schema 是什么？必须包含 source、status、success rate、duplicate score、transferability、failure count 吗？",
+      "新语言规则 red team 的 4% ASR 是否有统计意义？需要多少样本和哪些对照才能判断它不是噪声？",
+      "你给出的 5–15 万、8–20 万、3–8 万估值，分别对应什么交付物、什么买家、什么验收标准？如果没有买家验证，金额依据是什么？",
+      "三条线和 Brainary 的关系中，哪一条最可能在两周内接入自动化科研系统？为什么？",
+      "你这周最希望老师学到的东西里，哪一点是老师原本不知道、且能改变实验室决策的？如果没有，下一步如何产生真正的新知识？"
     ],
     "nextBestIntervention": {
-      "intervention": "要求学生下周只做一个主闭环：优先选择 DARWIN strategy pool，因为它当前负结果最强、机制问题最清楚、Brainary memory 映射最有潜力。SafeClaw-R 保持为次线，只完成实验层级 schema；新语言规则暂停扩展，只设计对照表不大量跑实验。",
-      "oneWeekDeliverable": [
-        "交付 DARWIN strategy memory schema v0：每条策略必须有来源、去重簇、攻击类型、目标模型成功率、平均 query、失败原因、active / silent 状态、状态变化原因、剪枝记录。",
-        "完成 100 条 DARWIN 实验的失败样本归因表：至少区分策略无效、策略重复、judge 问题、模型拒答强化、prompt 解析问题、query budget 不足、剪枝误杀。",
-        "做一个小型 ablation：固定模型和样本，比较原 strategy pool、去重后 strategy pool、高成功率 seed pool 三组的 ASR 和 avg query。",
-        "SafeClaw-R 只交付一页 schema：classification、runtime mock gating、real API execution 三层如何记录，暂不扩真实 API。",
-        "新语言规则只交付实验设计表：三组对照、指标定义、样本量计划和停止条件。"
+      "intervention": "要求学生下周只围绕一个主产物形成闭环，建议优先选择 SafeClaw-R / OpenClaw runtime safety workflow，因为它已有 1971 条数据、runtime mock 初步证据、明确 schema 缺口和较高自动化潜力。",
+      "whyThisIntervention": "当前学生不是缺执行，而是缺收敛。三条线都有数据和价值叙事，但最需要教授介入的是项目组合管理：把研究能力从“能同时推进多个实验”压缩成“能交付一个可复用、可验收、可自动化的研究资产”。",
+      "specificAssignment": [
+        "下周交付一个 OpenClaw runtime enforcement workflow 的最小可运行版本。",
+        "每条 case 必须记录实验层级、input、safe-gog verdict、ground truth、parsed verdict、runtime gate action、PASS / FAIL、risk type、failure reason。",
+        "把 1D、2C、5C、6A 低分 case 各抽样至少 10 条，形成错误归因表。",
+        "明确 classification、runtime mock gating、real API execution 三层中，本周只验收前两层，不扩展真实 API。",
+        "产出一个 1 页 benchmark schema 草案，说明未来如何迁移到其他 tool-use safety 场景。"
       ],
-      "successCriteria": [
-        "DARWIN 不再只报告 ASR，而能解释 ASR 差距的前三个来源。",
-        "strategy pool 从文本集合变成可查询 memory object。",
-        "至少一个 CoT's CoT 被转成字段级 schema。",
-        "下周周报能明确说出哪个方向继续、哪个方向暂停、哪个方向需要老师决策。"
+      "secondaryAssignments": [
+        "DARWIN 只做 strategy pool 抽样和 schema 草案，不继续盲目加进化轮数。",
+        "新语言规则 red team 只做三组对照的小样本验证，不扩大成主线。"
       ],
-      "stopCriteria": [
-        "如果 DARWIN 去重或高成功率 seed pool 后仍显著低于 baseline，必须暂停“自演化更强”的叙事，转为负结果分析或实现偏差排查。",
-        "如果 SafeClaw-R 无法明确实验层级，就不能继续扩展真实 API。",
-        "如果新语言规则三组对照没有设计清楚，就不应继续增加样本。"
-      ],
-      "professorAction": "老师应在组会上直接要求学生排序三条线，并批准一个主线闭环。不要只问进度，应问证据门槛、停止条件和可沉淀 schema。"
+      "successCriteria": "如果下周能交付可重复运行的 workflow、结构化日志 schema、低分 risk type 错误归因表和明确的 Brainary 接入点，则说明学生研究能力在从实验执行转向研究资产建设；如果只是继续增加样本数和项目线，则更像变忙而不是变强。"
     }
   }
 }
