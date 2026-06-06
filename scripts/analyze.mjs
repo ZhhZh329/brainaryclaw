@@ -26,6 +26,7 @@ const weekFilter = new Set((process.env.WEEKREP_ANALYZE_WEEKS || "").split(",").
 const rollingPersonAnalysis = process.env.WEEKREP_ANALYZE_ROLLING === "1";
 const analysisTypes = new Set((process.env.WEEKREP_ANALYZE_TYPES || "longitudinal,weekly-score,person-horizontal,week-horizontal,week-briefing").split(",").map((item) => item.trim()).filter(Boolean));
 const concurrency = Math.max(1, Number(process.env.WEEKREP_ANALYZE_CONCURRENCY || 4));
+const apiRetries = Math.max(0, Number(process.env.WEEKREP_ANALYZE_RETRIES || 3));
 const minValidReportChars = Number(process.env.WEEKREP_MIN_VALID_REPORT_CHARS || 10);
 const personWeekPolicy = process.env.WEEKREP_PERSON_WEEK_ANALYSIS_POLICY || "on-change";
 
@@ -138,6 +139,28 @@ function textFromResponse(payload) {
   return parts.join("\n").trim();
 }
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+async function fetchWithRetry(label, url, options) {
+  let lastError = null;
+  for (let attempt = 0; attempt <= apiRetries; attempt += 1) {
+    try {
+      const response = await fetch(url, options);
+      if (response.ok) return response;
+      const text = await response.text();
+      const transient = response.status === 429 || response.status >= 500;
+      lastError = new Error(`${label} API error ${response.status}: ${text}`);
+      if (!transient || attempt >= apiRetries) throw lastError;
+    } catch (error) {
+      lastError = error;
+      if (attempt >= apiRetries) throw lastError;
+    }
+    const jitter = Math.floor(Math.random() * 500);
+    await sleep(1000 * 2 ** attempt + jitter);
+  }
+  throw lastError;
+}
+
 async function callModel({ system, prompt, input }) {
   if (!apiKey) {
     return {
@@ -147,7 +170,7 @@ async function callModel({ system, prompt, input }) {
   }
 
   if (provider === "deepseek") {
-    const response = await fetch("https://api.deepseek.com/chat/completions", {
+    const response = await fetchWithRetry("DeepSeek", "https://api.deepseek.com/chat/completions", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${apiKey}`,
@@ -166,11 +189,6 @@ async function callModel({ system, prompt, input }) {
       })
     });
 
-    if (!response.ok) {
-      const text = await response.text();
-      throw new Error(`DeepSeek API error ${response.status}: ${text}`);
-    }
-
     const payload = await response.json();
     const text = payload.choices?.[0]?.message?.content || "";
     try {
@@ -180,7 +198,7 @@ async function callModel({ system, prompt, input }) {
     }
   }
 
-  const response = await fetch("https://api.openai.com/v1/responses", {
+  const response = await fetchWithRetry("OpenAI", "https://api.openai.com/v1/responses", {
     method: "POST",
     headers: {
       "Authorization": `Bearer ${apiKey}`,
@@ -201,11 +219,6 @@ async function callModel({ system, prompt, input }) {
       ]
     })
   });
-
-  if (!response.ok) {
-    const text = await response.text();
-    throw new Error(`OpenAI API error ${response.status}: ${text}`);
-  }
 
   const payload = await response.json();
   const text = textFromResponse(payload);

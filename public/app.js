@@ -619,25 +619,21 @@ async function renderPersonHorizontal(weekId) {
 
 function personHorizontalCard(person, week, payload) {
   const result = payload.result || {};
-  const action = result.bossAction || {};
-  const focus = result.focusDimensions || {};
+  const feedback = result.studentFeedback || {};
+  const overview = result.overviewSentence || result.shortRead || result.sameWeekPosition || result.headline || "已生成个人横向画像";
   return html`
     <a class="person-horizontal-card" href="#/person-horizontal-detail?week=${encodeURIComponent(week)}&slug=${encodeURIComponent(person.slug)}">
       <div class="person-horizontal-head">
         <div>
           <strong>${esc(person.name)}</strong>
-          <span class="muted">${esc(result.headline || result.shortRead || "已生成个人横向画像")}</span>
+          <span class="muted">${esc(week)}</span>
         </div>
         <span class="level-pill">${esc(result.overallLevel || "好")}</span>
       </div>
-      <p>${esc(result.shortRead || result.sameWeekPosition || "")}</p>
-      <div class="mini-dimensions">
-        <span>价值判断：${esc(focus.valueJudgment?.nextLift || focus.valueJudgment?.read || "已分析")}</span>
-        <span>项目管理：${esc(focus.projectManagement?.nextLift || focus.projectManagement?.read || "已分析")}</span>
-        <span>元认知：${esc(focus.metacognition?.nextLift || focus.metacognition?.read || "已分析")}</span>
-      </div>
+      <p class="overview-line">${esc(overview)}</p>
+      ${feedback.summary ? `<p class="student-feedback-line">${esc(feedback.summary)}</p>` : ""}
       <div class="person-horizontal-foot">
-        <span class="badge">${action.readOriginal ? "建议读原文" : "可按需阅读"}</span>
+        <span class="badge">查看反馈</span>
         <span class="muted">${esc(payload.model || "")}</span>
       </div>
     </a>
@@ -659,6 +655,7 @@ async function renderPersonHorizontalDetail(weekId, slugValue) {
   }
   const result = payload.result || {};
   const action = result.bossAction || {};
+  const feedback = result.studentFeedback || {};
   app.innerHTML = html`
     <section class="hero">
       <div>
@@ -687,6 +684,17 @@ async function renderPersonHorizontalDetail(weekId, slugValue) {
       ${focusDimension("价值判断", result.focusDimensions?.valueJudgment)}
       ${focusDimension("项目管理", result.focusDimensions?.projectManagement)}
       ${focusDimension("元认知", result.focusDimensions?.metacognition)}
+    </section>
+    <section class="student-feedback-panel">
+      <div>
+        <span class="badge">给学生的反馈</span>
+        <h2>${esc(feedback.summary || "这份周报已经有清楚的横向信号，下一步可以把证据和行动写得更可验证。")}</h2>
+      </div>
+      <div class="feedback-columns">
+        ${detailPanel("做得好的地方", feedback.whatYouDidWell)}
+        ${detailPanel("下一步可以更好", feedback.nextStep)}
+        ${detailPanel("下周可以这样写", feedback.suggestedRewrite)}
+      </div>
     </section>
     <section class="detail-grid">
       ${detailPanel("为什么是这个评价", result.levelRationale)}
