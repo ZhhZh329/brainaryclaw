@@ -15,6 +15,10 @@ function route() {
   if (path === "/briefings") return renderBriefings();
   if (path === "/briefing") return renderBriefing(params().get("week"));
   if (path === "/briefing-section") return renderBriefingSection(params().get("week"), params().get("section"));
+  if (path === "/person-analysis") return renderPersonAnalysisHub();
+  if (path === "/person-horizontal") return renderPersonHorizontal(params().get("week"));
+  if (path === "/person-horizontal-detail") return renderPersonHorizontalDetail(params().get("week"), params().get("slug"));
+  if (path === "/person-longitudinal") return renderPersonLongitudinalHub();
   if (path === "/people") return renderPeople();
   if (path === "/person") return renderPerson(params().get("slug"));
   if (path === "/teacher-unknown") return renderTeacherUnknown(params().get("week"));
@@ -79,6 +83,7 @@ function renderHome() {
       <div class="toolbar">
         <a class="button" href="#/week?week=${encodeURIComponent(latest.week)}">打开最新周</a>
         <a class="button" href="#/briefing?week=${encodeURIComponent(latestAvailableBriefingWeek())}">横向分析</a>
+        <a class="button" href="#/person-analysis">个人分析</a>
         <a class="button" href="#/teacher-unknown">老师不知道</a>
         <a class="button" href="#/search">全文搜索</a>
       </div>
@@ -474,6 +479,266 @@ function renderPeople() {
       `).join("")}
     </div>
   `;
+}
+
+function personHorizontalKey(person, week) {
+  return `person:${person.slug}:${week}:horizontal`;
+}
+
+function personHorizontalWeeks() {
+  const keys = Object.keys(analysisManifest?.items || {});
+  return state.weeks
+    .filter((week) => keys.some((key) => key.endsWith(`:${week.week}:horizontal`)))
+    .slice()
+    .sort((a, b) => a.week.localeCompare(b.week));
+}
+
+function renderPersonAnalysisHub() {
+  const horizontalWeek = personHorizontalWeeks().at(-1)?.week || latestWeek().week;
+  app.innerHTML = html`
+    <section class="hero">
+      <div>
+        <h1>个人分析</h1>
+        <p class="muted">把“这个人自己有没有进步”和“这个人本周相对同伴有什么独特信号”分开看。</p>
+      </div>
+    </section>
+    <section class="briefing-card-grid person-analysis-menu">
+      <a class="briefing-card feature" href="#/person-horizontal?week=${encodeURIComponent(horizontalWeek)}">
+        <span class="badge">同周定位</span>
+        <strong>个人横向</strong>
+        <span class="muted">按周查看每个人相对同周提交者的正向画像，突出价值判断、项目管理和元认知。</span>
+      </a>
+      <a class="briefing-card feature" href="#/person-longitudinal">
+        <span class="badge">跨周轨迹</span>
+        <strong>个人纵向</strong>
+        <span class="muted">进入个人页面，按周查看截至该周的 4 周纵向分析和原文。</span>
+      </a>
+    </section>
+  `;
+}
+
+function renderPersonLongitudinalHub() {
+  app.innerHTML = html`
+    <section class="hero">
+      <div>
+        <h1>个人纵向</h1>
+        <p class="muted">选择一个人，进入后可按周查看纵向分析、评分和对应周报原文。</p>
+      </div>
+      <div class="toolbar">
+        <a class="button" href="#/person-analysis">返回个人分析</a>
+      </div>
+    </section>
+    <section class="cards">
+      ${state.people.map((person) => `
+        <a class="card" href="#/person?slug=${encodeURIComponent(person.slug)}">
+          <strong>${esc(person.name)}</strong>
+          <span class="muted">${person.count} 份周报</span>
+          <span class="badge">最新 ${esc(person.latestWeek || "无")}</span>
+        </a>
+      `).join("")}
+    </section>
+  `;
+}
+
+function personHorizontalWeekControls(currentWeek) {
+  const weeks = personHorizontalWeeks();
+  const index = Math.max(0, weeks.findIndex((week) => week.week === currentWeek));
+  const previous = weeks[Math.max(0, index - 1)]?.week || currentWeek;
+  const next = weeks[Math.min(weeks.length - 1, index + 1)]?.week || currentWeek;
+  return `
+    <span class="week-controls inline-week-controls">
+      <a class="button" href="#/person-horizontal?week=${encodeURIComponent(previous)}" title="上一周">‹</a>
+      <select data-person-horizontal-week-select>
+        ${weeks.slice().reverse().map((week) => `<option value="${esc(week.week)}" ${week.week === currentWeek ? "selected" : ""}>${esc(week.week)}</option>`).join("")}
+      </select>
+      <a class="button" href="#/person-horizontal?week=${encodeURIComponent(next)}" title="下一周">›</a>
+    </span>
+  `;
+}
+
+function bindPersonHorizontalWeekPicker() {
+  document.querySelectorAll("[data-person-horizontal-week-select]").forEach((select) => {
+    select.addEventListener("change", () => {
+      location.hash = `#/person-horizontal?week=${encodeURIComponent(select.value)}`;
+    });
+  });
+}
+
+async function loadAnalysisByKey(key) {
+  const item = analysisManifest?.items?.[key];
+  if (!item?.file) return null;
+  return fetch(item.file, { cache: "no-store" }).then((response) => response.ok ? response.json() : null).catch(() => null);
+}
+
+async function renderPersonHorizontal(weekId) {
+  const weeks = personHorizontalWeeks();
+  const selectedWeek = weeks.find((item) => item.week === weekId) || weeks.at(-1);
+  if (!selectedWeek) {
+    app.innerHTML = html`
+      <section class="hero">
+        <div>
+          <h1>个人横向</h1>
+          <p class="muted">还没有生成个人横向分析。</p>
+        </div>
+        <a class="button" href="#/person-analysis">返回个人分析</a>
+      </section>
+    `;
+    return;
+  }
+  app.innerHTML = `<section class="panel"><h1>${esc(selectedWeek.week)} 个人横向</h1><p class="muted">正在加载个人画像...</p></section>`;
+  const people = state.people.filter((person) => person.weeks.includes(selectedWeek.week));
+  const payloads = await Promise.all(people.map(async (person) => ({
+    person,
+    payload: await loadAnalysisByKey(personHorizontalKey(person, selectedWeek.week))
+  })));
+  const available = payloads.filter((item) => item.payload && !item.payload.result?.skipped);
+  app.innerHTML = html`
+    <section class="hero">
+      <div>
+        <h1>${esc(selectedWeek.week)} 个人横向</h1>
+        <p class="muted">同周相对画像。评价只使用“好 / 很好 / 非常好 / 特别值得读”，问题写成下一步提升空间。</p>
+      </div>
+      <div class="toolbar">
+        ${personHorizontalWeekControls(selectedWeek.week)}
+        <a class="button" href="#/briefing?week=${encodeURIComponent(selectedWeek.week)}">本周横向分析</a>
+        <a class="button" href="#/person-analysis">返回个人分析</a>
+      </div>
+    </section>
+    <section class="stats">
+      <div class="stat"><strong>${available.length}</strong><span>已生成画像</span></div>
+      <div class="stat"><strong>${people.length}</strong><span>本周提交者</span></div>
+      <div class="stat"><strong>${selectedWeek.submitted}</strong><span>已交</span></div>
+      <div class="stat"><strong>${selectedWeek.reportCount || selectedWeek.submitted}</strong><span>原件</span></div>
+    </section>
+    <section class="person-horizontal-grid">
+      ${available.length ? available.map(({ person, payload }) => personHorizontalCard(person, selectedWeek.week, payload)).join("") : `<article class="panel"><p class="muted">这一周还没有个人横向分析文件。</p></article>`}
+    </section>
+  `;
+  bindPersonHorizontalWeekPicker();
+}
+
+function personHorizontalCard(person, week, payload) {
+  const result = payload.result || {};
+  const action = result.bossAction || {};
+  const focus = result.focusDimensions || {};
+  return html`
+    <a class="person-horizontal-card" href="#/person-horizontal-detail?week=${encodeURIComponent(week)}&slug=${encodeURIComponent(person.slug)}">
+      <div class="person-horizontal-head">
+        <div>
+          <strong>${esc(person.name)}</strong>
+          <span class="muted">${esc(result.headline || result.shortRead || "已生成个人横向画像")}</span>
+        </div>
+        <span class="level-pill">${esc(result.overallLevel || "好")}</span>
+      </div>
+      <p>${esc(result.shortRead || result.sameWeekPosition || "")}</p>
+      <div class="mini-dimensions">
+        <span>价值判断：${esc(focus.valueJudgment?.nextLift || focus.valueJudgment?.read || "已分析")}</span>
+        <span>项目管理：${esc(focus.projectManagement?.nextLift || focus.projectManagement?.read || "已分析")}</span>
+        <span>元认知：${esc(focus.metacognition?.nextLift || focus.metacognition?.read || "已分析")}</span>
+      </div>
+      <div class="person-horizontal-foot">
+        <span class="badge">${action.readOriginal ? "建议读原文" : "可按需阅读"}</span>
+        <span class="muted">${esc(payload.model || "")}</span>
+      </div>
+    </a>
+  `;
+}
+
+async function renderPersonHorizontalDetail(weekId, slugValue) {
+  const person = state.people.find((item) => item.slug === slugValue) || state.people[0];
+  const week = weekId || person.latestWeek;
+  const payload = await loadAnalysisByKey(personHorizontalKey(person, week));
+  if (!payload || payload.result?.skipped) {
+    app.innerHTML = html`
+      <section class="panel">
+        <h1>${esc(person.name)} 个人横向</h1>
+        <p class="muted">${esc(week)} 的个人横向分析还没有生成。</p>
+      </section>
+    `;
+    return;
+  }
+  const result = payload.result || {};
+  const action = result.bossAction || {};
+  app.innerHTML = html`
+    <section class="hero">
+      <div>
+        <h1>${esc(person.name)} · ${esc(week)} 个人横向</h1>
+        <p class="muted">${esc(result.headline || result.shortRead || "同周相对画像")}</p>
+      </div>
+      <div class="toolbar">
+        <a class="button" href="#/person-horizontal?week=${encodeURIComponent(week)}">返回个人横向</a>
+        <a class="button" href="#/person?slug=${encodeURIComponent(person.slug)}">个人原文</a>
+        <a class="button" href="#/week?week=${encodeURIComponent(week)}">本周原文</a>
+      </div>
+    </section>
+    <section class="person-profile-hero">
+      <div>
+        <span class="level-pill large">${esc(result.overallLevel || "好")}</span>
+        <h2>${esc(result.shortRead || result.sameWeekPosition || "")}</h2>
+        <p>${esc(result.sameWeekPosition || "")}</p>
+      </div>
+      <div class="boss-box">
+        <strong>老板动作</strong>
+        <p>${action.readOriginal ? "建议优先读原文。" : "可以按需阅读原文。"}</p>
+        ${analysisList(action.meetingQuestions, "meeting-questions")}
+      </div>
+    </section>
+    <section class="focus-grid">
+      ${focusDimension("价值判断", result.focusDimensions?.valueJudgment)}
+      ${focusDimension("项目管理", result.focusDimensions?.projectManagement)}
+      ${focusDimension("元认知", result.focusDimensions?.metacognition)}
+    </section>
+    <section class="detail-grid">
+      ${detailPanel("为什么是这个评价", result.levelRationale)}
+      ${detailPanel("本周突出信号", result.highlightedSignals)}
+      ${detailPanel("下一步提升空间", result.growthOpportunities)}
+      ${peerPanel(result.peerReferences)}
+      ${detailPanel("下周观察点", action.nextWeekWatch)}
+      ${detailPanel("证据入口", result.evidenceLinks)}
+    </section>
+  `;
+}
+
+function focusDimension(title, value = {}) {
+  return html`
+    <article class="focus-card">
+      <span class="badge">${esc(title)}</span>
+      <p>${esc(value.read || "")}</p>
+      ${value.evidence ? `<p class="muted"><strong>证据：</strong>${esc(value.evidence)}</p>` : ""}
+      ${value.nextLift ? `<p class="muted"><strong>下一步：</strong>${esc(value.nextLift)}</p>` : ""}
+    </article>
+  `;
+}
+
+function detailPanel(title, value) {
+  const body = Array.isArray(value)
+    ? `<ul>${value.map((item) => `<li>${esc(item)}</li>`).join("")}</ul>`
+    : `<p>${esc(value || "暂无")}</p>`;
+  return html`
+    <article class="detail-panel">
+      <h3>${esc(title)}</h3>
+      ${body}
+    </article>
+  `;
+}
+
+function peerPanel(peers = []) {
+  return html`
+    <article class="detail-panel">
+      <h3>可对标对象</h3>
+      ${peers.length ? peers.map((peer) => `
+        <div class="peer-row">
+          <strong>${esc(peer.name || "")}</strong>
+          <span>${esc(peer.why || "")}</span>
+        </div>
+      `).join("") : `<p class="muted">暂无明确对标对象。</p>`}
+    </article>
+  `;
+}
+
+function analysisList(items = [], className = "") {
+  if (!Array.isArray(items) || !items.length) return "";
+  return `<ul class="${esc(className)}">${items.map((item) => `<li>${esc(item)}</li>`).join("")}</ul>`;
 }
 
 function renderPerson(slugValue) {

@@ -24,7 +24,7 @@ const analyzeLimit = Number(process.env.WEEKREP_ANALYZE_LIMIT || 0);
 const personFilter = new Set((process.env.WEEKREP_ANALYZE_PERSON_SLUGS || "").split(",").map((item) => item.trim()).filter(Boolean));
 const weekFilter = new Set((process.env.WEEKREP_ANALYZE_WEEKS || "").split(",").map((item) => item.trim()).filter(Boolean));
 const rollingPersonAnalysis = process.env.WEEKREP_ANALYZE_ROLLING === "1";
-const analysisTypes = new Set((process.env.WEEKREP_ANALYZE_TYPES || "longitudinal,weekly-score,week-horizontal,week-briefing").split(",").map((item) => item.trim()).filter(Boolean));
+const analysisTypes = new Set((process.env.WEEKREP_ANALYZE_TYPES || "longitudinal,weekly-score,person-horizontal,week-horizontal,week-briefing").split(",").map((item) => item.trim()).filter(Boolean));
 const concurrency = Math.max(1, Number(process.env.WEEKREP_ANALYZE_CONCURRENCY || 4));
 const minValidReportChars = Number(process.env.WEEKREP_MIN_VALID_REPORT_CHARS || 10);
 const personWeekPolicy = process.env.WEEKREP_PERSON_WEEK_ANALYSIS_POLICY || "on-change";
@@ -285,6 +285,7 @@ async function main() {
   const system = prompts.sharedSystemPrompt;
   const weeksById = Object.fromEntries(site.weeks.map((week) => [week.week, week]));
   const shouldQueuePersonWeek = (week) => {
+    if (weekFilter.size && !weekFilter.has(week)) return false;
     if (personWeekPolicy === "on-change") return true;
     if (personWeekPolicy === "immediate-once") return true;
     return weeksById[week]?.pastDeadline === true || Date.now() > Date.parse(weeksById[week]?.deadline || "");
@@ -292,6 +293,7 @@ async function main() {
   const personWeekCachePolicy = personWeekPolicy.endsWith("once") ? "once" : "hash";
 
   const reportsByPerson = Map.groupBy(site.reports, (report) => report.slug);
+  const reportsByWeek = Map.groupBy(site.reports.filter(isValidReport), (report) => report.week);
   for (const person of site.people) {
     if (personFilter.size && !personFilter.has(person.slug)) continue;
     const allReports = (reportsByPerson.get(person.slug) || []).filter(isValidReport).sort((a, b) => a.week.localeCompare(b.week));
@@ -367,6 +369,38 @@ async function main() {
           prompt: prompts.prompts.weeklyScore.prompt,
           input: compactReport(report),
           latestReportHash: hash(compactReport(report)),
+          cachePolicy: personWeekCachePolicy
+        });
+      }
+    }
+
+    if (analysisTypes.has("person-horizontal")) {
+      for (const report of allReports) {
+        if (!shouldQueuePersonWeek(report.week)) continue;
+        const sameWeekReports = (reportsByWeek.get(report.week) || [])
+          .filter((item) => item.slug !== person.slug)
+          .map(compactForBriefing);
+        jobs.push({
+          key: `person:${person.slug}:${report.week}:horizontal`,
+          file: path.join(analysisDir, "people", person.slug, `${report.week}-horizontal.json`),
+          system,
+          prompt: prompts.prompts.personHorizontal.prompt,
+          input: {
+            week: report.week,
+            targetPerson: {
+              name: person.name,
+              slug: person.slug,
+              report: compactReport(report)
+            },
+            sameWeekContext: {
+              reportCount: sameWeekReports.length + 1,
+              peers: sameWeekReports
+            }
+          },
+          latestReportHash: hash({
+            target: compactReport(report),
+            peers: sameWeekReports
+          }),
           cachePolicy: personWeekCachePolicy
         });
       }
