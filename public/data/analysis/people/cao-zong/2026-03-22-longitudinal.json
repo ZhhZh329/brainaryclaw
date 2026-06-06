@@ -1,234 +1,296 @@
 {
   "key": "person:cao-zong:2026-03-22:longitudinal",
-  "generatedAt": "2026-06-06T01:01:39.267Z",
+  "generatedAt": "2026-06-06T02:01:56.070Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "6300da033c67edfddb47006bf57f8daf7f7df74ec1bbeb8b4623eea2409d8129",
   "result": {
     "overallTrajectory": {
-      "judgment": "学生在这两周里显示出研究能力提升，不只是变忙；提升主要体现在从“使用 Claude Code 做漏洞挖掘”转向“定义新攻击面、建立闭环 agent、用量化指标验证知识图谱方法”。但证据仍有关键缺口：15 个 kernel crash 尚未去重、未证明唯一漏洞数和可利用性；知识图谱 95%+ 一致性尚未跨领域验证；经济价值仍主要是推理而非市场证据。",
-      "mainShift": "从经验型探索转向方法型探索：3月15日主要是观察到 root 权限服务 RCE 场景和 prompting/meta-control 的重要性；3月22日开始把观察转成 benchmark、agent workflow、trace 闭环、构建-检索一致性实验。",
-      "researchAbilitySignal": "更强的信号是：他开始区分攻击面 creation、benchmark、失败模式、自动化模块、证据等级，并能说明为什么某个洞察可能是老师不知道的一线信息差。较弱的部分是：很多结论仍依赖自我叙述，缺少可复现实验包、对照组、负结果和外部用户验证。",
-      "notJustBusierEvidence": [
-        "硬指标从“阅读 7 篇论文、memory consistency 67%”进展到“声称 15 个 kernel crash、memory consistency 95%+”。",
-        "问题表述从“predicate 太多、树太深”进展到“抽象原因转检索问题，使构建反哺检索”。这是问题建模层面的变化。",
-        "下周动作从一般优化变成可验证动作：trace 格式逆向、crash 去重与 exploitability triage、自动化模块固化和泛化测试。"
+      "judgment": "这个学生在两周可见材料中表现出研究能力上升，而不只是更忙。核心证据不是任务数量增加，而是从“发现一个方向”推进到“产出可验证的新攻击面、量化指标、方法资产和自动化瓶颈”。但结论置信度受限：输入只提供了2周报告，不足以覆盖声明的4周窗口。",
+      "mainChange": "从2026-03-15的“观察到root权限RCE攻击场景、反思Claude Code使用差异、发现知识表示一致性问题”，推进到2026-03-22的“提出syscall × internet联合变异攻击面、即将产出15个内核crash、将知识图谱一致性从67%提升到95%+、明确构建反哺检索的机制”。这说明他开始把洞察转化为实验、benchmark、workflow和可自动化模块。",
+      "notJustBusierBecause": [
+        "硬进展有量化：记忆一致性67%到95%+，内核fuzzer即将产出15个crash。",
+        "题目轨迹有抽象升级：从单一攻击场景或输入渠道枚举，升级为输入渠道组合空间的系统搜索。",
+        "CoT's CoT开始要求回答“老师原本不知道什么、信息差在哪里、证据等级、沉淀形式”，比上一周的泛化反思更接近研究管理模板。",
+        "Brainary映射从概念类比变成具体模块建议：memory schema、agent module、evaluation protocol、workflow。",
+        "他开始把token消耗、evolving结果和竞争壁垒联系起来，出现经济学价值推理的雏形。"
       ],
-      "remainingRisk": [
-        "漏洞方向的核心产出还停留在 crash 数量，尚未转化为唯一漏洞、CVE、PoC、root RCE 或可复现 benchmark。",
-        "Brainary 映射仍偏概念对应，尚未证明可以稳定驱动 agent 决策或自动化检索改进。",
-        "价值推理中出现“token 消耗形成壁垒”的判断，但缺少成本、时间、竞争对手复现难度、用户愿付费程度等金额化证据。"
-      ]
+      "remainingConcern": [
+        "15个crash尚未去重、复现、归因、可利用性分析，因此不能直接等同于15个漏洞或高价值成果。",
+        "价值推理仍缺金额闭环：没有估算CVE价值、bug bounty、客户需求、产品收入、节省人力成本或token成本收益比。",
+        "自动化路径仍停在关键人工判断上：trace格式逆向、evolving方向选择、抽象原因到检索问题的转换都尚未完全模块化。",
+        "泛化证据不足：知识图谱一致性提升目前只在当前领域或当前数据上成立，新的知识领域验证缺失。",
+        "4周窗口只提交了2周材料，缺少前两周轨迹证据。"
+      ],
+      "oneThingProfessorShouldLearn": "最值得老师学习的一点是：学生发现“组合式攻击面搜索”可能是Claude Code降低高工程成本后释放的新研究空间。具体到本周，syscall × internet联合变异不是普通fuzzing优化，而是把攻击面从线性枚举升级为组合生成；这同时映射到Brainary的实体组合搜索问题。教授应把这件事当作一个可验证的研究命题，而不是只当作一次工程尝试。"
     },
     "stageByWeek": [
       {
         "week": "2026-03-15",
-        "stage": "问题发现与元认知形成期",
-        "topicTrajectory": "主题集中在漏洞挖掘，具体从 DCMTK 和 Linux 内核漏洞调试中提出一个被忽视的方向：root 权限运行的二进制服务的远程代码执行。此时题目轨迹是从传统 LPE 转向高权限服务 RCE 攻击面。",
-        "hardProgress": "报告有阅读 7 篇 LLM for Classification 论文、小规模推荐 Claude Code 给约 10 人并收到 3 人正反馈、memory consistency 为 67%。但没有报告新漏洞数量、PoC、复现实验、代码模块或 benchmark。",
-        "cognitiveTrend": "形成了一个重要认知：Claude Code 的效果差异主要来自使用者的 meta-level control，即何时坚持、何时转向、如何设计 prompting。这是从工具使用经验上升到控制策略的开始。",
-        "cotCotMaturity": "CoT's CoT 尚未显式结构化。已有工具使用反思，但没有清楚拆成命题、证据、老师是否不知道、自动化潜力、沉淀形式和证据等级。",
-        "brainaryMapping": "Brainary 映射处于抽象类比阶段：把 engineering 映射为 working memory 的有指向压缩，把 research 映射为 long-term memory 的高效检索。这个映射合理但还没有具体 schema、module 或 evaluation protocol。",
-        "valueReasoning": "价值函数偏向“低研究密度攻击面”和“Claude Code 使用者差异的元控制”。他认为值得做的事是寻找别人少做的高权限 RCE 场景，以及把元认知策略编码到 agent 行为框架中。用户证据是 10 人推荐中 3 人正反馈，但没有金额、付费场景或客户定义。",
-        "projectManagement": "下周计划是减少 subject tree 分支因子和 predicate 归一化。动作方向正确，但粒度仍偏工程优化，没有定义完成标准、A/B 对照或自动化验收指标。",
-        "evidenceLevel": "中低。主要是观察、个人测试和一个 67% 指标；缺少可复现实验和产出物。"
+        "stage": "从使用工具到形成元认知假设的阶段",
+        "topicTrajectory": "研究主题集中在漏洞挖掘，具体观察到root权限下运行的二进制服务存在被忽视的远程代码执行攻击面；同时开始关注LLM for Classification和Brainary知识归纳。",
+        "hardProgress": "硬进展偏弱到中等。报告中有7篇论文阅读、小规模约10人Claude Code使用反馈、memory consistency为67%的评估结果，但缺少新漏洞、crash、原型系统、代码模块或可复现实验产物。",
+        "cognitiveTrend": "认知上从“Claude Code很强”转向“Claude Code效果取决于使用者的meta-level control”。这是有效的研究能力信号，因为他开始解释差异来源，而不是只报告工具体验。",
+        "cotIncrement": "CoT增量主要是两个判断：一是root权限服务的RCE攻击面研究密度低；二是Claude Code需要通过高质量prompt和策略切换来发挥作用。这些判断有方向价值，但实验验证不足。",
+        "cotOfCotMaturity": "CoT's CoT尚未成型。报告中有元认知反思，但没有系统回答信息差、证据等级、自动化潜力、可沉淀形式和老师应学到什么。",
+        "brainaryMapping": "Brainary映射处于概念层：把Engineering映射为working memory的有指向性压缩，把Research映射为long-term memory的高效检索。这个映射清楚，但还没有形成schema、workflow或evaluation protocol。",
+        "valueReasoning": "价值函数开始从“工具能力强”转向“谁能更好控制模型，谁能获得更好漏洞挖掘效果”。但价值仍主要是研究直觉，没有连接金额、用户、产物形式或商业化路径。",
+        "projectManagement": "下周计划具体但偏局部：减少subject tree分支因子、规范predicate。计划对当前卡点有对应关系，但没有验收标准、负责人、时间盒和失败判据。",
+        "evidenceLevel": "中低。约10人的反馈和67%一致性提供了一些证据，但漏洞方向的主要判断仍是观察性假设。"
       },
       {
         "week": "2026-03-22",
-        "stage": "方法资产与闭环实验形成期",
-        "topicTrajectory": "主题从单点攻击面转向组合式攻击面：syscall × internet 联合变异 fuzzing。同时，Brainary 知识图谱从分类树归纳转向构建-检索协同进化。",
-        "hardProgress": "报告声称形成了 Linux 内核新攻击面、全局 fuzzing Agent、即将产出 15 个 kernel crash；知识图谱记忆一致性从 67% 提升到 95%+；与 Wenjing 的检索模型做了对比并发现知识正交性假设不适合真实知识图谱。",
-        "cognitiveTrend": "认知从“枚举输入渠道”升级到“组合输入渠道”；从“分别优化构建和检索”升级到“构建过程约束检索算法”；从“token 是成本”升级到“正确方向的 token 消耗可沉淀为 evolving 资产”。这些是研究能力增强的核心信号。",
-        "cotCotMaturity": "CoT's CoT 明显成熟：每个洞察都开始包含内容、老师是否原本不知道、信息差、自动化潜力、沉淀形式和证据等级。但仍有自评偏强的问题，例如 15 crash 未去重前不应直接作为强实证，竞争壁垒判断也缺少对照实验。",
-        "brainaryMapping": "Brainary 映射从抽象 memory 类比推进到更具体的结构：实体组合空间、输入渠道组合、memory schema、evaluation protocol、agent module。成熟度显著提升，但还没有实际展示 Brainary schema 如何被 agent 调用、如何提升检索或漏洞挖掘产出。",
-        "valueReasoning": "价值函数变为更工程化和资产化：值得做的是 creation 级攻击面、可持续 evolving workflow、可复用 benchmark、构建-检索闭环、自动化模块。他开始把价值连接到壁垒和 token 投资，但仍未连接到明确金额、客户、漏洞赏金、CVE 价值、节省人力成本或 Brainary 产品形态。",
-        "projectManagement": "项目管理明显改善：每个任务有硬进展、卡点和下周最小可验证动作。下一步动作更接近研究闭环：trace 解析、crash triage、自动化模块、泛化测试。",
-        "evidenceLevel": "中等到中强。知识图谱有明确 67% 到 95%+ 的量化提升，但缺少泛化验证；漏洞方向有 crash 数量线索，但未去重、未确认唯一漏洞、未报告可利用性。"
+        "stage": "从元认知假设到可验证研究资产的阶段",
+        "topicTrajectory": "主题扩展为两条主线：一是Linux内核新攻击面syscall × internet联合变异fuzzing；二是Brainary知识图谱的构建与检索协同进化。两条线开始通过“组合空间搜索”和“构建反哺检索”产生方法层连接。",
+        "hardProgress": "硬进展明显增强。新增攻击面、全局fuzzing Agent、即将产出15个内核crash、记忆一致性从67%提升到95%+、与Wenjing检索模型对比、明确trace数据格式逆向为工程瓶颈。",
+        "cognitiveTrend": "认知从“枚举输入渠道”升级为“搜索输入渠道组合”；从“分别优化构建和检索”升级为“构建过程约束检索算法设计”。这属于研究问题建模能力的提升。",
+        "cotIncrement": "CoT增量较强，包含4个可判定命题：攻击面组合化、构建反哺检索、evolving结果成为壁垒、一致性跃升验证建模方式。相比上一周，命题更可实验化。",
+        "cotOfCotMaturity": "CoT's CoT明显成熟。每个条目开始回答老师是否知道、信息差、自动化潜力、沉淀形式、证据等级。但第三条“evolving结果作为壁垒”的竞争对手不可复现判断仍主要是推理，缺少对照实验。",
+        "brainaryMapping": "Brainary映射从抽象概念推进到可实现模块：实体组合节点、输入渠道组合生成器、构建反哺检索pipeline、memory schema、evaluation protocol。成熟度显著提升。",
+        "valueReasoning": "价值函数开始包含研究壁垒和经济逻辑：token消耗如果沿正确方向积累，可以从成本转为资产。但仍缺少金额化：没有说明15个crash可能对应多少CVE、漏洞赏金、客户价值、自动化节省人力或token投入回报。",
+        "projectManagement": "项目管理变好：每个任务都有当前卡点和下周最小可验证动作。尤其是trace数据格式逆向、crash去重和exploitability triage是正确的下一步。但仍缺少风险优先级、验收指标和停止条件。",
+        "evidenceLevel": "中到中强。知识图谱有67%到95%+的量化对比；fuzzing有15个crash的初步实证。但crash尚未去重和可利用性分析，因此漏洞价值证据未闭环。"
       }
     ],
     "trendScores": {
+      "scale": "1到5分，5分表示强；分数只基于已提供的两周周报，不代表完整4周表现。",
       "hardProgress": {
-        "score": 7,
+        "score": 4,
         "trend": "上升明显",
-        "reason": "从阅读和观察转为报告 crash、agent workflow、量化一致性提升。但漏洞产出未完成 triage，所以不能打到 8 分以上。"
+        "reason": "从阅读、观察和一致性问题，推进到15个内核crash候选、67%到95%+一致性提升、Agent workflow和benchmark。主要扣分点是crash未去重、未复现、未做可利用性分析。"
       },
-      "topicValue": {
-        "score": 8,
+      "researchCapabilityNotBusyness": {
+        "score": 4,
         "trend": "上升",
-        "reason": "syscall × internet 联合变异是高潜在价值攻击面，知识图谱构建-检索闭环也有通用价值。风险是题目跨度较大，漏洞挖掘和 Brainary 两条线还未形成统一产品闭环。"
+        "reason": "进展不是简单增加任务量，而是问题建模、实验指标、自动化路径和方法资产同步出现。仍需用可复现产物证明。"
+      },
+      "topicTrajectory": {
+        "score": 4,
+        "trend": "从分散观察转向双主线收敛",
+        "reason": "漏洞挖掘和Brainary知识图谱看似两条线，但学生用组合空间搜索、working memory压缩、构建反哺检索把它们连接起来。需要防止两条线互相稀释。"
       },
       "cotIncrement": {
-        "score": 8,
+        "score": 4,
         "trend": "上升",
-        "reason": "从 root RCE 场景洞察进化到组合式攻击面、构建约束检索、evolving 资产化。认知增量不只是复述工作量。"
+        "reason": "从“root RCE被忽视”和“Claude使用差异”升级为“输入渠道组合是creation级攻击面”和“检索算法受知识构建约束”。命题更抽象也更可验证。"
       },
-      "cotCotMaturity": {
-        "score": 7,
+      "cotOfCotMaturity": {
+        "score": 4,
         "trend": "显著上升",
-        "reason": "第二周开始显式回答老师是否原本不知道、信息差、自动化潜力和沉淀形式。但证据等级判断有时偏乐观，需要更严格地区分 crash、unique bug、exploitable bug 和 CVE。"
+        "reason": "第二周开始按照信息差、证据等级、自动化潜力、沉淀形式组织CoT's CoT。仍需减少自我确认，增加反例和失败判据。"
       },
       "brainaryMappingMaturity": {
-        "score": 6,
+        "score": 4,
         "trend": "上升",
-        "reason": "从 working memory/long-term memory 的抽象映射进展到实体组合、memory schema、evaluation protocol、agent module。仍缺少真实 Brainary artifact 和自动调用证据。"
-      },
-      "metaCognition": {
-        "score": 8,
-        "trend": "上升",
-        "reason": "学生持续围绕 meta-level control、何时转向、如何让构建反哺检索、如何把 evolving 方向结构化进行反思。这是研究能力提升的重要信号。"
+        "reason": "从working memory和long-term memory的概念映射，推进到memory schema、agent module、evaluation protocol和实体组合节点。下一步应落到Brainary实际数据结构和接口。"
       },
       "valueReasoning": {
-        "score": 6,
-        "trend": "中等上升",
-        "reason": "价值推理从“Claude Code 好不好用”变成“哪些 token 消耗能形成壁垒、哪些模块能沉淀为 workflow/benchmark”。但金额、用户、市场和产品形态仍缺证据。"
+        "score": 3,
+        "trend": "有进步但未金额化",
+        "reason": "学生开始把token消耗、evolving积累和竞争壁垒联系起来，也把Claude Code的价值定位为降低高工程成本。但缺少用户、市场、金额、付费场景、漏洞赏金或产品价值估算。"
       },
       "monetaryValue": {
-        "score": 3,
-        "trend": "证据不足",
-        "reason": "没有漏洞赏金、CVE 估值、企业安全需求、付费用户、节省工程时间金额化、Brainary 商业转化路径等数据。"
+        "score": 2,
+        "trend": "轻微上升",
+        "reason": "第二周出现“token消耗转为资产”的经济学表达，但没有数字化成本收益模型。金额证据缺失。"
       },
       "evidenceLevel": {
-        "score": 6,
+        "score": 3,
         "trend": "上升",
-        "reason": "有 67% 到 95%+ 的量化指标和 15 crash 线索，但缺少复现实验、消融实验、泛化测试、去重和 exploitability triage。"
+        "reason": "知识图谱方向有清晰量化证据；漏洞方向有crash数量但还没有唯一漏洞、可利用性、CVE或对照基线。"
       },
       "projectManagement": {
-        "score": 7,
+        "score": 3,
         "trend": "上升",
-        "reason": "第二周采用新版模板后，任务、硬进展、卡点、最小可验证动作都更清楚。仍需把下一步动作绑定到验收标准和截止产物。"
+        "reason": "第二周的任务、硬进展、卡点和最小可验证动作更清楚。但验收标准、里程碑和资源安排仍不够严格。"
       },
       "automationPath": {
-        "score": 7,
+        "score": 4,
         "trend": "上升",
-        "reason": "已识别 fuzzer evolving agent、trace 数据闭环、构建反哺检索 pipeline、输入渠道组合生成器等自动化路径。关键缺口是仍依赖人工 meta-level 判断。"
+        "reason": "学生能识别哪些部分要沉淀为agent module、workflow、memory schema和pipeline。主要风险是关键决策仍依赖人工meta-level control。"
       },
-      "nextStepQuality": {
-        "score": 7,
+      "nextActionQuality": {
+        "score": 4,
         "trend": "上升",
-        "reason": "trace 格式逆向、crash 去重、exploitability triage、抽象原因到检索问题模块化，都是较好的最小可验证动作。需要增加明确验收标准，例如唯一 crash 数、复现率、跨领域一致性。"
+        "reason": "trace格式逆向、crash去重与可利用性分析、抽象原因到检索问题自动化都是正确的最小闭环动作。应补充明确产出格式和验收阈值。"
       }
     },
     "valueFunctionChange": {
-      "summary": "学生的价值函数从“找到低密度漏洞方向”和“更好地使用 Claude Code”转向“创造新攻击面、沉淀可复用 agent workflow、用量化 benchmark 证明方法、把 token 消耗转化为资产”。这是明显的研究价值观升级，但商业价值函数尚未成熟。",
-      "week20260315": {
-        "whatHeValued": [
-          "被传统社区忽视的 root 权限服务 RCE 攻击面。",
-          "Claude Code 的元层级调控能力，而不是单纯代码生成能力。",
-          "知识表示一致性，尤其是 subject tree 和 predicate normalization。"
-        ],
-        "whyHeThoughtValuable": [
-          "研究密度低，可能有未被充分挖掘的高权限攻击面。",
-          "不同使用者用 Claude Code 效果差异大，说明 prompting 和转向策略本身可能是核心能力。",
-          "知识图谱一致性影响 Brainary 的长期记忆质量。"
-        ],
-        "connectionsMade": {
-          "money": "缺失。没有金额化。",
-          "users": "有弱用户证据：约 10 人使用 Claude Code，3 人正反馈，但没有用户画像和付费意愿。",
-          "generalCapability": "连接到 meta-cognition 和长链条推理能力。",
-          "artifact": "主要是策略总结，尚未形成模块或 benchmark。",
-          "brainary": "连接到 working memory 压缩和 long-term memory 检索。",
-          "automation": "提出需要把元认知策略编码进 agent，但未给出 pipeline。"
+      "summary": "学生的价值函数正在从“某个工具是否强、某个方向是否没人做”转向“哪些高工程成本问题在Claude Code帮助下变得可探索，哪些迭代结果能积累成资产和壁垒”。这是重要进步，但还没有完成从研究价值到货币价值、用户价值和产品价值的闭环。",
+      "byWeek": [
+        {
+          "week": "2026-03-15",
+          "whatStudentThinksWorthDoing": [
+            "值得做root权限服务RCE，因为社区长期偏向本地提权，远程高权限攻击面研究密度较低。",
+            "值得研究Claude Code的使用方法，因为不同使用者效果差异大，关键可能是meta-level control。",
+            "值得优化知识归纳，因为predicate过多和分类树过深导致memory consistency下降。"
+          ],
+          "whyWorthDoing": "主要理由是研究空白、工具使用差异和知识一致性瓶颈。价值判断偏研究直觉，实证和金额连接弱。",
+          "connections": {
+            "money": "缺失。没有金额、赏金、客户、商业产品或成本收益估算。",
+            "users": "有约10名使用者的小规模反馈，但没有定义目标用户画像。",
+            "generalCapability": "有连接到元认知、长链条推理、working memory和long-term memory。",
+            "artifactForm": "初步指向prompting策略和知识表示规范，但未形成模块或系统。",
+            "brainary": "概念连接较强，工程落地较弱。",
+            "automation": "提出需要把元认知策略编码到Agent行为框架中，但未拆成具体自动化模块。"
+          }
+        },
+        {
+          "week": "2026-03-22",
+          "whatStudentThinksWorthDoing": [
+            "值得做syscall × internet联合变异，因为这是输入渠道组合产生的新攻击面，且Claude Code降低了开发成本。",
+            "值得做构建反哺检索，因为一致性从67%提升到95%+，证明问题建模方式比单纯算法复杂度更关键。",
+            "值得持续evolving fuzzer，因为正确方向上的token消耗会积累成竞争壁垒。",
+            "值得把方法沉淀为agent module、workflow、benchmark、memory schema和evaluation protocol。"
+          ],
+          "whyWorthDoing": "理由从“方向可能有空间”升级为“有初步产出密度、量化提升、自动化潜力和壁垒逻辑”。",
+          "connections": {
+            "money": "仍然不足。出现token成本转资产的表达，但没有估算token投入、人工节省、漏洞赏金、CVE价值或企业安全客户价值。",
+            "users": "隐含用户是漏洞研究者、fuzzer开发者、Brainary知识图谱使用者，但没有明确用户需求和付费意愿。",
+            "generalCapability": "较强，能把漏洞挖掘中的组合搜索映射到Brainary实体组合搜索。",
+            "artifactForm": "明显增强，已经提出agent module、workflow、benchmark、memory schema和evaluation protocol。",
+            "brainary": "从类比进入架构设计层，尤其是实体组合和构建反哺检索。",
+            "automation": "较强，明确trace解析、构建反哺检索pipeline和evolving方向选择需要自动化。"
+          }
         }
-      },
-      "week20260322": {
-        "whatHeValued": [
-          "creation 级别的新攻击面：输入渠道组合，尤其是 syscall × internet。",
-          "可持续 evolving 的全局 fuzzing Agent。",
-          "构建反哺检索的知识图谱方法。",
-          "token 消耗在正确方向上积累出的竞争壁垒。",
-          "可沉淀为 agent module、workflow、benchmark、memory schema 的产物。"
-        ],
-        "whyHeThoughtValuable": [
-          "组合式攻击面开发成本高，因此传统 fuzzing 工程少做；Claude Code 可能改变可行性边界。",
-          "15 个 kernel crash 线索说明该方向有产出密度。",
-          "67% 到 95%+ 的一致性提升说明问题建模方式比单纯算法复杂度更关键。",
-          "持续 evolving 的结果可能比框架本身更难复制。"
-        ],
-        "connectionsMade": {
-          "money": "仍然缺失。虽然提到竞争壁垒和 token 成本资产化，但没有估算 token 成本、人工成本、漏洞价值或客户收益。",
-          "users": "有 Wenjing 模型对比和前一周 10 人测试，但仍不是清晰用户需求验证。",
-          "generalCapability": "连接到组合搜索、构建-检索协同、agent evolving、meta-level 决策。",
-          "artifact": "明确提出 agent module、workflow、benchmark、memory schema、evaluation protocol。",
-          "brainary": "连接到实体组合空间、知识构建约束检索、记忆一致性评估。",
-          "automation": "提出输入渠道组合生成器、trace 分析闭环、构建反哺检索 pipeline。"
-        }
-      },
-      "maturityAssessment": "价值函数从兴趣驱动变为资产驱动，但还没变成商业函数。下一阶段必须要求他把价值写成：谁用、解决什么高成本问题、节省多少钱或产生多少钱、用什么产物交付、用什么指标证明比替代方案强。"
+      ],
+      "valueFunctionRisk": [
+        "学生可能高估crash数量的价值，未完成从crash到唯一漏洞、可利用漏洞、CVE或收入的价值转换。",
+        "学生可能把“token消耗不可逆”误认为天然壁垒，但如果没有数据、策略和结果的结构化沉淀，token消耗也可能只是 sunk cost。",
+        "学生的价值函数目前偏研究者视角，尚未充分纳入用户愿意为什么付钱、教授应如何分配团队资源、成果应以论文/系统/数据集/漏洞报告哪种形式发布。"
+      ],
+      "desiredNextValueFunction": "下一阶段价值函数应改成：每个方向必须同时回答“能产生什么可验证产物、服务哪个用户、节省或创造多少钱、能否沉淀为Brainary资产、能否被Agent自动复用、证据等级是什么”。"
     },
     "repeatedBlockers": [
       {
-        "blocker": "自动化闭环依赖人工 meta-level 判断",
-        "appearsIn": [
+        "blocker": "人工meta-level control尚未编码",
+        "appearsInWeeks": [
           "2026-03-15",
           "2026-03-22"
         ],
-        "analysis": "第一周说 Claude Code 效果取决于人类 prompting 和何时转向；第二周说 evolving 方向选择仍依赖人工 trace 分析和判断。重复卡点不是代码生成，而是决策逻辑未结构化。",
-        "risk": "如果无法把转向策略、变异方向选择和检索问题生成编码成规则或学习流程，研究会停留在个人能力展示，难以扩展为 Brainary/agent 产品。"
+        "evidence": "第一周说Claude Code效果差异来自prompting和何时转向的元层级决策；第二周说evolving方向选择仍依赖人工判断。",
+        "risk": "如果不编码成规则、启发式或学习型策略，学生个人能力无法扩展为团队能力或系统能力。",
+        "neededAction": "要求他把一次成功的fuzzer迭代拆成决策日志：输入信号、判断规则、行动、结果、失败备选，并形成最小决策树。"
       },
       {
-        "blocker": "知识表示规范化与自动 pipeline 缺失",
-        "appearsIn": [
+        "blocker": "知识表示和检索一致性依赖手动调优",
+        "appearsInWeeks": [
           "2026-03-15",
           "2026-03-22"
         ],
-        "analysis": "第一周卡在 predicate 数量过多、概念层次不清；第二周一致性提升到 95%+，但构建反哺检索仍是手动调优。说明表示层问题有所缓解，但自动化尚未完成。",
-        "risk": "没有自动 pipeline，就难以证明方法可泛化，也难以沉淀为 Brainary 标准能力。"
+        "evidence": "第一周predicate数量过多、层次结构不清导致67%一致性；第二周提升到95%+但承认构建反哺检索仍是手动调优。",
+        "risk": "当前提升可能是针对单一数据集或领域的局部优化，泛化性未知。",
+        "neededAction": "在新领域做盲测，固定抽象原因到检索问题的转换规则，不允许人工调参后再报告一致性。"
       },
       {
-        "blocker": "漏洞产出证据未完成从 crash 到漏洞的转换",
-        "appearsIn": [
+        "blocker": "漏洞产出证据未闭环",
+        "appearsInWeeks": [
           "2026-03-22"
         ],
-        "analysis": "报告说即将产出 15 个 kernel crash，但没有去重、复现率、root cause、可利用性、是否新漏洞、是否可提交 CVE。",
-        "risk": "crash 数量可能高估研究价值；教授应要求唯一漏洞数和 exploitability triage，而不是接受 crash 数作为最终产出。"
+        "evidence": "报告称即将产出15个内核crash，但尚未去重和exploitability triage。",
+        "risk": "crash可能重复、不可复现、不可利用或不是安全漏洞。",
+        "neededAction": "下周必须给出唯一crash数量、可复现率、根因分类、潜在安全影响、是否可提交CVE或报告。"
       },
       {
-        "blocker": "价值金额化缺失",
-        "appearsIn": [
+        "blocker": "金额和用户价值缺失",
+        "appearsInWeeks": [
           "2026-03-15",
           "2026-03-22"
         ],
-        "analysis": "两周都有价值判断，但没有把漏洞挖掘产出、Brainary 检索提升或 agent 自动化转成金额、节省工时、客户场景或商业交付。",
-        "risk": "学生可能会继续优化技术指标，但无法判断哪些方向最值得投入。"
+        "evidence": "两周都没有具体金额、客户、赏金、产品付费、节省人力或token成本收益比。",
+        "risk": "研究方向可能技术上有趣，但无法帮助教授判断资源投入优先级。",
+        "neededAction": "要求每个核心任务增加一行价值估算：目标用户、单位产物价值、成本、可能收入或战略价值。"
       },
       {
-        "blocker": "证据等级自评偏乐观",
-        "appearsIn": [
-          "2026-03-22"
+        "blocker": "报告覆盖不足",
+        "appearsInWeeks": [
+          "整个输入窗口"
         ],
-        "analysis": "把 15 个未 triage 的 crash 称为强实证不够严谨；把 token 消耗形成壁垒称为经济逻辑也缺少竞争对手复现实验。",
-        "risk": "如果证据分级不严格，后续项目管理会误把探索信号当成研究结论。"
+        "evidence": "输入声明windowWeeks为4，但只提供2026-03-15和2026-03-22两份报告。",
+        "risk": "纵向趋势判断置信度有限，无法判断更早两周是否有连续积累或中断。",
+        "neededAction": "补齐缺失周报，或明确这次只分析2周窗口。"
       }
     ],
     "professorShouldAsk": [
-      "15 个 kernel crash 现在的状态是什么？请给出去重后唯一 crash 数、可复现率、root cause 分类、是否触达安全边界、是否可能形成 CVE 或 PoC。",
-      "syscall × internet 联合变异相比单独 syscall fuzzing、单独网络协议 fuzzing 的增益是多少？请给出同等时间、同等 token、同等机器资源下的对照实验。",
-      "覆盖率 trace 数据格式逆向完成后，agent 如何根据 trace 自动决定下一步变异方向？请给出决策规则、输入输出格式和失败案例。",
-      "67% 到 95%+ 的 memory consistency 是在哪个数据集、多少样本、什么评价定义下得到的？是否有人类标注或重复实验？",
-      "把‘抽象原因 → 检索问题’应用到新知识领域后，一致性还能否保持？如果下降，下降在哪类关系上？",
-      "Wenjing 模型的知识正交性假设具体如何实现？对比是否公平？是否控制了 prompt、数据规模和检索预算？",
-      "Brainary 映射目前有无实际 schema 或 memory node 示例？agent 是否真的调用 Brainary 记忆来改善漏洞挖掘或检索？",
-      "你说 token 消耗在正确方向上形成壁垒，请估算：消耗多少 token、花费多少钱、节省多少人工时间、产出多少额外 crash 或一致性提升？",
-      "如果只能保留一个方向，是漏洞 fuzzing agent 还是知识图谱检索？选择依据是金额、论文价值、产品价值还是 Brainary 核心能力？",
-      "下周结束时，什么结果会让你承认这个方向失败或需要转向？请定义负结果标准。"
+      {
+        "question": "15个内核crash里，有多少是唯一crash、多少可稳定复现、多少可能是安全漏洞、多少能进入CVE或漏洞报告流程？",
+        "why": "这是区分“fuzzer很忙”和“研究真正有产出”的关键证据。"
+      },
+      {
+        "question": "syscall × internet联合变异相对于现有fuzzer的基线提升是多少？有没有对比只变异syscall、只变异internet、随机组合三种baseline？",
+        "why": "如果没有对照，无法判断新攻击面是否真的来自组合方法，而不是工程实现或运行时间差异。"
+      },
+      {
+        "question": "trace数据格式逆向完成后，Agent的closed-loop evolving具体闭环是什么？输入、决策、输出、评估指标分别是什么？",
+        "why": "这决定该工作能否从个人技巧变成可复用系统。"
+      },
+      {
+        "question": "67%到95%+的一致性提升是在什么数据集、多少样本、什么评估协议下得到的？是否有新领域盲测？",
+        "why": "这决定Brainary知识图谱方法是泛化方法，还是局部调参。"
+      },
+      {
+        "question": "“抽象原因到检索问题”的转换能否给出5个正例、5个失败例和一套自动化规则？",
+        "why": "失败例能暴露方法边界，比只报告成功率更能提升研究质量。"
+      },
+      {
+        "question": "如果把token消耗视为资产，本周投入了多少token和人工小时，换来了多少唯一crash、一致性提升或可复用模块？",
+        "why": "这是把价值推理从口号变成经济模型的必要问题。"
+      },
+      {
+        "question": "这个方向最可能的产物形式是什么：论文、开源fuzzer、漏洞报告、Brainary模块、内部自动化平台，还是商业安全服务？",
+        "why": "不同产物形式决定下一步资源配置、证据标准和时间线。"
+      }
     ],
     "nextBestIntervention": {
-      "intervention": "要求学生用一周交付一个“可验证研究包”，而不是继续扩展叙述。",
-      "deliverables": [
-        "漏洞方向：15 个 crash 的 triage 表，包括 crash ID、复现命令、去重 hash、root cause、触发路径、是否新颖、可利用性等级、下一步处理。",
-        "对照实验：syscall-only、internet-only、syscall × internet 三组在相同资源下的 crash 数、覆盖率增长、唯一路径数和唯一 bug 数。",
-        "agent 闭环：trace 数据格式说明、解析器、agent 根据 trace 选择下一步变异的规则或伪代码、至少一个自动迭代案例。",
-        "Brainary 方向：抽象原因到检索问题的自动化模块，配套 20 个样例、输入输出 schema、失败样例和跨领域测试结果。",
-        "价值表：每个方向填写用户、产物、指标、金额假设、自动化潜力、Brainary 关系、下周可验证证据。"
+      "intervention": "让学生下周提交一页“研究资产闭环表”，强制把两个主线都转成可验收资产，而不是继续扩展叙事。",
+      "requiredDeliverables": [
+        {
+          "deliverable": "内核fuzzing证据闭环",
+          "acceptanceCriteria": [
+            "15个crash完成去重，给出唯一crash数量。",
+            "每个唯一crash给出复现命令、触发输入、内核版本、根因初判和安全影响。",
+            "至少设置三个baseline：仅syscall、仅internet、syscall × internet联合变异。",
+            "报告单位时间crash密度和覆盖率提升，而不只报告总数。"
+          ]
+        },
+        {
+          "deliverable": "Agent evolving自动化闭环",
+          "acceptanceCriteria": [
+            "完成trace数据格式逆向并输出解析器。",
+            "给出Agent如何根据trace选择下一步变异方向的决策规则。",
+            "至少跑一次从trace分析到变异策略更新再到新覆盖率结果的闭环。"
+          ]
+        },
+        {
+          "deliverable": "Brainary构建反哺检索模块",
+          "acceptanceCriteria": [
+            "把“抽象原因到检索问题”的转换写成可复现规则或脚本。",
+            "在一个新知识领域上盲测，不允许针对测试集手动调参。",
+            "报告一致性、失败类型、错误案例和下一步修正规则。"
+          ]
+        },
+        {
+          "deliverable": "价值估算表",
+          "acceptanceCriteria": [
+            "列出目标用户：漏洞研究者、企业安全团队、Brainary使用者或内部研究团队。",
+            "估算成本：token、人工小时、计算资源。",
+            "估算收益：唯一漏洞数量、潜在CVE、节省工程时间、可复用模块数量、未来产品化可能。",
+            "明确本周最值得继续投入的一件事及其理由。"
+          ]
+        }
       ],
-      "successCriteria": [
-        "至少确认 1 个可复现且去重后的高质量 kernel bug，或明确说明 15 crash 中为何没有高质量漏洞。",
-        "组合 fuzzing 相比单一路径在同等预算下有可量化增益，否则需要降低对 creation 攻击面的信心。",
-        "知识图谱方法在新领域仍能显著超过 67% baseline；如果不能，需要定位泛化失败原因。",
-        "至少一个人工 meta-level 判断被转成可执行规则或模块。"
+      "managementStyle": "教授应把反馈重点放在证据闭环和价值闭环上，而不是鼓励更多方向探索。当前学生已经有足够多想法，最缺的是把想法压缩成可复现、可比较、可估值的研究资产。",
+      "stopDoing": [
+        "不要继续只报告crash总数而不做去重和可利用性分析。",
+        "不要继续用“Claude Code很强”解释产出，必须说明强在哪里、相对什么基线强、代价是多少。",
+        "不要继续把Brainary映射停留在类比层，必须落到schema、接口、评估协议。"
       ],
-      "whyThisIntervention": "这个学生已经有足够多想法，当前最需要的是把想法压缩成证据、模块和选择标准。教授应防止他继续用更大的叙事掩盖未完成的验证。"
+      "startDoing": [
+        "每周固定报告一个金额或成本收益估算，即使是粗估。",
+        "每周固定报告一个失败例和一个反例，防止只积累正反馈。",
+        "每周固定沉淀一个可复用资产：脚本、schema、benchmark、workflow或decision rule。"
+      ]
     }
   }
 }

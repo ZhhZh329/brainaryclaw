@@ -1,6 +1,6 @@
 {
   "key": "person:guo-wenbo:2026-05-03:weekly-score",
-  "generatedAt": "2026-06-06T01:01:18.398Z",
+  "generatedAt": "2026-06-06T02:01:19.610Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
@@ -8,47 +8,91 @@
   "result": {
     "hardProgress": {
       "score": 16,
-      "reason": "本周有明确硬进展，最强证据是 SkillBench 已完成接近 8k 样本的数据集构建：良性样本 4000 个、恶意样本 3947 个，并且已对 7 个 baseline 工具跑通整体实验流程，进入结果整理阶段。SkillAtlas 有 KG 节点、边类型和 operator 抽象的设计推进。华为鸿蒙方向只描述了继续完善生成流程、补充 case 和优化稳定性，但没有给出新增 case 数量、覆盖攻击类型或可运行结果，因此硬进展证据较弱。",
-      "missingEvidence": "缺少华为鸿蒙新增 case 数量、攻击类型覆盖清单、生成成功率或复现样例；缺少 7 个 baseline 的实验结果表；缺少 KG schema 草图、节点/边类型列表和 operator 接口定义。"
+      "reason": "本周有明确硬进展：SkillMal Benchmark 已完成，规模为良性样本 4000 个、恶意样本 3947 个；7 个 baseline 工具的对比实验流程已跑通，部分结果已产出。SkillAtlas 的 KG 节点/边类型、Skill/Taxonomy/行为语义关联建模、operator 抽象也有设计推进。华为鸿蒙恶意软件生成也提到补充新 case 和优化行为逻辑，但缺少具体数量和示例。",
+      "missingEvidence": [
+        "鸿蒙恶意软件新增 case 的数量、类型、覆盖场景和成功率缺失。",
+        "7 个 baseline 的名称、运行完成比例、初步结果表缺失。",
+        "KG 节点/边类型清单、operator 草图或设计文档链接缺失。",
+        "“部分结果已产出”没有给出任何具体指标。"
+      ]
     },
     "cognitiveIncrement": {
-      "score": 10,
-      "reason": "认知增量集中在两个判断：第一，接近 8k 的 benchmark 不只是评测工具，还可成为模型训练和分析的数据资产；第二，baseline 对比的关键不只是结果指标，而是统一 evaluation protocol。这说明学生从“做实验”推进到“理解评测有效性与数据资产价值”。但认知仍停留在原则层面，没有进一步说明 protocol 如何统一、哪些不统一会导致何种偏差。",
-      "missingEvidence": "缺少对 evaluation protocol 的具体拆解，例如输入标准化、输出映射、标签判定规则、阈值处理、不可比工具如何处理；缺少数据资产后续训练或分析用途的具体路径。"
+      "score": 12,
+      "reason": "有较好的 CoT 增量：从单纯完成 benchmark，提升到认识其作为后续模型训练与分析的数据资产价值；也认识到 baseline 对比的核心不是指标本身，而是 evaluation protocol 的统一。这是有效的研究判断增量。",
+      "missingEvidence": [
+        "没有说明这些判断如何改变了实验设计或项目优先级。",
+        "没有给出 benchmark 可作为训练数据资产的具体下游任务或验证路径。",
+        "没有说明 evaluation protocol 中具体哪些输入、输出、判定标准需要统一。"
+      ]
     },
     "cot2Depth": {
-      "score": 6,
-      "reason": "报告体现了一定的二阶思考，例如意识到 baseline 结果对齐会影响结论公平性，也意识到 operator 抽象需要在表达能力和复杂度之间权衡。但没有进一步展开“为什么这些问题会发生”“有哪些备选方案”“如何验证某种方案更好”。CoT 的 CoT 深度不足，更多是问题识别，而非决策推理。",
-      "missingEvidence": "缺少对工具输出差异的分类分析；缺少 operator 抽象的备选设计方案比较；缺少对错误来源、偏差来源、实验公平性威胁的系统推理。"
+      "score": 9,
+      "reason": "报告体现了一定的二阶思考，例如意识到不同工具输出格式和检测标准会影响公平性，也意识到 operator 抽象需要在表达能力与复杂度之间权衡。但还停留在问题识别层面，没有展开为什么这些问题重要、有哪些方案、各方案代价如何、如何做决策。",
+      "missingEvidence": [
+        "缺少对 evaluation protocol 失真风险的具体案例分析。",
+        "缺少 operator 抽象的候选方案、取舍矩阵和决策标准。",
+        "缺少对 benchmark 偏差、标签质量、数据泄漏、工具适配误差的反思。"
+      ]
     },
     "brainaryMapping": {
-      "score": 5,
-      "reason": "SkillAtlas 部分提到 Skill、Taxonomy 与行为语义之间的关联建模，并细化节点和边类型，说明有一定知识结构化意识。但没有看到 Brainary 式的概念地图、知识单元层级、概念关系、推理路径或从任务到知识资产的映射。当前更像 KG 设计的粗略进展，而不是完整 Brainary mapping。",
-      "missingEvidence": "缺少节点类型、边类型、属性字段、层级关系、行为语义本体、查询样例和推理样例；缺少三项任务之间如何映射到统一知识资产的说明。"
+      "score": 6,
+      "reason": "SkillAtlas 部分涉及 Skill、Taxonomy、行为语义之间的关联建模，并细化 KG 节点/边类型，和 Brainary/知识结构化方向有关。但报告没有明确说明 Brainary 映射目标、实体关系模式、认知层级、可查询问题或平台中如何落地。",
+      "missingEvidence": [
+        "缺少明确的 Brainary mapping schema。",
+        "缺少实体、关系、属性、约束和示例三元组。",
+        "缺少从 benchmark 或恶意 skill 到 KG/Brainary 的映射样例。",
+        "缺少该映射如何服务检索、推理、评测或自动化分析的说明。"
+      ]
     },
     "monetaryValue": {
-      "score": 3,
-      "reason": "报告隐含了一些潜在价值：SkillBench 可作为数据资产，实验部分可能支撑论文；SkillAtlas 可能形成平台能力。但没有明确货币价值、用户价值、可交付产品、产业合作价值、数据授权价值或后续商业化路径。华为鸿蒙恶意软件生成也没有说明对项目经费、合作方需求或安全评测服务的直接价值。",
-      "missingEvidence": "缺少目标用户、应用场景、可交付件、论文投稿目标、合作方需求、数据集开放策略、潜在服务或授权模式、与项目经费或产业价值的对应关系。"
+      "score": 6,
+      "reason": "benchmark 规模接近 8000 样本，具备数据资产、论文实验、后续模型训练和工具评测的潜在价值；SkillAtlas 平台若成型也可能形成可复用基础设施。但报告没有明确用户、商业场景、论文投稿目标、数据开放策略、合作方或价值转化路径。",
+      "missingEvidence": [
+        "缺少目标论文会议/期刊和投稿时间线。",
+        "缺少 benchmark 对外发布、授权、复用或合作计划。",
+        "缺少潜在用户画像，例如安全研究者、平台厂商、检测工具开发者。",
+        "缺少任何成本、收益、竞争基准或可货币化路径。"
+      ]
     },
     "projectManagement": {
       "score": 11,
-      "reason": "项目管理结构较清楚，三条任务都给出了当前阶段、下周计划和部分卡点；SkillBench 明确了下周里程碑，即完成实验分析并形成论文级实验部分；SkillAtlas 明确需要老师介入 operator 抽象设计。问题是缺少优先级、风险等级、负责人安排、验收标准和时间拆解，三条线并行推进的资源分配不清楚。",
-      "missingEvidence": "缺少每项任务的完成标准、预计交付物格式、风险优先级、时间预算、依赖关系和是否影响论文/项目节点；缺少老师介入 SkillAtlas 时需要决策的具体问题清单。"
+      "reason": "项目管理信息较完整：三个任务都有当前阶段、下周计划，SkillBench 和 SkillAtlas 给出卡点，且明确 SkillAtlas 需要老师介入。问题是任务拆解仍偏粗，没有验收标准、时间粒度、风险优先级、负责人、产物链接和依赖关系。",
+      "missingEvidence": [
+        "缺少每个任务下周完成的可验收标准。",
+        "缺少风险等级和阻塞项优先级。",
+        "缺少具体产物链接，如代码、数据、实验表、设计文档。",
+        "缺少三个任务之间的优先级排序和时间分配。",
+        "缺少是否按计划推进的判断依据。"
+      ]
     },
     "nextAction": {
       "score": 8,
-      "reason": "下周行动总体明确：华为鸿蒙继续扩充 case 并覆盖更多攻击类型；SkillBench 完成实验结果整理、输出对比结论并形成论文级实验部分；SkillAtlas 确定 KG 与 operator 最终方案、输出系统设计文档并启动原型实现。其中 SkillBench 和 SkillAtlas 的下一步较可执行，华为鸿蒙方向仍偏泛，没有数量目标和验收指标。",
-      "missingEvidence": "缺少下周每项任务的量化目标，例如新增多少 case、覆盖哪些攻击类型、完成哪些 baseline 表格、设计文档包含哪些章节、原型实现到什么程度。"
+      "reason": "下周行动相对明确：鸿蒙继续扩充 case；SkillBench 完成全部实验结果整理并形成论文级实验部分；SkillAtlas 确定 KG/operator 最终设计、输出系统设计文档并启动原型实现。这些动作方向清楚，但缺少数量目标和交付标准。",
+      "missingEvidence": [
+        "鸿蒙下周要新增多少 case、覆盖哪些攻击类型不明确。",
+        "SkillBench 的实验结果整理应输出哪些表、哪些指标、哪些结论不明确。",
+        "SkillAtlas 的设计文档范围、原型最小功能和完成标准不明确。",
+        "没有说明如果 operator 抽象无法定型时的备选方案。"
+      ]
     },
     "evidenceQuality": {
       "score": 3,
-      "reason": "证据质量中等。报告提供了关键数字：4000 个良性样本、3947 个恶意样本、7 个 baseline，并说明实验流程已跑通。这些是较强证据。但其他任务大多是描述性表达，没有实验截图、表格、链接、样例、设计文档片段或结果摘要。SkillBench 虽有数量，但没有给出数据来源、质量控制和实验指标。",
-      "missingEvidence": "缺少数据集构成说明、样本去重和标注质量证据；缺少 baseline 名称、指标表、失败案例和对齐方法；缺少恶意软件 case 示例；缺少 KG/operator 设计文档或 schema。"
+      "reason": "证据质量中等。优点是给出了 benchmark 样本数量和 baseline 数量，说明实验流程已跑通；缺点是核心证据大多没有展开，例如没有结果表、工具列表、case 示例、设计图或文档链接。",
+      "missingEvidence": [
+        "缺少实验结果截图、表格或统计指标。",
+        "缺少数据集构建方法、标签来源和质量控制说明。",
+        "缺少代码仓库、文档或原型链接。",
+        "缺少失败案例、负结果或异常情况记录。"
+      ]
     },
-    "totalScore": 62,
-    "tier": "C",
-    "oneLineJudgment": "本周最实质的进展是 SkillBench 数据集和 baseline 实验已进入可产出阶段，但其他方向证据偏虚，二阶推理、价值闭环和可验收交付标准不足。",
-    "professorFollowUp": "老师最应该追问 SkillBench 的 evaluation protocol：要求学生下周带来 baseline 名称、统一输入输出规则、指标表、不可比情况处理方案和初步结论；同时对 SkillAtlas 的 operator 抽象开一次短会，要求学生会前提交 2 到 3 个备选设计及取舍理由。"
+    "totalScore": 71,
+    "tier": "B",
+    "oneLineJudgment": "本周有真实硬进展，尤其是 SkillBench 数据集和 baseline 实验进入可产出阶段，但证据呈现、二阶决策和 KG/Brainary 映射仍不足，距离论文级周报还差具体结果表和设计定稿。",
+    "professorFollowUp": [
+      "优先要求学生提交 SkillBench 的 baseline 工具列表、统一 evaluation protocol 草案和第一版结果表。",
+      "针对 SkillAtlas，老师应介入一次 operator 抽象评审，要求学生给出 2 到 3 个候选设计及取舍矩阵。",
+      "要求鸿蒙恶意软件生成部分补充新增 case 数量、攻击类型、成功率和代表性样例，否则难以判断真实推进。",
+      "让学生把下周目标改成可验收产物：一份实验结果表、一份 KG/operator 设计文档、一个最小原型或 case 集增量清单。"
+    ]
   }
 }

@@ -1,54 +1,54 @@
 {
   "key": "person:feng-yebo:2026-05-17:weekly-score",
-  "generatedAt": "2026-06-06T01:00:36.893Z",
+  "generatedAt": "2026-06-06T02:00:45.305Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "39a19207ecd5835aa63553e8d389dd7976dfa2ebd9d9198ed99cf849c716e995",
   "result": {
     "hardProgress": {
-      "score": 17,
-      "reason": "本周有明确硬进展：PROVX 已录用 USENIX Security 2026 并完成 Ethical Considerations shepherding 修改；quant-agent 完成 65 个 commit、风控硬化、1086 个测试全过；squeeze-hunter 从零到 Phase 0-3，83 个 commit、296 个测试；ReinforceGuard 已完成 TSC 改投。扣分点是 squeeze-hunter 的核心验证 Gate 1 尚未真实跑出结果，TAProv 本周主要是稿件修改且没有新 commit，交易系统实盘收益为负，策略价值未被证明。",
-      "missingEvidence": "缺少 commit 链接、测试报告、PROVX 录用或 shepherd 记录、ReinforceGuard 投稿回执、squeeze-hunter Phase 0-3 的可复现实验输出。"
+      "score": 18,
+      "reason": "本周硬进展很强，且多为可交付成果：PROVX 已中 USENIX Security 2026 并完成 Ethical Considerations shepherding 修改；quant-agent 完成 65 个 commit、F1-F6 风控硬化、1086 个测试全过、成本追踪和模型切换；squeeze-hunter 从零到 Phase 0-3，83 个 commit、6243 行业务代码、7067 行测试、296 个测试；ReinforceGuard 完成 TSC 改投；TAProv 有论文、图和 evaluation 修订。但也有明显扣分点：squeeze-hunter 最关键的 Gate 1 尚未实际跑出结果，交易系统实盘本周亏损，TAProv 本周没有新 commit，部分进展仍停留在准备或修订层面。",
+      "missingEvidence": "缺少 PROVX shepherd 修改 diff 或提交证明；缺少 quant-agent 和 squeeze-hunter 的 commit 链接、测试报告、CI 记录；缺少 ReinforceGuard TSC 投稿回执；缺少 TAProv 本周稿件修改记录；缺少 squeeze-hunter Gate 1 的真实输出。"
     },
     "cognitiveIncrement": {
-      "score": 13,
-      "reason": "认知增量清楚：从“产出瓶颈”转向“验证和决策瓶颈”；认识到“构造上保证”仍可能被审计击穿；自然语言审查在多 Agent 系统中会被生成者绕过；审稿意见可被工程化为规格。这些判断都来自本周具体失败或审稿修复，不是空泛总结。",
-      "missingEvidence": "缺少对这些认知变化如何改变后续系统设计的更具体验收指标，例如什么条件下算抗自欺机制有效。"
+      "score": 14,
+      "reason": "认知增量明确且由本周失败驱动：从“产出瓶颈”转向“验证和决策瓶颈”；证伪了“构造级防前视即可一劳永逸”；证伪了“自然语言审查足够”；提出审稿意见可工程化为规格表。这些判断不是泛泛总结，而是和 quant-agent 三次 macro_warning_ignored、squeeze-hunter 前视偏差、TDSC 改投过程绑定。扣分点是部分结论仍偏方法论，还没有完全转化为可测量指标或统一实验设计。",
+      "missingEvidence": "缺少三次 macro_warning_ignored 的原始日志摘要；缺少 squeeze-hunter 前视偏差的审计报告或修复前后对照；缺少“审稿意见到 commit”的追踪表。"
     },
     "cot2Depth": {
-      "score": 13,
-      "reason": "CoT's CoT 有较强深度，抓住了“大模型会自欺、人也会自欺，因此系统必须有抗自欺子系统”这一上层结构，并进一步区分了软审查、带外验证、机器可强制控制、验证者再验证。它不是单个项目复盘，而是抽象到多 Agent 安全和科研自动化架构。扣分点是目前仍主要基于两个项目内案例，尚未形成跨任务统计或可复现 benchmark。",
-      "missingEvidence": "缺少独立审计报告、失败样例集、软审查与硬约束绕过率对照实验，以及 verifier 自身失效模式的测试结果。"
+      "score": 14,
+      "reason": "CoT's CoT 深度较高，核心不是复述项目，而是抽象出“抗自欺必须成为一等子系统”“验证者权威必须机器可强制”两个结构性命题，并进一步指出生成者不能验证自己、软审查会退化为建议、抗自欺机制本身也要被独立验证。它同时覆盖模型自欺和人的设计自欺，具备向 agent 安全、Brainary Monitoring、自动化科研协议迁移的潜力。扣分点是目前仍主要来自两个案例，尚未形成跨系统统计证据或标准化 benchmark。",
+      "missingEvidence": "缺少可复现的对照实验，例如软警告与硬约束的绕过率比较；缺少 verifier 模块的初版设计或接口；缺少对“抗自欺机制也需被验证”的具体验证协议。"
     },
     "brainaryMapping": {
       "score": 8,
-      "reason": "报告把抗自欺机制映射到 Brainary 的 Monitoring/Truthful、Reflection/Replanning、Failure Recovery、cognitive control、Solving/Evaluation 解耦等模块，方向合理，也指出可沉淀为强制 verifier、评测协议和项目记忆 schema。扣分点是映射仍偏概念层，缺少具体接口、数据结构、调用流程和并入 Brainary 的最小实现计划。",
-      "missingEvidence": "缺少 Brainary 模块级设计图、schema 草案、API 边界、集成路径和验收标准。"
+      "reason": "Brainary 关联写到了 Monitoring/Truthful、Project Management、Reflection/Replanning、Failure Recovery、cognitive control、Solving/Evaluation 解耦、Long-Term Memory 和 Target Understanding，方向是对的，并且指出应沉淀为强制 verifier、抗自欺协议和项目记忆 schema。但映射仍偏概念层，没有给出 Brainary 中具体节点、输入输出、状态转移或模块接口，因此离可执行架构还有距离。",
+      "missingEvidence": "缺少 Brainary 模块级映射图；缺少 verifier 如何接入 Monitoring/Truthful 的接口定义；缺少项目记忆 schema 的字段草案；缺少 Solving 与 Evaluation 解耦后的流程图。"
     },
     "monetaryValue": {
-      "score": 7,
-      "reason": "价值估算有金额、有假设，并且谨慎地把交易 alpha 记为 0，这是优点。PROVX 已录用，价值确定性较高；抗自欺架构、quant-agent、squeeze-hunter、ReinforceGuard、TAProv 都按重置成本或期望值法估算。但大部分金额仍是主观估计，缺少市场对标、外部报价或转化路径，尤其交易系统当前亏损，策略价值不能计入。",
-      "missingEvidence": "缺少外部重置成本依据、同类系统开发报价、潜在买方或用户验证、论文价值折现依据、交易系统长期收益曲线。"
+      "score": 8,
+      "reason": "价值估算覆盖了 PROVX、抗自欺架构、quant-agent、squeeze-hunter、ReinforceGuard、TAProv，并区分了已兑现价值、重置成本、期望值和未验证 alpha，尤其明确把交易 alpha 暂记为 0，这是较好的风险意识。扣分点是估值参数主要来自个人假设，例如人年成本、顶会论文价值、录用概率、重置月数，缺少外部基准或可核验依据；抗自欺架构“已反哺 A、C”的货币化也还没有结果证据。",
+      "missingEvidence": "缺少人年成本和论文价值的外部基准；缺少 ReinforceGuard、TAProv 录用概率的依据；缺少各系统重置成本的工作量拆分；缺少抗自欺架构实际节省成本或降低风险的量化证据。"
     },
     "projectManagement": {
       "score": 13,
-      "reason": "项目管理信息较完整：每条主线都有状态、投入时间、下周预计投入、资源需求、依赖、token 成本、阻塞点和纠偏。尤其明确指出 squeeze-hunter Gate 1 被历史数据、Postgres、IBKR 阻塞，TAProv 因排期偏慢。扣分点是优先级虽然大致清楚，但没有形成严格的里程碑表、风险等级和失败后的决策分支。",
-      "missingEvidence": "缺少甘特式里程碑、每项任务的验收标准、风险矩阵、Gate 1 失败后的转向规则、TAProv 截稿时间确认。"
+      "reason": "项目管理信息比较完整：按三条主线组织，说明了投入时间、下周预计时间、资源需求、关键路径、token 成本、进度偏差、阻塞点和是否需要老师介入。尤其清楚指出 squeeze-hunter Gate 1 受历史数据回填、Postgres、IBKR 阻塞，TAProv 偏慢是排期问题。扣分点是还缺少更硬的项目控制表：没有明确 owner、具体日期、验收标准、风险等级和依赖关闭时间；对多个并行项目的优先级冲突虽有描述，但资源重排还不够精确。",
+      "missingEvidence": "缺少下周任务的日期级排期；缺少每个阻塞项的负责人和截止时间；缺少 Gate 1、TAProv、PROVX camera-ready 的验收标准；缺少风险登记表；缺少 token 成本和交易亏损的账单或账户截图。"
     },
     "nextAction": {
       "score": 8,
-      "reason": "下周动作比较具体：squeeze-hunter 补历史数据并跑出 Gate 1 pass/fail；quant-agent 把 Evening 到 Morning 的警告改成机器可读硬约束；TAProv 清 bug、补 evaluation、按 S&P 模板重排；PROVX 完成 camera-ready 收尾。这些动作多数可验证。扣分点是部分动作缺少具体日期、产物格式和完成阈值。",
-      "missingEvidence": "缺少 Gate 1 的通过标准、数据回填范围、硬约束字段定义、TAProv bug 清单、每个下周动作的截止时间。"
+      "reason": "下一步动作明确：squeeze-hunter 补历史数据并跑出 Gate 1 pass/fail；quant-agent 将 Evening 警告改成机器可读硬约束；TAProv 清 bug、补 evaluation、按 S&P 模板重排；自动化科研方向先做抗自欺审计 harness 和 benchmark。这些动作基本可验证。扣分点是有些动作仍缺少量化验收线，例如 Gate 1 pass/fail 的阈值、硬约束绕过率目标、TAProv 数据缺口清单和 benchmark 的最小用例集。",
+      "missingEvidence": "缺少 Gate 1 的具体判定阈值；缺少 quant-agent 硬约束的 schema 草案；缺少 TAProv bug list 和 evaluation 缺口列表；缺少抗自欺 harness 的最小可运行定义。"
     },
     "evidenceQuality": {
       "score": 4,
-      "reason": "报告提供了较多可核查线索：commit 数、测试数、亏损金额、交易笔数、论文录用状态、审计发现、prompt/复盘日志/修复 commit 等。但周报正文没有附链接、截图、日志摘要或具体 commit hash，因此证据强度主要停留在自报层面。",
-      "missingEvidence": "缺少仓库链接、commit hash、CI 测试输出、交易记录、审计报告、论文投稿/录用证明、复盘日志摘录。"
+      "reason": "证据质量较好，有具体数字、项目状态、commit 数、测试数、交易盈亏、成本、审计发现和论文状态，并且主动标注证据等级 A。但周报本身仍是自述，没有附原始链接、日志片段、CI 报告、投稿回执、审计 diff 或账户记录，因此证据可核验性不足。考虑到模板是周报而非审计包，给较高但不满分。",
+      "missingEvidence": "缺少仓库链接、commit hash、CI 输出、审计报告、交易账户记录、投稿系统回执、成本账单和论文修改 diff。"
     },
-    "totalScore": 83,
+    "totalScore": 87,
     "tier": "A",
-    "oneLineJudgment": "这是一个高质量周报：硬进展充足，核心增量集中在“抗自欺机制必须工程化”，但关键策略验证 Gate 1 尚未跑出，证据也主要是自报，尚不到 S 级。",
-    "professorFollowUp": "老师最应该追问三件事：第一，squeeze-hunter 下周 Gate 1 的 pass/fail 标准是什么，失败后是否立即降级或停做；第二，quant-agent 的自然语言警告如何具体改成机器可强制约束，谁有否决权；第三，抗自欺审计协议能否在两周内抽象成脱离交易场景的 Brainary Monitoring 最小模块。"
+    "oneLineJudgment": "这是一个高质量周报：本周硬交付强、认知增量真实、CoT's CoT 有方法论价值，但关键交易系统尚未通过 Gate 1，核心证据仍多为自述，离 S 级还差可复现实验和外部可核验证据。",
+    "professorFollowUp": "老师最该追问一件事：下周请把“软自然语言审查无效、必须机器强制”的判断落成一个最小可运行验证包，包括 quant-agent 硬约束 schema、squeeze-hunter Gate 1 真实 pass/fail 输出、以及一个软警告对硬约束绕过率的最小 benchmark；否则这周最有价值的认知仍会停留在方法论而不是自动化科研资产。"
   }
 }

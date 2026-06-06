@@ -1,54 +1,101 @@
 {
   "key": "person:li-chunhan:2026-05-24:weekly-score",
-  "generatedAt": "2026-06-06T01:04:08.880Z",
+  "generatedAt": "2026-06-06T02:04:23.631Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "5bf13e168178c51b2aef9b21d78ac54301bd777873fac9100835ba3be7e8c689",
   "result": {
-    "hardProgress": {
-      "score": 17,
-      "reason": "本周有明确硬进展：搭建了 SAM / RynnBrain ViT / DINOv3 / CLIP-SigLIP 四路多尺度视觉特征统一框架；实际落地了 DINOv3 + SigLIP adapter-only 双视觉编码器通路；在 LMEE-Bench 上完成端到端评测，报告从 76.33% 提升到约 81.46%，约 +5pt。进展不是停留在方案层，而是包含训练、冻结策略、评测结果和下一步扩展路径。",
-      "missingEvidence": "缺少完整实验表、训练配置、数据划分、随机种子、复跑方差、各类别具体分数，以及 adapter 参数量和训练成本明细。"
+    "week": "2026-05-24",
+    "name": "李淳涵",
+    "scores": {
+      "hardProgress": {
+        "score": 17,
+        "reason": "本周有明确硬进展：完成四路多尺度视觉特征统一框架设计，落地 DINOv3 + SigLIP adapter-only 双编码器通路，并在 LMEE-Bench 上给出端到端结果，从 76.33% 提升到约 81.46%，约 +5pt。进展不是停留在想法层，而是包含训练、冻结策略、评测和类别现象解释。扣分点在于四路框架目前只有工作三真正落地，SAM 与 RynnBrain overlay 仍是下周计划；类别细分结果未给具体数字。",
+        "missingEvidence": [
+          "缺少完整实验表格，包括总分、各子类分数、样本数和置信区间。",
+          "缺少训练配置、数据划分、随机种子、checkpoint 或日志链接。",
+          "缺少 adapter-only 与 concat、MLP-only、Cross-Attn-only 等结构消融。",
+          "四路 pipeline 中 SAM 与 RynnBrain overlay 尚未实测落地。"
+        ]
+      },
+      "cognitiveIncrement": {
+        "score": 13,
+        "reason": "CoT 增量较实：把多 encoder 问题重新表述为按输出粒度组织的 perception 体系，并将粒度与 failure 类建立映射；对 adapter-only 的归因价值、Attribute 提升与视觉表征瓶颈之间的关系有明确推理。该增量有实验结果支撑，不只是概念迁移。扣分点是 Counting、Relationship 的机制解释仍偏假设，未用具体错误案例或类别数字验证。",
+        "missingEvidence": [
+          "缺少 failure case 的前后对比样例，无法判断 Attribute 提升具体来自颜色、材质、部件还是语义对齐。",
+          "缺少 Counting / Relationship 的具体变化数字。",
+          "缺少对可能混杂因素的排除，例如训练轮数、数据增强、prompt 变化、评测波动。"
+        ]
+      },
+      "cot2Depth": {
+        "score": 13,
+        "reason": "CoT's CoT 部分质量较高，能说明哪些认识老师可能已知、为什么自动化科研尚未吸收、可沉淀为什么 SOP 或矩阵，并给出证据等级。尤其是“粒度 × failure 类矩阵”和“adapter-only 作为干净归因协议”具有方法论价值。扣分点是证据等级多为自评 B，但没有对应到可复核证据；‘为什么未被自动化科研吸收’仍较概括。",
+        "missingEvidence": [
+          "缺少支撑 CoT's CoT 判断的具体论文对照或现有 multi-encoder 方法比较。",
+          "缺少自动化科研转化的最小原型或流程图。",
+          "缺少对 CoT's CoT 中每条 claim 的可检验标准。"
+        ]
+      },
+      "brainaryMapping": {
+        "score": 8,
+        "reason": "Brainary 关联覆盖 perception、workflow，并提到 memory 的 token 级表征储备，映射方向合理；也说明最终可沉淀为多尺度视觉 SOP、adapter-only 协议和开源 adapter 权重。扣分点是 Brainary 内部模块之间的数据接口、状态表示、调用时机和系统边界还不清楚，memory 的关联目前只是潜在储备。",
+        "missingEvidence": [
+          "缺少 Brainary perception、workflow、memory 三者之间的接口定义。",
+          "缺少该模块如何被 Brainary agent 调用的执行链路。",
+          "缺少 memory 模块实际使用 token 表征的实验或设计细节。"
+        ]
+      },
+      "monetaryValue": {
+        "score": 6,
+        "reason": "报告尝试给出人民币估值，并用工程人月和 GPU 成本解释，说明其知道要把研究结果转化为可复用资产。但估值主要是成本法，缺少市场法或收益法；100 万、80 万的估值没有外部报价、替代方案成本、潜在客户或复用次数支撑。因此货币价值判断有方向，但可信度中等偏低。",
+        "missingEvidence": [
+          "缺少外部 benchmark、竞品成本或采购价格对照。",
+          "缺少该框架可服务多少项目、节省多少实验周期的量化依据。",
+          "缺少 GPU 成本、工程人天、代码复用率的实际记录。",
+          "缺少论文、开源权重或产品化后可能带来的收益路径。"
+        ]
+      },
+      "projectManagement": {
+        "score": 12,
+        "reason": "项目管理信息较完整：有当前阶段、已完成事项、下周计划、预计投入时间，并把后续任务拆为 SAM、overlay、四路重测、meta-cognition head。计划与本周结果衔接紧密。扣分点是缺少风险管理、里程碑验收标准、依赖资源和失败预案；下周同时接入两路并做四路消融，32 小时可能偏乐观。",
+        "missingEvidence": [
+          "缺少每个下周任务的完成定义，例如达到什么指标才算接入成功。",
+          "缺少风险清单，例如 SAM 区域过多、overlay prompt 过长、四路融合维度爆炸。",
+          "缺少算力预算、数据处理时间和评测排队成本。",
+          "缺少如果四路融合不涨点时的回退方案。"
+        ]
+      },
+      "nextAction": {
+        "score": 9,
+        "reason": "下周行动非常具体：接入 SAM、接入检测框 overlay、四路融合重测、做四路/三路/两路/单路梯度消融，并开始通道置信度 head。行动能直接验证本周提出的粒度 × failure 矩阵和 meta-cognition 标签来源。扣 1 分是因为优先级和最小可交付版本没有排序，任务量较大。",
+        "missingEvidence": [
+          "缺少任务优先级：如果时间不够，先做 SAM、overlay、消融还是 confidence head 不明确。",
+          "缺少每项任务的验收指标和预期提升范围。",
+          "缺少具体实验矩阵规模，无法判断下周计划是否可执行。"
+        ]
+      },
+      "evidenceQuality": {
+        "score": 3,
+        "reason": "证据质量达到中等：有明确 benchmark、基线、当前结果和训练约束，且能把 Attribute 提升与假设联系起来。但证据还不足以完全支撑强结论，因为只有单次 LMEE-Bench 结果，类别数字未完整披露，复跑、显著性、消融和错误样例缺失。",
+        "missingEvidence": [
+          "缺少完整 LMEE-Bench 评测文件和类别分数。",
+          "缺少至少 3 个随机种子的均值和方差。",
+          "缺少消融实验以区分 DINOv3、SigLIP、MLP、Cross-Attn 各自贡献。",
+          "缺少错误案例归档和人工检查样例。",
+          "缺少跨 benchmark 验证，例如报告中提到的 EmbodiedQA / OpenEQA。"
+        ]
+      }
     },
-    "cognitiveIncrement": {
-      "score": 13,
-      "reason": "认知增量较强：从“增加 encoder”推进到“按输出粒度组织视觉能力”，并把像素级、区域级、token 级、图像级分别映射到不同 failure 类；同时提出 adapter-only 作为验证视觉表征瓶颈的干净实验协议。Attribute 类提升最大也被用于反推细粒度属性欠表征问题，形成了 failure-driven 的闭环解释。",
-      "missingEvidence": "缺少 Counting、Relationship 等其他 failure 类的细分结果来验证粒度映射是否普遍成立；缺少对 alternative explanations 的排除，例如训练数据、prompt、adapter 容量是否也可能贡献提升。"
-    },
-    "cot2Depth": {
-      "score": 12,
-      "reason": "CoT's CoT 结构完整，覆盖了内容、老师是否已知、为何未被自动化科研吸收、自动化潜力、沉淀形式和证据等级。深度主要体现在把实验结论抽象成“粒度 × failure 类矩阵”和“adapter-only 消融协议”。不足是前两条明确写到“老师原本不知道的吗：否”，说明其中部分并非真正的新知识；证据等级多为自评 B，但缺少外部或复现实证支撑。",
-      "missingEvidence": "缺少粒度 × failure 类矩阵的实测表；缺少四路、三路、两路、单路的梯度消融；缺少对 CoT's CoT 中自动化潜力的原型或最小实现。"
-    },
-    "brainaryMapping": {
-      "score": 7,
-      "reason": "报告把本周工作映射到 Brainary 的 perception、workflow 和 memory，其中 perception 和 workflow 的关联较清楚：多尺度视觉特征、adapter 融合、冻结主干、低成本验证协议。memory 的关联较弱，只说提供 token 级表征储备，没有说明如何进入 Brainary memory 的数据结构、检索方式或长期复用机制。",
-      "missingEvidence": "缺少 Brainary 内部模块接口定义；缺少 perception 输出如何被 memory 存储、索引、调用的具体设计；缺少 workflow 自动执行链路。"
-    },
-    "monetaryValue": {
-      "score": 6,
-      "reason": "报告给出了两个货币估值：四路多尺度视觉框架约 100 万人民币，DINOv3 + SigLIP adapter 约 80 万人民币，并用工程人月和 GPU 成本做了粗略解释。优点是尝试把研究产出转成工程替代成本；问题是估值主要基于成本法，缺少市场价值、复用次数、客户需求、论文影响、开源权重价值或商业转化路径的证据，因此决策可信度中等偏低。",
-      "missingEvidence": "缺少真实工程成本记录、GPU 使用量、可节省的人力对比、下游复用场景数量、潜在商业用户或产品收入假设。"
-    },
-    "projectManagement": {
-      "score": 12,
-      "reason": "项目管理信息较完整：说明当前阶段是“实验 → 模块化收敛”，列出本周完成项、下周任务、投入时间约 30h、下周预计 32h，并明确下一步要接入 SAM、RynnBrain overlay、四路融合重测和通道置信度 head。项目有节奏，也有模块化路线。",
-      "missingEvidence": "缺少风险清单、阻塞项、优先级排序、验收标准、每项任务预计耗时、失败预案，以及如果四路融合不提升时的决策规则。"
-    },
-    "nextAction": {
-      "score": 8,
-      "reason": "下周行动具体且可执行，包括接入 SAM 区域级 VQA、接入检测框 overlay、做四路/三路/两路/单路消融、开始通道置信度 head。行动与本周结论直接相连，符合 failure-driven 路线。",
-      "missingEvidence": "缺少量化验收目标，例如 Relationship 或 Counting 至少提升多少、四路融合是否必须超过 81.46%、消融表的格式、通道置信度 head 的训练标签和评价指标。"
-    },
-    "evidenceQuality": {
-      "score": 3,
-      "reason": "证据质量中等：有明确 benchmark、基线 76.33%、本周约 81.46%、+5pt、Attribute 类提升最大，也说明了冻结主 ViT 和 LLM、仅训 adapter 的实验控制。主要问题是结果仍是摘要式描述，类别细分只说“以最终复跑为准”，没有完整数据表和复现实验信息。",
-      "missingEvidence": "缺少完整 LMEE-Bench 分项分数、样本数、置信区间、随机种子、训练轮数、学习率、adapter 参数量、复跑结果、失败案例示例和日志链接。"
-    },
-    "totalScore": 78,
-    "tier": "B",
-    "oneLineJudgment": "这是一个有真实实验进展和清晰研究抽象的强周报，但证据仍停留在单次摘要结果，尚不足以支撑四路框架和 failure-driven mapping 的稳健结论。",
-    "professorFollowUp": "老师最应该追问一件事：请下周先交付 LMEE-Bench 的完整分项消融表，至少包含单 ViT、DINOv3、SigLIP、DINOv3+SigLIP、再到 SAM/overlay 接入后的逐步结果，并标明每个类别的分数、复跑方差和训练配置；只有这样才能确认 +5pt 是否真来自 token 级视觉表征增益，而不是偶然或实验设置变化。"
+    "totalScore": 81,
+    "tier": "A",
+    "oneLineJudgment": "这是一个有硬实验结果支撑的高质量单周进展，核心价值在于用 adapter-only 协议验证视觉表征瓶颈，但目前证据链还缺少完整消融、类别数字和可复现实验材料。",
+    "professorFollowUp": [
+      "要求学生下周首先补齐 LMEE-Bench 完整结果表：总分、Attribute、Counting、Relationship、Location 等子类分数，以及样本数和复跑方差。",
+      "要求做最小必要消融：单独 DINOv3、单独 SigLIP、DINOv3+SigLIP concat、MLP-only、Cross-Attn-only、完整 adapter。",
+      "要求提交 10 个 Attribute 成功修复案例和 10 个仍失败案例，用来验证是否真的是材质、颜色、部件细节被补齐。",
+      "要求把“粒度 × failure 类矩阵”做成一张可更新表，列出每一路特征源、目标 failure、当前证据、下一步验证实验。",
+      "要求下周计划降风险：优先完成四路消融矩阵的最小版本，再决定是否推进通道置信度 head。"
+    ]
   }
 }

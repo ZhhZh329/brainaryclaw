@@ -1,106 +1,64 @@
 {
   "key": "person:cao-yue:2026-04-12:weekly-score",
-  "generatedAt": "2026-06-06T01:00:45.182Z",
+  "generatedAt": "2026-06-06T02:00:40.756Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "24c94c73e9453d45d6852510f0e5aeef386ccf3856811d6cf0a3b11d5d1cbb7d",
   "result": {
-    "hardProgress": {
-      "score": 14,
-      "reason": "本周有明确硬进展：提出并实现了五阶段 batch 训练流程，包括 Collect、Diagnose、Modify、Validate、Accept/Reject，并识别了单样本训练的两个结构性问题；Distributional Semantics 方向新增两篇文献并完成与 P1/P2/P3 的初步映射。但周报没有提供 batch 机制实际运行结果、性能变化、失败样例、代码提交或实验日志，因此“实现”的硬度仍不够充分。",
-      "missingEvidence": [
-        "batch 训练流程的实际运行次数、batch size、样本构成",
-        "新旧 prompt 在同一 batch 上的量化对比",
-        "accept/reject 触发案例",
-        "代码提交、实验日志或结果表",
-        "Distributional Semantics 文献映射后的理论结构图或具体论证草稿"
-      ]
+    "week": "2026-04-12",
+    "name": "Cao Yue",
+    "scores": {
+      "hardProgress": {
+        "score": 15,
+        "reason": "本周有明确硬进展：识别单样本训练的两个根本问题，并设计且声称实现了五阶段 batch 训练流程；同时新增调研两篇相关文献，使 distributional semantics 方向的文献覆盖从三篇扩展到五篇。主要扣分点是：batch 机制尚未给出运行结果、性能变化、失败样例或代码证据；文献调研仍停留在映射层，尚未转化为实验设计或理论命题。",
+        "missingEvidence": "缺少 batch 训练前后指标对比、具体 batch size、accept 阈值、失败率变化、prompt 迭代次数、代码提交记录、实验日志；文献部分缺少表格化映射、核心命题提炼和实验假设。"
+      },
+      "cognitiveIncrement": {
+        "score": 12,
+        "reason": "认知增量较强。最有价值的增量是把单样本训练不稳定性从“调参问题”重定位为“归因单元错误”问题，并提出 batch 级聚合作为结构性解法；同时认识到 accept gate 必须同时约束平均收益和最差样本，避免整体提升但局部崩坏。这些不是简单执行进展，而是对训练机制的抽象提升。扣分点是这些判断主要来自推理，尚未被系统实验验证。",
+        "missingEvidence": "缺少能证明“归因单元错误”优于“agent 能力不足/阈值不当”等其他解释的消融实验；缺少单指标 gate 与双指标 gate 的对比结果。"
+      },
+      "cot2Depth": {
+        "score": 12,
+        "reason": "CoT's CoT 写得比较完整，包含老师是否原本知道、为什么不知道、自动化潜力、沉淀形式和证据等级。两个洞察都能上升到框架设计层：一个是反思/归因粒度，一个是 accept gate 的风险约束结构。扣分点是证据等级标为 B，但周报中没有提供支撑 B 级的具体实验或案例，更多是结构性判断。",
+        "missingEvidence": "缺少 diagnosis agent 在单样本与 batch 条件下的归因准确率比较；缺少崩坏样本案例；缺少 gate 策略对训练稳定性的 benchmark。"
+      },
+      "brainaryMapping": {
+        "score": 8,
+        "reason": "Brainary 映射较清楚：batch 归因聚合对应 Cognitive Control，双指标 accept gate 对应 Risk Modeling，并且说明了新增点和可沉淀模块。这个映射不是泛泛贴标签，而是能指出 cognitive control 中的噪声过滤机制和 risk modeling 中的局部崩坏保护。扣分点是尚未形成 Brainary 内部可复用接口、模块定义或触发条件。",
+        "missingEvidence": "缺少 Brainary 模块化设计草图、接口定义、触发条件、输入输出字段，以及如何接入现有 Brainary 流程的说明。"
+      },
+      "monetaryValue": {
+        "score": 5,
+        "reason": "周报尝试估算两个方向的经济价值，并列出潜在买单方和参考依据，这是符合模板的。但估值较粗，80 万和 120 万人民币的计算链条不够可靠，缺少具体客户、竞品价格、转化路径、交付形态和销售周期。当前更像愿景估值，而不是可用于决策的商业判断。",
+        "missingEvidence": "缺少具体市场案例、竞品报价、潜在客户名单、授权模式、交付物定义、从论文到工具的转化成本，以及收入概率估算。"
+      },
+      "projectManagement": {
+        "score": 11,
+        "reason": "项目管理信息较完整：列出了两个项目阶段、投入时间、资源消耗、关键路径、进度偏差和纠偏方式。A 项目被识别为关键路径，B 项目为非关键路径，资源瓶颈也有说明。扣分点是下周计划偏笼统，没有明确里程碑、验收指标、风险预案或停损条件；“持续观察运行效果”不足以指导管理。",
+        "missingEvidence": "缺少下周具体实验排期、验收标准、预期指标、风险优先级、何时需要老师介入、如果 batch 机制无效的备选方案。"
+      },
+      "nextAction": {
+        "score": 5,
+        "reason": "下周方向有，但可执行性不足。A 项目只写“持续观察框架运行效果”，B 项目写“继续完善理论框架覆盖面”，都没有明确到要跑多少 batch、比较哪些 gate、读哪些论文、产出什么表格或实验设计。自动化转化路径中提到 workflow 和 benchmark，但仍缺少下一步最小动作。",
+        "missingEvidence": "缺少下一周的具体任务清单，例如：固定 batch size 方案、设定 accept 阈值候选、完成多少轮训练、输出哪些指标、形成哪张文献映射表、设计哪一个 benchmark 原型。"
+      },
+      "evidenceQuality": {
+        "score": 2,
+        "reason": "证据质量偏弱。周报有机制描述和文献名称，但缺少可核查材料。核心主张包括 batch 训练更稳定、双指标 gate 更合理、文献支持增强等，目前主要靠叙述支撑，没有实验表、日志、图、代码、样例或定量指标。",
+        "missingEvidence": "缺少实验数据、运行日志、失败案例、前后对比表、代码链接、文献摘录、评价指标和统计结果。"
+      }
     },
-    "cognitiveIncrement": {
-      "score": 12,
-      "reason": "认知增量较清楚：将单样本训练不稳定性从“调参问题”重新定义为“信号归因单元错误”；提出 batch 聚合可提升 diagnosis 信噪比；意识到 accept gate 需要同时约束均值收益和最差样本退化。这些不是普通执行总结，而是对框架设计层面的抽象。但目前增量主要停留在机制直觉和设计原则，缺少实验证明其相对于旧方案的增量幅度。",
-      "missingEvidence": [
-        "单样本 diagnosis 误归因的具体案例",
-        "batch 聚合后 diagnosis issue 稳定性提升的证据",
-        "均值指标与最差样本指标冲突的真实样例",
-        "文献如何具体支持 distributional semantics 框架的推理链"
-      ]
-    },
-    "cot2Depth": {
-      "score": 12,
-      "reason": "CoT's CoT 部分较符合模板要求，明确写出了老师是否原本不知道、为什么不知道、自动化潜力、沉淀形式和证据等级。第一条“归因单元选错”有较强结构性，能上升到 meta-cognition 框架设计；第二条“双指标 accept gate”也能指向自动化评估协议。不过两条证据等级均为 B，且主要基于设计推理，没有实验反证或消融分析，深度尚未达到可定论水平。",
-      "missingEvidence": [
-        "为什么单样本归因失败不是 agent 能力问题的对照实验",
-        "batch 归因与单样本归因的诊断准确率对比",
-        "双指标 gate 相比单指标 gate 的训练稳定性 benchmark",
-        "CoT's CoT 结论是否能迁移到其他任务或模型的证据"
-      ]
-    },
-    "brainaryMapping": {
-      "score": 8,
-      "reason": "Brainary 映射比较具体，分别对应 Cognitive Control 和 Risk Modeling，并能说明新意：归因单元选择是 meta-level control，局部样本崩坏应作为独立风险类别。这比简单贴标签更有价值，也提出了可沉淀的模块扩展方向。但目前映射仍是概念层面，没有给出 Brainary 内部接口、模块输入输出、触发条件或可复用规范。",
-      "missingEvidence": [
-        "Cognitive Control 模块中归因聚合机制的具体接口定义",
-        "Risk Modeling 中局部崩坏保护的量化指标",
-        "Brainary 现有模块与本周新机制的差异对照",
-        "该映射如何进入实际系统或文档的证据"
-      ]
-    },
-    "monetaryValue": {
-      "score": 5,
-      "reason": "周报给出了买单方、估值和计算方法，覆盖了红队企业、顶会论文、benchmark 工具市场等潜在价值来源。但金额估算较粗，引用 Scale AI red team 服务和 benchmark SaaS 市场时没有具体价格证据、客户场景、付费路径或可交付产品边界。当前更像价值假设，而不是经过验证的商业判断。",
-      "missingEvidence": [
-        "具体市场报价、采购案例或竞品价格",
-        "红队测试工具授权的目标客户和购买流程",
-        "benchmark SaaS 化的最小产品形态",
-        "80 万和 120 万估值的可复核计算表",
-        "当前进展距离可收费交付物还有哪些里程碑"
-      ]
-    },
-    "projectManagement": {
-      "score": 11,
-      "reason": "项目管理信息较完整：区分两个项目，给出阶段、时间投入、API 成本、关键路径、进度偏差和纠偏策略。主线 A 被标记为关键路径，主线 B 为非关键路径，资源瓶颈也说明清楚。但存在一个重要不一致：前文说 batch 流程已设计并实现，项目管理部分又说“设计完成，进入初步实现阶段”。此外，下周计划偏宽泛，缺少可验收里程碑和风险关闭标准。",
-      "missingEvidence": [
-        "batch 机制到底是已实现、部分实现，还是刚进入实现阶段",
-        "下周的具体验收指标",
-        "每个项目的里程碑日期",
-        "关键风险及触发条件",
-        "如果阈值参数效果不好，具体如何纠偏"
-      ]
-    },
-    "nextAction": {
-      "score": 5,
-      "reason": "下周方向有写，但行动粒度不足。主线 A 的“持续观察框架运行效果”和“视情况微调阈值”不能直接指导执行；主线 B 的“继续完善理论框架覆盖面”也没有列出下一批文献、实验设计产出或判定标准。自动化转化路径中提到 workflow 和 benchmark，但还没有拆成具体任务。",
-      "missingEvidence": [
-        "下周要跑多少个 batch",
-        "accept 阈值要测试哪些候选值",
-        "观察运行效果的核心指标",
-        "Distributional Semantics 下周要补哪些文献或完成哪一页理论图",
-        "workflow 或 benchmark 的最小可交付物"
-      ]
-    },
-    "evidenceQuality": {
-      "score": 2,
-      "reason": "证据质量偏弱。周报有自评证据等级 B，也提到了两篇新增文献，但没有给出实验数据、表格、日志、失败案例、论文关键结论摘录或代码证据。很多判断是合理的设计推理，但尚未被当前周报中的硬证据支撑。",
-      "missingEvidence": [
-        "实验结果表",
-        "运行日志",
-        "代码或伪代码",
-        "文献摘录和精确对应关系",
-        "失败样例与修复前后对比",
-        "第三方或客观 benchmark 结果"
-      ]
-    },
-    "totalScore": 69,
-    "tier": "C",
-    "oneLineJudgment": "本周有不错的框架级认知增量和机制设计，但硬证据、量化验证和下周可执行计划不足，当前更像“设计推进周”而不是“结果闭环周”。",
+    "totalScore": 70,
+    "tier": "B",
+    "oneLineJudgment": "本周有较强的框架级认知增量和机制设计进展，但证据链和下周可执行计划不足，当前更像完成了结构设计，还没有证明机制有效。",
     "professorFollowUp": [
-      "请让学生澄清 batch 训练机制目前到底是已实现、部分实现，还是仅完成设计。",
-      "要求下周提交一张新旧 prompt 在同一 batch 上的对比表，至少包括均值、最差样本、accept/reject 结果和失败样例。",
-      "要求定义 accept gate 的两个核心阈值：平均收益阈值和单样本崩坏阈值，并说明为什么这样设。",
-      "Distributional Semantics 方向需要从“新增文献”推进到“理论命题—文献证据—可测试实验”的三列表。",
-      "最值得老师本周学习的一点是：单样本 diagnosis 的失败可能不是 agent 能力不足，而是反思和归因的粒度选错了；batch 级归因可以成为 meta-cognition 框架中的核心控制变量。"
+      "要求学生下周提交 batch 训练的最小实验结果：至少包括单样本训练与 batch 训练的成功率、退化率、平均收益、最差样本变化和迭代次数。",
+      "追问 accept gate 的量化定义：什么叫“整体不退化”，什么叫“单样本大幅崩坏”，阈值如何设定，是否有消融对比。",
+      "要求把五篇 distributional semantics 文献整理成一张映射表：每篇论文对应 P1/P2/P3 的哪一部分、支持什么命题、还缺什么实验。",
+      "要求明确下周唯一关键交付物：建议优先交付 batch 机制的可复现实验日志，而不是继续泛化理论表述。",
+      "老师本周最应该学到的一点是：单样本 diagnosis 的失败可能不是 agent 能力问题，而是归因粒度错误；把反思单元从单样本提升到 batch 是一个 meta-cognition 框架设计决策。"
     ]
   }
 }

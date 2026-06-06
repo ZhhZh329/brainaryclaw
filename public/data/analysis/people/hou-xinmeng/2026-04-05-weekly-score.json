@@ -1,6 +1,6 @@
 {
   "key": "person:hou-xinmeng:2026-04-05:weekly-score",
-  "generatedAt": "2026-06-06T01:01:54.084Z",
+  "generatedAt": "2026-06-06T02:02:04.771Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
@@ -8,57 +8,102 @@
   "result": {
     "week": "2026-04-05",
     "name": "侯欣萌",
-    "scores": {
+    "totalScore": 79,
+    "tier": "B",
+    "dimensions": {
       "hardProgress": {
-        "score": 16,
-        "reason": "本周有明确工程产出：新增 Prior Work Auditor skill，改写 Master Planner 与 Paper Reviewer，重写 auto-execute 控制流，完成 Trick Auto-Upgrade 系统设计，并产出版本文档、可视化流程、用户手册和 .skill 打包文件。硬进展主要集中在架构、prompt、skill harness 和文档层面。但关键系统 Trick Auto-Upgrade 尚未实现进 skill 代码，且 v4 还没有用真实论文跑通端到端，因此不能给满分。",
-        "missingEvidence": "缺少代码提交记录、文件链接、运行截图、测试日志、真实论文端到端运行结果，以及 trick_signals.log 或权重更新模块的实际实现证据。"
+        "score": 17,
+        "reason": "本周有较明确的工程产出：新增 Prior Work Auditor skill，改写 Master Planner 和 Paper Reviewer，重写 auto-execute 控制流，设计 Trick Auto-Upgrade 系统，并补充版本说明、可视化、用户手册和 skill 打包文件。硬进展覆盖了架构、控制逻辑、文档和打包。但核心短板是 Trick Auto-Upgrade 仍停留在设计文档，尚未进入可运行代码；v4 pipeline 尚未用真实论文 end-to-end 跑通，因此硬进展主要是 harness 和设计完成，不是实证闭环完成。",
+        "missingEvidence": [
+          "缺少代码仓库、文件列表、commit hash 或 skill 包路径来证明这些文件确实完成。",
+          "缺少 v4 pipeline 实际运行日志。",
+          "缺少 Prior Work Auditor、Planner、Reviewer 的样例输入输出。",
+          "缺少真实论文 end-to-end 运行结果。",
+          "Trick Auto-Upgrade 尚未实现，只有设计文档。"
+        ]
       },
       "cognitiveIncrement": {
-        "score": 12,
-        "reason": "认知增量较清楚：将 prior work audit 从 planner 中外化为独立 agent；认识到 trick 需要 per-user 与 context-aware 动态权重；将 minor/major revision 分叉理解为难度感知的资源分配。这些不是简单复述任务，而是从工程拆分中抽象出设计判断。但这些认知仍主要来自单个系统迭代，缺少跨案例验证。",
-        "missingEvidence": "缺少对 v3 与 v4 的对照结果，缺少 planner 负担下降、revision 成功率提升、per-user trick 权重有效性的量化证据。"
+        "score": 13,
+        "reason": "认知增量比较具体，围绕三个工程判断展开：Prior Work Audit 应独立成 agent，trick 价值应 per-user/context-aware，revision path 应按修改难度分叉。这些不是泛泛总结，而是能改变系统架构的判断。尤其是从静态 tricks 到动态权重，从单一路径 revision 到 MINOR/MAJOR 分流，体现了对 agent harness 控制结构的理解提升。扣分点在于这些认知尚未被真实数据验证，仍主要来自设计推理和工程直觉。",
+        "missingEvidence": [
+          "缺少 v3 与 v4 在同一任务上的对比实验。",
+          "缺少 planner 认知负担下降的可观测指标，例如 token 消耗、错误率、规划质量评分。",
+          "缺少 D-MINOR 与 D-MAJOR 分流后提升修订成功率或节约成本的证据。",
+          "缺少 per-user trick weight profile 的真实用户数据。"
+        ]
       },
       "cot2Depth": {
         "score": 11,
-        "reason": "CoT's CoT 有一定深度，提出了“skill 分拆由输出可独立评测性决定”和“cascading inheritance 类似 few-shot transfer learning”两个元原则，并说明自动化潜力、沉淀形式和证据等级。弱点是两个点都标注为老师原本知道，新增性有限；第二个主要是类比推理，尚无真实数据支撑；第一个也只是单案例观察。",
-        "missingEvidence": "缺少系统性 benchmark，缺少合并与分拆 pipeline 的性能对比，缺少多用户多论文数据验证 cascading inheritance 是否真的改善 cold-start。"
+        "reason": "CoT's CoT 有两层抽象：一是用“输出结构是否可独立评测”作为 skill 分拆原则，二是把 cascading inheritance 类比为 few-shot transfer learning。两者都能从单个项目上升为可迁移的设计原则，也标注了证据等级和自动化潜力。问题是两条 CoT's CoT 都承认老师原本并非不知道，新增性有限；第二条主要是类比推理，缺少实验数据；第一条也只有单案例，没有形成可执行的 meta-evaluator 或 benchmark。",
+        "missingEvidence": [
+          "缺少用于判断“输出可独立评测性”的评分协议或样例评分表。",
+          "缺少 skill 合并 vs 分拆的系统对照实验。",
+          "缺少 cascading inheritance 在多用户、多论文上的效果验证。",
+          "缺少证明 20% dampening 合理性的实验或推导。"
+        ]
       },
       "brainaryMapping": {
         "score": 8,
-        "reason": "Brainary 映射比较具体，分别对应 memory、calibration、cognitive control，并说明了可能沉淀为 weighted memory schema、signal-driven calibration loop、effort estimator 等模块。映射不是泛泛而谈，能看出与 Brainary 能力栈的接口。但目前还停留在概念和 schema 层，缺少可直接进入 Brainary 的模块规格、API、数据结构或实验接口。",
-        "missingEvidence": "缺少 Brainary memory schema 的正式字段定义，缺少 signal update engine 的接口草案，缺少 calibration proxy 与 ground truth 的验证计划细节。"
+        "reason": "Brainary 映射较清楚，分别对应 memory、calibration、cognitive control，并能说明每个映射可能沉淀为 schema、module、benchmark 或 workflow。尤其是 trick weight profile 与带生命周期的 memory schema 之间的映射，有潜在复用价值。扣分点是映射仍偏概念层，尚未给出 Brainary 现有接口、数据结构或模块边界如何接入，也没有可交付的 Brainary prototype。",
+        "missingEvidence": [
+          "缺少 Brainary 当前 memory/calibration/cognitive control 模块的接口对照。",
+          "缺少 trick weight schema 的正式数据结构定义。",
+          "缺少可运行的 Brainary memory update engine 原型。",
+          "缺少 proxy signal 与 journal outcome 相关性的验证计划细化。"
+        ]
       },
       "monetaryValue": {
-        "score": 6,
-        "reason": "报告给出了 200-500 万人民币的价值估计，并尝试从单篇论文人工成本、潜在用户、订阅价格和竞品参照推导，优于只喊价值。但估算仍较粗：目标用户数量、付费率、定价、转化路径、交付成本、法律与伦理风险、学术出版接受度都没有严谨证据。200-500 万更像早期机会估值，不是可验证收入预测。",
-        "missingEvidence": "缺少用户访谈、真实付费意愿、竞品价格验证、获客成本、合规风险分析、实际节省工时数据、客户愿意为端到端论文 pipeline 付费的证据。"
+        "score": 7,
+        "reason": "价值判断有金额区间、目标用户、人工成本替代逻辑、潜在市场和竞品参照，优于只写“有价值”。但 200-500 万人民币估值仍偏粗，关键假设缺少验证：用户是否愿意为论文生成 pipeline 付费、合规与学术诚信风险如何影响转化、生成质量是否达到投稿标准、获客成本和留存如何。市场规模从 LS 扩展到 STEM 的推断跨度较大，目前没有迁移实证。",
+        "missingEvidence": [
+          "缺少真实用户访谈或付费意愿证据。",
+          "缺少已生成论文达到 submission-ready 的质量证据。",
+          "缺少获客成本、定价、转化率、留存率假设。",
+          "缺少学术诚信、版权、数据隐私等商业化风险评估。",
+          "竞品对比没有给出来源链接或具体指标。"
+        ]
       },
       "projectManagement": {
         "score": 12,
-        "reason": "项目管理信息比较完整：有当前阶段、原计划与实际完成对比、投入时间、下周投入、里程碑、资源需求、依赖关系、关键路径判断、token 成本规划。也明确指出需要老师提供 LS dataset。主要不足是缺少每个里程碑的验收标准、风险优先级和 fallback 方案；“略超预期”缺少客观验收指标。",
-        "missingEvidence": "缺少端到端验证的成功标准，例如论文质量评分、运行时长、人工介入次数、token 成本上限、失败分类、回滚方案。"
+        "reason": "项目管理部分覆盖了阶段判断、原计划与实际完成、投入时间、下周时间、里程碑、资源、依赖、关键路径、token 成本和外部支持需求。当前状态“原型到小规模实验过渡”判断准确，也明确指出依赖老师提供真实 LS dataset。扣分点是 8 个 open questions 没有拆成决策负责人和截止时间；真实数据依赖是关键风险，但缺少备用方案；5 月底投稿系统论文的里程碑与当前尚未跑通 end-to-end 之间存在进度风险。",
+        "missingEvidence": [
+          "缺少 8 个 open questions 的完整列表、优先级和决策时间。",
+          "缺少如果老师无法提供 dataset 时的替代数据方案。",
+          "缺少每个里程碑的验收标准。",
+          "缺少风险登记表，例如真实数据不可用、review proxy 不可靠、token 成本超支、论文质量不达标。",
+          "缺少本周 20-25 小时投入的任务拆分记录。"
+        ]
       },
       "nextAction": {
         "score": 8,
-        "reason": "下周动作明确：实现 Phase 1 Signal Capture，在 reviewer R7 后和 auto-execute Step E 后记录信号日志，创建 trick_signals.log，并用一篇真实论文验证 v4 pipeline end-to-end。这个动作具备最小可验证性。但还不够细：没有定义日志字段、通过标准、测试数据要求、失败时如何判断是 pipeline 问题还是数据问题。",
-        "missingEvidence": "缺少 trick_signals.log 的 schema，缺少端到端测试 checklist，缺少真实论文测试的输入输出标准，缺少验收阈值。"
+        "reason": "下周动作明确：实现 Phase 1 Signal Capture，在 reviewer R7 后和 auto-execute Step E 后记录信号日志，创建 trick_signals.log，并用一篇真实论文验证 v4 end-to-end。这是可验证的下一步，且正好补当前最大证据缺口。扣分点是验收标准还不够量化，例如日志字段、成功条件、失败诊断、论文质量评分、token 成本上限没有写清。",
+        "missingEvidence": [
+          "缺少 trick_signals.log 的字段 schema。",
+          "缺少 end-to-end 验证的通过标准。",
+          "缺少真实论文测试的输入包清单。",
+          "缺少失败时的 debug 路径。",
+          "缺少下周完成后应产出的最小报告模板。"
+        ]
       },
       "evidenceQuality": {
         "score": 3,
-        "reason": "报告自觉标注了证据等级，且承认 CoT's CoT 主要是 B/C 级证据；对未实现和未验证部分也有说明。证据质量的问题在于主要依赖自述与设计文档，没有外部可检查证据，没有真实运行数据，没有实验对照，也没有用户反馈。",
-        "missingEvidence": "缺少仓库链接、commit diff、运行日志、生成样例、真实论文输出、reviewer 评分、人工评审反馈、用户测试记录。"
+        "reason": "周报中有较多具体 artifact 名称、系统组件、状态机、信号源、里程碑和证据等级自评，说明不是纯口头构想。但证据仍主要是自述，没有附实际文件、运行记录、样例输出、对比实验或用户反馈。最关键的 claim——v4 pipeline 能跑通、trick 系统能学习、skill 分拆更好——目前证据不足。",
+        "missingEvidence": [
+          "缺少附件、链接、截图、commit、运行日志。",
+          "缺少样例 Prior Work Dossier。",
+          "缺少样例 revision plan，其中包含 issue、trick_id 和 weight。",
+          "缺少 pipeline-flow-v4.html 或用户手册的可检查版本。",
+          "缺少任何真实数据实验结果。"
+        ]
       }
     },
-    "totalScore": 76,
-    "tier": "B",
-    "oneLineJudgment": "这是一个工程设计推进很强、认知抽象较清楚的周报，但核心系统尚未真实跑通，证据仍停留在设计与自述层，下一周必须用真实数据把 v4 从 harness 设计推进到可验证运行。",
+    "oneLineJudgment": "本周是高质量的 v4 harness 设计与工程整理周，但仍处在“架构完成、真实闭环未验证”的阶段，下一周必须用真实数据把设计转成证据。",
     "professorFollowUp": [
-      "优先提供一个可测试的 LS dataset 和对应已有论文，否则下周最关键的端到端验证无法发生。",
-      "要求学生下周提交三类硬证据：trick_signals.log 样例、一次完整 v4 pipeline 运行日志、生成论文与 reviewer verdict 的输出包。",
-      "要求学生定义端到端成功标准：运行是否完成、人工介入次数、token 成本、生成稿质量、reviewer 判定、revision 是否收敛。",
-      "暂时不要继续扩展 Trick Auto-Upgrade 的设计复杂度，应先实现 Phase 1 Signal Capture，并用真实样例验证信号是否可采、可解释、可用于后续权重更新。",
-      "教授本周最应该学到的一点是：该项目提出的“静态规则 + 动态权重 + cascading inheritance”可以作为 Brainary memory 的一个具体候选模式，但它目前只是高潜力设计，还不是已验证机制。"
+      "请优先决定是否提供一个可测试的 LS dataset；如果提供，需要包含原始数据、已有论文、目标期刊或会议、作者风格样本。",
+      "要求学生下周交付三件硬证据：v4 end-to-end 运行日志、一个完整样例输出包、trick_signals.log 的真实记录。",
+      "要求学生把 8 个 Trick Auto-Upgrade open questions 列成决策表，标注每项的默认方案、风险和需要老师拍板的点。",
+      "要求学生定义 v4 验收标准：生成论文质量、token 成本、运行时长、失败率、reviewer verdict、revision 轮数。",
+      "老师本周最应该吸收的一点是：该项目提出的“静态规则 + 动态权重 + cascading inheritance”可以作为 Brainary memory 的一个具体候选 schema，但目前还只是设计候选，不应当视为已验证模块。"
     ]
   }
 }

@@ -1,60 +1,64 @@
 {
   "key": "person:jie-wanqing:2026-05-03:weekly-score",
-  "generatedAt": "2026-06-06T01:03:27.597Z",
+  "generatedAt": "2026-06-06T02:03:30.144Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "211d129981f99eebb0204486e1168e3945aa682cd10e08ac81f1556b0107eb5e",
   "result": {
-    "hardProgress": {
-      "score": 7,
-      "reason": "本周有明确的工作推进：梳理了 reentrancy、integeroverflow、timestamp 的主要错误来源，并把后续优化拆成低耦合的单假设实验。但硬进展主要停留在分析、设计和规划层面，尚未看到已完成的实现、实验结果、指标变化、失败样例归因表或闭环验证。因此不能算高分。",
-      "missingEvidence": "缺少具体实验编号、数据集、baseline、评估指标、实验结果、消融结果、错误样例数量、Structured Trace 是否已实现的证据。"
-    },
-    "cognitiveIncrement": {
-      "score": 11,
-      "reason": "认知增量较清楚：从“堆叠增强策略”转向“单假设实验 + 明确失败假设 + 输入改动 + 可观测指标”，说明对实验不可归因问题有了更成熟的理解。对结构化证据不足的根因也有进一步拆解。",
-      "missingEvidence": "缺少具体说明哪些旧实验因为不可归因而失败、这些新认知如何改变了实验设计表或实验优先级。"
-    },
-    "cot2Depth": {
-      "score": 12,
-      "reason": "CoT² 深度较好，不只是说要加规则，而是识别出漏洞判定所需的因果链：external call、state write 顺序、共享状态依赖、CEI、nonReentrant、compiler version、unchecked、SafeMath、timestamp 是否参与关键业务逻辑等。这体现了对模型推理结构和安全语义之间错位的理解。",
-      "missingEvidence": "缺少这些因果字段与模型判定性能之间的实证关系，例如哪些字段最可能提升 precision/recall，哪些字段会产生噪声或负迁移。"
-    },
-    "brainaryMapping": {
-      "score": 8,
-      "reason": "Brainary 映射比较明确：将 Brainary 的价值定位为构造可验证、可消融、可追踪的中间证据，而不仅是生成检测结论。这与 Agent Code Retrieve、结构化证据、类型化安全推理之间的关系较清晰。",
-      "missingEvidence": "缺少 Brainary 侧的具体模块映射，例如证据质量控制由哪个组件承担，判定逻辑对齐如何自动化，Type-RAG 与 Brainary 知识结构如何连接。"
-    },
-    "monetaryValue": {
-      "score": 3,
-      "reason": "报告提到高价值安全审计任务，说明方向本身有潜在商业价值，但没有进一步量化或落到应用场景。没有说明目标客户、节省审计成本、提升漏洞发现率、减少误报成本、可交付产品形态或市场对比。",
-      "missingEvidence": "缺少商业场景、用户画像、审计成本基线、误报/漏报的经济影响、可收费功能、与现有安全审计工具的价值差异。"
-    },
-    "projectManagement": {
-      "score": 8,
-      "reason": "项目管理有一定结构：报告列出了当前阻碍，并把后续实验拆成 reentrancy Structured Trace、Verification Phase1 复核、selected routing Type-RAG 三条线。但缺少完成状态、优先级依据、时间预算、验收标准和风险应对，因此管理闭环不足。",
-      "missingEvidence": "缺少任务看板、完成百分比、实验排期、每项任务的输入输出、验收指标、风险等级、如果 Phase1 不通过时的替代路线。"
-    },
-    "nextAction": {
-      "score": 8,
-      "reason": "下周计划较具体，包含最小实现、完整评估复核和 selected routing 实验设计，且每项任务都有相对清楚的对象和目标。尤其 reentrancy Structured Trace 的字段范围较明确。",
-      "missingEvidence": "缺少每个 next action 的完成定义，例如 Structured Trace 最小实现覆盖多少样例、Verification Phase1 用什么指标判断是否继续、Type-RAG 实验如何判定收益明确。"
-    },
-    "evidenceQuality": {
-      "score": 2,
-      "reason": "证据质量偏弱。报告有概念分析和方向判断，但没有实验数据、图表、样例、论文名称、阅读产出、代码提交、错误统计或评估结果。‘文献阅读 3 篇’没有列出具体文献与吸收内容，证据不可复核。",
-      "missingEvidence": "缺少论文清单、阅读笔记、实验日志、代码链接、评估表、样例 case、失败归因证据、指标对比。"
-    },
+    "week": "2026-05-03",
+    "name": "Jie Wanqing",
     "totalScore": 59,
-    "tier": "C",
-    "oneLineJudgment": "这一周的认知推进和技术拆解较好，但硬结果和证据链明显不足，仍是从根因分析走向实验闭环前的准备周。",
+    "tier": "Risk",
+    "dimensions": {
+      "hardProgress": {
+        "score": 7,
+        "reason": "本周主要产出是问题拆解、实验设计思路和漏洞类型证据字段梳理，尚未体现可验证的硬进展。报告没有给出已完成的实现、实验结果、评估指标、代码提交、数据集处理或性能变化。虽然提出了 reentrancy、integeroverflow、timestamp 的结构化证据方向，但仍停留在设计与分析层面。",
+        "missingEvidence": "缺少具体实验结果、基线对比、指标变化、样例 trace、代码提交链接、失败案例数量、已完成模块说明。"
+      },
+      "cognitiveIncrement": {
+        "score": 12,
+        "reason": "CoT 增量较明确：从直接堆叠增强策略，转向单假设、低耦合、可归因实验；也识别了结构化证据不足导致非 SOTA 的核心问题。这属于有效认知增量，能改善后续实验闭环。但仍缺少对具体失败样本的定量归因。",
+        "missingEvidence": "缺少具体案例说明哪些错误来自证据过粗、哪些来自规则噪声；缺少按漏洞类型统计的错误分布。"
+      },
+      "cot2Depth": {
+        "score": 12,
+        "reason": "CoT² 深度较好，能够从“加规则/提示”上升到“结构化证据是否贴合漏洞因果链”。对 reentrancy 的调用顺序、共享状态依赖、CEI、nonReentrant，以及 integeroverflow/timestamp 的关键判定条件都有较细拆解。但还没有进一步形成可验证的理论框架或消融矩阵。",
+        "missingEvidence": "缺少因果链字段到最终判定准确率的验证设计；缺少不同字段的重要性排序和可消融假设。"
+      },
+      "brainaryMapping": {
+        "score": 8,
+        "reason": "报告较清楚地把当前工作映射到 Brainary：不是只生成检测结论，而是构造可验证、可消融、可追踪的中间证据，并沉淀证据质量控制、判定逻辑对齐、类型化安全推理能力。映射方向合理，但还没有说明这些能力如何进入 Brainary 的模块、接口或长期资产。",
+        "missingEvidence": "缺少 Brainary 侧具体沉淀形式，例如 schema、trace 格式、agent workflow、检索接口、可复用组件或评估协议。"
+      },
+      "monetaryValue": {
+        "score": 3,
+        "reason": "报告提到高价值安全审计任务，但没有展开商业价值、用户场景、成本节约、审计效率、误报漏报成本或可交付产品形态。当前货币价值判断依据不足。",
+        "missingEvidence": "缺少目标客户、审计场景、替代人工成本、潜在付费点、漏洞检测收益、与现有工具相比的商业优势。"
+      },
+      "projectManagement": {
+        "score": 8,
+        "reason": "报告有问题/阻碍和下周计划，且任务方向比较具体，包括 reentrancy Structured Trace、Verification Phase1 评估、selected routing Type-RAG。但项目管理仍偏弱：没有本周计划完成度、时间分配、优先级依据、验收标准、风险缓解方案或里程碑。",
+        "missingEvidence": "缺少本周承诺事项对照、完成/未完成原因、每项任务的 owner、deadline、验收指标、风险列表和依赖项。"
+      },
+      "nextAction": {
+        "score": 7,
+        "reason": "下周行动较清楚，三个方向都有明确对象：reentrancy trace、verification prompt、Type-RAG selected routing。问题是行动还不够可验收，例如没有说明最小实现覆盖多少样本、Phase1 用什么指标判断继续扩展、Type-RAG 成功阈值是什么。",
+        "missingEvidence": "缺少量化目标，例如完成多少个漏洞样本 trace、评估哪些 benchmark、F1/Recall/Precision 提升阈值、负迁移判定标准。"
+      },
+      "evidenceQuality": {
+        "score": 2,
+        "reason": "证据质量偏低。报告中有较多合理判断，但几乎全部是概念性描述，没有实验数据、案例、图表、文献清单或可复核材料。文献阅读只写了 3 篇，没有列出标题、结论和对当前方法的影响。",
+        "missingEvidence": "缺少文献名称和摘要、实验日志、错误案例、指标表、代码链接、评估结果、消融设计草案。"
+      }
+    },
+    "oneLineJudgment": "这一周的认知推进明显，但硬产出和证据支撑不足，仍处于从失败分析走向可验证实验的过渡阶段。",
     "professorFollowUp": [
-      "要求学生下周必须提交至少一个最小实验闭环：包含 baseline、改动点、数据集、指标、结果和失败样例。",
-      "追问 reentrancy Structured Trace 的字段是否真的可自动抽取，以及抽取错误会如何影响最终判定。",
-      "要求 Verification Phase1 给出继续或停止该路线的量化阈值，而不是只做定性判断。",
-      "要求把 Type-RAG selected routing 的收益假设写成可检验形式：在哪些漏洞类型启用、预期提升什么指标、如何避免负迁移。"
-    ],
-    "professorShouldLearn": "本周最值得教授关注的是：学生已经意识到问题不在于继续堆规则，而在于构造与漏洞因果链对齐的可验证中间证据；但目前还缺少实验数据证明这条路线有效。"
+      "请要求学生下周必须提交 reentrancy Structured Trace 的最小样例，包括输入代码、抽取字段、trace 输出和最终判定。",
+      "请追问 Verification Phase1 的完整评估结果：数据集、指标、baseline、提升或退化幅度分别是什么。",
+      "请要求把 selected routing Type-RAG 写成可消融实验表：只开 integeroverflow、全类型开启、不开规则三组对比。",
+      "请要求学生补充 3 篇文献的具体名称、核心方法、与当前失败原因的关系。",
+      "请明确一个继续投入的门槛：如果结构化证据不能在某个漏洞类型上稳定提升指标，应暂停扩展而不是继续加规则。"
+    ]
   }
 }

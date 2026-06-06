@@ -1,6 +1,6 @@
 {
   "key": "person:li-wenke:2026-03-29:weekly-score",
-  "generatedAt": "2026-06-06T01:04:40.614Z",
+  "generatedAt": "2026-06-06T02:05:02.926Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
@@ -8,47 +8,90 @@
   "result": {
     "hardProgress": {
       "score": 14,
-      "reason": "本周产出了可命名的方法资产：三层 Score Function、变更影响半径 R、Decision Function 映射表、合成 benchmark 设想，以及与 AutoSchemaKG/DIAL-KG 的差异化定位。进展主要是框架设计和文献归纳，尚未进入代码、实验或真实数据验证，因此硬进展强于普通调研，但还不是可运行成果。",
-      "missingEvidence": "缺少 S_struct/S_data/S_task 的完整数学公式细节、代码实现、在 KG 原型上的运行结果、合成缺陷数据样例，以及指标能区分好坏 schema 的实验证据。"
+      "reason": "本周有明确硬产出：三层Score Function定义、变更影响半径R、Decision Function分层映射表、合成benchmark设计、相关工作差异化定位。进展主要停留在方法设计和文献综合层面，尚未进入代码实现、指标计算、实验验证或真实KG运行，因此不能给高满分。",
+      "missingEvidence": [
+        "缺少S_struct、S_data、S_task的完整数学公式细节和可复现实例。",
+        "缺少在现有KG原型上的运行结果。",
+        "缺少合成缺陷benchmark的样例数据、生成规则和预期判别结果。",
+        "缺少Decision Function实际触发schema修改的端到端案例。"
+      ]
     },
     "cognitiveIncrement": {
-      "score": 12,
-      "reason": "认知增量明确：从“需要 score function”推进到“三层评价 + 变更影响半径 + 分层调用策略”，并把自身路线定位为 evaluation-driven construction。这个增量对研究方向有实际决策价值，尤其是识别出 auto schema generation 与 ontology evaluation 之间的断层。",
-      "missingEvidence": "缺少对 AutoSchemaKG/DIAL-KG 原文方法的具体引用段落或表格化对比；缺少证明 evaluation-driven 路线确实优于 construction-first 路线的初步实验。"
+      "score": 13,
+      "reason": "认知增量较强：从“需要score function”推进到“evaluation-driven schema maintenance”的方法论定位，并把OQuaRE、OntoQA、Cost-Optimal Active Evaluation与自身框架建立了对应关系。尤其是将R视为连接修改规模、评估成本和决策深度的桥梁，是本周的核心认知增量。扣分点在于部分判断仍是概念性归纳，尚未被实验或用户场景验证。",
+      "missingEvidence": [
+        "缺少对AutoSchemaKG、DIAL-KG具体方法流程的逐项对照表。",
+        "缺少证明evaluation-driven路线优于construction-first路线的实验设计或初步数据。",
+        "缺少R与真实错误风险、评估收益之间相关性的证据。"
+      ]
     },
     "cot2Depth": {
       "score": 12,
-      "reason": "CoT's CoT 不只是复述工作，而是抽象出两层较深判断：一是 construction-first 与 evaluation-driven 的认识论差异，二是变更影响半径作为通用评价成本调度器。这些判断有跨场景迁移潜力，也能沉淀为 protocol、benchmark 或 agent module。",
-      "missingEvidence": "“老师原本不知道”的判断主要是自我推断，缺少外部验证；“认识论差异”和“通用设计模式”的表述较强，但还缺少系统化论证和反例分析。"
+      "reason": "CoT's CoT部分不仅描述了想法，还追问了信息差、老师是否已知、自动化潜力和沉淀形式，深度超过普通周报。两个核心抽象分别是“construction-first vs evaluation-driven”和“变更规模决定评价深度”。但第二层反思仍有一些跳跃：例如把Cost-Optimal Active Evaluation直接同构迁移到schema maintenance，需要更多形式化映射和假设说明。",
+      "missingEvidence": [
+        "缺少Cost-Optimal Active Evaluation中变量、目标函数、约束与本项目变量之间的一一映射。",
+        "缺少为什么R可以近似条件误差的论证。",
+        "缺少对反例的讨论，例如小范围修改也可能造成高语义风险。"
+      ]
     },
     "brainaryMapping": {
       "score": 8,
-      "reason": "Brainary 映射较具体，把 Score Function 对应 calibration，把 Decision Function 对应 cognitive control，并形成感知—决策—执行—再感知的 metacognitive loop。不是停留在口号层面，而是给出了模块级落点。",
-      "missingEvidence": "缺少 Brainary 现有架构中这些模块的接口位置、输入输出格式、与已有模块的依赖关系，以及如何验证该 loop 提升系统能力的指标。"
+      "reason": "Brainary映射较清楚：Score Function对应calibration，Decision Function对应cognitive control，并形成“感知—决策—执行—再感知”的metacognitive loop。该映射不是泛泛而谈，而是落到了S_struct/S_data/S_task和R调度机制上。扣分点是仍缺少Brainary系统接口层面的说明，即这些模块如何进入现有Brainary架构。",
+      "missingEvidence": [
+        "缺少Brainary中已有模块与Score Function、Decision Function的接口关系。",
+        "缺少输入输出格式、调用时机和失败回退机制。",
+        "缺少该mapping如何被实际自动化科研流程调用的示例。"
+      ]
     },
     "monetaryValue": {
       "score": 6,
-      "reason": "报告给出了市场规模、客户类型、定价假设和年收入估算，能说明题目存在潜在商业价值。但估值从大市场 TAM 推到单模块收入，中间假设较多，且未证明目标客户会为 evaluation-driven schema maintenance 单独付费。",
-      "missingEvidence": "缺少客户访谈、竞品定价证据、Atlan/Alation/Collibra 中类似功能的实际价格、企业购买触发点、部署成本、销售周期，以及 80 家企业付费假设的来源。"
+      "reason": "报告尝试用数据目录、AI Agent平台、知识管理和数据治理市场规模估算商业价值，并给出模块订阅价和客户数假设。方向上有商业意识，但估值仍偏粗：市场规模与本模块可捕获收入之间跳跃较大，缺少客户访谈、竞品定价、采购触发点和部署成本。500万到1200万人民币的估值可作为初始假设，不能视为已验证价值。",
+      "missingEvidence": [
+        "缺少潜在客户的访谈或真实需求证据。",
+        "缺少Atlan、Alation、Collibra等产品是否已有类似schema quality功能的竞品分析。",
+        "缺少从总市场规模到本模块可服务市场、可获得市场的拆分。",
+        "缺少企业愿意为“evaluation-driven schema maintenance”单独付费的证据。"
+      ]
     },
     "projectManagement": {
       "score": 12,
-      "reason": "项目管理信息完整：有阶段判断、实际投入时间、下周投入、里程碑、关键路径、资源、成本和依赖关系。也识别了从设计转实现的风险。主要不足是本周没有可运行交付物，因此“符合预期”的判断仍依赖自评。",
-      "missingEvidence": "缺少本周实际产物链接或文档编号、公式文档、设计图、任务拆解 ticket、验收标准，以及下周实现失败时的备选计划。"
+      "reason": "项目管理信息完整：有阶段判断、原计划与实际完成对照、投入时间、下周投入、里程碑、依赖关系、成本规划和纠偏动作。尤其明确指出下周要从设计转实现，避免过度设计。扣分点是验收标准仍不够硬，例如什么叫“能区分好scheme和坏scheme”没有量化阈值。",
+      "missingEvidence": [
+        "缺少下周实现任务的具体验收指标，例如AUC、准确率、排序相关性或错误检出率。",
+        "缺少每个里程碑的风险缓冲和失败预案。",
+        "缺少代码仓库、模块边界、数据格式和测试计划。",
+        "缺少S_task依赖ground truth数据集的构造排期。"
+      ]
     },
     "nextAction": {
-      "score": 9,
-      "reason": "下周动作具体且可验证：实现 S_struct 和 S_data，在现有 KG 原型上跑通，用注入缺陷的合成数据测试，并初步跑通 Decision Function pipeline。这些动作能直接检验本周设计是否有效。",
-      "missingEvidence": "缺少明确的验收阈值，例如什么样的区分度算成功、合成 benchmark 的规模、坏 schema 类型数量、运行时间目标，以及如果指标区分不了好坏 schema 时如何修改。"
+      "score": 8,
+      "reason": "下周动作具体且可验证：实现S_struct和S_data，在现有KG原型上跑通，用注入缺陷的合成数据测试，并初步实现Decision Function映射pipeline。这是从设计转向验证的正确下一步。扣分点是动作仍缺少最小数据规模、通过标准和失败后如何调整的规则。",
+      "missingEvidence": [
+        "缺少合成benchmark至少包含多少个scheme、多少类缺陷、每类多少样本。",
+        "缺少S_struct和S_data应达到的最低判别标准。",
+        "缺少如果指标不能区分好坏scheme时的备选修正路径。",
+        "缺少Decision Function pipeline的最小输入输出样例。"
+      ]
     },
     "evidenceQuality": {
       "score": 3,
-      "reason": "证据质量中等。报告引用了 OQuaRE、OntoQA、OntoClean、AutoSchemaKG、DIAL-KG 和 Cost-Optimal Active Evaluation，并主动给 CoT's CoT 标为 B 级证据，说明有证据意识。但大部分证据仍是文献观察和方法类比，没有实验数据。",
-      "missingEvidence": "缺少可核查引用、论文具体结论摘录、对比表、实验日志、数据样本、代码结果，以及市场数据来源链接。"
+      "reason": "证据质量中等偏弱。报告引用了OQuaRE、OntoQA、OntoClean、AutoSchemaKG、DIAL-KG和Cost-Optimal Active Evaluation，也标注了证据等级为B，说明作者知道当前仍未系统验证。但报告没有提供关键论文中的具体证据摘录、对照表、实验结果或可复现数据，因此证据主要是文献阅读后的归纳判断。",
+      "missingEvidence": [
+        "缺少文献引用的完整出处、链接或关键段落。",
+        "缺少对相关工作的表格化比较。",
+        "缺少任何实验数据、运行日志或指标结果。",
+        "缺少市场数据来源的原始链接和口径说明。"
+      ]
     },
     "totalScore": 76,
     "tier": "B",
-    "oneLineJudgment": "这一周是高质量的研究设计周，核心价值在于把 score function 从概念推进成可实现框架，但还没有代码和实验证据支撑其有效性，因此不能评为 A 或 S。",
-    "professorFollowUp": "老师最应该追问三件事：第一，evaluation-driven 相比 AutoSchemaKG/DIAL-KG 的 novelty 是否足够构成论文主贡献；第二，下周必须交付 S_struct/S_data 的代码和合成 benchmark 结果，而不是继续扩展框架；第三，R 阈值和 S_task ground truth 如何从启发式方案转为数据驱动方案。"
+    "oneLineJudgment": "本周形成了有论文潜力的方法框架和清晰差异化定位，但主要仍是设计型进展，关键风险在于Score Function尚未被代码和实验验证。",
+    "professorFollowUp": [
+      "请优先追问：evaluation-driven相对于AutoSchemaKG、DIAL-KG的贡献是否足以构成论文主线，还是只能作为系统模块创新。",
+      "请要求下周必须交付S_struct和S_data的代码运行结果，而不是继续扩展理论框架。",
+      "请让学生给出一个最小benchmark规格：缺陷类型、样本数、好坏scheme定义、判别指标和通过阈值。",
+      "请重点检查R是否真的能代表评估风险；如果小修改可能造成大语义错误，当前R公式需要加入语义风险项。",
+      "教授本周最应该学到的一点是：该项目的潜在新意不在于自动生成schema，而在于用显式质量模型前置驱动schema修改决策。"
+    ]
   }
 }

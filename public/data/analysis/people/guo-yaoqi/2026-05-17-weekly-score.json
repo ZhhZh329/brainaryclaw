@@ -1,54 +1,64 @@
 {
   "key": "person:guo-yaoqi:2026-05-17:weekly-score",
-  "generatedAt": "2026-06-06T01:01:40.642Z",
+  "generatedAt": "2026-06-06T02:01:38.122Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "2d247a4c47ebd39d2f3e90ea63b0da0db11085caae23ccc1ca563c641683e5e6",
   "result": {
-    "hardProgress": {
-      "score": 16,
-      "reason": "本周有明确硬产出：拉取了 SWE-bench Verified leaderboard 的 500 case / 5000 trajectory，做出 trajectory 对拍器、bucket 分桶、skill 抽取 v1，并在 mini-SWE-agent 的 SWE-bench Pro 100 issue 上报告 37% 到 40% 的 +3pp 信号。同时修复了 regression_test_agent 的 critic 极性误判 bug，并启动了 49 实例 paired 评测。但主线 1 的核心交付没有完成：差分链路对函数级 Hit 和 solve rate 的真实增益仍未量化，因此硬进展不能给满分。",
-      "missingEvidence": "缺少 49 paired 评测完整结果；缺少 +3pp 实验的原始日志、随机性控制、issue 列表、失败/成功样例；缺少 skill 抽取模块的代码或接口说明；缺少 bug 修复后的复跑结果。"
+    "week": "2026-05-17",
+    "name": "郭耀祺",
+    "scores": {
+      "hardProgress": {
+        "score": 16,
+        "reason": "本周有明确硬产出：获取了 500 个 case / 5000 条 trajectory 的数据底座，完成 trajectory 对拍、bucket 分桶、skill 抽取的粗糙 v1，并在 SWE-bench Pro 100 issue 上报告 mini-SWE-agent 从 37% 到 40% 的提升。另有 regression paired 评测启动和 critic bug 修复。但主线 1 的关键交付没有完成：49 实例 paired 评测未收尾，函数级 Hit 和 solve rate 的真实增益没有数字。因此硬进展主要来自新主线，原定评测闭环缺口明显。",
+        "missingEvidence": "缺少 49 实例 paired 评测完整结果；缺少 +3pp 实验的运行日志、case 列表、随机性控制、失败/成功明细；缺少 skill 抽取模块的代码或接口说明；缺少 5000 条 trajectory 的质量过滤统计。"
+      },
+      "cognitiveIncrement": {
+        "score": 13,
+        "reason": "认知增量较强，核心是把 agent 失败从 factual knowledge 缺失重新归因为 procedural knowledge 缺失，并提出 success-fail trajectory diff 作为可扩展程序性知识来源。同时抽象出“差分是知识的可扩展来源”和“context-tagged skill 才有价值”。这些不是简单工程总结，而是有可能改变研究目标函数的判断。但目前部分判断仍偏概念性，尤其是“大多数失败是 procedure 而非 fact”的比例没有系统标注数据支撑。",
+        "missingEvidence": "缺少 fact-deficit 与 procedure-deficit 的人工或半自动分类统计；缺少 RAG-only / fact 补全 baseline 对比；缺少不同错误类型中 procedure 缺失占比的证据。"
+      },
+      "cot2Depth": {
+        "score": 13,
+        "reason": "CoT's CoT 写得比较完整：每条都有内容、证据等级、老师是否原本不知道、信息差、自动化潜力和沉淀形式。尤其是将 procedure knowledge、差分元方法、contextual skill 三者分别提升到方法论层，符合模板对深层认知的要求。扣分点在于证据等级虽然自标为 L2/L3，但支撑材料仍不足，且若只看本周报告，第二条中依赖“上周”的跨层级验证不能作为当前周独立证据完全计入。",
+        "missingEvidence": "缺少本周内独立复现第二个 benchmark 或第二个 agent 的结果；缺少 context-tagged skill 与全量注入的正式对照数字；缺少 CoT's CoT 结论可被证伪的实验设计细节。"
+      },
+      "brainaryMapping": {
+        "score": 8,
+        "reason": "Brainary 映射较具体，覆盖 memory、reasoning、calibration、cognitive control、benchmark/evaluation，并把 procedural memory 定义为带 trigger context、action sequence、来源 trajectory 和验证增益的结构化记忆。这比泛泛说“可接入 Brainary”更有价值。扣分在于目前仍是设计映射，尚未说明现有 Brainary 模块如何接入、接口边界是什么、哪些字段已经实现。",
+        "missingEvidence": "缺少 Brainary 现有 schema 与新 procedural memory schema 的字段级对齐；缺少模块接口、输入输出样例、存储格式；缺少实际接入 Brainary 后的运行结果。"
+      },
+      "monetaryValue": {
+        "score": 5,
+        "reason": "报告给出了 $110,000 的估值、拆分权重和保守/激进情景，形式完整，也能区分新 idea、元方法和 regression 推进的价值。但金额主要建立在“成熟 Unified Repair Agent 年化商业价值 $2M”和本周贡献 5.5% 的主观权重上，缺少市场、转化概率、时间折现和竞争替代的约束。当前更像研究价值定性定价，不是可用于预算或商业决策的货币估值。",
+        "missingEvidence": "缺少 $2M 年化价值来源；缺少从 +3pp benchmark 提升到商业价值的转换模型；缺少转化概率、开发成本、时间折现、失败情景成本；缺少同类 agent 提升对应商业收益的参照。"
+      },
+      "projectManagement": {
+        "score": 12,
+        "reason": "项目管理信息比较充分：记录了约 50 小时投入、下周 50 小时计划、SGD 成本、预算风险、偏差原因、纠偏动作和是否需要老师介入。也诚实承认主线 1 滞后，并提出前两到三天收尾 paired 评测。扣分主要因为关键承诺没有关闭，而且双主线切换虽然有理由，但没有给出明确优先级门禁机制，容易继续拖延原评测闭环。",
+        "missingEvidence": "缺少 regression paired 当前已完成多少实例、失败多少实例、预计剩余运行时间；缺少下周每个里程碑的验收标准；缺少预算上限的硬约束；缺少如果新 idea 继续占用时间时的取舍规则。"
+      },
+      "nextAction": {
+        "score": 8,
+        "reason": "下周动作具体：收尾 49 paired，给出函数级 Hit / solve rate 数字；与 wangchong 对 case；做 bucket 维度 ablation；将静态注入升级为 retrieval 注入；暂缓 knowledge graph。这些动作与本周卡点直接对应，具备可验证性。扣分在于部分动作还缺少实验矩阵、通过/失败阈值和最小验收标准。",
+        "missingEvidence": "缺少 bucket ablation 的具体实验表；缺少 retrieval 注入的 top-k、检索信号、评价指标；缺少 paired 评测的完成日期和报告格式；缺少决定是否继续 procedure knowledge 方向的 go/no-go 阈值。"
+      },
+      "evidenceQuality": {
+        "score": 3,
+        "reason": "有若干可量化证据：500 case / 5000 trajectory、SWE-bench Pro 100 issue 上 37% 到 40%、成本约 250+ SGD、时间约 50 小时。但证据质量仍属中等偏弱：核心 +3pp 没有置信区间、重复运行、case 级明细或消融；regression 主线没有最终数字；全量注入变差也没有正式数据。报告可信度来自结构化自述，不来自可审计材料。",
+        "missingEvidence": "缺少实验日志、seed、commit hash、prompt 版本、case-level 结果、统计显著性、消融表、失败样例和数据清洗报告。"
+      }
     },
-    "cognitiveIncrement": {
-      "score": 13,
-      "reason": "认知增量集中且有方向价值：把 agent 失败从 factual knowledge 缺失重新解释为 procedural knowledge 缺失，提出 success-fail trajectory diff 是程序性知识的可扩展来源，并进一步总结出“差分是知识的可扩展来源”的跨层级元方法。这些都不是普通工程总结，而是对研究目标函数的调整。但“唯一可扩展来源”“大多数失败都是程序性缺失”等表述证据仍偏弱，当前更像高价值假设，而不是已验证结论。",
-      "missingEvidence": "缺少对失败类型的系统标注比例；缺少 fact-deficit 与 procedure-deficit 的可操作判定标准；缺少 RAG-only、tool-only、procedure-skill 三类增强的并列对照；缺少跨 agent 或跨 benchmark 的复现。"
-    },
-    "cot2Depth": {
-      "score": 13,
-      "reason": "CoT's CoT 写出了三层较清晰的元判断：归因层级错位、差分作为跨抽象层级知识源、contextual skill 才有产品价值。每条都标注了证据等级、老师是否原本知道、自动化潜力和沉淀形式，符合模板要求。扣分点在于证据等级虽然自觉标为 L2/L3，但部分论断的外推幅度超过当前实验支持，尤其是 procedure vs fact 的领域级判断和 context-tagged skill 的必要性。",
-      "missingEvidence": "缺少正式的全量注入 vs context-tagged 注入 ablation；缺少 bucket 切法对 skill 质量的量化比较；缺少第三个抽象层级的差分验证；缺少具体 trajectory 分歧点案例来支撑 CoT's CoT。"
-    },
-    "brainaryMapping": {
-      "score": 8,
-      "reason": "Brainary 映射覆盖 memory、reasoning、calibration、cognitive control、benchmark/evaluation，并能把本周新 idea 落到 procedural memory、context tag、skill injector、procedure-deficit benchmark 等模块上。映射不是泛泛而谈，和本周工作有直接关系。扣分点是目前主要仍是概念映射，尚未给出可执行 schema、接口、数据结构或 Brainary 内部模块改造方案。",
-      "missingEvidence": "缺少 procedural memory 的正式字段定义；缺少 trigger context predicate、action sequence、来源 trajectory 指针、验证增益等 schema 样例；缺少 Brainary 现有模块如何接入 skill injector 的技术路径；缺少端到端自动化流程图或伪代码。"
-    },
-    "monetaryValue": {
-      "score": 7,
-      "reason": "价值定价部分给出了 $110,000 的金额、基准假设、三项拆分、权重和保守/激进/失败情景，形式上完整，也承认 regression paired 未收尾应折损。但金额高度依赖“Unified Repair Agent 年化商业价值 $2M”和“本周占 5.5% 权重”的主观假设，当前 +3pp 信号尚未有稳定性和泛化证据，因此商业定价只能作为内部优先级参考，不能作为真实价值证明。",
-      "missingEvidence": "缺少 $2M 年化价值的来源；缺少 +3pp 对真实商业收益的转化模型；缺少 API 成本、运行成本、人工维护成本与收益的净值计算；缺少失败情景下的止损阈值；缺少跨 agent 复现后价值上调的量化依据。"
-    },
-    "projectManagement": {
-      "score": 12,
-      "reason": "项目管理信息较完整：报告了本周 50 小时投入、下周 50 小时计划、API 成本 250+ SGD、下周 280–300 SGD 风险、人员需求、里程碑、偏差原因和纠偏动作。也明确承认主线 1 未收尾。但项目执行上存在真实偏差：上周 flag 的 paired 评测没有关闭，且新 idea 抢占主线资源后，尚未形成硬性的优先级约束和验收标准。",
-      "missingEvidence": "缺少 49 paired 评测的具体剩余数量和完成时间表；缺少下周每个实验的成功/失败判定阈值；缺少预算上限和超支处理规则；缺少与 wangchong 分工后的责任边界；缺少主线 1 与主线 2 冲突时的优先级规则。"
-    },
-    "nextAction": {
-      "score": 8,
-      "reason": "下周动作较具体：前两到三天收尾 regression paired，做 bucket 维度 ablation，把静态注入升级为 retrieval 注入，和 wangchong 对 benchmark case，并暂缓 root cause knowledge graph。这些动作能直接验证本周最关键假设。扣分点是 next action 还缺少明确验收标准，例如 +3pp 是否需要统计显著、bucket ablation 用多少 issue、retrieval top-k 怎么定、何时判定该方向降级。",
-      "missingEvidence": "缺少每个下周动作的量化验收标准；缺少 ablation 的实验矩阵；缺少 retrieval 注入的 baseline、top-k 设置和预算；缺少 regression paired 的最终报告格式；缺少如果新 idea 不复现时的决策分支。"
-    },
-    "evidenceQuality": {
-      "score": 3,
-      "reason": "报告提供了一些可评价证据：500 case / 5000 trajectory 数据规模、SWE-bench Pro 100 上 37% 到 40% 的结果、regression critic bug 类型、若干暂未证实项。但证据仍偏 L2：核心 +3pp 没有置信区间、重复运行、样例、日志或 ablation；主线 1 的关键 paired 数字缺失；context tag 有效性也只是描述性结论。",
-      "missingEvidence": "缺少实验日志链接；缺少随机种子和重复次数；缺少 issue-level 结果表；缺少统计显著性；缺少全量注入负效果的具体数字；缺少 regression paired 的完整 paired table。"
-    },
-    "totalScore": 80,
-    "tier": "A",
-    "oneLineJudgment": "本周是“高价值新方向 + 初步硬信号”的一周，但主线 1 关键数字未交付，且 procedure knowledge 的大判断仍明显跑在证据前面。",
-    "professorFollowUp": "老师最应该追问一件事：+3pp 到底是不是可复现、可归因、可泛化。建议下周只看三项硬材料：第一，49 paired regression 的函数级 Hit 和 solve rate 完整数字；第二，bucket ablation 表，至少比较错误类型、工具、agent 三种切法；第三，静态注入、全量注入、context-tagged retrieval 注入的 issue-level 对照结果。如果这三项不能落地，应把“procedure knowledge 改写 agent 增强目标函数”降级为高潜力假设，而不是当前结论。"
+    "totalScore": 78,
+    "tier": "B",
+    "oneLineJudgment": "本周新方向有实质工程原型和有价值的认知增量，但原定 regression 评测未闭环，且 +3pp 与 procedure-knowledge 结论的证据仍不足以支撑高置信判断。",
+    "professorFollowUp": [
+      "要求下周先交 49 实例 paired 评测完整表：每个 case 的 on/off 结果、函数级 Hit、solve rate、失败原因和 critic bug 修复前后差异。",
+      "要求把 37% 到 40% 的 SWE-bench Pro 100 结果拆成 case-level 明细，并说明是否重复运行、是否固定 seed、是否存在 prompt 或样本选择偏差。",
+      "要求做一个最小但正式的对照实验：无 skill、全量 skill、bucket context-tagged skill、retrieval skill 四组对比，否则不能确认 context tag 和 retrieval 的真实边际价值。",
+      "要求给 procedure-deficit 与 fact-deficit 一个可操作标注协议，并先在 30 到 50 个失败 case 上做人审或双人一致性检查。",
+      "老师本周最应该学习的一点是：如果这个方向成立，agent 增强的关键不只是补事实知识，而是把成功轨迹中的程序性动作序列抽成带适用条件的可检索 skill；但目前这仍是 L2 级信号，必须用消融和跨 agent 复现尽快升证据等级。"
+    ]
   }
 }

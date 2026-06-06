@@ -1,6 +1,6 @@
 {
   "key": "person:li-yanzhou:2026-03-29:weekly-score",
-  "generatedAt": "2026-06-06T01:04:56.299Z",
+  "generatedAt": "2026-06-06T02:05:06.194Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
@@ -8,57 +8,100 @@
   "result": {
     "week": "2026-03-29",
     "name": "Li Yanzhou",
-    "totalScore": 71,
-    "tier": "B",
-    "dimensionScores": {
+    "scores": {
       "hardProgress": {
-        "score": 15,
-        "reason": "本周有可识别的硬进展：在 xiaoxia coding agent 场景中测试 long-term memory framework，并报告两个较难项目 pass rate 提高约 20%；同时开始把 memory 从单一 coding 场景扩展到 build environment、terminal-level task、code repair 等 general SWE 任务；还启动了 skill schema、taxonomy 与 operational semantics 表达的探索。问题是实验规模、项目数量、任务分布、baseline、评价指标和复现实验信息都不充分，因此硬进展可信但还没有达到强实验结论级别。",
-        "missingEvidence": "缺少两个项目的具体名称、任务数量、原始 pass rate、提升后的 pass rate、baseline 设置、是否多次运行、统计显著性、失败案例、memory 注入方式和对照组。"
+        "score": 14,
+        "reason": "本周有实际推进：在 xiaoxia 的 coding agent 场景中完成两个较难项目测试，并报告 pass rate 约提升 20%；同时开始向 build environment、terminal-level task、code repair 等 general SWE 任务扩展，并探索 skill schema、taxonomy 和 operational semantics。硬进展存在，但仍处于小规模原型阶段，尚未证明稳定迁移。",
+        "missingEvidence": [
+          "两个较难项目的具体名称、任务数量、baseline pass rate、改进后 pass rate",
+          "20% 提升是绝对提升还是相对提升",
+          "实验设置、对照组、重复次数和失败案例",
+          "新增 trajectories / skills 的数量与样例",
+          "operational semantics 表达的具体 schema 示例"
+        ]
       },
       "cognitiveIncrement": {
         "score": 11,
-        "reason": "认知增量集中在两个判断：长期记忆的泛化关键不是经验数量，而是稳定抽象的 high-level knowledge unit；schema、taxonomy、semantics 不是包装层，而是决定准确性、可维护性、迁移性的核心。这些判断与本周实验方向有关，也能指导后续研究。但报告中也明确写到这些并非老师原本不知道的内容，因此增量更多是个人研究框架变清楚，而不是形成了新的理论突破。",
-        "missingEvidence": "缺少从具体 case 推导出这些认知更新的过程，例如哪些成功案例证明 high-level abstraction 有效，哪些失败案例说明低层经验不可迁移。"
+        "reason": "认知增量较清楚：从“积累经验”转向“抽象稳定的跨任务 knowledge unit”，并意识到 schema / taxonomy / semantics 是 memory system 的核心，而非包装层。这是有效的研究判断。但这些判断仍偏概念层，尚缺少由实验反推出来的具体机制、边界条件和反例。",
+        "missingEvidence": [
+          "哪些 case 证明高层抽象知识比更多 trajectory 更重要",
+          "哪些任务之间可以复用 knowledge unit，哪些不能",
+          "schema 改变后对性能、维护性或迁移性的实测影响"
+        ]
       },
       "cot2Depth": {
-        "score": 11,
-        "reason": "CoT’s CoT 部分覆盖了机制层判断、为什么尚未被自动化科研吸收、自动化潜力、沉淀形式和证据等级，结构完整。深度较好的地方是把 memory 从 trajectory accumulation 推进到 knowledge unit abstraction，把 schema/taxonomy/semantics 提升为系统核心对象。限制是两个 CoT’s CoT 都承认老师并非原本不知道，且还停留在概念判断层，缺少可证伪命题、可执行实验设计和具体系统接口。",
-        "missingEvidence": "缺少明确的机制假设，例如什么样的 schema 字段会提升迁移，什么样的 taxonomy 会失败；也缺少验证 CoT’s CoT 1 和 2 的实验协议。"
+        "score": 10,
+        "reason": "CoT’s CoT 能够上升到自动化科研吸收路径，指出 task-specific memory 到 unified memory 的断点，也指出 schema / taxonomy / semantics 应作为一等系统对象。深度中等偏好。但两条 CoT’s CoT 都标注为“老师原本不知道的吗：否”，说明新颖性主要在执行和系统化，而不是教授未知的新命题；同时缺少更深一层的因果机制和可证伪假设。",
+        "missingEvidence": [
+          "为什么当前多数系统无法自动吸收跨任务 knowledge abstraction 的具体技术原因",
+          "什么样的 schema 会导致迁移失败",
+          "CoT’s CoT 对应的可验证实验设计",
+          "与已有 memory / skill learning / SWE agent 工作的明确差异"
+        ]
       },
       "brainaryMapping": {
-        "score": 7,
-        "reason": "报告将工作映射到 Brainary 的 memory、reasoning、cognitive control、benchmark/evaluation，并说明可能沉淀为 memory 结构、benchmark、workflow、评测协议。映射方向是合理的。但当前映射较粗，只说明属于哪些能力，没有说明在 Brainary 中应成为哪个模块、输入输出是什么、与 cognitive control 如何交互、如何被其他 agent 调用。",
-        "missingEvidence": "缺少 Brainary 级别的模块设计图、接口定义、调用流程、数据结构样例，以及 memory schema 与 reasoning/cognitive control 的连接方式。"
+        "score": 6,
+        "reason": "报告将工作映射到 Brainary 的 memory、reasoning、cognitive control、benchmark / evaluation，方向正确。但映射仍是模块名级别，没有说明 unified memory schema 如何接入 Brainary，输入输出是什么，如何被 reasoning 或 cognitive control 调用，以及 benchmark 如何闭环评估。",
+        "missingEvidence": [
+          "Brainary 中 memory 模块的具体接口设计",
+          "knowledge unit 如何被 reasoning 调用的流程",
+          "cognitive control 如何决定调用哪类 high-level knowledge",
+          "benchmark / evaluation 的任务集、指标和验收标准"
+        ]
       },
       "monetaryValue": {
-        "score": 6,
-        "reason": "报告给出了两个价值项：跨任务 unified SWE memory 估值 50 万–150 万人民币，skill schema/taxonomy/semantics 估值 30 万–100 万人民币，并指出潜在买单方是 coding agent、developer agent 和 agent infrastructure 团队。价值判断有方向，但估值依据较弱，更多是主观资产价值估算，没有结合市场规模、替代成本、客户痛点强度、竞品、论文/benchmark 影响力或产品化路径。",
-        "missingEvidence": "缺少具体买单场景、可交付物边界、客户愿意付费的理由、竞品对比、替代方案成本、可商业化时间线和估值计算细节。"
+        "score": 5,
+        "reason": "报告识别了潜在买单方，包括 coding agent、developer agent 和 agent infrastructure 团队，并给出两个任务的金额区间。价值方向合理，但金额估计主要是主观资产估值，没有市场参照、节省成本测算、客户场景、商业化路径或可交付边界，因此货币价值证据较弱。",
+        "missingEvidence": [
+          "金额估计的外部参照或同类资产价格",
+          "买单方具体是谁、为何需要、预算来自哪里",
+          "该 memory schema 能节省多少人力、算力或研发周期",
+          "论文、benchmark、schema、workflow 分别对应的商业价值拆分"
+        ]
       },
       "projectManagement": {
         "score": 11,
-        "reason": "项目管理部分覆盖了项目名称、阶段、计划与实际、资源、依赖、成本、进度判断和纠偏动作。能看出当前处于原型/小规模实验阶段，关键路径是数据收集和 schema 设计，下周要从是否有效转向为何 generalize/何时不能 generalize。主要不足是缺少量化里程碑、验收标准、实验排期、风险优先级和决策门槛。",
-        "missingEvidence": "缺少下周具体要扩展多少项目、收集多少 trajectories、完成多少 case analysis、schema 验证用什么指标、何时决定继续/暂停/转向。"
+        "reason": "项目管理部分覆盖了项目名称、阶段、计划与实际、资源、依赖、成本、进度判断和纠偏动作。关键路径也识别为数据收集和 schema 设计。问题是计划仍较粗，缺少明确里程碑、量化验收标准、风险清单、任务优先级和完成定义。",
+        "missingEvidence": [
+          "下周要扩展到多少项目、多少任务、多少 trajectories",
+          "case-level analysis 的模板和产出形式",
+          "schema 验证的成功标准",
+          "关键风险及备选方案",
+          "是否需要其他成员、算力、数据或老师决策支持"
+        ]
       },
       "nextAction": {
         "score": 7,
-        "reason": "下周动作包括扩展到更多项目、做 case-level analysis、补充跨任务数据、验证抽象 knowledge 的跨任务复用性、用已抽取 skills 检验 schema 与 semantics。这些动作与当前卡点直接相关，方向正确。问题是动作仍偏研究意图，没有被拆成可检查的任务清单和完成标准。",
-        "missingEvidence": "缺少最小可执行实验定义，例如选择哪些项目、每类 SWE task 各多少样本、case analysis 模板、schema 验证标准、预期输出物和截止时间。"
+        "reason": "下周动作明确包括扩展更多项目、做 case-level 分析、补充跨任务数据、验证 schema 和 semantics。这些动作与当前卡点一致。但动作还不够可执行，缺少数量、截止时间、优先级和验收指标。",
+        "missingEvidence": [
+          "具体要新增哪些项目或任务类型",
+          "每个任务的最低样本量",
+          "case-level 分析要回答的核心问题",
+          "schema 验证通过或失败的判定标准",
+          "下周结束时应交付的文档、表格或实验结果"
+        ]
       },
       "evidenceQuality": {
         "score": 3,
-        "reason": "报告有一定证据：pass rate 提高约 20%，已有多任务数据收集，schema 与形式化表达已经开始探索，并给出 CoT’s CoT 证据等级 A/B。但证据主要是摘要式陈述，没有原始实验表、样本量、对照组、案例证据和失败分析。当前证据足以支持继续探索，不足以支持强结论。",
-        "missingEvidence": "缺少实验日志、任务列表、pass/fail 明细、对照设置、消融实验、case study、失败样例和 schema 实例。"
+        "reason": "报告提供了一个关键经验结果：两个较难项目 pass rate 约提升 20%，并将其作为 evidence level A 的依据。但当前证据主要是摘要式自述，没有实验表格、原始日志、对照设置、统计显著性或失败案例。因此证据质量只能算初步有效，不能支撑强结论。",
+        "missingEvidence": [
+          "原始实验日志",
+          "任务列表与 pass / fail 明细",
+          "baseline 与 memory 版本的严格对照",
+          "重复实验结果",
+          "负例与失败模式分析"
+        ]
       }
     },
-    "oneLineJudgment": "本周有真实原型实验和研究方向推进，但核心结论仍依赖未展示的实验细节；当前价值在于把 long-term memory 问题推进到跨任务 schema/taxonomy/semantics，而不是已经证明了可泛化系统。",
+    "totalScore": 67,
+    "tier": "C",
+    "oneLineJudgment": "本周有真实原型进展和清楚的研究方向转向，但证据链、实验细节和 Brainary 落地接口不足，当前更像有潜力的研究假设，而不是已被充分验证的系统进展。",
     "professorFollowUp": [
-      "要求他下周提交一张实验表：项目名称、任务数、baseline pass rate、memory pass rate、提升幅度、运行次数、失败类型。",
-      "要求他给出 3 个 memory 起作用的 case 和 3 个不起作用的 case，并解释差异来自 schema、taxonomy、知识粒度还是 retrieval。",
-      "要求他提交一个最小 unified SWE memory schema 样例，至少包含字段定义、一个 skill 实例、一个 operational semantics 表达样例。",
-      "要求他明确下周的验收标准：扩展到多少项目、多少 trajectories、什么结果算证明跨任务复用，什么结果算失败。",
-      "老师本周最应该关注的一点是：这个项目的关键已经从‘memory 是否提升 pass rate’转向‘什么样的知识表示能稳定迁移’，因此下一步必须用 case-level evidence 逼出 schema 设计。"
+      "请他下周提交一张实验表：项目名、任务数、baseline pass rate、memory 后 pass rate、绝对/相对提升、失败案例。",
+      "要求给出 3 个具体 knowledge unit 样例，并说明它们如何跨 build environment、terminal task、code repair 复用。",
+      "要求把 unified SWE memory schema 写成最小可评审版本，包括字段、taxonomy、procedure knowledge 表达和调用接口。",
+      "追问一个关键问题：这 20% 提升到底来自 long-term memory 的抽象知识，还是来自任务分布、prompt、工具链或调参差异。",
+      "教授本周最应学到的一点是：该项目的核心不在继续堆 trajectory，而在验证一种稳定、可维护、可迁移的 SWE memory 表示是否真的能跨任务提升 agent 能力。"
     ]
   }
 }

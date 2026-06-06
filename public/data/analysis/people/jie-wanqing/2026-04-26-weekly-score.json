@@ -1,6 +1,6 @@
 {
   "key": "person:jie-wanqing:2026-04-26:weekly-score",
-  "generatedAt": "2026-06-06T01:03:27.311Z",
+  "generatedAt": "2026-06-06T02:03:34.842Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
@@ -8,53 +8,92 @@
   "result": {
     "hardProgress": {
       "score": 11,
-      "reason": "本周有实质性的方向校正：完成了标准测试集对齐、潜在数据泄露排查、指标复核，并得出当前 Struct-LLM 路线距离 Smart-LLaMA-DPO 仍有明显差距的判断；同时复盘了 v2 增强、Type-RAG、Topology V1 和 DPO 实验，形成了从“多增强耦合”转向“单假设、可归因、可消融实验”的路线调整。但周报没有给出任何具体实验指标、对齐前后差异、泄露排查结论细节、错误样本数量或性能下降幅度，因此硬进展更偏向复核和诊断，而不是可验收的新结果。",
-      "missingEvidence": "缺少统一评估后的具体指标、与 Smart-LLaMA-DPO 的差距数值、测试集构成、数据泄露排查方法与结果、各漏洞类型的错误分布、v2/Type-RAG/Topology/DPO 复盘中的量化结论。"
+      "reason": "本周有实际研究推进：完成了标准测试集对齐、潜在数据泄露排查、指标复核，并对 v2 增强、Type-RAG、Topology V1、DPO 实验进行了复盘，形成了“当前方法距离 Smart-LLaMA-DPO 仍有明显差距”的判断。但周报没有给出任何具体实验数值、对齐前后指标变化、泄露排查结论细节、错误样例数量或复现实验产物，因此硬进展更多体现为复核和方向重构，而不是可验证的性能提升或新模块完成。",
+      "missingEvidence": [
+        "缺少当前方法与 Smart-LLaMA-DPO 的具体指标对比",
+        "缺少标准测试集对齐后的完整结果表",
+        "缺少数据泄露排查方法与结论证据",
+        "缺少 v2、Type-RAG、Topology V1、DPO 各实验的消融结果",
+        "缺少代码、日志、表格或可复现 artifact"
+      ]
     },
     "cognitiveIncrement": {
       "score": 13,
-      "reason": "认知增量较强。周报明确从“方法收束”转向“实验结果复核与非 SOTA 根因分析”，并识别出结构化证据当前不能稳定支撑最终判定的问题。对 reentrancy、integeroverflow、timestamp 三类错误的差异化机制也有较清楚的理解，说明本周不是简单推进实验，而是对失败原因进行了任务机制层面的重新建模。",
-      "missingEvidence": "缺少认知变化如何由具体实验结果触发的证据链，例如哪些 case 推翻了原有假设，哪些错误模式占比最高，哪些增强策略被证明无效。"
+      "reason": "认知增量较明确：从继续推进 Struct-LLM 方法，转向承认当前路线未达到 SOTA，并进一步把问题定义为结构化证据无法稳定支撑最终漏洞判定。该转向不是泛泛反思，而是基于测试集对齐、指标复核和错误类型分析得出的路线调整，说明本周有实质性判断更新。",
+      "missingEvidence": [
+        "缺少哪些实验结果直接触发该认知转向的证据",
+        "缺少非 SOTA 根因分析的定量支持",
+        "缺少各漏洞类型错误占比或代表性失败案例"
+      ]
     },
     "cot2Depth": {
       "score": 13,
-      "reason": "CoT² 深度较好。周报没有停留在 prompt 或超参数层面，而是指出结构化证据、训练范式和合约级判决之间尚未形成闭环；尤其对 reentrancy 的因果链需求进行了拆解，包括外部调用、状态写入顺序、共享状态依赖、CEI 模式和 nonReentrant 保护机制。这属于对模型为什么误判的二阶反思，也提出了后续实验设计应从耦合增强转向可归因消融。",
-      "missingEvidence": "缺少针对每个瓶颈的验证实验设计或反例样本；还没有说明如何证明 Structured Trace 字段确实能补足因果链，而不是再次变成规则堆叠。"
+      "reason": "CoT² 深度较好。周报没有停留在 prompt 或超参数层面，而是指出结构化证据、训练范式和合约级判决之间没有形成闭环，并进一步拆解 reentrancy、integeroverflow、timestamp 三类漏洞所需的不同因果信息。尤其对 reentrancy 中 external call、state write、CEI、nonReentrant、共享状态依赖等要素的分析，已经接近可操作的机制层判断。",
+      "missingEvidence": [
+        "缺少具体失败样例来证明这些因果字段确实是主要缺口",
+        "缺少不同漏洞类型的错误归因统计",
+        "缺少训练范式与合约级判决脱节的实验性证据"
+      ]
     },
     "brainaryMapping": {
       "score": 7,
-      "reason": "Brainary 关联是清楚的：作者把本周失败复盘上升到 Agent Code Retrieve 中间证据质量、判定逻辑对齐、语义仲裁能力的问题，说明能把单个项目经验映射到 Brainary 的系统设计原则。但目前仍主要是概念映射，没有给出 Brainary 中具体模块、接口、数据结构或自动化评测机制的改动方案。",
-      "missingEvidence": "缺少 Brainary 层面的具体产物，例如证据 schema、检索-判定闭环设计、可消融评测协议、Agent 审计流程图或将 Structured Trace 接入 Brainary 的实现路径。"
+      "reason": "Brainary 关联存在，但仍偏概念层。周报明确提出 Brainary 后续应强调证据质量与判定逻辑对齐，认为 Agent Code Retrieve 不能只生成合理解释，而要生成可验证、可消融、能支撑判定的中间证据。这与 Brainary 的语义仲裁和代码审计能力有一定映射。但缺少 Brainary 中具体模块、接口、数据结构或自动化流程的对应关系。",
+      "missingEvidence": [
+        "缺少 Structured Trace 如何接入 Brainary 的具体模块说明",
+        "缺少 Brainary 中 evidence、retrieval、verification、decision 之间的数据流设计",
+        "缺少该路线对 Brainary 产品或系统能力的明确贡献指标"
+      ]
     },
     "monetaryValue": {
-      "score": 1,
-      "reason": "周报几乎没有体现货币价值或应用转化价值。虽然智能合约漏洞检测本身具有潜在商业价值，但本周内容没有讨论目标用户、节省审计成本、提升召回/精度带来的经济收益、产品化路径、算力成本或与现有工具的竞争优势。",
-      "missingEvidence": "缺少任何关于商业场景、审计成本、客户价值、部署成本、性能收益对应经济收益、开源/论文/产品转化路线的说明。"
+      "score": 2,
+      "reason": "周报体现了代码安全检测方向的潜在应用价值，但没有讨论任何直接货币价值、商业化路径、成本节省、审计效率提升、客户场景或可交付产品形态。因此本维度只能给很低分。",
+      "missingEvidence": [
+        "缺少该研究对智能合约审计成本下降的估算",
+        "缺少潜在用户或应用场景",
+        "缺少与现有安全审计工具相比的商业优势",
+        "缺少可收费功能或产品化路径"
+      ]
     },
     "projectManagement": {
-      "score": 11,
-      "reason": "项目管理表现中上。本周识别了当前路线的主要风险：非 SOTA、结构化证据未表达关键因果关系、Type-RAG 可能负迁移，并据此调整下周优先级。计划中包含 Phase1 完整评估、reentrancy Structured Trace、Selected Type-RAG 三条任务，方向较聚焦。不过项目管理仍缺少时间分配、验收标准、风险阈值和任务依赖关系。",
-      "missingEvidence": "缺少每项任务的完成标准、预计产出、时间预算、失败后决策规则、谁负责什么、实验资源需求，以及 verification prompt 路线是否继续推进的判定阈值。"
+      "score": 10,
+      "reason": "项目管理有基本结构：说明了当前阻碍、主要错误类型、下周三项任务，并把路线从多增强耦合调整为单假设、可归因、可消融实验，这有助于降低实验混乱度。但计划仍缺少验收标准、时间拆分、优先级、风险应对和每项任务的预期产出。",
+      "missingEvidence": [
+        "缺少每个下周任务的完成定义",
+        "缺少 Verification Phase1 成功或失败的判定阈值",
+        "缺少 Structured Trace 字段设计的验收样例",
+        "缺少 Selected Type-RAG 的消融实验矩阵",
+        "缺少时间安排和风险预案"
+      ]
     },
     "nextAction": {
       "score": 9,
-      "reason": "下周行动具体且可执行。Phase1 评估明确了 3,542 个合约标准测试集；Structured Trace 明确了 reentrancy 需要补充的字段；Selected Type-RAG 也针对 integeroverflow 等收益较明确的类型，体现了避免全类型负迁移的策略。下一步计划与本周根因分析之间有较强连续性。",
-      "missingEvidence": "缺少量化验收条件，例如 Phase1 达到什么指标才继续推进，Structured Trace 先做多少样本或哪些基线对照，Selected Type-RAG 用什么消融设置判断是否有效。"
+      "reason": "下周行动具体且与本周发现直接相连：完成 3,542 个合约标准测试集评估、为 reentrancy 设计 Structured Trace 字段、对 integeroverflow 等类型尝试 Selected Type-RAG。任务具备一定可执行性，并且符合从耦合增强转向单假设验证的方向。扣分点是缺少量化验收条件和优先级排序。",
+      "missingEvidence": [
+        "缺少 Verification Prompt 继续推进的指标门槛",
+        "缺少 Structured Trace 字段的具体 schema",
+        "缺少 Selected Type-RAG 的启用类型列表和对照组设计"
+      ]
     },
     "evidenceQuality": {
-      "score": 2,
-      "reason": "证据质量偏弱。周报提供了较多判断，但支撑判断的实验数据基本缺失。比如“明显差距”“主要错误”“负迁移风险”“收益较明确”等说法都没有数值、表格、样本或对照实验支撑。当前更像研究者的内部诊断摘要，而不是可复核的实验周报。",
-      "missingEvidence": "缺少核心实验表、指标数值、错误样例、消融结果、数据泄露排查日志、每类漏洞的 precision/recall/F1、与基线模型的统一口径对比。"
+      "score": 3,
+      "reason": "证据质量中等偏弱。周报提供了若干具体对象，例如 3,542 个合约标准测试集、Smart-LLaMA-DPO、reentrancy/integeroverflow/timestamp、Type-RAG、Topology V1、DPO 等，使判断不是完全空泛。但核心结论几乎没有数值、表格、日志、样例或链接支撑，因此证据层级仍不足。",
+      "missingEvidence": [
+        "缺少实验结果表",
+        "缺少错误案例",
+        "缺少测试集构成说明",
+        "缺少代码或日志链接",
+        "缺少文献阅读的具体篇名和吸收结论"
+      ]
     },
-    "totalScore": 67,
-    "tier": "C",
-    "oneLineJudgment": "本周的研究判断和路线纠偏有价值，但硬结果和证据呈现不足，距离可验收的实验进展还有明显缺口。",
+    "totalScore": 68,
+    "tier": "B",
+    "oneLineJudgment": "本周最大的价值是及时承认非 SOTA 并完成机制层根因重构，但硬证据和可复现实验产出不足，仍需要把认知判断转化为可验证的消融结果。",
     "professorFollowUp": [
-      "要求学生下周必须提交 3,542 合约评估的完整表格，包括 Struct-LLM、Smart-LLaMA-DPO、verification prompt 的统一指标对比。",
-      "要求给出 reentrancy 至少 10 个误判样例，逐一标注缺失的因果字段，验证 Structured Trace 是否真正解决错误根因。",
-      "要求为 Selected Type-RAG 设置明确消融：全类型 Type-RAG、无 Type-RAG、仅 integeroverflow Type-RAG，并报告每类漏洞的变化。",
-      "要求学生定义 verification prompt 路线的继续/停止阈值，避免继续投入到无法超过基线的方向。",
-      "教授本周最应关注的一点是：该项目的问题不再是多加规则或 prompt，而是中间证据是否覆盖漏洞判定所需的因果链。"
+      "教授最应该关注的一点：学生已经意识到问题不在于继续堆规则或调 prompt，而在于中间证据是否覆盖漏洞判定的关键因果链。",
+      "建议追问：当前方法与 Smart-LLaMA-DPO 的具体差距是多少？按漏洞类型分别差多少？",
+      "建议要求：下周 Verification Phase1 必须给出完整结果表、失败样例和是否继续推进的明确阈值。",
+      "建议要求：Structured Trace 先只针对 reentrancy 做最小闭环，不要同时扩展太多类型。",
+      "建议追问：Brainary 中 Structured Trace、retrieval、verification、final decision 的数据流如何落地，是否能自动化生成和消融。"
     ]
   }
 }

@@ -1,65 +1,102 @@
 {
   "key": "person:huang-yitan:2026-05-31:weekly-score",
-  "generatedAt": "2026-06-06T01:03:11.221Z",
+  "generatedAt": "2026-06-06T02:03:21.122Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
   "inputHash": "21bcd984da61cff8174c615ddd1c44e5da0e6ad5673a5892881970a54e505b82",
   "result": {
     "week": "2026-05-31",
-    "name": "黄一坦",
+    "name": "Huang Yitan",
     "scores": {
       "hardProgress": {
         "score": 16,
-        "reason": "本周有明确硬产出：整理了429个BAC empirical sample，区分positive/likely与uncertain/negative control，形成12类pattern family，并抽象出授权边界位置、失效机制、补丁模式、检测/验证需求四个taxonomy维度。同时把样本结论转成agent能力需求，这是实质研究资产。但报告没有附样本表、标注规范、统计表或可检查文件；且228个positive/likely加198个uncertain/negative control只等于426，与429总数存在缺口未解释。本周也没有新增代码、运行实验或benchmark落地结果。",
-        "missingEvidence": "缺少样本清单、标注标准、12类pattern family完整表、429与426数量差异解释、统计分布表、可复核的taxonomy文件或论文section草稿。"
+        "reason": "本周有明确硬进展：整理了 429 个 BAC 样本，区分 positive/likely 与 uncertain/negative control，提出 12 类 pattern family，并抽象出授权边界位置、失效机制、修复方式、检测需求四个 taxonomy 维度；同时把 empirical finding 转成 agent 能力需求。扣分点是这些资产目前仍主要以报告叙述存在，缺少可检查的数据表、标注规范、样本来源、案例 ID、统计图或 artifact 链接；且 228 个 positive/likely 加 198 个 uncertain/negative control 等于 426，与 429 总数存在 3 个样本的计数缺口未解释。",
+        "missingEvidence": [
+          "429 个样本的原始列表、来源、去重规则和标注表未提供。",
+          "12 类 pattern family 的完整定义、样本分布和代表案例未提供。",
+          "228、198 与 429 之间的数量差异未解释。",
+          "没有提供 taxonomy 表格、统计图或可复核 appendix。"
+        ]
       },
       "cognitiveIncrement": {
         "score": 13,
-        "reason": "认知增量清楚：把BAC从漏洞案例库重新定义为授权边界、验证条件和agent能力结构的经验地图；核心判断从“识别漏洞名”推进到“恢复授权意图并构造可执行验证”。报告明确区分ownership、tenant isolation、route mismatch、workflow/state、cross-layer inconsistency对agent能力的不同要求，这是有效的研究问题重构。但这些认知主要来自内部整理，缺少与已有文献、现有工具或真实实验失败案例的对照。",
-        "missingEvidence": "缺少与已有BAC/IDOR/BOLA研究、SAST/DAST工具、agent benchmark的对比；缺少具体案例展示这些认知如何改变系统设计或减少误报/漏报。"
+        "reason": "认知增量较强。周报不是停留在“BAC 漏洞很多”，而是提出 BAC 的关键难点在于验证条件异质，并把 empirical study 和 agent architecture 连接起来：双用户差分、跨租户对照、路径变体、运行时对象准备、oracle 判断等成为 agent 能力需求。这对研究叙事和系统设计都有实际推动。扣分点是这些增量目前还主要是分析性结论，尚未通过具体案例执行或 ablation 证明其必要性。",
+        "missingEvidence": [
+          "缺少具体案例展示：某一类 BAC 如何从样本分析推导出 agent 模块需求。",
+          "缺少与现有 SAST/DAST/agent 方法的对比证据。",
+          "缺少实验说明：这些认知增量是否真的提高验证成功率或降低误报。"
+        ]
       },
       "cot2Depth": {
-        "score": 13,
-        "reason": "CoT's CoT有较好深度：不仅总结发现，还追问为什么没有被自动化科研吸收，并提出BAC Boundary Memory、Runtime Competence Estimator、Evidence Promotion Controller等可沉淀模块。尤其是把confidence定义为evidence promotion control，能避免agent把静态推理直接提升为confirmed finding。但三个CoT's CoT都标注“老师原本不知道的吗：否”，说明新颖性更多是系统化落地，而不是概念突破；证据等级均为B，尚未经过大规模实验验证。",
-        "missingEvidence": "缺少每个CoT's CoT对应的最小系统原型、状态机定义、失败案例、实验指标，以及为什么这些模块优于普通agent流程的实证证据。"
+        "score": 12,
+        "reason": "CoT's CoT 有较好的二阶深度：从 empirical taxonomy 上升到授权秩序地图、runtime competence、evidence promotion control，并能说明为什么这些还没有被自动化科研吸收，以及可能沉淀为 memory、module、workflow、benchmark。扣分点是三条 CoT's CoT 均标注为老师原本不知道的吗：否，说明新颖性更多在落地组合而非概念本身；此外证据等级均为 B，尚未形成系统实验或工程验证。",
+        "missingEvidence": [
+          "缺少 evidence promotion controller 的状态机定义或示例输出。",
+          "缺少 runtime competence estimator 的输入输出 schema。",
+          "缺少 BAC Boundary Memory 如何被 agent 读取和使用的具体流程。",
+          "缺少实验证据证明二阶认知结构优于普通 agent pipeline。"
+        ]
       },
       "brainaryMapping": {
-        "score": 9,
-        "reason": "Brainary/长期Agent认知架构映射较完整，覆盖Target Understanding、Knowledge/Benchmark、Problem Definition、Self-ability Understanding、Confidence、Architecture Modeling、Solving/Evaluation、Working Memory、Long-Term Memory、Monitoring/Project Management。报告把empirical taxonomy映射到pattern memory、oracle memory、failure-reason memory和case-quality memory，和自动化科研路径连接紧密。扣分点是映射仍偏概念化，缺少schema字段级定义和数据流接口。",
-        "missingEvidence": "缺少memory schema的字段定义、模块输入输出、状态转移图、与现有agent原型的接口说明。"
+        "score": 8,
+        "reason": "与长期 Agent 认知架构的映射比较完整，覆盖 Target Understanding、Knowledge/Benchmark、Problem Definition、Self-ability、Confidence、Architecture Modeling、Solving/Evaluation、Working Memory、Long-Term Memory、Monitoring/Project Management。尤其是把 pattern taxonomy、oracle template、failure reason 转为长期 memory 的方向较清楚。扣分点是映射仍偏概念层，尚未给出 Brainary/memory 的正式字段、读写时机、更新规则和评价指标。",
+        "missingEvidence": [
+          "缺少 memory schema 的正式 JSON/table 定义。",
+          "缺少 agent 在一次任务中如何调用 pattern memory、oracle memory、failure memory 的执行轨迹。",
+          "缺少长期 memory 更新机制和冲突处理规则。",
+          "缺少把该映射接入现有 agent 原型的证据。"
+        ]
       },
       "monetaryValue": {
         "score": 6,
-        "reason": "报告给出了两个5万元人民币估值，并解释其来自一周安全研究、taxonomy抽象、agent能力边界设计和返工成本规避。价值方向可信：可沉淀为论文、benchmark、workflow、module、verified BAC finding generation。但估值仍主要是主观工时换算，没有市场价格、客户痛点强度、替代方案成本、产品转化路径或可收费场景的证据。",
-        "missingEvidence": "缺少企业安全团队或工具厂商的实际需求证据、竞品/替代方案成本、节省人力估算、付费意愿、可交付产品形态和商业化指标。"
+        "reason": "周报给出了两个任务各 5 万人民币、合计约 10 万人民币的估值，并列出了潜在买单方：企业安全团队、安全工具厂商、开源项目/厂商安全团队、安全研究人员。价值方向合理：verified BAC finding generation、benchmark、agentic validation 都有应用潜力。扣分点是估值方法较粗糙，基本按一周研究工作量和返工成本估算，没有市场参照、替代方案成本、客户付费场景、ROI 或产品化路径的量化依据。",
+        "missingEvidence": [
+          "缺少具体客户场景中的付费意愿或采购预算依据。",
+          "缺少与人工安全审计成本、误报成本、验证成本的对比。",
+          "缺少产品化交付形态的最小闭环，例如插件、报告生成器、benchmark 服务或内部审计工具。",
+          "缺少估值中的时间成本、API 成本、人力成本和可复用资产比例拆分。"
+        ]
       },
       "projectManagement": {
         "score": 13,
-        "reason": "项目管理信息较完整：说明当前阶段、原计划与实际完成、投入时间、下周时间、关键里程碑、资源需求、依赖关系、延期影响、成本规划和纠偏动作。关键路径判断明确，知道下周应从内部报告转向paper-ready narrative和evaluation plan。扣分点是里程碑缺少可验收标准，例如‘empirical study section初稿’应达到什么结构、多少表格、多少案例；风险管理也还停留在描述瓶颈，缺少备选方案。",
-        "missingEvidence": "缺少每个里程碑的验收标准、artifact链接、风险优先级、延期备选路径、每项任务预计耗时拆分。"
+        "reason": "项目管理信息充分：说明了当前阶段、原计划与实际完成、投入时间、下周投入、关键里程碑、资源需求、依赖关系、延期影响、成本规划、瓶颈和纠偏动作。尤其是明确下周要进入 paper-ready narrative 和 executable evaluation plan，项目关键路径判断清楚。扣分点是里程碑仍偏文本产出，缺少每个里程碑的验收标准；风险管理也还没有量化，例如如果 oracle template 做不出来，是否调整 benchmark 范围。",
+        "missingEvidence": [
+          "缺少每个里程碑的可验收产物定义，例如文件名、表格、实验数、案例数。",
+          "缺少风险优先级和备选路径。",
+          "缺少已完成资产的位置或版本管理信息。",
+          "缺少 evaluation 阶段的资源预算和成功标准。"
+        ]
       },
       "nextAction": {
         "score": 9,
-        "reason": "下周行动非常具体：写empirical study section初稿，把12类压缩到3-5类，选择三类代表能力各2-3个案例，写pattern到agent capability映射表，形成ownership、tenant isolation、route mismatch三个能力模板和oracle template，并分类失败原因。这些动作都是最小可验证且直接服务论文和evaluation。扣分点是缺少明确验收口径，例如初稿页数、表格字段、案例入选标准、oracle template测试通过条件。",
-        "missingEvidence": "缺少下周交付物格式、完成定义、案例选择标准、oracle template的测试样例和验收指标。"
+        "reason": "下周动作具体且与本周卡点强相关：写 empirical study section 初稿，压缩 12 类 pattern family，选三类代表能力案例，制作 pattern -> agent capability 映射表，写 ownership、tenant isolation、route mismatch 的 oracle template，并统一失败原因字段。这些动作能直接推动论文、benchmark 和 agent evaluation。扣 1 分是因为部分动作仍较多，优先级和完成标准可以更硬，例如必须交付几张表、几个案例、几页正文、几个可运行 oracle。",
+        "missingEvidence": [
+          "缺少下周任务的优先级排序。",
+          "缺少每个 next action 的完成判据。",
+          "缺少三类代表能力每类至少多少案例、是否要跑通原型的硬指标。"
+        ]
       },
       "evidenceQuality": {
         "score": 3,
-        "reason": "报告提供了若干内部证据：样本规模、类别数量、positive/negative划分、能力分层、证据等级和项目时间成本。但证据质量只能算中等，因为没有原始数据、统计表、标注一致性、案例引用、实验日志或代码结果。数量还存在429总数与228+198不一致的问题。当前更像研究设计与内部整理总结，而不是可外部复核的实证结果。",
-        "missingEvidence": "缺少原始样本来源、标注流程、inter-rater或自检机制、完整分布表、代表案例、实验日志、artifact链接、数量不一致解释。"
+        "reason": "证据质量中等。优点是报告提供了样本规模、类别数量、正负/不确定样本数量、证据等级 B、时间和成本数据，并且对当前未完成的大规模实验有自知。主要问题是所有关键证据都停留在自述层，缺少可复核 artifact；样本计数存在不一致；没有案例片段、标注例子、统计表、运行日志或代码结果。因此只能支持“有实质整理和设计推进”，尚不能支持“结论已被验证”。",
+        "missingEvidence": [
+          "缺少样本标注数据或抽样审计结果。",
+          "缺少至少 2-3 个代表案例的完整链条：授权边界、根因、补丁、验证需求、oracle。",
+          "缺少 agent 原型运行结果或失败日志。",
+          "缺少论文 section 草稿或 taxonomy 表的实际附件。"
+        ]
       }
     },
-    "totalScore": 82,
+    "totalScore": 80,
     "tier": "A",
-    "oneLineJudgment": "这是一个研究方向和agent架构抽象都明显成型的强周报，但硬证据仍停留在内部整理层，下一步必须把taxonomy、样本和oracle变成可复核、可执行、可写进论文的artifact。",
-    "oneThingProfessorShouldLearn": "BAC自动化的核心不是识别更多漏洞名称，而是为不同授权边界建立不同的运行时验证条件，并让这些条件成为agent的长期记忆、能力自评和证据晋升规则。",
+    "oneLineJudgment": "本周是一次高质量的研究重构周：从 BAC 样本整理推进到 agent 能力模型与证据晋升框架，但主要成果仍需通过可复核数据表、案例链条和 oracle 原型来固化。",
     "professorFollowUp": [
-      "请要求学生下周提交一个可检查的BAC empirical study artifact：至少包括样本表、12类pattern定义、3-5类主文压缩方案、数量统计和429与426差异解释。",
-      "请确认论文主线是否采用“BAC empirical study + agentic validation”，因为本周报告显示这比单纯做agent系统更有叙事闭环。",
-      "请让学生优先做三类核心能力的最小闭环：owner vs non-owner、same-tenant vs cross-tenant、canonical route vs variant route，每类至少2个可运行或可解释案例。",
-      "请追问tenant isolation和route mismatch的oracle template，因为这两类是从概念映射走向系统评测的主要风险点。",
-      "请要求把suspected、not executed、not confirmed、confirmed做成统一结果状态，否则后续evaluation会混淆推理成功、执行失败和真实漏洞确认。"
+      "请优先确认研究主线是否定位为“BAC empirical study + agentic validation”，而不是单纯做一个安全 agent 系统。",
+      "要求学生下周交付三个硬件级产物：一份 empirical study section 初稿、一张 pattern -> capability 映射表、三类核心 BAC 的 oracle template。",
+      "要求解释 429、228、198 三组数量之间的差异，并提交可抽查的样本标注表。",
+      "建议老师重点追问：tenant isolation 和 route mismatch 为什么足以代表更高阶 agent 能力，而不是只是样本数量较少的边缘类别。",
+      "下周检查标准不应只看文字叙事，而应看是否有 2-3 个案例完整展示从授权边界到 validation plan 再到 oracle verdict 的闭环。"
     ]
   }
 }
