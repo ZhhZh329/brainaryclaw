@@ -1,6 +1,6 @@
 {
   "key": "person:guo-yaoqi:2026-05-17:weekly-score",
-  "generatedAt": "2026-06-06T02:01:38.122Z",
+  "generatedAt": "2026-06-06T06:01:39.301Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
@@ -11,54 +11,54 @@
     "scores": {
       "hardProgress": {
         "score": 16,
-        "reason": "本周有明确硬产出：获取了 500 个 case / 5000 条 trajectory 的数据底座，完成 trajectory 对拍、bucket 分桶、skill 抽取的粗糙 v1，并在 SWE-bench Pro 100 issue 上报告 mini-SWE-agent 从 37% 到 40% 的提升。另有 regression paired 评测启动和 critic bug 修复。但主线 1 的关键交付没有完成：49 实例 paired 评测未收尾，函数级 Hit 和 solve rate 的真实增益没有数字。因此硬进展主要来自新主线，原定评测闭环缺口明显。",
-        "missingEvidence": "缺少 49 实例 paired 评测完整结果；缺少 +3pp 实验的运行日志、case 列表、随机性控制、失败/成功明细；缺少 skill 抽取模块的代码或接口说明；缺少 5000 条 trajectory 的质量过滤统计。"
+        "reason": "本周有明确硬交付：拉取并形成 500 case / 5000 trajectory 数据底座，实现 trajectory 对拍、bucket 分桶、skill 抽取 v1，并在 SWE-bench Pro 100 issue 上报告 mini-SWE-agent 从 37% 到 40% 的 +3pp 信号；同时 regression paired 评测已启动并修复了 critic 极性误判 bug。主要扣分点是主线 1 的 49 实例 paired 评测没有收尾，函数级 Hit 和 solve rate 的关键数字缺席；主线 2 的 +3pp 仍是粗糙第一版，缺少正式实验控制。",
+        "missingEvidence": "缺 49 实例 paired 评测完整表；缺 regression on/off 的函数级 Hit、solve rate、置信区间或逐例结果；缺 +3pp 实验的详细配置、随机性控制、失败例分析和是否重复运行。"
       },
       "cognitiveIncrement": {
-        "score": 13,
-        "reason": "认知增量较强，核心是把 agent 失败从 factual knowledge 缺失重新归因为 procedural knowledge 缺失，并提出 success-fail trajectory diff 作为可扩展程序性知识来源。同时抽象出“差分是知识的可扩展来源”和“context-tagged skill 才有价值”。这些不是简单工程总结，而是有可能改变研究目标函数的判断。但目前部分判断仍偏概念性，尤其是“大多数失败是 procedure 而非 fact”的比例没有系统标注数据支撑。",
-        "missingEvidence": "缺少 fact-deficit 与 procedure-deficit 的人工或半自动分类统计；缺少 RAG-only / fact 补全 baseline 对比；缺少不同错误类型中 procedure 缺失占比的证据。"
+        "score": 14,
+        "reason": "认知增量强：把 agent 失败从 factual knowledge 缺失重新归因为 procedural knowledge 缺失，提出 trajectory 是程序性知识的可扩展来源，并进一步总结出“差分是知识的可扩展来源”的跨层级元方法；还识别出 context-tagged skill 相比通用 skill 的关键性。这些不是普通工程总结，而是对研究目标函数的重写。扣分点是部分判断仍主要基于单次 +3pp 信号和概念论证，外推到“业内系统性错位”证据还不足。",
+        "missingEvidence": "缺 fact-deficit 与 procedure-deficit 的系统分类统计；缺与 RAG-only、tool-only、fact-injection baseline 的并列比较；缺跨 agent、跨 benchmark 复现来支撑“目标函数改写”的强结论。"
       },
       "cot2Depth": {
         "score": 13,
-        "reason": "CoT's CoT 写得比较完整：每条都有内容、证据等级、老师是否原本不知道、信息差、自动化潜力和沉淀形式。尤其是将 procedure knowledge、差分元方法、contextual skill 三者分别提升到方法论层，符合模板对深层认知的要求。扣分点在于证据等级虽然自标为 L2/L3，但支撑材料仍不足，且若只看本周报告，第二条中依赖“上周”的跨层级验证不能作为当前周独立证据完全计入。",
-        "missingEvidence": "缺少本周内独立复现第二个 benchmark 或第二个 agent 的结果；缺少 context-tagged skill 与全量注入的正式对照数字；缺少 CoT's CoT 结论可被证伪的实验设计细节。"
+        "reason": "CoT's CoT 写得较完整：每条都有内容、证据等级、老师是否原本不知道、信息差、自动化潜力和沉淀形式。三条分别对应根因归因层错位、差分元方法、contextual skill 原则，层次清楚。扣分点是证据等级自评较诚实但仍偏概念化，尤其 CoT 1 和 CoT 3 的实验支撑较薄；有些“没人做过”“领域话语权”类判断缺外部证据，本周报告内无法验证。",
+        "missingEvidence": "缺正式的全量注入 vs context-tagged 注入实验数据；缺多 bucket 切法 ablation；缺第三个抽象层级的差分验证；缺文献或 leaderboard 失败模式统计来支撑“社区基本没有引入该区分”的判断。"
       },
       "brainaryMapping": {
-        "score": 8,
-        "reason": "Brainary 映射较具体，覆盖 memory、reasoning、calibration、cognitive control、benchmark/evaluation，并把 procedural memory 定义为带 trigger context、action sequence、来源 trajectory 和验证增益的结构化记忆。这比泛泛说“可接入 Brainary”更有价值。扣分在于目前仍是设计映射，尚未说明现有 Brainary 模块如何接入、接口边界是什么、哪些字段已经实现。",
-        "missingEvidence": "缺少 Brainary 现有 schema 与新 procedural memory schema 的字段级对齐；缺少模块接口、输入输出样例、存储格式；缺少实际接入 Brainary 后的运行结果。"
+        "score": 9,
+        "reason": "Brainary 映射具体且有结构：把本周工作映射到 memory、reasoning、calibration、cognitive control、benchmark/evaluation，并提出 procedural memory schema、context-aware skill injector、procedure-deficit benchmark 等沉淀物。优点是没有停留在口号，而是说明了 trigger context、action sequence、来源 trajectory、验证增益等结构。扣 1 分是因为这些映射大多还停留在设计层，尚未证明可稳定接入 Brainary 主系统。",
+        "missingEvidence": "缺 Brainary 现有模块接口与本周 procedural memory schema 的具体对接方式；缺端到端集成实验；缺 Brainary 内部 memory/reasoning/cognitive control 指标上的实际改善数据。"
       },
       "monetaryValue": {
-        "score": 5,
-        "reason": "报告给出了 $110,000 的估值、拆分权重和保守/激进情景，形式完整，也能区分新 idea、元方法和 regression 推进的价值。但金额主要建立在“成熟 Unified Repair Agent 年化商业价值 $2M”和本周贡献 5.5% 的主观权重上，缺少市场、转化概率、时间折现和竞争替代的约束。当前更像研究价值定性定价，不是可用于预算或商业决策的货币估值。",
-        "missingEvidence": "缺少 $2M 年化价值来源；缺少从 +3pp benchmark 提升到商业价值的转换模型；缺少转化概率、开发成本、时间折现、失败情景成本；缺少同类 agent 提升对应商业收益的参照。"
+        "score": 7,
+        "reason": "报告给出 $110,000 的价值定价，并拆成 procedure skill 范式、差分元方法、regression paired 推进三部分，还给出保守/激进/失败情景，说明有货币化意识和风险折扣。扣分点是估值基准“成熟 Unified Repair Agent 年化商业价值 $2M”和 5.5% 权重主要是主观设定；当前只有 +3pp 初步信号，尚不足以支撑较高金额。",
+        "missingEvidence": "缺 $2M 年化商业价值的来源；缺 5.5% 权重的客观依据；缺 +3pp 对实际产品收入、成本节约或客户价值的换算；缺 API 成本与收益之间的 ROI 计算。"
       },
       "projectManagement": {
         "score": 12,
-        "reason": "项目管理信息比较充分：记录了约 50 小时投入、下周 50 小时计划、SGD 成本、预算风险、偏差原因、纠偏动作和是否需要老师介入。也诚实承认主线 1 滞后，并提出前两到三天收尾 paired 评测。扣分主要因为关键承诺没有关闭，而且双主线切换虽然有理由，但没有给出明确优先级门禁机制，容易继续拖延原评测闭环。",
-        "missingEvidence": "缺少 regression paired 当前已完成多少实例、失败多少实例、预计剩余运行时间；缺少下周每个里程碑的验收标准；缺少预算上限的硬约束；缺少如果新 idea 继续占用时间时的取舍规则。"
+        "reason": "项目管理信息较全：报告了约 50 小时投入、任务分配、下周 50 小时计划、API 成本 250+ SGD、下周 280–300 SGD 风险、人员协作、里程碑和纠偏动作。也诚实记录了主线 1 未收尾。扣分点是上周 flag 没关闭，说明优先级切换虽有理由但执行上造成关键评测滞后；双主线并行带来成本和注意力风险，仍缺明确 stop/go gate。",
+        "missingEvidence": "缺具体日程排布和验收表；缺每个实验的预算上限和失败停止条件；缺 paired 评测重跑所需实例清单；缺 wangchong 协作后的责任划分。"
       },
       "nextAction": {
-        "score": 8,
-        "reason": "下周动作具体：收尾 49 paired，给出函数级 Hit / solve rate 数字；与 wangchong 对 case；做 bucket 维度 ablation；将静态注入升级为 retrieval 注入；暂缓 knowledge graph。这些动作与本周卡点直接对应，具备可验证性。扣分在于部分动作还缺少实验矩阵、通过/失败阈值和最小验收标准。",
-        "missingEvidence": "缺少 bucket ablation 的具体实验表；缺少 retrieval 注入的 top-k、检索信号、评价指标；缺少 paired 评测的完成日期和报告格式；缺少决定是否继续 procedure knowledge 方向的 go/no-go 阈值。"
+        "score": 9,
+        "reason": "下周动作清楚且可验证：先用两到三天收尾 49 paired，给出函数级 Hit / solve rate 数字；做 bucket 维度 ablation；把静态注入升级到 retrieval 注入；与 wangchong 对 benchmark case。动作与当前卡点直接对应，且有优先级排序。扣 1 分是因为 root cause knowledge graph 仍被提到，虽然报告也说应暂缓，需防止再次分散主线。",
+        "missingEvidence": "缺 bucket ablation 的具体实验矩阵、样本规模、评价指标；缺 retrieval 注入的 top-1/top-k、触发信号、对照组设计；缺 regression paired 收尾的确切完成日期和输出格式。"
       },
       "evidenceQuality": {
         "score": 3,
-        "reason": "有若干可量化证据：500 case / 5000 trajectory、SWE-bench Pro 100 issue 上 37% 到 40%、成本约 250+ SGD、时间约 50 小时。但证据质量仍属中等偏弱：核心 +3pp 没有置信区间、重复运行、case 级明细或消融；regression 主线没有最终数字；全量注入变差也没有正式数据。报告可信度来自结构化自述，不来自可审计材料。",
-        "missingEvidence": "缺少实验日志、seed、commit hash、prompt 版本、case-level 结果、统计显著性、消融表、失败样例和数据清洗报告。"
+        "reason": "证据质量中等偏弱。优点是有具体数据规模、benchmark 名称和 37%→40% 的初步结果，也明确标注若干结论仍未证实。主要问题是关键结果没有提供实验细节、统计稳定性、逐例证据和复现实验；regression 主线的核心数字缺失；context-tagged skill 的效果更多是描述性判断。",
+        "missingEvidence": "缺实验日志、commit/hash、prompt 配置、模型版本、随机种子、运行次数、显著性检验、逐例成功/失败列表、成本明细和可复现脚本说明。"
       }
     },
-    "totalScore": 78,
-    "tier": "B",
-    "oneLineJudgment": "本周新方向有实质工程原型和有价值的认知增量，但原定 regression 评测未闭环，且 +3pp 与 procedure-knowledge 结论的证据仍不足以支撑高置信判断。",
+    "totalScore": 83,
+    "tier": "A",
+    "oneLineJudgment": "这是一个研究增量很强但证据仍偏早期的一周：新方向有数据、模块和 +3pp 初信号，但 regression 关键评测未收尾，procedure knowledge 论断还需要正式 ablation 与跨 agent 复现来坐实。",
     "professorFollowUp": [
-      "要求下周先交 49 实例 paired 评测完整表：每个 case 的 on/off 结果、函数级 Hit、solve rate、失败原因和 critic bug 修复前后差异。",
-      "要求把 37% 到 40% 的 SWE-bench Pro 100 结果拆成 case-level 明细，并说明是否重复运行、是否固定 seed、是否存在 prompt 或样本选择偏差。",
-      "要求做一个最小但正式的对照实验：无 skill、全量 skill、bucket context-tagged skill、retrieval skill 四组对比，否则不能确认 context tag 和 retrieval 的真实边际价值。",
-      "要求给 procedure-deficit 与 fact-deficit 一个可操作标注协议，并先在 30 到 50 个失败 case 上做人审或双人一致性检查。",
-      "老师本周最应该学习的一点是：如果这个方向成立，agent 增强的关键不只是补事实知识，而是把成功轨迹中的程序性动作序列抽成带适用条件的可检索 skill；但目前这仍是 L2 级信号，必须用消融和跨 agent 复现尽快升证据等级。"
+      "要求下周优先交付 49 实例 regression paired 完整表，包括 on/off、函数级 Hit、solve rate、逐例差异和失败原因，不要再只报告“在跑”。",
+      "要求把 37%→40% 的实验做成可审计结果：列出 benchmark 切分、模型版本、prompt 注入方式、运行次数、随机性、逐例结果和成本。",
+      "要求做一个最小但严格的 ablation：无 skill、全量 skill、bucket context-tagged skill、retrieval skill 四组对照，先在小样本筛选，再上 100 issue。",
+      "要求暂缓 root cause knowledge graph，除非 regression paired 和 bucket ablation 已完成；否则会继续扩大探索面而削弱收敛。",
+      "老师本周最应该关注的一个新东西是：agent 失败可能不是缺事实，而是缺“何时、以什么顺序、在什么上下文使用事实”的程序性知识；如果这个判断被后续实验坐实，它会改变 Brainary memory 和 agent 增强模块的设计重心。"
     ]
   }
 }

@@ -1,6 +1,6 @@
 {
   "key": "person:feng-yebo:2026-04-26:weekly-score",
-  "generatedAt": "2026-06-06T05:00:44.317Z",
+  "generatedAt": "2026-06-06T06:00:49.331Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
@@ -8,53 +8,89 @@
   "result": {
     "hardProgress": {
       "score": 18,
-      "reason": "本周有明确硬产出：Quant-Agent 46 次提交并上线双层反思闭环，含 digest、meta-reflector、prompt_editor、测试与实盘运行；Skills-Security 进入 CCS 投稿前收口，威胁模型、数字一致性、图表与实验数字都有推进；DynaHive 完成 19 页第一版；TBProv 给出完整实验结果但仍有参考文献和结论占位；Trading Survey 本周推进较小，主要是句子级打磨。整体硬进展强，但多个成果仍处于自报状态，且部分项目仍有明显收尾缺口。",
-      "missingEvidence": "缺少可验证的 git diff 链接、CI 测试结果、实盘账户截图或交易日志、论文 PDF 链接、artifact 包链接、实验复现实验日志。Quant-Agent 的收益和 Q2 指标尚未提供可审计证据。"
+      "reason": "本周硬进展非常密集：Quant-Agent 有 46 次提交、双层反思闭环、测试行数、实盘收益；Skills-Security 从论文一致性、威胁模型、数字对齐推进到投稿前状态；DynaHive、TBProv、Trading Survey 都有明确稿件和实验/写作推进。扣分点是部分成果仍是自述，缺少可外部核验的链接、日志、PDF diff、实验复现记录；Quant-Agent 的收益和 Q2 指标样本很短，不能直接等同于稳定能力。",
+      "missingEvidence": [
+        "缺少 git commit 列表或仓库链接，无法核验 46 次、29 次提交的实际内容。",
+        "缺少 Quant-Agent 实盘账户截图、交易流水、收益曲线、手续费/滑点口径。",
+        "缺少各论文最新版 PDF、diff、实验脚本或 artifact 清单的可核验入口。",
+        "DynaHive 和 TBProv 的实验数字缺少原始日志、统计方差、重复次数说明。"
+      ]
     },
     "cognitiveIncrement": {
-      "score": 13,
-      "reason": "CoT 增量不是简单复述任务，而是提炼出三层反思架构、部署前自审、长期稳定性与短期 regime shift 的权衡、安全论文威胁模型骨架、随机采样验证等可迁移认知。增量质量较高，并能跨 Quant-Agent、DynaHive、TBProv、Skills-Security 做类比。但部分结论仍偏概念归纳，缺少系统实验来支撑泛化边界。",
-      "missingEvidence": "缺少对这些认知增量的反例分析、适用边界、失败案例，以及跨项目可量化验证。尤其是“高频总结 + 低频改变”的最优频率尚无实验数据。"
+      "score": 14,
+      "reason": "CoT 增量不是泛泛总结，而是从多个项目中抽出较清晰的新认知：反思三层分离、部署前自审、高频总结低频改变、威胁模型分类是系统安全论文骨架、随机采样验证替代完整重算。这些都能反推到系统设计原则。扣分点是有些认知仍偏概念归纳，尚未形成可执行的评价指标或可复用实验协议。",
+      "missingEvidence": [
+        "缺少对三层反思架构相较单层反思的对照实验。",
+        "缺少部署前自审在 DynaHive 之外的跨场景量化验证。",
+        "缺少“高频总结、低频改变”频率参数如何选择的实证依据。"
+      ]
     },
     "cot2Depth": {
       "score": 13,
-      "reason": "CoT's CoT 部分有三条二阶抽象：简单 agent 是否需要长期记忆、主动防御的预判结构、反思频率与系统稳定性的关系。每条都给出自动化潜力、沉淀形式和证据等级，符合模板要求。第三条尤其与本周 Quant-Agent 的具体架构强相关。但前两条证据等级为 B，主要来自观察和类比，尚未形成系统 ablation。",
-      "missingEvidence": "缺少 with/without memory 的控制实验、pre-action adversary simulation 的量化收益、反思频率对 drift 或 performance 的曲线数据。"
+      "reason": "CoT's CoT 有三条较高层原则，且每条都给出自动化潜力、沉淀形式和证据等级，尤其第三条把人和系统的反思频率统一到一个结构里，有较强设计价值。扣分点是证据等级的判定主要由作者自评，A/B、消融、跨任务边界条件仍缺；第一条和第二条还没有充分量化，不能完全支撑强原则。",
+      "missingEvidence": [
+        "缺少 with-memory 与 without-memory 的系统性 ablation。",
+        "缺少 pre-action adversary simulation 带来收益的对照实验。",
+        "缺少频繁反思导致 drift 的定量曲线或失败案例日志。"
+      ]
     },
     "brainaryMapping": {
       "score": 8,
-      "reason": "Brainary 映射覆盖 Quant-Agent、DynaHive、Skills-Security、TBProv 四个项目，能对应到 reflection、online learning、cognitive control、long-term memory、trust modeling、evaluation、calibration 等模块，并指出可能沉淀为 module、workflow、benchmark、evaluator。缺点是多数表述停留在能力映射层，具体 Brainary 接口、模块边界、优先级和落地任务还不够清晰。",
-      "missingEvidence": "缺少 Brainary 现有模块的具体接口名、集成改动清单、谁负责实现、预计工期、验收指标，以及这些映射是否已进入 Brainary backlog。"
+      "reason": "Brainary 映射覆盖了 reflection、online learning、cognitive control、long-term memory、monitoring、trust modeling、evaluation、tool orchestration 等模块，且每个项目都能落到可能沉淀的 module、workflow、evaluator 或 benchmark。扣分点是多处写明“老师原本不知道的吗：否”，说明本周对 Brainary 的新增理论信息有限；目前更多是实例化映射，而不是对 Brainary 架构的实质更新。最有价值的新点是把 pre-deployment self-audit gate 提为一等模块。",
+      "missingEvidence": [
+        "缺少 Brainary 现有模块图与本周新增模块之间的差异标注。",
+        "缺少 pre-deployment self-audit gate 的接口定义、输入输出 schema、失败处理机制。",
+        "缺少从这些项目回灌到 Brainary 代码库或设计文档的实际产物。"
+      ]
     },
     "monetaryValue": {
       "score": 6,
-      "reason": "报告给出了每个项目的估值、计算逻辑、谁会买单和价值来源，优于只写主观判断。但金额明显高度假设化，尤其 Quant-Agent 600 万、Skills-Security 400 万、总计 1300 万的估值缺少外部市场验证、客户访谈、转化概率和折现。论文价值、产品价值和策略收益被混合计算，容易高估。",
-      "missingEvidence": "缺少真实客户意向、报价、竞品对标、转化概率、维护成本、合规风险、资金容量上限、策略回撤压力测试，以及论文接收概率的折现模型。"
+      "reason": "周报给出了每个项目的估值、计算逻辑和合计价值，说明作者开始把科研资产按产品、论文、平台模块来估值。但估值证据较弱：Quant-Agent 的 600 万估值基于很短期实盘收益和假设年化；论文项目的估值主要按顶会潜在收益估算；DynaHive、TBProv 首次纳入估值但缺少市场验证。该部分有管理价值，但不能作为真实商业价值判断。",
+      "missingEvidence": [
+        "缺少真实客户、付费意向、试点合作或投资方反馈。",
+        "缺少 Quant-Agent 在更长周期、不同市场状态下的风险收益数据。",
+        "缺少论文项目转产品的成本、销售路径、竞争对手和合规风险分析。",
+        "缺少估值区间的敏感性分析。"
+      ]
     },
     "projectManagement": {
       "score": 13,
-      "reason": "项目管理部分结构完整：每个项目都有当前阶段、时间投入、下周投入、资源、依赖、成本、进度判断、纠偏动作。能识别 Skills-Security 为下周最高优先级，DynaHive 需要老师判断投稿目标，TBProv 和 Trading Survey 略微落后。风险识别较清楚。但同时推进 5 个项目，且 2 个投稿收口、1 个实盘系统、2 篇改稿，带宽风险偏高。",
-      "missingEvidence": "缺少统一优先级排序表、关键路径甘特图、截止日期硬约束、每项任务的完成定义、风险缓冲时间，以及如果 CCS/TBProv 同时爆雷时的取舍方案。"
+      "reason": "项目管理部分相对成熟：每个项目都有阶段、投入小时、下周工时、资源、依赖、成本、进度判断和纠偏动作。能看出优先级：Skills-Security 是最高投稿截止压力，Quant-Agent 是高 conviction，DynaHive 需要老师定投稿目标，TBProv 和 Trading Survey 有轻微延误。扣分点是同时推进五个项目，关键路径较多，存在带宽分散风险；部分项目的截止时间、投稿窗口和负责人边界仍不够硬。",
+      "missingEvidence": [
+        "缺少五个项目之间的统一优先级排序和放弃/延后规则。",
+        "缺少真实日历排期或任务看板状态。",
+        "DynaHive 的投稿目标和截止日未定，影响后续改稿 anchor。",
+        "TBProv References 和 Conclusion 仍是占位符，说明最后收口风险真实存在。"
+      ]
     },
     "nextAction": {
       "score": 9,
-      "reason": "下周动作基本都是最小可验证动作：Quant-Agent 做 shadow execution 和 position size confounder；Skills-Security 冻结正文、通读、提交、artifact；DynaHive 重写 introduction 并确定投稿窗口；TBProv 补 References 和 Conclusion；Trading Survey 通读并补 forex/derivatives subsection。动作具体、可检查、与当前卡点对齐。",
-      "missingEvidence": "部分动作缺少明确验收标准，例如 shadow run 要跑多少天、用什么指标判断 proposed_learning 有效；reviewer-style 通读由谁执行、产出什么 issue list；artifact 包需要达到什么复现程度。"
+      "reason": "下周动作大多是最小可验证动作：Quant-Agent 做 shadow execution 和 position size confounder；Skills-Security 冻结、通读、提交、artifact；DynaHive 重写 Introduction 并确认投稿窗口；TBProv 补 References 和 Conclusion；Trading Survey 做通读和 forex/derivatives subsection。这些动作具体、可检查、和当前卡点对应。扣分点是任务数量多，若 CCS 投稿占用超预期，其他动作可能滑坡。",
+      "missingEvidence": [
+        "缺少每个 next action 的验收标准，例如什么算 shadow run 成功、artifact 包完整。",
+        "缺少明确的日级排期和优先级冲突处理方案。",
+        "缺少如果 CCS 或 TBProv 延误时其他项目如何降级的计划。"
+      ]
     },
     "evidenceQuality": {
       "score": 4,
-      "reason": "证据密度较高，包括 commit 数、commit hash、代码行数、测试行数、论文页数、图表数、实验指标、交易收益、成本、时间投入等。比普通周报更可审计。但证据基本仍是自报文本，没有附原始日志、链接、截图、CI、PDF、实验脚本输出或第三方验证。",
-      "missingEvidence": "缺少仓库链接、commit diff、测试通过截图、交易账户流水、论文 PDF、artifact hash、实验配置文件、随机种子、benchmark 原始数据和 reviewer-style issue list。"
+      "reason": "证据密度高，包含 commit hash、代码行数、测试行数、实验指标、论文页数、figures/tables、成本、时间投入、收益数字等。但多数证据仍是周报内自述，没有附带可复核材料。Quant-Agent 的实盘和 Q2 alpha 特别需要更严谨证据，因为它们被用于支撑 hard progress 和 monetary value。",
+      "missingEvidence": [
+        "缺少外部可访问或可审计的仓库、PDF、日志、交易记录、实验原始数据。",
+        "缺少实验重复次数、置信区间、失败样本和负结果。",
+        "缺少 reviewer-style 通读后的问题清单或修复清单。",
+        "缺少 artifact 包的实际目录结构和运行命令。"
+      ]
     },
-    "totalScore": 84,
+    "totalScore": 85,
     "tier": "A",
-    "oneLineJudgment": "这是高产且结构完整的一周，核心价值在于把“部署前自审 / 受控反思 / 低频改变”跨三个项目抽象出来；主要扣分点是外部可验证证据不足、货币估值偏假设化、项目并行带宽风险较高。",
+    "oneLineJudgment": "这是一个高产且结构化很强的单周报告，最核心增量是把“部署前自审门控”和“三层反思闭环”从概念推进到多个项目的工程实例，但证据仍以自述为主，商业估值和反思有效性还缺关键对照实验。",
     "professorFollowUp": [
-      "优先看 Skills-Security 的 abstract、introduction、threat model 三节，判断 4 月 29 日冻结前是否还有结构性问题。",
-      "给 DynaHive 一个投稿目标判断：NDSS Fall、CCS 还是 S&P；否则改稿缺少 anchor。",
-      "要求 Quant-Agent 下周必须补 shadow A/B run 设计，不要只报告实盘收益，要能区分反思规则是否真的带来 alpha。",
-      "要求 TBProv 先清零 References 和 Conclusion 占位符，再讨论方法新意；当前这是投稿级红灯。",
-      "对 Brainary 的关键吸收点是：把 pre-deployment self-audit gate 从 reflection 里单独拆成一级模块，并定义输入、输出、gate 条件和回滚机制。"
+      "优先给 Skills-Security 的 abstract、intro、threat model 三节做 30 分钟快速判断，因为这是最近的投稿兑现点。",
+      "要求 Quant-Agent 下周必须交付 shadow A/B run 设计和第一版结果，否则“反思带来 alpha”的因果链仍不成立。",
+      "尽快为 DynaHive 决定投稿目标：NDSS Fall、CCS 还是 S&P；没有目标会导致改稿没有评价函数。",
+      "对 TBProv 设置硬截止：先补 References 和 Conclusion，再谈进一步润色；占位符是投稿风险。",
+      "本周老师最该带走的一点是：Brainary 里的 reflection 不应只表示内省，而应显式拆出 pre-deployment self-audit gate，作为产物落地前的独立审计门控。"
     ]
   }
 }

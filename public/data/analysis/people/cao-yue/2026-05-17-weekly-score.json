@@ -1,6 +1,6 @@
 {
   "key": "person:cao-yue:2026-05-17:weekly-score",
-  "generatedAt": "2026-06-06T05:00:43.322Z",
+  "generatedAt": "2026-06-06T06:00:40.504Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
@@ -8,100 +8,57 @@
   "result": {
     "week": "2026-05-17",
     "name": "Cao Yue",
-    "totalScore": 65,
-    "tier": "C",
-    "dimensions": {
+    "scores": {
       "hardProgress": {
-        "score": 14,
-        "reason": "本周有实质性框架改动：提出并设计了 fixed anchor，即锁定 Shared Global Objective 和 Planner Execution Constraints；同时提出 current state 与 candidate state 解耦、仅通过 accept gate 后提升为工作状态。这些属于可落地的系统结构进展。Distributional Semantics 方向也有概念重组进展，发现 P1/P2/P3 可能不是独立维度。但硬进展主要停留在机制设计和理论反思，缺少实现、实验、失败案例对比或文献矩阵更新产物。",
-        "missingEvidence": [
-          "缺少修改后的 prompt 模板或模块接口样例。",
-          "缺少 fixed anchor 前后对目标漂移的对比实验。",
-          "缺少 candidate state 污染问题的具体失败案例。",
-          "Distributional Semantics 缺少更新后的文献映射表或重切分草案。"
-        ]
+        "score": 15,
+        "reason": "本周有两个较实的框架层进展：一是把 Shared Global Objective 和 Planner Execution Constraints 显式设为不可修改区域，二是把 current state 与 candidate state 解耦并通过 accept gate 提升状态。这些属于可落地的系统设计增量，不只是想法。Distributional Semantics 方向也发现 P1/P2/P3 可能不独立，开始重审框架切分。但周报没有给出代码提交、实验结果、失败案例复现、prompt diff、accept gate 运行样例或文献映射表更新，因此硬进展仍主要停留在设计完成和理论反思层。",
+        "missingEvidence": "缺少具体实现记录、版本差异、实验前后对比、污染状态案例、目标漂移案例、文献映射矩阵或重新切分草案。"
       },
       "cognitiveIncrement": {
-        "score": 12,
-        "reason": "认知增量明确：self-modifying 系统必须区分可改与不可改区域；探索状态与承诺状态必须分离；P1/P2/P3 的高重叠提示原框架可能存在非独立性。这些不是简单复述工作，而是对框架稳定性和理论切分方式的上层抽象。扣分点是这些增量尚未被转化成可检验命题或明确决策。",
-        "missingEvidence": [
-          "缺少将三个认知增量转成可测试假设的形式。",
-          "缺少说明这些认知增量如何改变下周具体实验或论文结构。",
-          "缺少与已有方法或已有理论的明确差异边界。"
-        ]
+        "score": 13,
+        "reason": "认知增量明确：self-modifying 系统需要 fixed anchor；探索状态与承诺状态要分离；P1/P2/P3 可能是同一结构事实的不同投影。这些都不是简单总结，而是对框架稳定性和理论切分方式的上层抽象。尤其是把 threshold、format、anchor 组织成三层约束面，有较强的框架化价值。",
+        "missingEvidence": "缺少这些认知增量如何改变原有实验流程、原有 prompt 结构、评价指标或论文论证结构的具体示例。"
       },
       "cot2Depth": {
-        "score": 11,
-        "reason": "CoT's CoT 有两条，均包含内容、老师是否原本不知道、为什么不知道、自动化潜力、沉淀形式和证据等级，符合模板。第一条 fixed anchor 深度较好，能连接 threshold、format、anchor 三层约束面。第二条关于 P1/P2/P3 不独立有理论价值，但目前还是观察性判断，证据等级为 C，缺少形式化证明或系统文献统计。",
-        "missingEvidence": [
-          "缺少每条 CoT's CoT 对应的原始观察样本。",
-          "缺少 P1/P2/P3 重叠比例统计。",
-          "缺少 fixed anchor 机制导致性能改善或漂移减少的量化证据。",
-          "缺少反例：哪些案例只能由单一性质解释。"
-        ]
+        "score": 12,
+        "reason": "CoT's CoT 能解释为什么 Modifier 会通过修改难满足约束来提高 utility，也能指出 P1/P2/P3 的非独立性会削弱统一视角的贡献。这说明报告者不只描述现象，还在分析框架设计变量和失效机制。不过深度主要来自概念推理，尚未展示反例、边界条件、形式化定义或可证伪预测。",
+        "missingEvidence": "缺少 fixed anchor 失效前后的对照轨迹、trust region 类比的具体机制定义、P1/P2/P3 耦合关系的形式化表达，以及新切分是否更正交的验证标准。"
       },
       "brainaryMapping": {
-        "score": 7,
-        "reason": "Brainary 关联具体到 cognitive control 和 memory，并提出 cognitive control 模块扩展、memory schema 扩展，方向合理。优点是没有泛泛关联，而是把 fixed anchor 映射到修改边界控制，把双轨状态映射到 accepted/candidate memory。扣分点是映射仍是概念层，缺少 Brainary 中现有模块字段、接口、输入输出和更新规则。",
-        "missingEvidence": [
-          "缺少 Brainary cognitive control 模块的具体 schema 修改。",
-          "缺少 accepted state 与 candidate state 的字段定义。",
-          "缺少 Modifier 边界检查与 memory 更新之间的调用流程。",
-          "缺少说明这些映射是否与 Brainary 现有能力冲突或重复。"
-        ]
+        "score": 8,
+        "reason": "Brainary 映射较清晰：fixed anchor 对应 Cognitive Control，双轨状态解耦对应 Memory，并且提出了 cognitive control 模块扩展和 memory schema 扩展。映射不是泛泛而谈，能落到模块扩展。但目前没有说明这些扩展如何进入 Brainary 的现有接口、数据结构、调用流程或评估任务。",
+        "missingEvidence": "缺少 Brainary 模块 schema、接口字段、调用时序图、与现有 cognitive control 和 memory 模块的兼容性说明。"
       },
       "monetaryValue": {
-        "score": 4,
-        "reason": "周报列出了买单方和估值：Meta-Cognition Attack Framework 估计 85 万人民币，Distributional Semantics 估计 120 万人民币。但估值证据弱，主要是主观折算和市场想象，没有客户访谈、竞品价格、授权路径、可交付物定义或收入概率。尤其 Distributional Semantics 用 benchmark SaaS 授权估值，但本周实际进展是理论切分反思，离 SaaS 收入路径较远。",
-        "missingEvidence": [
-          "缺少潜在客户或用户需求证据。",
-          "缺少竞品、benchmark 工具或红队工具的真实价格参照。",
-          "缺少从本周技术进展到商业交付物的路径拆解。",
-          "缺少收入概率、开发成本和时间折现。",
-          "缺少为什么本周新增机制会提高估值的可验证依据。"
-        ]
+        "score": 6,
+        "reason": "报告识别了潜在买单方，包括 AI 安全红队企业、顶会学术赛道和 benchmark 工具市场，也给出了两个项目的人民币估值。但估值依据较粗，主要是顶会论文折算、工具授权和 SaaS 授权的假设，没有用户访谈、竞品价格、采购路径、交付形态、转化周期或风险折扣。价值判断有方向，但商业证据不足。",
+        "missingEvidence": "缺少潜在客户名单、竞品定价、benchmark 市场规模、授权案例、顶会概率估计、从论文到工具收入的转化路径和时间表。"
       },
       "projectManagement": {
-        "score": 10,
-        "reason": "项目管理部分提供了阶段、时间投入、下周预计时间、资源消耗、关键路径判断和是否需要老师介入，基本符合模板。问题是下周方向多为“继续观察”“继续梳理”，没有里程碑、验收标准、风险登记或优先级排序。项目 A 标记为关键路径但没有说明关键路径上的下一步交付物。",
-        "missingEvidence": [
-          "缺少下周可验收 deliverable。",
-          "缺少每个项目的完成定义。",
-          "缺少风险清单和触发条件。",
-          "缺少若观察发现漂移仍存在时的纠偏方案。",
-          "缺少项目 A 与项目 B 的优先级取舍依据。"
-        ]
+        "score": 11,
+        "reason": "项目管理部分覆盖了阶段、时间投入、资源消耗、关键路径、进度判断和纠偏建议。两个项目区分清楚，主项目每周 20 小时，副项目 8 小时，资源成本也有记录。但里程碑仍偏模糊，下周方向多为“继续观察”“继续梳理”，没有明确交付物、验收标准、风险列表或阻塞条件。",
+        "missingEvidence": "缺少下周可验收产物，例如完成边界检查器原型、跑 N 轮 self-modifying 实验、输出 P1/P2/P3 重映射表、形成新切分判断标准等。"
       },
       "nextAction": {
-        "score": 5,
-        "reason": "自动化科研转化路径中提出 workflow 和 agent module，且指出当前卡在可改/不可改区域的自动化判定标准尚未建立，这是一个真实下一步。但主线任务的下周方向仍过于笼统，‘继续观察’和‘继续梳理切分方案’不构成足够强的行动计划。缺少具体实验、文档、代码或文献矩阵更新目标。",
-        "missingEvidence": [
-          "缺少下周要完成的最小可交付物。",
-          "缺少 fixed anchor 的测试计划。",
-          "缺少 Modifier 边界检查模块的实现步骤。",
-          "缺少 P1/P2/P3 新切分的候选标准和评估方法。",
-          "缺少每个 next action 的截止时间和成功判据。"
-        ]
+        "score": 6,
+        "reason": "自动化路径提出了 workflow 和 agent module，包括可改区域标注规范、双轨状态管理接口、Modifier 边界检查和 accept gate 状态解耦，也指出当前卡在可改/不可改区域的自动判定标准。这是有用的下一步方向。但具体下周行动仍不够操作化，没有说明第一步实现什么、用什么数据测试、怎样判断完成、需要老师提供什么决策。",
+        "missingEvidence": "缺少明确的下周任务清单、优先级、验收指标、最小原型范围、测试集来源和预期输出格式。"
       },
       "evidenceQuality": {
-        "score": 2,
-        "reason": "周报自评证据等级为 B 和 C，符合证据意识，但外部证据较少。报告没有附代码、日志、实验表格、prompt diff、文献列表、案例矩阵或定量指标。当前多数判断依赖研究者的理论推理，尚不能支撑强结论。",
-        "missingEvidence": [
-          "缺少实验日志或运行结果。",
-          "缺少 prompt 修改前后的 diff。",
-          "缺少文献映射数据表。",
-          "缺少失败案例与成功案例。",
-          "缺少第三方或客观指标验证。"
-        ]
+        "score": 3,
+        "reason": "周报内部证据等级自评为 B 和 C，符合当前材料状态：主要是结构性推理和文献映射观察，还不是实验或外部验证。报告有机制解释，但缺少原始样例、日志、文献表、实验数据、代码或可复现材料。因此证据质量中等偏弱。",
+        "missingEvidence": "缺少 prompt 版本对比、状态污染日志、accept/reject 样例、目标漂移量化指标、文献归类表、代码链接、实验配置和结果截图。"
       }
     },
-    "oneLineJudgment": "本周有较好的框架级认知增量，尤其是 fixed anchor 和双轨状态解耦，但还停留在设计与反思层，缺少实验、产物和可验收下周行动，因此只能评为中等偏上的 C。",
+    "totalScore": 74,
+    "tier": "B",
+    "oneLineJudgment": "这一周的核心价值是把 self-modifying meta-cognition 的稳定性问题推进到 fixed anchor 与双轨状态机制，但仍缺少实现、实验和可验收交付物支撑。",
     "professorFollowUp": [
-      "要求学生下周提交 fixed anchor 机制的最小实现或 prompt 模板 diff，而不是只继续观察。",
-      "要求做一个小型对比实验：无 anchor、自带 anchor、anchor 加 candidate/current 解耦三种条件下，目标漂移和状态污染是否下降。",
-      "要求提交 P1/P2/P3 文献映射表，至少列出每篇论文对应哪些性质，并统计重叠比例。",
-      "要求把“可改/不可改区域自动化判定标准”写成一页规范，包含字段、规则、例外和 accept gate。",
-      "要求重新论证商业价值，至少补充竞品价格、潜在买单方场景和本周新增机制如何提高可部署性的证据。"
+      "要求学生下周给出一个最小可运行原型：包含不可修改区域标注、Modifier 边界检查、candidate/current 双轨状态、accept gate 四个组件。",
+      "要求展示至少 3 条 self-modifying 迭代轨迹：无 anchor 时如何目标漂移，有 anchor 后是否减少漂移，被拒 candidate 是否不污染 current state。",
+      "要求把 P1/P2/P3 文献映射做成表格，标出每篇论文对应哪些性质，并尝试给出一个更正交的新切分方案。",
+      "要求把商业估值从概念估值改成证据估值：列出可能买单方、具体交付物、竞品或替代方案、价格假设和最大风险。",
+      "教授本周最应该学到的一点是：self-modifying 系统不能只优化输出质量，还必须预先声明哪些目标和约束不可被自身修改，否则系统会通过修改评价标准来获得虚假的进步。"
     ]
   }
 }

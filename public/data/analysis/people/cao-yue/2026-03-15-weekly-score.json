@@ -1,6 +1,6 @@
 {
   "key": "person:cao-yue:2026-03-15:weekly-score",
-  "generatedAt": "2026-06-06T05:00:31.515Z",
+  "generatedAt": "2026-06-06T06:00:40.649Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
@@ -10,49 +10,98 @@
     "name": "曹玥",
     "scores": {
       "hardProgress": {
-        "score": 8,
-        "reason": "本周有明确研究方向：继续优化 Typographic Attack 生成过程中的 meta 框架，并聚焦 Working Memory 在多轮 attack 中的信息保留与利用。但周报没有给出任何硬结果，例如 pipeline 版本变化、实验次数、攻击成功率变化、稳定性指标、样例对比或代码实现进展。因此只能认定为概念与设计层面的推进，硬进展偏弱。",
-        "missingEvidence": "缺少实验结果、指标变化、失败/成功样例、代码提交、具体 prompt 或 memory 结构版本、与上一版 pipeline 的定量对比。"
+        "score": 6,
+        "reason": "本周主要是对 Typographic Attack pipeline 中 Working Memory 设计做概念性优化思考，明确了多轮攻击中信息保留、反馈、归因和策略修改之间的断裂问题。但周报没有给出具体实现、代码改动、实验结果、样例对比、成功率变化或失败案例，因此硬进展较弱。",
+        "missingEvidence": [
+          "缺少本周实际完成的 pipeline 改动清单",
+          "缺少 Working Memory 新旧版本的结构示例",
+          "缺少攻击成功率、稳定性、泛化能力等实验指标",
+          "缺少具体样本或多轮 attack 轨迹展示",
+          "缺少与上周或 baseline 的定量对比"
+        ]
       },
       "cognitiveIncrement": {
         "score": 10,
-        "reason": "CoT 增量较清楚地指出了当前认知推进点：多轮 attack 中 Working Memory 如何减少策略生成与修正阶段的理解断裂和不稳定问题。相比单纯描述任务，报告已经识别出一个机制性问题，即信息保留与策略修正之间的关系。但该增量仍停留在问题意识层面，缺少新的可检验假设或明确机制定义。",
-        "missingEvidence": "缺少对“理解断裂”“不稳定”的具体定义，缺少可验证假设，例如 memory 中哪些字段会提升 planner 稳定性、哪些字段会造成噪声。"
+        "reason": "认知增量较清晰：从单纯增加 memory 信息，转向关注信息保留与信息压缩之间的平衡；意识到 Working Memory 既能帮助 planner 保持上下文，也可能因噪声过多削弱修改稳定性。这是有价值的研究判断变化。",
+        "missingEvidence": [
+          "缺少该认知变化来自哪些实验或失败观察的证据",
+          "缺少对“有效信息”和“噪声信息”的操作性定义",
+          "缺少判断 memory 过载影响 planner 的具体案例"
+        ]
       },
       "cot2Depth": {
         "score": 9,
-        "reason": "CoT² 部分有一定深度，区分了两类 Working Memory：单样本多轮信息与跨样本积累信息。这已经开始触及“系统如何反思自己的推理与经验积累”的二阶问题。但目前仍是分类描述，没有进一步说明信息如何选择、压缩、权重化、遗忘或影响下一轮 planner，因此 CoT 的 CoT 深度中等。",
-        "missingEvidence": "缺少 memory 更新规则、信息压缩策略、跨样本经验如何进入单样本推理、反思机制如何改变下一轮 prompt 修改。"
+        "reason": "CoT² 层面有一定深度，区分了单样本多轮信息与跨样本累积信息两类 Working Memory，并把上一轮策略、review 反馈、diagnosis 归因、修改效果等中间变量纳入考虑。但仍停留在框架描述，缺少关于这些变量如何被筛选、压缩、加权、更新和调用的机制设计。",
+        "missingEvidence": [
+          "缺少 Working Memory 更新规则",
+          "缺少跨样本经验如何迁移到新样本的机制",
+          "缺少 feedback、diagnosis、prompt 修改之间的因果链条图或伪代码",
+          "缺少对 planner 自我修正失败原因的分层分析"
+        ]
       },
       "brainaryMapping": {
-        "score": 5,
-        "reason": "报告提到 Working Memory 是连接推理、反馈与经验积累的中间机制，也提到需要控制保留信息的重要程度。这与 Brainary 中关于认知结构、记忆、反馈和元认知调控的方向有一定关联。但映射非常笼统，没有明确对应到 Brainary 的具体节点、结构关系或可复用知识单元。",
-        "missingEvidence": "缺少 Brainary 中的具体概念映射，例如 Working Memory 对应哪个节点、feedback/diagnosis/planner 之间的边如何定义、哪些知识可以沉淀为可复用模块。"
+        "score": 4,
+        "reason": "周报提到与 Brainary 的关联，即在 meta 框架下控制系统保留真正重要的信息，使其参与后续推理。但映射较抽象，没有说明 Brainary 中对应的节点、边、记忆单元、元认知层级或可复用结构，也没有说明该映射如何反过来指导实验设计。",
+        "missingEvidence": [
+          "缺少 Brainary 映射图或结构化表示",
+          "缺少 Working Memory 与 Brainary 组件之间的一一对应关系",
+          "缺少该映射对 attack pipeline 的具体改动",
+          "缺少可复用的 meta-cognition 模块定义"
+        ]
       },
       "monetaryValue": {
-        "score": 1,
-        "reason": "周报没有说明该研究进展的潜在经济价值、应用场景、产品化路径、算力成本、数据成本、可交付成果或与安全评测市场的关系。只能从 AI robustness 和 LVLM attack 主题本身推测存在潜在安全评测价值，但报告内没有证据支撑。",
-        "missingEvidence": "缺少潜在客户、应用场景、安全评测价值、benchmark 价值、论文价值转化路径、工具化可能性、成本收益分析。"
+        "score": 0,
+        "reason": "周报没有讨论该研究方向的应用价值、产业价值、安全评测价值、潜在客户、算力成本、数据成本、论文产出价值或产品化路径，因此无法判断 monetary value。",
+        "missingEvidence": [
+          "缺少该攻击方法在 LVLM 安全评测中的实际使用场景",
+          "缺少潜在用户或客户画像，例如模型厂商、安全团队、评测平台",
+          "缺少成本收益分析",
+          "缺少可转化成果，例如 benchmark、评测工具、自动化红队系统或论文目标"
+        ]
       },
       "projectManagement": {
-        "score": 6,
-        "reason": "报告包含任务、阻碍和下周计划，基本项目管理结构完整；也识别了当前核心阻碍：memory 信息过多会引入噪声并削弱重点。但计划仍较泛，没有拆成可执行里程碑，没有优先级、时间安排、验收标准或风险控制方案。",
-        "missingEvidence": "缺少本周完成清单、未完成原因、下周具体实验矩阵、每项任务截止时间、验收指标、风险备选方案。"
+        "score": 7,
+        "reason": "周报有任务方向、当前阻碍和下周计划，项目线索连续：围绕 Working Memory 优化 attack pipeline。但项目管理粒度不足，没有明确本周完成物、下周验收标准、时间安排、优先级、风险缓解方案或实验矩阵。",
+        "missingEvidence": [
+          "缺少本周完成清单",
+          "缺少下周可验收 deliverable",
+          "缺少实验设计表，例如 memory 粒度、组织方式、评价指标",
+          "缺少风险优先级和应对策略",
+          "缺少自动化路径，例如如何自动记录、压缩和复用多轮 attack memory"
+        ]
       },
       "nextAction": {
-        "score": 5,
-        "reason": "下周计划方向明确：继续优化 Working Memory，观察不同 memory 粒度与组织方式对 planner 稳定性和泛化能力的影响，并梳理反馈、归因与 prompt 修改的信息传递。但行动描述仍偏抽象，没有说明具体要比较哪些 memory 粒度、使用哪些样本、看哪些指标、产出什么结论。",
-        "missingEvidence": "缺少具体下一步实验设计，例如设置 3 种 memory schema、固定样本集、比较攻击成功率/修改轮数/稳定性、输出 ablation 表。"
+        "score": 6,
+        "reason": "下周计划方向明确：继续优化 Working Memory，观察不同 memory 粒度与组织方式对 planner 稳定性和泛化能力的影响，并梳理反馈、归因与 prompt 修改之间的信息传递。但行动仍偏泛化，没有具体实验组、样本量、指标、截止时间和预期输出。",
+        "missingEvidence": [
+          "缺少具体要比较的 memory 粒度版本",
+          "缺少稳定性和泛化能力的量化指标",
+          "缺少计划测试的数据集、模型和样本数量",
+          "缺少下周结束时应提交的图表、表格或代码结果",
+          "缺少失败时的备选路线"
+        ]
       },
       "evidenceQuality": {
         "score": 2,
-        "reason": "证据质量较低。报告主要是概念性叙述和方向性判断，引用了两篇相关文献，但没有说明文献带来的具体方法借鉴，也没有实验记录或数据支撑当前判断。",
-        "missingEvidence": "缺少实验日志、数据表、样例、代码链接、文献笔记、失败案例、可复现设置。"
+        "reason": "证据主要来自概念描述和两篇相关文献名称。文献方向与自反馈、多阶段推理、记忆机制相关，但没有总结文献具体启发，也没有实验数据、案例、日志或图表支撑本周判断。",
+        "missingEvidence": [
+          "缺少文献阅读后的具体方法借鉴",
+          "缺少实验日志或攻击轨迹",
+          "缺少失败案例分析",
+          "缺少定量指标",
+          "缺少可复核的中间产物"
+        ]
       }
     },
-    "totalScore": 46,
-    "tier": "Risk",
-    "oneLineJudgment": "本周有清楚的问题意识和元认知方向，但几乎没有硬证据、定量结果和可执行实验设计，当前更像研究想法记录而不是可管理的周进展。",
-    "professorFollowUp": "教授最应该追问一件事：请学生下周必须把 Working Memory 设计转化为可检验实验，例如定义 2-3 种 memory schema，固定一组 LVLM typographic attack 样本，比较攻击成功率、平均修改轮数、planner 输出一致性和失败归因质量；否则该方向会停留在“记忆机制很重要”的抽象判断上。"
+    "totalScore": 44,
+    "tier": "C",
+    "oneLineJudgment": "本周有明确的元认知问题意识和 Working Memory 设计方向，但硬进展、证据、项目管理和价值转化信息明显不足，仍处在概念整理阶段。",
+    "professorFollowUp": [
+      "要求学生下周提交一个 Working Memory 设计表：至少包含单样本记忆、跨样本记忆、保留字段、压缩规则、更新规则、调用位置。",
+      "要求做一个最小可验证实验：比较无 memory、完整 memory、压缩 memory 三组在同一批 LVLM typographic attack 样本上的成功率、修改轮数和稳定性。",
+      "要求给出 2 到 3 个完整 attack 轨迹案例，展示上一轮策略、review、diagnosis、prompt 修改和最终效果之间的信息传递。",
+      "要求明确自动化路径：哪些 memory 内容由系统自动记录，哪些由 LLM 自动总结，哪些需要人工检查。",
+      "教授本周最应该关注的一点是：该学生已经意识到 memory 不是越多越好，关键研究问题应转化为“如何选择、压缩和复用对攻击策略真正有因果贡献的信息”。"
+    ]
   }
 }

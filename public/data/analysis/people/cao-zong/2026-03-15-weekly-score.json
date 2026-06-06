@@ -1,6 +1,6 @@
 {
   "key": "person:cao-zong:2026-03-15:weekly-score",
-  "generatedAt": "2026-06-06T05:00:36.071Z",
+  "generatedAt": "2026-06-06T06:00:47.750Z",
   "provider": "openai",
   "model": "gpt-5.5",
   "reasoningEffort": "medium",
@@ -10,49 +10,91 @@
     "name": "Cao Zong",
     "scores": {
       "hardProgress": {
-        "score": 8,
-        "reason": "本周有若干实际活动：调试 DCMTK 与 Linux 内核漏洞、阅读 7 篇论文、进行约 10 人的小规模 Claude Code 使用反馈测试，并报告了 memory consistency 为 67%。但周报没有给出任何可验证的硬产出，例如新漏洞编号、PoC、crash、补丁、复现实验、论文清单、分类树版本或数据集变化。因此硬进展偏弱，更多是观察和思考。",
-        "missingEvidence": "缺少具体漏洞样本、复现步骤、提交记录、实验日志、论文列表、分类树变更 diff、memory consistency 的评估方法与样本量。"
+        "score": 9,
+        "reason": "本周有一定硬进展线索：调试了 DCMTK 与 Linux 内核漏洞，阅读 7 篇 LLM for Classification 论文，做了约 10 人的小规模 Claude Code 使用反馈测试，并给出 memory consistency 为 67% 的量化结果。但周报没有说明实际挖到了哪些漏洞、是否有 PoC、崩溃样例、补丁、CVE、复现实验、代码提交或可交付产物，因此硬产出不足。",
+        "missingEvidence": [
+          "DCMTK 与 Linux 内核漏洞的具体编号、影响版本、触发条件、PoC 或复现日志缺失。",
+          "本周是否新发现漏洞、确认漏洞、提交报告或获得厂商反馈缺失。",
+          "7 篇论文的标题、核心结论、如何进入知识库或影响当前实验缺失。",
+          "memory consistency 67% 的评估集、样本量、计算方法和对比基线缺失。"
+        ]
       },
       "cognitiveIncrement": {
-        "score": 12,
-        "reason": "有明确的技术认知增量：提出 root 权限下运行的远程服务本身就是高权限 RCE 攻击面，不必局限于传统 LPE；同时指出 Claude Code 漏洞挖掘效果差异来自使用者的元层级调控能力。这些判断对研究方向和自动化漏洞挖掘策略都有启发。",
-        "missingEvidence": "缺少对该攻击场景研究密度低的证据，例如相关 CVE 分布、论文/工具覆盖情况、真实服务清单或攻击面统计。"
+        "score": 11,
+        "reason": "有明确的认知增量：从传统 LPE 视角转向关注 root 权限服务的 RCE 攻击面，并指出该方向研究密度较低；同时识别出知识归纳中 subject tree 分支因子过高、predicate 不规范导致一致性下降的问题。这些属于有效的问题重构与研究方向判断。但目前仍偏洞察，尚未落到可验证假设、实验设计或任务队列。",
+        "missingEvidence": [
+          "root 权限 RCE 攻击面相对 LPE 更低研究密度的证据缺失，例如论文数量、CVE 分布或开源项目扫描结果。",
+          "该方向优先级判断缺少目标列表、成功率预估和漏洞类型分布。",
+          "LLM for Classification 阅读如何改变分类树或 predicate 设计缺少具体例子。"
+        ]
       },
       "cot2Depth": {
         "score": 11,
-        "reason": "CoT² 部分不仅讨论工具使用，还上升到元认知、prompting、探索策略切换和 Agent 行为框架编码，具备较好的二阶反思深度。缺点是还停留在原则层面，没有形成可执行的策略库、决策规则或评估指标。",
-        "missingEvidence": "缺少具体 prompting 模板、策略切换条件、失败案例分析、Agent 框架设计图、以及不同策略带来的效果对比数据。"
+        "reason": "CoT² 部分有较好的元认知深度：不仅讨论 Claude Code 是否有效，还进一步归因到使用者的 meta-level control，即通过 prompting 控制搜索方向、判断何时坚持与何时转向。这已经触及自动化漏洞挖掘中策略层决策的问题。但目前还没有形成可执行的策略框架、决策规则、状态机或评估指标，因此深度尚未完全工程化。",
+        "missingEvidence": [
+          "缺少具体 prompting 策略样例，以及不同策略下的效果对比。",
+          "缺少“何时切换攻击面”的判定规则，例如尝试次数、路径覆盖率、失败模式或信息增益阈值。",
+          "缺少将元认知策略 encode 到 Agent 框架中的具体设计。"
+        ]
       },
       "brainaryMapping": {
         "score": 7,
-        "reason": "周报明确把 Engineering 映射到 working memory，把 Research 映射到 long-term memory，并提出 directed compression 与 effective retrieval 是 Brainary 的核心价值。映射方向清楚，但仍偏概念化，尚未落到 Brainary 的数据结构、工作流、接口或评估指标。",
-        "missingEvidence": "缺少 Brainary 中 subject tree、predicate、memory consistency、retrieval quality 与具体漏洞挖掘任务之间的结构化映射样例。"
+        "reason": "Brainary 映射较清楚：将 Engineering 对应 working memory 的上下文协调，将 Research 对应 long-term memory 的容量与检索质量，并进一步提出 directed compression 与 effective retrieval 两个核心价值点。这与 Brainary 的记忆组织方向相关。但映射仍停留在概念层，没有说明如何转成 Brainary 的数据结构、检索流程、评价指标或产品功能。",
+        "missingEvidence": [
+          "缺少 Brainary 中 subject、predicate、entity、CWE 等节点如何组织的实际 schema。",
+          "缺少 directed compression 的算法、规则或示例。",
+          "缺少 effective retrieval 的检索指标，例如召回率、准确率、延迟或对漏洞挖掘成功率的提升。"
+        ]
       },
       "monetaryValue": {
-        "score": 3,
-        "reason": "漏洞挖掘、root RCE 与自动化 Agent 理论上具有较高商业价值，但本周没有报告任何可货币化结果，如 bounty、CVE、客户需求、工具交付、节省人力成本或可出售的数据资产。因此只能给较低分。",
-        "missingEvidence": "缺少漏洞赏金金额、潜在客户、商业场景、自动化节省成本估算、可交付工具或知识库资产的市场价值评估。"
+        "score": 4,
+        "reason": "主题本身具备潜在货币价值：root 权限 RCE、自动化漏洞挖掘、Claude Code 辅助安全研究都可能对应漏洞赏金、安全服务、工具订阅或企业安全产品。但本周没有把技术进展转化为明确的商业路径，也没有奖金、客户、CVE、交付物、可售能力或成本收益估算。",
+        "missingEvidence": [
+          "缺少漏洞赏金、CVE、厂商响应或客户需求证据。",
+          "缺少该方向可变现的产品形态，例如漏洞挖掘 Agent、知识库服务或安全审计流程。",
+          "缺少投入产出分析，例如单个漏洞平均耗时、Claude Code 成本、成功率和潜在收益。"
+        ]
       },
       "projectManagement": {
         "score": 7,
-        "reason": "报告识别了当前阻碍：概念层次结构不清、predicate 过多且未规范化，并给出 memory consistency 67% 这一管理指标。下周计划也围绕降低 branching factor 和 predicate normalization 展开。但缺少里程碑、验收标准、优先级、时间预算和本周计划完成情况。",
-        "missingEvidence": "缺少本周原定目标与完成率、任务拆分、时间投入、产出物链接、下周验收指标，以及 memory consistency 期望提升到多少。"
+        "reason": "周报识别了当前阻碍，并提出下周要降低 subject tree 分支因子、规范 predicate，这说明有一定项目管理意识。但任务没有拆成可验收里程碑，也没有说明本周计划完成度、数据集规模、负责人、风险优先级、截止时间或成功标准。整体仍是研究笔记式管理，而非项目制推进。",
+        "missingEvidence": [
+          "缺少本周原定计划与实际完成情况的对照。",
+          "缺少任务优先级、预计耗时、截止日期和验收标准。",
+          "缺少知识归纳系统当前版本、变更记录和实验结果表。",
+          "缺少漏洞挖掘任务与 Brainary 任务之间的依赖关系管理。"
+        ]
       },
       "nextAction": {
-        "score": 6,
-        "reason": "下周动作明确指向两个瓶颈：减少 subject tree 分支因子、加强 predicate 归一化。这两个动作与当前问题一致，具备可执行性。但计划不够量化，没有说明具体方法、样本范围、完成标准和风险预案。",
-        "missingEvidence": "缺少具体执行方案，例如分支因子目标值、predicate 合并规则、评估集大小、预期 consistency 提升幅度、完成日期和产出格式。"
+        "score": 7,
+        "reason": "下周行动方向明确，集中在减少 subject tree 分支因子和 predicate normalization，这与当前 memory consistency 67% 的问题直接对应。问题是行动仍不够可量化：没有说明要把一致性从 67% 提升到多少、用多少样本评估、修改哪些 predicate、何时完成、如何判断分类树变好。",
+        "missingEvidence": [
+          "缺少下周 memory consistency 的目标值，例如从 67% 提升到 75% 或 80%。",
+          "缺少 subject tree 分支因子调整前后的目标范围。",
+          "缺少 predicate normalization 的规则清单和验收样例。",
+          "缺少下周必须交付的文档、代码或实验表。"
+        ]
       },
       "evidenceQuality": {
-        "score": 2,
-        "reason": "周报包含若干数字：7 篇论文、约 10 人测试、3 人正反馈、memory consistency 67%。但这些证据均缺少来源、样本、方法和原始记录，无法独立验证。漏洞调试和技术判断也没有附带实验材料。",
-        "missingEvidence": "缺少原始数据、实验设计、日志、链接、表格、论文题录、受试者反馈记录、漏洞复现材料和指标计算方式。"
+        "score": 3,
+        "reason": "周报包含少量量化证据：阅读 7 篇论文、约 10 人测试中 3 人正反馈、memory consistency 67%。这些比纯主观判断更好。但证据链不完整，样本来源、实验协议、数据表、复现材料和对照基线都缺失，因此只能支持方向性判断，不能支持强结论。",
+        "missingEvidence": [
+          "10 人 Claude Code 测试的对象背景、任务一致性、评价标准和原始反馈缺失。",
+          "3 人挖到漏洞的漏洞类型、严重性、是否真实有效缺失。",
+          "论文阅读没有文献列表与摘要。",
+          "67% 一致性没有评估协议和样本明细。"
+        ]
       }
     },
-    "totalScore": 56,
+    "totalScore": 59,
     "tier": "Risk",
-    "oneLineJudgment": "本周认知增量较强，但硬产出和证据链明显不足，尚不能证明漏洞挖掘或 Brainary 工程化取得了可验证进展。",
-    "professorFollowUp": "建议追问三件事：第一，DCMTK 与 Linux 内核漏洞调试到底产出了什么可验证材料；第二，memory consistency 67% 是如何计算的、下周要提升到多少；第三，Claude Code 元层级调控能否沉淀成一套可复用的 Agent 策略规则和对照实验。"
+    "oneLineJudgment": "本周有较好的元认知和方向判断，但硬产出、证据链、项目化管理和商业转化不足，仍停留在“有洞察但未形成可验证系统”的阶段。",
+    "professorFollowUp": [
+      "要求下周提交一个最小证据包：漏洞样例或调试记录、7 篇论文清单、memory consistency 评估表、predicate 归一化前后对比。",
+      "要求把“root 权限 RCE 是低密度高价值方向”转化为可验证假设：列出 20 个目标服务、预期攻击面、已有 CVE 密度和本周扫描结果。",
+      "要求把 Claude Code 的 meta-level control 写成可执行流程：何时继续、何时换攻击面、何时要求模型生成 PoC、何时人工介入。",
+      "要求为 Brainary 映射给出一个具体 schema 或 demo，而不只是 working memory 与 long-term memory 的概念对应。",
+      "教授本周最应该关注的一点是：学生已经意识到漏洞挖掘成败的关键可能不在模型能力本身，而在人的元策略控制；下一步必须把这个洞察固化成可复用、可评估、可自动化的 Agent 策略。"
+    ]
   }
 }
