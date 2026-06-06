@@ -306,7 +306,6 @@ async function main() {
   const personWeekCachePolicy = personWeekPolicy.endsWith("once") ? "once" : "hash";
 
   const reportsByPerson = Map.groupBy(site.reports, (report) => report.slug);
-  const reportsByWeek = Map.groupBy(site.reports.filter(isValidReport), (report) => report.week);
   for (const person of site.people) {
     if (personFilter.size && !personFilter.has(person.slug)) continue;
     const allReports = (reportsByPerson.get(person.slug) || []).filter(isValidReport).sort((a, b) => a.week.localeCompare(b.week));
@@ -390,9 +389,20 @@ async function main() {
     if (analysisTypes.has("person-horizontal")) {
       for (const report of allReports) {
         if (!shouldQueuePersonWeek(report.week)) continue;
-        const sameWeekReports = (reportsByWeek.get(report.week) || [])
-          .filter((item) => item.slug !== person.slug)
-          .map(compactForBriefing);
+        const weekInfo = weeksById[report.week] || {};
+        const targetReport = compactReport(report);
+        const weekContext = {
+          submitted: weekInfo.submitted,
+          rosterSize: weekInfo.rosterSize,
+          reportCount: weekInfo.reportCount || weekInfo.submitted,
+          deadline: weekInfo.deadline,
+          themes: (weekInfo.analysis?.themes || []).slice(0, 12),
+          standard: {
+            levels: ["好", "很好", "非常好", "特别值得读"],
+            focus: ["硬进展", "认知增量", "价值判断", "项目管理", "元认知变化", "Brainary 映射", "证据质量", "下周动作质量"],
+            note: "不要点名比较同学，只按本周研究管理标准给目标学生反馈。"
+          }
+        };
         jobs.push({
           key: `person:${person.slug}:${report.week}:horizontal`,
           file: path.join(analysisDir, "people", person.slug, `${report.week}-horizontal.json`),
@@ -403,16 +413,13 @@ async function main() {
             targetPerson: {
               name: person.name,
               slug: person.slug,
-              report: compactReport(report)
+              report: targetReport
             },
-            sameWeekContext: {
-              reportCount: sameWeekReports.length + 1,
-              peers: sameWeekReports
-            }
+            weekContext
           },
           latestReportHash: hash({
-            target: compactReport(report),
-            peers: sameWeekReports
+            target: targetReport,
+            weekContext
           }),
           cachePolicy: personWeekCachePolicy
         });

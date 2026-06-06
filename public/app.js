@@ -596,7 +596,7 @@ async function renderPersonHorizontal(weekId) {
     <section class="hero">
       <div>
         <h1>${esc(selectedWeek.week)} 个人横向</h1>
-        <p class="muted">同周相对画像。评价只使用“好 / 很好 / 非常好 / 特别值得读”，问题写成下一步提升空间。</p>
+        <p class="muted">按本周研究管理标准生成的个人反馈，不展示具体同学对标。评价只使用“好 / 很好 / 非常好 / 特别值得读”。</p>
       </div>
       <div class="toolbar">
         ${personHorizontalWeekControls(selectedWeek.week)}
@@ -660,7 +660,7 @@ async function renderPersonHorizontalDetail(weekId, slugValue) {
     <section class="hero">
       <div>
         <h1>${esc(person.name)} · ${esc(week)} 个人横向</h1>
-        <p class="muted">${esc(plainText(result.headline || result.shortRead || "同周相对画像"))}</p>
+        <p class="muted">${esc(plainText(result.headline || result.shortRead || "本周标准下的个人反馈"))}</p>
       </div>
       <div class="toolbar">
         <a class="button" href="#/person-horizontal?week=${encodeURIComponent(week)}">返回个人横向</a>
@@ -700,7 +700,6 @@ async function renderPersonHorizontalDetail(weekId, slugValue) {
       ${detailPanel("为什么是这个评价", result.levelRationale)}
       ${detailPanel("本周突出信号", result.highlightedSignals)}
       ${detailPanel("下一步提升空间", result.growthOpportunities)}
-      ${peerPanel(result.peerReferences)}
       ${detailPanel("下周观察点", action.nextWeekWatch)}
       ${detailPanel("证据入口", result.evidenceLinks)}
     </section>
@@ -826,20 +825,6 @@ function labelize(key) {
     nextStep: "下一步"
   };
   return labels[key] || String(key).replace(/([A-Z])/g, " $1").replace(/^./, (char) => char.toUpperCase());
-}
-
-function peerPanel(peers = []) {
-  return html`
-    <article class="detail-panel">
-      <h3>可对标对象</h3>
-      ${peers.length ? peers.map((peer) => `
-        <div class="peer-row">
-          <strong>${esc(plainText(peer.name || ""))}</strong>
-          <span>${esc(plainText(peer.why || ""))}</span>
-        </div>
-      `).join("") : `<p class="muted">暂无明确对标对象。</p>`}
-    </article>
-  `;
 }
 
 function analysisList(items = [], className = "") {
