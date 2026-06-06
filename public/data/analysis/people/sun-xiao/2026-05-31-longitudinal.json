@@ -1,75 +1,244 @@
 {
   "key": "person:sun-xiao:2026-05-31:longitudinal",
-  "generatedAt": "2026-05-31T11:01:52.227Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "8860dd6d58a086225c5207acc7b68f06723e9b7a796fe0f296b6f249736da19f",
+  "generatedAt": "2026-06-06T12:42:27.423Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "08870887815a27b997884a1bbf106eba0513c097f51ce959681c602a4142e708",
   "result": {
-    "overallTrajectory": "该生在四周内展现出显著的研究能力成长，从最初聚焦工程实现与接口清理，逐步转向算法设计（比较选择器）、实验诊断（episodic memory与slot对照），并最终上升到对研究动机与数据集质量的严格审视。其工作并非简单堆砌任务，而是围绕“沟通是否影响行为轨迹”这一核心问题不断纵深挖掘和纠偏，体现了从执行者到批判性设计者的转变。",
-    "stageByWeek": [
+    "overallTrajectory": {
+      "judgment": "总体看，这名学生最近四周是在提升研究能力，而不只是变忙；进步主要体现在问题表述从“把系统跑通”逐步转向“什么证据能证明 communication 真的改变后续 action trajectory”，但最新一周硬实验产出下降，进入数据质量与干预设计阶段，需要防止概念重定位变成范围漂移。",
+      "evidenceLevel": "中高：2026-05-10 至 2026-05-24 有较强运行、模块、回归和诊断证据；2026-05-31 主要是 ablation 清理、combo archive 和研究问题重定位，证据等级较前几周偏低，仍需下周 pilot 验证。",
+      "researchCapabilityChange": "能力提升的核心不是工时增加，而是他开始反复识别实验变量污染、运行时旧路径残留、selector/filler 不一致、memory ontology 不匹配、combo 质量不足等会破坏因果解释的因素，并把这些因素转成 verifier、trace、ablation、quality audit 和 next-action metric。",
+      "mainRisk": "当前最大风险是从 strict schema、comparison selector、episodic memory、slot/no-slot、action-free ablation、combo audit、communication master intervention 连续切换主线，虽然每次切换都有认知理由，但如果下周没有形成 3–5 个高质量 combo 的最小 pilot 和指标闭环，项目会从研究深化变成架构扩张。"
+    },
+    "headline": "研究能力在提升：他从工程接入推进到因果可证性、memory 表征、case 质量和 communication utility 的判断，但最新阶段需要用小规模 pilot 把重定位落回证据。",
+    "overviewSentence": "四周轨迹显示他越来越能识别实验不可解释的根因，并把问题转成可验证链路，但最新一周需要防止从实证推进滑向概念重构。",
+    "fourWeekTimeline": [
       {
         "week": "2026-05-10",
-        "stage": "Action Schema 接入与 Communication Schema 重构：完成 strict action schema runtime 接入规格与 communication source-grounded strategy 设计，建立验收框架"
+        "metacognition": "从“schema 已定版”推进到“runtime 是否真的遵守 schema 必须由 trace 证明”，能识别旧 PDDL/candidate/mask、summary 旧字段、private goal leakage、key-value leakage 等污染源。",
+        "valueJudgment": "认为题目的价值不在生成更自然话术，而在把 communication 作为 source-grounded content-selection intervention，检验同一 non-comm action 下不同内容机制是否改变后续 trajectory。",
+        "projectManagement": "计划清楚：用 BPT 1 case、2 个 non-comm policy、2 个 comm policy、13 strategy、repeat=1 做最小验收；但正式 benchmark 结果尚未产生。",
+        "evidence": "报告明确提出 strict schema runtime contract、direct two-call selection、CommunicationStrategyRegistry、strategy-level branch evaluator，并把证据标准从代码自报改为 CLI、rollout_record、diagnostic_summary、branch_evaluation、llm_io 可证明。"
       },
       {
         "week": "2026-05-17",
-        "stage": "Action Selection 比较化与 Runtime 清理：通过 12family 小规模回归暴露真实瓶颈，将 action selector 改造为 all-action comparison 结构，并清理旧路径"
+        "metacognition": "进一步认识到工程跑通不等于模型理解 action schema；识别 LLM 会把 action_name 当 topic label，并把 diagnostic fields 变成错误选择的辩护词。",
+        "valueJudgment": "价值判断从“通信变量可控”扩展到“action selection 本身必须可解释，否则 communication effect 无法归因”；这使项目价值从 schema 资产转向 benchmark 可信性。",
+        "projectManagement": "完成 12family × 1case × 13 communication 小规模回归，156 cells 全部 completed，并提出 comparison-based selector smoke 的下周最小动作；原计划与实际完成基本对齐，但正式结果分析延后。",
+        "evidence": "报告给出 action 分布不均、trajectory collapse、selector/filler 数值不一致、schema-case mismatch，并提出 AllActionComparisonSelector、SelectionAlignedSemanticFiller、ComparisonValidator。"
       },
       {
         "week": "2026-05-24",
-        "stage": "Episodic Memory Runtime 与 Slot 对照：构建 task-state episodic memory runtime，实现 sequential actor-turn 与不同 communicative mode 的对照实验，揭示 memory 拓扑适配问题"
+        "metacognition": "从 action selection 可验证进一步转到 episodic memory 因果链：communication 不是最终产物，而是写入 visible dialogue memory 后影响下一轮 action selection 的中介。",
+        "valueJudgment": "价值判断更成熟：task_state/slot 不是越多越好，而要匹配 family 交互拓扑；WBD 适合 current-state memory，BPT 需要 versioned agreement memory。",
+        "projectManagement": "完成 task-state episodic runtime、sequential actor-turn、WBD/BPT × 8 modes × 16 atomic turns、slot/no-slot 初步对照；有明确下周动作：修 prompt regression、公平重跑、BPT versioned agreement memory。",
+        "evidence": "报告给出 WBD slot 提高 closure、BPT 仍 0/8 terminal 且卡在 accept-to-complete gap；沉淀 EpisodicTaskStateRuntime、ModeConditionedTrajectoryDiagnostics、FamilyTopologyAwareMemorySelector。"
       },
       {
         "week": "2026-05-31",
-        "stage": "Combo 质量审查与 Master Motivation 重定位：转向 action-free ablation 以隔离 schema 影响，重新定位 motivation 为证明 communication master 必要性，并前置 combo 质量审计"
+        "metacognition": "出现关键重定位：不再问“mode 是否让话术不同”，而问“communication master 是否带来可测任务收益”；同时意识到 combo 质量是因果证明前置条件。",
+        "valueJudgment": "价值判断比前几周更接近论文问题：值得做的不是风格标签，而是能通过隐藏信息、约束披露、next-action shift、feasible resolution 证明 communication competence 必要性的任务。",
+        "projectManagement": "完成 action-free ablation 链路清理、SOTOPIA leave termination、450 combo/81 environment groups 留档；但本周没有正式 rollout 结果，下一步依赖 combo quality audit 和 intervention pilot。",
+        "evidence": "报告提出 NoSchemaActionAblation、SOTOPIAComboArchive、ComboQualityAuditor、CommunicationInfluenceTrace；但对 communication master 的有效性仍只有设计判断和静态数据准备，缺少 pilot 证据。"
       }
     ],
-    "trendScores": {
-      "硬进展": {
-        "分数": 8,
-        "趋势": "上升",
-        "描述": "从接入规格制定（第1周）到选择器结构改造（第2周）再到 runtime 与 ablations 设计（第3-4周），产出阶段性成果，但因结论未固化，分数留有上升空间"
-      },
-      "认知深度": {
-        "分数": 9,
-        "趋势": "显著上升",
-        "描述": "从关注工程边界到理解记忆结构必须匹配任务拓扑，再到批判数据集质量，认知层层递进，现能站在科研动机层面思考"
-      },
-      "CoT 成熟度": {
-        "分数": 9,
-        "趋势": "上升",
-        "描述": "CoT's CoT 从验证性‘运行时因果边界’升级为‘实验问题重定位’与‘数据集前提批判’，显示出对研究框架的自觉反思"
-      },
-      "Brainary 映射": {
-        "分数": 8,
-        "趋势": "上升",
-        "描述": "从描述对应能力到提出具体模块沉淀（如 AllActionComparisonSelector, EpisodicTaskStateRuntime, ComboQualityAuditor），路径越发清晰"
-      },
-      "价值推理": {
-        "分数": 9,
-        "趋势": "上升",
-        "描述": "初期以‘通用基建’立论，中期侧重内部效度，后期转为‘证明 communication master 的任务必要性’，并强调数据前置，价值判断更严谨务实"
-      },
-      "项目管理": {
-        "分数": 7,
-        "趋势": "稳定",
-        "描述": "每周有明确最小可验证动作和纠偏，但部分卡点（如 action collapse, info leakage）反复出现，资源规划需更精准"
-      },
-      "下一步动作质量": {
-        "分数": 8,
-        "趋势": "上升",
-        "描述": "从工程修复（第1-2周）到实验诊断（第3周）再到概念收束与 combo 审计（第4周），逐步瞄准论文级证据链的本质问题"
-      }
+    "metacognitionChange": {
+      "summary": "元认知有明显上升：四周内他从检查 schema 接入，推进到检查 action decision 是否可解释、memory 是否能承载因果传导、case 是否能支撑 communication necessity。最重要的进步是他不再把“系统能跑”“话术不同”“trace 存在”当作充分证据，而开始追问变量是否被污染、证据链是否可回放、结果是否能归因。",
+      "byWeek": [
+        {
+          "week": "2026-05-10",
+          "change": "识别 schema 文件定版与 runtime 遵守之间的差距，提出 trace proof，而不是相信代码自报。"
+        },
+        {
+          "week": "2026-05-17",
+          "change": "识别 LLM 选择 action 的失败模式不是 prompt 不够长，而是没有显式比较 action set；把错误从自然语言解释层下钻到 decision procedure。"
+        },
+        {
+          "week": "2026-05-24",
+          "change": "识别 communication effect 必须经过 episodic memory 才能传导到后续 action；同时识别 slot/state 的 family-specific 边界。"
+        },
+        {
+          "week": "2026-05-31",
+          "change": "识别研究问题本身需要重定位：communication master 的必要性必须由高质量 combo、能力干预和 trajectory-level outcome 证明。"
+        }
+      ],
+      "currentLevel": "当前处于较强研究型调试阶段：能主动发现证据边界、失败模式和下一步验证标准；但还未稳定进入结果收敛阶段，最新一周的判断需要 pilot 证据支撑。",
+      "strongestSignal": "最强信号是每周 CoT 增量都不是简单复述工作量，而是在修正上一周的假设：schema 接入不等于 runtime 干净，runtime 干净不等于 selector 理解，selector 理解不等于 memory 可归因，memory 可运行不等于 case 能证明 communication utility。",
+      "nextLift": "下一步提升不是继续提出新架构，而是把 2026-05-31 的重定位压成可失败的验证标准：选 3–5 个 combo，定义 C0/C1/C2 干预，预注册 next-action shift、deadlock reduction、feasible resolution 和 leave timing 指标，并接受 pilot 可能否定某些 combo 或 intervention。"
     },
-    "valueFunctionChange": "学生的价值判断在四周内发生根本转变：初期将价值锚定在‘action schema 与 communication strategy 的解耦和可验收性’上，认为只要工程边界严格即可产生可解释的结果；中期发现 action selector 的理解不足会掩盖 communication effect，进而将价值重心转向‘comparison-based selector 与对齐’；第三周通过 episodic runtime 实验认识到‘记忆结构必须匹配任务拓扑’，价值落地到 memory 设计；第四周发生升级，指出当前题目不能停留在 ‘communication mode 差异’，而应证明‘communication master 对任务收益的必要性’，并将前置条件锁定在数据集质量上。价值函数从‘做出干净的对比实验’迁移到‘回答关键问题所需的数据资质与因果链证明’，科研动机显著成熟。",
+    "valueGrowth": {
+      "summary": "科研/项目价值判断在变清楚：他逐渐把价值从工程资产、schema 美观、话术多样性，转向 communication 是否能在可控 episode 中改变任务行动和结果。这是价值观层面的提升，因为他开始判断什么问题值得继续投入、什么实验会污染结论、什么数据不适合作为 showcase。",
+      "byWeek": [
+        {
+          "week": "2026-05-10",
+          "valueJudgment": "认为值得做的是 strict action schema 与 source-grounded communication strategy，因为它们能让 communication effect 从 style 差异变成可控干预。"
+        },
+        {
+          "week": "2026-05-17",
+          "valueJudgment": "认为值得优先投入 action comparison selector，因为如果 action selection 坍缩，任何 communication strategy 的效果都不可解释。"
+        },
+        {
+          "week": "2026-05-24",
+          "valueJudgment": "认为值得沉淀 episodic memory runtime 和 family-topology-aware memory，因为 communication effect 的真实价值取决于是否能改变后续 task trajectory。"
+        },
+        {
+          "week": "2026-05-31",
+          "valueJudgment": "认为值得从 mode 多样性转向 communication master necessity，并把 combo 质量作为项目价值的前置判断；这是更接近论文贡献的价值函数。"
+        }
+      ],
+      "currentValueFunction": "当前隐含价值函数是：一个项目值得继续做，当且仅当它能用高质量任务场景、可控 communication intervention、可回放 memory trace 和 trajectory-level metrics 证明 communication competence 对任务推进有必要性；不能证明 next-action shift 或 outcome 改善的风格实验应降级。",
+      "improvementSignals": [
+        "不再把 8 个 communicative modes 的话术差异当作主贡献，而要求证明 communication master 的 task utility。",
+        "不再盲跑所有 family 或 450 combos，而提出先做 combo quality audit 和 case cards。",
+        "能把 Brainary 相关能力从单点模块连接成系统能力：traceability、episodic memory、benchmark curation、intervention evaluation、automation workflow。",
+        "能区分 sanity check 与 showcase：例如 divide 类可用于机制检查，但不适合作为主案例。"
+      ],
+      "nextValueQuestion": "下周应回答：哪些 3–5 个 combo 真正包含必须通过沟通暴露的关键信息、约束或风险，并且能用 next-action shift 和 feasible resolution 证明 communication master 比 low-communication baseline 更有任务价值？"
+    },
+    "projectManagementReview": {
+      "summary": "项目管理质量总体较强，周周都有可检查交付、当前阶段、关键路径和下周最小动作；不足是主线演化很快，正式结果闭环被多次后移。需要把最新重定位收束成小规模、可失败、可复现的 pilot，而不是继续扩展模块。",
+      "projects": [
+        {
+          "project": "strict action schema runtime 与 direct action pipeline",
+          "weeks": [
+            "2026-05-10",
+            "2026-05-17"
+          ],
+          "quality": "执行质量较高：从 strict_noncomm_v4_full 接入、direct two-call、general apply adapter，到 public/private history 清理和 12family 回归，均有明确交付。",
+          "whatWorked": "把 Brainary 的 representation grounding、benchmark infrastructure、causal traceability 落成了 schema-source trace contract、runtime verifier、public history builder 和 diagnostic summary。",
+          "managementGap": "2026-05-10 还停留在验收规格，2026-05-17 才有 156 cells completed；正式 benchmark 结论仍被推迟，说明工程验收与科学结论之间需要更明确的门槛。",
+          "nextConcreteMove": "把 strict schema runtime 作为已完成基建冻结，只保留 regression test；除非 pilot 发现 action-free 与 schema-conditioned 差异需要解释，否则不要继续大改此层。"
+        },
+        {
+          "project": "comparison-based action selector 与 selection-aligned semantic fill",
+          "weeks": [
+            "2026-05-17"
+          ],
+          "quality": "研究管理质量好：能从失败数据中定位 topic-label collapse，并提出 all-action comparison、validator、repair、selection_context、semantic fill alignment 的关键路径。",
+          "whatWorked": "把 CoT 增量转成自动化模块设想：AllActionComparisonSelector、SelectionAlignedSemanticFiller、ComparisonValidator，这些可沉淀为 Brainary 的 verifier-guided LLM control 能力。",
+          "managementGap": "报告说下周要做 smoke，但后续 2026-05-24 主线转向 episodic runtime，输入中没有明确看到 comparison-based selector smoke 的结果；证据不足以判断该 selector 是否被完整验证。",
+          "nextConcreteMove": "在当前 action-free 路线下，明确 comparison selector 是否降级为备用条件、对照条件，还是已被替代；需要给老师一个状态判定，避免悬空模块。"
+        },
+        {
+          "project": "task-state episodic runtime、sequential actor-turn 与 slot/no-slot 对照",
+          "weeks": [
+            "2026-05-24"
+          ],
+          "quality": "硬进展强：新增独立 benchmark_task 链路，完成 WBD/BPT × 8 modes × 16 atomic turns，并修正 simultaneous step 为 sequential actor-turn。",
+          "whatWorked": "Brainary 的 episodic memory、execution grounding、causal traceability 被具体化为 ActorTurnMemoryWriter、VisibleDialogueMemory、TaskActionSemanticMemory、LLMIOTraceMemory；并产出 WBD/BPT 的 slot/no-slot 初步证据。",
+          "managementGap": "下周计划包括 prompt regression、公平重跑、BPT versioned agreement memory，但 2026-05-31 转向 action-free ablation 和 combo audit，未明确这些重跑是否完成；证据缺失。",
+          "nextConcreteMove": "给出一页项目状态：哪些 episodic runtime 组件冻结，哪些 slot/state 结论保留，BPT versioned agreement memory 是继续、暂停还是被 action-free ablation 替代。"
+        },
+        {
+          "project": "communication treatment、mode diagnostics 与 communication master intervention",
+          "weeks": [
+            "2026-05-10",
+            "2026-05-17",
+            "2026-05-24",
+            "2026-05-31"
+          ],
+          "quality": "概念质量持续提升：从 13 个 source-grounded strategies，到 prior utterance as visible evidence，到 8 modes 的 trajectory diagnostics，再到 communication master necessity。",
+          "whatWorked": "逐步把 Brainary 的 pragmatic reasoning、partner modeling、intervention evaluation 和 trajectory influence analysis 连接起来；特别是 2026-05-31 明确旧 8 modes 不足以代表 communication master，是重要取舍。",
+          "managementGap": "策略体系经历 13 strategies、8 modes、C0/C1/C2 communication master 的连续改写；如果没有版本冻结和对照关系表，后续实验会难以解释到底比较的是哪个 intervention。",
+          "nextConcreteMove": "下周必须产出 intervention matrix：C0 low-communication、C1 competent communication、C2 stronger communication master 各自允许/禁止什么能力，如何只改变 communication competence 而不改变模型、信息或任务难度。"
+        },
+        {
+          "project": "action-free episodic ablation 与 SOTOPIA leave termination",
+          "weeks": [
+            "2026-05-31"
+          ],
+          "quality": "工程清理方向合理：去除 schema/state/slot/action_index 束缚，用自然 action text 与 SOTOPIA leave 终止观察 communication 影响。",
+          "whatWorked": "这可沉淀为 Brainary 的 causal intervention 和 memory control 能力，即 NoSchemaActionAblation 与 LeaveBasedTerminationAdapter；它为判断 schema 是否人为制造 task progress 提供对照。",
+          "managementGap": "本周主要是链路清理，没有正式重跑；因此 action-free 是否真的更能证明 communication influence 仍无证据。另一个风险是去掉 schema 后 outcome 更难自动判定。",
+          "nextConcreteMove": "用 3–5 个高质量 combo 跑最小 pilot，同时记录 leave timing、next-action shift、deadlock reduction、feasible resolution；若 outcome 无法判定，应恢复最小结构化 outcome rubric，而不是继续完全自由。"
+        },
+        {
+          "project": "SOTOPIA 原生 combo archive、quality audit 与 showcase case 选择",
+          "weeks": [
+            "2026-05-31"
+          ],
+          "quality": "项目阶段判断正确：从盲跑改为先审数据质量，已生成 450 combos、81 environment groups 的 archive，并提出 quality audit 维度。",
+          "whatWorked": "这将 Brainary 的 dataset audit、case retrieval、benchmark curation 转成 SOTOPIAComboArchive、CaseCardGenerator、ComboQualityAuditor 的自动化路径。",
+          "managementGap": "目前缺逐 combo case card、质量评级、候选排序和剔除理由；没有这些文档，老师无法判断为什么某个 combo 值得作为主 showcase。",
+          "nextConcreteMove": "下周先审 8–12 个 codename，产出 3–5 张 case cards，每张包括 scenario、双方 private goals、隐藏关键信息、预期 next-action shift、可判定 outcome、失败风险和是否进入 pilot。"
+        }
+      ],
+      "managementPattern": "管理模式有一个明显优点：每周都能把卡点转成下周最小可验证动作；也有一个需要控制的模式：当发现上层问题时会快速重构主线，导致上一周的验证任务有时缺少闭环回报。",
+      "nextManagementMove": "建立一个“冻结/继续/替代”表：strict schema、comparison selector、episodic runtime、slot memory、action-free ablation、combo audit、communication master intervention 分别处于什么状态；下周只允许围绕 3–5 个 combo pilot 推进，不再新增大模块。"
+    },
     "repeatedBlockers": [
-      "Action selection 长期存在分布不均与轨迹坍缩，虽从 prompt 规则改进到 comparison selector，但始终未完全根除，第4周通过 action-free ablation 尝试隔离，但未跑实验验证",
-      "BPT 任务中 complete_transaction 始终缺失，从 action schema 约束到 current-state slot 再到 versioned agreement memory 构想，问题持续多周，尚未解决",
-      "旧工程路径残留反复清理：旧 candidate/mask、source grounding/availability、schema id 等在第1-3周多次提及，显示出工程债务的根本消除并非易事",
-      "Communication intervention 设计经历多次迭代（mode, strategy, master），旧 8 个 communicative modes 被判定不足以代表 mastery，说明多次设计均未达到论文所需的对立强度"
+      "实验变量污染反复出现：旧 schema、旧 candidate、prompt 残留、validator 残留、slot/state 约束、termination 机制都可能改变结果。",
+      "正式结论多次后移：每周都有合理的新发现，但 seeded 回归、正式图表、公平重跑、pilot 结果在输入中尚未形成稳定闭环。",
+      "communication intervention 定义持续变化：13 strategies、8 modes、communication master 能力对照之间需要清楚版本关系。",
+      "case/data 质量成为新瓶颈：最新一周明确 WBD/play_rights、部分 bargain、divide 类可能无法支撑强 motivation。",
+      "自动化路径清楚但实现闭环不足：报告多次提出可沉淀为 verifier、memory、auditor、trace，但哪些已稳定进入 Brainary 系统能力，证据仍不完整。"
     ],
-    "professorShouldAsk": "若要证明‘沟通 mastery’的价值，你计划从 combo 审计中如何筛选出仅通过高级沟通才能解锁的关键因果链？你的 action-free ablation 中，如何确保观察到的行为转移确由沟通引起，而非任务自身的必然路径？",
-    "nextBestIntervention": "建议下周暂停大规模实验，集中完成：(1) 从 SOTOPIA 原生 combo 中筛选 3-5 个有明确关键私有信息、可判定 outcome 且低沟通基线下可能失败的高质量案例，编写详细 case card；(2) 基于这些案例，设计一组‘沟通 master’干预的最小可行提示（如仅提供关键信息暴露策略，不直接给出方案），并与无沟通基线形成强对照，规划出可发表的最小证据链框架。"
+    "teacherQuestions": [
+      "你现在认为 comparison-based selector 的状态是什么：已验证、暂停、被 action-free ablation 替代，还是仍需作为 schema-conditioned 对照？请给出证据。",
+      "下周 3–5 个主 combo 的选择标准能否预注册？每个 combo 里哪条 private information 或 constraint 必须通过沟通暴露，预期会改变对方什么 next action？",
+      "C0 low-communication 与 C1/C2 communication master 的差异到底是什么能力差异，而不是语气、长度或信息量差异？",
+      "action-free 后 outcome 如何判定？如果没有 schema action 和 task_state，你准备用什么证据判断 feasible resolution、deadlock reduction 或 task success？",
+      "哪些模块已经可以冻结为 Brainary 系统能力，哪些只是本项目临时实验脚手架？"
+    ],
+    "nextIntervention": {
+      "forProfessor": "下一次 meeting 不要先讨论更多架构，而要要求学生带来一张最小 pilot 表：3–5 个 combo、C0/C1/C2 干预、预期 next-action shift、metric、成功/失败判据、预计调用成本。",
+      "forStudent": "把最新的 communication master 重定位落实为可失败实验：先完成 case cards 和 intervention matrix，再跑小样本；如果 pilot 不能显示 next-action shift，就应回到 combo 或 intervention 设计，而不是继续扩大运行。",
+      "decisionGate": "只有当至少 2 个高质量 combo 显示 communication master 相比 low-communication baseline 产生可解释的 next-action shift 或 feasible resolution 改善时，才进入多 seed 或论文图表阶段。"
+    },
+    "studentFeedback": {
+      "summary": "你最近四周的进步主要在研究判断，而不只是工程执行：你越来越能指出为什么一个实验结果可能不可解释，并把不可解释性转成 trace、verifier、memory、ablation 和数据审查任务。",
+      "whatImproved": [
+        "从做 schema 接入，进步到要求 runtime trace 证明 schema 边界。",
+        "从看系统是否跑通，进步到诊断 action selection 是否理解离散决策空间。",
+        "从比较话术，进步到用 episodic memory 解释 communication 如何影响后续 action。",
+        "从盲跑案例，进步到判断 combo 是否具备任务底座、隐藏信息和可判定 outcome。",
+        "从个人兴趣驱动的模块扩展，逐步连接到 Brainary 的长期能力：benchmark curation、causal traceability、episodic memory、intervention evaluation。"
+      ],
+      "nextStep": "现在最重要的不是继续增加模块，而是证明你的最新问题表述能产生证据：下周请交付 3–5 个 case cards、C0/C1/C2 intervention matrix、最小 pilot 结果和失败分析。"
+    },
+    "evidenceLinks": [
+      {
+        "week": "2026-05-10",
+        "claim": "他开始把工程完成标准升级为 trace 可证明。",
+        "evidence": "报告写明不能凭 Codex 自报认定完成，必须通过 --help、rollout_record、diagnostic_summary、branch_evaluation 和 llm_io 验证旧 schema/candidate/mask 是否仍出现。"
+      },
+      {
+        "week": "2026-05-10",
+        "claim": "他把 communication 的价值从话术改写转成可控干预。",
+        "evidence": "报告定义 13 个 general content-selection strategies，并要求在 fixed action 与 fixed state-after-action 下只改变 source-grounded content-selection strategy。"
+      },
+      {
+        "week": "2026-05-17",
+        "claim": "他识别出工程跑通后的真实瓶颈是 decision procedure。",
+        "evidence": "报告指出 156 cells 全部 completed，但仍有 action 分布不均、trajectory collapse、selector/filler 不一致和 schema-case mismatch。"
+      },
+      {
+        "week": "2026-05-17",
+        "claim": "他把失败模式转成可自动化模块。",
+        "evidence": "报告提出 visible_history_interpretation、action_comparison、selected_action_comparison_item、selection_context、selection_alignment、comparison validator 和 repair prompt。"
+      },
+      {
+        "week": "2026-05-24",
+        "claim": "他把 communication effect 放入 episodic memory 因果链。",
+        "evidence": "报告新增 TaskObservation、TaskAgentAction、TaskStateLLMAgent、TaskStateSotopiaEnv，并将每个 actor turn 拆成 task action selection 与 utterance realization。"
+      },
+      {
+        "week": "2026-05-24",
+        "claim": "他能识别 memory ontology 的边界。",
+        "evidence": "报告判断 WBD current-state slot 有正收益，而 BPT current-slot 无法表达 versioned agreement，导致 accept arrangement 循环和 complete_transaction 缺失。"
+      },
+      {
+        "week": "2026-05-31",
+        "claim": "他将研究问题重定位到 communication master 的必要性证明。",
+        "evidence": "报告明确说当前题目不能表述为不同 communicative mode 让话术不同，而应表述为把 agent 做成 communication master 是否带来可测量任务收益。"
+      },
+      {
+        "week": "2026-05-31",
+        "claim": "最新一周证据强度低于前两周，需要 pilot 补足。",
+        "evidence": "报告本周主要完成 action-free ablation 清理、SOTOPIA combo 留档和 audit 框架，正式重跑、高质量 combo audit、communication master intervention 和指标实现均留到下周。"
+      }
+    ]
   }
 }

@@ -1,27 +1,215 @@
 {
   "key": "person:sun-manqi:2026-05-31:longitudinal",
-  "generatedAt": "2026-05-30T16:00:59.947Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "2bd2629aac1148fd007cf6a4247d07a6ef897aaacb35c959045a3198be63414a",
+  "generatedAt": "2026-06-06T12:42:13.302Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "c252459b647879406b9923acad58983bd618620e8b80210ce5604ac359c90ece",
   "result": {
-    "overallTrajectory": "学生四周内经历了从HarmonyOS样本合成流程跑通，到引入真实IOC驱动的行为复现，中途因任务需求转向包管理器方向预研，最后又回归并深度修复HarmonyOS样本以对齐交付标准的过程。整体研究能力呈现螺旋上升：初期关注流程可行性（pattern‑guided），中期强调证据闭环（IOC‑grounded），后期转向注重底层API真实调用与安全审计一致性。虽然出现过方向跳跃，但回归主线后通过大量人工修复积累了严格的工程规范认知，并将经验逐步转化为自动化改进规则，表明其正从“做出来”向“做得可交付、可评审”转变，而不是停留于忙碌的输出。",
-    "stageByWeek": {
-      "2026-05-10": "核心：pattern‑guided样本合成。基于Marcher/Exobot pattern跑通半自动迁移链路，提出Migration Spec Card中间层。认知从手工构造向多层行为映射转变。卡点：LLM代码需人工修正，pattern供给不足。",
-      "2026-05-17": "核心：IOC‑grounded行为复现。从Android APK中提取真实IOC，构建mock C2闭环，产出JsMiner v3.1与TERRACOTTA样本。认知升级为“样本必须保留可扫描证据和可复现行为链”。卡点：APK来源不稳定，协议适配复杂。",
-      "2026-05-24": "核心：包管理器恶意代码方向预研。配置服务器与数据迁移，学习师兄项目，拟定strategy‑guided red teaming题目。此周认知开始从单样本点关注到更高层的攻击策略抽象，但具体实现证据薄弱。卡点：方向刚起步，尚未形成实验方案。",
-      "2026-05-31": "核心：样本修复与标准对齐。针对验收反馈，将11个旧样本从日志虚拟输出重构为真实@kit API调用，并新合成16个样本。认知提升至“交付需通过严格API审计，安全开关必须在代码流中生效”。卡点：大模型生成代码偷懒，仍需人工逐行修正。"
+    "overallTrajectory": "最近四周看，学生不是单纯变忙，而是在研究能力上有可见增量：她逐步从“生成能跑的样本”转向“构造有证据来源、可审计、可复现、可沉淀为自动化模块的样本生成流程”。但这种进步仍主要发生在交付压力驱动下，尚未完全转化为稳定的研究设计能力；尤其是跨周项目切换、验收标准量化、外部评测结果、关键依赖管理仍写得不够硬。",
+    "headline": "研究能力在上升，核心信号是她开始识别“日志跑通不等于证据成立”，但还需要把这种认知固化成可复用的验收表、自动化规则和跨周里程碑。",
+    "overviewSentence": "她的进步主要体现在证据链、失败模式和验收底线越来越清楚，但项目管理还需要从高投入时间转向可检查的周级闭环。",
+    "fourWeekTimeline": [
+      {
+        "week": "2026-05-10",
+        "metacognition": "从直接让大模型生成样本，转向先构造 Migration Spec Card，再映射到 HarmonyOS 行为复现；已经能区分 Android pattern、method context、HarmonyOS 安全映射、运行日志各自的证据作用。",
+        "valueJudgment": "认为值得做的不是单个样本，而是 Android-to-HarmonyOS 的标准化迁移流程；价值判断开始从交付样本数转向可扩展的跨生态行为复现能力。",
+        "projectManagement": "有明确交付物：一个 Marcher/Exobot defanged 样本、DevEco 编译运行、Step 1–8 日志链；也写出下周要整理 HAP、源码、analysis、录屏。但批量扩展到 15 个样本依赖更多 pattern / method context，依赖项已识别但未给出获取计划。",
+        "evidence": "证据等级自评 A-；证据包括 Migration Spec Card、LLM design、ArkTS 草稿、DevEco 修正过程、模拟器日志。外部验收证据缺失。"
+      },
+      {
+        "week": "2026-05-17",
+        "metacognition": "进一步从 pattern-guided generation 升级到 IOC-grounded replay，认识到真实 IOC、mock C2、安全复现、HiLog、server terminal 必须形成闭环。",
+        "valueJudgment": "价值判断更清楚：华为需要的不是 UI Demo，而是能被静态扫描、能被运行时日志验证、又不会触发真实危险行为的 defanged evidence chain。",
+        "projectManagement": "有硬进展：15 个 family 的 key_pattern_v2.json、TERRACOTTA 的真实 IOC 提取、HarmonyOS 工程、mock C2 server、Step 0–10 和 accepted=True。计划周日扩展到 15 个样本，但报告中没有下一周直接证明该 15 个样本按 IOC-grounded 标准完成。",
+        "evidence": "证据等级自评 A-；证据包括 JsMiner v3.1、key_pattern_v2、IOC_Summary、TERRACOTTA mock server 运行记录。缺少批量样本的统一通过率和验收表。"
+      },
+      {
+        "week": "2026-05-24",
+        "metacognition": "切到包管理器恶意代码方向后，能够把问题从代码级检测抽象到 strategy-level attack pattern，提出检测器是否能泛化到未来供应链攻击的研究问题。",
+        "valueJudgment": "科研价值判断有提升：她不只是问能不能做 detector，而是问现有 detector 的鲁棒性证据是否充分，是否需要 red-team benchmark 来检验 strategy-level 泛化。",
+        "projectManagement": "当前处于预研和环境准备阶段，有 server17、VPN、SSH、902G APK 传输测试、师兄项目阅读等基础动作；但还没有 benchmark 设计、detector baseline、实验变量、样本生成规范或最小可验证实验结果。",
+        "evidence": "证据等级自评 B；环境和方向证据存在，实现和实验评估证据缺失。"
+      },
+      {
+        "week": "2026-05-31",
+        "metacognition": "出现关键纠偏：认识到模拟器能跑通和审计合格不是一回事，日志输出不能替代真实 API 调用，安全开关必须进入实际 if 分支。",
+        "valueJudgment": "价值判断从“能生成/能运行”提升到“源码实现、文档说明、安全逻辑、底层 API 调用必须一致”；这比前两周更接近可审计基准的标准。",
+        "projectManagement": "硬交付较强：修复 11 个存量样本，新增 16 个样本，提交 31 个样本压缩包，并将多数核心网络交互从 LogEvidence.step 替换为 @kit.NetworkKit 等真实 API 调用。但缺少每个样本的通过清单、失败清单、自动化检查结果和外部验收反馈。",
+        "evidence": "证据等级自评 A-；证据包括 31 个样本工程 ZIP、六大共性问题修改记录。是否全部达到华为验收标准仍缺外部证据。"
+      }
+    ],
+    "metacognitionChange": {
+      "summary": "元认知有真实进步，主线是她越来越能识别“表面可运行”和“研究证据成立”之间的差距。5月10日识别中间规格卡的重要性，5月17日识别真实 IOC 与 mock runtime 的边界，5月24日识别代码级检测与策略级攻击的层次差异，5月31日识别日志替代真实 API 是生成样本的失败模式。这说明她在从执行任务转向理解验收标准、证据边界和失败模式。",
+      "byWeek": [
+        {
+          "week": "2026-05-10",
+          "change": "从“让 LLM 生成代码”提升到“先建立 Migration Spec Card 再生成”，开始管理证据来源和安全边界。"
+        },
+        {
+          "week": "2026-05-17",
+          "change": "从“pattern 支撑样本”提升到“真实 IOC 接地”，能够区分 REAL_ANDROID_IOC、MOCK_RUNTIME_FIELD、NEED_APK_EXTRACTION。"
+        },
+        {
+          "week": "2026-05-24",
+          "change": "从历史恶意包检测转向未来攻击策略泛化，说明她开始识别研究问题的抽象层级。"
+        },
+        {
+          "week": "2026-05-31",
+          "change": "从“日志链证明行为”纠偏为“真实 API 调用和代码分支证明行为”，这是最强的失败模式识别。"
+        }
+      ],
+      "currentLevel": "当前可判断为从工程执行型向研究型工程能力过渡：能提出中间抽象、证据链、失败模式和自动化沉淀方向；但还没有稳定输出独立的实验设计、量化评测标准和外部验证闭环。",
+      "strongestSignal": "最强信号是 2026-05-31 她承认过去容易被模拟器跑通误导，并据此把日志映射重构为真实 @kit.NetworkKit 等底层 API 调用，同时要求安全常量进入 if 分支。",
+      "nextLift": "下一步提升不是再多做样本，而是把她已经识别出的失败模式写成机器可检查的验收规则：真实 IOC 是否保留、mock C2 是否闭环、NO_REAL_* 是否被条件流引用、是否存在日志替代 API、是否有 HiLog 与 server 双端证据。"
     },
-    "trendScores": {
-      "硬进展趋势": "第一、二周产出明确样本和工程化流程，第三周因方向切换暂时进展减缓（仅有环境与预研），第四周通过批量修复与新合成显著回升，整体呈“升‑降‑升”态势，但结束周产出密度与质量最高。",
-      "认知成熟度趋势": "从关注中间层映射（W1），到强调证据闭环（W2），经历攻击策略抽象（W3），最后回归但加深到API落地与审计一致性（W4）。认知深度逐周递增，尤其在W4形成对交付标准的系统理解，但W3的跳跃尚未获得实践验证。",
-      "价值导向趋势": "早期价值判断以工程产出件数计价（W1:1000元，W2:1500元），W3价值估计骤降至500元（仅环境与学习），W4又升至1500元（修复+新增），但强调依据变成“是否符合真实API调用、安全变量是否被引用”，体现出价值函数从产出数量向规范符合度迁移。",
-      "自动化意识趋势": "始终意识到LLM生成代码需人工约束，W1提出prompt固化，W2未深入自动化，W3暂时搁置，W4明确提出将修复经验转化为pipeline规则，自动化意识在W4重新强化，但仍处于经验沉淀阶段。"
+    "valueGrowth": {
+      "summary": "科研和项目价值判断在变清楚：她逐渐把价值从“交付一个样本”提升为“形成跨生态恶意行为证据链和可复用 benchmark 能力”。5月24日对包管理器方向的判断尤其显示研究问题意识：不是再做一个 detector，而是评估 detector 面对 strategy-level attack 的泛化能力。不过价值判断还不够稳定，因为 5月24日的新研究方向没有在 5月31日继续推进，跨项目取舍理由没有写清。",
+      "byWeek": [
+        {
+          "week": "2026-05-10",
+          "valueJudgment": "认为值得做的是 pattern-guided Android-to-HarmonyOS migration pipeline，因为纯手工样本不可扩展。"
+        },
+        {
+          "week": "2026-05-17",
+          "valueJudgment": "认为值得做的是 IOC-grounded evidence chain，因为真实 IOC、静态扫描、mock C2 和运行日志共同决定样本是否有评估价值。"
+        },
+        {
+          "week": "2026-05-24",
+          "valueJudgment": "认为值得做的是 strategy-guided red teaming benchmark，因为现有 malicious package detectors 可能只证明了历史样本识别能力，而没有证明未来攻击策略鲁棒性。"
+        },
+        {
+          "week": "2026-05-31",
+          "valueJudgment": "认为值得做的是 API-grounded strict-compliance migration，因为文档、源码、安全开关和底层 API 不一致会削弱基准样本价值。"
+        }
+      ],
+      "currentValueFunction": "当前她隐含的价值函数是：优先做能形成证据链、能被审计、能安全复现、能扩展为自动化生成或 benchmark 的项目；单纯能运行、能打印日志、能生成代码的工作价值较低。",
+      "improvementSignals": [
+        "从家族名生成 Demo 转向 Migration Spec Card，说明她开始重视可解释中间层。",
+        "从 pattern-guided 转向 IOC-grounded，说明她开始重视真实证据来源，而不是语义相似。",
+        "从代码级恶意包检测转向 strategy-level red teaming，说明她开始关注科研问题的长期价值和泛化能力。",
+        "从日志链转向真实 API 调用，说明她开始用审计标准反推项目价值。"
+      ],
+      "nextValueQuestion": "她下一步需要回答：在 HarmonyOS 样本生成与包管理器 red-team benchmark 两条线之间，哪一条最能沉淀 Brainary 的长期系统能力，判断依据是样本数量、自动化比例、外部验收、可发表研究问题，还是 detector evaluation 的实验闭环？"
     },
-    "valueFunctionChange": "学生的价值函数在前两周主要与可运行的样本数量和流程可行性挂钩，认为跑通一条链路或完成几个样本即有一定货币价值。第三周短暂偏离主线后，价值估计明显降低，仅计算数据迁移与概念学习的工时。第四周价值重新上升，但计算依据已完全不同：更看重是否遵守API使用规范、安全常量是否被逻辑流引用、代码与文档是否一致，即价值向交付物的可审计性与合规性倾斜。此变化显示学生正在从“完成任务”转向“完成任务到标准”，这是研究能力提升的关键信号。",
-    "repeatedBlockers": "重复卡点主要有两个：1）大模型在生成ArkTS或复杂业务逻辑时倾向于用console.log或日志打印替代真实实现，导致样本表面可运行但未通过深层审查；2）LLM生成代码需大量人工修正（如ArkTSCheck适配、协议状态机调试、安全开关引用缺失），且自动化改进规则尚未形成闭环。第三周的包管理器方向因刚起步未暴露此类卡点，但回归后问题立刻重现。",
-    "professorShouldAsk": "1）第三周转入包管理器方向是否经过论证？该方向与HarmonyOS主线的时间分配与优先级是如何考虑的？2）本周已积累大量API适配经验，有哪些已经转化为可复用的pipeline检查规则？预计多久能完成初步规则版本？3）在HarmonyOS样本交付后，包管理器red teaming方向的实验设计方案是否已开始结合本周对API规范的认知？",
-    "nextBestIntervention": "帮助学生将本周人工修复的31个样本中的共性错误（如日志替代实现、未引用常量）沉淀为自动化检查清单，并与LLM prompt模板结合，在下周尝试用修改后的pipeline生成1‑2个新型样本，验证规则效果。同时，要求学生在包管理器方向预研中，借鉴HarmonyOS经验，从真实包生命周期中找到至少一种strategy‑level attack pattern，并描述其安全映射与验证方式，以此连接两条工作线，避免认知割裂。"
+    "projectManagementReview": {
+      "summary": "项目管理质量有交付意识，但还不够研究项目化。她能写当前阶段、投入时间、下周动作和是否需要老师介入，也能给出具体交付物；不足是跨周目标经常从“扩展 15 个样本”变成“切换新方向”再回到“修复 31 个样本”，中间缺少原计划与实际完成的对账表、里程碑状态和验收结果。",
+      "projects": [
+        {
+          "project": "基于意图分析驱动的鸿蒙应用样本生成和应用安全检测",
+          "weeks": [
+            "2026-05-10",
+            "2026-05-17",
+            "2026-05-31"
+          ],
+          "quality": "持续推进且硬交付最多：从一个 Marcher/Exobot 样本，到 JsMiner/TERRACOTTA 的 IOC-grounded replay，再到 31 个样本工程包。研究能力增量主要集中在这条线。",
+          "whatWorked": "能持续把失败经验沉淀为 Brainary 可吸收的系统能力：Pattern-guided Sample Generation Module、IOC-grounded Sample Generation Module、Strict-Compliance Sample Generation Module。尤其是 5月31日把人工修复经验转成 pipeline 规则的意识，说明 Brainary 能力建设不只是口号，而是有模块化方向。",
+          "managementGap": "缺少跨周验收矩阵：每个样本是否有真实 IOC、是否有 mock C2、是否有真实 API、是否有安全开关分支、是否有 HiLog/server 双端证据、是否外部通过。5月17日计划批量修改 15 个样本，5月31日提交 31 个样本，但中间没有清楚说明哪些继承自前计划、哪些返工、哪些仍不达标。",
+          "nextConcreteMove": "下周交一个 31 行样本验收表，每行包含 family、真实 IOC 来源、API 调用点、mock C2 状态、安全开关引用位置、运行日志路径、server 日志路径、当前状态、阻塞项；同时抽 3 个样本做端到端复现实验录像。"
+        },
+        {
+          "project": "面向包管理器恶意代码检测器的 Strategy-guided Red Teaming Framework",
+          "weeks": [
+            "2026-05-24"
+          ],
+          "quality": "研究问题意识较强，但仍处于预研阶段。她提出了比普通 detector 更有研究价值的问题：现有检测器是否能泛化到未来高级供应链攻击策略。",
+          "whatWorked": "能够把个人兴趣、师兄已有项目、Brainary 的自动化 benchmark / red-team sample generation 能力连接起来；也识别了 non-weaponized、安全、可复现、可评估这些约束。",
+          "managementGap": "硬交付不足：目前只有服务器配置、数据迁移测试、项目阅读和题目草案，没有最小样本、baseline detector、攻击策略 taxonomy、评估指标或实验计划。5月31日未继续报告此项目，说明优先级和暂停原因缺失。",
+          "nextConcreteMove": "若继续推进，下一周只做一个最小闭环：选 3 个 strategy-level patterns，映射到 PyPI 或 NPM 生命周期，生成 5 个 non-weaponized 样本，选择 1-2 个已有 detector 跑通一次评估，并记录 false negative/告警原因。"
+        },
+        {
+          "project": "实验服务器配置与大规模 APK 数据准备",
+          "weeks": [
+            "2026-05-24"
+          ],
+          "quality": "基础设施推进有效，但项目价值依赖后续实验是否真正使用这些数据。",
+          "whatWorked": "完成 GlobalProtect / VPNGate、SSH key、server17 登录，启动 Google Cloud VM 到 server17 的 902G APK 数据传输测试，为后续大规模分析提供资源基础。",
+          "managementGap": "缺少资源状态闭环：数据是否传完、校验是否通过、目录结构如何、后续由哪个实验消费、是否需要 GPU/API/存储配额，都没有后续证据。",
+          "nextConcreteMove": "补一份 server17 数据资产清单：数据集名称、规模、良恶性比例、来源、校验方式、存放路径、可用脚本、预计用于哪个实验。"
+        }
+      ],
+      "managementPattern": "她的管理模式是强执行、强返工、能响应反馈，但容易用投入时间和大包交付替代周级可验证里程碑。她会写“是否需要老师介入：否”，但对关键外部依赖如华为验收、AndroZoo 覆盖、服务器数据完成度、师兄方法论对齐结果，缺少明确的触发条件。",
+      "nextManagementMove": "建立一张跨项目周报仪表盘：本周原计划、实际完成、可检查证据、未完成原因、下周最小可验证动作、需要谁的输入、何时需要老师介入。尤其 HarmonyOS 项目要从样本数量管理升级到样本合规状态管理。"
+    },
+    "repeatedBlockers": [
+      "大模型生成代码容易用日志或 console.info 替代真实系统 API 调用。",
+      "pattern / method context / 原始 APK 的批量供给不稳定，影响从单样本扩展到多样本。",
+      "真实 IOC、mock 字段、安全开关和运行时代码之间容易脱节，需要强制来源分层和代码流检查。",
+      "外部验收证据不足：报告中有自评 A- 和交付包，但缺少华为或第三方验收通过结果。",
+      "跨项目切换的优先级依据不够清楚，5月24日包管理器方向的后续状态缺失。",
+      "自动化沉淀仍停留在规则构想阶段，缺少脚本化检查器或 pipeline 改动的运行结果。"
+    ],
+    "teacherQuestions": [
+      "你提交的 31 个 HarmonyOS 样本中，逐个样本的验收状态是什么？哪些已经有真实 API、mock C2、HiLog/server 双端证据，哪些还只是本地代码校验？",
+      "你现在判断一个样本‘合格’的最低标准是什么？请给出机器可检查的 5-8 条规则，而不是文字描述。",
+      "5月24日提出的包管理器 strategy-guided red teaming 方向现在是暂停、并行还是放弃？取舍依据是什么？",
+      "你准备如何把 5月31日人工修复经验转成 pipeline？下周能否交一个检测‘日志替代 API’和‘安全常量未被 if 引用’的自动检查脚本？",
+      "如果只能保留一个 Brainary 能力沉淀，你认为是 IOC-grounded HarmonyOS sample generation，还是 strategy-level malicious package red-team benchmark？为什么？"
+    ],
+    "nextIntervention": "老师下一次 meeting 不需要先讨论更多题目，而应要求她带来一张样本级验收矩阵和一个最小自动化检查器原型；干预重点是把她已经形成的元认知转成可重复执行的标准，而不是继续靠 50 小时人工修复。",
+    "studentFeedback": {
+      "summary": "你这四周的真实进步不是做了更多样本，而是开始看见什么样的样本才有研究和审计价值：有真实证据来源、有安全映射、有真实 API、有运行闭环、有文档源码一致性。",
+      "whatImproved": "你从 Migration Spec Card、IOC-grounded replay、strategy-level red teaming，到 API-grounded strict compliance，逐步提高了抽象层级和验收标准；尤其 5月31日能主动否定‘日志跑通’这种假进展，是很重要的研究能力信号。",
+      "nextStep": "下周不要只继续扩数量。请把 31 个样本做成可检查清单，并至少自动化两类检查：一类检查是否存在日志替代真实 API，另一类检查安全开关是否真的进入代码分支。这样你的经验才会从个人返工变成系统能力。"
+    },
+    "evidenceLinks": [
+      {
+        "claim": "元认知从生成样本转向证据链构造",
+        "weeks": [
+          "2026-05-10",
+          "2026-05-17"
+        ],
+        "evidence": "5月10日提出 Migration Spec Card；5月17日提出 REAL_ANDROID_IOC、MOCK_RUNTIME_FIELD、NEED_APK_EXTRACTION 分层，并要求 HiLog 与 mock server 证明行为链。",
+        "evidenceLevel": "较强；有具体机制和样本例子，但缺少外部验收结果。"
+      },
+      {
+        "claim": "她能识别大模型生成样本的关键失败模式",
+        "weeks": [
+          "2026-05-31"
+        ],
+        "evidence": "报告明确写到放弃用打印日志代替实际功能，改为真实 API 驱动；修复安全变量未进入 if 分支的问题。",
+        "evidenceLevel": "较强；有 11 个旧样本修复和 31 个样本包作为证据，但逐样本通过结果缺失。"
+      },
+      {
+        "claim": "科研价值判断开始从局部交付转向通用 benchmark 能力",
+        "weeks": [
+          "2026-05-10",
+          "2026-05-17",
+          "2026-05-24",
+          "2026-05-31"
+        ],
+        "evidence": "四周分别提出 Pattern-guided Pipeline、IOC-grounded Replay Benchmark、Strategy-guided Red Teaming Framework、API-Grounded Replay Benchmark。",
+        "evidenceLevel": "中强；方向判断清楚，但哪些会真正持续投入尚不稳定。"
+      },
+      {
+        "claim": "包管理器方向有研究问题意识，但硬证据不足",
+        "weeks": [
+          "2026-05-24"
+        ],
+        "evidence": "提出 Beyond Code-Level Obfuscation 和 strategy-level attack pattern，但仅完成服务器配置、数据迁移测试和项目学习。",
+        "evidenceLevel": "中等；预研证据存在，实现和实验缺失。"
+      },
+      {
+        "claim": "项目管理存在可检查交付，但缺少跨周对账",
+        "weeks": [
+          "2026-05-17",
+          "2026-05-24",
+          "2026-05-31"
+        ],
+        "evidence": "5月17日计划周日扩展 15 个样本；5月24日转向包管理器方向；5月31日返回 HarmonyOS 并提交 31 个样本，但没有说明原计划、暂停原因、返工范围和验收状态之间的关系。",
+        "evidenceLevel": "较强；周报文本能直接支持该判断。"
+      },
+      {
+        "claim": "Brainary 相关能力有沉淀方向，但还未证明系统化落地",
+        "weeks": [
+          "2026-05-10",
+          "2026-05-17",
+          "2026-05-24",
+          "2026-05-31"
+        ],
+        "evidence": "多次提出 Sample Generation Module、Attack Pattern Abstraction Module、Strict-Compliance Module，但没有报告实际模块接口、脚本运行结果或自动化覆盖率。",
+        "evidenceLevel": "中等；概念清楚，工程化证据不足。"
+      }
+    ]
   }
 }

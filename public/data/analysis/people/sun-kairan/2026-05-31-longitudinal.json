@@ -1,95 +1,232 @@
 {
   "key": "person:sun-kairan:2026-05-31:longitudinal",
-  "generatedAt": "2026-05-31T15:01:42.513Z",
-  "provider": "deepseek",
-  "model": "deepseek-v4-pro",
-  "reasoningEffort": "high",
-  "inputHash": "dbfb7391f15f157f911e6ae6fba2969b4d2133d2e375434d617f73d94e98e7c3",
+  "generatedAt": "2026-06-06T12:41:09.298Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "e7a049d4d3a070a876bd17e8e6faf90d30c4c7e5bc783aa59b7e4449b716ef06",
   "result": {
-    "overallTrajectory": "学生从记忆类型的概念拆解出发，逐步深入到记忆系统的信息流、检索机制和架构分离，展现出从局部设计到系统架构、从静态存储到动态演化、从单模型依赖到平台化思维的研究能力成长。硬进展从模块化拆分演进到 buffer-index 分层结构，认知从回推任务本质到分离存储与检索，价值函数从功能实现转向长期系统稳定性与生态位判断。项目管理严谨且能响应外部约束，整体研究能力显著提升，非仅事务繁忙。",
-    "stageByWeek": [
+    "overallTrajectory": "最近四周呈现出从“模块分类”到“运行机制”再到“检索、压缩、遗忘、模型适配约束”的连续推进，说明学生不只是更忙，而是在逐步提高系统化研究能力；但目前主要证据仍来自概念设计、机制拆解和自述的上线或验证计划，真实任务中的效果指标、失败案例、对照实验和可复用交付物证据仍不足。",
+    "headline": "研究能力在增强，核心变化是开始把 memory 当作动态系统而非静态目录，但下一步必须用真实任务指标证明这些设计有效。",
+    "overviewSentence": "该学生四周内从 memory 分类推进到检索、遗忘、buffer-index 和多模型约束，显示研究判断在深化，但实证验证和交付证据仍需补强。",
+    "fourWeekTimeline": [
       {
         "week": "2026-05-10",
-        "summary": "初步拆解程序化与语义化记忆，完成模块上线测试，同步推进线上 use case 快速反馈迭代。认知上明确了记忆设计应回溯任务执行本身，而非从类型出发。"
+        "metacognition": "开始意识到 Long-term Memory 不能只按 memory 类型分类，而要从任务执行出发区分“怎么做”和“做时调用什么知识”；元认知重点是识别 procedural memory 与 semantic memory 混写会导致后续难复用、框架变重。",
+        "valueJudgment": "判断 procedural / semantic 模块化值得做，理由是它影响底层 memory 结构而非局部 patch；也判断 episodic memory 是自然下一步，因为 procedural 与 semantic 仍缺少对具体交互和阶段状态的承接。",
+        "projectManagement": "有较明确的项目阶段、原计划与实际完成、上线测试和下周最小动作；但上线测试的范围、测试标准、失败样例和判断边界是否“足够顺”的证据没有给出。",
+        "evidence": "报告写到 skill 和 knowledge 已拆为两个独立模块并上线，进入实际测试；CoT’s CoT 提出 procedural workflow library、semantic overlay system、memory schema；Brainary 关联到 memory、reasoning、workflow management、meta-cognition。"
       },
       {
         "week": "2026-05-17",
-        "summary": "建立记忆系统两层架构（System LTM / Project Memory），细化三层项目记忆和 MessageManager 运行机制。认知突破在于将记忆视为动态分层协作系统，并指出情境记忆是抢救性机制。"
+        "metacognition": "从“分清类型”推进到“分层、信息流、吸收和遗忘机制”，开始识别 Working Memory、Episodic Memory、User Context 不能平铺，而要看生命周期、更新节奏和 consolidation。",
+        "valueJudgment": "价值判断更系统：System LTM / Project Memory 被定义为跨项目能力基础设施，Episodic Memory + MemoryManager 被判断为让系统积累经验的关键机制；判断依据从“模块清楚”升级为“能否支撑跨 session 经验积累”。",
+        "projectManagement": "持续推进同一 memory 主线，并新增 MemoryManager runtime 的触发、打分、淘汰、直通道与 episode 路径；下周动作聚焦真实交互批次验证，但仍缺少验证数据和具体验收标准。",
+        "evidence": "报告写到 System LTM 与 Project Memory 两层、Project Memory 内部 Working Memory / Episodic Memory / User Context 三层；提出 batch 触发、persistent session、analyze_turn、episode 打分和淘汰；CoT’s CoT 证据等级为 B。"
       },
       {
         "week": "2026-05-24",
-        "summary": "调研 EvolveMem 论文，将检索提升为核心设计对象，确定了情境记忆的初版全量注入策略。同时深化对大模型能力边界的认知，区分有/无 verifier 任务。"
+        "metacognition": "进一步从“怎么存”转向“怎么取、怎么筛、怎么组织成当前上下文”，并引入 EvolveMem 作为外部参照；能识别 memory 可用性不取决于存储本身，而取决于 retrieval 质量、context budget 和 delta 总结。",
+        "valueJudgment": "价值判断开始连接任务边界：提出有 verifier 与无 verifier 任务的差异，认为无 verifier 任务中 agent 更适合作为认知放大器而非替代判断；这比前两周更接近科研问题选择和自动化边界判断。",
+        "projectManagement": "给出了当前可落地策略：20 条 episode 上限、每条约 30 tokens、score 降序全量注入，成本约 600 tokens；也列出后续升级方向，如 skill 阶段过滤、实体匹配、query 策略、entity reinforcement 和 hit rate 复盘。问题是这些仍主要是设计计划，真实 hit rate、信噪比和失败日志没有报告。",
+        "evidence": "报告基于 EvolveMem 梳理结构化 memory store、多路检索层、自演化机制；提出 Jaccard ≥ 0.80 去重、importance 线性衰减、entity reinforcement；Brainary 关联扩展到 memory、retrieval、reasoning、meta-cognition。"
       },
       {
         "week": "2026-05-31",
-        "summary": "提出 buffer + index 双层结构，实现存储与检索分离；明确情境记忆的事件类型和基本遗忘逻辑；启动多模型适配，降低单一模型政策风险。认知上强调捕获、组织、检索、遗忘应作为同一条设计链路。"
+        "metacognition": "将上一周的“全量注入”进一步修正为 buffer + index 两层结构，明确区分捕获、组织、检索、遗忘和吸收；这体现出能根据 token 约束和检索噪音重新调整方案，而不是固守原设计。",
+        "valueJudgment": "价值判断更稳定地围绕长期系统能力：buffer + index 被判断为让 episodic memory 从记录层走向经验层；多模型适配被判断为降低单一 Claude 政策依赖、让 memory/context 设计更接近平台级能力。",
+        "projectManagement": "项目阶段写得清楚，关键路径包括 buffer 压缩规则、index 粒度、路径检索、遗忘机制、多模型适配；但仍缺少已接入哪些模型、对比结果、路径检索的实际样例、压缩规则的验收标准。",
+        "evidence": "报告提出 buffer 负责捕获，index 负责组织和检索；事件类型收成 user feedback、milestone、decision；遗忘机制包括相关性加减分、吸收删除、20 条上限兜底；新增 Claude token 政策收紧带来的多模型适配问题。"
       }
     ],
-    "trendScores": {
-      "topicDepth": [
-        6,
-        7,
-        8,
-        9
+    "metacognitionChange": {
+      "summary": "元认知有明显纵向进步：从第一周识别 procedural / semantic 边界，到第二周把 memory 作为分层流动系统，再到第三周把 retrieval 和 context assembly 纳入 memory 本体，第四周进一步形成 buffer / index / forgetting / absorption 的设计链路。进步不是工作量增加，而是问题表征在变深：从“做了哪些模块”转向“信息如何进入、保留、检索、压缩、遗忘、被吸收，以及如何受 token 和模型差异约束”。",
+      "byWeek": [
+        {
+          "week": "2026-05-10",
+          "change": "能识别早期失败模式：把流程和领域知识混写进 workflow 会短期方便但长期难复用。下一步验证标准写成“在真实任务里看 skill 和 knowledge 边界是否足够顺”，但没有量化标准。"
+        },
+        {
+          "week": "2026-05-17",
+          "change": "开始关注状态覆写、episode 生成、rules/project 吸收边界，说明已经从静态分类进入动态机制。失败模式识别更清楚：如果没有遗忘和吸收，memory 会变成噪音堆积。"
+        },
+        {
+          "week": "2026-05-24",
+          "change": "能借外部论文 EvolveMem 反思自身方案，把盲区定位到 retrieval 太粗；提出当前全量注入策略及 token 成本，说明开始把可执行约束纳入设计。证据边界也更清楚：需要观察信噪比、score 稳定性、hit rate。"
+        },
+        {
+          "week": "2026-05-31",
+          "change": "能对上一周全量注入方案做结构升级，提出 buffer + index 和按路径检索，体现方案迭代能力。也开始把外部 Claude token 政策作为设计约束，说明对系统可持续性的盲区识别增强。"
+        }
       ],
-      "hardProgressConcreteness": [
-        6,
-        7,
-        7,
-        8
-      ],
-      "cognitiveProgression": [
-        6,
-        7,
-        8,
-        8
-      ],
-      "cotCotInsight": [
-        7,
-        7,
-        8,
-        8
-      ],
-      "brainaryMapping": [
-        6,
-        7,
-        7,
-        8
-      ],
-      "valueReasoning": [
-        7,
-        7,
-        8,
-        8
-      ],
-      "projectManagement": [
-        7,
-        7,
-        7,
-        8
-      ],
-      "automationPathClarity": [
-        6,
-        7,
-        7,
-        8
-      ],
-      "metaCognitionDepth": [
-        6,
-        7,
-        8,
-        8
-      ]
+      "currentLevel": "当前处于“设计研究能力明显增强，但实证研究闭环尚未充分建立”的阶段；能提出机制、边界、失败模式和自动化沉淀形式，但还没有稳定报告真实任务中的对照结果、失败日志、指标曲线或可复用实现文档。",
+      "strongestSignal": "最强信号是 2026-05-24 到 2026-05-31 的转变：先提出 score 降序全量注入作为可落地策略，再意识到全量加载会有噪音与 token 问题，进一步拆成 buffer + index、路径检索和语义吸收，这显示学生能根据约束修正自己的设计，而不只是堆新概念。",
+      "nextLift": "下一步提升不是继续增加新术语，而是把每个机制变成可验证标准：例如定义 episode hit rate、无关注入率、漏召回率、buffer 压缩后信息保真度、semantic absorption 后重复率下降、不同模型下任务完成质量差异，并每周报告至少一个真实失败案例和一次设计纠偏。"
     },
-    "valueFunctionChange": "四周内学生的价值判断从“让记忆在具体任务中落下来”转向“构建底层系统基础设施”，再升维到“通过检索与演化形成经验核心”，最终兼容“降低外部依赖、保证平台级可持续性”。金额估值基本保持稳定（100‑300万/50‑150万），但论证重心从模块可用性变为系统架构的长期价值与生态风险规避。能明确连接金额、用户、通用能力、Brainary 模块和自动化转化路径，价值观逐渐成熟，不再局限于局部优化。",
+    "valueGrowth": {
+      "summary": "科研和项目价值判断在四周内变得更清楚：价值不再主要来自“模块能不能做”，而是来自它是否能成为 Brainary / writing agent 的长期系统能力，是否能降低跨任务扩展成本，是否能支撑自动化科研中的经验积累、检索、验证和人机分工。稳定性也在增强：连续四周都围绕 memory 作为底层能力推进，而不是频繁换题。",
+      "byWeek": [
+        {
+          "week": "2026-05-10",
+          "valueJudgment": "认为 procedural / semantic 拆分值得做，因为它让 Long-term Memory 从概念分类落到工程模块；价值依据是底层结构清楚后可复用。判断有效，但仍偏模块层。"
+        },
+        {
+          "week": "2026-05-17",
+          "valueJudgment": "价值判断升级为系统基础设施：System LTM / Project Memory 可以支撑跨任务和跨项目能力，Episodic Memory + MemoryManager 可以避免经验丢失。这里已经开始把个人设计兴趣连接到 Brainary 的 memory、meta-cognition、workflow management 能力建设。"
+        },
+        {
+          "week": "2026-05-24",
+          "valueJudgment": "价值判断进一步包含任务边界：有 verifier 的任务适合更强自动化闭环，无 verifier 的任务要保留人类判断。这是科研价值判断的重要进步，因为它帮助决定哪些问题值得自动化、哪些问题需要 human-in-the-loop。"
+        },
+        {
+          "week": "2026-05-31",
+          "valueJudgment": "价值判断更加工程可持续：buffer + index 的价值在于从记录层走向经验层，多模型适配的价值在于降低单模型政策风险，并迫使 memory/context 设计具备跨模型稳健性。"
+        }
+      ],
+      "currentValueFunction": "当前学生隐含的价值函数是：优先投入能沉淀为长期系统能力的底层机制，尤其是 memory、retrieval、context organization、workflow management 和 meta-cognition；项目是否值得做取决于它能否减少未来任务扩展成本、支撑跨 session 经验积累、形成可自动化的规则或 pipeline，并在 token、模型差异和人类判断边界下仍可持续运行。",
+      "improvementSignals": [
+        "从“procedural / semantic 模块化值得做”推进到“memory 必须有信息流、遗忘、吸收、检索和运行管理”，价值判断从局部功能变成系统机制。",
+        "开始使用外部论文 EvolveMem 校准自己的方向，说明不只是内部闭门设计，而是在寻找研究证据和可借鉴机制。",
+        "提出 verifier / non-verifier 任务分类，说明能把 agent 能力建设与科研任务选择、自动化边界、人类判断保留连接起来。",
+        "多模型适配把外部资源/API/token 政策纳入项目价值判断，说明开始考虑项目长期可持续性，而不只是当前方案好不好。"
+      ],
+      "nextValueQuestion": "下次需要逼近的问题是：在 writing agent / Brainary 的长期系统能力中，episodic memory 的哪一个子机制最值得优先做成可复用基础设施，为什么它比继续扩展 semantic memory、优化 workflow 或做多模型适配更关键，能用哪三个真实任务指标证明它值得继续投入？"
+    },
+    "projectManagementReview": {
+      "summary": "项目管理质量有进步，尤其是每周都写了当前阶段、原计划 vs 实际完成、依赖关系、关键路径、资源和下周动作；但管理仍偏“设计推进记录”，不足在于缺少可检查交付物链接、测试样本、定量指标、失败案例、验收阈值和每周实际结果复盘。Brainary 相关的 memory、retrieval、context organization、workflow management、meta-cognition 能力被连续推进，但仍需要从设计文档转成可运行、可评估、可复用的系统能力。",
+      "projects": [
+        {
+          "project": "Academic Writing Agent / Brainary Memory System 主线",
+          "weeks": [
+            "2026-05-10",
+            "2026-05-17",
+            "2026-05-24",
+            "2026-05-31"
+          ],
+          "quality": "连续性强，问题逐周深化：procedural / semantic 拆分，到 System LTM / Project Memory，再到 retrieval、delta summarization、buffer + index。项目处于结构收敛和机制细化阶段，但真实效果证据不足。",
+          "whatWorked": "Brainary 的 memory、retrieval、context organization、workflow management 和 meta-cognition 能力被持续映射并推进；每周都有明确的 CoT 增量和 CoT’s CoT，自动化沉淀形式从 workflow library、semantic memory system，演进到 retrieval policy、context assembly rule、buffer-to-index compression rule、episodic index tree。",
+          "managementGap": "缺少可检查交付物，例如设计文档版本、schema、伪代码、运行截图、测试用例、真实任务样本、失败日志；“真实任务验证”连续出现，但没有报告验证结果。Brainary 能力建设目前证据主要是设计层映射，不足以证明已经沉淀为稳定系统能力。",
+          "nextConcreteMove": "下周选择一个真实 writing workspace，跑完整 memory 流程并交付一页验证表：输入对话、进入 buffer 的内容、压缩到 index 的内容、被直通道吸收到 rules/project 的内容、检索命中的 episode、无关注入、遗漏信息、最终任务影响。"
+        },
+        {
+          "project": "Procedural / Semantic Memory 模块化",
+          "weeks": [
+            "2026-05-10",
+            "2026-05-17"
+          ],
+          "quality": "前两周推进较实，已经从 skill / knowledge 两个模块上线测试，发展到 System LTM 内部 Procedural Memory 与 Semantic Memory 的职责、加载方式、分类和 retrieval cue。后两周主线转向 episodic memory，未继续单独报告该模块测试结果。",
+          "whatWorked": "明确 skill 负责流程、knowledge 负责执行中的规范和判断依据；提出 project metadata 作为 retrieval cue，这对 Brainary 的 workflow management 与 memory 复用有潜在系统价值。",
+          "managementGap": "没有看到上线后的具体测试结果，也没有说明 procedural 与 semantic 边界在哪些真实任务中成功或失败；后续是否被 episodic memory 和 buffer-index 结构继承，证据不足。",
+          "nextConcreteMove": "补一张 procedural / semantic 边界回归测试表：列出 5 个 writing agent 场景，标注哪些内容进入 skill、哪些进入 knowledge、哪些应动态检索，并记录一次边界判断错误。"
+        },
+        {
+          "project": "Episodic Memory / MemoryManager / Retrieval / Buffer-Index",
+          "weeks": [
+            "2026-05-17",
+            "2026-05-24",
+            "2026-05-31"
+          ],
+          "quality": "这是最近三周最核心、最有研究增量的项目。推进路径清楚：先定义 episode、打分、遗忘和 MemoryManager；再基于 EvolveMem 关注 retrieval、score、hit rate、delta 总结；最后形成 buffer + index、路径检索、事件类型和吸收删除机制。",
+          "whatWorked": "能把 Brainary 的 memory 与 retrieval 能力从“存储层”推进到“经验层”：包括事件筛选、score 演化、forgetting policy、semantic absorption、path-based retrieval。项目的 CoT 增量清楚，自动化路径也具体。",
+          "managementGap": "目前硬进展多为设计收敛，缺少真实 invocation 的统计结果；episode 初始分、加减分规则、20 条上限、路径检索、index 粒度都尚未给出实验依据。没有报告 delta summarization 的实际样例。",
+          "nextConcreteMove": "定义并跑最小实验：用同一 writing 任务对比“全量 episode 注入”和“buffer + index 路径检索”，至少记录 token 数、相关 episode 命中数、无关 episode 数、遗漏关键 episode 数、输出质量差异和一次失败分析。"
+        },
+        {
+          "project": "线上 use case 运维与快速反馈闭环",
+          "weeks": [
+            "2026-05-10"
+          ],
+          "quality": "有真实使用量和反馈处理节奏，报告称 NeurIPS 和 NDSS ddl 期间日活 40–50，反馈后 1–2 天内处理并上线。这是四周中少数带真实用户环境的项目证据。",
+          "whatWorked": "真实使用反馈可作为 Brainary / writing agent 能力收敛的外部测试场，能帮助判断哪些需求应沉淀成稳定 feature。",
+          "managementGap": "之后三周没有继续报告该项目，无法判断反馈是否沉淀成稳定能力；没有列出具体 feature、bug、共性需求、处理前后效果。",
+          "nextConcreteMove": "补一个反馈分类表：过去四周用户反馈总数、已处理数、1–2 天上线比例、重复需求、已沉淀为稳定能力的需求、仍未处理的关键阻塞。"
+        },
+        {
+          "project": "LLM 能力边界与 Verifier-aware Agent 定位",
+          "weeks": [
+            "2026-05-24"
+          ],
+          "quality": "这是研究判断框架项目，不是工程交付项目。它提升了学生对哪些任务适合自动化、哪些任务需要人类判断的辨别能力，但目前尚未转成设计规则或实验。",
+          "whatWorked": "提出有 verifier / 无 verifier 的任务区分，并把无 verifier 任务中的模型定位为认知放大器和材料组织器，这对 Brainary 的 reasoning、meta-cognition 和 human-in-the-loop policy 有价值。",
+          "managementGap": "只有一周报告，缺少任务分类样例、判断规则、对 writing agent 的具体设计影响；没有验证该分类是否能改善 agent 任务选择。",
+          "nextConcreteMove": "选 6 个 writing/research 子任务，标注 verifier 强弱、可自动化程度、人类介入点和 agent 位置，并说明这一分类如何改变 memory/retrieval 设计。"
+        },
+        {
+          "project": "Paper Agent 多模型适配",
+          "weeks": [
+            "2026-05-31"
+          ],
+          "quality": "这是由 Claude token 政策收紧触发的风险应对项目，项目价值判断合理，但目前处于起步阶段。",
+          "whatWorked": "能把资源/API/token 政策变化纳入 memory、context 和 workflow 设计约束，说明项目管理开始关注可持续性和平台级能力，而不是依赖单一模型。",
+          "managementGap": "没有说明已适配哪些模型、接入状态、能力差异、成本差异、失败模式，也没有下周验收标准；Brainary 的多模型兼容 memory workflow 还只是方向。",
+          "nextConcreteMove": "建立最小多模型评测表：Claude 与至少一个替代模型在同一 memory/context 输入下的输出质量、token 成本、上下文遵循、检索内容利用率和失败类型。"
+        }
+      ],
+      "managementPattern": "该学生的管理模式是每周能沿同一核心主线推进，并把上周的待明确点转化为下周的设计对象；优点是连续性和关键路径意识较强，问题是“实际验证”经常停留在计划表达，缺少每周闭环的结果数字和失败复盘。",
+      "nextManagementMove": "要求下周周报把每个核心项目拆成“设计假设—验证任务—验收指标—实际结果—失败样例—下周纠偏”，并至少附一个可检查 artifact：schema、规则表、测试日志、对比样例或运行截图。"
+    },
     "repeatedBlockers": [
-      "多次提到需要更多真实任务验证，边界和机制尚未经长期运行检验。",
-      "遗忘机制仍较基础，需细化衰减速度、吸收规则。",
-      "检索策略从全量注入到按路径拉取的升级尚未充分测试。",
-      "对 index 粒度和检索路径的设计仍需讨论。",
-      "多模型适配刚刚起步，差异和稳定性未知。"
+      "真实任务验证反复被列为下一步，但四周内缺少清晰的验证结果、样本数量、指标和失败案例。",
+      "CoT’s CoT 证据等级多数为 B，只有 2026-05-10 的第二条为 A；说明认知增量有价值，但证据强度尚未稳定提升。",
+      "多次提到 hit rate、信噪比、score 稳定性、delta 总结、路径检索效果，但尚未报告具体测量方法和结果。",
+      "Brainary 能力映射连续出现，但从设计映射到系统交付的证据不足，尤其缺少可复用模块、接口、规则文件或运行结果。",
+      "项目依赖和资源描述较完整，但资源/API/GPU/模型成本的量化管理仍不足；多模型适配只说明风险存在，尚未形成比较矩阵。"
     ],
-    "professorShouldAsk": "下一周可以重点问：'你如何验证 buffer-to-index 压缩规则在真实任务中的信噪比？index 树的节点粒度按什么原则定义，才能兼顾检索效率与跨 section 信息的完整性？'",
-    "nextBestIntervention": "建议下周安排一次专项讨论，聚焦 index 树的设计准则（如节点命名、父子关系、可检索字段）和跨模型检索的一致性验证方案，帮助把 episodic memory 从架构构想推向第一版可稳定量化的运行层。"
+    "teacherQuestions": [
+      "你现在认为 episodic memory 最关键的验证指标是哪三个？请不要只说“效果更好”，要定义 hit rate、无关注入率、遗漏率或输出质量变化的可测量口径。",
+      "从 2026-05-24 的 score 降序全量注入到 2026-05-31 的 buffer + index，你是基于什么证据决定升级结构的？有没有真实失败样例，还是主要基于设计推理？",
+      "如果只能把一个 Brainary memory 能力先做成稳定系统能力，你会选 procedural/semantic 边界、episodic retrieval、delta summarization、还是多模型兼容 memory workflow？为什么？",
+      "下周你能否拿一个真实 writing workspace 展示完整链路：哪些信息进入 buffer，哪些压缩进 index，哪些进入 rules/project，哪些被删除，最后检索如何影响输出？",
+      "多模型适配中，你准备如何区分是模型能力差异导致输出变差，还是 memory/context 组织方式对某个模型不适配导致输出变差？"
+    ],
+    "nextIntervention": "老师下一次 meeting 最有效的介入不是继续扩展概念，而是要求学生选定一个最小闭环实验：同一 writing 任务下比较“无 episodic memory”“score 全量注入”“buffer + index 路径检索”三种方案，交付具体样例、token 成本、命中/噪音/遗漏统计、输出差异和一次失败分析；同时帮助他收敛 index 粒度、检索升级条件和 semantic absorption 规则。",
+    "studentFeedback": {
+      "summary": "你这四周的进步主要不是做了更多事，而是开始把 memory 看成一个有流动方向、检索约束、遗忘机制、吸收路径和模型适配压力的系统；这是研究能力增强的信号。现在最需要补的是证据闭环。",
+      "whatImproved": [
+        "你能持续围绕同一核心问题推进，而不是每周换题。",
+        "你从分类思维推进到机制思维，再推进到检索、压缩和资源约束思维。",
+        "你开始能识别自己的设计盲区，例如 memory 不是存得越多越好，retrieval 太粗会让 memory 失效，单模型依赖会影响系统可持续性。",
+        "你能把个人兴趣连接到 Brainary 的长期能力建设，包括 memory、retrieval、context organization、workflow management 和 meta-cognition。"
+      ],
+      "nextStep": "下一周不要再主要增加概念层设计，而要交付一个小而完整的验证闭环：选择一个真实任务，记录 episode 如何进入、压缩、检索、吸收、遗忘，并用指标说明 buffer + index 是否比全量注入更好。"
+    },
+    "evidenceLinks": [
+      {
+        "week": "2026-05-10",
+        "evidence": "skill / knowledge 被做成两个独立模块并上线，进入实际测试；提出 procedural 负责流程、semantic 负责知识调用；Brainary 关联 memory、reasoning、workflow management、meta-cognition。"
+      },
+      {
+        "week": "2026-05-10",
+        "evidence": "CoT’s CoT 证据等级：第一条 B，第二条 A；自动化沉淀形式包括 procedural workflow library、semantic overlay system、memory schema、argument pattern base、evaluation protocol。"
+      },
+      {
+        "week": "2026-05-17",
+        "evidence": "Memory System 收成 System LTM 与 Project Memory 两层，Project Memory 拆成 Working Memory、Episodic Memory、User Context；提出 WM → EM → User Context 的 consolidation 路径。"
+      },
+      {
+        "week": "2026-05-17",
+        "evidence": "MemoryManager runtime 包括 batch 触发、persistent session、analyze_turn、episode 打分、遗忘、直通道与 episode 路径；CoT’s CoT 证据等级均为 B。"
+      },
+      {
+        "week": "2026-05-24",
+        "evidence": "调研 EvolveMem，关注结构化 memory store、多路检索层、self-evolution engine；提出当前可落地策略为 20 条上限、每条约 30 tokens、score 降序全量注入，总成本约 600 tokens。"
+      },
+      {
+        "week": "2026-05-24",
+        "evidence": "提出 Jaccard ≥ 0.80 去重、importance 线性衰减、entity reinforcement、episode hit rate、delta 总结；提出 verifier / non-verifier 任务分类和 human-in-the-loop policy。"
+      },
+      {
+        "week": "2026-05-31",
+        "evidence": "episodic memory 收成 buffer + index 两层：buffer 负责捕获，index 负责组织和检索；检索方式从全量加载转向按路径拉取相关子树。"
+      },
+      {
+        "week": "2026-05-31",
+        "evidence": "episode 保留范围收成 user feedback、milestone、decision；遗忘机制包括 invocation 相关性加减分、分数到 0 删除、semantic memory 吸收后删除、超过 20 条删除最低分。"
+      },
+      {
+        "week": "2026-05-31",
+        "evidence": "开始多模型适配以降低对 Claude token 政策的单点依赖；但未提供已接入模型、对比结果或失败样例，证据不足。"
+      }
+    ]
   }
 }
