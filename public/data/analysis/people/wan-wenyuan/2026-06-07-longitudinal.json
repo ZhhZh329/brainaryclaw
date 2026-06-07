@@ -1,0 +1,257 @@
+{
+  "key": "person:wan-wenyuan:2026-06-07:longitudinal",
+  "generatedAt": "2026-06-07T12:01:41.682Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "d78e1afa1a073c53e24db7f1cc26458105abc8b2d4bb717f22b346e1acd24798",
+  "result": {
+    "overallTrajectory": "总体判断：这个学生最近四周不是单纯变忙，而是在变得更有研究能力。主要证据是他能从一个无增益的 bbox memory ablation 出发，识别“视觉证据不是中性增强”的失败机制，逐步上升到 evidence gate、internal attention、Region PAI 和 geometry evidence 的可运行系统接口。但研究能力的下一步瓶颈也很明确：概念扩展和工程原型推进较快，系统化定量评估、题型拆分、fixed/broken 归因表和 gate 验证还没有跟上。",
+    "headline": "从“加 bbox 看有没有提升”进步到“控制视觉证据如何、何时、以何种内部机制影响模型”，但下周必须用成对评估把 Region PAI 和 evidence gate 的价值钉实。",
+    "overviewSentence": "四周轨迹显示他在从执行实验转向提出可检验的认知控制模块，但当前最需要补齐的是可复现结果表、题型拆分和证据启用规则。",
+    "fourWeekTimeline": [
+      {
+        "week": "2026-05-17",
+        "metacognition": "能从 full set ablation 的负结果中识别方法边界：bbox evidence 可稳定生成，但无条件写入 context 不提升整体 VQA，甚至对属性、计数、全局状态类问题可能有副作用；这已经从“做了什么”进入“为什么失败、适用边界是什么”。",
+        "valueJudgment": "价值判断聚焦在“视觉证据如何进入推理”这一通用科研问题，而不是停留在 accuracy 小增量；他判断 text-box memory 更适合作为 relevance selector 或 memory schema 的一部分，而不是通用 prompt 增强。",
+        "projectManagement": "项目管理较完整：写清原计划、实际完成、405 题 full-set 结果、GPU 资源、依赖 Chunhan 检测/分割结果、下周 schema 和 adapter 样例动作；但 adapter 仍是路线判断，训练数据和监督信号尚未落地。",
+        "evidence": "硬证据包括 LMEE-Bench 405 题 no-memory baseline 73.33%、generated bbox-memory context 73.09%，以及脚本 `examples/rynnbrain_context_memory_ablation.py`。"
+      },
+      {
+        "week": "2026-05-24",
+        "metacognition": "进一步把失败模式从“bbox context 不稳定”细化为“不同 evidence 形式对 attention 的干预强度不同”，开始识别题型、证据形式、错误路由之间的因果关系；但本周主要是样例观察和规则设计，full-set 新定量缺失。",
+        "valueJudgment": "价值判断更清楚：值得做的不是继续堆 bbox，而是做 task-type visual evidence router，把 external attention 做成可控中间层；他能解释为什么这对 Brainary 的 memory、reasoning、calibration、cognitive control 有系统价值。",
+        "projectManagement": "按周推进了 router 规则和证据分类，提出 Location、Relationship、Attribute、State、Counting 的 evidence 策略；但原本要进入定量验证，实际仍停在规则版 router 设计，缺少本周可检查结果表。",
+        "evidence": "证据等级主要为 B/C：有 5.17 ablation 和本周样例观察支撑，但 visual router full-set 定量尚未完成。"
+      },
+      {
+        "week": "2026-05-31",
+        "metacognition": "研究问题上移：从 visual evidence router 重构为 attention-memory-imagination 循环，并明确 memory 不是静态 context，而是参与 evidence activation 的认知状态；同时能承认本周没有新增实验，区分已有证据和 proposal。",
+        "valueJudgment": "价值判断从单模块价值扩展到系统能力建设：他开始判断哪些能力应成为 Brainary 的通用中间层，例如 memory-conditioned relevance selector、attention trace logger、object-centric 3D imagination；对 3D imagination 的风险也有初步取舍，提出小步验证而非大规模 reconstruction。",
+        "projectManagement": "本周项目发生路线重构，写清原计划是规则版 visual router 和 selected crop 对比，实际转为系统图、schema、题型映射和 3D imagination 最小验证设计；管理上诚实标注进度不符合预期，但实验交付断档，需要防止概念上移替代验证。",
+        "evidence": "没有新增定量实验、新数据或新 benchmark；证据仍来自 5.17/5.24，attention-memory-imagination loop 和 3D imagination 主要是框架重构。"
+      },
+      {
+        "week": "2026-06-07",
+        "metacognition": "出现关键增量：他把 internal attention 从 adapter 方案推进到 Region PAI 可运行原型，并能区分 bbox text、overlay、Region PAI 三种干预机制的不同副作用；同时明确不编造 accuracy，承认缺少完整结果表。",
+        "valueJudgment": "价值判断更稳定、更有取舍：Region PAI 被判断为 internal attention 主线候选，3D imagination 被压缩为 geometry evidence 接口，evidence gate 被定位为下一步核心；这说明他在把个人兴趣、Brainary 系统能力、自动化科研沉淀连接起来。",
+        "projectManagement": "工程推进明显：新增 `embodied_vlm_loop/region_pai.py`、CLI 参数、geometry_candidates 接口、attention enhancement 工具、25 个测试通过；但 Region PAI 只有正向现象没有正式表，gate 未实现，VGGT 未闭环，下周必须把评估表补齐。",
+        "evidence": "硬证据包括 Region PAI 代码原型、bbox-to-image-token mapping、SDPA patch、CLI 接入、geometry evidence schema、单元测试 25 通过 2 skipped；LMEE-Bench 正向现象有报告但缺少可复查数值。"
+      }
+    ],
+    "metacognitionChange": {
+      "summary": "元认知在四周内有真实提升：他不再只报告完成任务，而是在持续追问 evidence 何时有用、何时误导、以什么形式干预模型、怎样记录 fixed/broken、怎样转成可学习 gate。最强进步是能从负结果中抽象出认知控制问题，并在 6.7 转成 Region PAI 原型。主要不足是验证标准虽然越来越清楚，但执行上还没有形成稳定的每周定量闭环。",
+      "byWeek": [
+        {
+          "week": "2026-05-17",
+          "change": "识别 bbox memory 的适用边界，知道“可生成”不等于“应进入 context”。"
+        },
+        {
+          "week": "2026-05-24",
+          "change": "开始把失败模式拆到 evidence 形式和题型层面，提出 visual router。"
+        },
+        {
+          "week": "2026-05-31",
+          "change": "把 memory、attention、imagination 放入循环框架，并主动标注本周没有新实验。"
+        },
+        {
+          "week": "2026-06-07",
+          "change": "把 internal attention 工程化为 Region PAI，并提出以 fixed/broken、题型拆分、alpha/layer ablation 作为下一步验证标准。"
+        }
+      ],
+      "currentLevel": "当前处于“能提出机制假设并做原型验证”的阶段，强于单纯执行实验；但还未稳定达到“每个机制假设都有可复现实验表和自动化评估闭环”的阶段。",
+      "strongestSignal": "最强信号是 6.7 周报中没有把 Region PAI 的正向现象直接包装成结论，而是明确缺少完整 accuracy 表、修复错题数、破坏正确题数和题型拆分，因此只给 B 级证据。",
+      "nextLift": "下一步提升不是继续扩大概念，而是把元认知问题变成硬表格：对每种 evidence 记录 baseline answer、evidence type、after-evidence answer、fixed、broken、task type、bbox confidence、geometry confidence 和 memory outcome。"
+    },
+    "valueGrowth": {
+      "summary": "科研/项目价值判断明显变清楚：他从验证 text-box memory 是否提升 accuracy，逐步转向建设 Brainary 所需的 perception-to-reasoning 认知控制层。价值判断的稳定主线是：视觉证据不是越多越好，值得投入的是可控、可评估、可沉淀的 evidence selection、internal attention 和 memory outcome 机制。",
+      "byWeek": [
+        {
+          "week": "2026-05-17",
+          "valueJudgment": "判断 text-box memory 的价值不在通用提升，而在定义 memory schema、context ablation workflow、relevance selector 和 grounding evaluator。"
+        },
+        {
+          "week": "2026-05-24",
+          "valueJudgment": "判断 task-type visual evidence router 比继续堆 bbox 更值得做，因为它能把 external attention 从“更多信息”变成“正确形式的信息”。"
+        },
+        {
+          "week": "2026-05-31",
+          "valueJudgment": "把价值主线扩展为 attention-memory-imagination workflow，同时对 3D imagination 保持风险意识，主张先做空间题型小验证。"
+        },
+        {
+          "week": "2026-06-07",
+          "valueJudgment": "把最高优先级收敛到 Region PAI、gated evidence selector、geometry evidence schema；对 3D 不做完整 reconstruction，而是先做 selector 可读取的 geometry evidence。"
+        }
+      ],
+      "currentValueFunction": "当前他的价值函数可以概括为：优先做能减少无效 context 堆叠、能解释 evidence 副作用、能接入 Brainary memory/reasoning/calibration/cognitive control、能被评估表自动沉淀的模块；对证据等级低但有长期潜力的方向，只保留轻量接口和小样例验证。",
+      "improvementSignals": [
+        "从单一 accuracy 目标转向 fixed/broken、题型拆分、证据适用边界和 outcome memory。",
+        "从 prompt/context 层的 bbox memory 转向 internal attention 的 Region PAI，这更接近可复用系统能力。",
+        "对 3D imagination 有取舍：不做大而全 reconstruction demo，而是收敛为 geometry evidence 和空间鲁棒性验证。",
+        "能把 Brainary 的 memory、reasoning、calibration、cognitive control、tool orchestration 映射到具体模块，而不是泛泛关联。"
+      ],
+      "nextValueQuestion": "下周最关键的价值问题是：Region PAI 相比 bbox text 和 overlay，是否在至少一个题型上稳定提高修复数且不显著增加破坏数；如果不能，Region PAI 只能算工程尝试，不能升格为 Brainary internal attention 主线。"
+    },
+    "projectManagementReview": {
+      "summary": "项目管理质量整体在提升：每周都写了原计划、实际完成、依赖、资源、里程碑和老师介入点；6.7 的工程交付最强。但管理风险也清楚：5.24 和 5.31 多次把计划中的定量验证后移，导致概念框架和接口增加快于评估闭环。下一步应把所有项目压到一个统一的 gated evidence evaluation 表里。",
+      "projects": [
+        {
+          "project": "LMEE-Bench text-box memory / bbox context ablation",
+          "weeks": [
+            "2026-05-17",
+            "2026-05-24",
+            "2026-05-31",
+            "2026-06-07"
+          ],
+          "quality": "早期硬证据最扎实，完成 405 题 full-set ablation，并形成后续所有 evidence gate 判断的基线；但后续没有继续扩展成完整的按题型结果表。",
+          "whatWorked": "证明 no-memory 73.33% 与 bbox-memory 73.09% 基本持平略降，直接削弱“无条件加入 bbox context”的路线；这对 Brainary 的 memory、calibration 和 evaluation 能力有可沉淀价值。",
+          "managementGap": "缺少定位类、属性类、计数类、全局状态类的具体分项统计；报告称定位类有正向信号，但没有提供可复查表。",
+          "nextConcreteMove": "把 5.17 的 405 题结果重整理为题型 split、fixed/broken、answer change 表，作为后续 Region PAI 和 gate 的基准。"
+        },
+        {
+          "project": "task-type visual evidence router / gated evidence selector",
+          "weeks": [
+            "2026-05-24",
+            "2026-05-31",
+            "2026-06-07"
+          ],
+          "quality": "研究问题定义越来越清楚，是连接 external attention、internal attention 和 Brainary cognitive control 的关键路径；但规则版 router/gate 尚未实现，仍是最大管理缺口。",
+          "whatWorked": "已经定义 Location、Relationship、Attribute、State、Counting 等题型和 bbox、crop、marked image、structured memory、Region PAI、geometry evidence 的候选关系；6.7 明确 gate 评估不只看 overall accuracy，还看修复数、破坏数和题型稳定性。",
+          "managementGap": "5.24 计划下周实现规则版 visual router，5.31 因路线重构未完成，6.7 仍计划下周实现 evidence gate；这是连续后移的关键动作。",
+          "nextConcreteMove": "下周只实现最小规则 gate：输入题型和 evidence need，输出 no extra evidence、bbox text、attention-enhanced image、Region PAI 或 geometry evidence；必须同时产出同题对比表。"
+        },
+        {
+          "project": "attention-memory-imagination relevance selector",
+          "weeks": [
+            "2026-05-31",
+            "2026-06-07"
+          ],
+          "quality": "框架层质量较高，能把 perception、external attention、internal attention、working memory、long-term memory、relevance extraction 串成 Brainary 可追踪 workflow；但 5.31 主要是 proposal，6.7 部分由 Region PAI 和 geometry schema 工程化。",
+          "whatWorked": "明确 memory 不只是 context，而要记录 evidence 来源、适用题型、是否帮助/干扰 reasoning；这能沉淀为 Brainary 的 memory outcome schema、attention trace logger 和 cognitive control policy。",
+          "managementGap": "尚未看到完整 module I/O schema、attention trace logger 或 memory update 的运行样例；working memory 与 long-term memory 的字段仍偏概念。",
+          "nextConcreteMove": "用一个 LMEE-Bench 样例跑通最小 trace：perception 候选、gate 决策、Region PAI 或其他 evidence、answer change、memory outcome 写入。"
+        },
+        {
+          "project": "Region PAI internal attention 原型",
+          "weeks": [
+            "2026-06-07"
+          ],
+          "quality": "这是四周里最重要的硬工程增量：从 internal attention 概念推进到可运行原型，并接入 transformers 推理、CLI 和测试；但证据等级暂不能超过 B，因为缺少正式结果表。",
+          "whatWorked": "新增 `embodied_vlm_loop/region_pai.py`，支持 bbox_1000 读取、bbox 到 image token index 映射、SDPA patch、指定 layer 和 alpha 控制；这让 Brainary 的 internal attention 有了不改图像、不堆 context 的可插拔原型。",
+          "managementGap": "LMEE-Bench 正向现象没有具体 accuracy、题型拆分、fixed/broken、alpha/layer ablation；也未验证 bbox 来源错误时是否放大错误 attention。",
+          "nextConcreteMove": "6 月中旬前完成 baseline、bbox text memory、marked image/overlay、Region PAI 四种方式同题对比，并报告 overall、题型、fixed、broken、alpha、layer range。"
+        },
+        {
+          "project": "geometry evidence / 3D imagination 轻量接口",
+          "weeks": [
+            "2026-05-31",
+            "2026-06-07"
+          ],
+          "quality": "价值取舍比前一周更成熟：从 3D reconstruction demo 收敛为 selector 可读取的 geometry evidence；接口已有进展，但真实 VGGT 闭环和 VQA 收益缺失。",
+          "whatWorked": "`types.py`、`perception.py`、`selector.py` 和 README 支持 `geometry_candidates`，并能从 object geometry 字段构造 depth、center_3d、extent_3d、orientation、visible_surface、occlusion_3d、support_relation_3d 等 evidence；这对 Brainary imagination 和 tool orchestration 是可沉淀接口。",
+          "managementGap": "还没有确认 VGGT 环境、显存需求、输出格式，也没有 10-20 个空间题型样例的加入/不加入 geometry 对比结果。",
+          "nextConcreteMove": "只选 10-20 个空间关系、遮挡、方向样例，用手工或离线 VGGT 输出填入 geometry fields，验证 selector 是否触发正确 evidence，并记录是否修复答案。"
+        },
+        {
+          "project": "attention-enhanced image 外部 attention 对照工具",
+          "weeks": [
+            "2026-06-07"
+          ],
+          "quality": "作为对照工具有管理价值，可以帮助比较 overlay/视觉增强与 Region PAI 的差异；但不应抢占主线。",
+          "whatWorked": "新增 `embodied_vlm_loop/attention_enhancement.py`，CLI 支持 `--attention-output`，测试覆盖根据 relevant entity 收集 bbox 和压暗背景保留目标区域。",
+          "managementGap": "报告中已说明它不是当前最优方向，但还缺少与 bbox text、overlay、Region PAI 的统一评估。",
+          "nextConcreteMove": "只把它纳入四路对照表，不再继续扩展工具功能，避免 evidence 类型膨胀。"
+        }
+      ],
+      "managementPattern": "这个学生的管理模式是：能快速把失败实验转成新假设和工程接口，也能写清依赖和老师介入点；但容易在验证未闭环前继续扩展框架或工具。当前需要从“生成更多候选模块”切换到“减少变量、完成成对评估”。",
+      "nextManagementMove": "下周项目管理只允许三个交付：第一，Region PAI 四路对照表；第二，最小规则 evidence gate；第三，10-20 个 geometry evidence 小样例验证。其他新模块应暂停。"
+    },
+    "repeatedBlockers": [
+      "系统化定量评估反复后移：5.24 计划 router full-set，5.31 改为框架重构，6.7 仍缺 Region PAI 正式结果表。",
+      "证据等级与工程接口不完全匹配：接口和代码增长很快，但 A 级证据仍主要停留在 5.17 的 405 题 ablation。",
+      "gated evidence selector 是连续三周的关键路径，但尚未实现；没有 gate，bbox text、overlay、Region PAI、geometry evidence 都可能重新变成无条件增强。",
+      "依赖关系未完全解除：Chunhan 的检测/分割结果、VGGT 环境、GPU 时间和 bbox/object hint 质量都会影响后续判断。",
+      "Brainary 相关能力映射较丰富，但 memory outcome、attention trace logger、working/long-term memory update 还缺最小运行 trace。"
+    ],
+    "teacherQuestions": [
+      "Region PAI 是否可以被确定为当前 internal attention 的优先主线？如果可以，下周验收标准是否就是四路同题对比表和 fixed/broken 题型拆分？",
+      "对 evidence gate，老师更希望先用人工规则按题型路由，还是先用模型判断题型和 evidence need？",
+      "Region PAI 的成功标准应设为 overall accuracy 提升，还是某些题型 fixed 大于 broken 且副作用可控？",
+      "3D imagination 是否只保留 geometry evidence 小样例验证，暂不投入 VGGT 批量跑数和 reconstruction demo？",
+      "Brainary 里 memory outcome 最小字段应该包括哪些：evidence type、source、confidence、fixed/broken、task type、reason，还是还需要记录 attention trace？"
+    ],
+    "nextIntervention": {
+      "decision": "建议老师给出 REFINE / KEEP：保留 Region PAI 和 evidence gate 主线，压缩 3D imagination 投入，暂停新增 evidence 类型。",
+      "meetingFocus": "下一次 meeting 不要泛谈 attention-memory-imagination 大框架，直接审 Region PAI 评估表设计、gate 规则和 geometry 小样例选择。",
+      "requiredDeliverables": [
+        "一张 Region PAI vs bbox text vs overlay vs baseline 的同题对比表。",
+        "一张 fixed/broken/task-type 统计表。",
+        "一个最小 evidence gate 的规则和运行样例。",
+        "10-20 个 geometry evidence 空间题型样例及是否触发 selector 的记录。"
+      ],
+      "stopDoing": "暂时不要继续扩展新的 3D 模块、新的视觉增强形式或新的 Brainary 概念图，除非已有评估表证明当前 evidence 类型不足。",
+      "successCriterion": "如果 Region PAI 在至少一个明确题型上 fixed 明显多于 broken，并且 gate 能减少错误启用，则该方向可继续；如果没有，则应回到 bbox 来源质量、题型分类和 attention 参数的归因分析。"
+    },
+    "studentFeedback": {
+      "summary": "你这四周的主要进步不是做得更多，而是越来越能把失败实验转成机制问题，并把机制问题推进到可运行模块。现在最需要提升的是把每个新模块都及时压回可复现评估表。",
+      "whatImproved": [
+        "你能识别 bbox evidence 的证据边界，不再把“能生成”当成“应该使用”。",
+        "你能把 external attention、internal attention、memory、imagination 和 Brainary 系统能力连接起来。",
+        "你在 6.7 把 internal attention 做成 Region PAI 原型，这是从概念到工程的关键跨越。",
+        "你开始主动区分 A/B/C 证据等级，并承认 Region PAI 正向现象还没有正式数值表。"
+      ],
+      "nextStep": "下周不要再扩新方向，集中证明一个判断：Region PAI 和 evidence gate 是否真的比 bbox text 或 overlay 更稳定。用 fixed/broken 和题型拆分回答，而不是只用整体 accuracy 或主观现象回答。"
+    },
+    "evidenceLinks": [
+      {
+        "claim": "学生能从负结果中提炼认知边界。",
+        "weeks": [
+          "2026-05-17"
+        ],
+        "evidence": "LMEE-Bench 405 题中 no-memory 73.33%、bbox-memory 73.09%，他据此判断 bbox context 不能作为通用增强。",
+        "evidenceLevel": "A"
+      },
+      {
+        "claim": "学生的研究问题从 context 增强上升到 evidence selection。",
+        "weeks": [
+          "2026-05-24"
+        ],
+        "evidence": "将 object、bbox、crop、marked image、structured memory 拆成不同 evidence 形式，并提出 task-type visual router。",
+        "evidenceLevel": "B"
+      },
+      {
+        "claim": "学生能区分已有证据和新 proposal。",
+        "weeks": [
+          "2026-05-31"
+        ],
+        "evidence": "明确写出本周没有新增定量实验，attention-memory-imagination loop 和 3D imagination 仍主要是会后框架重构。",
+        "evidenceLevel": "B"
+      },
+      {
+        "claim": "学生从概念推进到 internal attention 工程原型。",
+        "weeks": [
+          "2026-06-07"
+        ],
+        "evidence": "新增 Region PAI，完成 bbox_1000 读取、image token 映射、SDPA patch、CLI 接入和单元测试。",
+        "evidenceLevel": "B"
+      },
+      {
+        "claim": "Region PAI 的真实效果还不能下最终判断。",
+        "weeks": [
+          "2026-06-07"
+        ],
+        "evidence": "报告称 LMEE-Bench 有正向现象，但没有完整 accuracy、fixed/broken、题型拆分和参数 ablation 表。",
+        "evidenceLevel": "证据不足，当前只能算 B 级现象。"
+      },
+      {
+        "claim": "3D imagination 方向被合理降风险。",
+        "weeks": [
+          "2026-05-31",
+          "2026-06-07"
+        ],
+        "evidence": "从 object-centric 3D imagination proposal 收敛为 geometry evidence schema，并明确 VGGT 未闭环、VQA 收益未证明。",
+        "evidenceLevel": "接口为 B，真实效果为 C。"
+      }
+    ]
+  }
+}
