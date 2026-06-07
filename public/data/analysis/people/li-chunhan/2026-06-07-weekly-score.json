@@ -1,0 +1,64 @@
+{
+  "key": "person:li-chunhan:2026-06-07:weekly-score",
+  "generatedAt": "2026-06-07T11:00:49.379Z",
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "reasoningEffort": "medium",
+  "inputHash": "1b4ab8a0fd7e7eb5dba2ed69c59eac4dbe156e612260088bcbd5413e90db4838",
+  "result": {
+    "week": "2026-06-07",
+    "name": "李淳涵",
+    "scores": {
+      "hardProgress": {
+        "score": 17,
+        "reason": "本周有明确硬进展：实现了可运行的 lmee_brain v0 流水线，接入 Depth-Anything V2、SAM、SigLIP、OWLv2，完成 LMEE-Bench sub 145 题评测，得到 53.79%；完成 Counting、Location 诊断；完成 OWLv2 grounding 对比；还发现并修改了 adapter 路线中的 DINO 域不匹配问题，并验证 DINOv2-large 前向可跑。扣分点是目前仍停留在 sub 子集和单帧/oracle 感知，Stage 4 多帧记忆和完整 long-term memory 评测尚未真正完成。",
+        "missingEvidence": "缺少代码提交链接、运行日志、配置文件、具体评测脚本版本、每次实验的随机种子和复现实验说明。"
+      },
+      "cognitiveIncrement": {
+        "score": 13,
+        "reason": "认知增量较强。报告不是只报结果，而是从 Counting 和 Location 的失败中判断出瓶颈主要在 grounding，不在几何规则；进一步通过 OWLv2 对比得出不同题型需要不同 grounding 路由的判断。这是从“调规则”升级到“诊断上游表征可分性”的有效认知变化。",
+        "missingEvidence": "缺少更系统的错误分类统计，例如 grounding 错误、关系规则错误、选项理解错误分别占比多少；SigLIP 小目标分数分布只描述了现象，没有给出图、样例数量或阈值分析。"
+      },
+      "cot2Depth": {
+        "score": 12,
+        "reason": "有一定 CoT 的 CoT 深度：先提出假设是后处理规则问题，再通过多轮修改无效和分数分布观察推翻假设，转向 grounding 瓶颈；再通过 OWLv2 反事实对比验证 per-category routing 的必要性。这个推理链比较清楚。扣分点是仍偏经验诊断，缺少严格的因果隔离实验和定量误差归因。",
+        "missingEvidence": "缺少每轮 Counting/Location 修改前后的详细分数、失败样例表、grounding 框质量评估、人工标注对照或 oracle grounding 上限实验。"
+      },
+      "brainaryMapping": {
+        "score": 8,
+        "reason": "报告明确把工作映射到 Brainary 的 perception、memory、adapter 和 meta-cognition：Stage 1/2 已实现，Stage 4 预留，Stage 5 有简化路由理解，adapter 路线也接上 DINOv2-large。映射比较完整。扣分点是 Brainary 各模块的接口、输入输出契约、数据结构标准和长期沉淀形式还不够明确。",
+        "missingEvidence": "缺少 Brainary 模块接口定义、scene-structure graph 的 schema、memory 检索输入输出格式、adapter 与 perception 模块如何共享特征的具体设计。"
+      },
+      "monetaryValue": {
+        "score": 6,
+        "reason": "项目价值判断主要体现在研究价值：能支撑 LMEE-Bench 上的结构化感知、adapter 注入和长期记忆方向，也发现了现有 76.6% 路线中的域不匹配风险。但报告没有直接说明论文产出路径、可复用资产价值、算力成本、时间成本收益比或商业/平台化价值，因此 monetaryValue 只能给中等分。",
+        "missingEvidence": "缺少对该方向相对其他路线的投入产出判断，例如预期提升多少分才值得继续、训练成本多少、是否能形成论文贡献点、是否能复用到其他 benchmark 或产品场景。"
+      },
+      "projectManagement": {
+        "score": 12,
+        "reason": "项目管理信息较完整：说明了当前阶段是 MVP 跑通、瓶颈诊断、准备 adapter 单变量训练；给出本周约 32 小时投入、下周约 30 小时计划；整理了 train/eval split，避免 sub 泄漏；下周任务也有较清楚顺序。扣分点是任务过多且风险未排序，缺少算力排期、完成标准和依赖管理。",
+        "missingEvidence": "缺少每项任务的预计耗时、优先级、风险、验收指标、GPU/存储资源需求、如果 DINOv2-large 训练失败时的备选方案。"
+      },
+      "nextAction": {
+        "score": 8,
+        "reason": "下周行动具体，包括 DINOv2-large adapter 训练、per-category 注入开关、混合 grounding 兜底、完整轨迹接入、Stage 4/5 联通；其中 DINOv2-large 训练还给出 alpha、cross-attn layers、epochs 等配置，行动性较强。扣分点是计划偏多，且缺少明确的优先级和最小可交付成果。",
+        "missingEvidence": "缺少下周最关键的一项必须完成事项、每项任务的成功判据，例如 DINOv2-large 相比 76.6% 提升或不下降多少算成功，per-category routing 需要在各类题型提升多少。"
+      },
+      "evidenceQuality": {
+        "score": 3,
+        "reason": "证据质量中等偏弱。报告提供了多张结果表、类别准确率和总体准确率，也给出部分模型配置和数据划分，足以支持初步判断。但存在几个问题：RynnBrain-2B baseline 是 full 405 上的 73.09%，而其他多为 sub 145，横向比较不完全一致；OWLv2 表中 Overall 与原方案完全相同但类别大幅变化，需要说明加权方式；缺少原始预测、日志、置信区间和统计显著性。",
+        "missingEvidence": "缺少可复现结果文件、评测命令、类别样本数、混淆矩阵、错误样例、人工核验、日志截图、随机种子、重复实验。"
+      }
+    },
+    "totalScore": 79,
+    "tier": "B",
+    "oneLineJudgment": "这是一个有实质工程推进和有效诊断增量的周报，但证据链、复现材料、误差归因和下周任务收敛性还不足，当前更像完成了可运行原型和方向判断，而不是完成了稳定可验证的研究结果。",
+    "professorFollowUp": [
+      "请他下周首先交付 DINOv2-large adapter 与 sat493m adapter 的单变量对比结果，并保证训练集、评测集、配置和随机种子一致。",
+      "要求补一个 oracle grounding 或人工框小样本实验，用来量化 Counting、Location、Relationship 到底有多少错误来自 grounding，而不是规则或语言理解。",
+      "要求把 per-category routing 写成明确决策表：题型、使用后端、置信度阈值、回退策略、预期提升指标。",
+      "要求提交评测日志和预测文件，特别是 OWLv2 总分不变但类别大幅变化的加权计算过程。",
+      "提醒他下周计划过多，应优先保证一个核心闭环：DINOv2-large adapter 干净对比，其次才是多帧 FAISS 记忆和完整轨迹接入。"
+    ]
+  }
+}
