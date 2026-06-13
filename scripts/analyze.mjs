@@ -27,6 +27,7 @@ const rollingPersonAnalysis = process.env.WEEKREP_ANALYZE_ROLLING === "1";
 const analysisTypes = new Set((process.env.WEEKREP_ANALYZE_TYPES || "longitudinal,weekly-score,person-horizontal,week-horizontal,week-briefing").split(",").map((item) => item.trim()).filter(Boolean));
 const concurrency = Math.max(1, Number(process.env.WEEKREP_ANALYZE_CONCURRENCY || 4));
 const apiRetries = Math.max(0, Number(process.env.WEEKREP_ANALYZE_RETRIES || 3));
+const apiTimeoutMs = Math.max(1000, Number(process.env.WEEKREP_ANALYZE_TIMEOUT_MS || 90000));
 const minValidReportChars = Number(process.env.WEEKREP_MIN_VALID_REPORT_CHARS || 10);
 const personWeekPolicy = process.env.WEEKREP_PERSON_WEEK_ANALYSIS_POLICY || "on-change";
 const reanalyzeOnPromptChange = process.env.WEEKREP_REANALYZE_ON_PROMPT_CHANGE === "1";
@@ -147,16 +148,22 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 async function fetchWithRetry(label, url, options) {
   let lastError = null;
   for (let attempt = 0; attempt <= apiRetries; attempt += 1) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), apiTimeoutMs);
     try {
-      const response = await fetch(url, options);
+      const response = await fetch(url, { ...options, signal: controller.signal });
       if (response.ok) return response;
       const text = await response.text();
       const transient = response.status === 429 || response.status >= 500;
       lastError = new Error(`${label} API error ${response.status}: ${text}`);
       if (!transient || attempt >= apiRetries) throw lastError;
     } catch (error) {
-      lastError = error;
+      lastError = error?.name === "AbortError"
+        ? new Error(`${label} API request timed out after ${apiTimeoutMs}ms`)
+        : error;
       if (attempt >= apiRetries) throw lastError;
+    } finally {
+      clearTimeout(timeout);
     }
     const jitter = Math.floor(Math.random() * 500);
     await sleep(1000 * 2 ** attempt + jitter);
