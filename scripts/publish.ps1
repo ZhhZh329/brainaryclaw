@@ -41,25 +41,22 @@ try {
 
   $hasToken = -not [string]::IsNullOrWhiteSpace($env:GITHUB_TOKEN_PUSH)
   if ($env:GITHUB_TOKEN_PUSH) {
-    $askpassSource = Join-Path $repo ".git\weekrep-askpass-source.sh"
-    $token = $env:GITHUB_TOKEN_PUSH.Replace("'", "'\''")
-    @(
-      "#!/bin/sh",
-      'case "$1" in',
-      "  *Username*) printf '%s\n' 'x-access-token' ;;",
-      "  *) printf '%s\n' '$token' ;;",
-      "esac"
-    ) | Set-Content -Encoding ASCII -Path $askpassSource
-    wsl bash -lc "cd '$wslRepo' && sed -i 's/\r$//' .git/weekrep-askpass-source.sh && cp .git/weekrep-askpass-source.sh /tmp/weekrep-pages-askpass.sh && chmod 700 /tmp/weekrep-pages-askpass.sh"
+    $env:WSLENV = if ([string]::IsNullOrWhiteSpace($env:WSLENV)) {
+      "GITHUB_TOKEN_PUSH"
+    } elseif ($env:WSLENV -notmatch "(^|:)GITHUB_TOKEN_PUSH(:|$)") {
+      "$env:WSLENV`:GITHUB_TOKEN_PUSH"
+    } else {
+      $env:WSLENV
+    }
   }
 
   Write-Step "Committing and pushing changed site artifacts."
   $pushCommand = if ($hasToken) {
-    "GIT_ASKPASS=/tmp/weekrep-pages-askpass.sh GIT_TERMINAL_PROMPT=0 git push"
+    "printf '%s\n' '#!/bin/sh' 'case ""`$1"" in' '  *Username*) printf ""%s\n"" ""x-access-token"" ;;' '  *) printf ""%s\n"" ""`$GITHUB_TOKEN_PUSH"" ;;' 'esac' > .git/weekrep-askpass.sh && chmod 700 .git/weekrep-askpass.sh && GIT_ASKPASS=""`$PWD/.git/weekrep-askpass.sh"" GIT_TERMINAL_PROMPT=0 git push"
   } else {
     "git push"
   }
-  wsl bash -lc "cd '$wslRepo' && git status --short && git add . && if git diff --cached --quiet; then echo 'No changes to publish.'; else git commit -m 'sync weekly reports' && $pushCommand; fi; rm -f /tmp/weekrep-pages-askpass.sh .git/weekrep-askpass-source.sh"
+  wsl bash -lc "cd '$wslRepo' && git status --short && git add . && if git diff --cached --quiet; then echo 'No changes to publish.'; else git commit -m 'sync weekly reports' && $pushCommand; fi; rm -f .git/weekrep-askpass.sh"
   Write-Step "Hourly OpenClaw sync finished."
 }
 finally {
