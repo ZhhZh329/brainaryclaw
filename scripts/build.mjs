@@ -167,12 +167,6 @@ function parseTime(value) {
   return Number.isFinite(time) ? time : null;
 }
 
-function isLate(report, deadline) {
-  const submittedAt = parseTime(report.submittedAt || report.updatedAt || report.createdAt);
-  const deadlineAt = parseTime(deadline);
-  return submittedAt !== null && deadlineAt !== null && submittedAt > deadlineAt;
-}
-
 function identityKeyFromParts(userId, name) {
   return userId ? `id:${userId}` : `name:${slugify(name)}`;
 }
@@ -246,20 +240,19 @@ function buildRoster(registry, reports, latestWeek) {
     .sort((a, b) => a.name.localeCompare(b.name));
 }
 
-function analyzeWeek(week, reports, roster, submittedRoster, missing, late, pastDeadline) {
+function analyzeWeek(week, reports, roster, submittedRoster, missing, pastDeadline) {
   const sorted = [...reports].sort((a, b) => reportQuality(b) - reportQuality(a));
   const allText = reports.map((report) => report.raw_text || "").join("\n");
   const missingLabel = pastDeadline ? "未提交" : "待提交";
   return {
-    summary: `${week} 应交 ${roster.length} 人，已交 ${submittedRoster.length} 人，收录原件 ${reports.length} 份。${missing.length ? `仍有 ${missing.length} 人${missingLabel}。` : "全部已提交。"}${late.length ? ` ${late.length} 人晚于周一 08:00 截止线提交。` : ""} 从文本信号看，本周更值得先看的报告集中在硬进展、实验发现、卡点和可沉淀方向写得更完整的人。`,
+    summary: `${week} 应交 ${roster.length} 人，已交 ${submittedRoster.length} 人，收录原件 ${reports.length} 份。${missing.length ? `仍有 ${missing.length} 人${missingLabel}。` : "全部已提交。"} 从文本信号看，本周更值得先看的报告集中在硬进展、实验发现、卡点和可沉淀方向写得更完整的人。`,
     topPerformers: sorted.slice(0, 8).map((report) => ({
       name: report.name,
       score: reportQuality(report),
       reason: snippet(section(report.raw_text, "本周核心任务") || report.raw_text, 180)
     })),
     themes: keywordScore(allText),
-    missingUserIds: missing.map((item) => item.userId),
-    lateUserIds: late.map((item) => item.userId)
+    missingUserIds: missing.map((item) => item.userId)
   };
 }
 
@@ -583,14 +576,6 @@ async function main() {
         status: "not_submitted"
       }))
       .sort((a, b) => a.name.localeCompare(b.name));
-    const late = enrichedReports
-      .filter((report) => submittedKeys.has(report.identityKey) && isLate(report, deadline))
-      .map((report) => ({
-        userId: report.userId,
-        name: report.name,
-        submittedAt: report.submittedAt
-      }))
-      .sort((a, b) => a.name.localeCompare(b.name));
     return {
       week,
       deadline,
@@ -600,9 +585,7 @@ async function main() {
       missingCount: missing.length,
       missing,
       pastDeadline,
-      lateCount: late.length,
-      late,
-      analysis: analyzeWeek(week, enrichedReports, weekRoster, submittedRoster, missing, late, pastDeadline)
+      analysis: analyzeWeek(week, enrichedReports, weekRoster, submittedRoster, missing, pastDeadline)
     };
   });
 

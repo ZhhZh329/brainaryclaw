@@ -6,6 +6,28 @@ const html = (strings, ...values) => strings.reduce((out, string, i) => out + st
 const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[ch]));
 const params = () => new URLSearchParams(location.hash.split("?")[1] || "");
 const missingLabel = (week) => week?.pastDeadline ? "未交" : "待交";
+const retiredLatePattern = /迟交|晚于(?:周一\s*)?08:00|晚于截止|超过截止|lateCount|lateNames|lateSubmissions/i;
+
+function hasRetiredLateContent(value) {
+  if (value == null) return false;
+  if (typeof value === "string") return retiredLatePattern.test(value);
+  if (Array.isArray(value)) return value.some(hasRetiredLateContent);
+  if (typeof value === "object") {
+    return Object.entries(value).some(([key, item]) => retiredLatePattern.test(key) || hasRetiredLateContent(item));
+  }
+  return false;
+}
+
+function scrubRetiredLateContent(value) {
+  if (typeof value === "string") return hasRetiredLateContent(value) ? "" : value;
+  if (Array.isArray(value)) return value.map(scrubRetiredLateContent).filter((item) => item !== "" && item != null);
+  if (value && typeof value === "object") {
+    return Object.fromEntries(Object.entries(value)
+      .filter(([key, item]) => !retiredLatePattern.test(key) && !hasRetiredLateContent(item))
+      .map(([key, item]) => [key, scrubRetiredLateContent(item)]));
+  }
+  return value;
+}
 
 function route() {
   const hash = location.hash || "#/";
@@ -102,7 +124,6 @@ function renderHome() {
         <span class="badge ok">已交 ${latest.submitted} / 应交 ${latest.rosterSize}</span>
         <span class="badge">原件 ${latest.reportCount || latest.submitted}</span>
         <span class="badge danger">${missingLabel(latest)} ${latest.missingCount}</span>
-        <span class="badge">迟交 ${latest.lateCount || 0}</span>
       </div>
       <p class="muted">截止时间：${esc(latest.deadline)}。应交名单来自 registry.json 的 active + bound 成员。</p>
       ${latest.missing.length ? `<p class="muted">${missingLabel(latest)}：${latest.missing.map((item) => esc(item.name)).join("、")}</p>` : `<p class="muted">最新周没有${missingLabel(latest)}记录。</p>`}
@@ -111,7 +132,7 @@ function renderHome() {
       ${state.weeks.slice().reverse().map((week) => `
         <a class="card" href="#/week?week=${encodeURIComponent(week.week)}">
           <strong>${esc(week.week)}</strong>
-          <span class="muted">已交 ${week.submitted} / 应交 ${week.rosterSize}，原件 ${week.reportCount || week.submitted}，迟交 ${week.lateCount || 0}</span>
+          <span class="muted">已交 ${week.submitted} / 应交 ${week.rosterSize}，原件 ${week.reportCount || week.submitted}</span>
           <span class="${week.missingCount ? "badge danger" : "badge ok"}">${week.missingCount ? `${missingLabel(week)} ${week.missingCount}` : "全部提交"}</span>
         </a>
       `).join("")}
@@ -223,7 +244,7 @@ function renderWeeks() {
       ${state.weeks.slice().reverse().map((week) => `
         <a class="row" href="#/week?week=${encodeURIComponent(week.week)}">
           <strong>${esc(week.week)}</strong>
-          <span>已交 ${week.submitted} / 应交 ${week.rosterSize}，原件 ${week.reportCount || week.submitted}，迟交 ${week.lateCount || 0}</span>
+          <span>已交 ${week.submitted} / 应交 ${week.rosterSize}，原件 ${week.reportCount || week.submitted}</span>
           <span class="${week.missingCount ? "badge danger" : "badge ok"}">${week.missingCount ? `${missingLabel(week)} ${week.missingCount}` : "全部提交"}</span>
         </a>
       `).join("")}
@@ -300,21 +321,21 @@ async function renderBriefing(weekId) {
         </div>
       </section>
       <section class="briefing-summary">
-        ${(result.executiveSummary || []).map((item) => `<div class="briefing-point">${esc(item)}</div>`).join("")}
+        ${(result.executiveSummary || []).filter((item) => !hasRetiredLateContent(item)).map((item) => `<div class="briefing-point">${esc(item)}</div>`).join("")}
       </section>
       <section class="briefing-card-grid">
         ${cards.map((card) => `
           <a class="briefing-card" href="#/briefing-section?week=${encodeURIComponent(week.week)}&section=${encodeURIComponent(card.id)}">
-            <span class="badge">${esc(card.count ?? sectionItems(result, card.id).length)} 条</span>
+            <span class="badge">${esc(sectionItems(result, card.id).length)} 条</span>
             <strong>${esc(card.title || briefingSectionMeta[card.id]?.title || card.id)}</strong>
-            <span class="muted">${esc(card.oneLine || "")}</span>
+            <span class="muted">${esc(hasRetiredLateContent(card.oneLine) ? "" : (card.oneLine || ""))}</span>
           </a>
         `).join("")}
       </section>
       <section class="panel" style="margin-top:16px">
         <h2>下一步追问</h2>
         <div class="list">
-          ${(result.closingAdvice || []).map((item) => `<div class="row"><strong>建议</strong><span>${esc(item)}</span><span></span></div>`).join("")}
+          ${(result.closingAdvice || []).filter((item) => !hasRetiredLateContent(item)).map((item) => `<div class="row"><strong>建议</strong><span>${esc(item)}</span><span></span></div>`).join("")}
         </div>
       </section>
     `;
@@ -393,8 +414,8 @@ function bindBriefingWeekPicker() {
 function sectionItems(result, id) {
   const meta = briefingSectionMeta[id];
   const value = meta ? result.sections?.[meta.field] : null;
-  if (Array.isArray(value)) return value;
-  return value ? [value] : [];
+  const items = Array.isArray(value) ? value : (value ? [value] : []);
+  return items.filter((item) => !hasRetiredLateContent(item));
 }
 
 function defaultBriefingCards(result) {
@@ -434,7 +455,6 @@ function renderWeek(weekId) {
         <span class="badge ok">已交 ${week.submitted} / 应交 ${week.rosterSize}</span>
         <span class="badge">原件 ${week.reportCount || week.submitted}</span>
         <span class="badge danger">${missingLabel(week)} ${week.missingCount}</span>
-        <span class="badge">迟交 ${week.lateCount || 0}</span>
         <a class="button" href="#/briefing?week=${encodeURIComponent(week.week)}">横向分析</a>
         <button data-analysis="week:${week.week}:horizontal" data-target="week-analysis">横向分析</button>
       </div>
@@ -446,7 +466,6 @@ function renderWeek(weekId) {
         <p><span class="badge ok">已交 ${week.submitted} / 应交 ${week.rosterSize}</span></p>
         <p><span class="badge">原件 ${week.reportCount || week.submitted}</span></p>
         <p><span class="badge danger">${missingLabel(week)} ${week.missingCount}</span></p>
-        <p><span class="badge">迟交 ${week.lateCount || 0}</span></p>
         <p class="muted">截止：${esc(week.deadline)}</p>
         <h3>已交</h3>
         <div class="name-list">
@@ -454,7 +473,6 @@ function renderWeek(weekId) {
         </div>
         <h3>${missingLabel(week)}</h3>
         ${week.missing.length ? `<div class="name-list muted">${week.missing.map((item) => `<span>${esc(item.name)}</span>`).join("")}</div>` : `<p class="muted">没有${missingLabel(week)}记录。</p>`}
-        ${week.late?.length ? `<h3>迟交</h3><p class="muted">${week.late.map((item) => `${esc(item.name)}<br>${esc(item.submittedAt)}`).join("<br>")}</p>` : ""}
       </aside>
       <div class="grid">
         ${reports.map((report) => reportCard(report, "", { collapsed: true })).join("")}
@@ -1320,7 +1338,7 @@ function fallbackPersonAnalysis(analysis) {
 }
 
 function renderAnalysisPayload(payload) {
-  const result = payload.result || {};
+  const result = scrubRetiredLateContent(payload.result || {});
   const body = typeof result.text === "string" ? result.text : JSON.stringify(result, null, 2);
   return `
     <h2>Codex 离线分析</h2>

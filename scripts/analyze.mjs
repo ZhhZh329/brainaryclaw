@@ -29,6 +29,9 @@ const concurrency = Math.max(1, Number(process.env.WEEKREP_ANALYZE_CONCURRENCY |
 const apiRetries = Math.max(0, Number(process.env.WEEKREP_ANALYZE_RETRIES || 3));
 const minValidReportChars = Number(process.env.WEEKREP_MIN_VALID_REPORT_CHARS || 10);
 const personWeekPolicy = process.env.WEEKREP_PERSON_WEEK_ANALYSIS_POLICY || "on-change";
+const reanalyzeOnPromptChange = process.env.WEEKREP_REANALYZE_ON_PROMPT_CHANGE === "1";
+const maxGeneratedPerRun = Math.max(0, Number(process.env.WEEKREP_ANALYZE_MAX_GENERATED_PER_RUN || 0));
+let generatedStarted = 0;
 
 async function loadLocalEnv() {
   for (const name of [".env.local", ".env"]) {
@@ -230,22 +233,39 @@ async function callModel({ system, prompt, input }) {
 }
 
 async function analyzeItem({ key, file, input, prompt, system, manifest, cachePolicy = "hash" }) {
-  const inputHash = hash({ input, prompt, system, model, reasoningEffort });
+  const contentHash = hash({ input });
+  const promptHash = hash({ prompt, system, model, reasoningEffort });
+  const inputHash = reanalyzeOnPromptChange ? hash({ contentHash, promptHash }) : contentHash;
   const previous = manifest.items[key];
   const fileExists = await fs.access(file).then(() => true, () => false);
   if (!force && cachePolicy === "once" && fileExists) {
     if (!previous) {
       manifest.items[key] = {
         inputHash,
+        contentHash,
+        promptHash,
         file: path.relative(path.join(root, "public"), file).replace(/\\/g, "/"),
         generatedAt: new Date().toISOString()
       };
+    } else if (!previous.contentHash) {
+      previous.contentHash = contentHash;
+      previous.promptHash = previous.promptHash || promptHash;
     }
+    return { key, status: "cached" };
+  }
+  if (!force && fileExists && previous && !previous.contentHash) {
+    previous.contentHash = contentHash;
+    previous.promptHash = previous.promptHash || promptHash;
+    previous.inputHash = inputHash;
     return { key, status: "cached" };
   }
   if (!force && previous?.inputHash === inputHash && fileExists) {
     return { key, status: "cached" };
   }
+  if (maxGeneratedPerRun && generatedStarted >= maxGeneratedPerRun) {
+    return { key, status: "skipped" };
+  }
+  generatedStarted += 1;
 
     const result = await callModel({ system, prompt, input });
     const payload = {
@@ -255,11 +275,15 @@ async function analyzeItem({ key, file, input, prompt, system, manifest, cachePo
       model,
       reasoningEffort,
       inputHash,
+      contentHash,
+      promptHash,
     result
   };
   await writeJson(file, payload);
   manifest.items[key] = {
     inputHash,
+    contentHash,
+    promptHash,
     file: path.relative(path.join(root, "public"), file).replace(/\\/g, "/"),
     generatedAt: payload.generatedAt
   };
@@ -489,8 +513,7 @@ async function main() {
           status: {
             submitted: week.submitted,
             rosterSize: week.rosterSize,
-            missingCount: week.missingCount,
-            lateCount: week.lateCount || 0
+            missingCount: week.missingCount
           },
           roster,
           teacherUnknown: teacherUnknownForWeek(site, week.week),
