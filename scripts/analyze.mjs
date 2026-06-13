@@ -274,16 +274,31 @@ async function analyzeItem({ key, file, input, prompt, system, manifest, cachePo
   }
   generatedStarted += 1;
 
-    const result = await callModel({ system, prompt, input });
-    const payload = {
-      key,
-      generatedAt: new Date().toISOString(),
-      provider,
-      model,
-      reasoningEffort,
-      inputHash,
-      contentHash,
-      promptHash,
+  let result;
+  try {
+    result = await callModel({ system, prompt, input });
+  } catch (error) {
+    manifest.items[key] = {
+      inputHash: previous?.inputHash || "",
+      contentHash: previous?.contentHash || contentHash,
+      promptHash: previous?.promptHash || promptHash,
+      file: path.relative(path.join(root, "public"), file).replace(/\\/g, "/"),
+      failedAt: new Date().toISOString(),
+      error: error?.message || String(error)
+    };
+    console.warn(`Analysis failed for ${key}: ${error?.message || error}`);
+    return { key, status: "failed" };
+  }
+
+  const payload = {
+    key,
+    generatedAt: new Date().toISOString(),
+    provider,
+    model,
+    reasoningEffort,
+    inputHash,
+    contentHash,
+    promptHash,
     result
   };
   await writeJson(file, payload);
@@ -544,10 +559,11 @@ async function main() {
     types: [...analysisTypes],
     generated: results.filter((item) => item.status === "generated").length,
     cached: results.filter((item) => item.status === "cached").length,
-    skipped: results.filter((item) => item.status === "skipped").length
+    skipped: results.filter((item) => item.status === "skipped").length,
+    failed: results.filter((item) => item.status === "failed").length
   };
   await writeJson(manifestPath, manifest);
-  console.log(`Analysis jobs: ${manifest.summary.generated} generated, ${manifest.summary.cached} cached, ${manifest.summary.skipped} skipped.`);
+  console.log(`Analysis jobs: ${manifest.summary.generated} generated, ${manifest.summary.cached} cached, ${manifest.summary.skipped} skipped, ${manifest.summary.failed} failed.`);
 }
 
 main().catch((error) => {

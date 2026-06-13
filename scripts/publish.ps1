@@ -27,6 +27,7 @@ try {
   if (-not $env:WEEKREP_ANALYZE_TYPES) { $env:WEEKREP_ANALYZE_TYPES = "weekly-score,longitudinal,person-horizontal,week-horizontal,week-briefing" }
   if (-not $env:WEEKREP_ANALYZE_ROLLING) { $env:WEEKREP_ANALYZE_ROLLING = "1" }
   if (-not $env:WEEKREP_ANALYZE_CONCURRENCY) { $env:WEEKREP_ANALYZE_CONCURRENCY = "5" }
+  if (-not $env:WEEKREP_ANALYZE_RETRIES) { $env:WEEKREP_ANALYZE_RETRIES = "1" }
   if (-not $env:WEEKREP_ANALYZE_MAX_GENERATED_PER_RUN) { $env:WEEKREP_ANALYZE_MAX_GENERATED_PER_RUN = "20" }
   if (-not $env:WEEKREP_ANALYZE_TIMEOUT_MS) { $env:WEEKREP_ANALYZE_TIMEOUT_MS = "90000" }
   if (-not $env:WEEKREP_PERSON_WEEK_ANALYSIS_POLICY) { $env:WEEKREP_PERSON_WEEK_ANALYSIS_POLICY = "on-change" }
