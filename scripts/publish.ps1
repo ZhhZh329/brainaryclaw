@@ -54,9 +54,9 @@ try {
 
   Write-Step "Committing and pushing changed site artifacts."
   $pushCommand = if ($hasToken) {
-    'GIT_TERMINAL_PROMPT=0 git push "https://x-access-token:${GITHUB_TOKEN_PUSH}@github.com/ZhhZh329/brainaryclaw.git" main'
+    'GIT_TERMINAL_PROMPT=0 git push "https://x-access-token:${GITHUB_TOKEN_PUSH}@github.com/ZhhZh329/brainaryclaw.git" main && git fetch origin main'
   } else {
-    "git push"
+    "git push && git fetch origin main"
   }
   wsl bash -lc "cd '$wslRepo' && git status --short && git add . && if git diff --cached --quiet; then echo 'No changes to publish.'; else git commit -m 'sync weekly reports' && $pushCommand; fi; rc=`$?; rm -f .git/weekrep-askpass.sh; exit `$rc"
   Write-Step "Hourly OpenClaw sync finished."
