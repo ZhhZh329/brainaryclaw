@@ -24,7 +24,7 @@ try {
     }
   }
 
-  if (-not $env:WEEKREP_ANALYZE_TYPES) { $env:WEEKREP_ANALYZE_TYPES = "weekly-score,longitudinal,person-horizontal,week-horizontal,week-briefing" }
+  if (-not $env:WEEKREP_ANALYZE_TYPES) { $env:WEEKREP_ANALYZE_TYPES = "weekly-score,longitudinal,person-horizontal,week-horizontal,week-briefing,month-horizontal" }
   if (-not $env:WEEKREP_ANALYZE_ROLLING) { $env:WEEKREP_ANALYZE_ROLLING = "1" }
   if (-not $env:WEEKREP_ANALYZE_CONCURRENCY) { $env:WEEKREP_ANALYZE_CONCURRENCY = "5" }
   if (-not $env:WEEKREP_ANALYZE_RETRIES) { $env:WEEKREP_ANALYZE_RETRIES = "0" }

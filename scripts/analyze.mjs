@@ -23,6 +23,7 @@ const apiKey = provider === "deepseek" ? process.env.DEEPSEEK_API_KEY : process.
 const analyzeLimit = Number(process.env.WEEKREP_ANALYZE_LIMIT || 0);
 const personFilter = new Set((process.env.WEEKREP_ANALYZE_PERSON_SLUGS || "").split(",").map((item) => item.trim()).filter(Boolean));
 const weekFilter = new Set((process.env.WEEKREP_ANALYZE_WEEKS || "").split(",").map((item) => item.trim()).filter(Boolean));
+const monthFilter = new Set((process.env.WEEKREP_ANALYZE_MONTHS || "").split(",").map((item) => item.trim()).filter(Boolean));
 const rollingPersonAnalysis = process.env.WEEKREP_ANALYZE_ROLLING === "1";
 const analysisTypes = new Set((process.env.WEEKREP_ANALYZE_TYPES || "longitudinal,weekly-score,person-horizontal,week-horizontal,week-briefing").split(",").map((item) => item.trim()).filter(Boolean));
 const concurrency = Math.max(1, Number(process.env.WEEKREP_ANALYZE_CONCURRENCY || 4));
@@ -114,6 +115,35 @@ function compactForBriefing(report) {
     excerpt: report.excerpt || "",
     extractedText: extract || text.slice(0, 1800)
   };
+}
+
+function compactForMonthly(report) {
+  const text = String(report.rawText || "");
+  return {
+    week: report.week,
+    name: report.name,
+    slug: report.slug,
+    userId: report.userId || "",
+    submittedAt: report.submittedAt || report.updatedAt || report.createdAt || "",
+    excerpt: report.excerpt || text.replace(/\s+/g, " ").slice(0, 900),
+    keywords: report.keywords || [],
+    qualityScore: report.qualityScore
+  };
+}
+
+async function weeklyHorizontalForMonth(month, weeks) {
+  const items = [];
+  for (const week of weeks) {
+    const payload = await readJson(path.join(analysisDir, "weeks", `${week.week}.json`));
+    if (!payload?.result) continue;
+    items.push({
+      week: week.week,
+      submitted: week.submitted,
+      reportCount: week.reportCount || week.submitted,
+      result: payload.result
+    });
+  }
+  return { month, weeks: items };
 }
 
 function teacherUnknownForWeek(site, week) {
@@ -540,6 +570,49 @@ async function main() {
           roster,
           teacherUnknown: teacherUnknownForWeek(site, week.week),
           reports: reports.map(compactForBriefing)
+        }
+      });
+    }
+  }
+
+  if (analysisTypes.has("month-horizontal") && !personFilter.size) {
+    const monthGroups = Map.groupBy(pastDeadlineWeeks, (week) => String(week.week).slice(0, 7));
+    for (const [month, monthWeeks] of monthGroups) {
+      if (monthFilter.size && !monthFilter.has(month)) continue;
+      if (weekFilter.size && !monthWeeks.some((week) => weekFilter.has(week.week))) continue;
+      const monthReports = site.reports
+        .filter((report) => String(report.week).startsWith(`${month}-`))
+        .filter(isValidReport);
+      if (!monthReports.length) continue;
+      const reportsBySlug = Map.groupBy(monthReports, (report) => report.slug);
+      const people = [...reportsBySlug.entries()]
+        .map(([slug, reports]) => ({
+          slug,
+          name: reports[0]?.name || slug,
+          submittedWeeks: reports.map((report) => report.week).sort(),
+          reportCount: reports.length,
+          reports: reports
+            .slice()
+            .sort((a, b) => a.week.localeCompare(b.week))
+            .map(compactForMonthly)
+        }))
+        .sort((a, b) => a.name.localeCompare(b.name));
+      jobs.push({
+        key: `month:${month}:horizontal`,
+        file: path.join(analysisDir, "months", `${month}.json`),
+        system,
+        prompt: prompts.prompts.monthHorizontal.prompt,
+        input: {
+          month,
+          weeks: monthWeeks.map((week) => ({
+            week: week.week,
+            deadline: week.deadline,
+            submitted: week.submitted,
+            rosterSize: week.rosterSize,
+            reportCount: week.reportCount || week.submitted
+          })),
+          weeklyHorizontal: await weeklyHorizontalForMonth(month, monthWeeks),
+          people
         }
       });
     }

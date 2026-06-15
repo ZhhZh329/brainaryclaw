@@ -50,6 +50,9 @@ function route() {
   if (path === "/briefings") return renderBriefings();
   if (path === "/briefing") return renderBriefing(params().get("week"));
   if (path === "/briefing-section") return renderBriefingSection(params().get("week"), params().get("section"));
+  if (path === "/monthlies") return renderMonthlies();
+  if (path === "/monthly") return renderMonthly(params().get("month"));
+  if (path === "/monthly-section") return renderMonthlySection(params().get("month"), params().get("section"));
   if (path === "/person-analysis") return renderPersonAnalysisHub();
   if (path === "/person-horizontal") return renderPersonHorizontal(params().get("week"));
   if (path === "/person-horizontal-detail") return renderPersonHorizontalDetail(params().get("week"), params().get("slug"));
@@ -119,6 +122,7 @@ function renderHome() {
       <div class="toolbar">
         <a class="button" href="#/week?week=${encodeURIComponent(latest.week)}">打开最新周</a>
         <a class="button" href="#/briefing?week=${encodeURIComponent(latestAvailableBriefingWeek())}">横向分析</a>
+        <a class="button" href="#/monthlies">月度分析</a>
         <a class="button" href="#/person-analysis">个人分析</a>
         <a class="button" href="#/teacher-unknown">老师不知道</a>
         <a class="button" href="#/search">全文搜索</a>
@@ -276,6 +280,29 @@ function briefingKey(week) {
   return `week:${week}:briefing`;
 }
 
+function monthlyKey(month) {
+  return `month:${month}:horizontal`;
+}
+
+function monthlyMonths() {
+  const items = analysisManifest?.items || {};
+  const months = Object.keys(items)
+    .map((key) => key.match(/^month:(\d{4}-\d{2}):horizontal$/)?.[1])
+    .filter(Boolean);
+  return [...new Set(months)].sort().map((month) => ({
+    month,
+    weeks: state.weeks.filter((week) => week.week.startsWith(`${month}-`))
+  }));
+}
+
+async function loadMonthly(month) {
+  const key = monthlyKey(month);
+  const file = analysisManifest?.items?.[key]?.file || `data/analysis/months/${month}.json`;
+  const response = await fetch(file, { cache: "no-store" });
+  if (!response.ok) throw new Error(`missing monthly analysis ${month}`);
+  return response.json();
+}
+
 async function loadBriefing(week) {
   const key = briefingKey(week);
   const file = analysisManifest?.items?.[key]?.file || `data/analysis/briefings/${week}.json`;
@@ -292,6 +319,179 @@ const briefingSectionMeta = {
   assets: { title: "可沉淀资产", field: "assets" },
   "people-to-read": { title: "值得细读的人", field: "peopleToRead" }
 };
+
+const monthlySectionMeta = {
+  "monthly-signals": { title: "月度信号", field: "monthlySignals" },
+  "people-to-read": { title: "值得细读的人", field: "peopleToRead" },
+  "project-themes": { title: "项目主题", field: "projectThemes" },
+  collaboration: { title: "协作机会", field: "collaboration" },
+  risks: { title: "共性卡点", field: "risks" },
+  assets: { title: "可沉淀资产", field: "assets" },
+  "teacher-actions": { title: "老师动作", field: "teacherActions" }
+};
+
+function renderMonthlies() {
+  const months = monthlyMonths().reverse();
+  app.innerHTML = html`
+    <section class="hero">
+      <div>
+        <h1>月度分析</h1>
+        <p class="muted">按周次所属月份聚合全体周报，做跨周、跨人的横向阅读。</p>
+      </div>
+    </section>
+    <section class="cards">
+      ${months.map((month) => `
+        <a class="card" href="#/monthly?month=${encodeURIComponent(month.month)}">
+          <strong>${esc(month.month)}</strong>
+          <span class="muted">${month.weeks.length} 个周次，${state.reports.filter((report) => report.week.startsWith(`${month.month}-`)).length} 份周报</span>
+          <span class="badge">月度横向</span>
+        </a>
+      `).join("") || `<div class="panel"><p class="muted">还没有生成月度分析。</p></div>`}
+    </section>
+  `;
+}
+
+async function renderMonthly(monthId) {
+  const month = monthlyMonths().find((item) => item.month === monthId) || monthlyMonths().at(-1);
+  if (!month) {
+    app.innerHTML = `<section class="panel"><h1>月度分析</h1><p class="muted">还没有生成月度分析。</p></section>`;
+    return;
+  }
+  app.innerHTML = `<section class="panel"><h1>${esc(month.month)} 月度分析</h1><p class="muted">正在加载离线分析...</p></section>`;
+  try {
+    const payload = await loadMonthly(month.month);
+    const result = payload.result || {};
+    const cards = normalizedMonthlyCards(result);
+    app.innerHTML = html`
+      <section class="hero">
+        <div>
+          <h1>${esc(month.month)} 月度分析</h1>
+          <p class="muted">${esc(result.headline || "这个月的横向摘要还没有完整标题。")}</p>
+        </div>
+        <div class="toolbar">
+          ${monthlyControls(month.month, "monthly")}
+          <a class="button" href="#/monthlies">全部月度分析</a>
+        </div>
+      </section>
+      <section class="briefing-summary">
+        ${(result.executiveSummary || []).filter((item) => !hasRetiredLateContent(item)).map((item) => `<div class="briefing-point">${esc(item)}</div>`).join("")}
+      </section>
+      <section class="briefing-card-grid">
+        ${cards.map((card) => `
+          <a class="briefing-card" href="#/monthly-section?month=${encodeURIComponent(month.month)}&section=${encodeURIComponent(card.id)}">
+            <span class="badge">${esc(monthlySectionItems(result, card.id).length)} 条</span>
+            <strong>${esc(card.title || monthlySectionMeta[card.id]?.title || card.id)}</strong>
+            <span class="muted">${esc(card.oneLine || "")}</span>
+          </a>
+        `).join("")}
+      </section>
+      <section class="panel" style="margin-top:16px">
+        <h2>下月追问</h2>
+        <div class="list">
+          ${(result.closingAdvice || []).map((item) => `<div class="row"><strong>建议</strong><span>${esc(item)}</span><span></span></div>`).join("")}
+        </div>
+      </section>
+    `;
+    bindMonthlyPicker();
+  } catch {
+    app.innerHTML = `<section class="panel"><h1>${esc(month.month)} 月度分析</h1><p class="muted">这个月的月度分析还没有生成。</p></section>`;
+  }
+}
+
+async function renderMonthlySection(monthId, sectionId) {
+  const month = monthlyMonths().find((item) => item.month === monthId) || monthlyMonths().at(-1);
+  const meta = monthlySectionMeta[sectionId] || monthlySectionMeta["monthly-signals"];
+  if (!month) {
+    app.innerHTML = `<section class="panel"><h1>${esc(meta.title)}</h1><p class="muted">还没有生成月度分析。</p></section>`;
+    return;
+  }
+  app.innerHTML = `<section class="panel"><h1>${esc(meta.title)}</h1><p class="muted">正在加载...</p></section>`;
+  try {
+    const payload = await loadMonthly(month.month);
+    const result = payload.result || {};
+    const items = monthlySectionItems(result, sectionId);
+    app.innerHTML = html`
+      <section class="hero">
+        <div>
+          <h1>${esc(meta.title)}</h1>
+          <p class="muted">${esc(month.month)} · ${items.length} 条 · ${esc(result.headline || "")}</p>
+        </div>
+        <div class="toolbar">
+          ${monthlyControls(month.month, "monthly-section", sectionId)}
+          <a class="button" href="#/monthly?month=${encodeURIComponent(month.month)}">返回月度分析</a>
+        </div>
+      </section>
+      <section class="briefing-section-list">
+        ${items.length ? items.map((item) => briefingSectionItem(item)).join("") : `<div class="panel"><p class="muted">这个分区暂无条目。</p></div>`}
+      </section>
+    `;
+    bindMonthlyPicker();
+  } catch {
+    app.innerHTML = `<section class="panel"><h1>${esc(meta.title)}</h1><p class="muted">月度分析文件还没有生成。</p></section>`;
+  }
+}
+
+function monthlyControls(currentMonth, target, sectionId = "") {
+  const months = monthlyMonths();
+  const index = Math.max(0, months.findIndex((item) => item.month === currentMonth));
+  const previous = months[Math.max(0, index - 1)]?.month || currentMonth;
+  const next = months[Math.min(months.length - 1, index + 1)]?.month || currentMonth;
+  const hrefFor = (month) => target === "monthly-section"
+    ? `#/monthly-section?month=${encodeURIComponent(month)}&section=${encodeURIComponent(sectionId)}`
+    : `#/monthly?month=${encodeURIComponent(month)}`;
+  return `
+    <span class="week-controls inline-week-controls">
+      <a class="button" href="${hrefFor(previous)}" title="上个月">‹</a>
+      <select data-monthly-select data-monthly-target="${esc(target)}" data-monthly-section="${esc(sectionId)}">
+        ${months.slice().reverse().map((item) => `<option value="${esc(item.month)}" ${item.month === currentMonth ? "selected" : ""}>${esc(item.month)}</option>`).join("")}
+      </select>
+      <a class="button" href="${hrefFor(next)}" title="下个月">›</a>
+    </span>
+  `;
+}
+
+function bindMonthlyPicker() {
+  document.querySelectorAll("[data-monthly-select]").forEach((select) => {
+    select.addEventListener("change", () => {
+      const target = select.dataset.monthlyTarget;
+      const section = select.dataset.monthlySection || "";
+      location.hash = target === "monthly-section"
+        ? `#/monthly-section?month=${encodeURIComponent(select.value)}&section=${encodeURIComponent(section)}`
+        : `#/monthly?month=${encodeURIComponent(select.value)}`;
+    });
+  });
+}
+
+function monthlySectionItems(result, id) {
+  const meta = monthlySectionMeta[id];
+  const value = meta ? result.sections?.[meta.field] : null;
+  const items = Array.isArray(value) ? value : (value ? [value] : []);
+  return items.filter((item) => !hasRetiredLateContent(item));
+}
+
+function defaultMonthlyCards(result) {
+  return Object.entries(monthlySectionMeta).map(([id, meta]) => ({
+    id,
+    title: meta.title,
+    oneLine: "",
+    count: (result.sections?.[meta.field] || []).length
+  }));
+}
+
+function normalizedMonthlyCards(result) {
+  const aliases = {
+    signals: "monthly-signals",
+    people: "people-to-read",
+    themes: "project-themes",
+    actions: "teacher-actions"
+  };
+  const byId = Object.fromEntries((result.sectionCards || []).map((card) => [aliases[card.id] || card.id, card]));
+  return defaultMonthlyCards(result).map((card) => ({
+    ...card,
+    title: byId[card.id]?.title || card.title,
+    oneLine: byId[card.id]?.oneLine || card.oneLine
+  }));
+}
 
 function renderBriefings() {
   const weeks = briefingWeeks().reverse();
