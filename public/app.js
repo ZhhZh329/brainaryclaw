@@ -8,6 +8,19 @@ const params = () => new URLSearchParams(location.hash.split("?")[1] || "");
 const missingLabel = (week) => week?.pastDeadline ? "未交" : "待交";
 const retiredLatePattern = /迟交|晚于(?:周一\s*)?08:00|晚于截止|超过截止|lateCount|lateNames|lateSubmissions/i;
 
+function reportSubmissionTime(report) {
+  const value = report?.submittedAt || report?.updatedAt || report?.createdAt || "";
+  const time = Date.parse(value);
+  return Number.isFinite(time) ? time : Number.MAX_SAFE_INTEGER;
+}
+
+function sortReportsBySubmissionTime(reports) {
+  return [...reports].sort((a, b) =>
+    reportSubmissionTime(a) - reportSubmissionTime(b) ||
+    String(a.name || "").localeCompare(String(b.name || ""))
+  );
+}
+
 function hasRetiredLateContent(value) {
   if (value == null) return false;
   if (typeof value === "string") return retiredLatePattern.test(value);
@@ -444,7 +457,7 @@ function briefingSectionItem(item) {
 
 function renderWeek(weekId) {
   const week = state.weeks.find((item) => item.week === weekId) || latestWeek();
-  const reports = state.reports.filter((report) => report.week === week.week).sort((a, b) => a.name.localeCompare(b.name));
+  const reports = sortReportsBySubmissionTime(state.reports.filter((report) => report.week === week.week));
   app.innerHTML = html`
     <section class="hero">
       <div>
