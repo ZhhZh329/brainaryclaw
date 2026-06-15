@@ -321,12 +321,12 @@ const briefingSectionMeta = {
 };
 
 const monthlySectionMeta = {
-  "monthly-signals": { title: "月度信号", field: "monthlySignals" },
-  "people-to-read": { title: "值得细读的人", field: "peopleToRead" },
-  "project-themes": { title: "项目主题", field: "projectThemes" },
-  collaboration: { title: "协作机会", field: "collaboration" },
-  risks: { title: "共性卡点", field: "risks" },
-  assets: { title: "可沉淀资产", field: "assets" },
+  "relationship-map": { title: "人际关联图", field: "relationshipMap" },
+  "pairwise-comparison": { title: "人物横向对比", field: "pairwiseComparison" },
+  "shared-projects": { title: "共同项目", field: "sharedProjects" },
+  "role-differences": { title: "角色互补", field: "roleDifferences" },
+  "merge-opportunities": { title: "合并与协作机会", field: "mergeOpportunities" },
+  "gaps-overlaps": { title: "重复与断点", field: "gapsOverlaps" },
   "teacher-actions": { title: "老师动作", field: "teacherActions" }
 };
 
@@ -483,7 +483,19 @@ function normalizedMonthlyCards(result) {
     signals: "monthly-signals",
     people: "people-to-read",
     themes: "project-themes",
-    actions: "teacher-actions"
+    actions: "teacher-actions",
+    monthlySignals: "relationship-map",
+    peopleToRead: "pairwise-comparison",
+    projectThemes: "shared-projects",
+    collaboration: "merge-opportunities",
+    risks: "gaps-overlaps",
+    assets: "role-differences",
+    relationship: "relationship-map",
+    comparisons: "pairwise-comparison",
+    shared: "shared-projects",
+    roles: "role-differences",
+    merge: "merge-opportunities",
+    gaps: "gaps-overlaps"
   };
   const byId = Object.fromEntries((result.sectionCards || []).map((card) => [aliases[card.id] || card.id, card]));
   return defaultMonthlyCards(result).map((card) => ({
