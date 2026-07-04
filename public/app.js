@@ -52,27 +52,39 @@ function normalizeMoneyAmount(amount, unit = "", currency = "") {
   return value * multiplier * currencyMultiplier;
 }
 
-function extractMoneyValue(report) {
-  const scope = valueScope(report?.rawText);
-  if (!scope) return 0;
+function extractMoneyFromText(text) {
   let total = 0;
-  let text = scope;
-  const rangePattern = /([¥￥$]?)\s*(\d+(?:,\d{3})*(?:\.\d+)?)\s*(?:-|–|—|~|～|到|至)\s*(\d+(?:,\d{3})*(?:\.\d+)?)\s*(亿|千万|百万|万|千|元|块|人民币|rmb|usd)?/gi;
-  text = text.replace(rangePattern, (full, currency, low, high, unit) => {
+  let remaining = String(text || "");
+  const rangePattern = /([¥￥$]?)\s*(\d+(?:,\d{3})*(?:\.\d+)?)\s*(?:-|–|—|~|～|到|至)\s*(?:[¥￥$]?\s*)?(\d+(?:,\d{3})*(?:\.\d+)?)\s*(亿|千万|百万|万|千|元|块|人民币|rmb|usd)?/gi;
+  remaining = remaining.replace(rangePattern, (full, currency, low, high, unit) => {
     if (!unit && !currency) return full;
     total += normalizeMoneyAmount((Number(low.replace(/,/g, "")) + Number(high.replace(/,/g, ""))) / 2, unit, currency);
     return " ";
   });
   const afterUnitPattern = /([¥￥$]?)\s*(\d+(?:,\d{3})*(?:\.\d+)?)\s*(亿|千万|百万|万|千|元|块|人民币|rmb|usd)/gi;
-  text = text.replace(afterUnitPattern, (full, currency, amount, unit) => {
+  remaining = remaining.replace(afterUnitPattern, (full, currency, amount, unit) => {
     total += normalizeMoneyAmount(amount, unit, currency);
     return " ";
   });
   const beforeUnitPattern = /(人民币|rmb|usd|¥|￥|\$)\s*(\d+(?:,\d{3})*(?:\.\d+)?)\s*(k|m|b)?/gi;
-  text.replace(beforeUnitPattern, (full, currency, amount, unit) => {
+  remaining.replace(beforeUnitPattern, (full, currency, amount, unit) => {
     total += normalizeMoneyAmount(amount, unit, currency);
     return " ";
   });
+  return total;
+}
+
+function extractMoneyValue(report) {
+  const scope = valueScope(report?.rawText);
+  if (!scope) return 0;
+  const excluded = /终局|机会规模|市场规模|企业价值|估值|锚点|参考依据|防误读|交易额|买方|能力价值|占其|若做成|上限|Tricentis|Cursor|Cognition|GTCR/i;
+  const preferred = /本周可归因价值|估计价值|价值金额|可归因价值|本周阶段贡献/i;
+  const lines = scope.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+  const preferredLines = lines.filter((line) => preferred.test(line) && !excluded.test(line));
+  const targetLines = preferredLines.length
+    ? preferredLines
+    : lines.filter((line) => /价值|金额|¥|￥|人民币|rmb|usd|\d+\s*(?:亿|千万|百万|万|千|元|块)/i.test(line) && !excluded.test(line));
+  const total = targetLines.reduce((sum, line) => sum + extractMoneyFromText(line), 0);
   return Math.round(total);
 }
 
@@ -231,8 +243,8 @@ function monthlyValueMetaScatter(month) {
   const top = 28;
   const bottom = 54;
   const maxValue = Math.max(...points.map((point) => point.value));
-  const minScore = Math.min(...points.map((point) => point.metaScore));
-  const maxScore = Math.max(...points.map((point) => point.metaScore));
+  const minScore = 0;
+  const maxScore = Math.max(1, ...points.map((point) => point.metaScore));
   return html`
     <section class="chart-panel">
       <div class="section-head">
@@ -243,9 +255,9 @@ function monthlyValueMetaScatter(month) {
         <line x1="${left}" y1="${height - bottom}" x2="${width - right}" y2="${height - bottom}" />
         <line x1="${left}" y1="${top}" x2="${left}" y2="${height - bottom}" />
         <text x="${left}" y="${top - 8}">钱价值</text>
-        <text x="${width - right}" y="${height - 18}" text-anchor="end">元认知成长</text>
-        <text x="${left}" y="${height - 18}">${esc(minScore.toFixed(1))}</text>
-        <text x="${width - right}" y="${height - 18}" text-anchor="end">${esc(maxScore.toFixed(1))}</text>
+        <text x="${(left + width - right) / 2}" y="${height - 12}" text-anchor="middle">元认知成长</text>
+        <text x="${left}" y="${height - 34}">0</text>
+        <text x="${width - right}" y="${height - 34}" text-anchor="end">${esc(maxScore.toFixed(1))}</text>
         <text x="${left - 8}" y="${top + 4}" text-anchor="end">${esc(formatMoney(maxValue))}</text>
         ${points.map((point, index) => {
           const x = scaleValue(point.metaScore, minScore, maxScore, left, width - right);
