@@ -8,6 +8,12 @@ const params = () => new URLSearchParams(location.hash.split("?")[1] || "");
 const missingLabel = (week) => week?.pastDeadline ? "未交" : "待交";
 const retiredLatePattern = /迟交|晚于(?:周一\s*)?08:00|晚于截止|超过截止|lateCount|lateNames|lateSubmissions/i;
 
+function asArray(value) {
+  if (Array.isArray(value)) return value;
+  if (value == null || value === "") return [];
+  return [value];
+}
+
 function reportSubmissionTime(report) {
   const value = report?.submittedAt || report?.updatedAt || report?.createdAt || "";
   const time = Date.parse(value);
@@ -19,6 +25,243 @@ function sortReportsBySubmissionTime(reports) {
     reportSubmissionTime(a) - reportSubmissionTime(b) ||
     String(a.name || "").localeCompare(String(b.name || ""))
   );
+}
+
+function valueScope(text) {
+  const source = String(text || "");
+  const match = source.search(/价值观总结|价值总结|估计价值|价值金额|值多少钱|为什么值这个钱|估值/i);
+  if (match < 0) return "";
+  return source.slice(match, match + 2600);
+}
+
+function normalizeMoneyAmount(amount, unit = "", currency = "") {
+  const value = Number(String(amount || "").replace(/,/g, ""));
+  if (!Number.isFinite(value) || value <= 0) return 0;
+  const normalizedUnit = String(unit || "").trim().toLowerCase();
+  const normalizedCurrency = String(currency || "").toLowerCase();
+  let multiplier = 1;
+  if (normalizedUnit.includes("亿")) multiplier = 100000000;
+  else if (normalizedUnit.includes("千万")) multiplier = 10000000;
+  else if (normalizedUnit.includes("百万")) multiplier = 1000000;
+  else if (normalizedUnit.includes("万")) multiplier = 10000;
+  else if (normalizedUnit.includes("千")) multiplier = 1000;
+  else if (normalizedUnit === "b") multiplier = 1000000000;
+  else if (normalizedUnit === "m") multiplier = 1000000;
+  else if (normalizedUnit === "k") multiplier = 1000;
+  const currencyMultiplier = /\$|usd|dollar/.test(normalizedCurrency) ? 7.2 : 1;
+  return value * multiplier * currencyMultiplier;
+}
+
+function extractMoneyValue(report) {
+  const scope = valueScope(report?.rawText);
+  if (!scope) return 0;
+  let total = 0;
+  let text = scope;
+  const rangePattern = /([¥￥$]?)\s*(\d+(?:,\d{3})*(?:\.\d+)?)\s*(?:-|–|—|~|～|到|至)\s*(\d+(?:,\d{3})*(?:\.\d+)?)\s*(亿|千万|百万|万|千|元|块|人民币|rmb|usd)?/gi;
+  text = text.replace(rangePattern, (full, currency, low, high, unit) => {
+    if (!unit && !currency) return full;
+    total += normalizeMoneyAmount((Number(low.replace(/,/g, "")) + Number(high.replace(/,/g, ""))) / 2, unit, currency);
+    return " ";
+  });
+  const afterUnitPattern = /([¥￥$]?)\s*(\d+(?:,\d{3})*(?:\.\d+)?)\s*(亿|千万|百万|万|千|元|块|人民币|rmb|usd)/gi;
+  text = text.replace(afterUnitPattern, (full, currency, amount, unit) => {
+    total += normalizeMoneyAmount(amount, unit, currency);
+    return " ";
+  });
+  const beforeUnitPattern = /(人民币|rmb|usd|¥|￥|\$)\s*(\d+(?:,\d{3})*(?:\.\d+)?)\s*(k|m|b)?/gi;
+  text.replace(beforeUnitPattern, (full, currency, amount, unit) => {
+    total += normalizeMoneyAmount(amount, unit, currency);
+    return " ";
+  });
+  return Math.round(total);
+}
+
+function formatMoney(value) {
+  const amount = Number(value || 0);
+  if (!Number.isFinite(amount) || amount <= 0) return "无金额";
+  if (amount >= 100000000) return `${(amount / 100000000).toFixed(amount >= 1000000000 ? 1 : 2).replace(/\.0+$/, "")} 亿`;
+  if (amount >= 10000) return `${(amount / 10000).toFixed(amount >= 1000000 ? 1 : 0).replace(/\.0+$/, "")} 万`;
+  return `${Math.round(amount)} 元`;
+}
+
+function reportsForWeek(week) {
+  return state.reports.filter((report) => report.week === week);
+}
+
+function reportsForMonth(month) {
+  return state.reports.filter((report) => report.week.startsWith(`${month}-`));
+}
+
+function personReportsUntil(person, week, windowSize = 4) {
+  const weeks = person.weeks.filter((item) => item <= week).slice(-windowSize);
+  return state.reports
+    .filter((report) => report.slug === person.slug && weeks.includes(report.week))
+    .sort((a, b) => a.week.localeCompare(b.week));
+}
+
+function personValueSeries(person, week, windowSize = 4) {
+  return personReportsUntil(person, week, windowSize).map((report) => ({
+    week: report.week,
+    value: extractMoneyValue(report)
+  }));
+}
+
+function weekValuePoints(week) {
+  return reportsForWeek(week)
+    .map((report) => ({ name: report.name, slug: report.slug, value: extractMoneyValue(report) }))
+    .filter((item) => item.value > 0)
+    .sort((a, b) => a.value - b.value);
+}
+
+function monthlyValueMetaPoints(month) {
+  const byPerson = new Map();
+  for (const report of reportsForMonth(month)) {
+    const current = byPerson.get(report.slug) || { name: report.name, slug: report.slug, value: 0, scoreTotal: 0, scoreCount: 0 };
+    current.value += extractMoneyValue(report);
+    const score = Number(report.qualityScore ?? report.score);
+    if (Number.isFinite(score)) {
+      current.scoreTotal += score;
+      current.scoreCount += 1;
+    }
+    byPerson.set(report.slug, current);
+  }
+  return [...byPerson.values()]
+    .map((item) => ({
+      ...item,
+      metaScore: item.scoreCount ? item.scoreTotal / item.scoreCount : 0
+    }))
+    .filter((item) => item.value > 0 && item.metaScore > 0)
+    .sort((a, b) => a.value - b.value);
+}
+
+function scaleValue(value, min, max, start, end) {
+  if (!Number.isFinite(value)) return start;
+  if (max <= min) return (start + end) / 2;
+  return start + ((value - min) / (max - min)) * (end - start);
+}
+
+function valueLineChart(points, title = "价值曲线") {
+  const valid = points.filter((point) => point.value > 0);
+  if (!valid.length) {
+    return `<section class="chart-panel"><div class="section-head"><h2>${esc(title)}</h2><p class="muted">这些周报里还没有可抽取的金额表达。</p></div></section>`;
+  }
+  const width = 720;
+  const height = 240;
+  const left = 56;
+  const right = 24;
+  const top = 24;
+  const bottom = 50;
+  const max = Math.max(...valid.map((point) => point.value));
+  const all = points.map((point, index) => ({
+    ...point,
+    x: points.length <= 1 ? (left + width - right) / 2 : scaleValue(index, 0, points.length - 1, left, width - right),
+    y: point.value > 0 ? scaleValue(point.value, 0, max, height - bottom, top) : height - bottom
+  }));
+  const path = all.map((point, index) => `${index ? "L" : "M"} ${point.x.toFixed(1)} ${point.y.toFixed(1)}`).join(" ");
+  return html`
+    <section class="chart-panel">
+      <div class="section-head">
+        <h2>${esc(title)}</h2>
+        <p class="muted">从周报价值部分抽取金额并按周合计；没有金额的周按 0 处理。</p>
+      </div>
+      <svg class="value-chart line-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="${esc(title)}">
+        <line x1="${left}" y1="${height - bottom}" x2="${width - right}" y2="${height - bottom}" />
+        <line x1="${left}" y1="${top}" x2="${left}" y2="${height - bottom}" />
+        <text x="${left}" y="${top - 6}">${esc(formatMoney(max))}</text>
+        <text x="${left}" y="${height - 16}">周次</text>
+        <path d="${path}" />
+        ${all.map((point) => `
+          <g>
+            <title>${esc(point.week)}：${esc(formatMoney(point.value))}</title>
+            <circle cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="${point.value > 0 ? 5 : 3}" />
+            <text x="${point.x.toFixed(1)}" y="${height - 26}" text-anchor="middle">${esc(point.week.slice(5))}</text>
+          </g>
+        `).join("")}
+      </svg>
+      <div class="chart-foot">
+        <span>最近 ${points.length} 周</span>
+        <strong>${esc(formatMoney(points.reduce((sum, point) => sum + point.value, 0)))}</strong>
+      </div>
+    </section>
+  `;
+}
+
+function weeklyValueDistributionChart(week) {
+  const points = weekValuePoints(week);
+  if (!points.length) {
+    return `<section class="chart-panel"><div class="section-head"><h2>价值分布</h2><p class="muted">本周周报里还没有可抽取的金额表达。</p></div></section>`;
+  }
+  const width = 760;
+  const height = 220;
+  const left = 48;
+  const right = 26;
+  const baseline = 120;
+  const max = Math.max(...points.map((point) => point.value));
+  return html`
+    <section class="chart-panel">
+      <div class="section-head">
+        <h2>价值分布</h2>
+        <p class="muted">横轴是每份周报中项目金额合计；点位不标姓名，只看本周价值判断的分布趋势。</p>
+      </div>
+      <svg class="value-chart scatter-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="${esc(week)} 价值分布">
+        <line x1="${left}" y1="${baseline}" x2="${width - right}" y2="${baseline}" />
+        <text x="${left}" y="${baseline + 32}">0</text>
+        <text x="${width - right}" y="${baseline + 32}" text-anchor="end">${esc(formatMoney(max))}</text>
+        ${points.map((point, index) => {
+          const x = scaleValue(point.value, 0, max, left, width - right);
+          const y = baseline + Math.sin(index * 1.7) * 34;
+          return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="6"><title>${esc(formatMoney(point.value))}</title></circle>`;
+        }).join("")}
+      </svg>
+      <div class="chart-foot">
+        <span>${points.length} 份包含金额</span>
+        <strong>最高 ${esc(formatMoney(max))}</strong>
+      </div>
+    </section>
+  `;
+}
+
+function monthlyValueMetaScatter(month) {
+  const points = monthlyValueMetaPoints(month);
+  if (!points.length) {
+    return `<section class="chart-panel"><div class="section-head"><h2>价值 × 元认知成长</h2><p class="muted">这个月还没有足够的金额和评分数据。</p></div></section>`;
+  }
+  const width = 760;
+  const height = 300;
+  const left = 58;
+  const right = 28;
+  const top = 28;
+  const bottom = 54;
+  const maxValue = Math.max(...points.map((point) => point.value));
+  const minScore = Math.min(...points.map((point) => point.metaScore));
+  const maxScore = Math.max(...points.map((point) => point.metaScore));
+  return html`
+    <section class="chart-panel">
+      <div class="section-head">
+        <h2>价值 × 元认知成长</h2>
+        <p class="muted">横轴复用周报质量评分近似元认知成长，纵轴是本月金额合计；鼠标悬停可看姓名。</p>
+      </div>
+      <svg class="value-chart scatter-chart monthly-value-meta" viewBox="0 0 ${width} ${height}" role="img" aria-label="${esc(month)} 价值和元认知成长散点图">
+        <line x1="${left}" y1="${height - bottom}" x2="${width - right}" y2="${height - bottom}" />
+        <line x1="${left}" y1="${top}" x2="${left}" y2="${height - bottom}" />
+        <text x="${left}" y="${top - 8}">钱价值</text>
+        <text x="${width - right}" y="${height - 18}" text-anchor="end">元认知成长</text>
+        <text x="${left}" y="${height - 18}">${esc(minScore.toFixed(1))}</text>
+        <text x="${width - right}" y="${height - 18}" text-anchor="end">${esc(maxScore.toFixed(1))}</text>
+        <text x="${left - 8}" y="${top + 4}" text-anchor="end">${esc(formatMoney(maxValue))}</text>
+        ${points.map((point, index) => {
+          const x = scaleValue(point.metaScore, minScore, maxScore, left, width - right);
+          const y = scaleValue(point.value, 0, maxValue, height - bottom, top);
+          const radius = 5 + Math.min(7, Math.sqrt(point.value / Math.max(maxValue, 1)) * 7);
+          return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${radius.toFixed(1)}" data-slug="${esc(point.slug)}"><title>${esc(point.name)}：${esc(formatMoney(point.value))}；元认知 ${point.metaScore.toFixed(1)}</title></circle>`;
+        }).join("")}
+      </svg>
+      <div class="chart-foot">
+        <span>${points.length} 人有金额和评分</span>
+        <strong>最高 ${esc(formatMoney(maxValue))}</strong>
+      </div>
+    </section>
+  `;
 }
 
 function hasRetiredLateContent(value) {
@@ -374,8 +617,9 @@ async function renderMonthly(monthId) {
         </div>
       </section>
       <section class="briefing-summary">
-        ${(result.executiveSummary || []).filter((item) => !hasRetiredLateContent(item)).map((item) => `<div class="briefing-point">${esc(item)}</div>`).join("")}
+        ${asArray(result.executiveSummary).filter((item) => !hasRetiredLateContent(item)).map((item) => `<div class="briefing-point">${esc(item)}</div>`).join("")}
       </section>
+      ${monthlyValueMetaScatter(month.month)}
       <section class="briefing-card-grid">
         ${cards.map((card) => `
           <a class="briefing-card" href="#/monthly-section?month=${encodeURIComponent(month.month)}&section=${encodeURIComponent(card.id)}">
@@ -388,7 +632,7 @@ async function renderMonthly(monthId) {
       <section class="panel" style="margin-top:16px">
         <h2>下月追问</h2>
         <div class="list">
-          ${(result.closingAdvice || []).map((item) => `<div class="row"><strong>建议</strong><span>${esc(item)}</span><span></span></div>`).join("")}
+          ${asArray(result.closingAdvice).map((item) => `<div class="row"><strong>建议</strong><span>${esc(item)}</span><span></span></div>`).join("")}
         </div>
       </section>
     `;
@@ -546,8 +790,9 @@ async function renderBriefing(weekId) {
         </div>
       </section>
       <section class="briefing-summary">
-        ${(result.executiveSummary || []).filter((item) => !hasRetiredLateContent(item)).map((item) => `<div class="briefing-point">${esc(item)}</div>`).join("")}
+        ${asArray(result.executiveSummary).filter((item) => !hasRetiredLateContent(item)).map((item) => `<div class="briefing-point">${esc(item)}</div>`).join("")}
       </section>
+      ${weeklyValueDistributionChart(week.week)}
       <section class="briefing-card-grid">
         ${cards.map((card) => `
           <a class="briefing-card" href="#/briefing-section?week=${encodeURIComponent(week.week)}&section=${encodeURIComponent(card.id)}">
@@ -560,12 +805,13 @@ async function renderBriefing(weekId) {
       <section class="panel" style="margin-top:16px">
         <h2>下一步追问</h2>
         <div class="list">
-          ${(result.closingAdvice || []).filter((item) => !hasRetiredLateContent(item)).map((item) => `<div class="row"><strong>建议</strong><span>${esc(item)}</span><span></span></div>`).join("")}
+          ${asArray(result.closingAdvice).filter((item) => !hasRetiredLateContent(item)).map((item) => `<div class="row"><strong>建议</strong><span>${esc(item)}</span><span></span></div>`).join("")}
         </div>
       </section>
     `;
     bindBriefingWeekPicker();
-  } catch {
+  } catch (error) {
+    console.error("Failed to render briefing", error);
     app.innerHTML = html`
       <section class="panel">
         <h1>${esc(week.week)} 横向分析</h1>
@@ -928,6 +1174,7 @@ async function renderPersonLongitudinalDetail(weekId, slugValue) {
         ${analysisList(result.teacherQuestions || result.professorShouldAsk || [], "meeting-questions")}
       </div>
     </section>
+    ${valueLineChart(personValueSeries(person, week, 4), "个人价值曲线")}
     <section class="focus-grid longitudinal-focus">
       ${longitudinalFocusCard("元认知变化", meta)}
       ${longitudinalFocusCard("价值观提升", value)}
