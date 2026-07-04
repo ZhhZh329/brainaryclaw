@@ -168,13 +168,11 @@ function valueLineChart(points, title = "价值曲线") {
         <line x1="${left}" y1="${height - bottom}" x2="${width - right}" y2="${height - bottom}" />
         <line x1="${left}" y1="${top}" x2="${left}" y2="${height - bottom}" />
         <text x="${left}" y="${top - 6}">${esc(formatMoney(max))}</text>
-        <text x="${left}" y="${height - 16}">周次</text>
         <path d="${path}" />
         ${all.map((point) => `
           <g>
-            <title>${esc(point.week)}：${esc(formatMoney(point.value))}</title>
+            <title>${esc(formatMoney(point.value))}</title>
             <circle cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="${point.value > 0 ? 5 : 3}" />
-            <text x="${point.x.toFixed(1)}" y="${height - 26}" text-anchor="middle">${esc(point.week.slice(5))}</text>
           </g>
         `).join("")}
       </svg>
