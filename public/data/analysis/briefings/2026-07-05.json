@@ -1,97 +1,145 @@
 {
   "key": "week:2026-07-05:briefing",
-  "generatedAt": "2026-07-06T01:06:15.258Z",
+  "generatedAt": "2026-07-12T20:04:21.243Z",
   "provider": "deepseek",
   "model": "deepseek-v4-pro",
   "reasoningEffort": "high",
-  "inputHash": "ac656e55a5bb2ef43b2e417b67123b254f3dd3ae0419e75948f299a7e0ae9d1e",
-  "contentHash": "ac656e55a5bb2ef43b2e417b67123b254f3dd3ae0419e75948f299a7e0ae9d1e",
+  "inputHash": "4646bdd5924c011d2137efed08512ecc46848f2c981af89188823f641b50c571",
+  "contentHash": "4646bdd5924c011d2137efed08512ecc46848f2c981af89188823f641b50c571",
   "promptHash": "fd044858c100ec630703bd42902fd3fddf90c8cba2723bb99c9bbfecea4fd4c3",
   "result": {
-    "headline": "安全指令衰减、记忆复利与防御性元认知：本周多项工作揭示Agent可靠性天花板在架构而非模型",
-    "executiveSummary": "1. Huang Xun 证明多步 Agent 中安全指令权重随轮次指数衰减，遵从率仅从 74% 升至 79%，安全决策必须移出上下文窗口（证据 A 级，老师未知）。2. Liang Ruichao 发现欲望层生理映射与反向调节共享双层安全边界，欲望层可参数化；前瞻性+沉默成本 replan 算法在 appworld 省 token 成功，token 预算成为 Agent “身体”。3. Xu Yijia 用构造样本回测证实，一致性分析是自动化科研基线防御的第一原则，defensive controller 对照实验证明其能改变系统行为（证据 A 级，老师未知）。4. Cao Zong 系统梳理攻击面记忆模型，用两轴分类定位记忆复利缺口，把口号转为可验收工程目标。5. 多项硬进展：Hou Xinmeng 的 v4 编码方案信度全部过线；Guo Wenbo 投稿 ICSE 的 MalSkillBench；Sun Manqi 完成华为样本整改交付；Zhang Haonan 的 dagplan 试点发现缓存 key 设计缺陷并修复；Wu Zhangfa 基本完成 Flow-SCAN 实验收口。6. 风险与瓶颈：Sui Hao 遭遇 GLM API 延迟导致实验仅完成 1/6；Qiao Wei 的对抗靶场端到端尚未跑通；部分项目因论文投稿挤占主进度。7. 本周沉淀包括攻击面记忆蓝图、编码类别合并 workflow、防御性 controller 模块、API 推荐结构 IR 等，自动化潜力高。",
+    "headline": "安全指令衰减、防御新范式、生理映射同构等多点突破，周报提交率44%，风险与工程瓶颈并存",
+    "executiveSummary": "1. Huang Xun通过100用例实证Agent多步推理中安全指令权重指数衰减，遵从率仅79%触顶，明确安全决策必须脱离LLM上下文窗口。\n2. Xu Yijia回测验证一致性分析可有效识别baseline攻击（fake eval/dataset drift/training leakage），并首次证明controller能阻断错误memory写入，改变系统行为。\n3. Liang Ruichao发现生理欲望层“身体提议、价值裁决”与反向调节边界同构，神经调质可参数化；将token预算定义为Agent稳态身体，经济学元认知控制器在appworld中初步实现省token。\n4. Yang Yanjing完成基于需求结构化的开源API推荐方法，在60个Web Domain上验证，揭示推荐本质是约束匹配而非相似度。\n5. Hou Xinmeng通过类别合并将编码信度κ从不过线提升至0.76-0.82，并审计出已发表工作存在标签混用伪影和设计声明错误。\n6. Zhang Haonan dagplan试点成功，暴露样本量敏感（n=10可反转结论）和缓存key设计缺陷（原句改写击穿决策缓存），修复为语义邻域缓存。\n7. 多名学生暴露工程落地瓶颈：Sui Hao智谱API延迟导致测评仅完成1/6，Huang Xun安全Prompt补丁无效，Qiao Wei日志对齐揭示检测能力天花板。\n8. 本周32/72提交周报，40人缺失，需排查进展与风险。",
     "sections": {
       "keyProgress": {
-        "title": "本周关键硬进展",
-        "people": "Cao Zong, Hou Xinmeng, Xu Yijia, Liang Ruichao, Zhang Haonan, Sun Manqi, Guo Wenbo, Wu Zhangfa, 等",
-        "whyItMatters": "这些进展将记忆复利、防御验证、信度工程等从概念推向可复现实验与可交付系统。",
-        "evidence": "多份实验数据（κ 值、p 值、A/B 对照、运行报告）、代码仓库、文档模板。",
-        "action": "教授应要求相关学生将其中可复用组件标准化（如记忆分类模板、一致性分析器），并加速自动化转化。"
+        "title": "关键进展",
+        "people": [
+          "Huang Xun",
+          "Xu Yijia",
+          "Liang Ruichao",
+          "Yang Yanjing",
+          "Hou Xinmeng",
+          "Zhang Haonan",
+          "Qiao Wei",
+          "Cao Zong",
+          "Sun Xiao"
+        ],
+        "whyItMatters": "本周多项工作从实证或理论层面推动安全、自动化科研、Agent认知架构等方向的关键认知升级，并产出可复用资产。",
+        "evidence": "Huang Xun提供A级证据（100用例定量）；Xu Yijia提供A级证据（6样本回测+controller对照）；Liang Ruichao理论两条独立推导线收敛，经济学实验省token（证据A/B）；Yang Yanjing方法验证A级；Hou Xinmeng编码方案v4信度全过线，审计发现A级；Zhang Haonan试点数据完整；Qiao Wei对齐跑通。",
+        "action": "请关注Huang Xun的架构级安全需求、Xu Yijia的防御机制集成、Liang Ruichao的理论整合潜力，并推动Hou Xinmeng的审计流程常态化。"
       },
       "teacherUnknown": {
-        "title": "老师原本不知道的新认知",
-        "people": "Huang Xun, Xu Yijia, Liang Ruichao, Sui Hao, Yang Yanjing, Zhang Jiayi",
-        "whyItMatters": "这些发现挑战了现有的安全架构、防御优先级和成本控制认知，具有架构级指导意义。",
-        "evidence": "均为 A 级或 B 级证据支撑（如 100 用例验证、对照实验、独立推导线收敛）。",
-        "action": "教授应将这些新认知作为 Brainary 系统设计的约束条件，如安全代码层网关、一致性校验器、欲望层参数 schema。"
+        "title": "教师须知",
+        "people": [
+          "Huang Xun",
+          "Xu Yijia",
+          "Liang Ruichao",
+          "Sui Hao",
+          "Yang Yanjing",
+          "Hou Xinmeng"
+        ],
+        "whyItMatters": "这些认知老师原本不知道或仅部分知道，它们为研究方向和系统设计提供新信息，可能改变决策。",
+        "evidence": "Huang Xun：安全指令衰减（A）；Xu Yijia：不一致防御入口（A）和controller行为改变（A）；Liang Ruichao：生理安全边界同构（B）与token预算统一理论（A）；Sui Hao：接口延迟杀手（A）；Yang Yanjing：API推荐是约束匹配（A）；Hou Xinmeng：设计声明与数据对账是（新增）。",
+        "action": "建议逐一讨论这些新认知的自动化沉淀形式，并优先将安全指令衰减和不一致防御转化为系统能力。"
       },
       "risks": {
-        "title": "关键风险与瓶颈",
-        "people": "Sui Hao, Qiao Wei, Guo Wenbo, Kevin Constantine Halim, Cao Zong, 等",
-        "whyItMatters": "这些风险可能延误关键路径，或导致前提错误未被及时验证。",
-        "evidence": "实验进度报告（仅完成 1/6）、资源冲突记录、数据集筛选结果。",
-        "action": "对每个风险指定责任人，要求下周汇报纠偏情况。重点盯防靶场端到端与记忆闭环的恢复。"
+        "title": "风险与卡点",
+        "people": [
+          "Sui Hao",
+          "Huang Xun",
+          "Zhang Haonan",
+          "Xu Yijia",
+          "Hou Xinmeng",
+          "Guo Wenbo",
+          "Qiao Wei",
+          "Liao Zeqin"
+        ],
+        "whyItMatters": "这些风险可能延误关键路径或导致错误结论，需及时干预。",
+        "evidence": "Sui Hao：GLM API慢，进度仅1/6，且下周无GPT/Claude资源；Huang Xun：安全Prompt补丁无效，架构方案未落地；Zhang Haonan：样本量敏感可能反转结论，缓存key问题虽修复但需验证；Xu Yijia：一致性分析样本为构造，真实repo测试未做；Hou Xinmeng：编码者无人工验证，n=56，过度解读风险；Guo Wenbo：记忆主线暂停一周；Qiao Wei：靶场端到端未完全跑通，核心前提未验证；Liao Zeqin：硬件场地不足。",
+        "action": "请协调Sui Hao购买GPT/Claude API；评审Huang Xun的安全网关架构；要求Zhang Haonan加大正式实验样本量；推动Xu Yijia获取真实repo样本。"
       },
       "followUps": {
-        "title": "下周关键行动",
-        "people": "Guo Wenbo, Zhang Jiayi, Hou Xinmeng, Qiao Wei, Zhang Haonan, Huang Xun, Sui Hao, 等",
-        "whyItMatters": "这些行动是验证本周假说、推进关键路径的最小可验证单位。",
-        "evidence": "各学生周报中明确承诺的最小可验证动作。",
-        "action": "教授应重点检查‘靶场首个攻击路径’和‘记忆闭环’的完成情况，并确保 Sloan 资源到位。"
+        "title": "下周关键动作",
+        "people": [
+          "Huang Xun",
+          "Xu Yijia",
+          "Liang Ruichao",
+          "Hou Xinmeng",
+          "Zhang Haonan",
+          "Sui Hao",
+          "Guo Wenbo",
+          "Qiao Wei",
+          "Zhang Jiayi"
+        ],
+        "whyItMatters": "这些最小验证动作将推动项目进入下一阶段，或排除关键风险。",
+        "evidence": "",
+        "action": "Huang Xun：运行400/600/800词表越狱对比；Xu Yijia：真实repo迁移测试；Liang Ruichao：appworld A/B表出token降幅数据；Hou Xinmeng：20%人工双编码验证κ；Zhang Haonan：Phase 1正式实验；Sui Hao：买GPT/Claude API，启动并行评测；Guo Wenbo：恢复记忆主线跑通WM闭环；Qiao Wei：完成靶场端到端攻击注入；Zhang Jiayi：SAP oracle判第一条业务结果。"
       },
       "assets": {
-        "title": "本周可自动化资产",
-        "people": "Cao Zong, Hou Xinmeng, Xu Yijia, Liang Ruichao, Yao Guangyu, Sun Manqi, Zhang Haonan, 等",
-        "whyItMatters": "这些模板、协议、schema 可立即转化为 Brainary 的工作流组件或评估器。",
-        "evidence": "已形成文档或代码原型（如两轴记忆模型、类别合并 workflow、procedure card schema）。",
-        "action": "指定专人将高潜力资产（如一致性分析、记忆分类模板）优先集成到 Brainary。"
+        "title": "沉淀资产",
+        "people": [
+          "Huang Xun",
+          "Xu Yijia",
+          "Liang Ruichao",
+          "Hou Xinmeng",
+          "Qiao Wei",
+          "Yang Yanjing",
+          "Zhang Haonan",
+          "Yao Guangyu",
+          "Wu Zhizhen",
+          "Hu Zhichao"
+        ],
+        "whyItMatters": "这些方法、schema、workflow可被Brainary直接吸收，构成长期竞争力。",
+        "evidence": "",
+        "action": "建议将以下资产纳入Brainary知识库或模块库：安全指令衰减数据集（Huang Xun）；consistency analysis v0.2+controller（Xu Yijia）；欲望层参数schema+经济学控制器族（Liang Ruichao）；类别合并workflow+审计harness（Hou Xinmeng）；日志可见性映射schema（Qiao Wei）；需求结构化pipeline（Yang Yanjing）；chooser语义缓存设计准则（Zhang Haonan）；procedure card标准（Yao Guangyu）；非对称容错判别式（Wu Zhizhen）；行为程序模型（Hu Zhichao）。"
       },
       "peopleToRead": {
-        "title": "值得细读的报告",
-        "people": "Huang Xun, Xu Yijia, Liang Ruichao, Cao Zong, Zhang Haonan, Sui Hao",
-        "whyItMatters": "这些报告包含反直觉发现或高证据等级结论，对整体方向有重大影响。",
-        "evidence": "A/B 级证据，并附有详细实验过程。",
-        "action": "教授可优先阅读这些报告的原文，并与学生讨论细节，特别是安全衰减和一致性分析的设计细节。"
+        "title": "值得关注",
+        "people": [
+          "Huang Xun",
+          "Liang Ruichao",
+          "Xu Yijia",
+          "Zhang Haonan",
+          "Hou Xinmeng",
+          "Sui Hao"
+        ],
+        "whyItMatters": "这些学生本周产出了最具冲击力的认知增量或硬进展，值得老师重点关注。",
+        "evidence": "",
+        "action": "建议一对一讨论Huang Xun的安全架构、Liang Ruichao的理论整合、Xu Yijia的防御落地路径，并关注Zhang Haonan的实验设计教训。"
       }
     },
     "sectionCards": [
       {
         "id": "key-progress",
         "title": "关键进展",
-        "oneLine": "本周产生至少 12 项可复现硬进展，涵盖记忆模型、防御验证、编码信度、经济学元认知等。",
-        "count": 12
+        "oneLine": "安全指令衰减实证、一致性防御打通、生理映射同构、API推荐方法论、编码信度提升、dagplan试点成功等。"
       },
       {
         "id": "teacher-unknown",
-        "title": "老师未知",
-        "oneLine": "至少 5 项教授此前未知的关键发现，包括安全衰减定律、一致性防御、欲望层可参数化等。",
-        "count": 5
+        "title": "教师须知",
+        "oneLine": "安全决策脱离LLM、不一致防御、生理安全边界同构、接口延迟杀手等新认知。"
       },
       {
         "id": "risks",
-        "title": "风险",
-        "oneLine": "已识别 7 个关键风险，包括 API 延迟、靶场未通、记忆主线停滞等。",
-        "count": 7
+        "title": "风险与卡点",
+        "oneLine": "API延迟阻测评、安全补丁无效、实验样本量敏感、人工验证缺失等。"
       },
       {
         "id": "follow-ups",
-        "title": "下周行动",
-        "oneLine": "已列出 8 项下周最小可验证动作，为关键路径推进提供明确目标。",
-        "count": 8
+        "title": "下周关键动作",
+        "oneLine": "补对比实验、迁移测试、A/B表出、人工编码、正式实验、买API、跑通闭环等。"
       },
       {
         "id": "assets",
-        "title": "可沉淀资产",
-        "oneLine": "至少 10 项可自动化沉淀的方法资产与模板，自动化潜力高。",
-        "count": 10
+        "title": "沉淀资产",
+        "oneLine": "安全数据集、一致性检测器、欲望参数表、审计workflow、日志映射、需求pipeline等。"
       },
       {
         "id": "people-to-read",
-        "title": "推荐阅读",
-        "oneLine": "推荐 6 份包含高证据或反直觉发现的学生报告。",
-        "count": 6
+        "title": "值得关注",
+        "oneLine": "Huang Xun, Liang Ruichao, Xu Yijia, Zhang Haonan, Hou Xinmeng, Sui Hao贡献突出。"
       }
     ],
-    "closingAdvice": "1. 立即启动确定性安全网关的开发，将安全策略从 LLM 上下文剥离，作为代码层拦截组件。2. 将一致性分析确立为自动化科研的默认防御机制，并扩展到 Brainary 的评估器。3. 标准化记忆复利自省模板，要求所有声称积累的系统必填。4. 优先解决 API 延迟造成的实验瓶颈，建立多模型并发资源池。5. 约束价值估算方法，要求以市场比对和风险折扣为基础，避免乐观估计。"
+    "closingAdvice": "1. 基于Huang Xun的A级证据，应尽快立项将安全决策从Agent上下文剥离，实现硬编排安全网关。\n2. 将Xu Yijia的consistency analysis和controller作为Brainary自动科研防御层的雏形，本周内评估集成路径。\n3. 支持Liang Ruichao将生理映射与经济学元认知整合为单一理论，并启动“我”架构的欲望层参数化落地。\n4. 对未提交周报的40名学生（如Cao Yue、Chen Huabao、Li Kaixuan等）进行排查，可能存在进度严重滞后或方向漂移。\n5. 统一采购GPT-4/Claude等API资源，解决Sui Hao等人的多模型并行评测瓶颈。"
   }
 }
