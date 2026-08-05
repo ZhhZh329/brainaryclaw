@@ -20,6 +20,23 @@ function reportSubmissionTime(report) {
   return Number.isFinite(time) ? time : Number.MAX_SAFE_INTEGER;
 }
 
+function formatReportTimestamp(report) {
+  const value = report?.submittedAt || report?.updatedAt || report?.createdAt || "";
+  const time = Date.parse(value);
+  if (!Number.isFinite(time)) return "未知";
+  const parts = Object.fromEntries(new Intl.DateTimeFormat("zh-CN", {
+    timeZone: "Asia/Singapore",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false
+  }).formatToParts(new Date(time)).map((part) => [part.type, part.value]));
+  return `${parts.year}-${parts.month}-${parts.day} ${parts.hour}:${parts.minute}:${parts.second}`;
+}
+
 function sortReportsBySubmissionTime(reports) {
   return [...reports].sort((a, b) =>
     reportSubmissionTime(a) - reportSubmissionTime(b) ||
@@ -345,6 +362,7 @@ function md(text) {
 
 function reportCard(report, meta = "", options = {}) {
   const collapsed = options.collapsed === true;
+  const submittedLabel = formatReportTimestamp(report);
   return html`
     <article class="report ${collapsed ? "collapsed" : ""}" id="${esc(report.id)}" data-report-id="${esc(report.id)}">
       <div class="report-header">
@@ -353,7 +371,11 @@ function reportCard(report, meta = "", options = {}) {
             ${collapsed ? `<button class="twisty" data-report-toggle="${esc(report.id)}" aria-label="展开 ${esc(report.name)}">▸</button>` : ""}
             ${esc(report.name)}
           </h3>
-          <div class="muted">${esc(report.week)} ${meta}</div>
+          <div class="report-meta muted">
+            <span>${esc(report.week)}</span>
+            <span>提交时间：${esc(submittedLabel)}</span>
+            ${meta}
+          </div>
           ${collapsed ? `<p class="excerpt">${esc(report.excerpt)}</p>` : ""}
         </div>
         <a class="button" href="#/person?slug=${encodeURIComponent(report.slug)}">看这个人</a>
@@ -950,7 +972,12 @@ function renderWeek(weekId) {
         <p class="muted">截止：${esc(week.deadline)}</p>
         <h3>已交</h3>
         <div class="name-list">
-          ${reports.map((report) => `<button class="name-jump" data-jump-report="${esc(report.id)}">${esc(report.name)}</button>`).join("")}
+          ${reports.map((report) => `
+            <button class="name-jump" data-jump-report="${esc(report.id)}">
+              <span>${esc(report.name)}</span>
+              <small>提交时间：${esc(formatReportTimestamp(report))}</small>
+            </button>
+          `).join("")}
         </div>
         <h3>${missingLabel(week)}</h3>
         ${week.missing.length ? `<div class="name-list muted">${week.missing.map((item) => `<span>${esc(item.name)}</span>`).join("")}</div>` : `<p class="muted">没有${missingLabel(week)}记录。</p>`}
@@ -1623,7 +1650,10 @@ function renderSearch() {
       <a class="row" href="#/week?week=${encodeURIComponent(report.week)}">
         <strong>${esc(report.name)}</strong>
         <span>${esc(report.excerpt)}</span>
-        <span class="badge">${esc(report.week)}</span>
+        <span class="report-search-meta">
+          <span class="badge">${esc(report.week)}</span>
+          <small>提交时间：${esc(formatReportTimestamp(report))}</small>
+        </span>
       </a>
     `).join("");
   };
