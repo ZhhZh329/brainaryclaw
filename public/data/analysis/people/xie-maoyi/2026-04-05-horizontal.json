@@ -1,123 +1,79 @@
 {
   "key": "person:xie-maoyi:2026-04-05:horizontal",
-  "generatedAt": "2026-06-06T13:15:26.936Z",
-  "provider": "openai",
-  "model": "gpt-5.5",
-  "reasoningEffort": "medium",
-  "inputHash": "06762708e0509cbd1beb1d1310fd92ee358ef24f54fd13cb22458e7b1389690d",
+  "generatedAt": "2026-08-05T20:02:29.236Z",
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "reasoningEffort": "high",
+  "inputHash": "f528640de374f1d0433efac464bfddc6986122282cb6a5fddd9685d17c9041b6",
+  "contentHash": "f528640de374f1d0433efac464bfddc6986122282cb6a5fddd9685d17c9041b6",
+  "promptHash": "7ab2efc4d416dbeeb34a0e2d3cc797ac660749509537011b4ea431707a52a0ba",
   "result": {
-    "overallLevel": "特别值得读",
-    "headline": "KCOV 实验把问题从“覆盖率”推进到“候选排序与因果建模”，并给出了可验证的下一步路线。",
-    "overviewSentence": "按本周研究管理标准，这份周报属于值得老师优先阅读的一类，因为它同时提供了硬数据、被证伪路径、方法转向、项目管理和自动化沉淀方向。",
-    "shortRead": "本周最有价值的信息是：KCOV pipeline 已经在 65 个困难 bug 上形成系统实验，RC 出现在 calltree 的比例达到 24/57，即 42.1%，相比原始方法 12.7% 有 3.3 倍提升；但进一步的 GPT-4o fault localization 实验显示，单纯把 calltree 加给 LLM 对 Top-1 没有提升，对 Top-5 和 Top-10 只有有限提升。因此，学生把研究判断从“更好的 trace 会带来更好的定位”修正为“coverage 只是前置条件，真正瓶颈在 candidate ranking 与 causality modeling”。这份周报对老师的主要价值不是某个指标已经很高，而是清楚呈现了方法路线如何被实验推动转向。",
-    "levelRationale": {
-      "hardProgress": "非常好：完成了 unified KCOV pipeline、TLS 多线程支持、all-syscall flush、fork-loop 处理、1M buffer 扩展，并在 65 个困难 bug 上给出覆盖率实验；同时完成了 24 个 RC-in-calltree bug 的 LLM 对比实验。",
-      "cognitiveIncrement": "特别值得读：学生明确证伪了“更好的 trace → 更好的 FL”和“只要 RC 在 trace 中就能找到”两个假设，把问题重心推进到 ranking 与 causality。",
-      "cotOfCot": "非常好：不仅总结了 insight，还解释了为什么 trace 过去被当作 feature 而不是 structure，以及为什么大 search space 下 LLM 表现受限；其中第二条证据等级标为 A。",
-      "brainaryMapping": "很好：映射到 reasoning、memory、cognitive control、tool orchestration，并指出缺少 unified representation；下一步若能把这些映射变成具体模块接口，会更有系统价值。",
-      "evidenceQuality": "非常好：有样本规模、比例、对比 baseline、Top-k 指标、失败类型拆分和证据等级；仍需要补充每类 bug 的代表性案例与实验可复现入口。",
-      "topicValue": "非常好：kernel logic bug 定位是真实问题，潜在用户包括 kernel 开发者和 fuzzing 平台；从 kernel 扩展到大型系统的通用性还需要后续实验支撑。",
-      "moneyValue": "很好：给出了 KCOV pipeline、KCOV+LLM 实验、KernelLocator 方向的金额估计，总计约 18 万人民币；估值逻辑已经开始形成，但还需要把金额与可交付资产、节省的人力时间、可复用场景进一步绑定。",
-      "projectManagement": "非常好：有阶段判断、投入时间、资源依赖、token 成本、里程碑、纠偏动作和是否需要老师介入；下周动作也具备可验证性。",
-      "automationPath": "非常好：明确可沉淀为 benchmark、workflow、graph builder、agent module 和 evaluation protocol；最值得推进的是 trace → graph → reasoning 的自动化路径。",
-      "nextWeekActionQuality": "非常好：KCOV_REMOTE、subsystem/frequency filter、function-level dependency graph、5 个 bug 上过滤 80% candidate 都是可检验动作。"
-    },
-    "sameWeekPosition": "按本周标准，这份周报属于较值得优先阅读的一类。它的特点是硬进展和认知转向都比较清楚：既有工程 pipeline 与实验数字，也能把未达到预期的实验结果转化为下一阶段研究问题。老师阅读原文的收益主要在于判断 KernelLocator 是否应从 trace pipeline 转向 graph-guided FL。",
+    "overallLevel": "非常好",
+    "headline": "从 trace 到 graph：KCOV 实验证伪简单假设，明确 FL 核心瓶颈是搜索空间控制",
+    "overviewSentence": "KCOV 将覆盖率从 33% 提升至 42%，但 LLM 实验表明 calltree 直接输入增益微弱；本周关键认知：fault localization 的真正瓶颈不是 trace 覆盖，而是 candidate ranking 与搜索空间控制，项目已转向 graph-guided 推理。",
+    "shortRead": "谢茂益本周在 Kernel FL 项目上取得扎实进展：完成 KCOV 统一收集 pipeline，在 65 个困难 bug 中成功收集 57 个 calltree，RC 覆盖率提升至 42.1%（原始方法 12.7%），提升 3.3 倍。LLM 实验发现 calltree 直接输入对 top-1 无提升，top-5/10 仅微弱增益，且 LLM 因搜索空间过大从“推理”退化为“搜索”。由此形成高价值认知：FL 瓶颈不是 trace 是否覆盖，而是如何从 execution 中构建可推理的结构，以及控制候选排名与搜索空间。项目已明确转向 Graph-guided FL，并有具体的下周动作（KCOV_REMOTE、压缩策略、graph 原型）。元认知层面提出“控制搜索空间比增加信息更重要”的原则。整体上，本周实验数据、认知深度和自我纠偏能力均很突出，建议老师优先阅读。",
+    "levelRationale": "本周周报在硬进展、认知增量、价值判断、项目管理和元认知变化五个维度均达到“非常好”水平。硬进展有明确的提升数据和新 pipeline；认知层面不仅给出三个 CoT 增量，还有两个证据等级分别为 A 和 B 的 CoT’s CoT，证伪了 naive 假设；项目管理能根据实验结果自我纠偏，调整方向并设计了可验证的下周动作；价值判断客观，给出了金额估值和局限性分析；元认知明确提出了“控制搜索空间”的核心原则。唯一提升空间在于 LLM 实验增益有限，但本周将其作为有价值的负面结果处理，并促进了方向优化，符合高水平研究迭代的特征。",
+    "sameWeekPosition": "按本周研究管理标准，这份周报的硬进展、认知深度和项目管理质量属于较值得优先阅读的一类，尤其在自我纠偏和理论构建方面表现突出。",
     "highlightedSignals": [
-      "硬进展清楚：65 个困难 bug 上 KCOV calltree 收集成功 57 个，RC 出现在 calltree 的比例为 24/57，即 42.1%。",
-      "实验结论有方向价值：GPT-4o 在 24 个 RC-in-calltree bug 上 Top-1 从 2/24 到 2/24，说明加入 calltree 本身并没有带来核心突破。",
-      "认知增量明确：学生把研究问题从 coverage 推进到 candidate ranking 与 causality modeling。",
-      "项目纠偏及时：从 ftrace/KCOV trace 路线转向 graph-guided FL，即 execution → graph → reasoning。",
-      "自动化沉淀意识较强：提出 graph builder、workflow、agent module、large search space FL benchmark 和 evaluation protocol。",
-      "下周动作可检验：KCOV_REMOTE 是否使 coverage 超过 50%，function-level dependency graph 是否能在 5 个 bug 上过滤 80% candidate。"
+      "成功构建统一 KCOV pipeline，RC 覆盖率从 33% 提升至 42.1%，相对原始方法提升 3.3 倍",
+      "LLM 实验证实搜索空间扩大导致推理退化，提供了 A 级证据证伪“更好 trace → 更好 FL”",
+      "从 trace 转向 graph-guided FL 的认知跃迁，明确了正确攻关方向",
+      "项目管理中主动记录失败模式并相应调整后续计划，自我纠偏意识强"
     ],
     "focusDimensions": {
       "valueJudgment": {
-        "read": "非常好：这份周报的价值判断不是停留在“做了很多实验”，而是判断出当前题目的关键价值点已经从 trace 收集转向结构化候选筛选与因果推理。",
-        "evidence": "报告中写到 KCOV 将 RC-in-calltree 提升到 42.1%，但 LLM Top-1 没有提升；随后明确提出“KCOV 解决覆盖问题，但没有解决 candidate ranking / reasoning 问题”，并把 KernelLocator 方向收敛为 Graph-guided FL。",
-        "nextLift": "下一步建议把主题价值拆成两个可验证主张：第一，graph 是否显著缩小候选空间；第二，缩小后的候选空间是否真正提升 Top-k fault localization。金额估值也建议绑定到具体资产，例如可复用 pipeline、benchmark、graph builder 或节省的人工定位时间。"
+        "read": "很好",
+        "evidence": "题目是否值得做：有潜力，但 KCOV + LLM 还没有形成明确方法，KernelLocator 仍未验证；价值观总结：任务 1 估计 6 万，任务 2 估计 8 万（empirical insight），任务 3 估计 4 万（early-stage idea）；判断客观，既看到长期价值也承认当前阶段未成熟。",
+        "nextLift": "随着 Graph 原型验证，价值判断可更量化地对比现有 FL 方案（如基于频谱的 SBFL），并给出不同 milestone 下的估值变化。"
       },
       "projectManagement": {
-        "read": "非常好：有任务拆分、阶段判断、时间投入、资源依赖、token 成本、里程碑和纠偏动作，老师可以直接据此安排 meeting。",
-        "evidence": "报告列出本周投入约 40 小时、下周预计 40 小时，依赖 kGym/Syzbot，成本约 30–40 美元；里程碑为 1 周 KCOV_REMOTE、2 周 graph prototype；纠偏动作为从 trace → graph、强化 candidate filtering。",
-        "nextLift": "下周可以把三个最小动作按优先级排序，并为每个动作写明通过标准、样本选择标准、如果结果未达到预期时的替代路径。这样项目会更容易被老师判断是否继续加码。"
+        "read": "很好",
+        "evidence": "进度判断：基本符合预期，但 LLM 提升低于预期，原因：方法路径问题（认知问题）；纠偏动作：从 trace → graph；是否需要老师介入：可以讨论方向；时间、资源、依赖规划清晰。",
+        "nextLift": "可为下周的 Graph 原型设定明确的成功标准（如过滤 80% 候选函数且保持对 RC 的召回），并画出关键路径里程碑。"
       },
       "metacognition": {
-        "read": "特别值得读：学生不仅记录了结果，还反思了自己原先假设被实验修正的过程，这是本周最重要的元认知变化。",
-        "evidence": "报告明确写出被证伪路径：“更好的 trace → 更好的 FL”和“只要 RC 在 trace 中就能找到”；并总结“在复杂系统中，控制 search space 比增加信息更重要”。",
-        "nextLift": "下一步建议把元认知转成实验设计原则：先定义候选空间大小、再定义排序信号、最后引入 LLM 推理；并在每个实验后记录是 coverage、ranking 还是 causality 哪一环发生变化。"
+        "read": "很好",
+        "evidence": "对 meta-cognition 的新理解：在复杂系统中，控制 search space 比增加信息更重要；与 CoT’s CoT 2 呼应，属于对研究本质的提炼。",
+        "nextLift": "将这一原则转化为可落地的 agent 策略或模块，并设计对比实验验证（如先缩空间再推理 vs. 直接推理）。"
       }
     },
     "growthOpportunities": [
-      "把 graph-guided FL 的假设写得更可检验：例如 graph 的节点、边、过滤规则、预期过滤比例、Top-k 提升目标分别是什么。",
-      "补充代表性案例：目前有整体数字，但如果能给 1–2 个成功案例和 1–2 个未奏效案例，会更容易判断 causality modeling 的真实入口。",
-      "金额价值可以更具体：建议把 6 万、8 万、4 万的估值与人力节省、可复用代码、benchmark 资产、论文贡献点逐一对应。",
-      "Brainary 映射已经有方向，下一步可推进到接口层：memory 存什么、reasoning 用什么图、cognitive control 如何控制 search space、tool orchestration 如何调 KCOV/LLM/graph。"
+      "Graph 构建的具体技术方案（节点类型、边类型、依赖抽取算法）可进一步细化，下周周报若能写出初步设计，会帮助老师更早发现可行性与风险。",
+      "LLM 实验 bug 样本量仅 24 个，建议扩大规模（如 50+）并系统比较多种压缩策略，以产出更可靠的定量结论。",
+      "在自动化科研转化路径部分，可以设想一个最小可用的 benchmark 原型（如 20 个 kernel bug，附带 calltree 和 ground truth），并说明需要哪些外部资源。"
     ],
     "teacherAction": {
       "readOriginal": true,
       "meetingQuestions": [
-        "你现在认为 KernelLocator 的最小核心贡献是什么：graph builder、candidate filtering protocol，还是 kernel FL benchmark？请选一个作为下周主线。",
-        "KCOV_REMOTE 如果把 coverage 提到 50% 以上，但 Top-k 仍然提升有限，你会如何判断下一步是继续做 coverage，还是全面转向 graph/ranking？",
-        "function-level dependency graph 的边准备怎么定义？调用边、数据依赖、patch 相关性、子系统关系，哪些是第一版必须有的？",
-        "你提出在 5 个 bug 上过滤 80% candidate，这 5 个 bug 如何选择，怎样避免只选对方法友好的样本？",
-        "金额价值里 18 万人民币对应的可交付资产是什么？是代码、数据集、benchmark、论文实验，还是可复用 workflow？"
+        "当前 Graph 构建最大的技术难点是什么？计划采用 code property graph、过程间依赖还是其他范式？",
+        "KCOV_REMOTE 预估能带来多少覆盖率提升，是否有把握将 RC coverage 推至 50% 以上？",
+        "如果 Graph 指导的过滤仍不能显著提升 LLM 的 Top-5，下一步的 Plan B 是什么？"
       ],
       "nextWeekWatch": [
-        "KCOV_REMOTE 是否能把 RC coverage 推到学生预期的 50% 以上。",
-        "subsystem filter 与 frequency filter 是否能改善 Top-5，而不仅是缩短 prompt。",
-        "function-level dependency graph 是否真的能过滤 80% candidate，并保留 RC。",
-        "学生是否能把 graph-guided FL 从概念推进到可运行 prototype。",
-        "下周是否补充代表性案例，以支撑 causality 建模的具体做法。"
+        "Graph 原型是否按时完成，并能演示在 5 个 bug 上明显缩小候选函数集。",
+        "KCOV_REMOTE 实现后，覆盖率提升幅度及新解锁的 bug 类型。",
+        "LLM 压缩策略（子系统 / 频率过滤）的定量效果和失败模式分析。"
       ]
     },
     "studentFeedback": {
-      "summary": "你这周最好的地方是用实验把研究问题从“怎么收集更多 trace”推进到“怎么控制候选空间并建立因果推理结构”。",
+      "summary": "本周你通过扎实的 KCOV 实验和 LLM 分析，不仅提升了覆盖率，更关键的是识别出 fault localization 的核心瓶颈并非 trace 本身，而是搜索空间控制与因果推理，这个认知非常有价值，为 Graph-guided 推理指明了方向，继续保持这种实验驱动认知迭代的节奏。",
       "whatYouDidWell": [
-        "你给出了扎实的硬进展：KCOV pipeline、65 个困难 bug 的覆盖率实验、24 个 RC-in-calltree bug 的 LLM 对比实验都有数字支撑。",
-        "你没有停在工程实现层，而是从 Top-k 结果中修正了原假设，明确提出 ranking 和 causality 才是当前核心问题。",
-        "你的项目管理信息比较完整：时间、成本、依赖、阶段、里程碑和下周最小验证动作都写出来了。"
+        "技术执行扎实：成功构建了统一的 KCOV 收集 pipeline，实现了多线程支持、fork-loop 安全等复杂特性，覆盖率提升 3.3 倍，数据可靠。",
+        "实验设计与分析严谨：系统对比了 ftrace 与 KCOV，主动记录多种失败模式，并在结论中区分“解决了什么／没有解决什么”，提供了 A 级证据的 CoT’s CoT。",
+        "元认知提升显著：从具体工具升级到研究本质，提出了“控制搜索空间比增加信息更重要”的原则，并据此调整研究方向，体现了高水平研究者的自我迭代能力。"
       ],
       "nextStep": [
-        "下周请把 graph-guided FL 写成一个最小可运行实验：图怎么建、候选怎么过滤、用哪 5 个 bug、通过标准是什么。",
-        "请补充代表性案例，至少说明一个 calltree 有用的 case 和一个 calltree 没有帮助的 case，让老师能判断方法边界。",
-        "金额价值建议和资产绑定：每个估值对应代码、数据、benchmark、workflow 或论文贡献中的哪一种。"
+        "Graph 构建方案细化：明确节点（函数、变量、系统调用）、边（调用、数据依赖、锁）、抽取方式，可先在一个 bug 上画出示意，再批量实施。",
+        "LLM 实验扩大样本并系统评估压缩策略：设计可量化的指标（如候选集缩减率、Top-5 提升与候选集大小的关系），产出更具统计效力的结论。",
+        "为 Graph 原型设定成功标准：例如过滤后候选函数不超过原始 20%，且 RC 仍在候选集中，以便快速判断方向可行性。"
       ],
-      "suggestedRewrite": "下周周报可以这样写得更清楚：『本周验证 graph-guided candidate filtering：在 5 个 bug 上构建 function-level dependency graph，节点为函数，边包括调用关系与同子系统关系；目标是在保留 RC 的前提下，将平均候选数从 200–1000 降到 40–200，并观察 GPT-4o Top-5 是否提升。若 RC 被过滤掉，将记录是哪类边或规则导致，并调整 graph 构建策略。』"
+      "suggestedRewrite": "示例：“本周实现了 KCOV_REMOTE，覆盖率从 42% 提升至 __%。Graph 原型基于调用图 + 数据依赖图构建，在 5 个 bug 上初步过滤，候选函数平均从 __ 缩减至 __（缩减率 __%），其中 __ 个 bug 的 RC 保留在候选集；LLM 压缩实验采用子系统+频率过滤后，候选集平均大小从 __ 降至 __，Top-5 提升至 __%（基线 __%），分析提升案例的特征。”"
     },
     "evidenceLinks": [
-      {
-        "section": "任务 1：KCOV calltree 收集 pipeline",
-        "evidence": "成功收集 calltree 57/65，RC 出现在 calltree 24/57，比例为 42.1%，相比原始方法 12.7% 提升 3.3 倍。"
-      },
-      {
-        "section": "任务 2：KCOV calltree + LLM fault localization",
-        "evidence": "Top-1 为 2/24 到 2/24，Top-5 为 2/24 到 3/24，Top-10 为 2/24 到 4/24，支持“calltree 本身不能直接解决定位”这一判断。"
-      },
-      {
-        "section": "任务 3：KernelLocator 方向",
-        "evidence": "学生把问题拆成覆盖问题、ranking 问题、causality 缺失，并提出 Graph-guided FL：execution → graph → reasoning。"
-      },
-      {
-        "section": "CoT 增量",
-        "evidence": "明确写出 KCOV 能解决“是否执行”，但不能解决“为什么错误”；并证伪“更好的 trace → 更好的 FL”。"
-      },
-      {
-        "section": "CoT’s CoT",
-        "evidence": "提出 trace 应从 feature 转为 structure，并建议沉淀为 graph builder、workflow、agent module；第二条关于 search space explosion 的证据等级为 A。"
-      },
-      {
-        "section": "Brainary 关联",
-        "evidence": "映射到 reasoning、memory、cognitive control、tool orchestration，并指出缺少 unified representation。"
-      },
-      {
-        "section": "项目管理",
-        "evidence": "报告给出本周约 40 小时、下周预计 40 小时、成本 30–40 美元、依赖 kGym/Syzbot、1 周 KCOV_REMOTE、2 周 graph prototype。"
-      },
-      {
-        "section": "老师应学到的新东西",
-        "evidence": "学生总结：KCOV 能解决覆盖问题，但 fault localization 的真正瓶颈是 candidate ranking 和 causality 建模，而不是 trace 本身。"
-      }
+      "成功收集 calltree：57/65 ; RC coverage：KCOV 42.1%（相对原始方法 12.7%，提升 3.3x）",
+      "CoT’s CoT 2：LLM 的 failure 主要来自 search space explosion，而不是 reasoning 能力不足，证据等级 A",
+      "CoT’s CoT 1：FL 的核心问题是如何从 execution 中构建可推理的结构，证据等级 B",
+      "项目管理：LLM 提升低于预期，纠偏动作从 trace → graph；下周最小可验证动作：实现 KCOV_REMOTE、压缩策略、graph 原型"
     ]
   }
 }

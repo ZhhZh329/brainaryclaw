@@ -1,154 +1,83 @@
 {
   "key": "person:xie-maoyi:2026-05-03:horizontal",
-  "generatedAt": "2026-06-06T13:15:30.034Z",
-  "provider": "openai",
-  "model": "gpt-5.5",
-  "reasoningEffort": "medium",
-  "inputHash": "26f35c0b1e134401de5cfdf23150407094f8b8df15ad5fa52f346dd76e90f3b2",
+  "generatedAt": "2026-08-05T20:03:25.454Z",
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "reasoningEffort": "high",
+  "inputHash": "1196e7810c4195de90a05295c18071a7dda2599357ce215e828311cf725db956",
+  "contentHash": "1196e7810c4195de90a05295c18071a7dda2599357ce215e828311cf725db956",
+  "promptHash": "7ab2efc4d416dbeeb34a0e2d3cc797ac660749509537011b4ea431707a52a0ba",
   "result": {
-    "overallLevel": "特别值得读",
-    "headline": "从真实内核 bug 产出推进到“pattern → LLM 筛选 → PoC 验证”的方法闭环，值得老师优先读原文并追问系统化路径。",
-    "overviewSentence": "按本周研究管理标准，这份周报属于特别值得读：既有 maintainer 确认、mainline/net tree 进入等硬进展，也有较清晰的方法论、自动化路径和元认知转变。",
-    "shortRead": {
-      "hardProgress": "非常好：#2 推进至 v6，#12 被 maintainer 确认为 bug 并由对方起草 patch，#1/#3 已进入 mainline/net tree，同时覆盖 net、io_uring、nl80211、xfrm、rds 等子系统。",
-      "cotIncrement": "非常好：明确提出 sibling-fix reverse search 是当前最高 EV 方法、LLM 更适合作为筛选器、bug oracle 必须依赖 PoC 与 runtime。",
-      "cotsCot": "特别值得读：不只写结论，还解释为什么自动化科研尚未吸收、适合沉淀成什么系统，以及自动化潜力和证据等级。",
-      "brainaryMapping": "很好：能映射到 reasoning、cognitive control、tool orchestration、WAI vs real bug 判断，并指向 bug hunting agent/workflow/pattern module。",
-      "evidenceQuality": "非常好：有 maintainer acknowledgement、patch、PoC、mainline/net tree 等较强证据；但缺少邮件链接、patch 链接、commit/link、bug 编号明细表，老师需要读原文或追要证据表。",
-      "themeValue": "非常好：问题定义清楚，即 kernel bug 发现效率与误判问题，且能落到 maintainers、security teams、cloud/infra 公司等潜在使用方。",
-      "moneyValue": "很好：给出了任务级金额估值，并能说明“直接真实漏洞产出、可复用经验、工具路径、fuzz 探索”的差异；下一步需要把金额与可交付件、复用次数、节省时间或真实采用场景绑定。",
-      "projectManagement": "非常好：阶段、投入、资源、依赖、关键路径、偏差原因、纠偏动作都有；下周动作也具备最小可验证性。",
-      "automationPath": "非常好：已经形成 workflow、pattern library、LLM filter module、harness template、verification workflow 的沉淀方向。",
-      "nextWeekActionQuality": "非常好：#16 PoC+patch、新增 1–2 个 confirmed bug、2–3 个 helper-pair query prototype、1 个 parametric harness，均比较可验收。"
-    },
-    "levelRationale": "这份周报达到“特别值得读”的主要原因是：它同时具备真实外部反馈、方法抽象、自动化转化路径和项目管理闭环。硬进展不是停留在阅读或尝试，而是有 maintainer 确认、patch 推进、mainline/net tree 进入等外部验证；认知增量也不是泛泛总结，而是把 bug hunting 的核心从“发现更多”转为“构造高 precision 候选生成机制，再用 PoC/runtime 做最终 oracle”。需要进一步补强的是证据可追溯性与结构化沉淀：目前报告中缺少可点击链接、编号表、query prototype 结果、harness 结果，以及金额估值的计算依据。",
-    "sameWeekPosition": "按本周研究管理标准，这份周报属于较值得老师优先阅读的一类，尤其适合用于判断 Kernel Bug Hunting 是否已经从个例推进到可系统化研究工程。",
+    "overallLevel": "特别好",
+    "headline": "Kernel bug 挖掘从单点发现向可复用方法论扎实转型",
+    "overviewSentence": "本周通过多个真实 bug 的推进、方法论的系统沉淀以及工具化路径的明确，扎实地迈出了从“个例发现”到“方法成型”的关键一步，认知深度与体系化程度在本周标准下属于较值得优先阅读的一类。",
+    "shortRead": "Xie Maoyi 本周继续基于 sibling‑fix reverse search 挖掘 kernel bug，新增数枚 confirmed bug（其中 #2 推进至 v6，#12 获 maintainer 确认并代拟 patch，#1、#3 已进入 mainline/net tree）。同时，将近期踩坑经验系统整理为 method‑level memory，提炼出 PoC 先行、helper‑pair 高价值、sub‑agent 不可轻信等稳定原则。在工具化设计上，明确了 Pattern+LLM+人工 PoC 的组合策略，并开始探索 directed fuzz 的 parametric harness。认知上提出三个高证据等级的 CoT’s CoT：最高 EV 的挖掘方法是 pattern‑driven candidate generation；bug oracle 必须是 runtime PoC；LLM 的最优角色是高 recall 过滤器。项目管理清晰，投入 40 小时，进度符合预期，已识别出 bug 数量增长较慢并计划提升 candidate generation 效率。下周动作具体，包括完成 #16 的 PoC+patch、新增 1–2 个 confirmed bug、将 helper‑pair 转为 query prototype、实现一个 parametric harness。整体进展扎实，方法意识强，属于本周较突出的周报。",
+    "levelRationale": "该周报在硬进展（多个 bug 推进至确认/合入）、认知增量（三个高证据等级的 CoT’s CoT，明确方法论闭环）、价值判断（方向成立且正规模化）、项目管理（阶段清晰、投入与纠偏明确）、元认知变化（从‘推理链’转向‘验证链’）等维度均表现出色，方法论的体系化程度显著高于一般周报，因此评为“特别好”。",
+    "sameWeekPosition": "按本周标准，这份周报属于较值得优先阅读的一类。",
     "highlightedSignals": [
-      {
-        "signal": "硬进展有外部确认",
-        "read": "#12 被 maintainer 确认为 bug 且由对方起草 patch，#1/#3 进入 mainline/net tree，这类证据比单纯自测更有研究管理价值。"
-      },
-      {
-        "signal": "方法从经验走向可复用机制",
-        "read": "sibling-fix reverse search、helper-pair catalogue、Pattern → candidate → LLM filter → 人工验证，已经具备转成工具链的雏形。"
-      },
-      {
-        "signal": "元认知变化明确",
-        "read": "学生把正确性来源从“推理链”转向“验证链”，这是本周最重要的认知变化。"
-      },
-      {
-        "signal": "失败模式被纳入方法论",
-        "read": "WAI 误判、phantom bug、agent 多一致但不正确、静态分析不可替代验证，这些失败经验被整理成 memory。"
-      },
-      {
-        "signal": "项目管理信息完整",
-        "read": "阶段、投入、依赖、关键路径、偏差原因和纠偏方式都有，老师可以直接围绕关键路径开会。"
-      }
+      "多处真实 kernel bug 获 maintainer 确认或进入主线，硬进展扎实",
+      "形成稳定的高价值挖掘方法 `sibling‑fix reverse search`，并总结为可复用的 method‑level memory",
+      "提炼出三个高证据等级的 CoT's CoT，对 bug 挖掘的自动化路径有决定性指导意义",
+      "将 LLM 的角色从“发现者”校正为“高 recall 过滤器”，体现认知上的重要纠偏",
+      "项目管理清晰，已识别瓶颈（bug 数量增长慢）并给出针对性纠偏方向",
+      "下周动作细化到具体 bug cursor 和方法论原型，行动力强"
     ],
     "focusDimensions": {
       "valueJudgment": {
-        "read": "非常好：学生能判断方向成立但数据规模还不够，并把价值拆成真实 bug 产出、方法沉淀、工具路径、fuzz 触发可靠性四类；这说明他不是只在做技术动作，而是在判断研究主题是否值得继续投资源。",
-        "evidence": "报告写到“方向是成立的，但规模还不够（缺数据量）”；同时列出买单方为 kernel maintainers、security teams、cloud/infra 公司，并给出任务 1 到任务 4 的金额估值：20 万、10 万、8 万、5 万。",
-        "nextLift": "下一步建议把金额价值从主观估计推进到可解释估计，例如每个 confirmed bug 的平均时间成本、maintainer 接受率、误判减少比例、工具化后每周可新增候选数。"
+        "read": "该同学清晰认识到 kernel bug 挖掘的真实需求来自 maintainer / security team / infra 公司，方向成立，当前主要缺口在于规模不足（bug 数量未达系统化验证阈值），价值判断准确且务实。",
+        "evidence": "已确认 6–7 个 bug，其中多个获 maintainer 正面反馈，方向直接服务于 kernel 安全生态，买单方明确。",
+        "nextLift": "在扩大 bug 发现规模的同时，量化方法对误报率、review 采纳率的影响，进一步向买单方展示可迁移的通用能力价值。"
       },
       "projectManagement": {
-        "read": "非常好：项目状态表达清楚，已经从“个例发现”进入“方法成型”；关键路径、时间投入、依赖、偏差原因和纠偏动作都写出来了，适合老师直接做管理决策。",
-        "evidence": "报告写到本周投入 40 小时、单人推进、依赖 LKML/maintainer review、关键路径是直接决定方法成立、偏差是 bug 数量增长较慢、原因是 verification 成本高、纠偏是提升 candidate generation 效率。",
-        "nextLift": "建议下周把项目管理再推进一层：列一个 15–20 个目标 bug 的漏斗表，包含 candidate 数、PoC 成功数、上报数、maintainer 确认数、进入 tree 数，以及每一层耗时。"
+        "read": "项目处于从‘个例发现’向‘方法成型’的过渡期，进度符合预期，投入成本透明（40 小时/周），关键路径清晰，已识别 bug 数量增长慢的偏差并计划通过提升 candidate generation 效率纠偏，管理意识强。",
+        "evidence": "明确记录了时间投入、依赖（LKML/maintainer）、关键路径（方法成立与否直接决定后续），并给出了纠偏动作。",
+        "nextLift": "为‘方法成型’设定量化里程碑（如周度 confirmed bug 数、helper‑pair 规则库条目数），并在周报中持续跟踪进度偏差。"
       },
       "metacognition": {
-        "read": "特别值得读：本周最重要的元认知是“正确性来自验证链，而不是推理链”，这直接改变了 agent、LLM、静态分析、PoC 在研究流程中的角色分配。",
-        "evidence": "报告写到“agent 多一致 ≠ 正确”“静态分析 ≈ 可验证”被证伪，并明确“真正的 bug oracle 必须是 PoC + runtime，而不是静态判断”。",
-        "nextLift": "建议把这个元认知落成一条硬规则：任何候选 bug 在进入上报前必须经过 PoC/runtime 证据、WAI 排查、UAPI/version 检查、maintainer 邮件规范检查四步。"
+        "read": "认识到在 bug 挖掘中，正确性来自“验证链”（PoC + runtime）而非“推理链”，该认知已直接转化为 agent policy（必须 PoC 验证）和方法论原则，标志着元认知层面的重要升级。",
+        "evidence": "明确提出‘bug oracle 必须是 runtime 验证，而不是 static reasoning’、‘sub‑agent 输出不能直接信’，并将之写入 memory。",
+        "nextLift": "将这一认知固化为自动化 verification workflow 模块，使每一份候选 bug 报告自动附带 PoC evidence，降低人力依赖。"
       }
     },
-    "growthOpportunities": [
-      {
-        "area": "证据可追溯性",
-        "suggestion": "下周周报建议给每个 bug 增加编号表：子系统、问题类型、状态、PoC、patch、maintainer 反馈、链接、下一步阻塞点。当前报告中这些证据被描述了，但原始链接缺失。"
-      },
-      {
-        "area": "方法结构化",
-        "suggestion": "memory 目前仍偏文本经验，建议优先把 helper-pair catalogue 转为规则字段，例如 trigger helper、missing check、expected invariant、PoC template、known WAI exception。"
-      },
-      {
-        "area": "金额价值说明",
-        "suggestion": "金额估值已经有方向感，下一步可以补充计算依据：真实漏洞数量、被接受概率、节省人工 review 时间、可复用到多少子系统、是否能形成内部工具。"
-      },
-      {
-        "area": "自动化验收",
-        "suggestion": "对 Pattern → candidate → LLM filter → 人工验证的流程，建议下周给出一个小规模 A/B 结果，例如同一批 helper-pair 中 pattern-only、LLM-filter 后、最终 PoC confirmed 的数量变化。"
-      }
-    ],
+    "growthOpportunities": "可将 helper‑pair catalogue 尽快从文本经验转化为可执行的 query prototype（如 2–3 个 CodeQL/semgrep 规则），同时为 bug 挖掘设定周度数量目标，以加速规模验证；在 directed fuzz 的 parametric harness 实现后，统一 oracle 标准，形成可复用的 trigger reliability 框架。",
     "teacherAction": {
       "readOriginal": true,
       "meetingQuestions": [
-        "请你把 #1、#2、#3、#12、#16 做成一张状态表：每个 bug 的证据链分别是什么，哪些已经有 maintainer acknowledgement，哪些进入 tree，哪些还在 review？",
-        "sibling-fix reverse search 为什么是最高 EV？请用本周数据说明它相比其他路径提升在哪里：candidate 数、confirmed 数、人工验证耗时分别是多少？",
-        "你说 LLM 最适合作 high-recall filter，而不是 primary detector。那 LLM filter 的输入、输出、拒绝标准和人工复核标准分别是什么？",
-        "helper-pair catalogue 下周要转成规则集合，请你给出 2–3 条最小 query prototype，并说明预期 precision/recall 如何测。",
-        "PoC/runtime 作为 oracle 的流程能否标准化？哪些部分可以模板化，哪些仍必须人工判断？",
-        "金额价值 20 万、10 万、8 万、5 万分别依据什么？如果老师要决定继续投 4 周，最应该看哪三个指标？"
+        "在 helper‑pair catalogue 向规则原型的转化中，当前最大的阻塞点是形式化表达还是验证样本不足？",
+        "如何在 bug 数量暂时未达 15–20 的阶段，设计一个小规模试验来证明方法的泛化性？",
+        "对于 WAI 误判和 phantom bug，是否考虑引入 maintainer 视角的 check list 做 pre‑screen？",
+        "Pattern+LLM+PoC 的组合策略中，LLM filter 的成本主要来自哪里？是否有降低成本的近一步思路？"
       ],
       "nextWeekWatch": [
-        "#16 是否完成 PoC + patch，而不仅是定位候选。",
-        "是否新增 1–2 个 confirmed bug，并说明 confirmed 的证据标准。",
-        "2–3 个 helper-pair 是否真的转成 query prototype，并给出运行结果。",
-        "parametric harness 是否在 1 个 bug 上跑通，是否能提升 trigger reliability。",
-        "是否补充 bug 证据链表和原始链接，便于老师快速判断真实性与可复用性。"
+        "helper‑pair query prototype 是否产出并跑出有效候选",
+        "bug 增长速度是否因 candidate generation 效率提升而改善",
+        "parametric harness 具体在哪个 bug 上实现，oracle 如何定义",
+        "是否对 WAI/phantom bug 形成更系统的判别规则"
       ]
     },
     "studentFeedback": {
-      "summary": "你这周最好的地方是把 kernel bug hunting 从“找个例”推进到了“pattern 生成候选、LLM 筛选、PoC/runtime 验证”的闭环，并且有 maintainer 和 mainline/net tree 这类外部证据支撑。",
+      "summary": "本周你在 kernel bug 挖掘的方法论构建上拿出了非常扎实的进展：不仅推进了多个真实 bug 的确认，更关键的是，你开始把经验抽象为可复用的原则，并清晰地指出了 LLM 在本任务中的正确角色，这是从‘做成一件事’到‘掌握一类事’的重要跃迁。继续保持，你正在建设的是一个有长期价值的方法资产。",
       "whatYouDidWell": [
-        "硬进展扎实：#2 推进到 v6，#12 获得 maintainer 确认并由对方起草 patch，#1/#3 进入 mainline/net tree，这些都是很强的阶段性结果。",
-        "认知增量清楚：你明确区分了 LLM、pattern、PoC 的角色，尤其是“正确性来自验证链，而不是推理链”这一点很关键。",
-        "项目管理意识很好：你写出了当前阶段、关键路径、投入时间、依赖、偏差原因和下周最小可验证动作，老师可以直接据此给你资源和反馈。"
+        "硬进展与认知迭代紧密结合，通过 #2、#12 等案例反哺出 sibling‑fix reverse search 等高 EV 方法，不再是零散的发现",
+        "对 LLM 的定位从 default 用法中跳脱出来，精确地将其定义为高 recall 过滤器而非 primary detector，这说明你对工具链的掌控力在上升",
+        "项目管理上，你清晰地记录了时间投入、关键路径和偏差，并给出了纠偏方向，这种透明度让老师能准确判断你的研究状态"
       ],
       "nextStep": [
-        "把证据链补全：为每个 bug 增加链接、状态、PoC、patch、maintainer 反馈和下一步动作，方便别人快速判断进展质量。",
-        "把 helper-pair catalogue 从文本经验转成规则集合，至少完成 2–3 个 query prototype，并报告运行后的 candidate 数和 confirmed 数。",
-        "把金额估值写得更可解释：说明每一类任务为什么值这个数，以及它对应的是漏洞产出、复用能力、时间节省还是工具资产。"
+        "尽快把 2–3 个 helper‑pair 实例化为可运行的 query 原型（哪怕先把规则写出来也行），让 pattern 这一环落在代码上，这是下周最重要的一个 jump",
+        "为 bug 挖掘设定一个最小周度数量目标（如每周 1–2 个 confirmed），把方法价值从‘定性’推至‘半定量’，这会让你更早感知到方法的瓶颈",
+        "在完成 #16 的过程中，同时记录下 WAI / phantom 的判别信号，逐渐建一个简单的 pre‑screen checklist，减少无效上报"
       ],
-      "suggestedRewrite": "下周周报可以这样写得更清楚：『本周对 3 条 helper-pair 规则实现 query prototype，共扫描 X 个文件，产生 Y 个 candidate，经 LLM filter 剩 Z 个，人工 PoC 验证 confirmed A 个，其中 B 个已上报，C 个获得 maintainer 回复；主要误判类型是……，下周要把……规则加入 WAI 排除条件。』"
+      "suggestedRewrite": "下周周报可以这样写：“本周将 helper‑pair catalogue 中的 X 对转化为 CodeQL 查询，在 XX 子系统上运行得到 N 个候选，经 LLM filter 后剩余 M 个，其中 K 个通过人工 PoC 确认…(附具体 cursor)”，这样能让老师一眼看到你 pipeline 的 throughput 和 precision，而不仅仅是单个 bug 的进展。"
     },
     "evidenceLinks": [
-      {
-        "claim": "存在真实外部确认的硬进展",
-        "evidence": "报告原文写到“#12（io_uring TIMEOUT_ABS）被 maintainer 确认为 bug，并由对方起草 patch”“#1、#3 已进入 mainline / net tree”。",
-        "evidenceLevel": "A",
-        "missing": "缺少 maintainer 邮件链接、patch 链接、commit 或 tree 链接。"
-      },
-      {
-        "claim": "方法论已经形成闭环",
-        "evidence": "报告原文写到“Pattern → candidate → LLM filter → 人工验证”，并说明“Pattern：高 precision；LLM：高 recall；人工 PoC：最终 oracle”。",
-        "evidenceLevel": "A",
-        "missing": "缺少该流程在一批 candidate 上的量化结果。"
-      },
-      {
-        "claim": "CoT 增量明确",
-        "evidence": "报告原文列出三个增量：sibling-fix reverse search 是当前最高 EV 方法、LLM 更适合筛选、bug oracle 必须是 PoC + runtime。",
-        "evidenceLevel": "A",
-        "missing": "缺少不同方法 EV 的计算表。"
-      },
-      {
-        "claim": "CoT’s CoT 有自动化沉淀方向",
-        "evidence": "报告原文写到 pattern library、query system、harness template、verification workflow、LLM filtering module，并给出证据等级 A。",
-        "evidenceLevel": "A",
-        "missing": "缺少已实现模块或 prototype 的运行证据。"
-      },
-      {
-        "claim": "Brainary 映射存在",
-        "evidence": "报告原文映射到 reasoning、cognitive control、tool orchestration、WAI vs real bug 判断，并指向 bug hunting agent、workflow、pattern module。",
-        "evidenceLevel": "B",
-        "missing": "缺少每个能力映射到具体任务步骤和可测指标的表。"
-      },
-      {
-        "claim": "金额价值判断有初步框架",
-        "evidence": "报告原文给出任务 1：20 万，任务 2：10 万，任务 3：8 万，任务 4：5 万，并分别说明理由。",
-        "evidenceLevel": "B",
-        "missing": "缺少金额估值的计算依据、采用场景和可交付件边界。"
-      }
+      "ipv6 flowlabel bug (#2) 推进至 v6，解决 Willem review 关键问题，接近合入",
+      "io_uring TIMEOUT_ABS bug (#12) 被 maintainer 确认，并代拟 patch",
+      "#1、#3 已进入 mainline/net tree，形成阶段性闭环",
+      "已确认 6–7 个 bug，多个达到 PoC+patch+maintainer acknowledgement",
+      "系统整理 method‑level memory：disclosure 流程、WAI 判断、配额计算、helper‑pair catalogue、agent verification",
+      "提炼出必须 PoC 验证、helper‑pair 高价值、sub‑agent 不可信等稳定原则",
+      "明确工具化两条路径及组合策略：Pattern (高 precision) → LLM filter (高 recall) → 人工 PoC (最终 oracle)",
+      "元认知升级：正确性来自验证链而非推理链，已转化为 agent policy"
     ]
   }
 }
