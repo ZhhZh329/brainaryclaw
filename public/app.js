@@ -828,7 +828,7 @@ async function renderBriefing(weekId) {
       <section class="briefing-card-grid">
         ${cards.map((card) => `
           <a class="briefing-card" href="#/briefing-section?week=${encodeURIComponent(week.week)}&section=${encodeURIComponent(card.id)}">
-            <span class="badge">${esc(sectionItems(result, card.id).length)} 条</span>
+            <span class="badge">${esc(briefingSectionCount(result, card.id))} 条</span>
             <strong>${esc(card.title || briefingSectionMeta[card.id]?.title || card.id)}</strong>
             <span class="muted">${esc(hasRetiredLateContent(card.oneLine) ? "" : (card.oneLine || ""))}</span>
           </a>
@@ -865,7 +865,7 @@ async function renderBriefingSection(weekId, sectionId) {
       <section class="hero">
         <div>
           <h1>${esc(meta.title)}</h1>
-          <p class="muted">${esc(week.week)} · ${items.length} 条 · ${esc(result.headline || "")}</p>
+          <p class="muted">${esc(week.week)} · ${esc(briefingSectionCount(result, sectionId))} 条 · ${esc(result.headline || "")}</p>
         </div>
         <div class="toolbar">
           ${briefingWeekControls(week.week, "briefing-section", sectionId)}
@@ -916,9 +916,29 @@ function bindBriefingWeekPicker() {
 
 function sectionItems(result, id) {
   const meta = briefingSectionMeta[id];
-  const value = meta ? result.sections?.[meta.field] : null;
+  const sections = result.sections;
+  let value = meta && !Array.isArray(sections) ? sections?.[meta.field] : null;
+
+  if (Array.isArray(sections)) {
+    const cards = Array.isArray(result.sectionCards) ? result.sectionCards : [];
+    const cardIndex = cards.findIndex((card) => card.id === id);
+    const cardTitle = cards[cardIndex]?.title;
+    const metaIndex = Object.keys(briefingSectionMeta).indexOf(id);
+    value = sections.find((section) => section?.id === id)
+      || sections.find((section) => cardTitle && section?.title === cardTitle)
+      || sections[cardIndex >= 0 ? cardIndex : metaIndex];
+  }
+
   const items = Array.isArray(value) ? value : (value ? [value] : []);
   return items.filter((item) => !hasRetiredLateContent(item));
+}
+
+function briefingSectionCount(result, id) {
+  const card = Array.isArray(result.sectionCards)
+    ? result.sectionCards.find((item) => item.id === id)
+    : null;
+  const count = Number(card?.count);
+  return Number.isFinite(count) && count >= 0 ? count : sectionItems(result, id).length;
 }
 
 function defaultBriefingCards(result) {
@@ -932,14 +952,20 @@ function defaultBriefingCards(result) {
 
 function briefingSectionItem(item) {
   const people = Array.isArray(item.people) ? item.people.join("、") : (item.people || "");
+  const evidence = asArray(item.evidence).filter(Boolean);
   return html`
     <article class="briefing-section-item">
       <div class="briefing-section-head">
         <strong>${esc(item.title || "未命名条目")}</strong>
         ${people ? `<span class="badge">${esc(people)}</span>` : ""}
       </div>
-      <p>${esc(item.whyItMatters || item.evidence || "")}</p>
-      ${item.evidence ? `<p class="muted"><strong>证据：</strong>${esc(item.evidence)}</p>` : ""}
+      <p>${esc(item.whyItMatters || evidence[0] || "")}</p>
+      ${evidence.length ? `
+        <div class="muted">
+          <strong>证据：</strong>
+          <ul>${evidence.map((entry) => `<li>${esc(entry)}</li>`).join("")}</ul>
+        </div>
+      ` : ""}
       ${item.action ? `<p class="muted"><strong>动作：</strong>${esc(item.action)}</p>` : ""}
     </article>
   `;
