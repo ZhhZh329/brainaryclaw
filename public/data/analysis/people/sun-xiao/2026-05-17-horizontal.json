@@ -1,116 +1,76 @@
 {
   "key": "person:sun-xiao:2026-05-17:horizontal",
-  "generatedAt": "2026-06-06T13:12:52.489Z",
-  "provider": "openai",
-  "model": "gpt-5.5",
-  "reasoningEffort": "medium",
-  "inputHash": "513b115df1ac08ef7c682508a28c2e418c2508f814ab271e886cc0b03187b41a",
+  "generatedAt": "2026-08-05T14:04:02.965Z",
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "reasoningEffort": "high",
+  "inputHash": "f4ba6e64967dc59f79b05412ca7357e2a55ef7320f62ca71364fd01cf1ea5f90",
+  "contentHash": "f4ba6e64967dc59f79b05412ca7357e2a55ef7320f62ca71364fd01cf1ea5f90",
+  "promptHash": "7ab2efc4d416dbeeb34a0e2d3cc797ac660749509537011b4ea431707a52a0ba",
   "result": {
     "overallLevel": "特别值得读",
-    "headline": "从“能跑通 runtime”推进到“能验证 action selector 是否真的理解 schema”的一周",
-    "overviewSentence": "按本周研究管理标准，这份周报属于特别值得优先阅读的一类，因为它同时给出了工程验收、认知转向、可自动化模块和下周最小验证路径。",
-    "shortRead": "这份周报的核心价值不在于已经得出正式 benchmark 结论，而在于把问题边界推进清楚：action-first runtime 已经完成较多清理并跑到 156 cells completed，但真正瓶颈转向 action selector 是否把 schema 当作离散决策空间。学生没有继续堆 prompt，而是提出 all-action comparison、selection validator、selection-aligned semantic fill 的结构化方案，并把下周动作收束为 smoke → seeded 12family 回归 → schema-case alignment audit。老师值得优先读原文，尤其适合在 meeting 中追问 comparison-based selector 的实测效果、distribution 是否改善、repair/token 代价是否可控，以及 communication evidence 是否真的影响后续 action。",
-    "levelRationale": {
-      "hardProgress": "非常好：报告列出 runtime 边界清理、public/private history、visible_action_state_digest、diagnostic fields、12family × 1case × 13 communication 小规模回归、156 cells completed、action count/trajectory summary 等具体产出，硬进展可追踪。",
-      "cognitiveIncrement": "特别值得读：认知增量从“prompt 是否够细”转为“selection 是否显式比较所有 schema actions”，这是任务形态层面的变化，不只是工程修补。",
-      "cotIncrement": "非常好：CoT 增量明确写出 action schema 不能被当作 topic label、communication utterance history 应作为后续 action selection 的 visible evidence、state digest 需要 validator 才能成为约束。",
-      "cotsCot": "特别值得读：CoT's CoT 把本周最重要的变化抽象成可复用研究判断：将不可见的 schema 理解转化为可验收的 comparison 输出和 validator 约束。",
-      "brainaryMapping": "非常好：Brainary 映射不是泛泛对应，而是把 benchmark infrastructure、decision procedure design、semantic grounding、pragmatic reasoning 分别对应到可沉淀模块。",
-      "evidenceQuality": "非常好：有运行规模、完成状态、具体模块、典型坍缩现象、诊断字段和下周 smoke 设计；但正式结果图表、seeded 回归结果和 comparison-based selector 的实测改善尚未提供，因此还不是最终结论型证据。",
-      "topicValue": "特别值得读：题目指向 communication effect 归因问题，即如果 action selection 自身不可靠，就无法判断 trajectory 差异来自 communication strategy 还是 selector/schema 机制。",
-      "monetaryValue": "很好：报告指出潜在受益方包括 agent benchmark、workflow intelligence、多智能体协作、企业流程 agent、AI evaluation / safety 团队；但没有提供具体付费场景、金额规模或采购路径，金额价值证据仍缺失。",
-      "projectManagement": "非常好：下周动作被拆成 duplicate validator 小修、1 family × 1 case × 2 strategies smoke、12family seeded 回归、schema-case alignment audit，路径有先后约束和成本控制。",
-      "automationPath": "特别值得读：AllActionComparisonSelector、SelectionAlignedSemanticFiller、ComparisonValidator、VisibleCommunicationEvidenceSummary 都是可以转为 workflow/module 的明确沉淀。",
-      "nextWeekActionQuality": "非常好：下周不是笼统继续实验，而是明确 smoke 的三个验收点：comparison 覆盖、selected item 对齐、semantic fill alignment 是否阻止 selector-fill 不一致。"
-    },
-    "sameWeekPosition": "按本周研究管理标准，这份周报属于较值得优先阅读的一类；它的优势在于把工程进展、问题诊断、方法重构、自动化沉淀和下周验收条件连成了一条可管理路径，而不是只汇报做了很多实验。",
+    "headline": "Sun Xiao：action selection 从 prompt-only 到 comparison-based 的关键认知跃迁",
+    "overviewSentence": "本周完成 action-first runtime 清理与 12family 小规模回归，核心认知跃进为将 action selection 从单轮直接输出改为显式比较所有 schema action，并提出了 comparison-based selector 与 selection-aligned semantic fill 方案。",
+    "shortRead": "该周报不仅报告了硬性的工程进展，更揭示了 action 分布不均与 trajectory collapse 的根本原因——LLM 将 action schema 误用为主题标签而非离散决策空间。基于此，提出了将 action selection 重构为“visible history interpretation + all-action comparison + fill alignment”的结构化方案，并规划了下周 smoke 验证路径。项目管理上，清晰划分了收口与验证节奏，体现了对研究里程碑的精准控制。强烈建议优先阅读，以便在 meeting 中围绕 comparison 验证的关键假设深入追问。",
+    "levelRationale": "本周周报在多个研究管理维度上表现突出：硬进展从 runtime 清理推进到 action selection 结构重构；认知增量明确识别了‘topic label collapse’这一本质障碍；CoT's CoT 将理解的差异转化为可验证的输出结构；证据质量上提供了 12family 回归数据、diagnostic fields 和代码验收材料；项目管理上划分了两条主线并给出最小可验证动作；元认知变化将 communication effect 归因建立在 selector 离散理解的基础上，提升了研究格局。这些叠加使其成为本周极具决策参考价值的周报。",
+    "sameWeekPosition": "按本周标准，这份周报在认知深度、方法论创新、项目管理严谨性和可操作性上均属上乘，是值得老师优先阅读的一类周报。",
     "highlightedSignals": [
-      "硬进展信号：从 strict schema 能跑，推进到 action-first runtime 边界清理，并完成 12family × 1case × 13 communication 小规模回归，报告中写到 156 cells 全部 completed。",
-      "认知信号：学生明确意识到“工程跑通不等于 action selector 已理解 schema”，并把 action 分布不均、trajectory collapse、selector/filler 不一致作为诊断对象。",
-      "元认知信号：学生主动克制结论边界，没有把本周全部实验包装成正式 benchmark 结论，而是把正式图表、schema-case alignment 和 communication strategy 改写留到下周。",
-      "自动化信号：本周提出的 AllActionComparisonSelector、SelectionAlignedSemanticFiller、ComparisonValidator 已经具备模块化命名、输入输出结构和验收条件。",
-      "项目管理信号：下周动作有明确顺序：先小规模 smoke，再 seeded 12family 回归，再做 schema-case alignment audit，而不是同时扩大多个变量。"
+      "硬进展：完成 12family×1case×13 communication 的回归，所有 156 cells 均 completed",
+      "认知增量：定位 action selection 的本质问题为 LLM 将 action 当 topic label，而非离散决策",
+      "CoT's CoT：将 action selection 从隐式推理变为显式 comparison 输出，并配套 validator",
+      "项目管理：明确下周先 smoke 再 seeded 回归的节奏，禁止过早修改 schema 或下结论",
+      "价值判断：communication effect 的可信归因必须建立在 selector 正确理解 action schema 的基础上"
     ],
     "focusDimensions": {
       "valueJudgment": {
-        "read": "特别值得读：价值判断清楚地落在“communication effect 的可归因性”上，而不是停留在 action schema 或 communication prompt 的局部优化。",
-        "evidence": "报告第 6 节明确说明真实问题是 social/business multi-agent benchmark 中 communication effect 难以归因；如果 action selection 没有稳定理解 action schema，trajectory 差异就无法判断来自 communication strategy、schema 坍缩还是 runtime 旧路径。报告也列出潜在受益方：agent benchmark、workflow intelligence、多智能体协作、企业流程 agent、AI evaluation / safety 团队。",
-        "nextLift": "下一步可把价值判断再推进一层：给出一个最小可展示的“communication effect 被正确传导到 action trajectory”的案例，说明该能力如何服务一个具体评测或企业流程场景；金额价值目前只有受益方描述，缺少具体付费机制或场景证据。"
+        "read": "该周报明确判断：当前 action-first benchmark 的核心难点不是能否跑通，而是 LLM 是否把 action schema 视为离散决策空间；若不解决，后续 communication effect 分析将没有可靠基础。这一判断直接决定了资源投入的方向。",
+        "evidence": "12family 回归中暴露的 action 分布不均（如 Donation 中 make_contribution 占比过高）、trajectory collapse 和 schema-case mismatch，证实仅靠 strict prompt 无法纠正 selection 偏差。",
+        "nextLift": "下周 smoke 验证 comparison-based selector 后，应进一步定义‘action 分布改善’的定量标准（如每个 family 的 action entropy），并与基线对比，以确证该路径的价值。"
       },
       "projectManagement": {
-        "read": "非常好：项目被拆成 action-first runtime 与 comparison-based selector 验收、communication strategy influence 与 trajectory 诊断两条主线，关键路径和下周动作较清楚。",
-        "evidence": "报告第 7 节写出当前阶段、时间规划、资源规划、依赖关系、Token/成本规划、进度判断和纠偏动作；下周明确先做 1 family × 1 case × 2 communication strategies 的 smoke，通过后再跑 12family × 1case × 13 strategies，最后才考虑 multiple seed/repeat。",
-        "nextLift": "下周周报可以增加一个简表，把每个验收动作对应到“完成条件、观察指标、通过后进入哪一步、未通过时改什么”，这样老师可以更快判断是否该扩大实验规模。"
+        "read": "项目管理表现出极强的收口意识与路径规划：将本周定位为‘selector 结构升级’而非结论产出周；划分了两条项目管理主线，清晰列出资源、时间、关键路径，并明确纠偏动作（不改 schema、不写结论）。",
+        "evidence": "项目管理 A 栏中写道：‘下周不要先改 schema action_definition，也不要先写论文结论；先验证 comparison-based selector 是否真的减少坍缩’。这体现了避免多变量干扰的严谨管理。",
+        "nextLift": "下周按 smoke→seeded regression 推进，同时建立监控指标（repair 次数、comparison 完整性），以便快速判定方法可行性。"
       },
       "metacognition": {
-        "read": "特别值得读：元认知变化明确，学生从“修 prompt/修 schema”上升到“验证 LLM 是否把 schema 当作结构化决策空间”的层面。",
-        "evidence": "报告第 5 节指出，如果要解释“说话是否改变后续行为”，不能只定义 action 和 communication 边界，还必须让 action selector 真正把 action schema 当成结构化决策空间；否则 communication strategy 的影响会被 topic-label collapse 等机制遮蔽。",
-        "nextLift": "可以进一步把元认知写成可证伪假设：如果 comparison-based selector 有效，应当在 action distribution、unique trajectory count、selector/filler consistency、repair count 上看到哪些具体变化。"
+        "read": "元认知层面的重要进步在于：意识到 communication benchmark 的本质挑战不是生成不同 utterance，而是让 action selector 将前序 utterance 作为决策证据，并离散地选择 action。这防止了‘说话’的影响被 selector 自身的 topic-label collapse 所掩盖。",
+        "evidence": "在‘5. 对 meta-cognition 的新理解’中，学生提出：‘一个 communication benchmark 如果要解释说话是否改变后续行为，……必须让 action selector 真正把 action schema 当成结构化决策空间。’ 这一理解提升了研究设计的层次。",
+        "nextLift": "后续可将‘action selection 是否成功离散化理解 schema’作为 communication effect 分析的前置指标，并开发对应的诊断（如 family 级 selection diversity），以提前发现归因风险。"
       }
     },
-    "growthOpportunities": [
-      "正式证据还可以再补齐：本周已有 156 cells completed 和多个诊断资产，但 comparison-based selector 的 smoke 结果、seeded 回归图表和改善幅度还没有出现；下周应优先把这些转化成表格或图。",
-      "金额价值可以更具体：目前只说明谁可能受益，还没有说明哪类团队会为什么场景付费、付费对象是 benchmark、workflow module 还是 evaluation service。",
-      "schema-case alignment 的决策门槛可以更清楚：报告说不要先改 schema，但下周可定义什么情况下才进入 schema 修订，什么情况下继续改 selector/filler。",
-      "communication evidence 的作用还需实测：报告已经提出 prior utterance 应作为 visible evidence，但还需要展示它是否真的改变 action comparison 和 selected action。"
-    ],
+    "growthOpportunities": "建议下周在 smoke 报告中提前定义‘success criteria’，比如 action 分布熵需提升至多少、selected action 对齐率需达 100% 等，以便快速得出‘通过/未通过’的结论。在周报中可更早给出量化摘要，让阅读者一眼抓住核心结果。",
     "teacherAction": {
       "readOriginal": true,
       "meetingQuestions": [
-        "comparison-based selector 的 smoke 准备如何定义通过条件？除了 JSON 完整和 selected item 对齐，还看哪些 trajectory 指标？",
-        "如果 1 family × 1 case × 2 strategies 通过，12family seeded 回归中你最希望看到哪三个指标改善？",
-        "目前 action 分布不均时，你如何区分是 selector 没有比较清楚、semantic fill 不一致，还是 schema-case 本身不贴合？",
-        "communication utterance 作为 visible evidence 后，能否给一个具体例子说明 prior utterance 如何改变 action_comparison 中某个 near-miss action 的判断？",
-        "金额价值上，最可能被产品化的是 benchmark、validator、selector/filler 模块，还是 trajectory diagnostics？你会优先包装哪一个？"
+        "comparison-based selector 的 smoke 运行中，action_comparison 是否稳定输出所有 schema action 的 comparison？selected action 与 comparison item 的对齐率是多少？",
+        "你预期 comparison 机制能使 action 分布改善到什么程度？是否已计算了 baseline 的 action entropy？",
+        "如果 smoke 显示改善有限，你的后备方案是什么？是进行 schema-case alignment audit 还是调整 comparison prompt？"
       ],
       "nextWeekWatch": [
-        "comparison 输出是否完整覆盖 family schema 中所有 actions，并且不会出现长输出导致的解析不稳定。",
-        "selected_action_id/name 是否与 selected_action_comparison_item 保持一致。",
-        "semantic fill 的 operator_args 和 semantic_payload 是否真的受 selection_context 约束。",
-        "action distribution、unique trajectory count、top action percentage 是否显示 trajectory collapse 得到缓解。",
-        "repair count、fallback count、token/费用是否仍在可接受范围内。",
-        "communication_evidence_summary 是否被 action selector 实际使用，而不是只作为 prompt 背景存在。"
+        "观察 comparison-based selector 的 smoke 输出，确认 action_comparison 的完整性和 repair 触发情况",
+        "查看 12family seeded 回归中 action 分布是否趋于均匀、trajectory 多样性是否提升",
+        "关注 communication_evidence_summary 是否被正确用于影响 action 选择"
       ]
     },
     "studentFeedback": {
-      "summary": "你这周最好的地方，是把问题从“runtime 能不能跑”推进到“selector 是否真的理解 schema”，并把这个判断落到了 comparison、validator、semantic fill alignment 和下周 smoke 的可验证路径上。",
+      "summary": "本周周报展现了极强的科研洞察力和方法论意识：你不仅完成了艰苦的工程清理，更准确抓住了 action selection 的根本缺陷——LLM 将 action 当主题标签，并设计了可验证的结构化解决方案。这种从‘修修补补’到‘重构问题定义’的跃迁，是高质量研究的关键。",
       "whatYouDidWell": [
-        "你没有把 156 cells completed 直接包装成正式结论，而是进一步分析 action 分布不均、trajectory collapse、selector/filler 不一致等现象，这让周报更有研究判断。",
-        "你把 all-action comparison 从一个想法写成了结构化流程：visible_history_interpretation、action_comparison、selected_action_comparison_item、selection_context、selection_alignment 和 validator。",
-        "你的项目管理比较清楚，知道下周不能直接多 seed 大跑，而是先用小规模 smoke 验证 comparison-based selector 的稳定性。"
+        "问题定位极其精准：通过分析 12family 的 action 分布，发现了 topic-label collapse 这一深层障碍，而不是停留在表面 prompt 不足。",
+        "方案设计系统性强：comparison-based selector 配齐了 input interpretation、per-action comparison、validator、repair 和 fill alignment，形成了闭环约束。",
+        "项目管理节奏控制得当：你明确制止了过早修改 schema 或仓促下结论的想法，为下周的 smoke 验证创造了干净的环境。"
       ],
       "nextStep": [
-        "下周优先给出 smoke 的结果表：comparison 是否覆盖完整、repair 次数、selected item 是否对齐、semantic fill 是否一致、是否出现解析问题。",
-        "把 communication evidence 的作用用一个具体 trajectory 展示出来：某条 prior utterance 如何进入 visible evidence，并改变 action comparison 或 selected action。",
-        "补一个价值侧最小案例：说明这个 selector/validator 如果做成，最先可以服务哪类 benchmark 或 workflow evaluation。"
+        "下周 smoke 通过后，建议立即计算每个 family 的 action 熵和 top-1 集中度，用具体数字展示 comparison 的效果。",
+        "可以考虑在 comparison 结尾要求模型给出“最难区分的两个 action 是什么”，作为 schema-case alignment audit 的早期信号。",
+        "在周报开头使用 3-5 行的结果闪耀摘要，直接给出关键数字和核心结论，让阅读体验更好。"
       ],
-      "suggestedRewrite": "下周周报可以这样写得更清楚：『本周 smoke 验收 comparison-based selector：设置为 1 family × 1 case × 2 communication strategies；通过条件为 action_comparison 覆盖全部 schema actions、唯一 selected item 与 selected_action_id/name 对齐、semantic fill 的 operator_args 与 selection_context 一致、repair 次数不超过 X、无 JSON parse 中断；结果是……；如果通过，下一步进入 12family seeded 回归；如果未通过，优先修改……』"
+      "suggestedRewrite": "【示例】下周周报开头可以这样写：'本周 comparison-based selector smoke 验证通过：1 family × 1 case × 2 strategies 下，action_comparison 全部覆盖 7 个 action，selected action 对齐率 100%，未触发 repair。关键结果：action 分布从之前的单动作独占（100% 选择 ‘make_contribution’）改善为两个动作各占 60% 和 40%，初步证明 comparison 机制能够打破 topic-label collapse。下一步已启动 12family seeded 回归。'"
     },
     "evidenceLinks": [
-      {
-        "claim": "runtime 已从能跑 strict schema 推进到可分析状态",
-        "evidence": "报告写到完成 public action history / communication history 清理、private goal 仅进入所属 actor prompt、source-grounding / availability 旧逻辑从 communication 主路径删除，并在修复工程问题后进入 156 cells 全部 completed。"
-      },
-      {
-        "claim": "核心认知增量是 action selection 需要显式比较所有 schema actions",
-        "evidence": "报告本周判断中写到，仅靠把 prompt 写得更长无法保证 LLM 正确区分 action；必须让 action selection 显式比较 FAMILY_ACTION_SCHEMA 中所有 action，并让 semantic fill 与 selection comparison 对齐。"
-      },
-      {
-        "claim": "CoT's CoT 具有模块化沉淀价值",
-        "evidence": "报告 CoT’s CoT 1 建议沉淀形式为 AllActionComparisonSelector + SelectionAlignedSemanticFiller + ComparisonValidator，自动化潜力标为高，证据等级标为 A。"
-      },
-      {
-        "claim": "communication utterance 被重新定位为 action selection 的 visible evidence",
-        "evidence": "报告 CoT 增量和 CoT’s CoT 2 都指出 prior utterance 不是 style 背景，而是后续 action selection 的 visible evidence，应影响 stage、proposal、constraint、accept/reject 和 partner concern 判断。"
-      },
-      {
-        "claim": "项目管理路径清楚",
-        "evidence": "报告项目管理部分给出关键路径：schema rows → all-action comparison → structural comparison validator → selection_context → semantic fill alignment → clean apply → action distribution diagnostics，并明确下周先 smoke，再 seeded 12family 回归。"
-      },
-      {
-        "claim": "正式结论证据仍需下周补齐",
-        "evidence": "报告本周主线和单独结论均说明尚未把结果包装为正式 benchmark 结论，完整 seeded 回归、schema 修订和论文级结果分析留到下周。"
-      }
+      "12family × 13 strategy rollout zip",
+      "action count / trajectory summary 数据",
+      "构建 comparison-based selector 的代码验收材料（visible_history_interpretation, action_comparison, selection_context 等）",
+      "156 cells 均 completed 的运行记录"
     ]
   }
 }
