@@ -1,0 +1,306 @@
+{
+  "key": "week:2026-08-09:briefing",
+  "generatedAt": "2026-08-10T02:02:47.091Z",
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "reasoningEffort": "high",
+  "inputHash": "2081388da747f93be48d50574b276d9c3d21cfe638ac3a6081c4481183837e0b",
+  "contentHash": "2081388da747f93be48d50574b276d9c3d21cfe638ac3a6081c4481183837e0b",
+  "promptHash": "fd044858c100ec630703bd42902fd3fddf90c8cba2723bb99c9bbfecea4fd4c3",
+  "result": {
+    "headline": "证据—推理—行动闭环缺失成Agent核心瓶颈，本周多项工作推进认知控制与记忆分层",
+    "executiveSummary": [
+      "郭曜齐的skill distill主线首次产出对照数字：按需检索注入带来+8%解决率，且增益主要在读取侧而非内容侧，验证07-12预测。",
+      "陈华宝通过12条VQA路径验证critical-edge传导规则，明确证据等级需与推理角色绑定，低证据关键边应触发拒答。",
+      "梁瑞超实现元元认知层，用客观结果反调元认知参数，3轮迭代提升42.7%，并完成左脑解释器神经机制调研与稽核者对接。",
+      "侯昕萌完成CT系统五维仪表化并发现adaptive模式agency状态不可重构的致命缺口，修复后实现零成本重构。",
+      "黄勋在构造语言红队测试中发现LLM形态学退化固有比例18%，证明扩词表无效，需建立弹性容错。",
+      "多个Agent系统（命令行agent、Lean证明agent）揭示通用失败模式：成功条件—证据—置信度失配，缺乏反证触发的认知更新。",
+      "胡连雨与王文渊等推进memory分层，明确episodic memory作为STM到LTM中间层的结构过渡功能。",
+      "其他方向：安卓鸿蒙机制差异三分法；多Agent欺骗式权限委托攻击；渗透技能知识地图等均有硬进展。"
+    ],
+    "sections": {
+      "keyProgress": [
+        {
+          "title": "技能蒸馏管线首次产出对照数字：按需检索注入带来+8%解决率",
+          "people": "郭曜齐",
+          "whyItMatters": "明确了技能库的增益主要来自触发/检索机制而非内容打磨，直接改变资源投资优先级。",
+          "evidence": "随机50个SWE-bench Pro题目对照，注入组比不注入组高8个百分点，归因显示增益主要来自按需检索模块。",
+          "action": "扩大评测规模（50→更大子集），单独评测检索命中率，并启动技能采集环境设计。"
+        },
+        {
+          "title": "12条VQA路径验证critical-edge传导规则：低证据关键边降置信/拒答",
+          "people": "陈华宝",
+          "whyItMatters": "将证据可信度从源等级升级到路径角色校准，否则Brainary memory可信度排序无法对接推理。",
+          "evidence": "12条手工路径验证，区分旁支warning与关键边拒答，初步形成path_confidence_v2规则。",
+          "action": "审阅critical-edge标注，补证据完善KGR-30子集，阈值待专家审阅。"
+        },
+        {
+          "title": "元元认知层用客观结果反调元认知参数，3轮迭代提升42.7%",
+          "people": "梁瑞超",
+          "whyItMatters": "证明嵌套元认知可作为独立稽核者，锚在客观结果而非自评，是‘我’架构的关键组件。",
+          "evidence": "3轮迭代在边际原理优化上再提升42.7%，信号只含动作次数/Δ准确率/Δ成本。",
+          "action": "给出收敛曲线，并在第二个benchmark复现，验证跨任务迁移性。"
+        },
+        {
+          "title": "CT system研究级仪表化，修复agency状态不可重构致命缺口",
+          "people": "侯昕萌",
+          "whyItMatters": "确保adaptive实验臂数据可分析，为实验有效性奠基。",
+          "evidence": "agency_transitions缺stage/step，无周期性采样；现已补列，并利用affect_samples高频流零成本载入agency_mode。",
+          "action": "完成数据导出，推进HLM分析。"
+        },
+        {
+          "title": "受限语言输出中LLM自创伪token占比18%，扩词表无效，需弹性解码",
+          "people": "黄勋",
+          "whyItMatters": "首次量化受限条件下LLM的词汇幻觉，证明其是系统常量，防御与评测需建立宽容区间。",
+          "evidence": "50样本全量测试，多次运行OOV率18%，ASR中位数6%，扩词表仅提升1.5%覆盖。",
+          "action": "引入模糊匹配容错映射，跨模型对比基准测试。"
+        }
+      ],
+      "teacherUnknown": [
+        {
+          "title": "证据可信度必须和推理角色绑定，不能脱离路径结构单独打分",
+          "people": "陈华宝",
+          "whyItMatters": "打破‘证据等级越高越好’的惯性，揭示了同等级证据因在推理路径中的关键性不同而应有不同处理。",
+          "evidence": "12条VQA路径对照，低证据关键边导致拒答，而旁支边仅warning。证据等级B。",
+          "action": "沉淀为evaluation protocol + agent module + memory schema。"
+        },
+        {
+          "title": "经验→资产蒸馏管线的增益主要来自读取侧（按需检索），投资优先级应为‘检索/触发机制 > 内容打磨’",
+          "people": "郭曜齐",
+          "whyItMatters": "颠覆蒸馏工作的直觉重心，将资源导向检索命中率优化，而非一昧扩充内容。",
+          "evidence": "50题对照实验，按需注入增益远大于全量注入；07-12预测被证实。证据等级A（对照实验）。",
+          "action": "转为skill库评估标准：首要指标为检索命中率；启动技能采集环境搭建。"
+        },
+        {
+          "title": "episodic memory不是多一层存储，而是为系统补上‘事件变化—内容抽象—世界知识沉淀’的中间过渡层",
+          "people": "胡连雨",
+          "whyItMatters": "明确了记忆分层中的功能缺口，避免STM直接上升为LTM的困难。",
+          "evidence": "框架设计讨论形成判断，待验证。证据等级B。",
+          "action": "完成初版结构定义，并设计验证方式。"
+        },
+        {
+          "title": "元元认知 = 嵌套元认知的落地，本质是‘锚在客观结果上的稽核者’（不是自评）",
+          "people": "梁瑞超",
+          "whyItMatters": "为Brainary的‘我’架构提供了独立的稽核层，且只依赖客观量，避免叙事污染。",
+          "evidence": "3轮迭代+42.7%，并完成神经机制调研对接。证据等级A。",
+          "action": "沉淀为agent policy + cognitive control module。"
+        },
+        {
+          "title": "Validation本质上是一个Evidence Accumulation System，而非Boolean Rule System",
+          "people": "吴佳慧",
+          "whyItMatters": "数据验证从‘通过/失败’转为多证据置信度评估，可应对开放世界数据。",
+          "evidence": "系统梳理形成taxonomy，尚缺量化。证据等级B。",
+          "action": "沉淀为validation framework + confidence engine。"
+        },
+        {
+          "title": "反预期结果应优先触发方法链路诊断，而不是形成数据层面的结论",
+          "people": "赵璇玥",
+          "whyItMatters": "避免在小样本容量上错误归因，形成正确的失效排查流程。",
+          "evidence": "60-500条PCA建库对照实验，准确率未随数据量提升，定位到PCA均值重建和残差注入问题。证据等级A。",
+          "action": "转为failure checklist和评估协议。"
+        }
+      ],
+      "risks": [
+        {
+          "title": "关键实验样本量小，置信区间宽",
+          "people": "郭曜齐、陈华宝等",
+          "whyItMatters": "+8%仅基于50题、12条路径等小样本，数字易波动，过早结论可能导致错误投入。",
+          "evidence": "郭曜齐明确卡点；陈华宝仅12条路径。",
+          "action": "立即启动扩样，给出置信区间。"
+        },
+        {
+          "title": "记忆分层设计缺乏独立消融验证",
+          "people": "胡连雨、王文渊",
+          "whyItMatters": "episodic memory价值若无法通过消融证明，可能沦为冗余层。",
+          "evidence": "目前仅框架设计，无实验；王文渊进行了初步benchmark但未系统消融。",
+          "action": "设置严格消融实验，测量信息筛选、遗忘、抽象对下游任务的影响。"
+        },
+        {
+          "title": "Agent元认知闭环未闭合，反证不触发认知更新",
+          "people": "张浩楠、孙玉强",
+          "whyItMatters": "命令行agent和Lean证明agent中普遍存在‘成功条件被替换、证据忽略、过早完成’的失败模式。",
+          "evidence": "张浩楠的失败轨迹分析；孙玉强的可观测性盲区案例。",
+          "action": "实现证据驱动终止门和反证触发重规划机制。"
+        },
+        {
+          "title": "动态语言静态分析存在硬天花板，LLM自由生成引入不确定性",
+          "people": "周子阳",
+          "whyItMatters": "维护IR lift中77%的属性调用无法静态定型，若用LLM猜测会污染记忆层，导致幽灵变更。",
+          "evidence": "实际代码测量，AST仅能定型23%；LLM相似度bug导致I/O副作用混淆。",
+          "action": "使用测试执行获取运行时真相，禁止lift环节使用LLM。"
+        },
+        {
+          "title": "跨平台权限迁移中权限真伪验证不足",
+          "people": "孙曼祺",
+          "whyItMatters": "Kimi生成的代码可能声称成功但实际设备状态未变化，如Clipper写入成功但读取为空。",
+          "evidence": "DoubleLocker恢复失败被重新加密掩盖，Clipper读取长度为0。",
+          "action": "强制要求独立设备证据重算，禁用日志自评。"
+        }
+      ],
+      "followUps": [
+        {
+          "title": "扩大skill注入实验规模并评测检索命中率",
+          "people": "郭曜齐",
+          "whyItMatters": "验证+8%的稳定性，将‘效果不错’转化为硬数字。",
+          "evidence": "当前仅50题。",
+          "action": "下周完成"
+        },
+        {
+          "title": "审阅并补足KGR-30中critical-edge标注",
+          "people": "陈华宝",
+          "whyItMatters": "为后续benchmark建立正确的基线。",
+          "evidence": "当前标注未专家审阅。",
+          "action": "下周完成"
+        },
+        {
+          "title": "实现命令行agent的证据驱动终止门",
+          "people": "张浩楠",
+          "whyItMatters": "直接验证元认知整改对降低假完成率的效果。",
+          "evidence": "已定位失败链。",
+          "action": "下周小规模A/B测试"
+        },
+        {
+          "title": "完成C异步漏洞检测中recover/resolve的召回精度评估",
+          "people": "梁瑞超",
+          "whyItMatters": "判断关系恢复是否达到理论预期，决定下一步。",
+          "evidence": "已有初步代码实现。",
+          "action": "下周给出数字"
+        },
+        {
+          "title": "开展跨平台恶意行为迁移的正式交付门禁",
+          "people": "孙曼祺",
+          "whyItMatters": "将迁移分类、权限审查、独立验证固化成自动化流水线。",
+          "evidence": "已完成首批四家族审查及方法升级。",
+          "action": "下周完成"
+        }
+      ],
+      "assets": [
+        {
+          "title": "按需检索注入模块（skill distill）",
+          "people": "郭曜齐",
+          "whyItMatters": "实现了任务特征到策略库的检索与分层注入，是主线的核心引擎。",
+          "evidence": "50题对照实验，增益主要来自该模块。",
+          "action": "沉淀为skill injection module"
+        },
+        {
+          "title": "KGR-10评测接口草案",
+          "people": "陈华宝",
+          "whyItMatters": "定义了包含evidence_path、critical_edges、abstention_required等字段的最小JSON，使评测可解释。",
+          "evidence": "10个样本手工跑通。",
+          "action": "扩展为KGR-30并补字段"
+        },
+        {
+          "title": "元元认知算法与左脑解释器神经机制调研报告",
+          "people": "梁瑞超",
+          "whyItMatters": "为认知架构提供了可运行的嵌套元认知以及神经科学依据。",
+          "evidence": "3轮迭代+42.7%，文献调研形成回路图。",
+          "action": "沉淀为module + policy"
+        },
+        {
+          "title": "五维数据粒度新表与TA实时监控台",
+          "people": "侯昕萌",
+          "whyItMatters": "将数据记录细化到Student×Lab×Session×Stage×Step，并建监控台，使过程可分析。",
+          "evidence": "已实现并修复agency状态缺口。",
+          "action": "用于论文分析"
+        },
+        {
+          "title": "权限生命周期模型PEDR与依赖图schema",
+          "people": "黄一坦",
+          "whyItMatters": "将权限判断从静态缓存变为依赖感知的动态再巩固，可迁移到Brainary的记忆管理。",
+          "evidence": "设计了五类失效场景和算法草图。",
+          "action": "在JHipster中静抽实现候选边"
+        }
+      ],
+      "peopleToRead": [
+        {
+          "title": "郭曜齐",
+          "people": "郭曜齐",
+          "whyItMatters": "skill distill主线首个对照数字和读取侧优先结论，直接改变团队投资思路。",
+          "evidence": "周报含完整实验设计和归因。",
+          "action": "重点评审实验及下一步规划"
+        },
+        {
+          "title": "陈华宝",
+          "people": "陈华宝",
+          "whyItMatters": "critical-edge规则是Brainary推理校准的关键缺口，且已跑出手工验证。",
+          "evidence": "周报包含12条路径对比和规则草案。",
+          "action": "评审规则并推进自动化"
+        },
+        {
+          "title": "梁瑞超",
+          "people": "梁瑞超",
+          "whyItMatters": "元元认知落地和左脑解释器调研，为‘我’架构提供了具体实现路径和理论基础。",
+          "evidence": "含算法、数据、文献映射。",
+          "action": "讨论如何嵌入Brainary"
+        },
+        {
+          "title": "黄勋",
+          "people": "黄勋",
+          "whyItMatters": "形态学幻觉量化结论对安全对齐和资源风控有直接启示。",
+          "evidence": "全量测试数据支撑。",
+          "action": "跟进解码端改进"
+        },
+        {
+          "title": "侯昕萌",
+          "people": "侯昕萌",
+          "whyItMatters": "agency状态缺口发现确保了实验数据有效性，否则adaptive臂结论不可信。",
+          "evidence": "周报中有详细修复记录。",
+          "action": "跟进数据导出和分析"
+        },
+        {
+          "title": "赵璇玥",
+          "people": "赵璇玥",
+          "whyItMatters": "反预期诊断原则和方法链路排查案例具有通用方法论价值。",
+          "evidence": "60-500条建库对照实验。",
+          "action": "整理成failure checklist"
+        }
+      ]
+    },
+    "sectionCards": [
+      {
+        "id": "key-progress",
+        "title": "关键进展",
+        "oneLine": "5项硬进展涵盖对照实验、新模块、架构突破，特别是skill注入数字和元元认知落地。",
+        "count": 5
+      },
+      {
+        "id": "teacher-unknown",
+        "title": "老师未知之事",
+        "oneLine": "本周6个老师原本不知道的认知，涉及证据角色绑定、读取侧投资、记忆过渡层等。",
+        "count": 6
+      },
+      {
+        "id": "risks",
+        "title": "风险",
+        "oneLine": "样本量小、记忆分层未验证、元认知未闭环、静态分析天花板等5大风险。",
+        "count": 5
+      },
+      {
+        "id": "follow-ups",
+        "title": "下一步行动",
+        "oneLine": "5项关键跟进动作，包括扩样、审阅标注、实现终止门、评估召回等。",
+        "count": 5
+      },
+      {
+        "id": "assets",
+        "title": "新增资产",
+        "oneLine": "5项新模块/方法/数据/benchmark，如检索注入模块、PEDR、五维数据表等。",
+        "count": 5
+      },
+      {
+        "id": "people-to-read",
+        "title": "值得细读的人",
+        "oneLine": "推荐重点阅读郭曜齐、陈华宝、梁瑞超、黄勋、侯昕萌、赵璇玥的周报。",
+        "count": 6
+      }
+    ],
+    "closingAdvice": [
+      "立即将资源向‘检索/触发机制’与‘证据角色绑定’倾斜，这两个点的工程杠杆最高，且已有初步证据。",
+      "将‘证据—置信度—行动’闭环缺失定为多项目共同瓶颈，尽快建立可复用的认知控制模块（如证据驱动终止门、反证触发重规划），避免不同项目各自重复摸索。",
+      "要求memory分层工作（episodic memory）在下周产出消融实验设计，证明独立价值；否则暂缓实施。",
+      "对关键对照实验（如+8%解决率）立即扩样至200题以上，给出置信区间，防止假阳性误导后续投入。",
+      "在涉及确定性要求的系统（如IR lift、记忆写入）中，明确禁止LLM自由生成，优先使用运行时信息源或确定性算法。"
+    ]
+  }
+}
