@@ -1,0 +1,56 @@
+{
+  "key": "person:shen-qiwei:2026-08-16:weekly-score",
+  "generatedAt": "2026-08-14T16:06:27.829Z",
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "reasoningEffort": "high",
+  "inputHash": "94bbe1c03d8b322519bde2bd08b6540bef79d951f9c16394ad215dded5434aed",
+  "contentHash": "94bbe1c03d8b322519bde2bd08b6540bef79d951f9c16394ad215dded5434aed",
+  "promptHash": "dd5205e0146f7bfc74cbfb84ed9fc44caa48090dca3cd84f010cf05b11b06e18",
+  "result": {
+    "hardProgress": {
+      "score": 18,
+      "reason": "任务1产出5份结构化数据，178行成绩、12张榜单、62条链接61条可达；复核发现70处修正与30行遗漏，4处结论翻转；发现自洽伪造表并拦截。任务2定位5个真实缺陷，修复3个并补回first_contact.py，根因定位到坐标格式静默错配。硬进展非常扎实，但任务2的probe结论未跑回，真机41步用例未跑通，部分关键结果仍待验证。",
+      "missingEvidence": "缺少probe实测结果，因此坐标反转仍为代码级推断；任务2真机执行与41步用例成功率尚无实证；JS渲染榜单与图片榜单OCR尚未完全抓取，AutoCodeBench有6行缺模型名。"
+    },
+    "cognitiveIncrement": {
+      "score": 14,
+      "reason": "五条CoT增量非常清晰且相互独立：基准分数是带版本和口径的四元组、自洽从质量信号降级为风险信号、scaffold被低估、单轮强≠多轮强、具身失败模式不同。每条都有指向性证据，尤其scaffold权重与自洽幻觉的判断具备跨任务解释力。",
+      "missingEvidence": "部分结论基于特定基准集，可能存在样本选择偏差；scaffold权重差异来自公开数据，缺少独立重现；具身失败模式仅凭单一GUI案例，尚未形成类别性证据。"
+    },
+    "cot2Depth": {
+      "score": 14,
+      "reason": "两个CoT's CoT都触及机制层：验证器必须要求源可重放而非一致性，以及宽容解析把格式错配从显式失败变成静默偏移。均包含为什么未被自动化科研吸收、为什么没变成workflow、自动化潜力与沉淀形式，深度很高。证据等级A/B标注明确。",
+      "missingEvidence": "CoT's CoT 2的证据等级为B，核心因果链“GPT-5.5实际回x在前”尚未经probe实测确认；CoT's CoT 1虽为A级，但源锚定自动验证器尚未实现，仍停留在人工复核阶段。"
+    },
+    "brainaryMapping": {
+      "score": 9,
+      "reason": "映射到calibration、memory、risk modeling、benchmark/evaluation四项能力，并提出grounded-fact层与能力探针矩阵，具有可操作性。同时指出系统层校准空档，与Brainary定位契合。",
+      "missingEvidence": "尚未给出与Brainary现有数据结构的接口定义或冲突分析；能力探针矩阵目前只有设计方案，没有实际存储或查询实现。"
+    },
+    "monetaryValue": {
+      "score": 8,
+      "reason": "任务1一次性价值8-9万元、年化25-35万元，任务2约10万元/年条件价值。计算过程有明确假设和参考依据，且任务1有实测修正数据支撑，任务2有判官层差异化。但均为估算，且任务2价值依赖未验证前提。",
+      "missingEvidence": "任务1人日成本、返工成本均为推断；任务2测试执行时长、回归频率、缺陷拦截数量均无历史数据，条件价值尚未兑现；年化推算仅凭有限更新频率，缺乏统计支持。"
+    },
+    "projectManagement": {
+      "score": 14,
+      "reason": "两个项目都给出当前阶段、原计划、实际、投入时间、里程碑、所需资源、依赖关系、关键路径、token消耗、偏差原因与纠偏措施。尤其对偏差根因识别深刻，且纠正措施机制化。项目管理成熟度高。",
+      "missingEvidence": "本周实际投入时间、token消耗均为推断而非计费数据；项目2关键路径判断“否”可能未与团队共识；延期虽反思充分，但实际目标未达成。"
+    },
+    "nextAction": {
+      "score": 10,
+      "reason": "动作非常具体且二值可验：任务1定死schema并回填178行，写source-anchored校验器对随机10个数字重放，10抽10中通过；任务2先跑first_contact.py探针，五分钟定性，再跑最短用例，验收前5步红圈落点。每个动作有明确验收标准和截止时间。",
+      "missingEvidence": "抽检10个数字的样本量较小，可能不足以覆盖所有错误类型；缺少若探针显示“无定位能力”或“不按格式回话”时的备选方案。"
+    },
+    "evidenceQuality": {
+      "score": 4,
+      "reason": "证据等级自评为A/B且与内容匹配，提供了量化后果（70修正、30遗漏、31字符占位符、40次退格时间等）和多个可追溯来源。但部分证据为内部推断，原始产出物未附链接，可复现性不足。",
+      "missingEvidence": "未提供伪造表的原始输出样例或复核agent的判定原文；未附或说明结构化数据的存储位置；62条链接中1条失败未明确替代方案；任务2的probe.png和真机结果均未产生。"
+    },
+    "totalScore": 91,
+    "tier": "S",
+    "oneLineJudgment": "两条不相关主线在同一周独立暴露“验证只查内部一致性”的系统性漏洞，且各自产出了高质量硬进展与可复用的机制化设计，是本周最有决策价值的发现，但关键结论仍待探针与重放验证。",
+    "professorFollowUp": "建议尽快批准任务2所需Gemini系视觉模型API key与LGS环境访问权限，以完成probe二值判定；确认是否将source-anchored输出契约推广为组内标准，涉及他人输出接口需拍板；下周验证结果若升级CoT's CoT 2证据等级，应纳入Brainary的grounded-fact层设计；同时关注反事实收益计价问题，考虑为验证环节预留固定budget的政策。"
+  }
+}
