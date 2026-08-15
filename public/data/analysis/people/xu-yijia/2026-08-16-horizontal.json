@@ -1,82 +1,84 @@
 {
   "key": "person:xu-yijia:2026-08-16:horizontal",
-  "generatedAt": "2026-08-14T16:07:04.914Z",
+  "generatedAt": "2026-08-15T03:02:26.557Z",
   "provider": "deepseek",
   "model": "deepseek-v4-pro",
   "reasoningEffort": "high",
-  "inputHash": "945b2350b7b75c88c50f2ba5c495ae6f9a11780e43bedcce81eb85e182c31e88",
-  "contentHash": "945b2350b7b75c88c50f2ba5c495ae6f9a11780e43bedcce81eb85e182c31e88",
+  "inputHash": "c3d20482443c34e48d101b798a43b19175856cd65362cb7eb979271dbe13d233",
+  "contentHash": "c3d20482443c34e48d101b798a43b19175856cd65362cb7eb979271dbe13d233",
   "promptHash": "7ab2efc4d416dbeeb34a0e2d3cc797ac660749509537011b4ea431707a52a0ba",
   "result": {
-    "overallLevel": "特别值得读",
-    "headline": "本周把 controller 裁决从“固定权重+固定阈值”推进为“风险子类型×任务相对不确定性×证据可靠性”三元联合判断，并在三个关键路径上拿到了可复用的失败模式与最小验证动作。",
-    "overviewSentence": "Xu Yijia 本周在风险校准、不确定性阈值和证据抽取三条关键路径上完成硬数据回填与失败模式定位，属于较值得优先阅读的一类。",
-    "shortRead": "本周完成三件硬进展：第一，把 data consistency 拆成 preprocessing、split、version、filtering 四子项并回填 5 个 repo，发现 data version 高频低影响、preprocessing/split 更容易改变结论，形成第一版 hierarchical weight；第二，repo A alternative split 只改变 1.36% metric delta，但已超过自然波动和 0.7% claim margin，且改变模型排序，证明固定 2% 阈值会误裁决；第三，evidence extraction 在 24 个 evidence item 上发现 README authority bias，4 个 false supported 中 2 个改变 controller action、1 个污染 memory；第二版 prompt 把 false supported 从 4 降到 1，人工校正时间从 13 分钟降到 8 分钟。CoT's CoT 证据等级为 2A1B，项目管理三项目均标注关键路径、时间/token 成本与纠偏动作。",
-    "levelRationale": "这份周报的硬进展有明确量化数据支撑：5 repo 子项回填、24 evidence item、重复运行指标与 downstream contamination 重放；认知增量清晰，三个 CoT's CoT 都标记了老师原本不知道的信息差；价值判断强，每个题目都回答了真实问题、买单方、通用能力、可沉淀物和为什么值得继续；项目管理细致，阶段、投入小时、依赖关键路径、token 消耗、进度判断和纠偏动作完整；元认知变化明确，指向 evidence reliability、task-relative uncertainty 与 risk 子类型在 controller pipeline 中的联合依赖；证据质量较好，CoT2、CoT3 为 A，CoT1 为 B；下周动作均为最小可验证动作，不继续扩规则。综合达到“特别值得读”一类。",
+    "overallLevel": "非常好",
+    "headline": "三条主线共同指向：可信结论应由风险子类型、任务相对不确定性与证据来源可靠性联合决定",
+    "overviewSentence": "本周用5个代码仓库回填、24个证据项和不确定案例复测，把三个分离机制连成一个控制管道，属于较值得优先阅读的一类。",
+    "shortRead": "硬进展包括：数据一致性拆成四个子项，发现数据预处理和数据划分比数据版本更影响结论；代码仓库甲的不确定案例因超过自然波动和声明边际而升级为复核；证据抽取第二版将错误支持从4个降到1个，并显现说明文档权威偏差对控制器动作和记忆写入的污染。三个项目均标记为关键路径，下周动作都有最小可验证目标。",
+    "levelRationale": "达到“非常好”的原因：三条主线都有可复算的硬数据和失败模式，思维链再思考明确标识老师原本不知道的信息差，证据等级两条甲级一条乙级；项目管理给出时间、成本、依赖和纠偏动作，元认知开始把证据可靠性、风险影响和任务相对不确定性看作同一控制管道的联合条件；下周动作都有最小可验证实验，不扩规则只验证决策一致性。尚未给“特别值得读”是因为样本量仍小，动作边界还未稳定建立，但已属于本周较值得优先阅读的一类。",
     "sameWeekPosition": "按本周研究管理标准，这份周报属于较值得优先阅读的一类。",
     "highlightedSignals": [
-      "三个主线任务均有硬数据和新失败模式，不是只有计划。",
-      "README authority bias 的下游污染链被拆到 severity、controller action、memory write 三层。",
-      "两个 CoT's CoT 证据等级 A，1 个 B，区分度明确。",
-      "项目管理三项目均标记为关键路径，时间/token/纠偏动作清晰。"
+      "主线一首次把数据一致性分解为四个子项，并给出第一版内部权重：数据处理0.50、数据划分0.25、数据版本0.15、样本过滤0.10。",
+      "主线二用代码仓库甲重复运行得到0.810、0.813、0.808的自然波动约0.3%到0.4%，证明1.36%的不同划分虽然低于上周2%阈值，但已超过声明边际0.7%并改变排序。",
+      "主线三发现说明文档权威偏差：24个证据项中，第二版提示将错误支持从4个降到1个，并量化下游污染到控制器动作和记忆写入。",
+      "所有三条线都沉淀出可复用模块、评估器或基准测试的自动化路径，并标明当前转化门槛。",
+      "元认知新增理解：同样的1%指标变化，在不同任务波动、声明边际和证据可靠性下，可以产生完全不同的控制器动作。"
     ],
     "focusDimensions": {
       "valueJudgment": {
         "read": "非常好",
-        "evidence": "三条题目均回答真实问题、买单方、通用能力、可沉淀物、为什么值得继续；本周以 repo A 1.36% 改变排序、4 个 false supported 中 2 个改变 controller action 等证据支撑价值判断。",
-        "nextLift": "可在下一条主线里进一步区分“平台功能价值”和“科研贡献价值”，并注明如果只做 5 repo / 24 item 的边界条件，价值的置信边界在哪里。"
+        "evidence": "周报明确三个题目的真实问题、谁会买单、局部优化还是通用能力、最可能沉淀成什么，并且每条都有真实失败模式支撑。例如数据版本高频低影响，数据预处理和数据划分低频高影响；固定2%阈值会同时误复核和漏复核；错误支持证据有2/4改变控制器动作，1/4会错误进入记忆。",
+        "nextLift": "可进一步把“谁会买单”映射到具体使用场景和采用指标，例如每个模块在什么触发条件下会改变控制器决策，是否值得单独作为产品功能。"
       },
       "projectManagement": {
         "read": "非常好",
-        "evidence": "三个项目均标注阶段、实际投入小时、关键依赖、关键路径、token 消耗、进度判断和纠偏动作；纠偏动作均指向减少规则扩张、优先验证一致性/案例/降低 false supported。",
-        "nextLift": "建议下周把三个关键路径项目的共同里程碑合成一张单一决策表，明确若三线最低验证都达成，将先并联成哪一条 controller 决策链。"
+        "evidence": "三个项目均有当前阶段、时间规划、资源规划、依赖关系、词元成本规划、进度判断和纠偏动作；且都标明为关键路径项目。例如主线一下周纠偏是“优先验证决策一致性，不继续扩规则”；主线三纠偏是“优先降低错误支持，而不是继续追总体正确率”。",
+        "nextLift": "可以增加一个总项目看板：三条关键路径的合并里程碑和冲突点，尤其是资源规划中若出现额外代码仓库或人工标注需求时如何触发申请。"
       },
       "metacognition": {
         "read": "非常好",
-        "evidence": "元认知新增点明确：同样的 1% metric change，在不同 task variability、claim margin 和 evidence reliability 下可产生不同 controller action；已看到三者依赖关系而非三个分离机制。",
-        "nextLift": "下一步可以把这条元认知规则写成可测试的决策矩阵：输入 evidence reliability、task-relative uncertainty、risk 子类型，输出 warning/uncertain/review 的边界条件。"
+        "evidence": "元认知新增理解是：元认知控制层不只是判断风险，而是联合管理证据可靠性、风险影响和任务相对不确定性，并判断证据是否足够改变系统动作。周报还给出信息差：之前三个机制分离，本周开始看到它们在同一控制管道的依赖关系。",
+        "nextLift": "可尝试把这种联合管理进一步写成一条智能体策略的触发条件，例如“当证据可靠性低于某值且风险影响高于某值且不确定性接近声明边际时，强制不进入记忆写入”。"
       }
     },
     "growthOpportunities": [
-      "证据链仍以 5 个 repo 和 24 个 evidence item 为主，后续可通过独立 repo 和更多 uncertain 案例增强外推性。",
-      "三个项目目前分别验证，尚未形成同一条 controller 决策链的联合消融；下周可在最小范围内做一次“risk 子项×threshold×evidence reliability”交叉案例。",
-      "evidence confidence 和 source reliability 尚未落地为字段，prompt 层缓解尚未转化为模块化 verification。"
+      "当前样本量仍小：5个代码仓库、24个证据项、仅1个不确定二次验证。下周可优先做最小可验证的独立样本，而不是立即扩规则或新增大量代码仓库。",
+      "动作边界尚未稳定建立：分层风险评分与警告、复核的人工一致性还没验证；这应是主线一下周的核心判据。",
+      "证据链中证据置信度和来源可靠性字段尚缺，建议在下周扩代码仓库时同步加入，并观察错误支持是否继续下降。",
+      "可以把三条主线放在同一个控制管道示意图里，用同一组代码仓库跑一次联合前后对比，验证联合条件是否比单一规则更接近人工裁决。"
     ],
     "teacherAction": {
       "readOriginal": true,
       "meetingQuestions": [
-        "本周 repo X/Z/A 的 risk ranking 变化是否主要由 preprocessing 子项驱动？如果没有 preprocessing 触发，hierarchical score 与人工 warning/review 的一致性会怎样？",
-        "repo A alternative split 只改变了 1.36% metric delta，你如何确认排序变化不是由于 baseline 0.7% margin 本身太窄导致的稳定性能差？",
-        "第二版 evidence extraction 将 false supported 从 4 降到 1，剩余 1 个 false supported 的根因是什么？是否属于 source reliability 无法通过 prompt 解决的结构性错误？",
-        "下周最小验证中，三个项目如果只有一个能推进，你建议先验证哪个？理由是什么？"
+        "如果子权重继续人工设定，你准备用什么判据决定何时切换到更多样本学习？",
+        "主线二的第二个不同任务类型案例，你打算选哪一类任务才能最大程度暴露固定阈值的错误模式？",
+        "当证据错误支持降到0后，你准备用哪个下游错误率作为模块的验收指标？",
+        "三条关键路径项目如果发生资源冲突，你建议优先保护哪一条？为什么？"
       ],
       "nextWeekWatch": [
-        "是否完成 hierarchical score 与人工 warning/review 的一致性对比，而不是继续加规则。",
-        "是否补第二个不同任务类型 uncertain case，并给出 natural variability + claim margin + execution path 的可操作判断。",
-        "是否在扩展 2 个 repo 后把 evidence confidence、source reliability、missing evidence type 真正写入输出字段。",
-        "是否把三条关键路径的最低验证结果合并成一个 controller pipeline 联合判断。"
+        "主线一是否完成分层风险评分与人工警告、复核的一致性对比，并且不继续扩规则。",
+        "主线二是否补上第二个不同任务类型案例，验证自然波动加声明边际加执行路径是否比统一百分比更稳。",
+        "主线三是否扩展到50个证据项并加入证据置信度、来源可靠性，观察错误支持是否继续下降。",
+        "是否出现把三条主线合并成同一控制管道联合验证的雏形。"
       ]
     },
     "studentFeedback": {
-      "summary": "本周你在风险权重、不确定性阈值和证据可靠性三条线上都拿到了关键失败模式和可复用的实验证据，周报的判断颗粒度明显提高，下一步可以把三条线的最小验证合流成一个 controller 决策链。",
+      "summary": "本周你把三个分离的机制推进成同一条控制逻辑，尤其用真实失败案例证明不能只看频率或百分比，这是很好的研究管理节奏。",
       "whatYouDidWell": [
-        "把 data consistency 拆成四子项并给出权重，同时用 5 个 repo 的 risk score 变化证明子项级影响，避免了只按频率赋权的偏差。",
-        "用 repo A 重复运行 alternative split 和 claim margin 证据推翻了固定 2% 阈值，把 uncertain 升级为 review，具有清晰的裁决逻辑。",
-        "第二版 evidence extraction 以 false supported 为主指标，24 个 evidence item 中把错误从 4 降到 1，并量化了人工校正时间下降。"
+        "你清楚记录了每个主线的硬数据：数据预处理4/5、数据划分3/5、数据版本3/5等，并给出子权重和风险评分变化，让老师可以直接复核。",
+        "你把失败模式说得具体：数据版本高频但低影响，数据预处理和数据划分低频但高影响；错误支持证据2/4改变控制器动作，1/4会错误进入记忆。",
+        "你的项目管理很完整：三条线都有时间、词元成本、依赖、纠偏动作，而且下周动作都限定在最小可验证，没有继续铺开。"
       ],
       "nextStep": [
-        "下周优先做 decision consistency，而不是扩大规则；用已有 5 repo 比较 hierarchical score 与人工 warning/review，先确认主评价指标。",
-        "证据链扩展时加入 source reliability 和 evidence confidence 字段，让“prompt 缓解”转化为可复用的 verification 输出。",
-        "把三个项目的下周最小验证动作合成一张决策表，说明如果三线都达成最低门槛，下一步将先联调哪一个 controller 决策模块。"
+        "下周优先做一致性验证：用现有5个代码仓库比较分层风险评分与人工警告、复核的一致性，先不新增大量代码仓库。",
+        "为不确定校准选一个与代码仓库甲噪声特征明显不同的任务类型，验证任务相对阈值是否更稳，而不是继续用一个案例扩展公式。",
+        "在扩到50个证据项时，同步加入证据置信度和来源可靠性，重点观察错误支持是否继续下降，而不是只追总体正确率。"
       ],
-      "suggestedRewrite": "下周周报可以这样写：主线1 用 5 repo 对比 hierarchical score 与人工 warning/review 的一致性，给出命中/漏报/误报各几例，并明确是否因 preprocessing 子项驱动；主线2 补一个不同任务类型 uncertain case，记录 natural variability、claim margin 和 execution path 三项；主线3 扩展 2 repo 并输出 evidence confidence、source reliability、missing evidence type，报告 false supported 数量变化。每项都先写“验证问题—证据—结论是否改变下一步规则”，这样三条线的最小可验证动作更便于老师判断资源投向。"
+      "suggestedRewrite": "下周周报可以这样写：开头先给一句话：“本周的最小可验证结论是：分层风险评分与人工警告、复核的一致性为若干比若干，任务相对阈值在第二个案例中是否维持正确，错误支持从若干降到若干。”然后按“证据、失败模式、下一步最小实验”展开，避免把三条线写成并列说明。"
     },
     "evidenceLinks": [
-      "第一部分/主线任务1/新失败模式：单一 data consistency 总分高估 data version、低估 preprocessing mismatch。",
-      "第一部分/主线任务2/新实验：repo A fixed split 3 次运行 0.810/0.813/0.808，alternative split 0.799，相对变化 1.36%，改变模型排序。",
-      "第一部分/主线任务3/第二版结果：evidence classification 16/24→20/24，false supported 4→1，人工校正时间 13分钟→8分钟。",
-      "第三部分/CoT's CoT 证据等级：CoT1 B，CoT2 A，CoT3 A。",
-      "第三部分/项目管理/项目3/纠偏动作：下周优先降低 false supported，而不是继续追 overall accuracy。"
+      "周报第一部分主线任务一：数据预处理4/5触发，其中3/4影响核心指标或结论；第一版内部权重；5个代码仓库风险评分变化。",
+      "周报第一部分主线任务二：代码仓库甲重复运行3次，核心指标0.810、0.813、0.808；不同划分1.36%变化改变模型排序，从不确定升级为复核。",
+      "周报第一部分主线任务三：24个证据项，第二版提示将证据分类从16/24提升到20/24，错误支持从4降到1；说明文档权威偏差污染下游。",
+      "周报第三部分思维链再思考证据等级：思维链一再思考为乙级，思维链二再思考为甲级，思维链三再思考为甲级。",
+      "周报第三部分项目管理：三个项目均标注关键路径，并有时间、词元成本、纠偏动作。"
     ]
   }
 }
