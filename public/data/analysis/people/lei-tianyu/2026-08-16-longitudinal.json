@@ -1,0 +1,101 @@
+{
+  "key": "person:lei-tianyu:2026-08-16:longitudinal",
+  "generatedAt": "2026-08-16T15:03:49.977Z",
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "reasoningEffort": "high",
+  "inputHash": "3b7b1db9b8eb20aa42b5fba5a507a8c4054c59e812df3f4c23aa99d4039c1a9d",
+  "contentHash": "3b7b1db9b8eb20aa42b5fba5a507a8c4054c59e812df3f4c23aa99d4039c1a9d",
+  "promptHash": "a81d300342d311075e5a9e7b2b844c66b91ae9fd5bc49dd5635c5300f773e454",
+  "result": {
+    "overallTrajectory": "基于最近两周周报（前两周无报告），Lei 从功能实现和实验执行转向论文初稿撰写与机制验证，研究问题从“多视图交易检测”收敛到“证据不充分时主动补证据的认知控制机制”。关注点从继续堆模块转向证明模块不可替代，并开始识别类别级性能回归问题，但版本管理和失败模式沉淀尚未形成稳定的自动化闭环。",
+    "headline": "从“做功能”转向“证明机制”，类别级回归暴露版本管理短板，需把失败模式沉淀为自动化科研闭环。",
+    "overviewSentence": "Lei 在两周内将 Ravel 从功能实现推进到论文初稿与消融验证，关注点从模块堆叠转向证据充分性与类别稳定，但版本回归和 followup 触发仍待闭环。",
+    "fourWeekTimeline": [
+      {
+        "week": "2026-08-09",
+        "metacognition": "识别出 Ravel 核心应从“多视图检测”转为“证据不足时主动补证据”；把 followup 从实现细节提升为独立 reasoning control variable。意识到需要证明收益来自按需补证据，而非额外 token 或 reasoning budget。",
+        "valueJudgment": "判断题目值得做，但下一阶段重点从继续堆叠模块转向证明现有模块分别解决了什么不可替代的问题；认为可沉淀为论文 + benchmark/evaluation protocol + evidence-driven reasoning module。",
+        "projectManagement": "完成论文初稿框架整理和一组 w/o followup 消融实验；原计划基本完成。偏差不在执行而在论文抽象，下周暂停优化补图表。资源不依赖额外 GPU，主要消耗 LLM API 和 token。",
+        "evidence": "周报中 CoT's CoT 1 给出证据等级 A（w/o followup 消融直接支撑）；项目管理原计划 vs 实际完成及下周最小验证动作明确。"
+      },
+      {
+        "week": "2026-08-16",
+        "metacognition": "识别统一版本下不同攻击类别性能相互干扰，从只看 FP 数量转向分析 FP 来源类别（新增 heatmap）；意识到需要追踪“某次修改提升了谁、又损害了谁”，并开始考虑分版本运行。",
+        "valueJudgment": "判断继续做，但重心从增加模块转向稳定版本、补齐实验和完善表达；将版本回归问题视为可沉淀的 regression evaluator 和 per-class version manager。",
+        "projectManagement": "完成论文其余章节初稿和动机图/方案图初步绘制；新增 FP 类别 heatmap；发现统一版本持续退化，决定分版本运行。下周继续代码迭代并补充 x-shot 实验（x=3,7）。",
+        "evidence": "周报中 CoT's CoT 2 给出证据等级 B（多轮版本回归现象支撑）；新增 heatmap 和多轮代码调整但未恢复此前效果。"
+      }
+    ],
+    "metacognitionChange": {
+      "summary": "元认知能力有明显提升：从第一周的“描述任务”进步到第二周“识别失败模式并给出证据等级”，能够区分实现细节与研究变量，并开始将失败模式（版本回归）纳入自动化科研思考。但当前仍停留在“识别问题”和“被动分版本”，尚未把回归分析和触发判断沉淀为稳定接口。",
+      "byWeek": [
+        {
+          "week": "2026-08-09",
+          "observation": "能从论文初稿写作中提炼核心叙事差异，意识到 followup 要从实现细节变为可验证研究变量；给出 CoT's CoT 的证据等级 A；对 meta-cognition 的理解扩展到“信息状态判断”。"
+        },
+        {
+          "week": "2026-08-16",
+          "observation": "识别出统一版本的类别间性能干扰，并从只看 FP 数量提升到分析 FP 类别来源；新增 CoT's CoT 2（修改影响追踪）并给出证据等级 B；对 meta-cognition 进一步扩展到“判断当前修改是否破坏其他能力”。"
+        }
+      ],
+      "currentLevel": "已能识别认知盲区（如论文抽象困难、版本冲突）和失败模式，并主动寻找验证标准（如 w/o followup 消融、FP 类别 heatmap），但尚不能把识别到的失败模式转化为自动化监控和回归评估，部分推演仍依赖经验而不是协议化机制。",
+      "strongestSignal": "将 followup 从实现细节提升为论文中可独立验证的研究变量，并通过 w/o followup 消融给出直接证据，同时开始思考收益来源的排除实验。",
+      "nextLift": "把“分版本运行”从被动应对升级为主动的类别级回归评估与版本管理，并将该过程沉淀为 Brainary 的 regression evaluator；为 followup 组件未调用设置专门的最小触发测试，使元认知从“发现问题”走向“验证并沉淀”。"
+    },
+    "valueGrowth": {
+      "summary": "科研价值判断从第一周“题目值得做、但应证明不可替代”到第二周“重点转向稳定版本和补齐实验”，显得更清楚、更有取舍：不再追求功能堆叠，而是追求机制可验证、系统稳定和资产可复用。同时把版本回归纳入了长期系统能力建设，但尚缺少对“通用性损不损失”和“什么证据能证明 followup 不可替代”的进一步界定。",
+      "byWeek": [
+        {
+          "week": "2026-08-09",
+          "observation": "价值判断强调真实问题（复杂 DeFi 攻击）和通用能力（证据不足时动态补证据），认为值得做，但必须证明每个模块解决不可替代问题；提出下一阶段不继续堆模块。"
+        },
+        {
+          "week": "2026-08-16",
+          "observation": "价值判断更聚焦：在保持题目值得做的判断下，优先级变为稳定版本、补齐实验、完善表达；同时认为版本回归问题也可沉淀为 evaluator，显示价值判断开始覆盖科研过程的可靠性本身。"
+        }
+      ],
+      "currentValueFunction": "当前价值函数：Ravel 值得继续做，但价值不再依赖模块数量，而取决于 followup 机制能否被证明为必要且带来可归因的收益，以及系统在不同攻击类别上能否保持稳定边界；长期价值在于证据驱动推理和自动化回归监控的通用能力。",
+      "improvementSignals": "从“检测系统”价值转向“机制可验证性”；从追求功能增加到证明不可替代；第二周开始把“类别稳定”和“版本管理”作为科研价值的一部分，表明价值判断从个人兴趣扩散到科研过程质量。",
+      "nextValueQuestion": "如果分版本是必要的，那“统一框架”的通用性主张是否仍成立？什么实验可以证明 followup 的增益独立于额外 token 和 reasoning budget？现有数据能支持的最强 claim 是什么？"
+    },
+    "projectManagementReview": {
+      "summary": "Ravel 项目持续按周推进，有可检查交付（论文初稿、消融实验、heatmap），阶段、原计划 vs 实际、依赖关系、资源、里程碑基本清晰。主要问题是版本管理决策滞后于风险暴露，且对 followup 组件未调用问题缺少明确的排查计划；Brainary 相关的 evidence sufficiency module、regression evaluator 仍停留在建议层，没有实际交付。",
+      "projects": [
+        {
+          "project": "Ravel",
+          "weeks": "2026-08-09, 2026-08-16",
+          "quality": "中等偏上：有清晰的阶段规划和偏差识别，但缺少提前风险预警和版本管理协议。",
+          "whatWorked": "按周推进并产出具体交付：论文初稿框架、w/o followup 消融实验、动机图/方案图初步绘制、FP 类别 heatmap。头脑中保持“原计划 vs 实际”和“最小验证动作”意识。对 Brainary 的映射连续两周被记录，能识别可沉淀能力（evidence sufficiency module、regression evaluator），并明确下一步自动化路径。",
+          "managementGap": "对类别性能回归缺乏提前预警，连续两周尝试统一版本优化后才决定分版本；followup 组件未调用问题在第一周提出后，第二周未给出排查日志或截止点；分版本后尚未定义合并/评估协议。Brainary 相关能力没有落地为可运行的最小组件或接口。",
+          "nextConcreteMove": "下周完成分版本实验和 x-shot 实验，同时为 followup 组件未调用建立最小触发测试和日志；将 FP 类别 regression 分析改写为一个可复用脚本（per-class regression evaluator），作为 Brainary 组件雏形交付。"
+        }
+      ],
+      "managementPattern": "呈现“先执行后反思”模式：能及时记录偏差和纠偏，但纠偏动作往往滞后于风险已经显著影响实验，且倾向独立解决而较少主动请求老师介入。",
+      "nextManagementMove": "建议把版本回归问题显式转化为一个带自动比较和日志的 evaluator，并在下周计划中增加“followup 组件调用检查点”；考虑主动请老师审阅论文核心 claim 与证据匹配度，避免写作和实验切换导致主线漂移。"
+    },
+    "repeatedBlockers": [
+      "统一版本下不同攻击类别性能相互干扰，局部优化导致其他类别退化（两周持续出现）。",
+      "followup 中一个设计组件未被调用（第一周明确提出，第二周未解决且未再报告）。",
+      "论文抽象/方法表达困难，导致工程实现与论文叙事之间反复切换（第一周偏差类型为认知/方法表达，第二周仍在压缩表达）。"
+    ],
+    "teacherQuestions": [
+      "分版本运行后，你打算如何证明 followup 的增量价值来自“按需补证据”而不是额外推理预算？是否会设计一个无额外 token/reasoning budget 的对照？",
+      "followup 中未被调用的组件，目前是否有最小触发示例或调用日志？你能在下周 meeting 前给出一个可复现的触发失败案例吗？",
+      "类别级性能回归，你是否有明确的 per-class 版本管理和回归评估流程？是否愿意把这个流程做成一个 Brainary 的最小 evaluator？",
+      "论文的核心 claim 现在可以写成什么？哪些实验支撑了 claim 的强度？是否提前让我审阅 Method/Experiment 初稿，以便减少写作返工？",
+      "你连续两周判断“暂时不需要老师介入”，但版本回归和组件调用一直未闭环，你希望我在哪些具体环节提供什么形式的帮助？"
+    ],
+    "nextIntervention": "建议在下次 meeting 中重点检查三个点：论文核心 claim 与现有实验证据的匹配度；类别级回归的自动评估方案是否能作为 Brainary 小交付；followup 组件未调用的触发条件和日志。可以要求学生现场展示一个失败案例，并讨论分版本后的合并策略，避免把分版本变成掩盖机制缺陷的临时方案。",
+    "studentFeedback": {
+      "summary": "你在两周内完成了从功能实现到论文初稿和机制验证的推进，已经能把“实现细节”和“研究变量”区分开，并识别出类别级回归这一关键失败模式。这些都表明研究能力在增长，不只是更忙。",
+      "whatImproved": "论文表达中收紧了核心叙事，开始用消融实验支撑 followup 的独立价值；项目管理上能写出偏差、纠偏、依赖和最小验证动作，并新增 FP 类别 heatmap 以解释混淆关系。",
+      "nextStep": "请为 followup 组件未调用设置专门的最小触发测试和截止时间；把版本回归分析做成一个可重复运行的 per-class evaluator，并记录如何从评估结果驱动下一步实验；同时避免在论文写作和实验闭环之间频繁切换，先完成主要实验闭环再统一润色表达。"
+    },
+    "evidenceLinks": [
+      "2026-08-09 周报：CoT's CoT 1 证据等级 A，w/o followup 消融实验支撑；项目管理中偏差类型为认知/方法表达，显示早期识别。",
+      "2026-08-16 周报：CoT's CoT 2 证据等级 B，多轮版本性能回归现象支撑；新增 FP 类别 heatmap；决定分版本运行和补充 x-shot 实验。",
+      "2026-08-16 周报：meta-cognition 新理解扩展到“判断当前修改是否破坏其他已稳定能力”，为版本回归分析提供认知框架。"
+    ]
+  }
+}
