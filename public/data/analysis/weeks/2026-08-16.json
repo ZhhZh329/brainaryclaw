@@ -1,126 +1,132 @@
 {
   "key": "week:2026-08-16:horizontal",
-  "generatedAt": "2026-08-17T00:01:44.358Z",
+  "generatedAt": "2026-08-17T17:03:40.914Z",
   "provider": "deepseek",
   "model": "deepseek-v4-pro",
   "reasoningEffort": "high",
-  "inputHash": "16d5752ded8226d1b0cd8916c405595373d8625059b197e430cbee37d6c6e319",
-  "contentHash": "16d5752ded8226d1b0cd8916c405595373d8625059b197e430cbee37d6c6e319",
+  "inputHash": "d6322b83fad161b21a5a9b6582f9ac00232db1caa917b63e0d282c1573419e0e",
+  "contentHash": "d6322b83fad161b21a5a9b6582f9ac00232db1caa917b63e0d282c1573419e0e",
   "promptHash": "d5dbdfc5549acc1104e527368173d8297b203b85695a994e292ae089aedc6b71",
   "result": {
-    "submissionStatus": "已提交42人，未提交32人；提交率约57%。",
-    "overallRead": "本周最值得关注的是验证层与生产路径之间出现多起独立的“静默错配”：沈奇伟发现自洽伪造表通过验证、GUI坐标静默反转；张律业抓住9个测量故障；孙宇强发现错误记忆导致搜索量放大5倍；徐一格证明README权威偏见污染下游控制器。这些信号共同指向：主要风险不是模型能力，而是验证机制只检查系统自身输出。郭耀琪和钱加宇分别用自然实验和数据审计把“可信”落实到证据与闸门。但大量报告仍停留在设计层，金额估值普遍偏高，需要老师用实验冻结和里程碑来压住节奏。",
+    "submissionStatus": "本周应提交 73 人，实际提交 42 人，31 人缺失。已提交中 Li Yifan 提交时间早于本周区间（08-11），Li Qiankun、Lyuye Zhang、Zhou Ziyang 等提交于 08-17 02:00-02:50，接近但未超过 08:00 截止。缺失名单数量较大，需要老师关注。",
+    "overallRead": "本周最强决策信号集中在少数人的硬进展：郭曜齐把规则入库从 LLM 自评升级为留出自然实验统计门控，产出可复用验证器；沈奇伟用源锚定抓住自洽伪造表并定位 GUI 坐标静默错配；孙宇强通过重复扫描和回归修复暴露 Agent 机制评估的噪声与错误记忆；徐艺嘉用层级风险、任务相对不确定性和证据来源可靠性校准控制动作。但整体仍偏设计，大量周报没有可运行实验，价值金额和证据等级口径混乱，31 人缺失，需要收缩方向并追责。",
     "ranking": [
       {
         "rank": 1,
-        "name": "Shen Qiwei",
-        "reason": "两条主线撞见同一结构故障：验证器只查自身一致性，算术自洽伪造表通过；GUI坐标格式静默错配。提供A级证据，并给出source-anchored schema与preflight capability probe的可复用机制。"
+        "name": "郭曜齐",
+        "signal": "V8 采集管线全量跑通，B' 留出验证器用分层自然实验+Mantel-Haenszel 给规则入库提供统计证据，杀灭 71% 旧规则，总成本 $17.4；下游 43/50 同等效果但语料约 1/4。",
+        "decisionValue": "本周最可复用自动化资产。需立即定 M5 多 seed 主实验，避免只靠单 seed 43/50；grounding 阈值需老师拍板。",
+        "evidenceLevel": "L2：全量管线与 M1 回填实证，缺 M5 多 seed 和反事实补证"
       },
       {
         "rank": 2,
-        "name": "Sun Yuqiang",
-        "reason": "发现记忆语义错误比没有记忆更危险，搜索量446→88；建立重复扫描观测单位，撤回四个此前误判的机制结论。协议已产出第一个判决，证据A。"
+        "name": "沈奇伟",
+        "signal": "两条主线同时撞上“自洽≠正确”：源锚定验证抓出自洽伪造表；GUI 探针定位坐标格式静默错配，且发现宽容解析把格式不统一变成不可见错误。",
+        "decisionValue": "建议把 source-anchored schema 和 preflight capability probe 固化为 Agent 产出和执行器的强制契约，跨项目复用。",
+        "evidenceLevel": "A/B：源锚定有直接实例和量化错误；坐标格式反转尚未探针实测"
       },
       {
         "rank": 3,
-        "name": "Guo Yaoqi",
-        "reason": "V8采集管线把规则入库从LLM自评升级为分层留出自然实验，旧规则71%杀灭率；下游43/50与V5同量级但语料1/4、条条带证据。含grounding三道门和SIT-v2，是本周最完整的工程闭环。"
+        "name": "孙宇强",
+        "signal": "数学证明 Agent 机制调试：发现能力回归、错误经验记忆导致搜索量 88→446、单点实验方差可翻转结论；提出七题总分+重复扫描作为观测单位。",
+        "decisionValue": "改变了 Agent 机制评估方法论：单次运行不可信，必须聚合重复扫描；错误记忆比没有记忆危害更大。",
+        "evidenceLevel": "A：三个 CoT's CoT 均有直接实验支持"
       },
       {
         "rank": 4,
-        "name": "Qian Jiayu",
-        "reason": "用数据审计阻止了错误的大规模CT–report训练。实测模态混杂、SR未验证、配对缺失，并建立manifest/stage gate。决策价值高，避免无效算力投入。"
+        "name": "徐艺嘉",
+        "signal": "在 5 个 repo 上回填四子项风险，发现 data version 高频低影响而 preprocessing/split 才改变结论；24 个 evidence item 显示 README-as-fact 会污染 controller 和 memory。",
+        "decisionValue": "为自动化科研 trust evaluator 提供层级化风险、task-relative uncertainty 和证据 source reliability 的实证原型。",
+        "evidenceLevel": "A/B：repo A 重复运行和 contamination 链有直接数据；子权重尚需独立验证"
       },
       {
         "rank": 5,
-        "name": "Xu Yijia",
-        "reason": "将data consistency拆成层次化子风险，5个repo显示preprocessing/split高频高影响、version高频低影响；并证明README权威偏见可污染下游控制器。A级证据，直接改进控制器决策。"
+        "name": "杨彦靖",
+        "signal": "OSSP-benchmark Set F1 76.63% vs 强 baseline 55.08%，提升 21.55pp；DeepAPI_V3 Submodule-level 51.58% vs Graph-KNN 24.25%，提升 27.33pp。",
+        "decisionValue": "API/库选择方法有强实验支撑，可作为知识选择与迁移的 baseline；下一步聚焦鸿蒙 API 数据后可直接工程化。",
+        "evidenceLevel": "B+/A-：多 benchmark 结果明确，但数据规模和复现细节待确认"
       },
       {
         "rank": 6,
-        "name": "Lyuye Zhang",
-        "reason": "metaskill系统跑出第一个Pareto胜利：成本−61%，仅损失1/22题；同时抓住9个测量故障，强调多基线、双账本。make-or-buy机制第二次被验证。"
+        "name": "黄勋",
+        "signal": "红队测量体系重构：净化 37% 污染词表后 ASR 从 2-8% 跃升至 16%；纯逻辑 DoS 推理烧穿 ~100%，输出泄漏近零。",
+        "decisionValue": "提供安全评估硬指标，且两条 CoT's CoT 证据 A；可作为安全红线与资源耗竭防护的早期成果。",
+        "evidenceLevel": "A/B：有明确修复数据，部分全量稳定性未跑"
       },
       {
         "rank": 7,
-        "name": "Liang Ruichao",
-        "reason": "经济学元认知完成主实验（2模型全数据集），并设计4个基线各剥一个替代解释，其中随机干预是信号信息量的判决性对照。把“证伪自己功劳”作为评测核心。"
+        "name": "钱加宇",
+        "signal": "上海肝胆医院数据审计：57.95 万 DICOM 对象中 MR 占 66%，CT 仅 33.5%；72 个 SR 中 71 个 UNVERIFIED，937 张报告截图非正式报告。",
+        "decisionValue": "用事实阻止了错误的大规模 CT-language 训练，立即转入 manifest 和阶段闸门；价值在于避免无效投入。",
+        "evidenceLevel": "A/B：文件级统计和 OCR 样本实测；全量配对未完成"
       },
       {
         "rank": 8,
-        "name": "Huang Xun",
-        "reason": "修复自创词测量方法，真实自创率从误判修正，词表污染37%被剔除，ASR提升到16%。CoT指出硬逻辑校验探针必须外挂，证据A。"
+        "name": "梁瑞超",
+        "signal": "经济学元认知论文级实验设计：4 个基线各剥离一个省 token 替代解释，随机干预为判决性对照；主实验已在 2 模型全数据集跑完。",
+        "decisionValue": "把省钱收益从“报一个数字”升级为“证伪式归因”，可发表且可复现；需老师快速过 USENIX 收尾。",
+        "evidenceLevel": "B：主实验跑完，4 基线对比未全跑"
       },
       {
         "rank": 9,
-        "name": "Yang Yanjing",
-        "reason": "OSSP Library/API选型方法在多个benchmark上大幅领先：Set F1 76.63% vs 55.08%，Submodule F1 51.58% vs 24.25%。硬结果强，且有鸿蒙迁移计划。"
+        "name": "万文渊",
+        "signal": "在 MMStar 和 MMMU 上完成四配置 Memory 消融，完整框架均最好，说明 LTM 和 STM 有独立贡献且互补；下一步应进入 perception-attention 闭环。",
+        "decisionValue": "为 memory 模块有效性提供跨 benchmark 直接证据，可作为 Brainary memory 的评测基线。",
+        "evidenceLevel": "A：两 benchmark 四配置直接实验"
       },
       {
         "rank": 10,
-        "name": "Chen Huabao",
-        "reason": "critical_edge复核定义了任务必要性vs医学重要性，将低证据关键边提升并引发拒答/降置信，形成path_confidence_v3草案。证据B，但边界稳定仍需专家确认。"
-      },
-      {
-        "rank": 11,
-        "name": "Huang Yitan",
-        "reason": "PEDR五态状态机与依赖完整性门暴露dependency-blind reconsolidation；把权限判断建模为可撤销的正当性证明。理论深，但真实运行时回放未完成。"
-      },
-      {
-        "rank": 12,
-        "name": "Guo Wenbo",
-        "reason": "skill模型选型给出可操作决策：诊断缺知识（注入WM配便宜模型）或缺推理（换大模型），拆开三件事。直接省成本，待实验。"
-      },
-      {
-        "rank": 13,
-        "name": "Li Yifan",
-        "reason": "将planning memory从episode抽取推向structure-aware LTM构造，提出K0/K1/K2知识分层。框架清晰，但尚未完成具身/evolution对照实验。"
-      },
-      {
-        "rank": 14,
-        "name": "Hu Zhichao",
-        "reason": "APT能力单元作为统一抽象，多个实验（P/R 0.9、BPAIR、ProvBREAK）形成初步证据；但各条线仍分散，缺少统一benchmark。"
-      },
-      {
-        "rank": 15,
-        "name": "Dang Wenjing",
-        "reason": "把切片方法重构为CEGAR风格闭环，将LLM限制在提议位置并设计证书。元认知深入，但仅设计，无case复现。"
+        "name": "张颢楠",
+        "signal": "CLI Agent 基线：DeepSeek Harness 81 任务冻结审计，75 可计价 primary attempts 成本下界 $13.12；提出 requirement contract 和实验契约。",
+        "decisionValue": "研究范围从三模块收敛为可验证的 specification fidelity+token efficiency；需要老师确认先做 TB2.1 还是 interactive clarification。",
+        "evidenceLevel": "B：冻结审计详细，干预原型未启动"
       }
     ],
     "topSignals": [
-      "验证层的外部接触检查成为本周最通用发现：Shen Qiwei两个A级案例证明一致性检查不够，必须要求源可重放/像素探针。",
-      "错误记忆比没有记忆更危险：Sun Yuqiang发现记录错误导致搜索量放大5倍，机制修复后同一题解出。",
-      "资产入库需要自然实验/统计判别力：Guo Yaoqi的V8用6000条历史轨迹做分层lift+CI，旧规则71%被淘汰。",
-      "数据审计应前置于训练：Qian Jiayu的医院库审计避免把19万DICOM错误当成训练集，建立可训练子集闸门。",
-      "控制器需要层次化风险与证据可靠性：Xu Yijia显示子维度影响差异和README权威污染，需同时输入risk sub-type、task variability、evidence reliability。",
-      "实验设计应针对自己的credit提供证伪基线：Liang Ruichao的4基线设计，随机干预最尖锐。",
-      "测量故障比方法缺陷更容易导致自信错误：Lyuye Zhang的9个测量故障与成本归属错误提醒多口径审计。",
-      "成本优化应从能力诊断出发，而非一律强模型：Guo Wenbo的skill选型先测缺知识/缺推理再决定注入或换模型。"
+      "规则入库统计门控（郭曜齐）：B' 留出验证器把 LLM 自评升级为自然实验，71% 旧规则被杀灭，是本周最可复用自动化资产。",
+      "源锚定验证（沈奇伟）：自洽不是正确性证据，可重放源指针是唯一判别；等价在 GUI Agent 用 preflight probe 捕获坐标格式错配。",
+      "Agent 机制评估的观测单位（孙宇强）：单点运行噪声淹没结论，需要重复扫描分+噪声基线；错误记忆比没有记忆危害更大。",
+      "层级化 risk/evidence/task-relative uncertainty（徐艺嘉）：固定阈值和 flat risk 会误判，需按子风险、任务波动和证据来源分级。",
+      "跨平台迁移应判断家族行为闭环而非功能数量（孙曼琪）：局部成功不能推整体迁移，验证合同本身是可信链薄弱点。",
+      "医学数据审计阻止错误大规模训练（钱加宇）：原始库 MR 为主、报告未核验，不能直接训练，应先建 manifest。",
+      "黑盒检测器盲区可用受控探针测绘（乔伟）：告警行为即 API，剂量递增/间隔拉长可测阈值与窗口，连续三周设计需下周落地。",
+      "Agent 交付前必须至少一次面向外部世界的验证（沈奇伟）：检查外部接触点而非内部一致性。",
+      "模型选型应按知识/推理瓶颈注入或换模型（郭文博）：LTM/WM 成本调度，可降低 Skill 调用成本。",
+      "沟通/行为 benchmark 需要统一 event/snapshot/knowledge schema（孙骁）：不能靠 prompt 格式统一，要保护 agent native control loop。"
     ],
     "commonRisks": [
-      "设计空转：多人连续数周无最小可验证实验，尤其盲区测绘连续三周C、多Agent benchmark仍停留在schema设计。",
-      "证据兑现风险：大量CoT's CoT标B/C，依赖下周/未来实验，但判据未冻结（如Sun Xiao、Li Kaixuan、Dang Wenjing）。",
-      "金额估值缺乏一致锚点：部分数百万估值与本周实际产出不匹配，需建立统一成本/价值计算模板。",
-      "并行线过多，关键路径被稀释：多位成员同时兼顾多条主线，导致核心MVP或论文推迟（如Liang Ruichao的4基线未跑完、Zhang Haonan核心干预未启动）。",
-      "验证机制没有制度化：仅有Shen Qiwei、Guo Yaoqi等少数报告将验证器/契约上线为schema或workflow，多数仍是一次性人工行为。"
+      "大量报告停留在设计/认知层，缺少可运行实验：乔伟连续三周 evidence C，李凯旋、石俊杰、曾婉莹、吴俊浩等尚无端到端闭环。",
+      "证据等级分布中 A 级少、B/C 多，多条 CoT's CoT 只有设计没有验证；部分强烈主张证据不足。",
+      "单点/小样本结果多，无法排除噪声：郭曜齐只有单 seed，吕野 n=5，谢茂毅约 30 case，姚光宇 1000 条但无回放结果。",
+      "价值金额和证据等级口径不一致：李梅 750 元、胡志超 3500 万；多个报告金额计算与可交付物不符。",
+      "项目管理和 cost/token 记录不完整：孔梓乔、吴俊浩、胡连宇等“待补”；Sun Kairan 等只有“低到中”没有实账。",
+      "关键主实验未按计划启动：张颢楠原计划证据门 A/B 未做，郭曜齐 M5 未跑，梁瑞超基线未全跑。",
+      "31 人未提交，导致研究覆盖存在盲区，可能漏掉重要进展或风险。",
+      "多条线并行导致注意力分散：张晓宇三个大方向只有框架对齐；胡志超多项目但统一 claim 边界未收敛。"
     ],
     "collaborationCandidates": [
-      "Shen Qiwei + Xu Yijia + Lyuye Zhang：整合source-anchored memory、evidence reliability与测量故障审计，形成统一的grounded-fact准入层和实验契约。",
-      "Sun Yuqiang + Guo Yaoqi：将“重复扫描+噪声基线”协议与“留出自然实验”验证器结合，用于任意Agent机制变更的判决。",
-      "Guo Wenbo + Lyuye Zhang：skill模型瓶颈诊断与metaskill make-or-buy路由可结合，降低大规模Agent运行成本。",
-      "Qian Jiayu + Chen Huabao：医疗数据manifest闸门与KG路径复核整合，形成可信临床数据/知识边界。",
-      "Zhang Jiayi + Zhang Xiaoyu + Liao Zeqin：GUI/具身行为多样性参数化和神经调质机制，可共享相同的行为模拟框架。",
-      "Zhou Zhenhong + 全部成员：创新方法论taxonomy需要收集本周真实CoT's CoT案例，尤其验证器、记忆、自然实验、证据等级差值监控等。"
+      "郭曜齐 × 徐艺嘉：B' 留出验证器与层级风险/证据来源校准可合并为统一的统计门控与可信评估层。",
+      "沈奇伟 × 徐艺嘉：source-anchored schema 与 evidence source reliability 同构，可共建 Agent 事实准入协议。",
+      "陈华宝 × 钱加宇：医学 KG 的 edge_role 与临床数据 manifest 可共享 provenance 和阶段闸门。",
+      "梁瑞超 × 张颢楠：实验设计证伪基线与 experiment contract/预算准入可整合为可发表评测协议。",
+      "黄勋 × 乔伟：红队测量与黑盒盲区测绘同属探针+暴露预算，可共享探针库与归因 schema。",
+      "万文渊 × 李一帆/胡连宇/马晓宇：Memory 消融与结构记忆、3D WM/Episodic 分层可形成统一 memory 评测与生命周期。",
+      "孙宇强 × 党文静：Agent 机制调试与 CEGAR 抽象精化可互相借鉴；孙的失败模式可作为党文静验证案例，党文静的证书制可约束孙的 Agent。",
+      "孙骁 × 周振宏：communication-agent benchmark 的 event/snapshot schema 与 auto-benchmark 的 domain-specific validation 可结合。",
+      "张嘉怡 × 张晓宇：GUI 人格参数化与多巴胺行为模拟共享 human behavior simulation 接口。",
+      "杨彦靖 × 郭曜齐：API/库选择与 skill 提取可互为上下游，共用知识获取与验证管线。"
     ],
     "teacherChecklist": [
-      "对Guo Yaoqi的V8定位“同等效果+1/4语料+可审计”和grounding阈值（κ≥0.7等）做拍板。",
-      "要求Qiao Wei下周若不能产出至少一条剂量–告警曲线，则收缩盲区测绘范围；避免连续第四周C级设计。",
-      "推动“source-anchored输出契约+preflight capability probe”成为组内所有抽取/执行类Agent的强制gate（基于Shen Qiwei案例）。",
-      "将“验证器先于被验证物上线”和“证据等级差值监控触发下行”纳入下周计划模板，重点检查哪些项目连续两周以上无实验。",
-      "对Sun Yuqiang的数学测试床：确认本周7/41的分数停滞是否威胁继续投入，还是把测试床和方法论作为独立产出先发表。",
-      "对Qian Jiayu的数据闸门：确认医院数据转向external evaluation或small-scale adaptation的优先级，及DeepTumorVQA复现后续。",
-      "对Liang Ruichao的4基线实验，要求下周必须给出随机干预对照结果；关注USENIX 8/26截止写作进度。",
-      "催交32份未提交周报，并检查是否存在系统性停摆。"
+      "约郭曜齐过会，确认 V8 定位、M5 主实验设计、grounding 三道门阈值；明确不做单 seed 结论。",
+      "让沈奇伟跑 preflight probe 证实 GPT-5.5 坐标格式反转；批准 Gemini key 或决定改代码调换顺序；推广 source-anchored schema。",
+      "与孙宇强确认模型服务长请求稳定性；要求其把重复扫描协议固化为标准命令。",
+      "钱加宇继续数据阶段闸门，不批准大规模训练；下周交付 manifest v0.1 和 ZIP 盘点。",
+      "梁瑞超 USENIX 死线在即，需要老师快速过论文收尾；确定经济元认知基线优先级（随机干预优先）。",
+      "张颢楠：确认阶段二优先做 TB2.1 specification fidelity+token efficiency，把 interactive clarification 后置；帮助冻结 experiment contract。",
+      "处理 31 人未提交问题，要求补齐或说明风险；连续缺失者需要单独跟进。",
+      "统一价值金额和证据等级口径：对明显偏离或缺失 token/成本记录的要求补报；禁止自评过高但无实验。",
+      "对长期设计无实验的线（乔伟、李凯旋、石俊杰、曾婉莹等）设置证据等级升级门槛：连续三周 C 级必须交最小实验或收缩。",
+      "张晓宇三条线并行需要收缩：scam、game/GUI、熵减应各锁定一个最小可验证动作，避免只有框架对齐。"
     ]
   }
 }
