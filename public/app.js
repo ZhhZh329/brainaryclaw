@@ -609,14 +609,22 @@ function innovationGraph(result) {
       ${methods.map((method, index) => {
         const point = points[method.id];
         const ideaCount = asArray(method.ideaIds).length;
-        const nodeRadius = 34 + Math.min(14, ideaCount * 3);
         const label = String(method.name || `方法 ${index + 1}`);
-        const shortLabel = label.length > 10 ? `${label.slice(0, 9)}…` : label;
+        const labelChars = Array.from(label);
+        const lineLength = Math.ceil(labelChars.length / Math.ceil(labelChars.length / 7));
+        const labelLines = Array.from(
+          { length: Math.ceil(labelChars.length / lineLength) },
+          (_, lineIndex) => labelChars.slice(lineIndex * lineLength, (lineIndex + 1) * lineLength).join("")
+        );
+        const nodeRadius = Math.max(48, 36 + labelLines.length * 6);
+        const labelStartY = point.y - 10 - ((labelLines.length - 1) * 7);
         return `
           <g class="innovation-node" data-innovation-method="${esc(method.id)}" tabindex="0" role="button">
             <circle cx="${point.x}" cy="${point.y}" r="${nodeRadius}" fill="${colors[index % colors.length]}" stroke="#fff" stroke-width="4" />
-            <text x="${point.x}" y="${point.y - 2}" fill="#fff" font-size="14" font-weight="750" text-anchor="middle">${esc(shortLabel)}</text>
-            <text x="${point.x}" y="${point.y + 18}" fill="#fff" font-size="12" text-anchor="middle">${ideaCount} Ideas</text>
+            <text fill="#fff" font-size="13" font-weight="750" text-anchor="middle">
+              ${labelLines.map((line, lineIndex) => `<tspan x="${point.x}" y="${labelStartY + lineIndex * 15}">${esc(line)}</tspan>`).join("")}
+            </text>
+            <text x="${point.x}" y="${point.y + 28}" fill="#fff" font-size="11" text-anchor="middle">${ideaCount} Ideas</text>
             <title>${esc(label)} · ${ideaCount} Ideas</title>
           </g>
         `;
