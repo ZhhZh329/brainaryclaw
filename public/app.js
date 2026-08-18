@@ -664,19 +664,28 @@ function innovationGraph(result, rawWeek) {
         const valueWeight = maxValueScore === minValueScore ? 0.5 : (valueScore - minValueScore) / (maxValueScore - minValueScore);
         const label = String(node.shortLabel || rawIdea.project || `Idea ${rawIdea.ideaIndex || ""}`);
         const labelChars = Array.from(label);
-        const lineLength = Math.ceil(labelChars.length / Math.ceil(labelChars.length / 6));
+        const nodeRadius = node.radius;
+        const preferredFontSize = 11 + valueWeight * 4;
+        const availableLabelWidth = nodeRadius * 1.5;
+        const preferredLineLength = Math.max(2, Math.floor(availableLabelWidth / preferredFontSize));
+        const lineCount = Math.min(3, Math.max(1, Math.ceil(labelChars.length / preferredLineLength)));
+        const lineLength = Math.ceil(labelChars.length / lineCount);
         const labelLines = Array.from(
-          { length: Math.ceil(labelChars.length / lineLength) },
+          { length: lineCount },
           (_, lineIndex) => labelChars.slice(lineIndex * lineLength, (lineIndex + 1) * lineLength).join("")
         );
-        const nodeRadius = node.radius;
-        const labelFontSize = 11 + valueWeight * 4;
-        const labelStartY = point.y - ((labelLines.length - 1) * 7);
+        const labelFontSize = Math.min(
+          preferredFontSize,
+          availableLabelWidth / lineLength,
+          (nodeRadius * 1.55) / lineCount
+        );
+        const labelLineHeight = labelFontSize * 1.08;
+        const labelStartY = point.y - ((labelLines.length - 1) * labelLineHeight) / 2 + labelFontSize * 0.34;
         return `
           <g class="innovation-node" data-innovation-idea="${esc(node.ideaId)}" tabindex="0" role="button">
             <circle cx="${point.x}" cy="${point.y}" r="${nodeRadius}" fill="${methodColors[node.methodId] || "#607d75"}" stroke="#fff" stroke-width="4" />
             <text fill="#fff" font-size="${labelFontSize.toFixed(1)}" font-weight="750" text-anchor="middle">
-              ${labelLines.map((line, lineIndex) => `<tspan x="${point.x}" y="${labelStartY + lineIndex * 15}">${esc(line)}</tspan>`).join("")}
+              ${labelLines.map((line, lineIndex) => `<tspan x="${point.x}" y="${labelStartY + lineIndex * labelLineHeight}">${esc(line)}</tspan>`).join("")}
             </text>
             <title>${esc(rawIdea.name || "")} · Idea ${esc(rawIdea.ideaIndex || "")} · ${esc(label)} · 研究价值 ${Math.round(valueScore)}</title>
           </g>
