@@ -139,3 +139,24 @@ export function mergeInnovationIdeas(dataset, extraIdeas = []) {
     })
   };
 }
+
+export function expandInnovationDemo(demo = {}) {
+  const baseIdeas = Array.isArray(demo.ideas) ? demo.ideas : [];
+  const replicas = (Array.isArray(demo.testReplicas) ? demo.testReplicas : []).flatMap((person, personIndex) => {
+    const sourceIdeas = baseIdeas
+      .filter((idea) => idea.slug === person.sourceSlug)
+      .slice(0, Math.max(2, Math.min(3, Number(person.ideaCount) || 2)));
+    return sourceIdeas.map((idea, ideaIndex) => ({
+      ...idea,
+      ideaId: `demo:${idea.week}:${person.slug}:idea-${ideaIndex + 1}`,
+      reportId: `demo:${idea.week}:${person.slug}`,
+      ideaIndex: ideaIndex + 1,
+      name: person.name,
+      slug: person.slug,
+      submittedAt: `2026-08-18T${String(10 + Math.floor(personIndex / 6)).padStart(2, "0")}:${String((personIndex * 7) % 60).padStart(2, "0")}:00+08:00`,
+      rawText: `由历史周报方法线索复制改写的规模测试 Idea；仅用于测试 30 人页面。`,
+      isDemo: true
+    }));
+  });
+  return [...baseIdeas, ...replicas];
+}

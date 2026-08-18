@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import { buildInnovationDataset, mergeInnovationIdeas } from "./innovation.mjs";
+import { buildInnovationDataset, expandInnovationDemo, mergeInnovationIdeas } from "./innovation.mjs";
 
 const root = path.resolve(new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1"));
 const publicDir = path.join(root, "public");
@@ -599,7 +599,7 @@ async function main() {
   const teacherUnknown = buildTeacherUnknownSummary(visibleReports, weeks);
   const extractedInnovation = buildInnovationDataset(visibleReports, weeks, innovationStartWeek);
   const innovationDemo = await readJson(innovationDemoPath).catch(() => ({ ideas: [] }));
-  const innovation = mergeInnovationIdeas(extractedInnovation, innovationDemo?.ideas || []);
+  const innovation = mergeInnovationIdeas(extractedInnovation, expandInnovationDemo(innovationDemo));
 
   const siteData = {
     generatedAt: new Date().toISOString(),

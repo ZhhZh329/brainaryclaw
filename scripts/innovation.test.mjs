@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { buildInnovationDataset, extractInnovationIdeas, mergeInnovationIdeas } from "./innovation.mjs";
+import { buildInnovationDataset, expandInnovationDemo, extractInnovationIdeas, mergeInnovationIdeas } from "./innovation.mjs";
 
 const report = {
   id: "2026-08-23/test-person",
@@ -66,5 +66,13 @@ const merged = mergeInnovationIdeas(dataset, [{
 assert.equal(merged.ideas.length, 3);
 assert.equal(merged.weeks[0].peopleCount, 2);
 assert.equal(merged.ideas.find((idea) => idea.ideaId === "demo:test:idea-1")?.isDemo, true);
+
+const expandedDemo = expandInnovationDemo({
+  ideas: [{ ...ideas[0], isDemo: true }],
+  testReplicas: [{ name: "Replica Person", slug: "replica-person", sourceSlug: "test-person", ideaCount: 2 }]
+});
+assert.equal(expandedDemo.length, 2);
+assert.equal(expandedDemo[1].name, "Replica Person");
+assert.equal(expandedDemo[1].ideaId, "demo:2026-08-23:replica-person:idea-1");
 
 console.log("Innovation extraction tests passed.");

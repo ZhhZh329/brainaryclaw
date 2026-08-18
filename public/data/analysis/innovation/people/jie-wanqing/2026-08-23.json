@@ -1,0 +1,41 @@
+{
+  "key": "innovation:person:jie-wanqing:2026-08-23",
+  "generatedAt": "2026-08-18T07:43:03.034Z",
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "reasoningEffort": "high",
+  "inputHash": "2496b90981520ce65b78bee61b00532884f5a979ebf553f4fea9853a48041375",
+  "contentHash": "2496b90981520ce65b78bee61b00532884f5a979ebf553f4fea9853a48041375",
+  "promptHash": "bf2ddf02742a0fe5a3725c366c40e9f709ba1ad8be9317a8d94674e714368321",
+  "result": {
+    "name": "Jie Wanqing",
+    "week": "2026-08-23",
+    "ideas": [
+      {
+        "ideaId": "demo:2026-08-23:jie-wanqing:idea-1",
+        "essence": "复用已有两秒一次 affect_samples 流记录 agency_mode，而非新增周期性快照管道。",
+        "origin": "起点是 agency_transitions 只记录切换，且日志缺少结构化代理状态，导致任意时间点代理轨迹无法重构。",
+        "keyMoves": [
+          "反查现有采样链路",
+          "发现 affect_samples 已携带 session、stage、step",
+          "提出仅补一个 agency 标签"
+        ],
+        "innovationKernel": "用既有高频数据流承载新构念，以最小系统成本修复完整轨迹。",
+        "reusablePattern": "当缺少某状态轨迹时，优先查找已携带关联维度的高频数据流，通过补标签而非新建管道修复。"
+      },
+      {
+        "ideaId": "demo:2026-08-23:jie-wanqing:idea-2",
+        "essence": "把实验数据统一到 Student × Lab × Session × Stage × Step 五维，并生成可直接供统计分析使用的预连接汇总。",
+        "origin": "起点是行为、情感、视线和干预数据分散在不同表中，后续分析需要复杂 JOIN 且维度难以对齐。",
+        "keyMoves": [
+          "确定所有研究问题共同需要的最小追踪粒度",
+          "为既有表补充 stage/step",
+          "在会话结束时计算去规范化 session_metrics"
+        ],
+        "innovationKernel": "用统一分析粒度反向约束采集 schema，让原始证据和统计分析之间只需一次连接。",
+        "reusablePattern": "对分散数据，先确定共同最小追踪粒度，再反向补充维度并生成预连接汇总，以降低后续分析连接复杂度。"
+      }
+    ],
+    "overallPattern": "两个 Idea 都通过复用或统一既有数据维度/流，以最小改动补全追踪或分析所需的结构化证据。"
+  }
+}

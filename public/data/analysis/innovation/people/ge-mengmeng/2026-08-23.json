@@ -1,0 +1,41 @@
+{
+  "key": "innovation:person:ge-mengmeng:2026-08-23",
+  "generatedAt": "2026-08-18T07:42:39.309Z",
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "reasoningEffort": "high",
+  "inputHash": "28dd4802691761fe0a70e52b797b8189593e05ada259c2139cff026cb2f24c77",
+  "contentHash": "28dd4802691761fe0a70e52b797b8189593e05ada259c2139cff026cb2f24c77",
+  "promptHash": "bf2ddf02742a0fe5a3725c366c40e9f709ba1ad8be9317a8d94674e714368321",
+  "result": {
+    "name": "Ge Mengmeng",
+    "week": "2026-08-23",
+    "ideas": [
+      {
+        "ideaId": "demo:2026-08-23:ge-mengmeng:idea-1",
+        "essence": "复用已有两秒一次的 affect_samples 流记录 agency_mode，而非新增周期性快照管道。",
+        "origin": "agency_transitions 只记录切换，日志缺乏结构化 agency 状态，导致任意时间点 agency 轨迹无法重构。",
+        "keyMoves": [
+          "从数据缺口反查现有采样链路",
+          "发现 affect_samples 已携带 session、stage 和 step",
+          "确定仅补 agency 标签即可获得更高频且可关联的状态记录"
+        ],
+        "innovationKernel": "用既有高频数据流承载新构念，以最小系统成本修复完整轨迹。",
+        "reusablePattern": "优先在已有数据流上扩展字段，而不是新建采集管道；先识别现有记录中的可关联维度，再补最小标签。"
+      },
+      {
+        "ideaId": "demo:2026-08-23:ge-mengmeng:idea-2",
+        "essence": "把实验数据统一到 Student × Lab × Session × Stage × Step 五维，并生成可直接供统计分析使用的预连接汇总。",
+        "origin": "行为、情感、视线和干预数据分散在不同表中，后续分析需要复杂 JOIN 且维度难以对齐。",
+        "keyMoves": [
+          "确定所有研究问题共同需要的最小追踪粒度",
+          "为既有表补充 stage/step",
+          "在会话结束时计算去规范化 session_metrics"
+        ],
+        "innovationKernel": "用统一分析粒度反向约束采集 schema，让原始证据与统计分析之间只需一次连接。",
+        "reusablePattern": "以最终分析所需最小粒度反向设计采集表结构，并预先生成汇总层，减少后续重复连接。"
+      }
+    ],
+    "overallPattern": "两个 Idea 都表现为：识别数据缺口后，复用或统一现有数据维度，以最小改动补足可分析状态或汇总层。"
+  }
+}

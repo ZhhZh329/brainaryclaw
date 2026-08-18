@@ -579,10 +579,11 @@ function innovationGraph(result) {
   if (!methods.length) return "";
   const compact = window.innerWidth <= 600;
   const width = compact ? 380 : 900;
-  const height = compact ? Math.max(320, Math.ceil(methods.length / 2) * 136 + 80) : 540;
+  const dense = methods.length > 10;
+  const height = compact ? Math.max(320, Math.ceil(methods.length / 2) * 136 + 80) : (dense ? 640 : 540);
   const centerX = width / 2;
   const centerY = height / 2;
-  const radius = methods.length <= 2 ? 155 : 205;
+  const radius = methods.length <= 2 ? 155 : (dense ? 245 : 205);
   const colors = ["#0f766e", "#8a5a2b", "#3f5f91", "#8b3f62", "#51723b", "#76558f"];
   const valueScores = methods.map((method) => Math.max(1, Math.min(100, Number(method.valueScore) || 50)));
   const minValueScore = Math.min(...valueScores);
@@ -728,7 +729,12 @@ async function renderInnovation(weekId) {
             <h2>${esc(selected.week)} 方法关系</h2>
             <p class="muted">点击方法节点或连线查看对应 Idea 与关联依据。</p>
           </div>
-          ${innovationGraph(result)}
+          <div class="innovation-zoom-controls" aria-label="关系图缩放">
+            <button type="button" data-innovation-zoom-out aria-label="缩小关系图" title="缩小">−</button>
+            <button type="button" data-innovation-zoom-reset aria-label="复位关系图" title="复位">↺</button>
+            <button type="button" data-innovation-zoom-in aria-label="放大关系图" title="放大">+</button>
+          </div>
+          <div class="innovation-canvas">${innovationGraph(result)}</div>
         </div>
         <aside class="panel innovation-detail" id="innovation-detail">
           ${methods.length ? innovationMethodDetail(methods[0], rawWeek) : `<p class="muted">本周没有可展示的方法节点。</p>`}
@@ -756,6 +762,30 @@ function bindInnovationPage(result, rawWeek, week) {
   const methods = Object.fromEntries(asArray(result?.methods).map((method) => [method.id, method]));
   const relations = asArray(result?.relations);
   const detail = document.querySelector("#innovation-detail");
+  const canvas = document.querySelector(".innovation-canvas");
+  const graph = document.querySelector("#innovation-network");
+  let graphZoom = 1;
+  const applyGraphZoom = () => {
+    if (!graph) return;
+    graph.style.width = `${graphZoom * 100}%`;
+    graph.style.maxHeight = graphZoom === 1 ? "" : "none";
+  };
+  document.querySelector("[data-innovation-zoom-out]")?.addEventListener("click", () => {
+    graphZoom = Math.max(0.75, graphZoom - 0.25);
+    applyGraphZoom();
+  });
+  document.querySelector("[data-innovation-zoom-in]")?.addEventListener("click", () => {
+    graphZoom = Math.min(2.5, graphZoom + 0.25);
+    applyGraphZoom();
+  });
+  document.querySelector("[data-innovation-zoom-reset]")?.addEventListener("click", () => {
+    graphZoom = 1;
+    applyGraphZoom();
+    if (canvas) {
+      canvas.scrollLeft = 0;
+      canvas.scrollTop = 0;
+    }
+  });
   const activate = (selector, current) => {
     document.querySelectorAll(selector).forEach((item) => item.classList.toggle("selected", item === current));
   };

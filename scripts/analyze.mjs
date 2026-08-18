@@ -35,6 +35,7 @@ const personWeekPolicy = process.env.WEEKREP_PERSON_WEEK_ANALYSIS_POLICY || "on-
 const reanalyzeOnPromptChange = process.env.WEEKREP_REANALYZE_ON_PROMPT_CHANGE === "1";
 const maxGeneratedPerRun = Math.max(0, Number(process.env.WEEKREP_ANALYZE_MAX_GENERATED_PER_RUN || 0));
 const allowOpenInnovationWeek = process.env.WEEKREP_INNOVATION_ALLOW_OPEN_WEEK === "1";
+const refreshInnovationWeek = process.env.WEEKREP_INNOVATION_REFRESH_WEEK === "1";
 let generatedStarted = 0;
 
 async function loadLocalEnv() {
@@ -748,7 +749,7 @@ async function main() {
         peopleCount: candidate.rawWeek.peopleCount,
         people: personalSummaries
       },
-      cachePolicy: "once",
+      cachePolicy: refreshInnovationWeek ? "hash" : "once",
       validateResult: validInnovationWeekOutput
     });
   }
