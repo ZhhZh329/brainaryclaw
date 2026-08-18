@@ -574,10 +574,17 @@ function innovationWeekControls(currentWeek) {
   `;
 }
 
-const innovationPalette = ["#0f766e", "#8a5a2b", "#3f5f91", "#8b3f62", "#51723b", "#76558f", "#9a6a16", "#35718b", "#8a4f3d", "#4f6b46", "#6d5e95", "#8a6a76"];
-
 function innovationMethodColors(methods) {
-  return Object.fromEntries(methods.map((method, index) => [method.id, innovationPalette[index % innovationPalette.length]]));
+  const count = Math.max(1, methods.length);
+  const phase = methods.reduce((sum, method) => (
+    sum + Array.from(String(method.name || method.id)).reduce((hash, char) => hash + char.codePointAt(0), 0)
+  ), 0) % 360;
+  return Object.fromEntries(methods.map((method, index) => {
+    const hue = Math.round((phase + (360 * index) / count) % 360);
+    const saturation = 48 + (index % 3) * 6;
+    const lightness = 34 + (index % 2) * 5;
+    return [method.id, `hsl(${hue} ${saturation}% ${lightness}%)`];
+  }));
 }
 
 function innovationLegend(result) {
