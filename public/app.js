@@ -577,8 +577,9 @@ function innovationWeekControls(currentWeek) {
 function innovationGraph(result) {
   const methods = asArray(result?.methods).slice(0, 12);
   if (!methods.length) return "";
-  const width = 900;
-  const height = 540;
+  const compact = window.innerWidth <= 600;
+  const width = compact ? 380 : 900;
+  const height = compact ? Math.max(320, Math.ceil(methods.length / 2) * 120 + 80) : 540;
   const centerX = width / 2;
   const centerY = height / 2;
   const radius = methods.length <= 2 ? 155 : 205;
@@ -586,8 +587,8 @@ function innovationGraph(result) {
   const points = Object.fromEntries(methods.map((method, index) => {
     const angle = methods.length === 1 ? 0 : (-Math.PI / 2 + (Math.PI * 2 * index) / methods.length);
     return [method.id, {
-      x: methods.length === 1 ? centerX : centerX + Math.cos(angle) * radius,
-      y: methods.length === 1 ? centerY : centerY + Math.sin(angle) * radius
+      x: compact ? (index % 2 ? 275 : 105) : (methods.length === 1 ? centerX : centerX + Math.cos(angle) * radius),
+      y: compact ? 90 + Math.floor(index / 2) * 120 : (methods.length === 1 ? centerY : centerY + Math.sin(angle) * radius)
     }];
   }));
   const relations = asArray(result?.relations).filter((relation) => points[relation.source] && points[relation.target]).slice(0, 20);
