@@ -331,6 +331,7 @@ function route() {
   if (path === "/people") return renderPeople();
   if (path === "/person") return renderPerson(params().get("slug"));
   if (path === "/teacher-unknown") return renderTeacherUnknown(params().get("week"));
+  if (path === "/innovation") return renderInnovation(params().get("week"));
   if (path === "/search") return renderSearch();
   if (path === "/template") return renderTemplate();
   return renderHome();
@@ -400,6 +401,7 @@ function renderHome() {
         <a class="button" href="#/monthlies">月度分析</a>
         <a class="button" href="#/person-analysis">个人分析</a>
         <a class="button" href="#/teacher-unknown">老师不知道</a>
+        <a class="button" href="#/innovation">创新方法论</a>
         <a class="button" href="#/search">全文搜索</a>
       </div>
     </section>
@@ -525,6 +527,252 @@ function bindTeacherUnknownPicker() {
       select.value = weeks[next];
       go();
     });
+  });
+}
+
+function innovationWeeks() {
+  return (state.innovation?.weeks || []).slice().sort((a, b) => a.week.localeCompare(b.week));
+}
+
+function latestInnovationWeek() {
+  const weeks = innovationWeeks();
+  return weeks.filter((week) => week.count > 0).at(-1) || weeks.at(-1);
+}
+
+function innovationAnalysisKey(week) {
+  return `innovation:week:${week}`;
+}
+
+async function loadInnovationWeek(week) {
+  const response = await fetch(`data/innovation/weeks/${encodeURIComponent(week)}.json`, { cache: "no-store" });
+  if (!response.ok) return { week, count: 0, peopleCount: 0, items: [] };
+  return response.json();
+}
+
+async function loadInnovationAnalysis(week) {
+  const key = innovationAnalysisKey(week);
+  const file = analysisManifest?.items?.[key]?.file || `data/analysis/innovation/weeks/${week}.json`;
+  const response = await fetch(file, { cache: "no-store" });
+  if (!response.ok) return null;
+  return response.json();
+}
+
+function innovationWeekControls(currentWeek) {
+  const weeks = innovationWeeks();
+  const index = Math.max(0, weeks.findIndex((week) => week.week === currentWeek));
+  const previous = weeks[Math.max(0, index - 1)]?.week || currentWeek;
+  const next = weeks[Math.min(weeks.length - 1, index + 1)]?.week || currentWeek;
+  const href = (week) => `#/innovation?week=${encodeURIComponent(week)}`;
+  return html`
+    <span class="week-controls inline-week-controls">
+      <a class="button" href="${href(previous)}" title="上一周">‹</a>
+      <select data-innovation-week-select>
+        ${weeks.slice().reverse().map((week) => `<option value="${esc(week.week)}" ${week.week === currentWeek ? "selected" : ""}>${esc(week.week)} · ${week.count}</option>`).join("")}
+      </select>
+      <a class="button" href="${href(next)}" title="下一周">›</a>
+    </span>
+  `;
+}
+
+function innovationGraph(result) {
+  const methods = asArray(result?.methods).slice(0, 12);
+  if (!methods.length) return "";
+  const width = 900;
+  const height = 540;
+  const centerX = width / 2;
+  const centerY = height / 2;
+  const radius = methods.length <= 2 ? 155 : 205;
+  const colors = ["#0f766e", "#8a5a2b", "#3f5f91", "#8b3f62", "#51723b", "#76558f"];
+  const points = Object.fromEntries(methods.map((method, index) => {
+    const angle = methods.length === 1 ? 0 : (-Math.PI / 2 + (Math.PI * 2 * index) / methods.length);
+    return [method.id, {
+      x: methods.length === 1 ? centerX : centerX + Math.cos(angle) * radius,
+      y: methods.length === 1 ? centerY : centerY + Math.sin(angle) * radius
+    }];
+  }));
+  const relations = asArray(result?.relations).filter((relation) => points[relation.source] && points[relation.target]).slice(0, 20);
+  return html`
+    <svg id="innovation-network" class="innovation-network" viewBox="0 0 ${width} ${height}" role="img" aria-label="本周创新方法论关系图" xmlns="http://www.w3.org/2000/svg">
+      <rect width="${width}" height="${height}" rx="8" fill="#fbfaf8" />
+      ${relations.map((relation, index) => {
+        const source = points[relation.source];
+        const target = points[relation.target];
+        return `
+          <g class="innovation-edge" data-innovation-relation="${index}" tabindex="0" role="button">
+            <line x1="${source.x}" y1="${source.y}" x2="${target.x}" y2="${target.y}" stroke="#aaa298" stroke-width="2" />
+            <line class="innovation-edge-hit" x1="${source.x}" y1="${source.y}" x2="${target.x}" y2="${target.y}" stroke="transparent" stroke-width="16" />
+            <title>${esc(relation.type || "关联")}：${esc(relation.reason || "")}</title>
+          </g>
+        `;
+      }).join("")}
+      ${methods.map((method, index) => {
+        const point = points[method.id];
+        const ideaCount = asArray(method.ideaIds).length;
+        const nodeRadius = 34 + Math.min(14, ideaCount * 3);
+        const label = String(method.name || `方法 ${index + 1}`);
+        const shortLabel = label.length > 10 ? `${label.slice(0, 9)}…` : label;
+        return `
+          <g class="innovation-node" data-innovation-method="${esc(method.id)}" tabindex="0" role="button">
+            <circle cx="${point.x}" cy="${point.y}" r="${nodeRadius}" fill="${colors[index % colors.length]}" stroke="#fff" stroke-width="4" />
+            <text x="${point.x}" y="${point.y - 2}" fill="#fff" font-size="14" font-weight="750" text-anchor="middle">${esc(shortLabel)}</text>
+            <text x="${point.x}" y="${point.y + 18}" fill="#fff" font-size="12" text-anchor="middle">${ideaCount} Ideas</text>
+            <title>${esc(label)} · ${ideaCount} Ideas</title>
+          </g>
+        `;
+      }).join("")}
+    </svg>
+  `;
+}
+
+function innovationIdeaCard(idea) {
+  return html`
+    <article class="innovation-idea-card">
+      <div class="innovation-idea-head">
+        <strong>${esc(idea.name)}</strong>
+        <span class="badge">${esc(idea.project || "未命名项目")}</span>
+      </div>
+      <p>${esc(idea.idea || idea.innovationPoint || "")}</p>
+      ${idea.formationProcess ? `<p class="innovation-formation"><strong>形成过程：</strong>${esc(idea.formationProcess)}</p>` : ""}
+      ${idea.innovationPoint ? `<p class="muted"><strong>创新点：</strong>${esc(idea.innovationPoint)}</p>` : ""}
+    </article>
+  `;
+}
+
+function innovationMethodDetail(method, rawWeek) {
+  const ideaIds = new Set(asArray(method?.ideaIds));
+  const ideas = asArray(rawWeek?.items).filter((idea) => ideaIds.has(idea.ideaId));
+  return html`
+    <div class="innovation-detail-head">
+      <span class="badge">${ideas.length} Ideas</span>
+      <h2>${esc(method?.name || "创新方法")}</h2>
+      <p class="muted">${esc(method?.description || "")}</p>
+    </div>
+    <div class="innovation-idea-list">
+      ${ideas.length ? ideas.map(innovationIdeaCard).join("") : `<p class="muted">这一方法暂时没有可回指的 Idea。</p>`}
+    </div>
+  `;
+}
+
+function innovationRelationDetail(relation, result, rawWeek) {
+  const methods = Object.fromEntries(asArray(result?.methods).map((method) => [method.id, method]));
+  const ideaIds = new Set(asArray(relation?.ideaIds));
+  const ideas = asArray(rawWeek?.items).filter((idea) => ideaIds.has(idea.ideaId));
+  return html`
+    <div class="innovation-detail-head">
+      <span class="badge">${esc(relation?.type || "关联")}</span>
+      <h2>${esc(methods[relation?.source]?.name || relation?.source)} ↔ ${esc(methods[relation?.target]?.name || relation?.target)}</h2>
+      <p>${esc(relation?.reason || "")}</p>
+    </div>
+    <div class="innovation-idea-list">
+      ${ideas.length ? ideas.map(innovationIdeaCard).join("") : `<p class="muted">这条关系暂时没有可回指的 Idea。</p>`}
+    </div>
+  `;
+}
+
+async function renderInnovation(weekId) {
+  const weeks = innovationWeeks();
+  const selected = weeks.find((week) => week.week === weekId) || latestInnovationWeek();
+  if (!selected) {
+    app.innerHTML = `<section class="panel"><h1>创新方法论</h1><p class="muted">功能尚未到启用周次。</p></section>`;
+    return;
+  }
+  app.innerHTML = `<section class="panel"><h1>${esc(selected.week)} 创新方法论</h1><p class="muted">正在加载...</p></section>`;
+  const [rawWeek, payload] = await Promise.all([
+    loadInnovationWeek(selected.week),
+    loadInnovationAnalysis(selected.week).catch(() => null)
+  ]);
+  const result = payload?.result || null;
+  const methods = asArray(result?.methods);
+  app.innerHTML = html`
+    <section class="hero innovation-hero">
+      <div>
+        <h1>创新方法论</h1>
+        <p class="muted">${result ? esc(result.headline || "本周创新方法关系已生成。") : `从 ${esc(state.innovation?.startWeek || selected.week)} 开始采集；周一 08:00 后生成本周关系分析。`}</p>
+      </div>
+      <div class="toolbar">
+        ${innovationWeekControls(selected.week)}
+        <a class="button" href="data/innovation/innovation-ideas.jsonl" download="innovation-ideas.jsonl">导出全部原始数据</a>
+        ${methods.length ? `<button data-export-innovation-svg>导出关系图 SVG</button>` : ""}
+      </div>
+    </section>
+    <section class="stats innovation-stats">
+      <div class="stat"><strong>${rawWeek.count || 0}</strong><span>Ideas</span></div>
+      <div class="stat"><strong>${rawWeek.peopleCount || 0}</strong><span>人员</span></div>
+      <div class="stat"><strong>${methods.length}</strong><span>方法</span></div>
+      <div class="stat"><strong>${asArray(result?.relations).length}</strong><span>关联</span></div>
+    </section>
+    ${result ? `
+      <section class="briefing-summary innovation-summary">
+        ${asArray(result.summary).slice(0, 3).map((item) => `<div class="briefing-point">${esc(item)}</div>`).join("")}
+      </section>
+      <section class="innovation-layout">
+        <div class="chart-panel innovation-graph-panel">
+          <div class="section-head">
+            <h2>${esc(selected.week)} 方法关系</h2>
+            <p class="muted">点击方法节点或连线查看对应 Idea 与关联依据。</p>
+          </div>
+          ${innovationGraph(result)}
+        </div>
+        <aside class="panel innovation-detail" id="innovation-detail">
+          ${methods.length ? innovationMethodDetail(methods[0], rawWeek) : `<p class="muted">本周没有可展示的方法节点。</p>`}
+        </aside>
+      </section>
+      <section class="panel innovation-questions">
+        <h2>老师追问</h2>
+        <div class="list">${asArray(result.teacherQuestions).map((item) => `<div class="row"><strong>问题</strong><span>${esc(item)}</span><span></span></div>`).join("")}</div>
+      </section>
+    ` : `
+      <section class="panel innovation-empty">
+        <h2>${esc(selected.week)}</h2>
+        <p class="muted">${rawWeek.count ? `已采集 ${rawWeek.count} 个 Idea，关系分析将在本周截止后生成。` : "本周还没有采集到 Idea。"}</p>
+      </section>
+    `}
+  `;
+  bindInnovationPage(result, rawWeek, selected.week);
+}
+
+function bindInnovationPage(result, rawWeek, week) {
+  const select = document.querySelector("[data-innovation-week-select]");
+  select?.addEventListener("change", () => {
+    location.hash = `#/innovation?week=${encodeURIComponent(select.value)}`;
+  });
+  const methods = Object.fromEntries(asArray(result?.methods).map((method) => [method.id, method]));
+  const relations = asArray(result?.relations);
+  const detail = document.querySelector("#innovation-detail");
+  const activate = (selector, current) => {
+    document.querySelectorAll(selector).forEach((item) => item.classList.toggle("selected", item === current));
+  };
+  document.querySelectorAll("[data-innovation-method]").forEach((node) => {
+    const show = () => {
+      if (detail) detail.innerHTML = innovationMethodDetail(methods[node.dataset.innovationMethod], rawWeek);
+      activate("[data-innovation-method]", node);
+      activate("[data-innovation-relation]", null);
+    };
+    node.addEventListener("click", show);
+    node.addEventListener("keydown", (event) => { if (event.key === "Enter" || event.key === " ") show(); });
+  });
+  document.querySelectorAll("[data-innovation-relation]").forEach((edge) => {
+    const show = () => {
+      const relation = relations[Number(edge.dataset.innovationRelation)];
+      if (detail && relation) detail.innerHTML = innovationRelationDetail(relation, result, rawWeek);
+      activate("[data-innovation-relation]", edge);
+      activate("[data-innovation-method]", null);
+    };
+    edge.addEventListener("click", show);
+    edge.addEventListener("keydown", (event) => { if (event.key === "Enter" || event.key === " ") show(); });
+  });
+  document.querySelector("[data-export-innovation-svg]")?.addEventListener("click", () => {
+    const svg = document.querySelector("#innovation-network");
+    if (!svg) return;
+    const clone = svg.cloneNode(true);
+    clone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    const blob = new Blob([new XMLSerializer().serializeToString(clone)], { type: "image/svg+xml;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `innovation-methodology-${week}.svg`;
+    link.click();
+    URL.revokeObjectURL(url);
   });
 }
 

@@ -7,6 +7,7 @@ const dataPath = path.join(root, "public", "data", "site-data.json");
 const analysisDir = path.join(root, "public", "data", "analysis");
 const manifestPath = path.join(analysisDir, "manifest.json");
 const promptsPath = path.join(root, "prompts", "weekrep-analysis-prompts.json");
+const innovationDir = path.join(root, "public", "data", "innovation");
 
 await loadLocalEnv();
 
@@ -162,6 +163,44 @@ function isValidReport(report) {
   return String(report?.rawText || "").trim().length > minValidReportChars;
 }
 
+function compactInnovationIdea(idea) {
+  return {
+    ideaId: idea.ideaId,
+    project: idea.project || "",
+    idea: idea.idea || "",
+    startingProblem: idea.startingProblem || "",
+    formationProcess: idea.formationProcess || "",
+    innovationPoint: idea.innovationPoint || "",
+    rawText: idea.rawText || ""
+  };
+}
+
+function validInnovationPersonOutput(result, expectedIdeaIds) {
+  const ideas = result?.ideas;
+  if (!Array.isArray(ideas) || !ideas.length) return false;
+  const returned = new Set(ideas.map((idea) => idea?.ideaId).filter(Boolean));
+  return expectedIdeaIds.every((ideaId) => returned.has(ideaId));
+}
+
+function validInnovationWeekOutput(result, input) {
+  const methods = result?.methods;
+  if (!Array.isArray(methods) || !methods.length) return false;
+  const methodIds = new Set(methods.map((method) => method?.id).filter(Boolean));
+  const inputIdeaIds = new Set(input.people.flatMap((person) => person.result.ideas.map((idea) => idea.ideaId)));
+  if (methods.some((method) => !method?.id || !Array.isArray(method.ideaIds) || method.ideaIds.some((ideaId) => !inputIdeaIds.has(ideaId)))) return false;
+  return asArrayForValidation(result.relations).every((relation) => (
+    methodIds.has(relation?.source)
+    && methodIds.has(relation?.target)
+    && asArrayForValidation(relation?.ideaIds).every((ideaId) => inputIdeaIds.has(ideaId))
+  ));
+}
+
+function asArrayForValidation(value) {
+  if (Array.isArray(value)) return value;
+  if (value == null) return [];
+  return [value];
+}
+
 function textFromResponse(payload) {
   if (payload.output_text) return payload.output_text;
   const parts = [];
@@ -269,13 +308,15 @@ async function callModel({ system, prompt, input }) {
   }
 }
 
-async function analyzeItem({ key, file, input, prompt, system, manifest, cachePolicy = "hash" }) {
+async function analyzeItem({ key, file, input, prompt, system, manifest, cachePolicy = "hash", validateResult = null }) {
   const contentHash = hash({ input });
   const promptHash = hash({ prompt, system, model, reasoningEffort });
   const inputHash = reanalyzeOnPromptChange ? hash({ contentHash, promptHash }) : contentHash;
   const previous = manifest.items[key];
   const fileExists = await fs.access(file).then(() => true, () => false);
-  if (!force && cachePolicy === "once" && fileExists) {
+  const existingPayload = fileExists && validateResult ? await readJson(file) : null;
+  const validFile = fileExists && (!validateResult || validateResult(existingPayload?.result, input));
+  if (!force && cachePolicy === "once" && validFile) {
     if (!previous) {
       manifest.items[key] = {
         inputHash,
@@ -290,13 +331,13 @@ async function analyzeItem({ key, file, input, prompt, system, manifest, cachePo
     }
     return { key, status: "cached" };
   }
-  if (!force && fileExists && previous && !previous.contentHash) {
+  if (!force && validFile && previous && !previous.contentHash) {
     previous.contentHash = contentHash;
     previous.promptHash = previous.promptHash || promptHash;
     previous.inputHash = inputHash;
     return { key, status: "cached" };
   }
-  if (!force && previous?.inputHash === inputHash && fileExists) {
+  if (!force && previous?.inputHash === inputHash && validFile) {
     return { key, status: "cached" };
   }
   if (maxGeneratedPerRun && generatedStarted >= maxGeneratedPerRun) {
@@ -307,6 +348,9 @@ async function analyzeItem({ key, file, input, prompt, system, manifest, cachePo
   let result;
   try {
     result = await callModel({ system, prompt, input });
+    if (validateResult && !result?.skipped && !validateResult(result, input)) {
+      throw new Error(`Analysis returned invalid structured output for ${key}`);
+    }
   } catch (error) {
     manifest.items[key] = {
       inputHash: previous?.inputHash || "",
@@ -371,6 +415,7 @@ async function main() {
   manifest.updatedAt = new Date().toISOString();
 
   const jobs = [];
+  const innovationCandidates = [];
   const system = prompts.sharedSystemPrompt;
   const weeksById = Object.fromEntries(site.weeks.map((week) => [week.week, week]));
   const shouldQueuePersonWeek = (week) => {
@@ -575,6 +620,40 @@ async function main() {
     }
   }
 
+  if (analysisTypes.has("innovation-week")) {
+    const innovationStartWeek = site.innovation?.startWeek || "2026-08-23";
+    const eligibleWeeks = pastDeadlineWeeks.filter((week) => (
+      week.week >= innovationStartWeek
+      && (!weekFilter.size || weekFilter.has(week.week))
+    ));
+    for (const week of eligibleWeeks) {
+      const rawWeek = await readJson(path.join(innovationDir, "weeks", `${week.week}.json`));
+      if (!rawWeek?.items?.length) continue;
+      const byPerson = Map.groupBy(rawWeek.items, (idea) => idea.slug);
+      const people = [...byPerson.entries()].map(([personSlug, ideas]) => ({
+        slug: personSlug,
+        name: ideas[0]?.name || personSlug,
+        ideas: ideas.slice().sort((a, b) => a.ideaIndex - b.ideaIndex)
+      })).sort((a, b) => a.name.localeCompare(b.name));
+      innovationCandidates.push({ week: week.week, rawWeek, people });
+      for (const person of people) {
+        jobs.push({
+          key: `innovation:person:${person.slug}:${week.week}`,
+          file: path.join(analysisDir, "innovation", "people", person.slug, `${week.week}.json`),
+          system,
+          prompt: prompts.prompts.innovationPerson.prompt,
+          input: {
+            week: week.week,
+            name: person.name,
+            ideas: person.ideas.map(compactInnovationIdea)
+          },
+          cachePolicy: "once",
+          validateResult: (result) => validInnovationPersonOutput(result, person.ideas.map((idea) => idea.ideaId))
+        });
+      }
+    }
+  }
+
   if (analysisTypes.has("month-horizontal") && !personFilter.size) {
     const monthGroups = Map.groupBy(pastDeadlineWeeks, (week) => String(week.week).slice(0, 7));
     for (const [month, monthWeeks] of monthGroups) {
@@ -625,15 +704,59 @@ async function main() {
     concurrency
   );
 
+  const innovationWeekJobs = [];
+  for (const candidate of innovationCandidates) {
+    const personalSummaries = [];
+    let complete = true;
+    for (const person of candidate.people) {
+      const file = path.join(analysisDir, "innovation", "people", person.slug, `${candidate.week}.json`);
+      const payload = await readJson(file);
+      const expectedIdeaIds = person.ideas.map((idea) => idea.ideaId);
+      if (!validInnovationPersonOutput(payload?.result, expectedIdeaIds)) {
+        complete = false;
+        break;
+      }
+      personalSummaries.push({
+        name: person.name,
+        slug: person.slug,
+        result: payload.result
+      });
+    }
+    if (!complete) {
+      console.warn(`Innovation week ${candidate.week} is waiting for complete personal summaries.`);
+      continue;
+    }
+    innovationWeekJobs.push({
+      key: `innovation:week:${candidate.week}`,
+      file: path.join(analysisDir, "innovation", "weeks", `${candidate.week}.json`),
+      system,
+      prompt: prompts.prompts.innovationWeek.prompt,
+      input: {
+        week: candidate.week,
+        ideaCount: candidate.rawWeek.count,
+        peopleCount: candidate.rawWeek.peopleCount,
+        people: personalSummaries
+      },
+      cachePolicy: "once",
+      validateResult: validInnovationWeekOutput
+    });
+  }
+  const innovationWeekResults = await runConcurrent(
+    innovationWeekJobs,
+    (job) => analyzeItem({ ...job, manifest }),
+    concurrency
+  );
+  const allResults = [...results, ...innovationWeekResults];
+
   manifest.summary = {
-    total: selectedJobs.length,
-    available: jobs.length,
+    total: selectedJobs.length + innovationWeekJobs.length,
+    available: jobs.length + innovationWeekJobs.length,
     concurrency,
     types: [...analysisTypes],
-    generated: results.filter((item) => item.status === "generated").length,
-    cached: results.filter((item) => item.status === "cached").length,
-    skipped: results.filter((item) => item.status === "skipped").length,
-    failed: results.filter((item) => item.status === "failed").length
+    generated: allResults.filter((item) => item.status === "generated").length,
+    cached: allResults.filter((item) => item.status === "cached").length,
+    skipped: allResults.filter((item) => item.status === "skipped").length,
+    failed: allResults.filter((item) => item.status === "failed").length
   };
   await writeJson(manifestPath, manifest);
   console.log(`Analysis jobs: ${manifest.summary.generated} generated, ${manifest.summary.cached} cached, ${manifest.summary.skipped} skipped, ${manifest.summary.failed} failed.`);

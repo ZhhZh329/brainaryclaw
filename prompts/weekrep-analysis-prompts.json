@@ -33,6 +33,16 @@
       "outputFormat": "json",
       "prompt": "用中文给这一份单周周报独立打分。只评价当前这一周，不参考历史周报。评分必须基于周报模板，而不是字数或态度。总分 100 分，维度为：hardProgress 20 分，cognitiveIncrement 15 分，cot2Depth 15 分，brainaryMapping 10 分，monetaryValue 10 分，projectManagement 15 分，nextAction 10 分，evidenceQuality 5 分。每个维度给 score、reason、missingEvidence。最后给 totalScore、tier（S/A/B/C/Risk）、oneLineJudgment、professorFollowUp。JSON 字段名保持英文，但所有面向人读的字符串值必须是中文。"
     },
+    "innovationPerson": {
+      "purpose": "Compress one person's weekly idea-formation records without imposing a fixed taxonomy.",
+      "outputFormat": "json",
+      "prompt": "把这个人本周填写的 1-3 个 Idea 形成过程压缩成高密度、可供后续横向分析的中文摘要。只使用输入内容，不补写缺失的动机、步骤或因果关系，不评价个人优劣，不预设统一的方法论分类。固定输出 JSON 外壳，但允许每个 Idea 的 keyMoves 数量不同。返回字段 name, week, ideas, overallPattern。ideas 中每项必须包含 ideaId, essence, origin, keyMoves, innovationKernel, reusablePattern。ideaId 必须原样复制输入。essence 说明 Idea 本质；origin 说明真实起点；keyMoves 只保留真正推动 Idea 形成的思维动作；innovationKernel 说明不可替代的创新核心；reusablePattern 提炼可复用但不过度泛化的方法。每个 Idea 的人读内容合计控制在 120-200 个汉字，overallPattern 只写一句。所有人名严格照抄输入英文 name；所有面向人读的内容用简体中文。"
+    },
+    "innovationWeek": {
+      "purpose": "Synthesize all personal idea summaries into a weekly innovation-method network.",
+      "outputFormat": "json",
+      "prompt": "基于本周所有人的个人创新摘要，归纳创新方法之间的联系，生成老师可阅读的创新方法论关系网络。不要重新分析冗长原文，不做人际排名，不评价谁缺乏创新，不虚构人员、项目、Idea 或关联。每个方法和每条关系都必须通过 ideaIds 回指输入中真实存在的 ideaId。方法是本周材料中动态出现的候选类别，不要强行套入预设 taxonomy。返回 JSON 字段 headline, summary, methods, relations, teacherQuestions。headline 是一句话；summary 最多 3 条。methods 是数组，最多 12 项，每项包含 id, name, description, ideaIds；id 使用 method-1、method-2 的稳定形式，name 简短。relations 是数组，最多 20 项，每项包含 source, target, type, reason, ideaIds；source 和 target 必须引用 methods 中的 id。teacherQuestions 为 3-5 个老师可直接追问的问题。英文姓名严格照抄输入；所有面向人读的内容用简体中文。"
+    },
     "weekBriefing": {
       "purpose": "Professor-facing weekly briefing after the weekly deadline.",
       "outputFormat": "json",

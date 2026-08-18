@@ -1,5 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import { buildInnovationDataset } from "./innovation.mjs";
 
 const root = path.resolve(new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1"));
 const publicDir = path.join(root, "public");
@@ -14,6 +15,7 @@ const templatePath = process.env.WEEKREP_TEMPLATE_PATH || path.join(sourceRoot, 
 const nameAliasesPath = process.env.WEEKREP_NAME_ALIASES_PATH || path.join(root, "config", "name-aliases.json");
 const excludedWeeks = new Set((process.env.WEEKREP_EXCLUDED_WEEKS || "2026-03-08").split(",").map((week) => week.trim()).filter(Boolean));
 const teacherUnknownStartWeek = process.env.WEEKREP_TEACHER_UNKNOWN_START_WEEK || "2026-05-31";
+const innovationStartWeek = process.env.WEEKREP_INNOVATION_START_WEEK || "2026-08-23";
 
 async function readJson(file) {
   const text = await fs.readFile(file, "utf8");
@@ -594,6 +596,7 @@ async function main() {
     analyzePerson(person.name, visibleReports.filter((report) => report.slug === person.slug))
   ]));
   const teacherUnknown = buildTeacherUnknownSummary(visibleReports, weeks);
+  const innovation = buildInnovationDataset(visibleReports, weeks, innovationStartWeek);
 
   const siteData = {
     generatedAt: new Date().toISOString(),
@@ -614,7 +617,12 @@ async function main() {
     people,
     weeks: weekSummaries,
     personAnalyses,
-    teacherUnknown
+    teacherUnknown,
+    innovation: {
+      startWeek: innovation.startWeek,
+      total: innovation.ideas.length,
+      weeks: innovation.weeks.map(({ week, count, peopleCount }) => ({ week, count, peopleCount }))
+    }
   };
 
   await fs.writeFile(path.join(dataDir, "site-data.json"), JSON.stringify(siteData));
@@ -624,6 +632,31 @@ async function main() {
     source: templatePath,
     text: templateText
   }, null, 2), "utf8");
+  const innovationDir = path.join(dataDir, "innovation");
+  const innovationWeeksDir = path.join(innovationDir, "weeks");
+  await fs.mkdir(innovationWeeksDir, { recursive: true });
+  const jsonl = innovation.ideas.map((idea) => JSON.stringify(idea)).join("\n");
+  await fs.writeFile(path.join(innovationDir, "innovation-ideas.jsonl"), jsonl ? `${jsonl}\n` : "", "utf8");
+  await fs.writeFile(path.join(innovationDir, "index.json"), JSON.stringify({
+    generatedAt: siteData.generatedAt,
+    startWeek: innovation.startWeek,
+    total: innovation.ideas.length,
+    exportFile: "data/innovation/innovation-ideas.jsonl",
+    weeks: innovation.weeks.map(({ week, count, peopleCount }) => ({
+      week,
+      count,
+      peopleCount,
+      file: `data/innovation/weeks/${week}.json`
+    }))
+  }, null, 2), "utf8");
+  for (const week of innovation.weeks) {
+    await fs.writeFile(path.join(innovationWeeksDir, `${week.week}.json`), JSON.stringify({
+      week: week.week,
+      count: week.count,
+      peopleCount: week.peopleCount,
+      items: week.items
+    }, null, 2), "utf8");
+  }
   console.log(`Generated ${reports.length} reports, ${people.length} people, ${weeks.length} weeks.`);
 }
 
