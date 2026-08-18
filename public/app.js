@@ -709,12 +709,20 @@ function innovationIdeaCard(idea) {
   `;
 }
 
+function innovationActualValue(idea) {
+  const explicitValue = Number(idea?.valueAmount);
+  if (Number.isFinite(explicitValue) && explicitValue > 0) return explicitValue;
+  const report = state.reports.find((item) => item.id === idea?.reportId);
+  return extractMoneyValue(report);
+}
+
 function innovationIdeaDetail(node, result, rawWeek) {
   const methods = Object.fromEntries(asArray(result?.methods).map((method) => [method.id, method]));
   const idea = asArray(rawWeek?.items).find((item) => item.ideaId === node?.ideaId);
+  const actualValue = innovationActualValue(idea);
   return html`
     <div class="innovation-detail-head">
-      <span class="badge">研究价值 ${Math.round(Number(node?.valueScore) || 0)}</span>
+      <span class="badge">研究价值 ${esc(formatMoney(actualValue))}</span>
       <h2>${esc(node?.shortLabel || idea?.project || "Idea")}</h2>
       <p class="muted">${esc(methods[node?.methodId]?.name || "未分组")}</p>
     </div>
