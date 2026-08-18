@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import { buildInnovationDataset } from "./innovation.mjs";
+import { buildInnovationDataset, mergeInnovationIdeas } from "./innovation.mjs";
 
 const root = path.resolve(new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1"));
 const publicDir = path.join(root, "public");
@@ -16,6 +16,7 @@ const nameAliasesPath = process.env.WEEKREP_NAME_ALIASES_PATH || path.join(root,
 const excludedWeeks = new Set((process.env.WEEKREP_EXCLUDED_WEEKS || "2026-03-08").split(",").map((week) => week.trim()).filter(Boolean));
 const teacherUnknownStartWeek = process.env.WEEKREP_TEACHER_UNKNOWN_START_WEEK || "2026-05-31";
 const innovationStartWeek = process.env.WEEKREP_INNOVATION_START_WEEK || "2026-08-23";
+const innovationDemoPath = process.env.WEEKREP_INNOVATION_DEMO_PATH || path.join(root, "config", "innovation-demo.json");
 
 async function readJson(file) {
   const text = await fs.readFile(file, "utf8");
@@ -596,7 +597,9 @@ async function main() {
     analyzePerson(person.name, visibleReports.filter((report) => report.slug === person.slug))
   ]));
   const teacherUnknown = buildTeacherUnknownSummary(visibleReports, weeks);
-  const innovation = buildInnovationDataset(visibleReports, weeks, innovationStartWeek);
+  const extractedInnovation = buildInnovationDataset(visibleReports, weeks, innovationStartWeek);
+  const innovationDemo = await readJson(innovationDemoPath).catch(() => ({ ideas: [] }));
+  const innovation = mergeInnovationIdeas(extractedInnovation, innovationDemo?.ideas || []);
 
   const siteData = {
     generatedAt: new Date().toISOString(),

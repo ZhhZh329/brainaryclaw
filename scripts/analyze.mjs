@@ -34,6 +34,7 @@ const minValidReportChars = Number(process.env.WEEKREP_MIN_VALID_REPORT_CHARS ||
 const personWeekPolicy = process.env.WEEKREP_PERSON_WEEK_ANALYSIS_POLICY || "on-change";
 const reanalyzeOnPromptChange = process.env.WEEKREP_REANALYZE_ON_PROMPT_CHANGE === "1";
 const maxGeneratedPerRun = Math.max(0, Number(process.env.WEEKREP_ANALYZE_MAX_GENERATED_PER_RUN || 0));
+const allowOpenInnovationWeek = process.env.WEEKREP_INNOVATION_ALLOW_OPEN_WEEK === "1";
 let generatedStarted = 0;
 
 async function loadLocalEnv() {
@@ -622,7 +623,10 @@ async function main() {
 
   if (analysisTypes.has("innovation-week")) {
     const innovationStartWeek = site.innovation?.startWeek || "2026-08-23";
-    const eligibleWeeks = pastDeadlineWeeks.filter((week) => (
+    const innovationWeeks = allowOpenInnovationWeek
+      ? site.weeks.slice().sort((a, b) => String(a.week).localeCompare(String(b.week)))
+      : pastDeadlineWeeks;
+    const eligibleWeeks = innovationWeeks.filter((week) => (
       week.week >= innovationStartWeek
       && (!weekFilter.size || weekFilter.has(week.week))
     ));

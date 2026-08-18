@@ -629,7 +629,7 @@ function innovationIdeaCard(idea) {
   return html`
     <article class="innovation-idea-card">
       <div class="innovation-idea-head">
-        <strong>${esc(idea.name)}</strong>
+        <strong>${esc(idea.name)}${idea.isDemo ? ` <span class="badge innovation-demo-badge">测试</span>` : ""}</strong>
         <span class="badge">${esc(idea.project || "未命名项目")}</span>
       </div>
       <p>${esc(idea.idea || idea.innovationPoint || "")}</p>
@@ -684,11 +684,13 @@ async function renderInnovation(weekId) {
   ]);
   const result = payload?.result || null;
   const methods = asArray(result?.methods);
+  const hasDemo = asArray(rawWeek?.items).some((idea) => idea.isDemo);
   app.innerHTML = html`
     <section class="hero innovation-hero">
       <div>
         <h1>创新方法论</h1>
         <p class="muted">${result ? esc(result.headline || "本周创新方法关系已生成。") : `从 ${esc(state.innovation?.startWeek || selected.week)} 开始采集；周一 08:00 后生成本周关系分析。`}</p>
+        ${hasDemo ? `<p class="innovation-demo-note"><strong>测试数据</strong> 本周内容用于预览页面效果，不代表正式填报。</p>` : ""}
       </div>
       <div class="toolbar">
         ${innovationWeekControls(selected.week)}

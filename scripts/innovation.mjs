@@ -116,3 +116,26 @@ export function buildInnovationDataset(reports, weeks, startWeek = "2026-08-23")
     })
   };
 }
+
+export function mergeInnovationIdeas(dataset, extraIdeas = []) {
+  const byId = new Map(dataset.ideas.map((idea) => [idea.ideaId, idea]));
+  for (const idea of extraIdeas) {
+    if (idea?.ideaId && idea?.week >= dataset.startWeek) byId.set(idea.ideaId, idea);
+  }
+  const ideas = [...byId.values()]
+    .sort((a, b) => a.week.localeCompare(b.week) || a.name.localeCompare(b.name) || a.ideaIndex - b.ideaIndex);
+  const weekIds = [...new Set([...dataset.weeks.map((item) => item.week), ...ideas.map((idea) => idea.week)])].sort();
+  return {
+    ...dataset,
+    ideas,
+    weeks: weekIds.map((week) => {
+      const items = ideas.filter((idea) => idea.week === week);
+      return {
+        week,
+        count: items.length,
+        peopleCount: new Set(items.map((item) => item.slug)).size,
+        items
+      };
+    })
+  };
+}
