@@ -188,7 +188,14 @@ function validInnovationWeekOutput(result, input) {
   if (!Array.isArray(methods) || !methods.length) return false;
   const methodIds = new Set(methods.map((method) => method?.id).filter(Boolean));
   const inputIdeaIds = new Set(input.people.flatMap((person) => person.result.ideas.map((idea) => idea.ideaId)));
-  if (methods.some((method) => !method?.id || !Array.isArray(method.ideaIds) || method.ideaIds.some((ideaId) => !inputIdeaIds.has(ideaId)))) return false;
+  if (methods.some((method) => (
+    !method?.id
+    || !Array.isArray(method.ideaIds)
+    || method.ideaIds.some((ideaId) => !inputIdeaIds.has(ideaId))
+    || !Number.isFinite(Number(method.valueScore))
+    || Number(method.valueScore) < 1
+    || Number(method.valueScore) > 100
+  ))) return false;
   return asArrayForValidation(result.relations).every((relation) => (
     methodIds.has(relation?.source)
     && methodIds.has(relation?.target)

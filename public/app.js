@@ -579,16 +579,19 @@ function innovationGraph(result) {
   if (!methods.length) return "";
   const compact = window.innerWidth <= 600;
   const width = compact ? 380 : 900;
-  const height = compact ? Math.max(320, Math.ceil(methods.length / 2) * 120 + 80) : 540;
+  const height = compact ? Math.max(320, Math.ceil(methods.length / 2) * 136 + 80) : 540;
   const centerX = width / 2;
   const centerY = height / 2;
   const radius = methods.length <= 2 ? 155 : 205;
   const colors = ["#0f766e", "#8a5a2b", "#3f5f91", "#8b3f62", "#51723b", "#76558f"];
+  const valueScores = methods.map((method) => Math.max(1, Math.min(100, Number(method.valueScore) || 50)));
+  const minValueScore = Math.min(...valueScores);
+  const maxValueScore = Math.max(...valueScores);
   const points = Object.fromEntries(methods.map((method, index) => {
     const angle = methods.length === 1 ? 0 : (-Math.PI / 2 + (Math.PI * 2 * index) / methods.length);
     return [method.id, {
       x: compact ? (index % 2 ? 275 : 105) : (methods.length === 1 ? centerX : centerX + Math.cos(angle) * radius),
-      y: compact ? 90 + Math.floor(index / 2) * 120 : (methods.length === 1 ? centerY : centerY + Math.sin(angle) * radius)
+      y: compact ? 90 + Math.floor(index / 2) * 136 : (methods.length === 1 ? centerY : centerY + Math.sin(angle) * radius)
     }];
   }));
   const relations = asArray(result?.relations).filter((relation) => points[relation.source] && points[relation.target]).slice(0, 20);
@@ -609,6 +612,8 @@ function innovationGraph(result) {
       ${methods.map((method, index) => {
         const point = points[method.id];
         const ideaCount = asArray(method.ideaIds).length;
+        const valueScore = Math.max(1, Math.min(100, Number(method.valueScore) || 50));
+        const valueWeight = maxValueScore === minValueScore ? 0.5 : (valueScore - minValueScore) / (maxValueScore - minValueScore);
         const label = String(method.name || `方法 ${index + 1}`);
         const labelChars = Array.from(label);
         const lineLength = Math.ceil(labelChars.length / Math.ceil(labelChars.length / 7));
@@ -616,16 +621,17 @@ function innovationGraph(result) {
           { length: Math.ceil(labelChars.length / lineLength) },
           (_, lineIndex) => labelChars.slice(lineIndex * lineLength, (lineIndex + 1) * lineLength).join("")
         );
-        const nodeRadius = Math.max(48, 36 + labelLines.length * 6);
+        const nodeRadius = 48 + valueWeight * 14;
+        const labelFontSize = 12.5 + valueWeight * 3.5;
         const labelStartY = point.y - 10 - ((labelLines.length - 1) * 7);
         return `
           <g class="innovation-node" data-innovation-method="${esc(method.id)}" tabindex="0" role="button">
             <circle cx="${point.x}" cy="${point.y}" r="${nodeRadius}" fill="${colors[index % colors.length]}" stroke="#fff" stroke-width="4" />
-            <text fill="#fff" font-size="13" font-weight="750" text-anchor="middle">
+            <text fill="#fff" font-size="${labelFontSize.toFixed(1)}" font-weight="750" text-anchor="middle">
               ${labelLines.map((line, lineIndex) => `<tspan x="${point.x}" y="${labelStartY + lineIndex * 15}">${esc(line)}</tspan>`).join("")}
             </text>
             <text x="${point.x}" y="${point.y + 28}" fill="#fff" font-size="11" text-anchor="middle">${ideaCount} Ideas</text>
-            <title>${esc(label)} · ${ideaCount} Ideas</title>
+            <title>${esc(label)} · 研究价值 ${Math.round(valueScore)} · ${ideaCount} Ideas</title>
           </g>
         `;
       }).join("")}
