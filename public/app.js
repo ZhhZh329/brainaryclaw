@@ -574,60 +574,72 @@ function innovationWeekControls(currentWeek) {
   `;
 }
 
+const innovationPalette = ["#0f766e", "#8a5a2b", "#3f5f91", "#8b3f62", "#51723b", "#76558f", "#9a6a16", "#35718b", "#8a4f3d", "#4f6b46", "#6d5e95", "#8a6a76"];
+
+function innovationMethodColors(methods) {
+  return Object.fromEntries(methods.map((method, index) => [method.id, innovationPalette[index % innovationPalette.length]]));
+}
+
+function innovationLegend(result) {
+  const methods = asArray(result?.methods).slice(0, 12);
+  const colors = innovationMethodColors(methods);
+  return html`
+    <div class="innovation-legend">
+      ${methods.map((method) => `
+        <span class="innovation-legend-item"><i style="background:${colors[method.id]}"></i>${esc(method.name)}</span>
+      `).join("")}
+    </div>
+  `;
+}
+
 function innovationGraph(result, rawWeek) {
   const methods = asArray(result?.methods).slice(0, 12);
   const ideaNodes = asArray(result?.ideaNodes);
   if (!methods.length || !ideaNodes.length) return "";
-  const dense = methods.length > 10;
-  const width = dense ? 2000 : 1800;
-  const height = dense ? 1400 : 1300;
-  const centerX = width / 2;
-  const centerY = height / 2;
-  const clusterRadius = methods.length <= 2 ? 260 : (dense ? 520 : 470);
-  const colors = ["#0f766e", "#8a5a2b", "#3f5f91", "#8b3f62", "#51723b", "#76558f"];
+  const width = 1800;
+  const height = 1200;
+  const methodColors = innovationMethodColors(methods);
   const valueScores = ideaNodes.map((node) => Math.max(1, Math.min(100, Number(node.valueScore) || 50)));
   const minValueScore = Math.min(...valueScores);
   const maxValueScore = Math.max(...valueScores);
   const rawById = Object.fromEntries(asArray(rawWeek?.items).map((idea) => [idea.ideaId, idea]));
-  const groupedNodes = Object.fromEntries(methods.map((method) => [method.id, ideaNodes.filter((node) => node.methodId === method.id)]));
-  const clusters = Object.fromEntries(methods.map((method, index) => {
-    const angle = methods.length === 1 ? 0 : (-Math.PI / 2 + (Math.PI * 2 * index) / methods.length);
-    const nodes = groupedNodes[method.id] || [];
-    return [method.id, {
-      x: methods.length === 1 ? centerX : centerX + Math.cos(angle) * clusterRadius,
-      y: methods.length === 1 ? centerY : centerY + Math.sin(angle) * clusterRadius,
-      radius: nodes.length <= 1 ? 72 : 150,
-      color: colors[index % colors.length]
-    }];
-  }));
-  const points = {};
-  for (const method of methods) {
-    const nodes = groupedNodes[method.id] || [];
-    const cluster = clusters[method.id];
-    const localRadius = nodes.length <= 1 ? 0 : 100;
-    nodes.forEach((node, index) => {
-      const angle = nodes.length === 1 ? 0 : (-Math.PI / 2 + (Math.PI * 2 * index) / nodes.length);
-      points[node.ideaId] = {
-        x: cluster.x + Math.cos(angle) * localRadius,
-        y: cluster.y + Math.sin(angle) * localRadius,
-        color: cluster.color
-      };
+  const layoutNodes = ideaNodes.map((node) => {
+    const valueScore = Math.max(1, Math.min(100, Number(node.valueScore) || 50));
+    const valueWeight = maxValueScore === minValueScore ? 0.5 : (valueScore - minValueScore) / (maxValueScore - minValueScore);
+    return { ...node, id: node.ideaId, radius: 26 + valueWeight * 15 };
+  });
+  const layoutNodeIds = new Set(layoutNodes.map((node) => node.id));
+  const graphRelations = asArray(result?.relations)
+    .filter((relation) => layoutNodeIds.has(relation.source) && layoutNodeIds.has(relation.target))
+    .slice(0, 80);
+  const force = globalThis.InnovationForce;
+  if (force?.forceSimulation) {
+    const simulation = force.forceSimulation(layoutNodes)
+      .force("link", force.forceLink(graphRelations.map((relation) => ({ source: relation.source, target: relation.target }))).id((node) => node.id).distance(115).strength(0.4))
+      .force("charge", force.forceManyBody().strength(-190))
+      .force("center", force.forceCenter(width / 2, height / 2))
+      .force("collision", force.forceCollide().radius((node) => node.radius + 12).iterations(3))
+      .force("x", force.forceX(width / 2).strength(0.08))
+      .force("y", force.forceY(height / 2).strength(0.08))
+      .stop();
+    for (let index = 0; index < 500; index += 1) simulation.tick();
+  } else {
+    layoutNodes.forEach((node, index) => {
+      const angle = -Math.PI / 2 + (Math.PI * 2 * index) / layoutNodes.length;
+      node.x = width / 2 + Math.cos(angle) * 360;
+      node.y = height / 2 + Math.sin(angle) * 360;
     });
   }
-  const relations = asArray(result?.relations).filter((relation) => points[relation.source] && points[relation.target]).slice(0, 80);
+  const points = Object.fromEntries(layoutNodes.map((node) => [node.id, node]));
+  const graphPadding = 64;
+  const graphMinX = Math.min(...layoutNodes.map((node) => node.x - node.radius)) - graphPadding;
+  const graphMaxX = Math.max(...layoutNodes.map((node) => node.x + node.radius)) + graphPadding;
+  const graphMinY = Math.min(...layoutNodes.map((node) => node.y - node.radius)) - graphPadding;
+  const graphMaxY = Math.max(...layoutNodes.map((node) => node.y + node.radius)) + graphPadding;
   return html`
-    <svg id="innovation-network" class="innovation-network" viewBox="0 0 ${width} ${height}" role="img" aria-label="本周 Idea 关系图" xmlns="http://www.w3.org/2000/svg">
+    <svg id="innovation-network" class="innovation-network" viewBox="${graphMinX} ${graphMinY} ${graphMaxX - graphMinX} ${graphMaxY - graphMinY}" role="img" aria-label="本周 Idea 关系图" xmlns="http://www.w3.org/2000/svg">
       <rect width="${width}" height="${height}" rx="8" fill="#fbfaf8" />
-      ${methods.map((method) => {
-        const cluster = clusters[method.id];
-        return `
-          <g class="innovation-cluster">
-            <circle cx="${cluster.x}" cy="${cluster.y}" r="${cluster.radius}" fill="${cluster.color}" fill-opacity="0.06" stroke="${cluster.color}" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="8 8" />
-            <text x="${cluster.x}" y="${cluster.y - cluster.radius - 18}" fill="${cluster.color}" font-size="22" font-weight="750" text-anchor="middle">${esc(method.name)}</text>
-          </g>
-        `;
-      }).join("")}
-      ${relations.map((relation, index) => {
+      ${graphRelations.map((relation, index) => {
         const source = points[relation.source];
         const target = points[relation.target];
         return `
@@ -638,7 +650,7 @@ function innovationGraph(result, rawWeek) {
           </g>
         `;
       }).join("")}
-      ${ideaNodes.map((node) => {
+      ${layoutNodes.map((node) => {
         const point = points[node.ideaId];
         const rawIdea = rawById[node.ideaId] || {};
         const valueScore = Math.max(1, Math.min(100, Number(node.valueScore) || 50));
@@ -650,12 +662,12 @@ function innovationGraph(result, rawWeek) {
           { length: Math.ceil(labelChars.length / lineLength) },
           (_, lineIndex) => labelChars.slice(lineIndex * lineLength, (lineIndex + 1) * lineLength).join("")
         );
-        const nodeRadius = 30 + valueWeight * 16;
+        const nodeRadius = node.radius;
         const labelFontSize = 11 + valueWeight * 4;
         const labelStartY = point.y - ((labelLines.length - 1) * 7);
         return `
           <g class="innovation-node" data-innovation-idea="${esc(node.ideaId)}" tabindex="0" role="button">
-            <circle cx="${point.x}" cy="${point.y}" r="${nodeRadius}" fill="${point.color}" stroke="#fff" stroke-width="4" />
+            <circle cx="${point.x}" cy="${point.y}" r="${nodeRadius}" fill="${methodColors[node.methodId] || "#607d75"}" stroke="#fff" stroke-width="4" />
             <text fill="#fff" font-size="${labelFontSize.toFixed(1)}" font-weight="750" text-anchor="middle">
               ${labelLines.map((line, lineIndex) => `<tspan x="${point.x}" y="${labelStartY + lineIndex * 15}">${esc(line)}</tspan>`).join("")}
             </text>
@@ -762,6 +774,7 @@ async function renderInnovation(weekId) {
             <button type="button" data-innovation-zoom-reset aria-label="复位关系图" title="复位">↺</button>
             <button type="button" data-innovation-zoom-in aria-label="放大关系图" title="放大">+</button>
           </div>
+          ${innovationLegend(result)}
           <div class="innovation-canvas">${innovationGraph(result, rawWeek)}</div>
         </div>
         <aside class="panel innovation-detail" id="innovation-detail">

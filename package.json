@@ -4,11 +4,18 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node scripts/build.mjs",
+    "build": "npm run build:vendor && node scripts/build.mjs",
+    "build:vendor": "esbuild scripts/innovation-force-entry.mjs --bundle --format=iife --global-name=InnovationForce --minify --outfile=public/vendor/innovation-force.js",
     "analyze": "node scripts/analyze.mjs",
     "test:innovation": "node scripts/innovation.test.mjs",
-    "sync-full": "node scripts/build.mjs && node scripts/analyze.mjs && node scripts/build.mjs",
+    "sync-full": "npm run build && npm run analyze && npm run build",
     "sync": "node scripts/build.mjs",
     "serve": "node scripts/serve.mjs"
+  },
+  "dependencies": {
+    "d3-force": "3.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
   }
 }
