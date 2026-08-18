@@ -189,18 +189,20 @@ function validInnovationWeekOutput(result, input) {
   if (!Array.isArray(methods) || !methods.length) return false;
   const methodIds = new Set(methods.map((method) => method?.id).filter(Boolean));
   const inputIdeaIds = new Set(input.people.flatMap((person) => person.result.ideas.map((idea) => idea.ideaId)));
-  if (methods.some((method) => (
-    !method?.id
-    || !Array.isArray(method.ideaIds)
-    || method.ideaIds.some((ideaId) => !inputIdeaIds.has(ideaId))
-    || !Number.isFinite(Number(method.valueScore))
-    || Number(method.valueScore) < 1
-    || Number(method.valueScore) > 100
+  const ideaNodes = result?.ideaNodes;
+  if (!Array.isArray(ideaNodes) || ideaNodes.length !== inputIdeaIds.size) return false;
+  const returnedIdeaIds = new Set(ideaNodes.map((node) => node?.ideaId).filter(Boolean));
+  if (returnedIdeaIds.size !== inputIdeaIds.size || [...inputIdeaIds].some((ideaId) => !returnedIdeaIds.has(ideaId))) return false;
+  if (ideaNodes.some((node) => (
+    !methodIds.has(node?.methodId)
+    || !Number.isFinite(Number(node?.valueScore))
+    || Number(node.valueScore) < 1
+    || Number(node.valueScore) > 100
   ))) return false;
   return asArrayForValidation(result.relations).every((relation) => (
-    methodIds.has(relation?.source)
-    && methodIds.has(relation?.target)
-    && asArrayForValidation(relation?.ideaIds).every((ideaId) => inputIdeaIds.has(ideaId))
+    returnedIdeaIds.has(relation?.source)
+    && returnedIdeaIds.has(relation?.target)
+    && relation.source !== relation.target
   ));
 }
 

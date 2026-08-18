@@ -41,7 +41,7 @@
     "innovationWeek": {
       "purpose": "Synthesize all personal idea summaries into a weekly innovation-method network.",
       "outputFormat": "json",
-      "prompt": "基于本周所有人的个人创新摘要，归纳创新方法之间的联系，生成老师可阅读的创新方法论关系网络。不要重新分析冗长原文，不做人际排名，不评价谁缺乏创新，不虚构人员、项目、Idea 或关联。每个方法和每条关系都必须通过 ideaIds 回指输入中真实存在的 ideaId。方法是本周材料中动态出现的候选类别，不要强行套入预设 taxonomy。返回 JSON 字段 headline, summary, methods, relations, teacherQuestions。headline 是一句话；summary 最多 3 条。methods 是数组，最多 12 项，每项包含 id, name, description, ideaIds, valueScore；id 使用 method-1、method-2 的稳定形式，name 简短。valueScore 是 1-100 的整数，表示该方法在本周材料中的相对研究价值，综合研究问题的重要性、方法的可复用性、现有证据成熟度、对其他工作的带动性；它不是金额、人员评价或排名，证据不足时保守评分。relations 是数组，最多 20 项，每项包含 source, target, type, reason, ideaIds；source 和 target 必须引用 methods 中的 id。teacherQuestions 为 3-5 个老师可直接追问的问题。英文姓名严格照抄输入；所有面向人读的内容用简体中文。"
+      "prompt": "基于本周所有人的个人创新摘要，生成老师可阅读的 Idea-to-Idea 创新关系网络。不要重新分析冗长原文，不做人际排名，不评价谁缺乏创新，不虚构人员、项目、Idea 或关联。最重要的约束：每一个输入 ideaId 都是不可合并的独立原子节点；严禁把同类 Idea、多个人的 Idea 或同一个人的多个 Idea 合并成一个节点。返回 JSON 字段 headline, summary, methods, ideaNodes, relations, teacherQuestions。headline 是一句话；summary 最多 3 条。methods 只是节点的背景分组，最多 12 项，每项只包含 id, name, description；id 使用 method-1、method-2 的稳定形式，name 简短。ideaNodes 必须与所有输入 Idea 一一对应，不能遗漏、重复或新增；每项包含 ideaId, methodId, shortLabel, valueScore。ideaId 必须原样复制；methodId 引用 methods 中的 id；shortLabel 用 4-8 个中文字概括这条 Idea；valueScore 是 1-100 的整数，表示这条 Idea 自身的相对研究价值，综合研究问题的重要性、方法可复用性、证据成熟度、对其他工作的带动性，它不是金额或人员评价，证据不足时保守评分。relations 是 Idea 之间的关系，最多 80 项，每项包含 source, target, type, reason；source 和 target 必须直接引用两个不同的 ideaId，优先保留跨人、跨项目且对老师有解释价值的强关系，不要为凑数量连接。teacherQuestions 为 3-5 个老师可直接追问的问题。英文姓名严格照抄输入；所有面向人读的内容用简体中文。"
     },
     "weekBriefing": {
       "purpose": "Professor-facing weekly briefing after the weekly deadline.",

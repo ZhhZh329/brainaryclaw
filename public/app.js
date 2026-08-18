@@ -574,65 +574,92 @@ function innovationWeekControls(currentWeek) {
   `;
 }
 
-function innovationGraph(result) {
+function innovationGraph(result, rawWeek) {
   const methods = asArray(result?.methods).slice(0, 12);
-  if (!methods.length) return "";
-  const compact = window.innerWidth <= 600;
-  const width = compact ? 380 : 900;
+  const ideaNodes = asArray(result?.ideaNodes);
+  if (!methods.length || !ideaNodes.length) return "";
   const dense = methods.length > 10;
-  const height = compact ? Math.max(320, Math.ceil(methods.length / 2) * 136 + 80) : (dense ? 640 : 540);
+  const width = dense ? 2000 : 1800;
+  const height = dense ? 1400 : 1300;
   const centerX = width / 2;
   const centerY = height / 2;
-  const radius = methods.length <= 2 ? 155 : (dense ? 245 : 205);
+  const clusterRadius = methods.length <= 2 ? 260 : (dense ? 520 : 470);
   const colors = ["#0f766e", "#8a5a2b", "#3f5f91", "#8b3f62", "#51723b", "#76558f"];
-  const valueScores = methods.map((method) => Math.max(1, Math.min(100, Number(method.valueScore) || 50)));
+  const valueScores = ideaNodes.map((node) => Math.max(1, Math.min(100, Number(node.valueScore) || 50)));
   const minValueScore = Math.min(...valueScores);
   const maxValueScore = Math.max(...valueScores);
-  const points = Object.fromEntries(methods.map((method, index) => {
+  const rawById = Object.fromEntries(asArray(rawWeek?.items).map((idea) => [idea.ideaId, idea]));
+  const groupedNodes = Object.fromEntries(methods.map((method) => [method.id, ideaNodes.filter((node) => node.methodId === method.id)]));
+  const clusters = Object.fromEntries(methods.map((method, index) => {
     const angle = methods.length === 1 ? 0 : (-Math.PI / 2 + (Math.PI * 2 * index) / methods.length);
+    const nodes = groupedNodes[method.id] || [];
     return [method.id, {
-      x: compact ? (index % 2 ? 275 : 105) : (methods.length === 1 ? centerX : centerX + Math.cos(angle) * radius),
-      y: compact ? 90 + Math.floor(index / 2) * 136 : (methods.length === 1 ? centerY : centerY + Math.sin(angle) * radius)
+      x: methods.length === 1 ? centerX : centerX + Math.cos(angle) * clusterRadius,
+      y: methods.length === 1 ? centerY : centerY + Math.sin(angle) * clusterRadius,
+      radius: nodes.length <= 1 ? 72 : 150,
+      color: colors[index % colors.length]
     }];
   }));
-  const relations = asArray(result?.relations).filter((relation) => points[relation.source] && points[relation.target]).slice(0, 20);
+  const points = {};
+  for (const method of methods) {
+    const nodes = groupedNodes[method.id] || [];
+    const cluster = clusters[method.id];
+    const localRadius = nodes.length <= 1 ? 0 : 100;
+    nodes.forEach((node, index) => {
+      const angle = nodes.length === 1 ? 0 : (-Math.PI / 2 + (Math.PI * 2 * index) / nodes.length);
+      points[node.ideaId] = {
+        x: cluster.x + Math.cos(angle) * localRadius,
+        y: cluster.y + Math.sin(angle) * localRadius,
+        color: cluster.color
+      };
+    });
+  }
+  const relations = asArray(result?.relations).filter((relation) => points[relation.source] && points[relation.target]).slice(0, 80);
   return html`
-    <svg id="innovation-network" class="innovation-network" viewBox="0 0 ${width} ${height}" role="img" aria-label="本周创新方法论关系图" xmlns="http://www.w3.org/2000/svg">
+    <svg id="innovation-network" class="innovation-network" viewBox="0 0 ${width} ${height}" role="img" aria-label="本周 Idea 关系图" xmlns="http://www.w3.org/2000/svg">
       <rect width="${width}" height="${height}" rx="8" fill="#fbfaf8" />
+      ${methods.map((method) => {
+        const cluster = clusters[method.id];
+        return `
+          <g class="innovation-cluster">
+            <circle cx="${cluster.x}" cy="${cluster.y}" r="${cluster.radius}" fill="${cluster.color}" fill-opacity="0.06" stroke="${cluster.color}" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="8 8" />
+            <text x="${cluster.x}" y="${cluster.y - cluster.radius - 18}" fill="${cluster.color}" font-size="22" font-weight="750" text-anchor="middle">${esc(method.name)}</text>
+          </g>
+        `;
+      }).join("")}
       ${relations.map((relation, index) => {
         const source = points[relation.source];
         const target = points[relation.target];
         return `
           <g class="innovation-edge" data-innovation-relation="${index}" tabindex="0" role="button">
-            <line x1="${source.x}" y1="${source.y}" x2="${target.x}" y2="${target.y}" stroke="#aaa298" stroke-width="2" />
-            <line class="innovation-edge-hit" x1="${source.x}" y1="${source.y}" x2="${target.x}" y2="${target.y}" stroke="transparent" stroke-width="16" />
+            <line x1="${source.x}" y1="${source.y}" x2="${target.x}" y2="${target.y}" stroke="#aaa298" stroke-opacity="0.62" stroke-width="3" />
+            <line class="innovation-edge-hit" x1="${source.x}" y1="${source.y}" x2="${target.x}" y2="${target.y}" stroke="transparent" stroke-width="20" />
             <title>${esc(relation.type || "关联")}：${esc(relation.reason || "")}</title>
           </g>
         `;
       }).join("")}
-      ${methods.map((method, index) => {
-        const point = points[method.id];
-        const ideaCount = asArray(method.ideaIds).length;
-        const valueScore = Math.max(1, Math.min(100, Number(method.valueScore) || 50));
+      ${ideaNodes.map((node) => {
+        const point = points[node.ideaId];
+        const rawIdea = rawById[node.ideaId] || {};
+        const valueScore = Math.max(1, Math.min(100, Number(node.valueScore) || 50));
         const valueWeight = maxValueScore === minValueScore ? 0.5 : (valueScore - minValueScore) / (maxValueScore - minValueScore);
-        const label = String(method.name || `方法 ${index + 1}`);
+        const label = String(node.shortLabel || rawIdea.project || `Idea ${rawIdea.ideaIndex || ""}`);
         const labelChars = Array.from(label);
-        const lineLength = Math.ceil(labelChars.length / Math.ceil(labelChars.length / 7));
+        const lineLength = Math.ceil(labelChars.length / Math.ceil(labelChars.length / 6));
         const labelLines = Array.from(
           { length: Math.ceil(labelChars.length / lineLength) },
           (_, lineIndex) => labelChars.slice(lineIndex * lineLength, (lineIndex + 1) * lineLength).join("")
         );
-        const nodeRadius = 48 + valueWeight * 14;
-        const labelFontSize = 12.5 + valueWeight * 3.5;
-        const labelStartY = point.y - 10 - ((labelLines.length - 1) * 7);
+        const nodeRadius = 30 + valueWeight * 16;
+        const labelFontSize = 11 + valueWeight * 4;
+        const labelStartY = point.y - ((labelLines.length - 1) * 7);
         return `
-          <g class="innovation-node" data-innovation-method="${esc(method.id)}" tabindex="0" role="button">
-            <circle cx="${point.x}" cy="${point.y}" r="${nodeRadius}" fill="${colors[index % colors.length]}" stroke="#fff" stroke-width="4" />
+          <g class="innovation-node" data-innovation-idea="${esc(node.ideaId)}" tabindex="0" role="button">
+            <circle cx="${point.x}" cy="${point.y}" r="${nodeRadius}" fill="${point.color}" stroke="#fff" stroke-width="4" />
             <text fill="#fff" font-size="${labelFontSize.toFixed(1)}" font-weight="750" text-anchor="middle">
               ${labelLines.map((line, lineIndex) => `<tspan x="${point.x}" y="${labelStartY + lineIndex * 15}">${esc(line)}</tspan>`).join("")}
             </text>
-            <text x="${point.x}" y="${point.y + 28}" fill="#fff" font-size="11" text-anchor="middle">${ideaCount} Ideas</text>
-            <title>${esc(label)} · 研究价值 ${Math.round(valueScore)} · ${ideaCount} Ideas</title>
+            <title>${esc(rawIdea.name || "")} · Idea ${esc(rawIdea.ideaIndex || "")} · ${esc(label)} · 研究价值 ${Math.round(valueScore)}</title>
           </g>
         `;
       }).join("")}
@@ -654,29 +681,29 @@ function innovationIdeaCard(idea) {
   `;
 }
 
-function innovationMethodDetail(method, rawWeek) {
-  const ideaIds = new Set(asArray(method?.ideaIds));
-  const ideas = asArray(rawWeek?.items).filter((idea) => ideaIds.has(idea.ideaId));
+function innovationIdeaDetail(node, result, rawWeek) {
+  const methods = Object.fromEntries(asArray(result?.methods).map((method) => [method.id, method]));
+  const idea = asArray(rawWeek?.items).find((item) => item.ideaId === node?.ideaId);
   return html`
     <div class="innovation-detail-head">
-      <span class="badge">${ideas.length} Ideas</span>
-      <h2>${esc(method?.name || "创新方法")}</h2>
-      <p class="muted">${esc(method?.description || "")}</p>
+      <span class="badge">研究价值 ${Math.round(Number(node?.valueScore) || 0)}</span>
+      <h2>${esc(node?.shortLabel || idea?.project || "Idea")}</h2>
+      <p class="muted">${esc(methods[node?.methodId]?.name || "未分组")}</p>
     </div>
     <div class="innovation-idea-list">
-      ${ideas.length ? ideas.map(innovationIdeaCard).join("") : `<p class="muted">这一方法暂时没有可回指的 Idea。</p>`}
+      ${idea ? innovationIdeaCard(idea) : `<p class="muted">这一节点暂时没有可回指的 Idea。</p>`}
     </div>
   `;
 }
 
 function innovationRelationDetail(relation, result, rawWeek) {
-  const methods = Object.fromEntries(asArray(result?.methods).map((method) => [method.id, method]));
-  const ideaIds = new Set(asArray(relation?.ideaIds));
+  const nodes = Object.fromEntries(asArray(result?.ideaNodes).map((node) => [node.ideaId, node]));
+  const ideaIds = new Set([relation?.source, relation?.target]);
   const ideas = asArray(rawWeek?.items).filter((idea) => ideaIds.has(idea.ideaId));
   return html`
     <div class="innovation-detail-head">
       <span class="badge">${esc(relation?.type || "关联")}</span>
-      <h2>${esc(methods[relation?.source]?.name || relation?.source)} ↔ ${esc(methods[relation?.target]?.name || relation?.target)}</h2>
+      <h2>${esc(nodes[relation?.source]?.shortLabel || "Idea")} ↔ ${esc(nodes[relation?.target]?.shortLabel || "Idea")}</h2>
       <p>${esc(relation?.reason || "")}</p>
     </div>
     <div class="innovation-idea-list">
@@ -699,6 +726,7 @@ async function renderInnovation(weekId) {
   ]);
   const result = payload?.result || null;
   const methods = asArray(result?.methods);
+  const ideaNodes = asArray(result?.ideaNodes);
   const hasDemo = asArray(rawWeek?.items).some((idea) => idea.isDemo);
   app.innerHTML = html`
     <section class="hero innovation-hero">
@@ -726,18 +754,18 @@ async function renderInnovation(weekId) {
       <section class="innovation-layout">
         <div class="chart-panel innovation-graph-panel">
           <div class="section-head">
-            <h2>${esc(selected.week)} 方法关系</h2>
-            <p class="muted">点击方法节点或连线查看对应 Idea 与关联依据。</p>
+            <h2>${esc(selected.week)} Idea 关系</h2>
+            <p class="muted">点击 Idea 节点或连线查看原件与关联依据。</p>
           </div>
           <div class="innovation-zoom-controls" aria-label="关系图缩放">
             <button type="button" data-innovation-zoom-out aria-label="缩小关系图" title="缩小">−</button>
             <button type="button" data-innovation-zoom-reset aria-label="复位关系图" title="复位">↺</button>
             <button type="button" data-innovation-zoom-in aria-label="放大关系图" title="放大">+</button>
           </div>
-          <div class="innovation-canvas">${innovationGraph(result)}</div>
+          <div class="innovation-canvas">${innovationGraph(result, rawWeek)}</div>
         </div>
         <aside class="panel innovation-detail" id="innovation-detail">
-          ${methods.length ? innovationMethodDetail(methods[0], rawWeek) : `<p class="muted">本周没有可展示的方法节点。</p>`}
+          ${ideaNodes.length ? innovationIdeaDetail(ideaNodes[0], result, rawWeek) : `<p class="muted">本周没有可展示的 Idea 节点。</p>`}
         </aside>
       </section>
       <section class="panel innovation-questions">
@@ -759,12 +787,12 @@ function bindInnovationPage(result, rawWeek, week) {
   select?.addEventListener("change", () => {
     location.hash = `#/innovation?week=${encodeURIComponent(select.value)}`;
   });
-  const methods = Object.fromEntries(asArray(result?.methods).map((method) => [method.id, method]));
+  const ideaNodes = Object.fromEntries(asArray(result?.ideaNodes).map((node) => [node.ideaId, node]));
   const relations = asArray(result?.relations);
   const detail = document.querySelector("#innovation-detail");
   const canvas = document.querySelector(".innovation-canvas");
   const graph = document.querySelector("#innovation-network");
-  let graphZoom = 1;
+  let graphZoom = window.innerWidth <= 600 ? 1.75 : 1;
   const applyGraphZoom = () => {
     if (!graph) return;
     graph.style.width = `${graphZoom * 100}%`;
@@ -775,11 +803,11 @@ function bindInnovationPage(result, rawWeek, week) {
     applyGraphZoom();
   });
   document.querySelector("[data-innovation-zoom-in]")?.addEventListener("click", () => {
-    graphZoom = Math.min(2.5, graphZoom + 0.25);
+    graphZoom = Math.min(4, graphZoom + 0.25);
     applyGraphZoom();
   });
   document.querySelector("[data-innovation-zoom-reset]")?.addEventListener("click", () => {
-    graphZoom = 1;
+    graphZoom = window.innerWidth <= 600 ? 1.75 : 1;
     applyGraphZoom();
     if (canvas) {
       canvas.scrollLeft = 0;
@@ -789,10 +817,11 @@ function bindInnovationPage(result, rawWeek, week) {
   const activate = (selector, current) => {
     document.querySelectorAll(selector).forEach((item) => item.classList.toggle("selected", item === current));
   };
-  document.querySelectorAll("[data-innovation-method]").forEach((node) => {
+  applyGraphZoom();
+  document.querySelectorAll("[data-innovation-idea]").forEach((node) => {
     const show = () => {
-      if (detail) detail.innerHTML = innovationMethodDetail(methods[node.dataset.innovationMethod], rawWeek);
-      activate("[data-innovation-method]", node);
+      if (detail) detail.innerHTML = innovationIdeaDetail(ideaNodes[node.dataset.innovationIdea], result, rawWeek);
+      activate("[data-innovation-idea]", node);
       activate("[data-innovation-relation]", null);
     };
     node.addEventListener("click", show);
@@ -803,7 +832,7 @@ function bindInnovationPage(result, rawWeek, week) {
       const relation = relations[Number(edge.dataset.innovationRelation)];
       if (detail && relation) detail.innerHTML = innovationRelationDetail(relation, result, rawWeek);
       activate("[data-innovation-relation]", edge);
-      activate("[data-innovation-method]", null);
+      activate("[data-innovation-idea]", null);
     };
     edge.addEventListener("click", show);
     edge.addEventListener("keydown", (event) => { if (event.key === "Enter" || event.key === " ") show(); });
