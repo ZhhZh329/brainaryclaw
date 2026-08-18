@@ -557,12 +557,12 @@ async function loadInnovationAnalysis(week) {
   return response.json();
 }
 
-function innovationWeekControls(currentWeek) {
+function innovationWeekControls(currentWeek, view = "ideas") {
   const weeks = innovationWeeks();
   const index = Math.max(0, weeks.findIndex((week) => week.week === currentWeek));
   const previous = weeks[Math.max(0, index - 1)]?.week || currentWeek;
   const next = weeks[Math.min(weeks.length - 1, index + 1)]?.week || currentWeek;
-  const href = (week) => `#/innovation?week=${encodeURIComponent(week)}`;
+  const href = (week) => `#/innovation?week=${encodeURIComponent(week)}${view === "taxonomy" ? "&view=taxonomy" : ""}`;
   return html`
     <span class="week-controls inline-week-controls">
       <a class="button" href="${href(previous)}" title="上一周">‹</a>
@@ -596,6 +596,76 @@ function innovationLegend(result) {
         <span class="innovation-legend-item"><i style="background:${colors[method.id]}"></i>${esc(method.name)}</span>
       `).join("")}
     </div>
+  `;
+}
+
+const innovationTaxonomyLayers = {
+  trigger: { name: "问题触发", color: "#a34a3b" },
+  reasoning: { name: "思考动作", color: "#246f73" },
+  validation: { name: "验证方式", color: "#576b38" }
+};
+
+function innovationTaxonomyIdeaIds(node, result) {
+  const directIds = new Set(asArray(node?.ideaIds));
+  const methodIds = new Set(asArray(node?.methodIds));
+  return asArray(result?.ideaNodes)
+    .filter((idea) => directIds.has(idea.ideaId) || methodIds.has(idea.methodId))
+    .map((idea) => idea.ideaId);
+}
+
+function innovationTaxonomyLegend() {
+  return `<div class="innovation-legend">${Object.values(innovationTaxonomyLayers).map((layer) => `
+    <span class="innovation-legend-item"><i style="background:${layer.color}"></i>${layer.name}</span>
+  `).join("")}</div>`;
+}
+
+function innovationTaxonomyGraph(result) {
+  const nodes = asArray(result?.formationTaxonomy?.nodes).filter((node) => innovationTaxonomyLayers[node.layer]);
+  if (!nodes.length) return "";
+  const width = 1200;
+  const layerNodes = Object.fromEntries(Object.keys(innovationTaxonomyLayers).map((layer) => [layer, nodes.filter((node) => node.layer === layer)]));
+  const maxLayerSize = Math.max(...Object.values(layerNodes).map((items) => items.length), 1);
+  const height = Math.max(680, maxLayerSize * 116 + 100);
+  const xByLayer = { trigger: 170, reasoning: 600, validation: 1030 };
+  const points = {};
+  for (const [layer, items] of Object.entries(layerNodes)) {
+    items.forEach((node, index) => {
+      const ideaCount = innovationTaxonomyIdeaIds(node, result).length;
+      points[node.id] = {
+        x: xByLayer[layer],
+        y: 75 + ((index + 1) * (height - 125)) / (items.length + 1),
+        radius: 18 + Math.min(18, Math.sqrt(Math.max(ideaCount, 1)) * 4),
+        ideaCount
+      };
+    });
+  }
+  const relations = asArray(result?.formationTaxonomy?.relations).filter((relation) => points[relation.source] && points[relation.target]);
+  return html`
+    <svg id="innovation-network" class="innovation-network innovation-taxonomy-network" viewBox="0 0 ${width} ${height}" role="img" aria-label="本周 Idea 形成机制 taxonomy" xmlns="http://www.w3.org/2000/svg">
+      <rect width="${width}" height="${height}" rx="8" fill="#fbfaf8" />
+      ${Object.entries(innovationTaxonomyLayers).map(([layer, meta]) => `<text x="${xByLayer[layer]}" y="38" text-anchor="middle" fill="${meta.color}" font-size="18" font-weight="750">${meta.name}</text>`).join("")}
+      ${relations.map((relation, index) => {
+        const source = points[relation.source];
+        const target = points[relation.target];
+        const count = Number(relation.count) || Math.min(source.ideaCount, target.ideaCount);
+        const strokeWidth = 2 + Math.min(8, Math.sqrt(Math.max(count, 1)) * 1.5);
+        return `<g class="innovation-edge taxonomy-edge" data-innovation-taxonomy-relation="${index}" tabindex="0" role="button">
+          <line x1="${source.x}" y1="${source.y}" x2="${target.x}" y2="${target.y}" stroke="#aaa298" stroke-opacity="0.5" stroke-width="${strokeWidth.toFixed(1)}" />
+          <line x1="${source.x}" y1="${source.y}" x2="${target.x}" y2="${target.y}" stroke="transparent" stroke-width="20" />
+          <title>${esc(relation.reason || "形成路径")} · ${count} 个 Idea</title>
+        </g>`;
+      }).join("")}
+      ${nodes.map((node) => {
+        const point = points[node.id];
+        const layer = innovationTaxonomyLayers[node.layer];
+        return `<g class="innovation-node taxonomy-node" data-innovation-taxonomy="${esc(node.id)}" tabindex="0" role="button">
+          <circle cx="${point.x}" cy="${point.y}" r="${point.radius}" fill="${layer.color}" stroke="#fff" stroke-width="4" />
+          <text x="${point.x}" y="${point.y + point.radius + 22}" fill="#252421" font-size="15" font-weight="700" text-anchor="middle">${esc(node.name)}</text>
+          <text x="${point.x}" y="${point.y + 5}" fill="#fff" font-size="13" font-weight="750" text-anchor="middle">${point.ideaCount}</text>
+          <title>${esc(node.name)} · ${point.ideaCount} 个 Idea</title>
+        </g>`;
+      }).join("")}
+    </svg>
   `;
 }
 
@@ -748,9 +818,45 @@ function innovationRelationDetail(relation, result, rawWeek) {
   `;
 }
 
+function innovationTaxonomyDetail(node, result, rawWeek) {
+  const ideaIds = new Set(innovationTaxonomyIdeaIds(node, result));
+  const ideas = asArray(rawWeek?.items).filter((idea) => ideaIds.has(idea.ideaId));
+  const layer = innovationTaxonomyLayers[node?.layer];
+  return html`
+    <div class="innovation-detail-head">
+      <span class="badge">${esc(layer?.name || "形成机制")} · ${ideas.length} 个 Idea</span>
+      <h2>${esc(node?.name || "形成机制")}</h2>
+      <p>${esc(node?.description || "")}</p>
+    </div>
+    <div class="innovation-idea-list">
+      ${ideas.length ? ideas.map(innovationIdeaCard).join("") : `<p class="muted">这一机制暂时没有可回指的 Idea。</p>`}
+    </div>
+  `;
+}
+
+function innovationTaxonomyRelationDetail(relation, result, rawWeek) {
+  const nodes = Object.fromEntries(asArray(result?.formationTaxonomy?.nodes).map((node) => [node.id, node]));
+  const sourceIds = new Set(innovationTaxonomyIdeaIds(nodes[relation?.source], result));
+  const targetIds = new Set(innovationTaxonomyIdeaIds(nodes[relation?.target], result));
+  const directIds = asArray(relation?.ideaIds);
+  const ideaIds = new Set(directIds.length ? directIds : [...sourceIds].filter((ideaId) => targetIds.has(ideaId)));
+  const ideas = asArray(rawWeek?.items).filter((idea) => ideaIds.has(idea.ideaId));
+  return html`
+    <div class="innovation-detail-head">
+      <span class="badge">形成路径</span>
+      <h2>${esc(nodes[relation?.source]?.name || "起点")} → ${esc(nodes[relation?.target]?.name || "下一步")}</h2>
+      <p>${esc(relation?.reason || "")}</p>
+    </div>
+    <div class="innovation-idea-list">
+      ${ideas.length ? ideas.map(innovationIdeaCard).join("") : `<p class="muted">这条路径暂时没有可回指的 Idea。</p>`}
+    </div>
+  `;
+}
+
 async function renderInnovation(weekId) {
   const weeks = innovationWeeks();
   const selected = weeks.find((week) => week.week === weekId) || latestInnovationWeek();
+  const view = params().get("view") === "taxonomy" ? "taxonomy" : "ideas";
   if (!selected) {
     app.innerHTML = `<section class="panel"><h1>创新方法论</h1><p class="muted">功能尚未到启用周次。</p></section>`;
     return;
@@ -763,6 +869,8 @@ async function renderInnovation(weekId) {
   const result = payload?.result || null;
   const methods = asArray(result?.methods);
   const ideaNodes = asArray(result?.ideaNodes);
+  const taxonomyNodes = asArray(result?.formationTaxonomy?.nodes);
+  const showTaxonomy = view === "taxonomy" && taxonomyNodes.length;
   const hasDemo = asArray(rawWeek?.items).some((idea) => idea.isDemo);
   app.innerHTML = html`
     <section class="hero innovation-hero">
@@ -772,7 +880,7 @@ async function renderInnovation(weekId) {
         ${hasDemo ? `<p class="innovation-demo-note"><strong>测试数据</strong> 本周内容用于预览页面效果，不代表正式填报。</p>` : ""}
       </div>
       <div class="toolbar">
-        ${innovationWeekControls(selected.week)}
+        ${innovationWeekControls(selected.week, view)}
         <a class="button" href="data/innovation/innovation-ideas.jsonl" download="innovation-ideas.jsonl">导出全部原始数据</a>
         ${methods.length ? `<button data-export-innovation-svg>导出关系图 SVG</button>` : ""}
       </div>
@@ -780,8 +888,8 @@ async function renderInnovation(weekId) {
     <section class="stats innovation-stats">
       <div class="stat"><strong>${rawWeek.count || 0}</strong><span>Ideas</span></div>
       <div class="stat"><strong>${rawWeek.peopleCount || 0}</strong><span>人员</span></div>
-      <div class="stat"><strong>${methods.length}</strong><span>方法</span></div>
-      <div class="stat"><strong>${asArray(result?.relations).length}</strong><span>关联</span></div>
+      <div class="stat"><strong>${showTaxonomy ? taxonomyNodes.length : methods.length}</strong><span>${showTaxonomy ? "机制" : "方法"}</span></div>
+      <div class="stat"><strong>${showTaxonomy ? asArray(result?.formationTaxonomy?.relations).length : asArray(result?.relations).length}</strong><span>${showTaxonomy ? "路径" : "关联"}</span></div>
     </section>
     ${result ? `
       <section class="briefing-summary innovation-summary">
@@ -789,20 +897,26 @@ async function renderInnovation(weekId) {
       </section>
       <section class="innovation-layout">
         <div class="chart-panel innovation-graph-panel">
+          <nav class="innovation-view-switch" aria-label="创新图视图">
+            <a class="button ${view === "ideas" ? "active" : ""}" href="#/innovation?week=${encodeURIComponent(selected.week)}">Idea 关系</a>
+            <a class="button ${view === "taxonomy" ? "active" : ""}" href="#/innovation?week=${encodeURIComponent(selected.week)}&view=taxonomy">形成机制</a>
+          </nav>
           <div class="section-head">
-            <h2>${esc(selected.week)} Idea 关系</h2>
-            <p class="muted">点击 Idea 节点或连线查看原件与关联依据。</p>
+            <h2>${esc(selected.week)} ${showTaxonomy ? "Idea 形成机制" : "Idea 关系"}</h2>
+            <p class="muted">${showTaxonomy ? esc(result?.formationTaxonomy?.summary || "从问题触发、思考动作到验证方式，查看创新是怎样形成的。") : "点击 Idea 节点或连线查看原件与关联依据。"}</p>
           </div>
           <div class="innovation-zoom-controls" aria-label="关系图缩放">
             <button type="button" data-innovation-zoom-out aria-label="缩小关系图" title="缩小">−</button>
             <button type="button" data-innovation-zoom-reset aria-label="复位关系图" title="复位">↺</button>
             <button type="button" data-innovation-zoom-in aria-label="放大关系图" title="放大">+</button>
           </div>
-          ${innovationLegend(result)}
-          <div class="innovation-canvas">${innovationGraph(result, rawWeek)}</div>
+          ${showTaxonomy ? innovationTaxonomyLegend() : innovationLegend(result)}
+          <div class="innovation-canvas">${showTaxonomy ? innovationTaxonomyGraph(result) : innovationGraph(result, rawWeek)}</div>
         </div>
         <aside class="panel innovation-detail" id="innovation-detail">
-          ${ideaNodes.length ? innovationIdeaDetail(ideaNodes[0], result, rawWeek) : `<p class="muted">本周没有可展示的 Idea 节点。</p>`}
+          ${showTaxonomy
+            ? innovationTaxonomyDetail(taxonomyNodes[0], result, rawWeek)
+            : (ideaNodes.length ? innovationIdeaDetail(ideaNodes[0], result, rawWeek) : `<p class="muted">本周没有可展示的 Idea 节点。</p>`)}
         </aside>
       </section>
       <section class="panel innovation-questions">
@@ -816,16 +930,18 @@ async function renderInnovation(weekId) {
       </section>
     `}
   `;
-  bindInnovationPage(result, rawWeek, selected.week);
+  bindInnovationPage(result, rawWeek, selected.week, view);
 }
 
-function bindInnovationPage(result, rawWeek, week) {
+function bindInnovationPage(result, rawWeek, week, view = "ideas") {
   const select = document.querySelector("[data-innovation-week-select]");
   select?.addEventListener("change", () => {
-    location.hash = `#/innovation?week=${encodeURIComponent(select.value)}`;
+    location.hash = `#/innovation?week=${encodeURIComponent(select.value)}${view === "taxonomy" ? "&view=taxonomy" : ""}`;
   });
   const ideaNodes = Object.fromEntries(asArray(result?.ideaNodes).map((node) => [node.ideaId, node]));
   const relations = asArray(result?.relations);
+  const taxonomyNodes = Object.fromEntries(asArray(result?.formationTaxonomy?.nodes).map((node) => [node.id, node]));
+  const taxonomyRelations = asArray(result?.formationTaxonomy?.relations);
   const detail = document.querySelector("#innovation-detail");
   const canvas = document.querySelector(".innovation-canvas");
   const graph = document.querySelector("#innovation-network");
@@ -874,6 +990,25 @@ function bindInnovationPage(result, rawWeek, week) {
     edge.addEventListener("click", show);
     edge.addEventListener("keydown", (event) => { if (event.key === "Enter" || event.key === " ") show(); });
   });
+  document.querySelectorAll("[data-innovation-taxonomy]").forEach((node) => {
+    const show = () => {
+      if (detail) detail.innerHTML = innovationTaxonomyDetail(taxonomyNodes[node.dataset.innovationTaxonomy], result, rawWeek);
+      activate("[data-innovation-taxonomy]", node);
+      activate("[data-innovation-taxonomy-relation]", null);
+    };
+    node.addEventListener("click", show);
+    node.addEventListener("keydown", (event) => { if (event.key === "Enter" || event.key === " ") show(); });
+  });
+  document.querySelectorAll("[data-innovation-taxonomy-relation]").forEach((edge) => {
+    const show = () => {
+      const relation = taxonomyRelations[Number(edge.dataset.innovationTaxonomyRelation)];
+      if (detail && relation) detail.innerHTML = innovationTaxonomyRelationDetail(relation, result, rawWeek);
+      activate("[data-innovation-taxonomy-relation]", edge);
+      activate("[data-innovation-taxonomy]", null);
+    };
+    edge.addEventListener("click", show);
+    edge.addEventListener("keydown", (event) => { if (event.key === "Enter" || event.key === " ") show(); });
+  });
   document.querySelector("[data-export-innovation-svg]")?.addEventListener("click", () => {
     const svg = document.querySelector("#innovation-network");
     if (!svg) return;
@@ -883,7 +1018,7 @@ function bindInnovationPage(result, rawWeek, week) {
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = `innovation-methodology-${week}.svg`;
+    link.download = `innovation-${view === "taxonomy" ? "formation-taxonomy" : "methodology"}-${week}.svg`;
     link.click();
     URL.revokeObjectURL(url);
   });
