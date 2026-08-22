@@ -1,82 +1,84 @@
 {
   "key": "person:xu-yijia:2026-08-23:horizontal",
-  "generatedAt": "2026-08-22T15:03:46.913Z",
+  "generatedAt": "2026-08-22T21:03:49.387Z",
   "provider": "deepseek",
   "model": "deepseek-v4-pro",
   "reasoningEffort": "high",
-  "inputHash": "e6fe12c5b4731ecea67d98116858ebe185c17a807e635b140ba73a68509f4c6e",
-  "contentHash": "e6fe12c5b4731ecea67d98116858ebe185c17a807e635b140ba73a68509f4c6e",
+  "inputHash": "f7cd88e51886ddf86b5c330d024b5337247cd96a7d00ea93ea868fd10ffba605",
+  "contentHash": "f7cd88e51886ddf86b5c330d024b5337247cd96a7d00ea93ea868fd10ffba605",
   "promptHash": "7ab2efc4d416dbeeb34a0e2d3cc797ac660749509537011b4ea431707a52a0ba",
   "result": {
     "overallLevel": "特别值得读",
-    "headline": "从 56.3% 到 87.5%：受约束 LLM fallback 提升复杂公式 Paper IR，并用 stage-level coverage 暴露新瓶颈",
-    "overviewSentence": "本周用固定 Gold Set 验证了受约束 LLM fallback 对复杂公式 Paper IR 的提升，并系统记录了 Paper-Code localization 与 end-to-end stage 瓶颈。",
-    "shortRead": "本周核心进展是：在五篇论文固定 32 个 Paper Semantic Gold 样本上，deterministic coverage 为 56.3%，加入受约束 LLM fallback 后提升到 87.5%，并通过 abstain 和 gate 控制 unsupported relation。同时完成 27 个 Paper-Code entity 的 mismatch taxonomy，发现 name match 只占 9/27。五篇论文 stage-level coverage 显示瓶颈已向 localization 和 correspondence 后移，下一阶段应逐层确定 semantic assistance 插入点。",
-    "levelRationale": "按本周研究管理标准，这份周报属于特别值得读的一类。它不只汇报进度，而是给出三个有对照数据的硬进展：Paper IR 覆盖率从 56.3% 提升到 87.5%；27 个 entity 的 localization mismatch taxonomy；五篇论文 stage-level coverage。CoT’s CoT 有 A/B/A 证据等级，meta-cognition 明确为 semantic routing，价值判断和项目管理均落到具体金额、阶段和关键路径。唯一需要继续保持的是把 Gold Set 和 stage-level success/failure 定义进一步固定。因此整体达到特别值得读。",
-    "sameWeekPosition": "按本周标准，这份周报属于较值得优先阅读的一类；它把“要不要用 LLM”转化为可验证的 Gold 对照和 stage 失败归因，不是简单完成清单。",
+    "headline": "三线硬进展同步推进，用固定Gold把LLM定位为受约束semantic fallback，并把端到端瓶颈从Paper projection后移到localization与correspondence。",
+    "overviewSentence": "本周完成32个Paper Semantic Gold样本和27个entity mismatch统计，将可接受Paper IR覆盖率从56.3%提高到87.5%，并首次获得1个final aligned relation，同时把下一步聚焦在Gold扩样和stage-level failure accounting上。",
+    "shortRead": "本周核心不是继续补规则，而是先建立固定Gold，做deterministic与受约束LLM fallback的对照：32个样本中，可接受Paper IR覆盖率从18/32提高到28/32；2个证据不足主动abstain，2个论文不存在的隐含关系被gate拒绝。Paper-Code localization用27个entity完成mismatch taxonomy，发现alias、structural和scope差异才是主要瓶颈。五篇论文的stage-level重算显示只有LoRA出现1个final aligned relation，证明单模块覆盖率会高估系统能力。下周最小动作是Gold扩到约50个hard case，并先建localization Gold，不新开LLM模块。",
+    "levelRationale": "这份周报达到特别值得读，因为它同时满足了研究管理的多个高标准：硬进展有可复现的固定Gold对照，不是零散尝试；认知增量从CoT推进到CoT's CoT，并清楚说明老师原本不知道什么；Brainary映射指向可沉淀的verifier、benchmark和workflow controller；价值判断给出三个任务的具体金额和计算方法；项目管理记录阶段、时间、token成本、关键路径和纠偏动作；元认知提出semantic routing，不是只讲模型能力。证据等级为A/B，下周动作均可验证，因此属于优先阅读。",
+    "sameWeekPosition": "按本周标准，这份周报属于较值得优先阅读的一类，因为在硬数据、失败模式识别和下一步验证设计上都给出了清晰闭环。",
     "highlightedSignals": [
-      "32 个固定 Gold 样本：deterministic 18/32，受约束 LLM fallback 后 28/32，coverage 从 56.3% 提升到 87.5%。",
-      "27 个 Paper-Code entity 中仅 9 个 exact/near-exact name 定位，alias、structural、scope 三类 mismatch 成为主因。",
-      "五篇论文 stage-level coverage：LoRA 首次出现 final aligned relation，其他论文仍停在 localization/correspondence/scope。",
-      "CoT’s CoT 1 和 3 证据等级为 A，CoT’s CoT 2 为 B；meta-cognition 明确为 semantic routing。",
-      "项目管理标注三个关键路径，并决定下周固定五篇论文、不扩新论文，先补齐 stage-level failure accounting。"
+      "受约束LLM fallback在32个固定样本上把可接受Paper IR覆盖率从56.3%提高到87.5%，同时保留abstain和gate控制错误。",
+      "27个Paper entity中只有9个能直接name match，说明semantic correspondence必须独立于字符串匹配设计。",
+      "五篇论文stage-level trace显示只有LoRA出现1个final aligned relation，证明需要按stage计算end-to-end coverage。",
+      "CoT's CoT三条均标注为老师原本不知道，且自动化潜力都为高，可沉淀为semantic fallback module、entity correspondence schema、stage coverage dashboard。",
+      "项目管理记录三线任务各自时间、资源、token成本与关键路径，并明确下周只扩Gold、不新增LLM能力。"
     ],
     "focusDimensions": {
       "valueJudgment": {
         "read": "非常好",
-        "evidence": "学生分别估计三个项目价值为 50 万、45 万、30 万人民币，并给出计算方法；其中 Paper Semantic Fallback 的价值判断与本周实验直接挂钩，不是空泛估值。",
-        "nextLift": "下一步可以更明确地区分“早期实验价值”与“规模化复用价值”，并把估值更新绑到下一轮 Gold 扩到 50 个样本后的效果。"
+        "evidence": "三个题目分别给出50万、45万、30万人民币的估计价值，并说明计算方法：复杂公式自动projection减少2-3人1-2个月投入；semantic correspondence减少跨repo人工定位与返工；stage-level benchmark避免在错误模块上持续投入。还标注了局部优化还是通用能力以及最可能沉淀成什么。",
+        "nextLift": "可以进一步把金额估算与具体验收指标绑定，例如当Gold扩到50且abstain rate低于某个阈值时，模块价值才算兑现；同时可补充更保守的区间而非单点金额，方便老师在资源决策时判断真值。"
       },
       "projectManagement": {
         "read": "非常好",
-        "evidence": "三个项目都写清阶段、时间投入、下周预计、依赖关系、关键路径和纠偏动作；尤其把 localization 和 alignment 标为关键路径，并决定固定五篇论文不扩新论文。",
-        "nextLift": "可以在下周把三个项目的成功/失败定义统一到一个 stage-level checklist，并标出每一项目前缺的唯一可交付物。"
+        "evidence": "三个项目都有当前阶段、时间规划、实际进展、资源依赖、关键路径和纠偏动作；本周投入分别约10-12、6-8、5-7小时，token成本约12-15万、6-8万、5-7万；关键路径识别为Paper Semantic Fallback和Paper-Code correspondence，并坚持下周不扩新论文、不新增LLM模块。",
+        "nextLift": "可以增加一个跨三线任务的统一里程碑和失败退出条件，例如如果Gold扩到50后fallback提升低于5个百分点，是否回到规则或调整schema；这样项目管理能从任务级再上升为项目组合级控制。"
       },
       "metacognition": {
         "read": "特别值得读",
-        "evidence": "从‘增加 coverage’转向‘先知道 deterministic 在哪里失效、何时 abstain、何时由 verifier 决定 downstream’；把 meta-cognitive control 写成了 routing policy，且与 32 样本结果一致。",
-        "nextLift": "下一步可以把 routing policy 写出可执行规则，而不仅是概念；例如给定公式类型、证据 span 和 confidence 阈值如何决定 fallback/abstain/gate。"
+        "evidence": "周报明确说出'一个可靠的semantic agent不应该首先追求理解更多，而应该先知道deterministic system在哪里失效、什么时候有足够证据介入，以及什么时候应该abstain'；并进一步写成semantic routing：规则能处理时不调用LLM，规则失败且证据充分时调用fallback，证据不足时abstain，最终由deterministic verifier决定是否进入downstream。",
+        "nextLift": "可以把这个routing policy从叙述升级为可测试决策表或伪代码，写明'什么条件下调用fallback、什么条件下abstain、什么条件下gate'，让下周周报能引用具体criterion，而不是只停留在认知层。"
       }
     },
     "growthOpportunities": [
-      "Gold Set 目前是早期规模，下周可继续扩到约 50 个 hard case，并按公式类型分别报告 success、abstain、unsupported relation rate，使提升不只是总数。",
-      "localization 现在处于 failure analysis 阶段，建议把 alias / structural mismatch 的固定人工 Gold 先建起来，再验证 role-aware semantic localization 的效果。",
-      "stage-level coverage 已记录，但各 stage 的 success/failure 定义还可进一步统一，以避免模块间指标不可比。"
+      "当前Gold只覆盖Paper Semantic Fallback，扩到约50个样本时需要提前固定min-max、piecewise、reduction各类hard case的比例，并分别报告成功率、abstain rate和unsupported relation rate，避免总覆盖率掩盖类型差异。",
+      "Paper-Code semantic correspondence已经完成taxonomy，但还没有固定localization Gold，可以用alias和structural mismatch各标一小批，再决定是否引入LLM localization。",
+      "stage-level failure accounting尚不完整，建议把五篇论文每个relation停在哪一层、失败类型和证据记录做成统一表格，便于下一周判断semantic assistance应先进localization还是entity correspondence。"
     ],
     "teacherAction": {
       "readOriginal": true,
       "meetingQuestions": [
-        "你下周扩 Gold 到 50 个 hard case 时，如何定义并区分 abstain、unsupported relation 和 gate 拒绝的边界？",
-        "如果 semantic localization 在小样本上也提升，你准备先接 localization 还是 entity correspondence？判断标准是什么？",
-        "stage-level coverage 中，如何统一 success/failure 定义，避免指标在模块间不可比？",
-        "你能否给出一个 2 周内把 Paper Semantic Fallback 变成可复用 benchmark 的最小版本？"
+        "下周Gold扩到50后，如果min-max、piecewise、reduction的fallback成功率或abstain率差异很大，你会把semantic fallback拆成公式类型专用模块吗？",
+        "27个entity mismatch中，alias、structural、scope三类对应的localization Gold标注标准分别是什么，如何避免name match污染Gold？",
+        "五篇论文stage-level trace除了LoRA外停在哪一阶段，你判断下一步semantic assistance应先进localization还是entity correspondence？",
+        "如果semantic fallback的unsupported relation gate拒绝率继续升高，你认为可接受的拒绝率上限是多少？",
+        "能否把semantic routing policy写成可执行规则或伪代码，作为下周周报的一部分？"
       ],
       "nextWeekWatch": [
-        "Gold 扩到约 50 个 hard case 后，fallback 在 min-max/piecewise/reduction 上的成功率、abstain rate 和 unsupported relation rate。",
-        "是否建立 localization Gold，并初步定义 role-aware semantic correspondence。",
-        "是否补齐五篇论文的 stage-level failure accounting，并明确下一个 semantic module 的插入位置。",
-        "是否把本周的三个项目沉淀为可复用的 evaluation protocol / schema / dashboard。"
+        "Gold是否从32扩到约50，并且包含足量min-max、piecewise、reduction hard case。",
+        "localization Gold是否已经固定一小批alias/structural mismatch case，且没有启动LLM localization。",
+        "五篇论文stage-level failure accounting是否补全，能否看到第二个final aligned relation出现。",
+        "是否继续只验证Paper Semantic Fallback，没有同时新增LLM localization或alignment模块。"
       ]
     },
     "studentFeedback": {
-      "summary": "本周你把一个模糊的 LLM 要不要介入问题，转化为可验证的固定 Gold 对照和 stage-level 失败归因，这已经超过一般进度汇报。",
+      "summary": "本周你把三线工作都推进到了可验证的硬数据，而且没有在样本还小时就急着扩大系统，这是很成熟的节奏；下一步继续固定Gold和stage-level trace，会让结论更稳。",
       "whatYouDidWell": [
-        "你用 32 个固定样本得到 56.3%→87.5% 的 coverage 提升，并把 abstain/gate 失败模式写得很清楚。",
-        "你不仅报告 localization 失败，还做了 27 个 entity 的 mismatch taxonomy，把问题从字符串匹配升级为 role-aware semantic correspondence。",
-        "你给出了清晰的 stage-level coverage 记录，避免了用前端 Paper IR 成功率高估系统能力。"
+        "用32个固定Gold样本做deterministic vs semantic fallback对照，把可接受Paper IR覆盖率从56.3%提高到87.5%，并主动让2个unsupported relation被gate拒绝，保护了下游可靠性。",
+        "对27个Paper entity完成mismatch taxonomy，把localization问题从名称匹配升级为role-aware semantic correspondence，并形成第一版correspondence schema。",
+        "同时维护三个关键路径项目，记录时间、token成本和纠偏动作，并明确下周最小验证动作，项目管理清晰。"
       ],
       "nextStep": [
-        "下周扩 Gold 时，建议同时记录每个 hard case 的公式类型、证据充分度和失败原因，使 benchmark 不只是数量增加。",
-        "建议把 localization Gold 的候选选择规则固定下来，避免在缺失 ground truth 时让 semantic retriever 自由发挥。",
-        "继续用五篇论文做 stage-level trace，明确 localization 和 entity correspondence 哪一个是更优先的 semantic 插入点。"
+        "继续扩Gold到约50个，重点增加min-max、piecewise和reduction，并分类型记录成功率、abstain rate和unsupported relation rate，避免只报总覆盖率。",
+        "先给alias和structural mismatch建立固定localization Gold，不要急着让LLM自动定位，以验证semantic localization是否真的有效。",
+        "把stage-level failure accounting补完整，并考虑把routing policy写成可执行决策表，让下周周报能出现具体规则而不仅是概念。"
       ],
-      "suggestedRewrite": "下周周报可以这样写：『本周将 Paper Semantic Gold 从 32 扩到 50，新增 18 个 min-max/piecewise/reduction hard case；结果：fallback 在 hard 类型上成功恢复 11/18，abstain 3 例，unsupported relation 被 gate 拒绝 2 例；按公式类型成功率分别为 min-max 60%、piecewise 80%、reduction 50%。据此判断，下一步应优先增强 reduction 类的 evidence boundary，而不是继续增加 LLM 调用频率。』"
+      "suggestedRewrite": "下周周报可以这样写：'本周我没有新增LLM模块，而是把Gold从32扩到50，其中min-max、piecewise、reduction各增加X个；在50个固定样本上，deterministic coverage为X%，fallback后为X%，abstain rate为X%，gate拒绝率为X%；同时从27个entity中固定Y个alias/structural mismatch作为localization Gold，未启动LLM localization。' 这样老师和后续复盘能直接比较本周与下周的增量。"
     },
     "evidenceLinks": [
-      "主线任务1：32 个固定 Paper Semantic Gold 样本，deterministic 18/32，fallback 后 28/32，coverage 56.3%→87.5%。",
-      "主线任务2：27 个 Paper entity，9 exact match，8 alias，6 structural，4 scope；形成 correspondence schema。",
-      "主线任务3：五篇论文 stage-level coverage，LoRA 出现第 1 个 final aligned relation。",
-      "CoT’s CoT 证据等级：1=A，2=B，3=A；元认知指向 semantic routing。"
+      "32个Paper Gold样本与18/32→28/32覆盖率对照，以及2 abstain、2 gate拒绝数据。",
+      "27个Paper entity mismatch taxonomy：9 exact match、8 alias、6 structural、4 scope。",
+      "五篇论文stage-level coverage trace与LoRA首个final aligned relation。",
+      "CoT's CoT三条的证据等级：1-A、2-B、3-A。",
+      "三个项目的价值估算、时间投入与token成本记录。"
     ]
   }
 }
