@@ -1,0 +1,418 @@
+{
+  "key": "week:2026-08-23:briefing",
+  "generatedAt": "2026-08-24T01:05:51.640Z",
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "reasoningEffort": "high",
+  "inputHash": "2d5a331cdd4c8b137197168ac4b204b12c75c711458b1be16404f128de8731db",
+  "contentHash": "2d5a331cdd4c8b137197168ac4b204b12c75c711458b1be16404f128de8731db",
+  "promptHash": "fd044858c100ec630703bd42902fd3fddf90c8cba2723bb99c9bbfecea4fd4c3",
+  "result": {
+    "headline": "本周25/74提交率，M5+5%、90万预测审计与跨文献端粒因果链成为硬进展；但49人未交、多条高价值框架仍缺真实实验。",
+    "executiveSummary": [
+      "本周74人名单仅25人提交，缺49人，提交率34%，且存在重名ID冲突，需优先数据治理与催收。",
+      "多条主线产生首个统计显著或端到端证据：M5 200题防作弊评测集上V8注入+5%显著；7模型90万预测审计分离image-presence与patient-specific content；AutoResearch在5篇论文中恢复跨文献因果路径。",
+      "关键认知增量集中在“把复合指标拆成正交维度”：证据等级×任务必要性、条件存在×内容正确、deterministic边界×LLM fallback、状态变化来源归因。",
+      "高价值但证据不足的框架需警惕：Meta-CoT三阶对抗、BAC语法模型、task drift监控等均为设计或观察，自评C级或无量化。",
+      "Brainary可沉淀模块新增：dual-axis memory scoring、算力占用异常监控、Working Memory schema、目标对齐守卫、state-change attribution、evidence-driven Validation Planner。",
+      "工程瓶颈与验证债务突出：MinerU解析阻塞AutoResearch扩容；Ravel演化链路不稳；长程agent平均token检测阈值升至35%；多条线仍停留在最小可验证动作前。"
+    ],
+    "sections": {
+      "keyProgress": [
+        {
+          "title": "M5主实验与grounding三道门落地",
+          "people": [
+            "Guo Yaoqi"
+          ],
+          "whyItMatters": "主线首个统计显著下游数字，且评测集防作弊可复用为后续所有claim的标准检验场。",
+          "evidence": "200题+屏蔽作弊通道；V8语料注入相对裸跑约+5%，统计显著；实验日志已落盘。",
+          "action": "下周完成贡献分解（规则轴vs事实轴）并补lift×翻正率图，结束三周挂账。"
+        },
+        {
+          "title": "Patient-specific content attribution审计",
+          "people": [
+            "Qian Jiayu"
+          ],
+          "whyItMatters": "把准确率拆为条件存在与内容正确两个正交轴，发现多数模型内容增益≈0，只有Merlin显著；审计指标可承担系统选择。",
+          "evidence": "7个checkpoint、90个条件、900,000条预测；Merlin阳性对照+2.10pp p=1.8e-04；25%路由系统43.96% acc +1.74pp content gain。",
+          "action": "将反事实换患者设计推为通用benchmark validity harness，在更多模型和任务上验证。"
+        },
+        {
+          "title": "AutoResearch跨文献因果链验证",
+          "people": [
+            "Li Qiankun",
+            "Sipeng",
+            "Zhihang"
+          ],
+          "whyItMatters": "证明KG合并能产生单篇论文无法得到的跨文献因果推断，是自动化科学发现的关键证据。",
+          "evidence": "5篇论文合并，找到4个共享节点，恢复端粒缩短→端粒危机→肿瘤形成路径，Context兼容。",
+          "action": "修复MinerU批量解析工程问题，将验证规模从5篇扩大。"
+        },
+        {
+          "title": "Paper Semantic Fallback小样本金标准",
+          "people": [
+            "Xu Yijia"
+          ],
+          "whyItMatters": "用32个固定Gold样本证明deterministic边界+LLM fallback+abstain能把coverage从56.3%提高到87.5%，且控制错误。",
+          "evidence": "deterministic正确18/32；14个失败中fallback恢复10个；2个unsupported拒绝，未强行追求全覆盖。",
+          "action": "扩大Gold Set，验证stage-wise coverage和失败后移规律。"
+        },
+        {
+          "title": "命令行agent外置认知框架实现与Working Memory缺口识别",
+          "people": [
+            "Zhang Haonan"
+          ],
+          "whyItMatters": "真实宿主上验证LTM跨任务端到端链路，但暴露没有Working Memory导致模块孤立，这是认知agent闭环设计的通用问题。",
+          "evidence": "Claude Code与DeepSeek Harness接入；candidate→promoted→retrieved→injected链路完成；281任务池；运行方差CV0.634，最小检测效应升至35%。",
+          "action": "定义Working Memory schema和认知状态转移协议，补过程指标（假完成率、spec drift等）。"
+        },
+        {
+          "title": "CommActBench冻结统一T+C+A评测协议",
+          "people": [
+            "Sun Xiao"
+          ],
+          "whyItMatters": "把通信agent评测从异构比较收束到只替换LLM的控制设计，隔离框架混淆，使归因可信。",
+          "evidence": "1,400条runtime-qualified场景；24条infrastructure gate；六类runtime最小EpisodeRunner通路接通。",
+          "action": "正式运行模型比较，严格通过L3兼容门槛后进入正式集。"
+        },
+        {
+          "title": "edge_role双维度校准与KGR三分类",
+          "people": [
+            "Chen Huabao"
+          ],
+          "whyItMatters": "证据等级与问题条件必要性被证明正交，防止高证据边因问题类型被错误降级；三分类清理评测污染。",
+          "evidence": "争议样本重判，Level4关键边触发abstention；KGR-10更新为7 main_eval/2 abstention_eval/1 excluded_defect。",
+          "action": "组织医生口径确认会，校准两维矩阵默认角色。"
+        },
+        {
+          "title": "语言红队词表收敛与算力天花板探测",
+          "people": [
+            "Huang Xun"
+          ],
+          "whyItMatters": "发现隐式攻击93%伤害隐藏在内嵌思考轨道，并存在~35K token深度天花板，为算力审计提供硬指标。",
+          "evidence": "词表净增1200余词至4,256，零垃圾零重复；ASR 6%-26%，可读性88-93%；自创词占比5-7%。",
+          "action": "从话术维度转向底层数学组合结构，建立算力占用异常监控护栏。"
+        }
+      ],
+      "teacherUnknown": [
+        {
+          "title": "question-conditioned必要性与证据等级正交",
+          "people": [
+            "Chen Huabao"
+          ],
+          "whyItMatters": "高证据边也会因问题措辞反转，必要性不能作为证据不足的副产品，需要两维校准矩阵。",
+          "evidence": "高证据的at-risk肝硬化背景边在LI-RADS vs恶性可能性问题下角色反转；证据等级B。",
+          "action": "建立evidence_level × question-conditioned necessity矩阵，并沉淀为calibration protocol。"
+        },
+        {
+          "title": "半成品模糊规则是剧毒，需要主动做减法",
+          "people": [
+            "Huang Xun"
+          ],
+          "whyItMatters": "不完整规则比直接置空破坏更大，因为自回归机制对早期模糊状态有不可逆倍乘畸变；同时93%算力伤害隐藏在内嵌思考轨道。",
+          "evidence": "剔除不完整词缀后大盘语义重组稳定度和质量提升；A级。",
+          "action": "增加算力占用异常监控护栏，与内容安全护栏并列。"
+        },
+        {
+          "title": "Benchmark分数必须拆为条件存在与内容正确",
+          "people": [
+            "Qian Jiayu"
+          ],
+          "whyItMatters": "一个模型可能仅因输入槽位有影像而得益，并不使用患者特异内容；反事实换患者设计才能分离。",
+          "evidence": "7模型实测，除Merlin外content gain≈0；900,000条预测；A级。",
+          "action": "将matched wrong-patient counterfactual固化为benchmark validity harness。"
+        },
+        {
+          "title": "审计指标可以承担系统选择，不只是事后解释",
+          "people": [
+            "Qian Jiayu"
+          ],
+          "whyItMatters": "准确率与内容归因冲突时，按content gain路由能同时获得高准确率与显著内容归因，改变系统设计。",
+          "evidence": "25%路由系统达到43.96% accuracy与+1.74pp content gain；证据A/B，跨第三通路待验证。",
+          "action": "把审计作为路由决策的一等指标，验证跨模型普适性。"
+        },
+        {
+          "title": "对抗Agent需要三阶心智建模，传统OODA一阶天花板",
+          "people": [
+            "Qiao Wei"
+          ],
+          "whyItMatters": "对抗本质是心智vs心智，砍掉二三阶会退化为盲打或被反向利用；五维Meta-CoT框架可操作化。",
+          "evidence": "框架设计推演，C级，无实现无实验；有一阶工具打不过现代EDR的业界现象。",
+          "action": "实现四步CoT模板为最小可运行推理循环，并定义双memory schema。"
+        },
+        {
+          "title": "元认知应包含现实验证维度，怀疑自身观测",
+          "people": [
+            "Qiao Wei"
+          ],
+          "whyItMatters": "防御方会构造幻觉空间（沙箱/蜜罐），Agent必须验证自己是否被隔离，否则成功可能是假象。",
+          "evidence": "DNS带外验证为设计动作，C级推演，未实测。",
+          "action": "细化反向观测评估的可操作判据，纳入带外验证信道。"
+        },
+        {
+          "title": "长期多agent research task需要独立task drift检测",
+          "people": [
+            "Sun Kairan"
+          ],
+          "whyItMatters": "任务跑久后可能偏离原主题，不能只看持续产出；需要专门监控agent做reflection。",
+          "evidence": "接入多个agent后的观察，无量化数据，证据缺失。",
+          "action": "实现一个独立monitoring agent定时reflection，并量化drift触发条件。"
+        },
+        {
+          "title": "Validation Agent核心是规划Evidence Acquisition而非执行Validator",
+          "people": [
+            "Wu Jiahui"
+          ],
+          "whyItMatters": "传统系统以Validator为中心堆规则，Agent化后应围绕当前Hypothesis最缺什么Evidence选择工具。",
+          "evidence": "架构设计，无实验，证据缺失。",
+          "action": "在2-3个真实OSS数据问题上实现第一版workflow，验证stop policy。"
+        },
+        {
+          "title": "Hybrid系统关键是deterministic边界+LLM语义fallback+abstain",
+          "people": [
+            "Xu Yijia"
+          ],
+          "whyItMatters": "LLM最合适的第一角色不是parser replacement，而是evidence-bounded semantic fallback，把unsupported inference挡在downstream外。",
+          "evidence": "32样本Gold Set，coverage从56.3%提升到87.5%，A级。",
+          "action": "扩大Gold Set，形成routing policy和confidence gate。"
+        }
+      ],
+      "risks": [
+        {
+          "title": "提交缺口过大",
+          "people": [
+            "全部"
+          ],
+          "whyItMatters": "49/74未交，可能遗漏重要进展和风险；存在重复姓名和空userId。",
+          "evidence": "status显示submitted 25，rosterSize 74，missing 49；Zhao Xuanyue出现两处ID。",
+          "action": "立即催收，核对roster身份，确保覆盖面。"
+        },
+        {
+          "title": "多个高价值框架仍停留在设计/推演层",
+          "people": [
+            "Qiao Wei",
+            "Sun Kairan",
+            "Huang Yitan"
+          ],
+          "whyItMatters": "Meta-CoT三阶、task drift监控、BAC语法模型均无真实实验或量化，自评C级或无证据。",
+          "evidence": "Qiao Wei自评C；Sun Kairan无量化；Huang Yitan BAC模型v0未在真实漏洞集验证。",
+          "action": "要求下周提供最小可运行原型和一组量化指标，否则不继续投入。"
+        },
+        {
+          "title": "工程瓶颈阻塞关键路径",
+          "people": [
+            "Li Qiankun",
+            "Lei Tianyu",
+            "Zhang Haonan"
+          ],
+          "whyItMatters": "MinerU批量解析阻塞AutoResearch扩容；Ravel演化链路多环节不确定导致难以稳定复现；长程agent检测阈值达35%，预算可能无法检出真实收益。",
+          "evidence": "Li Qiankun工程扩容30%；Lei Tianyu多轮修改仍未稳定；Zhang Haonan CV0.634。",
+          "action": "优先解决MinerU；压缩Ravel演化自由度；Zhang Haonan聚焦方差对照。"
+        },
+        {
+          "title": "指标与目标对齐风险",
+          "people": [
+            "Zhao Xuanyue",
+            "Sun Manqi",
+            "Qian Jiayu"
+          ],
+          "whyItMatters": "LoRA抗噪增强高分但离题；迁移判断曾按API数量而非家族核心行为；benchmark分数可能只反映条件存在而非内容使用。",
+          "evidence": "Zhao Xuanyue自评A级失败模式；Sun Manqi方法调整；Qian Jiayu content gain≈0。",
+          "action": "强制在评估协议中加入“优化对象==研究目标”对齐检查。"
+        },
+        {
+          "title": "周报质量参差，部分内容极简",
+          "people": [
+            "Yang Bo",
+            "部分其他"
+          ],
+          "whyItMatters": "Yang Bo周报仅3行，无法判断硬进展和认知增量，影响管理决策。",
+          "evidence": "Yang Bo extractedText只有三句话。",
+          "action": "重申周报模板要求，对过简周报退回补充。"
+        }
+      ],
+      "followUps": [
+        {
+          "title": "催收并清理roster数据",
+          "people": [
+            "管理员"
+          ],
+          "action": "联系49位未交成员，核实重复姓名和ID，明确提交截止。"
+        },
+        {
+          "title": "M5结果归因分解与mapping路由对照",
+          "people": [
+            "Guo Yaoqi"
+          ],
+          "action": "完成规则轴vs事实轴贡献拆分，在200题上补lift×翻正率图；设计mapping路由vs相关性检索对照实验。"
+        },
+        {
+          "title": "修复MinerU与扩大AutoResearch规模",
+          "people": [
+            "Li Qiankun",
+            "Sipeng"
+          ],
+          "action": "协助Sipeng解决批量PDF解析bug，将跨文献推理从5篇扩到更多，验证更多跨论文连接。"
+        },
+        {
+          "title": "将CoT's CoT沉淀为可复用模块",
+          "people": [
+            "全体"
+          ],
+          "action": "本周内选择1-2个最高价值CoT's CoT，转成可运行协议/模块：dual-axis calibration、counterfactual evaluator、Working Memory schema、目标对齐守卫、算力监控。"
+        },
+        {
+          "title": "设计真实环境最小实验",
+          "people": [
+            "Qiao Wei",
+            "Sun Kairan",
+            "Huang Yitan"
+          ],
+          "action": "Qiao Wei实现四段式状态机一次完整循环；Sun Kairan实现监控agent并量化drift；Huang Yitan在真实漏洞集验证BAC语法覆盖率。"
+        },
+        {
+          "title": "ICLR和论文冲刺",
+          "people": [
+            "Li Qiankun",
+            "Qian Jiayu",
+            "Lei Tianyu"
+          ],
+          "action": "病理KG v2写作从20%提升到可投稿；Ravel固定稳定版本，完成消融；CommActBench正式运行。"
+        }
+      ],
+      "assets": [
+        {
+          "title": "200题防作弊评测集 + grounding三道门",
+          "people": [
+            "Guo Yaoqi"
+          ],
+          "description": "可复用标准检验场，G1/G2/G3可运行实现。"
+        },
+        {
+          "title": "90万预测反事实审计管线与content gain metric",
+          "people": [
+            "Qian Jiayu"
+          ],
+          "description": "含阳性对照、成对统计、跨模型复现，可直接扩展。"
+        },
+        {
+          "title": "path_confidence v3.1与KGR-30三分类",
+          "people": [
+            "Chen Huabao"
+          ],
+          "description": "二维校准模块和评测子集清理规则。"
+        },
+        {
+          "title": "32样本Paper Semantic Gold Set",
+          "people": [
+            "Xu Yijia"
+          ],
+          "description": "支持semantic fallback对照，后续可扩展为benchmark。"
+        },
+        {
+          "title": "命令行agent认知框架与281任务池",
+          "people": [
+            "Zhang Haonan"
+          ],
+          "description": "含交互层、4个认知skill、元认知控制器、LTM；真实宿主可运行。"
+        },
+        {
+          "title": "1,400场景CommActBench + T+C+A协议",
+          "people": [
+            "Sun Xiao"
+          ],
+          "description": "统一shell、固定partner、仅换LLM的评测协议。"
+        },
+        {
+          "title": "4,256词表与收敛式数据构建闭环",
+          "people": [
+            "Huang Xun"
+          ],
+          "description": "零垃圾零重复，可复现测量体系。"
+        },
+        {
+          "title": "独立运行包 + 10项门禁 + 18条实验清单",
+          "people": [
+            "Zhang Jiayi"
+          ],
+          "description": "人格/状态两层参数模型，基座无关，可复用。"
+        }
+      ],
+      "peopleToRead": [
+        {
+          "name": "Guo Yaoqi",
+          "reason": "M5首个显著结果+老师反馈mapping展开，提供从诊断到处方的路由表。"
+        },
+        {
+          "name": "Qian Jiayu",
+          "reason": "反事实审计90万预测，分离presence和content，审计指标成为系统选择准则。"
+        },
+        {
+          "name": "Chen Huabao",
+          "reason": "证据等级与任务必要性正交，直接修正知识图谱评测逻辑。"
+        },
+        {
+          "name": "Qiao Wei",
+          "reason": "对抗Agent三阶心智建模，虽为设计但触及自动化安全的核心缺口。"
+        },
+        {
+          "name": "Zhang Haonan",
+          "reason": "真实运行暴露Working Memory缺失，对Brainary认知闭环有直接架构启示。"
+        },
+        {
+          "name": "Xu Yijia",
+          "reason": "deterministic边界+LLM fallback+abstain，给出混合系统可复制的最小结构。"
+        },
+        {
+          "name": "Li Qiankun",
+          "reason": "AutoResearch跨文献因果链验证，展示KG合并的科学发现潜力。"
+        }
+      ]
+    },
+    "sectionCards": [
+      {
+        "id": "key-progress",
+        "title": "关键进展",
+        "oneLine": "8项硬进展产生首个统计显著/端到端证据，但多数仍需下一步验证。",
+        "count": 8
+      },
+      {
+        "id": "teacher-unknown",
+        "title": "教师未知点",
+        "oneLine": "9条高价值CoT's CoT，集中正交拆分、对抗心智和认知闭环。",
+        "count": 9
+      },
+      {
+        "id": "risks",
+        "title": "风险",
+        "oneLine": "提交缺口、框架未验证、工程瓶颈和目标对齐风险需优先处理。",
+        "count": 5
+      },
+      {
+        "id": "follow-ups",
+        "title": "后续行动",
+        "oneLine": "6项下周动作，聚焦催收、归因分解、工程修复和模块沉淀。",
+        "count": 6
+      },
+      {
+        "id": "assets",
+        "title": "资产",
+        "oneLine": "8类可复用资产，包括评测集、协议、模块和数据集。",
+        "count": 8
+      },
+      {
+        "id": "people-to-read",
+        "title": "值得细读",
+        "oneLine": "7人周报值得优先阅读，覆盖核心方法和失败模式。",
+        "count": 7
+      }
+    ],
+    "closingAdvice": [
+      "本周最优先事项不是科研，而是提交治理：49/74未交，且存在重名ID冲突，必须今天完成催收和数据核对。",
+      "Qian Jiayu的反事实审计和content gain路由可能是通用能力，应列为下周评审重点，推动其成为Brainary的benchmark validity模块。",
+      "要求Qiao Wei把Meta-CoT从框架推演降级为最小可运行状态机，否则三阶心智建模无法证伪；严禁在无实测前扩大投入。",
+      "对多条线上出现的“正交拆分”认知（证据等级×必要性、presence×content、deterministic×LLM）做一次横向合成，可能形成团队级的方法论资产。",
+      "重点关注M5归因分解和ICLR病理KG v2写作，这些是近期可交付成果，避免被工程问题拖延。"
+    ]
+  }
+}

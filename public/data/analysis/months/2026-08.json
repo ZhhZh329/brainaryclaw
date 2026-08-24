@@ -1,612 +1,726 @@
 {
   "key": "month:2026-08:horizontal",
-  "generatedAt": "2026-08-23T19:05:18.375Z",
+  "generatedAt": "2026-08-24T01:07:02.529Z",
   "provider": "deepseek",
   "model": "deepseek-v4-pro",
   "reasoningEffort": "high",
-  "inputHash": "7011cc5d93315990f52223a8af96ab09723059e5583593f3e79a3084876bbca5",
-  "contentHash": "7011cc5d93315990f52223a8af96ab09723059e5583593f3e79a3084876bbca5",
+  "inputHash": "65dac306307f03409ce5185bbcd907e9f42b58d008d65cb8b43aadbe17ea8e49",
+  "contentHash": "65dac306307f03409ce5185bbcd907e9f42b58d008d65cb8b43aadbe17ea8e49",
   "promptHash": "0e25dfcb422cefbe2d717bfbd05813eff7148a7c9cbb899d5baff5bee7d829fa",
   "result": {
-    "headline": "本月团队结构呈现三类主轴：Memory/Perception 线高度重叠且需合并；Agent 安全与评估两条大线内部互补但接口未统一；Brainary 平台与华为/医学项目存在上下游但缺少 schema 对齐。建议老师本月重点把 Memory 组、安全探针、Agent 评估协议三件事拉到一起决策。",
+    "headline": "本月横向分析：Memory、安全红队、代码分析各自收敛，但跨人接口与重复模块仍未打通，需老师强制拉会合并统一 schema 与评测协议。",
     "executiveSummary": [
-      "Hu Lianyu, Wan Wenyuan, Ma Xiaoyu, Li Chunhan, Li Yifan 等人的 memory 工作明显重复或边界不清，需要合并成统一 memory 架构与 benchmark。",
-      "Huang Xun, Qiao Wei, Li Mei, Huang Yitan, Ge Mengmeng, Hu Zhichao, Yao Guangyu 在安全攻防上形成互补网络，但探针库、攻击面 schema、知识库未共享，存在重复建设。",
-      "Sun Yuqiang, Zhang Haonan, Liang Ruichao, Guo Yaoqi, Xu Yijia, Shen Qiwei 在 agent 机制评估、成本控制、可信验证上各有关键增量，应建立统一评估协议。",
-      "Chen Huabao, Qian Jiayu, Li Qiankun, Feng Yebo 的医学数据与 KG 链路需统一 provenance 和阶段闸门，否则影响临床迁移可信度。",
-      "Sun Manqi 与 Guo Wenbo 在华为恶意软件迁移上形成上游建模、下游生成验证的共生关系，但需要明确接口和差异清单。",
-      "Guo Yaoqi 与 Xu Yijia 的统计门控/风险权重，以及 Shen Qiwei 的 source-anchored schema 可合并为统一可信评估层，直接服务 Brainary。",
-      "Kong Ziqiao, Liu Chengyue, Sun Kairan 负责 Brainary 平台，但各项目 agent/memory/artifact 接入不统一，需要老师定义接口规范。",
-      "Zhang Jiayi, Xie Maoyi, Zhou Ziyang, Jie Wanqing, Yu Hongwei 在代码/漏洞知识表示上多线并进，应共享 root cause/invariant/IR schema 和标注数据。"
+      "Guo Yaoqi 与 Xu Yijia 已经形成统计门控验证器与层级风险可信评估的互补，但两者尚未合并验证器/风险权重接口，属于最应推动的跨项目合并。",
+      "Hu Lianyu、Wan Wenyuan、Ma Xiaoyu、Li Yifan、Li Chunhan、Sun Moran 等人在 Memory 架构上边界重叠严重，Wan Wenyuan 已有消融实验而其他人仍停留在设计，需要老师立即拉会对齐统一 schema。",
+      "Huang Xun、Qiao Wei、Li Mei、Huang Yitan、Hu Zhichao、Ge Mengmeng 分别覆盖 DoS、盲区测绘、权限提升、BAC、APT，但探针库与权限语义未统一，存在重复造轮子且安全接口断点明显。",
+      "Sun Yuqiang 与 Zhang Haonan 都发现 agent 执行噪声与失败归因问题，Sun Yuqiang 的重复扫描协议与 Zhang Haonan 的终止门可以合并为通用 Agent 评测协议。",
+      "Zhang Jiayi、Xie Maoyi、Zhou Ziyang、Jie Wanqing、Li Kaixuan、Lei Tianyu 在知识驱动代码分析上各自持有独立 IR 和知识表示，尚未形成统一 schema，老师应推动合并。",
+      "Liang Ruichao 的元认知成本节省与 Xu Yijia 的 trust evaluator 可以形成 controller 决策层闭环，但目前 evidence gate 未对接，缺少跨项目实验。",
+      "医学线 Li Qiankun、Chen Huabao、Qian Jiayu 各自推进 KG/证据/临床数据，需要建立统一 provenance 与 manifest，避免相互脱节。",
+      "多个 benchmark/自动化科研组件（Zhou Zhenhong auto-benchmark、Sun Xiao communication、Shen Qiwei source anchoring、Xu Yijia trust eval）可以抽取为 Brainary 公共模块，避免重复建设。"
     ],
     "sectionCards": [
       {
         "id": "relationship-map",
-        "title": "关系网络：谁和谁实际在一条线上",
-        "oneLine": "Memory 线和安全线是最大两个网，多个子群有上下游关系。",
-        "count": 8
+        "title": "人与人的关联网络",
+        "oneLine": "按研究线聚类，识别强关联与可复用接口",
+        "count": 7
       },
       {
         "id": "pairwise-comparison",
-        "title": "成对差异：方法与视角的横向比较",
-        "oneLine": "几个关键人-人差异决定了下阶段要合并还是保留独立。",
-        "count": 7
+        "title": "具体人-人纵向对比",
+        "oneLine": "关键差异与互补对",
+        "count": 8
       },
       {
         "id": "shared-projects",
-        "title": "共同项目与研究线",
-        "oneLine": "可识别的共享项目有 7 个，多数需要老师指定负责人统一接口。",
-        "count": 7
+        "title": "共同项目/共同研究线",
+        "oneLine": "实际在同一项目或同一研究线的人员",
+        "count": 6
       },
       {
         "id": "role-differences",
-        "title": "同项目内的角色差异与互补",
-        "oneLine": "华为、Memory、安全、Agent 评估内部已有自然分工，但边界未确认。",
+        "title": "同项目内角色与互补",
+        "oneLine": "同一研究线内分工与断点",
         "count": 5
       },
       {
         "id": "merge-opportunities",
-        "title": "建议合并的接口/数据/benchmark",
-        "oneLine": "五个合并机会能直接减少重复标注和实验成本。",
-        "count": 5
+        "title": "老师应推动的合并/协作",
+        "oneLine": "可立即合并的接口与 schema",
+        "count": 6
       },
       {
         "id": "gaps-overlaps",
-        "title": "重复劳动与协作断点",
-        "oneLine": "Memory 组和安全知识库重复最严重；接口断点集中在医学数据和 Brainary 接入。",
-        "count": 5
+        "title": "重复劳动与接口断点",
+        "oneLine": "需要对齐的问题点",
+        "count": 6
       },
       {
         "id": "teacher-actions",
-        "title": "老师下一步动作",
-        "oneLine": "六个动作重点关注拉会对齐、定义接口、推动合并。",
-        "count": 6
+        "title": "老师下一步执行动作",
+        "oneLine": "拉人、问人、定接口的具体动作",
+        "count": 8
       }
     ],
     "sections": {
       "relationshipMap": [
         {
-          "title": "Memory/Perception 研究线高度重合",
+          "title": "Memory 架构群：多层记忆设计彼此重叠",
           "people": [
             "Hu Lianyu",
             "Wan Wenyuan",
-            "Ma Xiaoyu",
             "Li Chunhan",
+            "Ma Xiaoyu",
             "Li Yifan",
-            "Sun Moran"
+            "Wu Junhao",
+            "Sun Moran",
+            "Zhao Xuanyue",
+            "Zhou Zhenhong",
+            "Guo Yaoqi"
           ],
-          "whyItMatters": "多人围绕 memory 分层、perception 接入、planning memory 展开工作，但各自边界不清，可能导致重复开发和无法比较。",
-          "evidence": "Hu Lianyu 连续三周做 episodic memory 架构设计；Wan Wenyuan 完成符号 memory 消融实验；Ma Xiaoyu 跑通 3D Working Memory 与 perception 对接；Li Chunhan 做过 Perception+Attention 框架；Li Yifan 做 Structure-aware Planning Memory；Sun Moran 做 chatbot 分层记忆 WM/EM/PM。周横向明确指出三人 memory 计划重复。",
-          "action": "老师应召集 memory 对齐会，统一 LTM/STM/EM/3D 的 schema、生命周期和评测基准，指定 Wan Wenyuan 的 MMStar/MMMU 消融为公共基线。"
+          "whyItMatters": "这是本月最明显的重复建设区：多人同时推进 Working Memory、Episodic Memory、Long-term Memory、3D WM、音频 LTM、skill memory，但彼此没有统一 schema 和评测协议；Wan Wenyuan 已经跑出消融实验，Hu Lianyu 三周仍停留在设计，Li Yifan 有 planning memory，Zhao Xuanyue/Zhou Zhenhong 有音频 LTM，Guo Yaoqi 有 procedural memory/skill，可形成一条完整 memory 生命周期。",
+          "evidence": "周报显示：Wan Wenyuan 在 MMStar/MMMU 上完成四配置 Memory 消融且完整框架最好；Hu Lianyu 连续三周仅做框架设计无实验；Ma Xiaoyu 完成 3D Working Memory 与 perception 对接；Li Yifan 明确 Planning Memory 与 QA Memory 分离；Zhao Xuanyue 从判别式增强转向特征分解式增强；Zhou Zhenhong 做 LTM Scaling Law；Guo Yaoqi 的 skill 按需检索注入 +8pp。",
+          "action": "老师下周必须拉这些同学开会，指定 Wan Wenyuan 的消融配置为统一 memory 评测基线，要求其他人把各自 memory 作为模块接入同一 pipeline，而不是另起 schema。"
         },
         {
-          "title": "Agent 安全/红队形成多分支网络",
+          "title": "安全红队/权限群：攻击面互补但探针未共享",
           "people": [
             "Huang Xun",
             "Qiao Wei",
             "Li Mei",
             "Huang Yitan",
-            "Ge Mengmeng",
+            "Cao Zong",
             "Hu Zhichao",
-            "Yao Guangyu",
-            "Lei Tianyu"
+            "Ge Mengmeng",
+            "Yao Guangyu"
           ],
-          "whyItMatters": "安全方向分散在攻击、检测、授权、审计、知识库等子领域，但共享探针、攻击面、归因方法，需要协同避免重复。",
-          "evidence": "Huang Xun 做构造语言 DoS 与测量体系；Qiao Wei 做黑盒盲区测绘与元认知红队；Li Mei 做 deceptive permission delegation；Huang Yitan 做 BAC 责任建模；Ge Mengmeng 做 APT 四层检测；Hu Zhichao 做 capability-aware provenance；Yao Guangyu 做渗透技能抽象；Lei Tianyu 做 Ravel 交易推理。周横向多次建议 Huang Xun 与 Qiao Wei 共享探针库，Ge Mengmeng 与 Yao Guangyu 知识库重叠。",
-          "action": "建立安全研究协同组，每周交换探针、攻击面和知识表示，逐步合并成统一 red team benchmark。"
+          "whyItMatters": "该群覆盖红队测量、权限提升、访问控制、APT、provenance 观测，但每个人的告警行为/权限语义/探针库都是私有的，Qiao Wei 甚至连续三周纯设计无落地，Huang Xun 已有实测但探针未共享给 Qiao Wei/Li Mei，导致无法形成跨项目安全协议。",
+          "evidence": "Huang Xun 构造语言 DoS 攻击验证 400+ 倍推理放大，净化 37% 污染词表后 ASR 从 2-8% 升至 16%；Qiao Wei 本周仅完成盲区测绘设计/Meta-CoT 框架，尚无实验；Li Mei 有 deceptive permission delegation 最小实验，但无 guardrail 下 1.0 结果需限制；Huang Yitan 把权限建模为语法学并有 PEDR 状态机；Cao Zong 做带权限语义的动态观测层；Hu Zhichao 做 APT 能力单元；Ge Mengmeng 做 APT 四层检测。",
+          "action": "老师应召开安全线会议，要求 Huang Xun 公开探针库和测量口径，Qiao Wei 必须在下周产出第一个盲区量化实验，Li Mei/Huang Yitan 统一权限语法，Cao Zong 的观测层作为所有红队实验的 provenance 基础。"
         },
         {
-          "title": "Agent 机制评估与成本控制形成闭环",
-          "people": [
-            "Sun Yuqiang",
-            "Zhang Haonan",
-            "Liang Ruichao",
-            "Lyuye Zhang",
-            "Guo Yaoqi",
-            "Xu Yijia",
-            "Shen Qiwei"
-          ],
-          "whyItMatters": "这些人在不同 agent 场景下分别解决失败归因、跨框架一致性、成本控制、验证器、风险权重等问题，互补性强，但指标和验证器不互通。",
-          "evidence": "Sun Yuqiang 发现单点运行不可信，提出重复扫描和 root-share；Zhang Haonan 冻结三框架发现 52.7% 结果不一致，提出证据驱动终止门；Liang Ruichao 用 4 基线证伪省 token 替代解释；Lyuye Zhang 跑出 make-or-buy Pareto 胜利；Guo Yaoqi 用留出自然实验统计门控；Xu Yijia 建立层级风险权重；Shen Qiwei 提出 source-anchored schema 和 preflight probe。",
-          "action": "推动形成统一 agent 评估协议，共享失败轨迹、验证器和观测单位，避免各自重复造轮子。"
-        },
-        {
-          "title": "代码分析与漏洞修复方法交叉",
+          "title": "代码分析与仓库维护群：独立 IR 五花八门",
           "people": [
             "Zhang Jiayi",
             "Xie Maoyi",
             "Zhou Ziyang",
             "Jie Wanqing",
-            "Yu Hongwei",
             "Li Kaixuan",
-            "Shi Junjie"
-          ],
-          "whyItMatters": "这些工作都从代码/需求中提取知识或验证逻辑漏洞，但各自建立 taxonomy、IR、invariant，缺少共享 schema 和数据集。",
-          "evidence": "Zhang Jiayi 定 fix strategy 字段和 root cause 索引；Xie Maoyi 整理 kernel invariant knowledge base；Zhou Ziyang 构建维护 IR 并发现静态分析天花板；Jie Wanqing 做智能合约漏洞知识库；Yu Hongwei 做 NL2Repo 与 Delta IR；Li Kaixuan 做 specification monitor；Shi Junjie 做 Event-B 需求验证。",
-          "action": "推动共享 root cause/invariant/IR schema，合并小型 gold set，由老师指定一个代码分析小组长负责整合。"
-        },
-        {
-          "title": "医学 AI 数据链路上下游",
-          "people": [
-            "Qian Jiayu",
-            "Chen Huabao",
-            "Li Qiankun",
-            "Feng Yebo"
-          ],
-          "whyItMatters": "临床数据、医学 KG、VQA、Digital Twin 是一条链路，但 provenance 和阶段闸门分散，可能导致训练数据不可信。",
-          "evidence": "Qian Jiayu 完成上海肝胆数据审计，发现 MR 为主且报告未核验；Chen Huabao 标注医学 KG 证据等级和 edge role；Li Qiankun 推进 Biological AI 与 Digital Twin 框架；Feng Yebo 参与 healthcare proposal。周横向建议 Chen Huabao 与 Qian Jiayu 共享受 provenance 和阶段闸门。",
-          "action": "制定统一医学数据 manifest、伦理边界和 KG 证据等级标准，由 Qian Jiayu 和 Chen Huabao 共同负责，Li Qiankun 集成到 Digital Twin。"
-        },
-        {
-          "title": "华为恶意软件迁移与建模",
-          "people": [
+            "Lei Tianyu",
             "Sun Manqi",
             "Guo Wenbo",
-            "Guo Yaoqi",
-            "Yang Yanjing"
+            "Yang Yanjing",
+            "Shen Qiwei"
           ],
-          "whyItMatters": "华为项目需要机制差异分析、样本生成验证、API/skill 支持形成流水线，目前角色未完全打通。",
-          "evidence": "Guo Wenbo 分析安卓/鸿蒙能力模型差异；Sun Manqi 重新定义家族迁移完成标准为行为闭环；Guo Yaoqi 交付华为调研报告并做 skill 提取；Yang Yanjing 做 API/库选择推荐，可服务鸿蒙 API 数据。",
-          "action": "明确华为项目内上下游：Guo Wenbo 输出可检查的差异清单，Sun Manqi 基于差异生成并验证，Guo Yaoqi 和 Yang Yanjing 提供 skill/API 选择支持。"
+          "whyItMatters": "多人都在做知识驱动的代码分析/漏洞检测/修复/API 选型，但各自使用不同 IR、知识库、验证门禁；Zhou Ziyang 的静态分析只能定型 23% 类型，Li Kaixuan 做 Spec-driven logic 漏洞检测，与 Xie Maoyi 的内核 invariant、Zhang Jiayi 的 fix strategy 没有共享。",
+          "evidence": "Zhang Jiayi 提出 root cause 索引和收敛性测试；Xie Maoyi 完成 Invariant Knowledge Base 和 Reasoning Framework 并小规模验证；Zhou Ziyang 发现动态语言静态分析天花板，应利用仓库测试做运行时信息源；Li Kaixuan 建立 Specification→Monitor→Program Behavior 框架；Lei Tianyu 完成 Ravel 主要对比实验；Sun Manqi 建立代码生成质量门禁；Guo Wenbo 分析华为 API/权限模型差异；Yang Yanjing 的 OSSPilot Set F1 76.63%；Shen Qiwei 的 source-anchored schema 可复用。",
+          "action": "推动合并代码分析 IR 和知识表示，指定 Xie Maoyi 的 Invariant KB 或 Zhou Ziyang 的 IR 作为基础，让其他人贡献适配器，统一 bug/漏洞知识 schema。"
         },
         {
-          "title": "具身智能与脑启发架构",
+          "title": "自动科研/可信评估群：统计门控、源锚定、重复扫描可分可合",
+          "people": [
+            "Xu Yijia",
+            "Guo Yaoqi",
+            "Shen Qiwei",
+            "Sun Yuqiang",
+            "Zhang Haonan",
+            "Liang Ruichao",
+            "Zhou Zhenhong",
+            "Sun Xiao",
+            "Wu Jiahui"
+          ],
+          "whyItMatters": "这些人都沉淀出可复用的自动化科研组件：统计门控验证器（Guo Yaoqi）、source-anchored schema（Shen Qiwei）、层级风险权重（Xu Yijia）、重复扫描观测单位（Sun Yuqiang）、终止门（Zhang Haonan）、auto-benchmark（Zhou Zhenhong）、communication benchmark（Sun Xiao）、validation theory（Wu Jiahui），目前散落在各自项目，尚未组装成统一评测协议。",
+          "evidence": "Guo Yaoqi 的 B' 留出验证器用自然实验杀灭 71% 旧规则；Shen Qiwei 用源锚定抓出自洽伪造表；Xu Yijia 发现 data preprocessing/split 比 data version 更改变结论；Sun Yuqiang 发现单点运行方差可翻转结论；Zhang Haonan 发现三框架 52.7% 结果不一致并提 termination gate；Zhou Zhenhong 排序一致性 ρ=0.883；Sun Xiao 冻结 shared shell；Wu Jiahui 提出 validation 的 Bayesian 模型。",
+          "action": "老师应让 Xu Yijia 牵头，把上述组件合并成一个 Brainary 公共验证模块，输出统一 evidence gate 和实验契约，供所有 agent 项目调用。"
+        },
+        {
+          "title": "医学 AI 群：KG/证据/临床数据各自为政",
+          "people": [
+            "Li Qiankun",
+            "Chen Huabao",
+            "Qian Jiayu",
+            "Ma Siyuan",
+            "Hou Xinmeng"
+          ],
+          "whyItMatters": "Li Qiankun 做 AutoResearch 癌变/衰老 KG，Chen Huabao 做医学 KG 证据等级，Qian Jiayu 做医学 VQA 和临床数据审计，三者需要统一 provenance 和 manifest；Hou Xinmeng 的 RCT agency 属于临床干预，需要与数据侧打通。",
+          "evidence": "Chen Huabao 完成 edge role 双维度校准和 Level 4 关键边 abstention；Qian Jiayu 完成上海肝胆医院 57.95 万 DICOM 审计，MR 占 66% CT 仅 33.5%，阻止错误大规模 CT 训练；Li Qiankun 与 Sipeng/Zhihang 跑通 5 篇 Paper-level KG Merge；Hou Xinmeng codebook v4 两面向 κ 同时 >0.7。",
+          "action": "老师应让 Li Qiankun、Chen Huabao、Qian Jiayu 对齐医学数据 manifest 和证据等级 schema，共享 phase gate，避免重复清洗和 provenance 缺失。"
+        },
+        {
+          "title": "具身智能/机器人规划群：大小脑与记忆接口需要对齐",
           "people": [
             "Liao Zeqin",
             "Wu Junhao",
             "Sun Wangting",
-            "Ma Xiaoyu"
+            "Li Chunhan",
+            "Wan Wenyuan",
+            "Ma Xiaoyu",
+            "Hu Lianyu"
           ],
-          "whyItMatters": "大小脑模型、小脑运动学习、全脑动力学、3D WM 应形成统一脑启发架构，但当前互相独立。",
-          "evidence": "Liao Zeqin 推进大小脑 Planning Agent；Wu Junhao 整理全脑动力学六类功能并调研动作准备；Sun Wangting 做小脑计算架构和视频到动作学习；Ma Xiaoyu 完成 3D WM 与 perception 对接。",
-          "action": "让 Liao Zeqin 和 Sun Wangting 对齐小脑模型，Ma Xiaoyu 提供 3D WM 接口，Wu Junhao 贡献全脑功能地图，形成具身智能统一框架。"
+          "whyItMatters": "Liao Zeqin 做具身大小脑 Planning Agent，Sun Wangting 调研第三人称视频到机器人动作学习，Wu Junhao 做动态视觉 4D 世界记忆，与 Li Chunhan/Wan Wenyuan/Ma Xiaoyu 的感知记忆链重叠；如果不对齐，会出现多套 world model 和 memory 表示。",
+          "evidence": "Liao Zeqin 本周确定人机协作 Planning Agent 拆分为差分世界模型、任务状态感知 memory、元认知监控；Sun Wangting 调研小脑计算架构三阶段；Wu Junhao 完成 4,646 张图像的人脑-模型验证复现；Ma Xiaoyu 的 3D WM 已与 perception 对接；Wan Wenyuan 的 memory 消融可以支撑具身基准。",
+          "action": "老师应让 Liao Zeqin 牵头确定机器人的统一 world model 和 memory 接口，把 Sun Wangting 的小脑学习、Wu Junhao 的 4D 记忆纳入具身 agent 架构，避免与 perception-memory 群重复。"
         },
         {
-          "title": "形式化方法与软件维护交叉",
+          "title": "Brainary 基础设施与 Agent OS：开发线相对收敛但需对接研究组件",
           "people": [
-            "Shi Junjie",
-            "Li Kaixuan",
-            "Zhou Ziyang",
-            "Yu Hongwei",
-            "Dang Wenjing"
+            "Kong Ziqiao",
+            "Liu Chengyue",
+            "Sun Kairan",
+            "Zhou Zhenhong",
+            "Sun Xiao",
+            "Zhang Haonan"
           ],
-          "whyItMatters": "需求形式化、规格监控、仓库 IR、CEGAR 精化在理论上有共同基础，但缺少统一规范和工具链。",
-          "evidence": "Shi Junjie 做 Cockburn 到 Event-B 验收；Li Kaixuan 做 specification-driven monitor；Zhou Ziyang 做维护 IR 和对齐；Yu Hongwei 做 NL2Repo 与 Delta IR；Dang Wenjing 提出 CEGAR 风格切片精化。",
-          "action": "组织 formal methods 小组，统一规格语言、IR 表示和验证目标，避免重复造形式化框架。"
+          "whyItMatters": "Brainary 主线由 Kong Ziqiao/Liu Chengyue 推进 Codex fork 与 PoA，Sun Kairan 负责接入 agents，但研究侧大量组件（周振宏 auto-benchmark、孙骁 communication runtime、张皓楠 CLI working memory）应当作为公共模块接入 Brainary，而不是各自维护。",
+          "evidence": "Kong Ziqiao 完成 PoA 最基础实现并调试 Codex CI；Liu Chengyue 上周决策 fork Codex；Sun Kairan 接入 Xiaoxia coding agent；Zhou Zhenhong 完成四 domain auto-benchmark；Sun Xiao 冻结 1,400-scenario runtime gate；Zhang Haonan 实现带 Working Memory 的 CLI Agent 外置认知框架。",
+          "action": "老师应检查 Brainary SDK 边界，把周振宏、孙骁、张皓楠的可复用组件以 module 形式并入 Brainary，由 Kong Ziqiao 统一接口，避免重复开发。"
         }
       ],
       "pairwiseComparison": [
         {
-          "title": "Sun Yuqiang 与 Zhang Haonan：agent 机制评估侧重不同",
+          "title": "Guo Yaoqi vs Yang Yanjing：skill 提取与 API 库选择互补但未合并",
+          "people": [
+            "Guo Yaoqi",
+            "Yang Yanjing"
+          ],
+          "whyItMatters": "Guo Yaoqi 的 skill 蒸馏和统计门控是知识获取侧，Yang Yanjing 的 OSSPilot 是 API/库选择侧，两者可形成上下游，但目前没有共享检索命中率评测和三档注入对照。",
+          "evidence": "Guo Yaoqi V8 采集管线全量跑通，43/50 同等效果但语料约 1/4；Yang Yanjing OSSP-benchmark F1 76.63% vs baseline 55.08%，且依赖 Jiahui 团队的库语义分类树。",
+          "action": "让 Guo Yaoqi 和 Yang Yanjing 定义统一的知识选择/检索评测，把 skill 提取和 API 库选择作为一个选型 pipeline 的两个阶段。"
+        },
+        {
+          "title": "Sun Yuqiang vs Zhang Haonan：agent 机制评估的两种进路应合并",
           "people": [
             "Sun Yuqiang",
             "Zhang Haonan"
           ],
-          "whyItMatters": "一个关注单点运行噪声和记忆错误，一个关注跨框架一致性和终止门，两者结合可形成更完整的 agent 评估体系。",
-          "evidence": "Sun Yuqiang 发现能力回归未察觉、错误记忆导致搜索量从 88 升到 446，提出重复扫描和 noise baseline。Zhang Haonan 冻结 DeepSeek 基座下三框架，发现 74 个任务中 52.7% 结果不一致，提出 evidence-driven termination gate。",
-          "action": "让两人互读周报，统一 needs_review 和观测单位，共同设计跨框架+重复扫描的评测协议。"
+          "whyItMatters": "孙宇强用重复扫描和错误记忆实验暴露能力回归，张皓楠用三框架结果不一致和终止门暴露部署问题，两者都是 agent 机制评估，但指标和协议未统一。",
+          "evidence": "孙宇强发现七题能力回归，重复扫描后配置 7/7 恢复，错误记忆导致搜索量 88→446；张皓楠发现同基座三框架 52.7% 任务结果不一致，并提出证据驱动终止门。",
+          "action": "让两人合并重复扫描、噪音基线、termination gate 为一个 Agent 评测协议，并作为 Brainary benchmark 的标准执行单位。"
         },
         {
-          "title": "Guo Yaoqi 与 Xu Yijia：验证器与风险权重互补",
-          "people": [
-            "Guo Yaoqi",
-            "Xu Yijia"
-          ],
-          "whyItMatters": "Guo Yaoqi 提供统计门控的留出验证器，Xu Yijia 提供层级风险和证据来源校准，可合并为统一可信评估层。",
-          "evidence": "Guo Yaoqi 用 B' 留出验证器和 Mantel-Haenszel 杀灭 71% 旧规则；Xu Yijia 回填四子项风险发现 data preprocessing/split 才改变结论，README-as-fact 污染 controller/memory。",
-          "action": "让两人共同设计一个统计门控+证据来源可靠性模块，先在 skill 入库和 trust evaluator 上试点。"
-        },
-        {
-          "title": "Wan Wenyuan 与 Hu Lianyu 与 Ma Xiaoyu：memory 分层思路分歧",
-          "people": [
-            "Wan Wenyuan",
-            "Hu Lianyu",
-            "Ma Xiaoyu"
-          ],
-          "whyItMatters": "三人各自主导不同记忆层级，需要明确边界，否则会重复实现同一功能。",
-          "evidence": "Wan Wenyuan 完成 LTM/STM 消融并强调符号记忆；Hu Lianyu 提出 episodic memory 作为中间层；Ma Xiaoyu 将 3D 内容纳入 working memory 并完成对接。",
-          "action": "合并为一个 memory 架构小组，定义 LTM/STM/EM/3D 的职责和信息流，指定统一评测基准。"
-        },
-        {
-          "title": "Huang Xun 与 Qiao Wei：攻击与盲区测绘互补",
+          "title": "Huang Xun vs Qiao Wei：红队测量的实证与设计差距",
           "people": [
             "Huang Xun",
             "Qiao Wei"
           ],
-          "whyItMatters": "Huang Xun 做具体 DoS 攻击和测量体系，Qiao Wei 做黑盒检测器盲区测绘，两者均用受控探针和牺牲小告警获取信息。",
-          "evidence": "Huang Xun 净化词表后 ASR 从 2-8% 跃升至 16%；Qiao Wei 设计剂量递增/间隔拉长的盲区测绘三层逻辑。",
-          "action": "共享探针库和盲区量化 schema，合并安全评估工具，避免重复设计探针和攻击脚本。"
+          "whyItMatters": "Huang Xun 持续产出 DoS 实测硬数据，Qiao Wei 连续三周仍停留在盲区测绘设计；两人都做红队测量，但 Huang Xun 的探针库和指标未共享给 Qiao Wei，Qiao Wei 的盲区量化思路可反哺 Huang Xun 的探测空间。",
+          "evidence": "Huang Xun 净化词表后 ASR 16%，逻辑 DoS 推理烧穿 ~100%；Qiao Wei 本周只有盲区测绘三层逻辑方案和 Meta-CoT 框架，尚无实验落地。",
+          "action": "要求 Qiao Wei 在本周内基于 Huang Xun 的构造语言环境实现第一个检测器盲区量化实验，完成从设计到 data 的跨越。"
         },
         {
-          "title": "Li Mei 与 Huang Yitan：权限攻击与责任建模互补",
+          "title": "Wan Wenyuan vs Hu Lianyu：同一 memory 方向的实验/设计剪刀差",
+          "people": [
+            "Wan Wenyuan",
+            "Hu Lianyu"
+          ],
+          "whyItMatters": "二人同属 perception-memory 合作小组，但 Wan Wenyuan 已产出两 benchmark 四配置消融硬证据，Hu Lianyu 三周仅更新框架概念；长期剪刀差会导致同一项目内两套话语。",
+          "evidence": "Wan Wenyuan 在 MMStar/MMMU 上完整 memory 框架最好，说明 LTM 和 STM 有独立贡献；Hu Lianyu 连续三周为 episodic memory、3D WM 设计，未交付可运行代码。",
+          "action": "把 Hu Lianyu 的设计纳入 Wan Wenyuan 的实验版图，让 Wan Wenyuan 作为 memory 消融负责人，Hu Lianyu 负责供给新的模块假设，但必须有最小实现才进入实验。"
+        },
+        {
+          "title": "Liang Ruichao vs Xu Yijia：元认知成本节省与 trust evaluator 的对接缺失",
+          "people": [
+            "Liang Ruichao",
+            "Xu Yijia"
+          ],
+          "whyItMatters": "Liang Ruichao 的元认知控制器可降本 33%，Xu Yijia 的 trust evaluator 可按风险和 source reliability 校准动作，两者合并可实现成本与可信度的联合优化，但目前没有任何接口。",
+          "evidence": "Liang Ruichao 边际+机会成本控制器组合费用 -33% 而得分零损失，且 4 基线证伪设计已跑主实验；Xu Yijia 的 data preprocessing/split 风险子项已回填并对 controller 污染链有实证。",
+          "action": "让 Liang Ruichao 和 Xu Yijia 合作一个跨实验，把 trust evaluator 的 evidence gate 作为元认知控制器的输入，验证是否能进一步减少误省 token。"
+        },
+        {
+          "title": "Zhang Jiayi vs Zhang Xiaoyu：模拟用户/人格参数化的同源接口",
+          "people": [
+            "Zhang Jiayi",
+            "Zhang Xiaoyu"
+          ],
+          "whyItMatters": "Zhang Jiayi 在做可观测、可硬控的人格参数旋钮和真实软件扫参，Zhang Xiaoyu 在做 MAS scam agent 中的 meta scam skill 和红蓝 self-play；两者都需要 human behavior simulation 接口，但尚未共享。",
+          "evidence": "Zhang Jiayi 将参数收敛为去哪/动什么/填什么/停不停四个旋钮，全部接在 agent 基础设施上，已打包门禁；Zhang Xiaoyu 与老师对齐 scam agent 需要红蓝队 self-play 设计。",
+          "action": "让 Zhang Jiayi 的人格参数化工具作为 Zhang Xiaoyu scam 红蓝队的模拟用户生成器，统一行为模型和轨迹格式。"
+        },
+        {
+          "title": "Li Mei vs Huang Yitan：权限提升攻击与访问控制防御的攻防对",
           "people": [
             "Li Mei",
             "Huang Yitan"
           ],
-          "whyItMatters": "Li Mei 从攻击侧验证欺骗式权限委托，Huang Yitan 从防御侧建立 BAC 责任模型和动态生命周期，攻防两端可互相验证。",
-          "evidence": "Li Mei 发现无 guardrail 下攻击率 1.0，但真实 LLM 在 guardrail 下拒绝简单 admin:payroll；Huang Yitan 定义 PDP/PEP 责任单元和 PEDR 状态机。",
-          "action": "用 Huang Yitan 的责任模型作为 Li Mei 攻击的防御基准，合作构建权限安全 benchmark。"
+          "whyItMatters": "Li Mei 从恶意 Agent 权限委托攻击面切入，Huang Yitan 从 BAC 责任建模和权限语法学切入，天然攻防对；但二者尚未统一权限决策模型，Li Mei 的 guardrail 实验与 Huang Yitan 的 PEDR 状态机没有对接。",
+          "evidence": "Li Mei 无 guardrail 下 admin:payroll 签发率 1.0，有任一 guardrail 时五个真实 LLM 全部拒绝；Huang Yitan 已建立 PDP/PEP 责任单元、PEDR 状态机、BAC 权限语法学。",
+          "action": "让 Li Mei 的权限提升攻击案例作为 Huang Yitan BAC 权限语法学的红队测试集，验证权限语法是否能阻止有效委托攻击。"
         },
         {
-          "title": "Sun Manqi 与 Guo Wenbo：华为项目上下游角色差异",
+          "title": "Qian Jiayu vs Chen Huabao：医学 VQA 与 KG 证据链的临床数据断点",
           "people": [
-            "Sun Manqi",
-            "Guo Wenbo"
+            "Qian Jiayu",
+            "Chen Huabao"
           ],
-          "whyItMatters": "Guo Wenbo 做机制差异分析，Sun Manqi 做样本迁移与验证，形成上游建模、下游生成验证的分工，但接口需明确。",
-          "evidence": "Guo Wenbo 指出安卓/鸿蒙差异不在 API 名字而在能力模型和权限执行机制；Sun Manqi 重新定义迁移完成标准为行为闭环而非功能数量。",
-          "action": "让 Guo Wenbo 输出可检查的差异清单和典型案例，Sun Manqi 按清单验证并返回失败模式，每周更新。"
-        },
-        {
-          "title": "Zhang Jiayi 与 Xie Maoyi：漏洞知识表示不同路线",
-          "people": [
-            "Zhang Jiayi",
-            "Xie Maoyi"
-          ],
-          "whyItMatters": "Zhang Jiayi 基于 root cause 的 fix strategy，Xie Maoyi 基于 invariant 的推理框架，两者可互补但需要术语对齐。",
-          "evidence": "Zhang Jiayi 确立 root cause 索引和决策纪律；Xie Maoyi 整理 invariant taxonomy、helper pattern 和 reasoning framework。",
-          "action": "合并漏洞知识 schema，共享 root cause 和 invariant 标注数据集，形成统一的漏洞知识库。"
+          "whyItMatters": "Qian Jiayu 完成临床数据审计并阻止错误训练，Chen Huabao 在构建医学 KG 证据等级和关键边 abstention；两者共享医学数据 manifest 和 provenance，但目前一个在 VQA 数据侧，一个在 KG 侧。",
+          "evidence": "Qian Jiayu 发现 MR 66% CT 33.5%，72 个 SR 中 71 个 UNVERIFIED；Chen Huabao 对 12 条路径做 critical edge 复核，将争议样本升级/降级并完成 Level 4 abstention。",
+          "action": "让 Qian Jiayu 输出 manifest v0.1 作为 Chen Huabao KG 的 source provenance，Chen Huabao 的 evidence level 作为 Qian Jiayu VQA 的推理路径标定，形成医学数据闭环。"
         }
       ],
       "sharedProjects": [
         {
-          "title": "Unified Memory Architecture",
+          "title": "Brainary Agent OS / Codex fork / PoA",
           "people": [
-            "Hu Lianyu",
-            "Wan Wenyuan",
-            "Ma Xiaoyu",
-            "Li Chunhan",
-            "Li Yifan",
-            "Sun Moran"
+            "Kong Ziqiao",
+            "Liu Chengyue",
+            "Sun Kairan",
+            "Zhou Zhenhong",
+            "Sun Xiao",
+            "Zhang Haonan"
           ],
-          "whyItMatters": "所有 memory 相关同学都在构建记忆系统，但分属不同项目和物态，需统一生命周期和接口，否则重复且无法集成 Brainary。",
-          "evidence": "周报显示各自有 memory 模块：Wan Wenyuan 有消融实验，Ma Xiaoyu 有 3D WM 对接，Hu Lianyu 有 episodic 设计，Li Yifan 有 planning memory，Sun Moran 有 chatbot 分层记忆。",
-          "action": "指定 Wan Wenyuan 作为 memory 评测基准负责人，Ma Xiaoyu 提供 3D 接口，Hu Lianyu 收敛 episodic 设计，Li Yifan 对接 planning，形成统一架构。"
+          "whyItMatters": "Brainary 是整个团队的基础设施，Codex fork 路线已定，PoA 最基础实现完成，但研究侧模块尚未正式 merge，需要确定 SDK 边界和模块准入。",
+          "evidence": "Kong Ziqiao 完成 PoA 最基础实现并调试 CI；Liu Chengyue 上月决策 fork Codex；Sun Kairan 持续接入 agents 包括 Xiaoxia coding agent；周振宏 auto-benchmark、孙骁 CommActBench、张皓楠 CLI 外置认知框架均可作为 Brainary module。",
+          "action": "让 Kong Ziqiao 发出 Brainary SDK 接口清单，将周振宏/孙骁/张皓楠的组件以插件形式纳入，下月完成第一个跨项目 demo。"
         },
         {
-          "title": "Agentic Security Red Team Infrastructure",
+          "title": "医学 KG / 临床 VQA / 数字孪生",
+          "people": [
+            "Li Qiankun",
+            "Chen Huabao",
+            "Qian Jiayu",
+            "Ma Siyuan"
+          ],
+          "whyItMatters": "AI4Health 线有明确的共同目标：用可溯源的 KG 和临床数据支持医学推理，但目前 KG 构建、证据等级、临床 VQA 三个子项目各自为政。",
+          "evidence": "Li Qiankun 与 Sipeng/Zhihang 完成 5 篇 Paper-level KG Merge 和 4 个 cross-paper connection；Chen Huabao 完成 edge role 校准；Qian Jiayu 完成临床数据审计和 patient-specific attribution；Ma Siyuan 完成 NME/NBME 稿件封版。",
+          "action": "建立医学项目周会，统一医学数据 manifest、证据等级、provenance 格式，把 Qian Jiayu 的审计结果作为 Chen Huabao KG 的 source gate。"
+        },
+        {
+          "title": "华为安卓/鸿蒙恶意软件迁移与生成",
+          "people": [
+            "Sun Manqi",
+            "Guo Wenbo"
+          ],
+          "whyItMatters": "两人同做华为项目，Sun Manqi 负责样本生成质量门禁和行为链验证，Guo Wenbo 分析 API/权限模型差异；双方成果应当互相输入，但目前 Guo Wenbo 的机制分析未落入 Sun Manqi 的迁移合同。",
+          "evidence": "Sun Manqi 已形成迁移评价对象是核心行为链、源锚定和 preflight probe；Guo Wenbo 反复强调差异不在 API 名字而在能力模型和权限执行机制。",
+          "action": "让 Guo Wenbo 把平台差异机制整理成可查询的权限/能力约束表，输入 Sun Manqi 的迁移判断 pipeline，避免各自手动试错。"
+        },
+        {
+          "title": "APT 检测/攻防/知识抽象",
+          "people": [
+            "Hu Zhichao",
+            "Ge Mengmeng",
+            "Qiao Wei",
+            "Yao Guangyu"
+          ],
+          "whyItMatters": "APT 攻防是多人的共同目标，但 Hu Zhichao 做能力单元与 BPAIR，Ge Mengmeng 做四层检测和剧本生成，Qiao Wei 做盲区测绘和红蓝对抗，Yao Guangyu 做渗透技能抽象，缺乏统一 ontology。",
+          "evidence": "Hu Zhichao 将 APT 分析收敛为 capability-unit；Ge Mengmeng 完成四层次 APT 检测框架进入写作；Qiao Wei 设计盲区测绘/Meta-CoT；Yao Guangyu 首轮抽象约 1000 条 write-up 形成技能知识图。",
+          "action": "召开 APT 工作坊，统一 capability-unit、IOC/pattern/intention、攻击剧本、技能抽象为一个攻击知识图谱 schema。"
+        },
+        {
+          "title": "代码/需求/漏洞知识驱动分析",
+          "people": [
+            "Zhang Jiayi",
+            "Xie Maoyi",
+            "Zhou Ziyang",
+            "Jie Wanqing",
+            "Li Kaixuan",
+            "Lei Tianyu",
+            "Yu Hongwei",
+            "Shi Junjie"
+          ],
+          "whyItMatters": "这是知识驱动软件分析的一个大群，涵盖修复策略、内核 invariant、仓库维护 IR、智能合约漏洞、spec-driven 检测、Ravel 漏洞检测、需求 IR/Event-B，共同需要可共享的代码 IR 和知识库。",
+          "evidence": "Zhang Jiayi 的 fix strategy 按 root cause 建 taxonomy；Xie Maoyi 完成 Invariant KB 和 reasoning framework；Zhou Ziyang 完成 maint.lift；Li Kaixuan 建立 specification monitor；Lei Tianyu 完成 Ravel 主实验；Yu Hongwei 完成 NL2Repo Demo；Shi Junjie 建立 Event-B 验收方法。",
+          "action": "指定一个代码 IR/知识表示工作组，确定最小可共享 schema，后续所有人贡献适配器。"
+        },
+        {
+          "title": "自动化科研 AutoResearch / Trust Eval / Benchmark",
+          "people": [
+            "Xu Yijia",
+            "Guo Yaoqi",
+            "Shen Qiwei",
+            "Zhou Zhenhong",
+            "Sun Xiao",
+            "Sun Yuqiang",
+            "Zhang Haonan",
+            "Wu Jiahui"
+          ],
+          "whyItMatters": "这个群的目标是构建可信赖的自动化科研和评测基础设施，但各组件未集成，团队内大量重复实验和协议不一致。",
+          "evidence": "Xu Yijia 的 baseline trust evaluator 已覆盖 5 个 repo 并抽出 data preprocessing/split 子风险；Guo Yaoqi 的 B' 留出验证器已杀灭 71% 旧规则；Shen Qiwei 的 source-anchored schema 已可抓伪造表；Zhou Zhenhong 完成 4 domain auto-benchmark；Sun Xiao 冻结 shared shell 和 1,400-scenario gate；Sun Yuqiang 用重复扫描矫正协议；Zhang Haonan 提 termination gate；Wu Jiahui 完成 validation 的 Bayesian 理论设计。",
+          "action": "由 Xu Yijia 牵头，把这些组件组装成一个 Brainary 公共验证/评测模块，统一 experiment contract 和 evidence gate。"
+        }
+      ],
+      "roleDifferences": [
+        {
+          "title": "Memory 架构团队内的互补分工",
+          "people": [
+            "Wan Wenyuan",
+            "Hu Lianyu",
+            "Li Chunhan",
+            "Ma Xiaoyu",
+            "Li Yifan",
+            "Wu Junhao",
+            "Zhao Xuanyue",
+            "Zhou Zhenhong"
+          ],
+          "whyItMatters": "他们负责不同记忆类型和层级：Wan Wenyuan 负责注意力/消融评测，Hu Lianyu 负责框架设计/3D WM，Li Chunhan 负责 perception+attention 基础，Ma Xiaoyu 负责 3D WM 与 LTM 对接，Li Yifan 负责 planning memory，Wu Junhao 负责动态视觉 4D 记忆，Zhao Xuanyue/Zhou Zhenhong 负责音频 LTM/attention；但目前没有统一的接口和评测。",
+          "evidence": "各自周报均明确了分工，但 Wan Wenyuan 的消融未成为公共基线；Zhao Xuanyue 发现判别式增强失效并转特征分解式，Zhou Zhenhong 在做多 backbone scaling law，两者音频线也需统一。",
+          "action": "让 Wan Wenyuan 定义统一的 memory 评测协议和 trace 格式，其他人必须按此接入，否则不纳入 memory 主线。"
+        },
+        {
+          "title": "安全小组内的攻防角色互补与断点",
           "people": [
             "Huang Xun",
             "Qiao Wei",
             "Li Mei",
             "Huang Yitan",
-            "Ge Mengmeng",
+            "Cao Zong",
             "Hu Zhichao",
-            "Yao Guangyu",
-            "Lei Tianyu"
+            "Ge Mengmeng"
           ],
-          "whyItMatters": "安全研究需要统一探针、攻击面、知识库和验证协议，否则各做各的造成资源浪费和结果不可比。",
-          "evidence": "多人分别在攻击、检测、授权、审计、知识库上有重叠，周横向已建议 Huang Xun 与 Qiao Wei 共享探针，Ge Mengmeng 和 Hu Zhichao 做 APT 检测。",
-          "action": "由 Qiao Wei 或 Hu Zhichao 牵头建立 red team 资产库，统一攻击面描述和评测 benchmark。"
+          "whyItMatters": "角色包括：攻击面/DoS（Huang Xun）、红队协同/盲区（Qiao Wei）、权限提升（Li Mei）、访问控制/权限语法（Huang Yitan）、观测层/provenance（Cao Zong）、APT 能力单元（Hu Zhichao）、APT 检测（Ge Mengmeng），是一个完整安全闭环，但缺乏统一威胁模型和接口。",
+          "evidence": "Huang Xun 有构造语言和 DoS 实测；Qiao Wei 有盲区测绘设计但无实验；Li Mei 有 deceptive delegation 实验；Huang Yitan 有 PEDR 状态机；Cao Zong 有动态观测层实现；Hu Zhichao 有 capability-unit provenance graph；Ge Mengmeng 有四层次检测框架。",
+          "action": "由 Huang Yitan 主持定义统一权限语法和 threat model，Cao Zong 的观测层作为事件源，Huang Xun/Ge Mengmeng 作为检测器，Qiao Wei/Li Mei 作为红队，Hu Zhichao 作为评估器，形成一个安全 pipeline。"
         },
         {
-          "title": "Medical AI Data & KG Pipeline",
-          "people": [
-            "Qian Jiayu",
-            "Chen Huabao",
-            "Li Qiankun",
-            "Feng Yebo"
-          ],
-          "whyItMatters": "医学数据从临床审计、KG 构建到 VQA/Digital Twin 需要统一 provenance 和阶段闸门，否则影响临床可信度。",
-          "evidence": "Qian Jiayu 审计显示 MR 为主、报告未核验；Chen Huabao 标注 edge role；Li Qiankun 做 Digital Twin 框架。",
-          "action": "建立 medical data manifest 和 KG 证据等级标准，共享数据审计脚本和标注 schema。"
-        },
-        {
-          "title": "Code & Vulnerability Knowledge Pipeline",
+          "title": "代码分析团队内不同层次角色",
           "people": [
             "Zhang Jiayi",
             "Xie Maoyi",
             "Zhou Ziyang",
             "Jie Wanqing",
-            "Yu Hongwei",
             "Li Kaixuan",
-            "Shi Junjie"
-          ],
-          "whyItMatters": "多个代码分析方向各自建立知识库和 IR，共享可降低标注成本和加速方法比较。",
-          "evidence": "均在做代码/需求提取与验证，周横向建议共享 root cause、invariant、IR 字段。",
-          "action": "推动共享 CWE/root cause/invariant schema，合并公开数据集和 benchmark。"
-        },
-        {
-          "title": "Huawei HarmonyOS Malware Migration",
-          "people": [
+            "Lei Tianyu",
             "Sun Manqi",
             "Guo Wenbo",
-            "Guo Yaoqi",
-            "Yang Yanjing"
-          ],
-          "whyItMatters": "华为项目内需分工：机制差异、样本生成、skill/API 支持形成流水线。",
-          "evidence": "Guo Wenbo 分析机制差异，Sun Manqi 迁移验证，Guo Yaoqi 有华为调研，Yang Yanjing 做 API 推荐。",
-          "action": "明确角色：Guo Wenbo 输出差异清单，Sun Manqi 验证，Guo Yaoqi/Yang Yanjing 提供 skill/API 选择。"
-        },
-        {
-          "title": "Agent Evaluation & Trust Protocol",
-          "people": [
-            "Sun Yuqiang",
-            "Zhang Haonan",
-            "Liang Ruichao",
-            "Lyuye Zhang",
-            "Guo Yaoqi",
-            "Xu Yijia",
+            "Yang Yanjing",
             "Shen Qiwei"
           ],
-          "whyItMatters": "多组都要评估 agent 可靠性/成本/风险，需要统一指标和验证器，否则无法集成到 Brainary。",
-          "evidence": "各组均有相关实验：Sun Yuqiang 重复扫描，Zhang Haonan 跨框架一致性，Liang Ruichao 证伪基线，Guo Yaoqi 留出验证器，Xu Yijia 层级风险，Shen Qiwei source-anchored。",
-          "action": "建立跨项目 evaluation protocol 工作组，共享失败轨迹和验证器，形成统一 schema。"
+          "whyItMatters": "角色从修复策略、invariant、IR、漏洞检测到质量门禁覆盖完整软件分析周期，但各角色的输入输出格式没有对齐。",
+          "evidence": "Zhang Jiayi 的 fix strategy 需要 root cause 索引；Xie Maoyi 的 invariant 需要 candidate 验证；Zhou Ziyang 的 IR 只有 23% 可定型；Li Kaixuan 的 specification monitor 需要行为描述；Lei Tianyu 的 Ravel 有 between-attacks 和 w/o followup 消融；Sun Manqi 的质量门禁使用行为链；Guo Wenbo 的平台差异分析；Yang Yanjing 的库选择；Shen Qiwei 的源锚定。",
+          "action": "指定一个统一的 IR/schema 工作组，由 Zhou Ziyang 和 Xie Maoyi 牵头，输出 IR 定义和知识表示版本 v0.1，其他人提交适配器。"
         },
         {
-          "title": "Brainary Platform Integration",
+          "title": "自动科研/评测团队内的组件角色",
           "people": [
-            "Kong Ziqiao",
-            "Liu Chengyue",
-            "Sun Kairan"
-          ],
-          "whyItMatters": "Brainary 是团队基础设施，但各项目接入不统一，需要定义接口和 schema。",
-          "evidence": "Kong Ziqiao 推进 Codex/PoA，Liu Chengyue 负责迁移，Sun Kairan 接 agents 并调整框架。",
-          "action": "老师定义统一 agent/memory/artifact 接口规范，督促各项目按 Brainary 标准交付。"
-        }
-      ],
-      "roleDifferences": [
-        {
-          "title": "华为项目内攻防角色分工",
-          "people": [
-            "Sun Manqi",
-            "Guo Wenbo"
-          ],
-          "whyItMatters": "Guo Wenbo 负责恶意软件机制建模，Sun Manqi 负责样本生成与迁移验证，形成上游分析、下游验证的共生关系。",
-          "evidence": "Guo Wenbo 分析能力模型差异；Sun Manqi 定义行为闭环验证和迁移判断原则。",
-          "action": "保持分工，每周交换差异清单和失败样本，形成闭环迭代。"
-        },
-        {
-          "title": "Memory 组内架构与实验角色",
-          "people": [
-            "Wan Wenyuan",
-            "Hu Lianyu",
-            "Ma Xiaoyu"
-          ],
-          "whyItMatters": "Wan Wenyuan 负责符号记忆与消融，Hu Lianyu 负责 episodic 架构，Ma Xiaoyu 负责 3D WM 对接，需明确边界防止重复。",
-          "evidence": "三人报告侧重不同，Wan Wenyuan 有实验，Hu Lianyu 偏设计，Ma Xiaoyu 有真实对接。",
-          "action": "让 Wan Wenyuan 维护统一评测，Hu Lianyu 提供架构，Ma Xiaoyu 提供 3D 接口，形成互补。"
-        },
-        {
-          "title": "安全组内攻击与防御角色",
-          "people": [
-            "Huang Xun",
-            "Li Mei",
-            "Huang Yitan"
-          ],
-          "whyItMatters": "Huang Xun 做 DoS 攻击，Li Mei 做权限攻击，Huang Yitan 做 BAC 责任模型，攻防互补。",
-          "evidence": "Huang Xun 有 400+ 倍推理放大，Li Mei 有 1.0 攻击率，Huang Yitan 有 PEDR 状态机。",
-          "action": "建立攻防对练，共享攻击面和防御 schema，每周互相验证。"
-        },
-        {
-          "title": "Agent 评估内指标与机制角色",
-          "people": [
+            "Xu Yijia",
+            "Guo Yaoqi",
+            "Shen Qiwei",
             "Sun Yuqiang",
             "Zhang Haonan",
-            "Liang Ruichao"
+            "Zhou Zhenhong",
+            "Sun Xiao",
+            "Wu Jiahui"
           ],
-          "whyItMatters": "Sun Yuqiang 关注机制健康度，Zhang Haonan 关注跨框架一致性，Liang Ruichao 关注成本控制，三者互补。",
-          "evidence": "Sun Yuqiang 提出 root-share；Zhang Haonan 提出终止门；Liang Ruichao 提出证伪基线。",
-          "action": "合并为三者共同评估协议，分工负责机制、一致性、成本三个维度。"
+          "whyItMatters": "这些角色可以组合成一个完整的自动化科研可信执行框架：验证器/统计门控（Guo Yaoqi）、source anchoring（Shen Qiwei）、风险权重（Xu Yijia）、重复扫描（Sun Yuqiang）、termination gate（Zhang Haonan）、auto-benchmark（Zhou Zhenhong）、communication benchmark（Sun Xiao）、validation theory（Wu Jiahui）。",
+          "evidence": "各自的周报提供了组件级证据，但没有一个组件间接口定义，无法串成 pipeline。",
+          "action": "由 Xu Yijia 组建一个公共模块工作组，定义 evidence item、risk weight、statistical gate、source anchor、scan protocol 的接口，下月产出第一个集成 demo。"
         },
         {
-          "title": "医学数据与知识图谱角色",
+          "title": "具身智能团队内的 planner/memory/world model 分工",
           "people": [
-            "Qian Jiayu",
-            "Chen Huabao",
-            "Li Qiankun"
+            "Liao Zeqin",
+            "Wu Junhao",
+            "Sun Wangting",
+            "Li Chunhan",
+            "Wan Wenyuan",
+            "Ma Xiaoyu",
+            "Hu Lianyu"
           ],
-          "whyItMatters": "Qian Jiayu 做数据审计与 VQA，Chen Huabao 做证据等级标注，Li Qiankun 做框架集成。",
-          "evidence": "Qian Jiayu 有数据审计，Chen Huabao 有 edge role 标注，Li Qiankun 有 Digital Twin 框架。",
-          "action": "明确数据路径：Qian Jiayu 提供审计结果和 manifest，Chen Huabao 标注 KG，Li Qiankun 输出 Digital Twin 框架。"
+          "whyItMatters": "Liao Zeqin 的高层 planning 需要 world model 和 memory 支持，Wu Junhao 的 4D 世界记忆和 Sun Wangting 的小脑学习应该作为模块进入 Liao Zeqin 的 Agent 架构；Li Chunhan/Wan Wenyuan/Ma Xiaoyu 的 perception-memory 输出可作为传感器。",
+          "evidence": "Liao Zeqin 已拆分差分世界模型、任务状态感知 memory、元认知监控；Sun Wangting 给出小脑计算架构三阶段；Wu Junhao 完成人脑-模型验证复现；Ma Xiaoyu 的 3D WM 已对接 perception；Wan Wenyuan 的 memory 消融可作为基准。",
+          "action": "由 Liao Zeqin 召开具身智能接口会，定义 world state schema、memory update 协议和 feedback 信号，把 Wu Junhao、Sun Wangting、Wan Wenyuan 的模块接入。"
         }
       ],
       "mergeOpportunities": [
         {
-          "title": "合并 Memory 组统一架构与 benchmark",
+          "title": "合并 Memory schema 与评测协议",
           "people": [
             "Hu Lianyu",
             "Wan Wenyuan",
-            "Ma Xiaoyu",
             "Li Chunhan",
-            "Li Yifan"
+            "Ma Xiaoyu",
+            "Li Yifan",
+            "Wu Junhao",
+            "Sun Moran",
+            "Zhao Xuanyue",
+            "Zhou Zhenhong",
+            "Guo Yaoqi"
           ],
-          "whyItMatters": "这些人的 memory 工作可合并，避免重复设计和评测，节省至少三个独立项目的人力。",
-          "evidence": "周横向明确指出三份 memory 计划重叠；Wan Wenyuan 已有 MMStar/MMMU 消融，Hu Lianyu 和 Ma Xiaoyu 尚未跑通统一 benchmark。",
-          "action": "下周召开 memory 对齐会，确定统一 schema 和评测 benchmark，指定 Wan Wenyuan 的消融实验为基准，会后要求提交 merge 计划。"
+          "whyItMatters": "这是最迫切的合并，否则会浪费大量人力重复设计，而且由于 Wan Wenyuan 已有可靠消融，合并成本低、收益高。",
+          "evidence": "Wan Wenyuan 的 MMStar/MMMU 四配置消融显示完整框架最好；Ma Xiaoyu 完成 3D WM 对接；Li Yifan 的 Planning Memory 表明 QA/Planning 应分开；Zhao Xuanyue 从判别式转向特征分解式增强，可与音频 LTM 合并。",
+          "action": "下周组建 Memory SIG，由 Wan Wenyuan 主持，产出统一 memory schema 和 benchmark 协议，其他人必须在一个月内迁移。"
         },
         {
-          "title": "合并安全探针库与攻击面 schema",
+          "title": "合并安全探针库、权限语法与告警 API",
           "people": [
             "Huang Xun",
             "Qiao Wei",
+            "Li Mei",
+            "Huang Yitan",
+            "Cao Zong",
+            "Hu Zhichao",
             "Ge Mengmeng",
-            "Yao Guangyu",
-            "Hu Zhichao"
+            "Yao Guangyu"
           ],
-          "whyItMatters": "安全方向重复建设探针和知识库，合并可减少重复开发，提升攻击/检测覆盖。",
-          "evidence": "周横向建议 Huang Xun 与 Qiao Wei 共享探针；Ge Mengmeng 做 APT 四层检测，Yao Guangyu 做渗透技能地图，Hu Zhichao 做 capability-aware provenance，知识库有重叠。",
-          "action": "建立共享探针/攻击面 registry，统一 red team 评测标准，本周产出共享 schema。"
+          "whyItMatters": "安全团队各自有私有探针、漏报/误报标准、告警行为定义，导致红队实验无法互相比较，防御侧也无法系统化验证。",
+          "evidence": "Huang Xun 有词表净化/DoS 探针；Qiao Wei 提出告警行为即 API；Li Mei 有权限委托攻击场景；Huang Yitan 有权限语法学；Cao Zong 有权限语义动态观测；Hu Zhichao 有 capability-unit 攻击；Yao Guangyu 有渗透技能知识图。",
+          "action": "由 Huang Yitan 和 Cao Zong 牵头，定义统一的安全语义层，把各人的探针和告警格式映射进去，暑假结束前产出统一 threat model。"
         },
         {
-          "title": "合并 agent 验证器与统计门控",
-          "people": [
-            "Guo Yaoqi",
-            "Xu Yijia",
-            "Shen Qiwei"
-          ],
-          "whyItMatters": "Guo Yaoqi 的留出验证器、Xu Yijia 的风险权重、Shen Qiwei 的 source-anchored schema 可合成统一可信评估层。",
-          "evidence": "周横向建议 Guo Yaoqi 与 Xu Yijia 合并统计门控与风险权重；Shen Qiwei 的 source-anchored 与 Xu Yijia 的 evidence source reliability 同构。",
-          "action": "让三人共同设计一个统计门控+来源可靠性模块，先在 skill 入库和 trust evaluator 上试用，两周内向老师汇报。"
-        },
-        {
-          "title": "合并代码/漏洞知识 schema 与 benchmark",
+          "title": "合并代码 IR 和知识表示",
           "people": [
             "Zhang Jiayi",
             "Xie Maoyi",
             "Zhou Ziyang",
             "Jie Wanqing",
-            "Yu Hongwei"
-          ],
-          "whyItMatters": "各自建立 taxonomy 和 IR，合并可共享标注数据，加速方法比较。",
-          "evidence": "周横向建议代码分析组协作；Zhang Jiayi 有 fix strategy taxonomy，Xie Maoyi 有 invariant knowledge base，Zhou Ziyang 有维护 IR，Jie Wanqing 有智能合约知识库，Yu Hongwei 有 NL2Repo IR。",
-          "action": "统一 root cause/invariant/IR 字段，共享小型 gold set，指定一人维护 schema 仓库。"
-        },
-        {
-          "title": "合并华为项目 skill/API 支持",
-          "people": [
+            "Li Kaixuan",
+            "Lei Tianyu",
             "Sun Manqi",
             "Guo Wenbo",
-            "Guo Yaoqi",
-            "Yang Yanjing"
+            "Shen Qiwei"
           ],
-          "whyItMatters": "机制差异、样本迁移、API 知识应连成流水线，避免各自重复调研华为平台。",
-          "evidence": "周报显示各自独立：Guo Wenbo 分析机制差异，Sun Manqi 验证生成，Guo Yaoqi 做 skill 提取，Yang Yanjing 做 API 推荐。",
-          "action": "让 Guo Wenbo 的差异清单直接驱动 Sun Manqi 的生成，Guo Yaoqi/Yang Yanjing 提供 skill/API 选择，本周产出接口文档。"
+          "whyItMatters": "每个代码分析项目都定义了自己的 IR、知识库和验证门禁，导致跨项目经验无法放大，且周子阳的静态分析天花板已经显示需要共享运行时信息。",
+          "evidence": "Zhou Ziyang 只有 23% 类型可定，77% 不可定，已提出用仓库测试做运行时信息源；Xie Maoyi 的 Invariant KB 可提供验证要点；张嘉怡的 fix strategy 需要 root cause 索引；Li Kaixuan 的 spec monitor 需要行为提取；Shen Qiwei 的 source anchor 能防止伪造。",
+          "action": "成立代码 IR 工作组，以 Xie Maoyi 的 Invariant 和 Zhou Ziyang 的 IR 为基础，统一 bug/漏洞知识 schema，并要求 Lei Tianyu/Sun Manqi 等提供接口。"
+        },
+        {
+          "title": "合并 Agent 评测协议（重复扫描/证据门/终止门）",
+          "people": [
+            "Sun Yuqiang",
+            "Zhang Haonan",
+            "Xu Yijia",
+            "Guo Yaoqi",
+            "Shen Qiwei",
+            "Zhou Zhenhong",
+            "Sun Xiao"
+          ],
+          "whyItMatters": "所有 Agent 项目都存在单次运行噪声、错误记忆、部署错误等问题，孙宇强的重复扫描、张皓楠的终止门、徐艺嘉的证据门、沈奇伟的源锚定可以形成统一协议。",
+          "evidence": "Sun Yuqiang 发现单点运行可翻转结论，需重复扫描；Zhang Haonan 提出 termination gate；Xu Yijia 的 evidence gate 可阻断 README-as-fact 污染；Guo Yaoqi 的统计门控杀灭 71% 旧规则；Shen Qiwei 的 source anchor 抓出伪造表。",
+          "action": "让 Xu Yijia 牵头制定 Agent 评测协议 v0.1，包含重复扫描次数、统计门控、source anchor、evidence gate、termination gate，供所有 agent 项目强制使用。"
+        },
+        {
+          "title": "合并医学数据 manifest 与 provenance",
+          "people": [
+            "Li Qiankun",
+            "Chen Huabao",
+            "Qian Jiayu",
+            "Ma Siyuan"
+          ],
+          "whyItMatters": "医学数据质量直接决定下游 VQA/KG 可信度，Qian Jiayu 的审计已经显示原始数据不能直接训练，必须建立 provenance 和 phase gate。",
+          "evidence": "Qian Jiayu 审计发现 MR 66% CT 33.5%，72 个 SR 中 71 个 UNVERIFIED；Chen Huabao 的 KG 证据等级需要 source domain/review status；Li Qiankun 的 AutoResearch 在癌变/衰老场景需要跨文献 provenance。",
+          "action": "由 Qian Jiayu 输出临床数据 manifest v0.1 作为医学数据入口，Chen Huabao 的 evidence level 作为推理路径标定，Li Qiankun 的 KG 合并需遵循同一 manifest。"
+        },
+        {
+          "title": "合并模拟用户/人格行为接口",
+          "people": [
+            "Zhang Jiayi",
+            "Zhang Xiaoyu",
+            "Sun Moran"
+          ],
+          "whyItMatters": "三人都在做与用户/人格行为相关的模拟，Zhang Jiayi 的硬控参数、Zhang Xiaoyu 的 scam agent、Sun Moran 的 Need Space 情感支持，可以共享 behavior trace 格式。",
+          "evidence": "Zhang Jiayi 已收敛四个参数旋钮并全接 agent 基础设施，形成可扫参工具；Zhang Xiaoyu 在推进 MAS scam skill 红蓝 self-play；Sun Moran 的 Need Space 编码在 ESConv 上评分 3.85→4.05。",
+          "action": "让 Zhang Jiayi 把参数化模拟器打包成库，提供给 Zhang Xiaoyu 和 Sun Moran 作为模拟用户生成器，统一轨迹和评分格式。"
         }
       ],
       "gapsOverlaps": [
         {
-          "title": "Memory 组三条线重复设计",
+          "title": "Memory 架构重复设计且无统一 schema",
           "people": [
             "Hu Lianyu",
-            "Wan Wenyuan",
-            "Ma Xiaoyu"
+            "Li Chunhan",
+            "Ma Xiaoyu",
+            "Li Yifan",
+            "Wu Junhao",
+            "Sun Moran"
           ],
-          "whyItMatters": "三人都做 memory，但没有统一接口，可能存在重复劳动和无法集成到 Brainary 的风险。",
-          "evidence": "周横向明确三份记忆计划重复；Wan Wenyuan 有消融但 Hu Lianyu 和 Ma Xiaoyu 尚未共享接口。",
-          "action": "立即合并，避免继续各自开发，老师需要拍板统一架构负责人。"
+          "whyItMatters": "这些人在各自的周报里持续设计 memory 但未共享接口，导致多个 overlapping memory 并存，而 Wan Wenyuan 的实验成果不能直接复用。",
+          "evidence": "Hu Lianyu 三周只设计无实验；Li Chunhan 的 perception+attention 框架停在 Step1-3；Ma Xiaoyu 的 3D WM 已对接 perception 但未给出 benchmark 成绩；Li Yifan 的 planning memory 只收敛方法无实验；Wu Junhao 的 4D 记忆准确率暂低；Sun Moran 的 LTM 实现未与主线对接。",
+          "action": "老师需强制合并：未来 memory 相关工作必须复用 Wan Wenyuan 的评测协议，否则不接受单独设计报告。"
         },
         {
-          "title": "安全线知识库重复建设",
+          "title": "安全红队测量各自独立，探针库和指标不互通",
           "people": [
-            "Ge Mengmeng",
-            "Yao Guangyu",
-            "Hu Zhichao"
+            "Huang Xun",
+            "Qiao Wei",
+            "Li Mei",
+            "Hu Zhichao",
+            "Ge Mengmeng"
           ],
-          "whyItMatters": "APT 知识库、渗透技能抽象、行为程序分析可能重复，造成标注和存储冗余。",
-          "evidence": "Ge Mengmeng 做 APT 四层检测知识库；Yao Guangyu 做渗透技能地图；Hu Zhichao 做 capability-aware provenance graph。",
-          "action": "统一 APT/渗透知识表示，由老师指定一个知识库负责人，合并已有数据。"
+          "whyItMatters": "Qiao Wei 的盲区测绘和 Huang Xun 的 DoS 测量互相不知情，Li Mei 的权限提升实验与 Hu Zhichao 的 APT capability 没有统一威胁模型，导致实验结果无法加总比较。",
+          "evidence": "Huang Xun 的词表净化实验使用自己的 ASR 指标；Qiao Wei 的盲区量化尚未有数据；Li Mei 的 Decision Compromise Rate 与 Huang Yitan 的权限语法不挂钩；Hu Zhichao/Ge Mengmeng 的 APT 检测指标未统一。",
+          "action": "老师应在安全会上直接指出这些独立指标的问题，要求下次汇报都对齐到统一威胁模型和告警 API。"
         },
         {
-          "title": "代码分析组 benchmark 不互通",
+          "title": "代码分析 IR 不统一，静态分析天花板未被共享",
           "people": [
-            "Zhang Jiayi",
-            "Xie Maoyi",
             "Zhou Ziyang",
+            "Li Kaixuan",
+            "Xie Maoyi",
+            "Zhang Jiayi",
             "Jie Wanqing"
           ],
-          "whyItMatters": "各自有小型验证但无共享数据集，导致方法无法公平比较。",
-          "evidence": "周报显示各自独立 case 或 benchmark，没有统一评估指标。",
-          "action": "合并公开数据集和标注，统一评估指标，至少共享一个公共测试集。"
+          "whyItMatters": "Zhou Ziyang 已发现静态分析只能定型 23%，但 Li Kaixuan 的 spec-driven 路线和 Zhang Jiayi 的 fix strategy 没有利用这一发现，可能继续假设可静态提取。",
+          "evidence": "Zhou Ziyang 数据表明 77% 类型不可定，应把仓库自带测试当运行时信息源；Li Kaixuan 仍以 specification 为主；Zhang Jiayi 的 root cause 索引未与小春的 IR 结合；Jie Wanqing 的合约检测知识库未对接内核 invariant。",
+          "action": "让 Zhou Ziyang 在代码组内分享 23% 数据，要求 Li Kaixuan/Zhang Jiayi 在方案中说明如何处理不可定类型。"
         },
         {
-          "title": "Agent 评估指标不一致",
+          "title": "自动科研评测组件散落，无法串成 pipeline",
           "people": [
+            "Guo Yaoqi",
+            "Shen Qiwei",
+            "Xu Yijia",
             "Sun Yuqiang",
             "Zhang Haonan",
-            "Liang Ruichao",
-            "Lyuye Zhang"
+            "Zhou Zhenhong",
+            "Sun Xiao"
           ],
-          "whyItMatters": "不同 agent 评估指标不同，无法横向比较，阻碍 Brainary 统一评测。",
-          "evidence": "Sun Yuqiang 用 root-share 和重复扫描；Zhang Haonan 用结果不一致率；Liang Ruichao 用费用/得分；Lyuye Zhang 用 Pareto 成本/代价。",
-          "action": "老师应推动统一核心指标和观测单位，至少明确失败、成本、一致性三个维度。"
+          "whyItMatters": "每个人都有可复用组件，但缺少统一接口，导致每个新项目都要重新造轮子，且周振宏的 auto-benchmark 与孙骁的 communication benchmark 没有 event/snapshot schema 对齐。",
+          "evidence": "郭曜齐的统计门控验证器未发布接口；沈奇伟的 source-anchored schema 只在 GUI 代码审计用；徐艺嘉的层级风险权重未打包；孙宇强的重复扫描协议未固化；张皓楠的 termination gate 未接入 Brainary；周振宏与孙骁的 schema 差异已在周报中明确提出。",
+          "action": "由 Xu Yijia 汇总这些组件为一个 Brainary 公共模块需求文档，老师审阅后批准立项，避免继续分散。"
         },
         {
-          "title": "医学数据伦理/阶段闸门缺失",
+          "title": "医学数据阶段闸门未同步，存在错误训练风险",
           "people": [
             "Qian Jiayu",
             "Chen Huabao",
             "Li Qiankun"
           ],
-          "whyItMatters": "临床数据和 KG 需一致伦理边界和 provenance，当前分散，可能导致训练数据不可用。",
-          "evidence": "Qian Jiayu 数据审计发现报告未核验；Chen Huabao 临床专家校准未完成；Li Qiankun 的 Digital Twin 框架未落地。",
-          "action": "制定统一医学数据 manifest 和伦理闸门，在私有数据训练前完成。"
+          "whyItMatters": "Qian Jiayu 已用审计阻止错误 CT 训练，但 Chen Huabao 的 KG 和 Li Qiankun 的 AutoResearch 可能仍在使用未经审计的数据源，需要立即同步 phase gate。",
+          "evidence": "Qian Jiayu 审计发现 57.95 万 DICOM 中 MR 占 66%、72 个 SR 中 71 个 UNVERIFIED；陈华宝的 evidence level 标注部分依赖 source domain，但未说明是否使用同一批临床数据。",
+          "action": "老师需明确医学线所有数据在训练/入 KG 前必须经过 Qian Jiayu 的 manifest 审核。"
+        },
+        {
+          "title": "华为迁移判据不统一，Guo Wenbo 分析未落入 Sun Manqi 合同",
+          "people": [
+            "Sun Manqi",
+            "Guo Wenbo"
+          ],
+          "whyItMatters": "Sun Manqi 已形成核心行为链和 source anchor 验证，Guo Wenbo 仍停留在 API/权限模型差异的概念分析，两人没有共享判据，可能导致重复试错。",
+          "evidence": "Sun Manqi 本周强调迁移评价对象是核心行为链而非功能数量；Guo Wenbo 连续三周重复“差异不在 API 名字而在能力模型”，但未输出可查询的能力约束表。",
+          "action": "让 Guo Wenbo 把能力模型差异转化为约束清单，直接输入 Sun Manqi 的迁移判断 pipeline，避免口头对齐。"
         }
       ],
       "teacherActions": [
         {
-          "title": "召集 Memory 对齐会",
+          "title": "紧急拉 Memory 相关人开会，统一 schema 和评测",
           "people": [
             "Hu Lianyu",
             "Wan Wenyuan",
-            "Ma Xiaoyu",
             "Li Chunhan",
-            "Li Yifan"
+            "Ma Xiaoyu",
+            "Li Yifan",
+            "Wu Junhao",
+            "Sun Moran",
+            "Zhao Xuanyue",
+            "Zhou Zhenhong",
+            "Guo Yaoqi"
           ],
-          "whyItMatters": "这是本月最大重叠区，需老师拍板统一架构，否则继续浪费人力。",
-          "evidence": "周横向多次建议合并 memory 计划，且多人涉及 Brainary memory。",
-          "action": "下周开小会，让 Wan Wenyuan 展示消融结果，Hu Lianyu 和 Ma Xiaoyu 对齐接口，确定最终 memory 生命周期和 schema，会后要求提交 merge 计划。"
+          "whyItMatters": "Memory 是本月重复建设最严重的区域，不干预会持续浪费三到五个人力。",
+          "evidence": "Wan Wenyuan 已有消融基线，其他人仍自行设计，接口未对齐。",
+          "action": "指定 Wan Wenyuan 为 Memory SIG 负责人，下周产出一份 memory schema v0.1 和统一 benchmark 协议，其他人一个月内迁移。"
         },
         {
-          "title": "推动安全线探针和知识库合并",
+          "title": "约安全线黄勋/乔伟/李梅/黄一坦，定统一威胁模型和告警 API",
           "people": [
             "Huang Xun",
             "Qiao Wei",
-            "Ge Mengmeng",
-            "Yao Guangyu",
-            "Hu Zhichao"
+            "Li Mei",
+            "Huang Yitan",
+            "Cao Zong",
+            "Hu Zhichao",
+            "Ge Mengmeng"
           ],
-          "whyItMatters": "安全方向重复且重要，需整合资源提升攻防能力。",
-          "evidence": "周横向建议共享探针，多个安全知识库重叠。",
-          "action": "让 Qiao Wei 或 Hu Zhichao 牵头建立统一安全资产库，本周提交共享 schema，逐步合并探针和知识库。"
+          "whyItMatters": "安全团队红队/防御指标不统一，Qiao Wei 连续三周纯设计需立即刹车。",
+          "evidence": "Qiao Wei 本周仍无实验，Huang Xun 已有探针但未共享。",
+          "action": "要求 Huang Xun 公开探针库，Qiao Wei 下周必须产出第一个盲区量化实验，Huang Yitan 与 Li Mei 统一权限语法，否则收缩该线。"
         },
         {
-          "title": "明确 agent 评估协议",
+          "title": "推动代码分析组统一 IR，指定基础表示",
           "people": [
-            "Sun Yuqiang",
-            "Zhang Haonan",
-            "Liang Ruichao",
-            "Guo Yaoqi",
-            "Xu Yijia",
+            "Zhang Jiayi",
+            "Xie Maoyi",
+            "Zhou Ziyang",
+            "Jie Wanqing",
+            "Li Kaixuan",
+            "Lei Tianyu",
+            "Sun Manqi",
+            "Guo Wenbo",
             "Shen Qiwei"
           ],
-          "whyItMatters": "多组评估方法可形成统一标准，促进 Brainary 接入。",
-          "evidence": "各自独立但互补，周横向已建议合并验证器。",
-          "action": "老师组织一次评估 workshop，要求 Sun Yuqiang 的重复扫描、Zhang Haonan 的 needs_review、Guo Yaoqi 的留出验证器、Xu Yijia 的风险权重交换及统一，两周内形成 evaluation schema。"
+          "whyItMatters": "代码分析各自为政，静态分析天花板和 source anchor 等最佳实践未共享。",
+          "evidence": "Zhou Ziyang 的 23% 数据、Shen Qiwei 的源锚定、Xie Maoyi 的 Invariant KB 均应进入统一 IR。",
+          "action": "指定 Xie Maoyi 和 Zhou Ziyang 为 code IR 责任人，下周提交 IR v0.1，老师审阅后所有漏洞/修复项目必须使用。"
         },
         {
-          "title": "处理华为项目分工与接口",
+          "title": "让徐艺嘉牵头整合自动科研评测组件，形成 Brainary 公共模块",
+          "people": [
+            "Xu Yijia",
+            "Guo Yaoqi",
+            "Shen Qiwei",
+            "Sun Yuqiang",
+            "Zhang Haonan",
+            "Zhou Zhenhong",
+            "Sun Xiao",
+            "Wu Jiahui"
+          ],
+          "whyItMatters": "Evidence gate、统计门控、源锚定、重复扫描等组件可立即复用，缺少集成者。",
+          "evidence": "Guo Yaoqi 的验证器、沈奇伟的 source anchor、孙宇强的重复扫描、徐艺嘉的风险权重均已在各自项目验证。",
+          "action": "授权徐艺嘉召开一次集成会，产出公共验证模块接口定义，两周后接入 Brainary。"
+        },
+        {
+          "title": "向乔伟、胡连宇等长期设计无实验者设置证据等级升级门槛",
+          "people": [
+            "Qiao Wei",
+            "Hu Lianyu",
+            "Li Chunhan",
+            "Sun Kairan"
+          ],
+          "whyItMatters": "连续三周以上纯设计会虚耗资源，并导致论文支撑不足。",
+          "evidence": "Qiao Wei 连续三周 evidence C；Hu Lianyu 三周设计无实现；Li Chunhan 只到 Step1-3。",
+          "action": "宣布规则：连续三周无最小实验的线必须收缩或并线，下周一前不接受纯框架报告。"
+        },
+        {
+          "title": "检查华为和医学项目的数据/判据同步",
           "people": [
             "Sun Manqi",
             "Guo Wenbo",
-            "Guo Yaoqi",
-            "Yang Yanjing"
-          ],
-          "whyItMatters": "华为项目多人参与，需明确上下游减少重复调研。",
-          "evidence": "Sun Manqi 和 Guo Wenbo 都涉及鸿蒙，Guo Yaoqi 有调研，Yang Yanjing 有 API 知识。",
-          "action": "老师与华为项目负责人开会，确认 Guo Wenbo 输出机制差异清单，Sun Manqi 按清单验证，Guo Yaoqi/Yang Yanjing 提供 skill/API 选择。"
-        },
-        {
-          "title": "统一价值金额和证据等级口径",
-          "people": [
-            "Liang Ruichao",
             "Qian Jiayu",
-            "Hu Zhichao"
+            "Chen Huabao",
+            "Li Qiankun"
           ],
-          "whyItMatters": "周横向指出价值金额和证据等级口径混乱，影响老师判断资源投入。",
-          "evidence": "多个报告金额计算与可交付物不符，证据等级自评过宽。",
-          "action": "老师要求所有周报按统一价值/证据等级模板，对缺失 cost/token 或夸大金额的报告退回补交，连续偏离者单独约谈。"
+          "whyItMatters": "两个应用项目都需要统一判据和 phase gate，避免无效投入。",
+          "evidence": "Sun Manqi 已有行为链验证，Guo Wenbo 未输出可查询约束表；Qian Jiayu 的审计未同步给 KG 侧。",
+          "action": "让 Guo Wenbo 输出华为能力约束清单；让 Qian Jiayu 输出临床数据 manifest v0.1，并分别发给相关责任人。"
         },
         {
-          "title": "推进 Brainary 接口标准化",
+          "title": "统一价值金额和证据等级口径，设置自评上限",
           "people": [
-            "Kong Ziqiao",
-            "Liu Chengyue",
-            "Sun Kairan"
+            "Li Mei",
+            "Hu Zhichao",
+            "Ma Xiaoyu",
+            "Qiao Wei",
+            "Hu Lianyu",
+            "Zhang Jiayi"
           ],
-          "whyItMatters": "Brainary 是团队基础设施，但各项目接入不统一，阻碍复用。",
-          "evidence": "Kong Ziqiao 在推进 PoA，Sun Kairan 在接 agents，Liu Chengyue 负责迁移，但接口未标准化。",
-          "action": "老师让 Kong Ziqiao 定义 agent/memory/artifact 接口规范，督促各 project 按规范接入，定期审查接入进度。"
+          "whyItMatters": "周报中存在价值金额与可验证证据严重背离，如李梅 750 元 vs 胡志超 3500 万，影响决策判断。",
+          "evidence": "多份周报存在金额估计过高、无 token/成本埋点，且证据等级 A 级少 B/C 多。",
+          "action": "老师下发统一模板：必须填写 token 成本、样本量、重复次数、反事实对照；取消无依据的高估值，以后只按可验证交付物计价。"
+        },
+        {
+          "title": "关注 08-23 周提交率下降与连续缺失者",
+          "people": [
+            "Cao Zong",
+            "Dang Wenjing",
+            "Guo Yaoqi",
+            "Sun Yuqiang",
+            "Wan Wenyuan",
+            "Hou Xinmeng",
+            "Li Qiankun"
+          ],
+          "whyItMatters": "08-23 周提交率骤降，多个关键协作者沉默，可能导致协同判断缺失。",
+          "evidence": "顶层 weeks 数据显示 08-23 提交仅 25 人/74 人；people 列表中 Sun Yuqiang、Wan Wenyuan 等未提交 08-23 周报，但这些人处于核心协同网络。",
+          "action": "对连续缺失者发提醒并要求补交简短版本；下月周报提交率纳入项目组绩效，避免关键线突然静默。"
         }
       ]
     },
     "closingAdvice": [
-      "下周一组织 Memory 对齐会，参会人 Hu Lianyu, Wan Wenyuan, Ma Xiaoyu, Li Chunhan, Li Yifan，明确统一 schema 和 benchmark，会后要求提交 merge 计划。",
-      "建立一个安全研究协同群（Huang Xun, Qiao Wei, Li Mei, Huang Yitan, Ge Mengmeng, Hu Zhichao, Yao Guangyu），每周共享探针和攻击面，逐步合并知识库。",
-      "发起 agent 评估协议工作流（Sun Yuqiang, Zhang Haonan, Liang Ruichao, Guo Yaoqi, Xu Yijia, Shen Qiwei），由 Sun Yuqiang 的重复扫描协议作为起点，要求两周内形成统一 evaluation schema。",
-      "与华为项目子团队（Sun Manqi, Guo Wenbo, Guo Yaoqi, Yang Yanjing）确认角色，本周内产出差异清单到生成验证的接口文档。",
-      "统一周报价值金额和证据等级模板，对缺失 cost/token 或夸大金额的报告退回补交，下周一执行。"
+      "下周优先拉 Memory SIG 和安全线两个会议，分别以 Wan Wenyuan 和 Cao Zong/Huang Yitan 的现有资产为基础，冻结 schema v0.1，不允许继续新增独立设计。",
+      "立即要求 Qiao Wei、Hu Lianyu、Li Chunhan 在一周内交付最小可运行实验，否则将他们的方向并入 Wan Wenyuan 或 Huang Xun 的现有实验线。",
+      "让 Xu Yijia 牵头把统计门控、源锚定、重复扫描、evidence gate 集成为一个 Brainary 公共验证模块，并让周振宏/孙骁/张皓楠提供接口需求。",
+      "对医学和华为两个应用线强制数据/判据同步：Qian Jiayu 输出 manifest v0.1，Guo Wenbo 输出能力约束清单，双方在两日内合并到对方 pipeline。",
+      "统一周报计价和证据等级模板，下月起所有报告必须包含 token 成本、样本量、重复次数、反事实对照；拒不填写者不纳入 ranking 和资源分配。"
     ]
   }
 }
