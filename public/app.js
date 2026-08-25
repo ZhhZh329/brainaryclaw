@@ -1,5 +1,10 @@
 const app = document.querySelector("#app");
-const state = await fetch("data/site-index.json", { cache: "no-store" }).then((response) => response.json());
+const state = await fetch("data/site-index.json", { cache: "no-store" }).then(async (response) => {
+  if (response.ok) return response.json();
+  const fallback = await fetch("data/site-data.json", { cache: "no-store" });
+  if (!fallback.ok) throw new Error(`站点数据加载失败 (${fallback.status})`);
+  return fallback.json();
+});
 const analysisManifest = await fetch("data/analysis/manifest.json", { cache: "no-store" }).then((response) => response.ok ? response.json() : null).catch(() => null);
 let reportTextsPromise = null;
 
