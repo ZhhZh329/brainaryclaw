@@ -1,4 +1,5 @@
 const app = document.querySelector("#app");
+async function bootstrap() {
 const state = await fetch("data/site-index.json", { cache: "no-store" }).then(async (response) => {
   if (response.ok) return response.json();
   const fallback = await fetch("data/site-data.json", { cache: "no-store" });
@@ -10,6 +11,7 @@ let reportTextsPromise = null;
 
 const html = (strings, ...values) => strings.reduce((out, string, i) => out + string + (values[i] ?? ""), "");
 const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[ch]));
+const last = (items) => items[items.length - 1];
 const params = () => new URLSearchParams(location.hash.split("?")[1] || "");
 const missingLabel = (week) => week?.pastDeadline ? "未交" : "待交";
 const retiredLatePattern = /迟交|晚于(?:周一\s*)?08:00|晚于截止|超过截止|lateCount|lateNames|lateSubmissions/i;
@@ -320,10 +322,12 @@ function scrubRetiredLateContent(value) {
 
 async function ensureReportTexts() {
   if (state.reports.every((report) => typeof report.rawText === "string")) return;
-  reportTextsPromise ||= fetch("data/report-texts.json", { cache: "no-store" }).then(async (response) => {
-    if (!response.ok) throw new Error(`周报原文加载失败 (${response.status})`);
-    return response.json();
-  });
+  if (!reportTextsPromise) {
+    reportTextsPromise = fetch("data/report-texts.json", { cache: "no-store" }).then(async (response) => {
+      if (!response.ok) throw new Error(`周报原文加载失败 (${response.status})`);
+      return response.json();
+    });
+  }
   const reportTexts = await reportTextsPromise;
   state.reports.forEach((report) => {
     report.rawText = reportTexts[report.id] || "";
@@ -370,11 +374,11 @@ async function route() {
 }
 
 function latestWeek() {
-  return [...state.weeks].sort((a, b) => a.week.localeCompare(b.week)).at(-1);
+  return last([...state.weeks].sort((a, b) => a.week.localeCompare(b.week)));
 }
 
 function latestAvailableBriefingWeek() {
-  return briefingWeeks().at(-1)?.week || latestWeek().week;
+  return last(briefingWeeks())?.week || latestWeek().week;
 }
 
 function md(text) {
@@ -473,7 +477,7 @@ function teacherUnknownWeeks() {
 
 function latestTeacherUnknownWeek() {
   const weeks = teacherUnknownWeeks();
-  return weeks.filter((week) => week.count > 0).at(-1) || weeks.at(-1);
+  return last(weeks.filter((week) => week.count > 0)) || last(weeks);
 }
 
 function renderTeacherUnknown(weekId) {
@@ -568,7 +572,7 @@ function innovationWeeks() {
 
 function latestInnovationWeek() {
   const weeks = innovationWeeks();
-  return weeks.filter((week) => week.count > 0).at(-1) || weeks.at(-1);
+  return last(weeks.filter((week) => week.count > 0)) || last(weeks);
 }
 
 function innovationAnalysisKey(week) {
@@ -1155,7 +1159,7 @@ function renderMonthlies() {
 }
 
 async function renderMonthly(monthId) {
-  const month = monthlyMonths().find((item) => item.month === monthId) || monthlyMonths().at(-1);
+  const month = monthlyMonths().find((item) => item.month === monthId) || last(monthlyMonths());
   if (!month) {
     app.innerHTML = `<section class="panel"><h1>月度分析</h1><p class="muted">还没有生成月度分析。</p></section>`;
     return;
@@ -1203,7 +1207,7 @@ async function renderMonthly(monthId) {
 }
 
 async function renderMonthlySection(monthId, sectionId) {
-  const month = monthlyMonths().find((item) => item.month === monthId) || monthlyMonths().at(-1);
+  const month = monthlyMonths().find((item) => item.month === monthId) || last(monthlyMonths());
   const meta = monthlySectionMeta[sectionId] || monthlySectionMeta["monthly-signals"];
   if (!month) {
     app.innerHTML = `<section class="panel"><h1>${esc(meta.title)}</h1><p class="muted">还没有生成月度分析。</p></section>`;
@@ -1331,7 +1335,7 @@ function renderBriefings() {
 }
 
 async function renderBriefing(weekId) {
-  const week = briefingWeeks().find((item) => item.week === weekId) || briefingWeeks().at(-1) || latestWeek();
+  const week = briefingWeeks().find((item) => item.week === weekId) || last(briefingWeeks()) || latestWeek();
   app.innerHTML = `<section class="panel"><h1>${esc(week.week)} 横向分析</h1><p class="muted">正在加载离线分析...</p></section>`;
   try {
     const payload = await loadBriefing(week.week);
@@ -1382,7 +1386,7 @@ async function renderBriefing(weekId) {
 }
 
 async function renderBriefingSection(weekId, sectionId) {
-  const week = briefingWeeks().find((item) => item.week === weekId) || briefingWeeks().at(-1) || latestWeek();
+  const week = briefingWeeks().find((item) => item.week === weekId) || last(briefingWeeks()) || latestWeek();
   const meta = briefingSectionMeta[sectionId] || briefingSectionMeta["key-progress"];
   app.innerHTML = `<section class="panel"><h1>${esc(meta.title)}</h1><p class="muted">正在加载...</p></section>`;
   try {
@@ -1575,7 +1579,7 @@ function personHorizontalWeeks() {
 }
 
 function renderPersonAnalysisHub() {
-  const horizontalWeek = personHorizontalWeeks().at(-1)?.week || latestWeek().week;
+  const horizontalWeek = last(personHorizontalWeeks())?.week || latestWeek().week;
   app.innerHTML = html`
     <section class="hero">
       <div>
@@ -1637,7 +1641,7 @@ function isStructuredLongitudinal(payload) {
 
 async function renderPersonLongitudinalHub(weekId) {
   const weeks = personLongitudinalWeeks();
-  const selectedWeek = weeks.find((item) => item.week === weekId) || weeks.at(-1);
+  const selectedWeek = weeks.find((item) => item.week === weekId) || last(weeks);
   if (!selectedWeek) {
     app.innerHTML = html`
       <section class="hero">
@@ -1864,7 +1868,7 @@ async function loadAnalysisByKey(key) {
 
 async function renderPersonHorizontal(weekId) {
   const weeks = personHorizontalWeeks();
-  const selectedWeek = weeks.find((item) => item.week === weekId) || weeks.at(-1);
+  const selectedWeek = weeks.find((item) => item.week === weekId) || last(weeks);
   if (!selectedWeek) {
     app.innerHTML = html`
       <section class="hero">
@@ -2420,3 +2424,8 @@ function slug(value) {
 
 window.addEventListener("hashchange", route);
 route();
+}
+
+bootstrap().catch((error) => {
+  app.innerHTML = `<section class="panel"><h1>页面加载失败</h1><p class="muted">${String(error?.message || error || "未知错误")}</p><p><button onclick="location.reload()">重新加载</button></p></section>`;
+});
