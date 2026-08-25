@@ -629,6 +629,13 @@ async function main() {
   };
 
   await fs.writeFile(path.join(dataDir, "site-data.json"), JSON.stringify(siteData));
+  const siteIndexData = {
+    ...siteData,
+    reports: visibleReports.map(({ rawText, ...report }) => report)
+  };
+  const reportTexts = Object.fromEntries(visibleReports.map((report) => [report.id, report.rawText || ""]));
+  await fs.writeFile(path.join(dataDir, "site-index.json"), JSON.stringify(siteIndexData));
+  await fs.writeFile(path.join(dataDir, "report-texts.json"), JSON.stringify(reportTexts));
   await fs.writeFile(path.join(dataDir, "weekly-report-template.md"), templateText, "utf8");
   await fs.writeFile(path.join(dataDir, "weekly-report-template.json"), JSON.stringify({
     generatedAt: siteData.generatedAt,

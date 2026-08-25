@@ -1,6 +1,7 @@
 const app = document.querySelector("#app");
-const state = await fetch("data/site-data.json", { cache: "no-store" }).then((response) => response.json());
+const state = await fetch("data/site-index.json", { cache: "no-store" }).then((response) => response.json());
 const analysisManifest = await fetch("data/analysis/manifest.json", { cache: "no-store" }).then((response) => response.ok ? response.json() : null).catch(() => null);
+let reportTextsPromise = null;
 
 const html = (strings, ...values) => strings.reduce((out, string, i) => out + string + (values[i] ?? ""), "");
 const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[ch]));
@@ -312,9 +313,35 @@ function scrubRetiredLateContent(value) {
   return value;
 }
 
-function route() {
+async function ensureReportTexts() {
+  if (state.reports.every((report) => typeof report.rawText === "string")) return;
+  reportTextsPromise ||= fetch("data/report-texts.json", { cache: "no-store" }).then(async (response) => {
+    if (!response.ok) throw new Error(`周报原文加载失败 (${response.status})`);
+    return response.json();
+  });
+  const reportTexts = await reportTextsPromise;
+  state.reports.forEach((report) => {
+    report.rawText = reportTexts[report.id] || "";
+  });
+}
+
+let routeVersion = 0;
+
+async function route() {
+  const version = ++routeVersion;
   const hash = location.hash || "#/";
   const [path] = hash.slice(1).split("?");
+  const reportTextRoutes = new Set(["/week", "/briefing", "/monthly", "/person-longitudinal-detail", "/person", "/innovation", "/search"]);
+  if (reportTextRoutes.has(path)) {
+    app.innerHTML = `<section class="panel"><h1>正在加载</h1><p class="muted">正在读取周报原文...</p></section>`;
+    try {
+      await ensureReportTexts();
+    } catch (error) {
+      if (version === routeVersion) app.innerHTML = `<section class="panel"><h1>加载失败</h1><p class="muted">${esc(error.message)}</p></section>`;
+      return;
+    }
+    if (version !== routeVersion) return;
+  }
   if (path === "/weeks") return renderWeeks();
   if (path === "/week") return renderWeek(params().get("week"));
   if (path === "/briefings") return renderBriefings();
