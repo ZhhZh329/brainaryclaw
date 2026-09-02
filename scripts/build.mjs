@@ -218,9 +218,10 @@ function buildRoster(registry, reports, latestWeek) {
   }
 
   for (const report of reports) {
-    const member = (report.userId ? byId[report.userId] : null) || byName[report.slug];
+    const memberById = report.userId ? byId[report.userId] : null;
+    const member = memberById || byName[report.slug];
     if (!isCountableMember(member)) continue;
-    const userId = report.userId || (member?.user_id ? String(member.user_id) : "");
+    const userId = member?.user_id ? String(member.user_id) : report.userId;
     const name = member?.name || report.name;
     const key = identityKeyFromParts(userId, name);
     report.identityKey = key;
