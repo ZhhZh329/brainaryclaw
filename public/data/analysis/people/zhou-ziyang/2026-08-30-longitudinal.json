@@ -1,0 +1,117 @@
+{
+  "key": "person:zhou-ziyang:2026-08-30:longitudinal",
+  "generatedAt": "2026-09-02T13:08:31.124Z",
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "reasoningEffort": "high",
+  "inputHash": "6565a435d4e0215be89bce40925b32e6da9d4fb55848f8ddb7a2601d3ab44712",
+  "contentHash": "6565a435d4e0215be89bce40925b32e6da9d4fb55848f8ddb7a2601d3ab44712",
+  "promptHash": "a81d300342d311075e5a9e7b2b844c66b91ae9fd5bc49dd5635c5300f773e454",
+  "result": {
+    "overallTrajectory": "从第一周判定瓶颈在表示端而非生成端，到第二周用运行时代替猜类型并确立确定性禁令，第三周把问题重构为“已有表示随仓库演化”，第四周收敛到 typed update operation + reconciliation 并给出可验证的下一轮判据。整体是从识别问题到可执行验证设计的过程，而不是只增加活动量；但可用实验证据仍滞后于认知框架。",
+    "headline": "问题从“如何提取表示”演进到“如何让已有表示可增量、可验证地演化”，并已收敛到 typed delta + conflict protocol 的最小验证循环。",
+    "overviewSentence": "四周内，该生围绕仓库维护的形式化 IR，从计划层批判推进到运行时代码通路，再将问题重构为 IR 增量更新，最终给出 typed operations 与 conflict reconciliation 的可验证分类，研究价值判断逐步清晰且开始具备可检查交付。",
+    "fourWeekTimeline": [
+      {
+        "week": "2026-08-02",
+        "metacognition": "通过注入 ground-truth 计划只把 Pass@1 从 29.84% 抬到 51.91%，推断瓶颈不在规划质量而在自然语言表示，开始把“生成端能力”与“表示端能力”分开。",
+        "valueJudgment": "认为自然语言计划层无法承载跨文件一致性与传播，形式化 IR 才是值得投入的方向；模型 DELETE 能力弱会带来结构性仓库膨胀。",
+        "projectManagement": "给出 lift→IR→solve→lower 流水线，但尚无代码交付；卡点是 IR 表达力边界未定，下周要定义最小可用形式并设计评测。",
+        "evidence": "引用 NFEI 平均 Pass@1 29.84%、注入 GT 后 51.91%；DELETE 0.16–0.40；CodePlan 5/6 vs 自由形式 0/6。"
+      },
+      {
+        "week": "2026-08-09",
+        "metacognition": "把表示端瓶颈进一步拆为“形式够不够用”和“形式能否被填满”，并用 AST 只能定型 23% 来量化填充上限；推出确定性禁令以避免幽灵变更。",
+        "valueJudgment": "维护场景自带可运行测试，正确做法是用运行时信息源替代 LLM 猜类型；测试不仅是验收手段，更是信息抽取手段。",
+        "projectManagement": "实现 maint.lift 并与规格通路对齐，修复 dedup_constraints 文本相似度 bug；下周计划被测试集和数据流/控制流表示阻塞。",
+        "evidence": "属性调用接收者 3357 处，AST 定型 23%；修复 “performs io side effects” 与 “performs net side effects” 被合并的 bug。"
+      },
+      {
+        "week": "2026-08-16",
+        "metacognition": "把核心问题从“怎么提取表示”换成“已有表示如何随仓库改动一致演化”，并提出每条结论必须有可计算依据指针，才能知道哪些结论在改动后作废。",
+        "valueJudgment": "软件维护的核心价值被表述为在持续迭代中保持一致、可理解、可追踪和可验证，而不仅是修问题；这开始与长期系统能力连接。",
+        "projectManagement": "并行投入 SAP Coding Agent 对接和 maintenance 调研；新方向的依据指针尚未实现，成为关键路径；下周计划写有明确判据但交付物偏设计。",
+        "evidence": "没有给出依据指针或代码实现证据，只有方向切换和 SpecRover 文献；SAP 对接也无交付细节。"
+      },
+      {
+        "week": "2026-08-30",
+        "metacognition": "澄清“AddEntity 是 operation，overlap/rebase/conflict 是两个 operation 之间的关系”，把冲突检测推到 property/edge/closure 粒度；已有组件分别验证不等于系统验证。",
+        "valueJudgment": "分类必须区分对象与对象间关系；结构上无冲突不代表语义安全，closure 与 round-trip verification 是冲突检测的组成部分。",
+        "projectManagement": "收敛为 typed update operation + reconciliation，产出 9 个 operations、6 种结果、五步流程，下周有可验证判据；但 delta schema 和 conflict oracle 尚未可执行。",
+        "evidence": "定义 7 类更新、9 类冲突、9 个 typed operations、6 种处理结果；核查 10 组工作并区分已有局部验证与未端到端验证。"
+      }
+    ],
+    "metacognitionChange": {
+      "summary": "从“做了什么”逐步转到“为什么这样做、如何证明、如何沉淀”：已能通过注入 GT 或实测比例定位瓶颈，能把自然语言与形式化表示、形式设计与填充、operation 与 operation 间关系分开，并能识别已有组件验证的局限。但尚未把元认知优势转成可执行验证证据。",
+      "byWeek": [
+        "第1周：能区分瓶颈层级，用注入 GT 的读数排除规划质量。",
+        "第2周：把表示端瓶颈拆为形式与填充，并推出跨任务 diff 需要确定性的约束。",
+        "第3周：把问题从“提取”改为“一致演化”，并意识到依据指针必须可计算。",
+        "第4周：区分 operation 与 operation 之间的关系，并将验证粒度精确到 property/edge/closure。"
+      ],
+      "currentLevel": "已经能识别认知盲区、失败模式、证据边界和验证标准，并能在理论框架上逐步沉淀；但尚未把框架转成可执行的 delta schema 和 conflict oracle，因此实验证据仍然落后于概念分类。",
+      "strongestSignal": "第四周把“IR 更新”区分为对象和对象间关系，并坚持冲突检测必须到 property/edge/closure 粒度，说明已从模糊方向进入可验证的分类设计，而不是只增加任务量。",
+      "nextLift": "下一级的元认知提升是把分类当作可反驳假设：给 9 个 typed operations 和 6 种冲突结果写最小测试，记录哪些真实案例推翻分类，并且固定每个结论的依据指针。这样可以验证分类是否过度设计或遗漏。"
+    },
+    "valueGrowth": {
+      "summary": "四周内，该生把价值判断从“自然语言计划层不够好”推进到“维护中真正值得做的是可验证、低成本的增量 IR 更新系统”，并且开始做范围取舍——把真正的双侧并发 reconciliation 暂缓，先做单分支端到端验证。",
+      "byWeek": [
+        "第1周：判断自然语言表示不可承载，要换表示而不是调优模型。",
+        "第2周：判断静态分析有硬天花板，正确出路是测试执行的运行时信息源，而不是 LLM 猜类型。",
+        "第3周：判断维护的核心价值不是修复，而是让代码在持续迭代中保持一致、可追踪、可验证。",
+        "第4周：判断分类必须区分对象与关系，结构无冲突不等于语义安全，closure/round-trip 是 conflict detector 的一部分。"
+      ],
+      "currentValueFunction": "当前他认为最值得投入的是：把已有 IR 的更新形式化为 typed operations 与 conflict reconciliation，并通过 round-trip verification 证明合并后的代码仍满足 contract、架构不变量和测试。为什么值得：因为自然语言计划与无验证 diff 会造成幽灵变更、语义冲突和架构侵蚀；已有组件都缺乏端到端验证。当前取舍是先把双侧并发 reconciliation 放后，优先做单分支端到端。",
+      "improvementSignals": [
+        "从“优化规划质量”转向“更换表示形式”，判断更稳定。",
+        "从“模型猜类型”转向“用测试运行拿事实”，更尊重可验证证据。",
+        "从“提取表示”转向“表示与仓库一致演化”，更接近长期维护痛点。",
+        "从“结构无冲突即安全”转向“语义冲突需要 closure/round-trip 验证”，对证据要求更严。"
+      ],
+      "nextValueQuestion": "如果单分支 round-trip 验证通过，它能否证明 typed delta 系统比现有结构化 prompt 或 agent 路线更值得长期投入？如果下一步的 delta schema/conflict oracle 反而显示分类过于复杂，他是否愿意缩小问题边界，例如先只做 AddEntity 和 UpdateSignature。"
+    },
+    "projectManagementReview": {
+      "summary": "核心研究连续四周有推进，每天/周都有可检查的认知增量和下步判据；但可执行交付偏少，SAP 并行任务只出现一次，项目边界和资源分配透明度不足。",
+      "projects": [
+        {
+          "project": "形式化 IR 与增量仓库维护研究",
+          "weeks": "2026-08-02 至 2026-08-30，连续 4 周",
+          "quality": "持续性强，且有从问题定义到实现再到验证计划的主线推进；但可运行样机尚未完成，多个判据还停留在计划层。",
+          "whatWorked": "每周都有明确当前阶段和卡点；第二周实际实现 maint.lift 并修 bug；第四周产出可检验的分类和五步流程。与 Brainary 的关联被持续映射为 Typed operation↔Procedure、Stable identity↔Memory、Conflict outcome↔Evaluation，说明该研究有沉淀为系统能力的意图，但目前还只是映射，未变成可复用模块。",
+          "managementGap": "关键缺口是没有机器可执行的 delta schema 和 conflict oracle；benchmark 没有成对 delta/conflict gold，导致下一步实验无法直接开始；split/merge 的一对多映射只能人工确认；原计划与实际完成没有逐周对照，难以判断中途是否在第三周出现方向切换后过度延迟。",
+          "nextConcreteMove": "按第四周优先级 1 实现 delta schema 和 validator，并把 AddEntity(Function) 与 UpdateSignature 两条 round-trip 作为下周最小可验证交付；周报里补上“原计划 vs 实际完成”。"
+        },
+        {
+          "project": "SAP Coding Agent 对接交付",
+          "weeks": "2026-08-16 单次出现",
+          "quality": "证据不足，无法判断是否持续推进。",
+          "whatWorked": "该任务被列入第三周工作，但没有给出交付物、依赖、卡点或下周计划；不能确认是否有可复用产出。",
+          "managementGap": "第三周只一句话，第四周完全未提；没有原计划/实际完成、关键路径、需老师介入的说明。如果已终止，也没有写终止理由。",
+          "nextConcreteMove": "下次 meeting 确认 SAP Coding Agent 的状态；若继续，提供一页现状：已完成、卡点、下周最小交付；若不再推进，明确终止并把时间重新分配给核心研究。"
+        }
+      ],
+      "managementPattern": "优点是能把研究中的卡点分解成可验证的维度，并提前识别 benchmark 缺陷、设置判据。不足是多项目并行管理不稳定，SAP 任务无痕消失；周报计划多但缺少实际完成对照，导致“计划 vs 实际”只能靠 CoT 推理。",
+      "nextManagementMove": "建议从下周起，每篇周报固定包含：原计划、实际完成、证据链接、下周最小可验证动作、需要老师介入项；对每个并行项目至少一行状态，避免隐性任务占用。管理不是把计划写长，而是让每个项目都有可检查交付和明确归属。"
+    },
+    "repeatedBlockers": [
+      "缺少与目标匹配的 benchmark/oracle：第一周缺少架构级变更评测，第二周找不到贴切测试集，第四周 NFEI 没有成对 delta 和 conflict gold。",
+      "表示形式与真实代码之间的抽取/执行缺口：第一周表达力边界未定，第二周静态分析只能定型 23%，第四周缺可执行 delta schema 和 conflict oracle。",
+      "split/merge 等一对多身份映射没有自动方法，只能检测并要求人工确认，影响自动化闭环。",
+      "并行任务管理透明不足：SAP Coding Agent 对接只在第三周出现，之后未更新，可能挤占核心研究但证据不足。"
+    ],
+    "teacherQuestions": [
+      "你第三周提出的“每条结论加依据指针”是否已经完成？第四周的分类是否仍建立在未实现的可计算依据上？",
+      "SAP Coding Agent 对接现在处于什么状态？继续或终止？如果继续，它的资源会不会挤占 typed delta schema 的下一周工期？",
+      "你核查的 10 组工作中，哪一组的验证设定最接近你要做的 repository-level new feature transaction？能否作为最低端到端 baseline？",
+      "如果按第四周判据实现 delta schema/validator，你预计何时跑通 AddEntity 与 UpdateSignature 的两条 round-trip？老师应在哪个节点介入看结果？",
+      "第一篇论文是否已经明确排除 split/merge 的自动合并？如果真实测试样本里出现 split/merge，你打算改边界还是加例外？"
+    ],
+    "nextIntervention": "建议老师在下一次 meeting 先确认 SAP 任务是否继续，并要求学生补交上一周的原计划 vs 实际完成；然后围绕 delta schema/conflict oracle 的最小验证设定一个截止日期，最好要求两周内跑通 AddEntity 和 UpdateSignature 的 round-trip。同时帮他缩小第一篇边界：明确把双侧并发和 split/merge 作为未来工作，避免分类过度膨胀。",
+    "studentFeedback": {
+      "summary": "这四周不是单纯变忙，而是在研究方法上有可见提升：从发现表示层问题，到用运行时代替猜测，再到把增量维护收敛为 typed operation + reconciliation 的验证问题。下一步需要把认知优势变成可执行证据。",
+      "whatImproved": "能够拆解失败模式、用注入 GT 或实测比例来定位瓶颈；能识别已有组件验证的局限，并把研究价值判断从泛泛转向可检验的范围取舍。",
+      "nextStep": "下一步应集中实现 delta schema 和 validator，完成 AddEntity 与 UpdateSignature 两条 round-trip；同时把 SAP 状态透明化，并按周补上原计划 vs 实际完成表。"
+    },
+    "evidenceLinks": []
+  }
+}
