@@ -1,0 +1,84 @@
+{
+  "key": "person:li-chunhan:2026-08-30:horizontal",
+  "generatedAt": "2026-09-02T10:05:24.067Z",
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "reasoningEffort": "high",
+  "inputHash": "0c6e2e74298d35fb6b6ac7278c2c0935c86f5969a6d81582a998ac1de22eff3e",
+  "contentHash": "0c6e2e74298d35fb6b6ac7278c2c0935c86f5969a6d81582a998ac1de22eff3e",
+  "promptHash": "7ab2efc4d416dbeeb34a0e2d3cc797ac660749509537011b4ea431707a52a0ba",
+  "result": {
+    "overallLevel": "特别值得读",
+    "headline": "从文献梳理到可落地主线：VLM-IAD 少样本冷启动 + Open-World 缺陷检测的清晰研究判断",
+    "overviewSentence": "本周完成 VLM-IAD 2024–2026 范式梳理，明确以 normal-only VLM 冷启动、YOLO 下游部署的 Few-shot Open-World Defect Detection 主线，并给出可复现实验方案，属于较值得优先阅读的一类。",
+    "shortRead": "李淳涵本周集中完成 VLM-IAD 范式演进、评价协议、数据集与工业落地路线梳理。核心判断是缺陷样本极少时不应先训普通 YOLO，而应以 VLM/FSAD 建 anomaly gate，再蒸馏到 YOLO 实时检测；MLLM 定位为辅助旁路而非最终质量闸门。下周计划转向 PromptAD→IIPAD→DriftAD 复现与 open-world 预研，并升级评估指标。",
+    "levelRationale": "这份周报达到特别值得读：硬进展上是完整的 2024–2026 文献与指标地图；认知增量不仅停在罗列，而是形成 VLM↔YOLO 关系重定义、动态异常语义判断；价值判断明确避开 MVTec 饱和刷点，提出 2026 少样本 open-world 主线；项目管理有清晰下周五步与 40h 投入；元认知上主动识别术语混用、指标横比、MLLM 幻觉等风险并给出解决。证据多为论文指标，且对预印本和 1-shot 性能保持怀疑，证据质量高。因此建议老师优先阅读。",
+    "sameWeekPosition": "按本周标准，这份周报属于较值得优先阅读的一类。",
+    "highlightedSignals": [
+      "完整梳理 2024→2026 VLM-IAD 范式：PromptAD→IIPAD→DriftAD，异常语义从全局单一概念升级为动态文本漂移",
+      "明确三类少样本问题（FSAD / 跨类 zero-shot VLM / 少样本 detection）的评价协议，并指出 AUROC≠mAP 不可横比",
+      "重定义 VLM 与 YOLO 关系：先用 normal-only VLM 建 anomaly gate，再随标注积累蒸馏到实时 YOLO",
+      "对 MLLM 幻觉风险有清晰边界判断：定位为解释/复核旁路，而非最终 QC 闸门",
+      "给出可执行下周计划：复现三层基线 + 增长点 + 预研路线 + 对照实验 + 指标升级，投入时间 40h",
+      "识别 MVTec 1/2/4-shot 饱和，建议组合 AD2/Real-IAD/NEU-DET/PCB 提升辨识度"
+    ],
+    "focusDimensions": {
+      "valueJudgment": {
+        "read": "主题价值判断非常清晰，学生没有停留在刷 MVTec 指标，而是指向少样本 open-world 缺陷检测这一更难的闭环问题。",
+        "evidence": "核心判断：缺陷样本极少甚至没有时不应先训练普通 YOLO，而应以 normal-only VLM/FSAD 建 anomaly gate；明确 2026 最值得做的问题是 Few-shot Open-World Defect Detection：VLM 发现未知 + open-vocab YOLO 定位 + 蒸馏到实时 student；并指出 MLLM 现阶段更适合辅助复核而非最终质量闸门。",
+        "nextLift": "可进一步把主线价值转化为可验证假设：例如用一条困难产线样例，量化 normal-only VLM 冷启动相比直接 YOLO 在 0/5/10 张缺陷标注下能省多少人工、漏检率下降多少；或给出相对 MVTec 刷点的预期 AP 增益区间。"
+      },
+      "projectManagement": {
+        "read": "项目管理已形成“调研—判断—实验设计—下周执行”的完整闭环，下周计划颗粒度足够进入执行。",
+        "evidence": "下周计划包含：搭建 VLM 复现框架（5 seeds、异常训练样本 0、MVTec/VisA/AD2）、实现论文增长点（spatial text drift + instance prompt + uncertainty head）、预研 Few-shot Open-World Defect Detection 链路、NEU-DET/PCB 对照 RPS-GA、指标升级；本周 32h，下周 40h。",
+        "nextLift": "可把下周五条计划拆成按天/按里程碑的 mini-sprint，并给每条定义退出条件（如 DriftAD 复现成功以 MVTec 4-shot 复现到 97±0.5 为门槛，否则暂停该分支），减少并行切换成本。"
+      },
+      "metacognition": {
+        "read": "元认知变化明显：从展示文献转向主动识别自己研究中的术语混用、指标误用和饱和陷阱，并形成统一评价视角。",
+        "evidence": "问题及解决方案中列出‘zero-shot/few-shot 术语混用’、‘VLM 与 YOLO 数字横比误导’、‘MVTec 饱和单点微涨 0.2 难证真实价值’、‘MLLM 幻觉风险’等，并给出三类问题协议、统一任务框架、不确定度输出等解决。",
+        "nextLift": "可把本周认知升级整理成一份‘不再假设’清单（例如不再假设 AUROC 高等于可上线、不再假设 1 张正常图等于产线冷启动充分），并给每个新假设写明可证伪实验，方便两周后检查认知是否继续演进。"
+      }
+    },
+    "growthOpportunities": [
+      "把文献洞察尽快转化为最小可复现实验：优先跑通 PromptAD 与 DriftAD 在 MVTec 4-shot 的复现，确认最新预印本的域内/域外性能，再决定是否合并 spatial text drift 与 instance prompt。",
+      "对 DriftAD 的 1-shot 97.2 保持怀疑，设计光照/相机/批次 domain shift 的消融；如果 AD2/Real-IAD 退化明显，说明该优势尚未超越域内饱和。",
+      "评估指标升级可做成一个自动脚本或配置模板，让后续实验默认输出 AUPR/PRO/FPR@95TPR/误杀率/std，减少手工整理成本。",
+      "把 VLM→YOLO 蒸馏链路纳入下周预研时，先固定一个最小闭环（如 MVTec 类 1-shot 发现 + 少量伪标注）测端到端增益，避免一开始就上全套三数据集。"
+    ],
+    "teacherAction": {
+      "readOriginal": true,
+      "meetingQuestions": [
+        "你提出 2026 主线是 Few-shot Open-World Defect Detection，其中 VLM 发现未知 + YOLOE 定位 + 蒸馏到 YOLO11；如果未知缺陷没有可参考文本，VLM 的误报率和漏报率如何控制？有没有比 MVTec 更接近 open-world 的真实冷启动场景作为验证？",
+        "你计划复现 PromptAD→IIPAD→DriftAD，DriftAD 是很新的 arXiv 预印本；如果复现结果低于论文 2 个点以上，你的下一步是继续调还是切换到 IIPAD+InCTRLv2 的组合？退出条件是什么？",
+        "你强调 test set 绝不参与 prompt/threshold/checkpoint 选择，这很好；下周 40h 内你如何保证这个纪律在多人仓库/多数据集切换时不被打折？",
+        "你提到 MLLM 幻觉并建议 uncertainty head 输出‘需人工复核’；这套不确定性估计具体打算用 entropy/ensemble/calibration 哪种？在少样本正常图下如何校准？",
+        "NEU-DET/PCB 与 VLM cold-start 是两条评估线，你如何判断下周先在哪个上投入能更快得到可展示的结论？"
+      ],
+      "nextWeekWatch": [
+        "是否产出 PromptAD/IIPAD/DriftAD 的初步复现结果或至少训练日志，并如实报告与论文的 gap 和 5-seed std",
+        "是否把指标升级做成可复用脚本/模板，并在第一条实验里默认输出 AUPR/PRO/FPR@95TPR/误杀率",
+        "是否在周报中记录 VLM→YOLO 最小闭环的一次端到端尝试，即使只是伪标注质量或训练时间等早期信号"
+      ]
+    },
+    "studentFeedback": {
+      "summary": "本周你把零散文献梳理成了一条非常清楚的主线：少样本工业缺陷识别里，先用 VLM 做冷启动异常门，再随标注积累蒸馏到实时 YOLO；这个判断值得继续往下做。",
+      "whatYouDidWell": [
+        "你把 VLM-IAD 的 2024–2026 演进讲得很透，尤其抓住 DriftAD 代表的‘异常语义从全局静态到空间动态漂移’这一关键变化。",
+        "你主动区分了三类少样本任务的评价协议，并明确 AUROC 和 mAP 不能横比，避免了很多后续实验设计中的坑。",
+        "你对 MLLM 的角色定位很清醒：旁路辅助而不是最终质量闸门，这比盲目夸大 MLLM 更成熟。"
+      ],
+      "nextStep": [
+        "下周先把 PromptAD→IIPAD→DriftAD 的最小复现跑起来，哪怕只完成一个数据集的一个 shot，也要记录论文指标与实际复现的 gap。",
+        "把评估指标升级做成一个一次性脚本，保证每轮实验默认输出 AUPR/PRO/FPR@95TPR/误杀率/seed std，不用每次手写。",
+        "可以开始写一个简短的‘假设清单’：哪些判断你已经很有把握，哪些还需要实验证伪，方便 meeting 时快速对齐。"
+      ],
+      "suggestedRewrite": "下周周报可以这样组织：先写‘本周执行的最小实验闭环（模型/数据/shot 数/实际耗时）’，再写‘复现结果与论文 gap（附指标表和 seed std）’，然后写‘该结果对 Few-shot Open-World 主线的下一步决策意味着什么’，最后写‘下一周只做哪一件事最能让主线成立’。这样老师不用在文献细节里找你的实验进展和判断。"
+    },
+    "evidenceLinks": [
+      "周报第 2.1.d 关键认知：DriftAD 代表异常语义从全局单一概念升级为动态文本漂移，并指出 1-shot 97.2 不等于真实产线 1 张就够。",
+      "周报第 2.4.a 核心判断：缺陷样本极少或没有时不应先训练普通 YOLO，而应先以 VLM/FSAD 建 anomaly gate。",
+      "周报第 3 问题 1/2/3/5：术语混用、指标横比、MVTec 饱和、MLLM 幻觉风险及其解决方案。",
+      "周报第 4 下周计划第 1/2/3/5 条：复现框架、论文增长点、open-world 预研、指标升级。"
+    ]
+  }
+}
