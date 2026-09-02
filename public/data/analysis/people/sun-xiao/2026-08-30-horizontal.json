@@ -1,0 +1,80 @@
+{
+  "key": "person:sun-xiao:2026-08-30:horizontal",
+  "generatedAt": "2026-09-02T12:02:35.580Z",
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "reasoningEffort": "high",
+  "inputHash": "aec1bab38937d5eff545b18ed1103ae9c45049d52b6f09985a95a2ca36a4b708",
+  "contentHash": "aec1bab38937d5eff545b18ed1103ae9c45049d52b6f09985a95a2ca36a4b708",
+  "promptHash": "7ab2efc4d416dbeeb34a0e2d3cc797ac660749509537011b4ea431707a52a0ba",
+  "result": {
+    "overallLevel": "特别值得读",
+    "headline": "完成 Craig188 双模型配对审计与部分因果分支，定位“公式正确≠识别有效”的关键瓶颈并设定下周质量门",
+    "overviewSentence": "本周完成 GPT-Sol 与 DeepSeek 376 条 Natural 配对审计和 GPT-Sol 部分因果分支，发现近零效应暂时不能解释为 communication 无效，并锁定 checkpoint 显著性与语义质量为下周关键门。",
+    "shortRead": "Sun Xiao 本周将 Craig188 从 Natural 对比推进到 checkpoint 级因果实验：冻结 k=2 与每模型 72 checkpoint，完成 GPT-Sol 640/1,389 因果分支，并离线确认指标公式逻辑成立。同时识别出 ORIGINAL 噪声、OFFER-only checkpoint 和 C/A 信息重复会干扰 T/C/A 干预效应，因此没有把近零均值写成“communication 无效”，而是提出下周先用 Sotopia-top 与 formal-random C_NULL 对照校准 checkpoint 衰减。该周报方法清晰、自我纠错强，值得优先阅读。",
+    "levelRationale": "本周周报包含可复核的硬进展（376 条配对审计、144 checkpoint 计划、640 条 GPT-Sol 因果分支、v1.5 代码改造），且把实验推进到真实数据阶段；更重要的是在 CoT’s CoT 和元认知层明确提出“公式正确不等于因果识别有效”，并定位了 checkpoint 显著性、干预语义一致性和 rollout 噪声三个关键影响项。项目管理上给出了清晰的路径和最小验证动作，下周动作质量高。因此评为特别值得读。",
+    "sameWeekPosition": "按本周标准，这份周报属于较值得优先阅读的一类。",
+    "highlightedSignals": [
+      "完成 376 条双模型 Natural 配对审计，GPT-Sol native reward 0.478、DeepSeek 0.022，平均差 0.456",
+      "冻结 k=2 与每模型 72 checkpoint，并定义 DROP_F/PARA_F/SWAP_F 及 C_NULL/T_ERASE/A_NOOP 结构对照",
+      "跑通 annotation→checkpoint→intervention→causal rollout→offline effect 完整链路",
+      "GPT-Sol 因果分支完成 640/1,389，离线复核确认指标计算逻辑成立",
+      "识别出 ORIGINAL 重复运行终局奖励绝对波动均值约 0.150，高于多数干预效应，定位噪声为主要解释",
+      "引入 Sotopia-RL 官方 post-hoc utterance direct attribution 作为 checkpoint 选择诊断",
+      "完成 v1.5.0 主要代码改造，分离 partner/focal/scorer 配置，避免旧实验混淆",
+      "给出下周先做 checkpoint 质量对照与 formal-random vs Sotopia-top 小样本的最小验证动作"
+    ],
+    "focusDimensions": {
+      "valueJudgment": {
+        "read": "非常好",
+        "evidence": "周报明确区分了 Natural 结果与 causal 近零结果的解释边界：Natural 差异真实且可报告；causal 近零不能写成 communication 无效，因为 ORIGINAL 噪声、checkpoint 结构和反事实语义都可能影响。题目价值被定位为“判断 LLM communication function 在 task action 之外是否有可识别增量”，并指出可迁移到协作规划、调解和任务对话。单独结论是“值得继续，但主张必须收紧”。",
+        "nextLift": "可以进一步把“可报告结论”和“待验证结论”写成两个独立段落，并给出各自证据等级；同时在价值部分补充如果主要结论是“能力越强模型越不受说话艺术影响”，需要哪些分层证据才能支撑。"
+      },
+      "projectManagement": {
+        "read": "特别值得读",
+        "evidence": "周报给出了清晰的项目阶段判断、关键路径和资源规划：Craig188 完成 376 条 Natural 和部分 causal，新双模型实验已完成代码改造但数据仍待运行；下周按‘离线 checkpoint audit → Sotopia direct score → top/random C_NULL → strict intervention pilot → full causal’顺序推进。纠偏动作具体，如不把 failed branch 当 0、不用不完整类别外推、SWAP 必须与固定 action/price 兼容等。",
+        "nextLift": "可以把‘不扩大低质量分支’的决策条件写得更量化，例如明确 top/random C_NULL 对照中，如果两者绝对效应均低于某个噪声带宽，则增加多少次 rollout 或收紧 horizon 后再决定。"
+      },
+      "metacognition": {
+        "read": "特别值得读",
+        "evidence": "本周的核心认知变化是：指标正确、代码运行成功和因果识别成立是三件不同的事。周报通过公式、源码和具体 dialogue 对照确认计算逻辑成立，同时发现更关键的问题是 checkpoint/action 结构和反事实语义质量可能作为影响项。并且提出未来可沉淀为 Natural Audit → Noise Calibration → Checkpoint Salience Audit → Semantic Intervention Gate → Strict Pilot → Causal Rollout → Hierarchical Effect Analysis 的流程。",
+        "nextLift": "可以把‘为什么这个理解没有进入自动化科研体系’的反思进一步转化为一个可执行的 gate 清单，例如每个 checkpoint 必须同时通过 schema validator、function-action coherence、coverage 和 ORIGINAL noise 阈值，方便直接接入以后的 pipeline。"
+      }
+    },
+    "growthOpportunities": [
+      "把 ORIGINAL/PARA 噪声校准从当前探索性分析固化为可复用脚本，并输出噪声带宽和干预效应对比表，供下周 checkpoint 选择直接使用。",
+      "在正式结论前补充分层稳健性检验，例如按角色、对话长度和类别分别报告 Natural 差异和 causal 效应，避免总体均值掩盖结构差异。",
+      "将本周已经确认的公式、失败模式和干预语义检查整理成 v1.5 的标准模块文档，减少后续新配置下的人工复核成本。"
+    ],
+    "teacherAction": {
+      "readOriginal": true,
+      "meetingQuestions": [
+        "下周 formal-random vs Sotopia-top C_NULL 对照的样本量、拒绝标准和最小效应阈值准备怎么定？",
+        "如果 top/random C_NULL 都被 ORIGINAL 噪声淹没，你会选择增加 rollout、收紧 continuation 条件，还是更换 checkpoint 选择策略？",
+        "当前 GPT-Sol 的 640 条 causal 中，DROP/PARA/SWAP 的 coverage 和 accepted/missing 比例分别是多少？有没有已经发现必须换 checkpoint 的案例？",
+        "Natural 差异是否已经按角色、对话长度做过分层？如果没有，补哪些表格可以支持‘能力越强越不受说话艺术影响’的解释？"
+      ],
+      "nextWeekWatch": [
+        "是否完成 checkpoint 案例级质量清单，并给出 accepted/missing/coverage 的量化结果",
+        "是否按计划完成 formal-random vs Sotopia-top 小样本 C_NULL 对照，并据此更新 checkpoint selection",
+        "是否在 strict pilot 达标后才启动 GPT-Terra 与 DeepSeek 的全量 causal，而不是直接补齐所有分支",
+        "是否把 ORIGINAL noise 带宽和干预效应对比写入周报，作为后续因果结论的证据链起点"
+      ]
+    },
+    "studentFeedback": {
+      "summary": "本周你在 Craig188 上完成了从 Natural 配对到部分 causal 的可复核闭环，并且主动区分了指标正确与因果识别有效，这是很好的进展。",
+      "whatYouDidWell": [
+        "把模型差异落实到 376 条配对审计并冻结 k=2 与 72 checkpoint/模型，不是停留在计划层面。",
+        "发现近零均值不等于通道无效，明确 ORIGINAL 噪声、checkpoint 结构和反事实语义是主要解释，避免了过度结论。",
+        "引入 Sotopia-RL attribution 作为 checkpoint 诊断工具，并设计严格的纠偏动作，提升了后续实验的决策质量。"
+      ],
+      "nextStep": [
+        "下周先完成 checkpoint 案例级质量清单和 formal-random vs Sotopia-top 小样本对照，再决定是否扩量。",
+        "为 DROP/PARA/SWAP 每个家族补充 coverage、accepted/missing 和 ORIGINAL noise 带宽，确保最终结论可以分层表述。",
+        "把本周确认的公式、失败模式和语义检查沉淀为标准模块，减少后续新配置下的人工复核。"
+      ],
+      "suggestedRewrite": "下周周报可以把‘Communication 近零效应’部分按‘指标公式复核—ORIGINAL 噪声校准—checkpoint 显著性诊断—语义一致性检查’四步组织，并在开头先用一句粗体写出当前可报告结论和证据等级，例如：‘截至本周，可报告 Natural 差异与公式正确性；causal 近零暂不可解释，待 checkpoint validation 后再做通道敏感性结论’。这样老师能更快判断是否需要介入。"
+    },
+    "evidenceLinks": []
+  }
+}
