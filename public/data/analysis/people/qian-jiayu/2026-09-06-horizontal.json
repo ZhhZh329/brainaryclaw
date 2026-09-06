@@ -1,85 +1,87 @@
 {
   "key": "person:qian-jiayu:2026-09-06:horizontal",
-  "generatedAt": "2026-09-06T13:04:01.479Z",
+  "generatedAt": "2026-09-06T14:05:16.208Z",
   "provider": "deepseek",
   "model": "deepseek-v4-pro",
   "reasoningEffort": "high",
-  "inputHash": "d2c3105a84171fede14e300c3d0f133b7f5662b2383a17274f13b89461c5b0d3",
-  "contentHash": "d2c3105a84171fede14e300c3d0f133b7f5662b2383a17274f13b89461c5b0d3",
+  "inputHash": "795963fa47cb89c497ef557bc836086462ec23d917ba68b04c6c23964a02572c",
+  "contentHash": "795963fa47cb89c497ef557bc836086462ec23d917ba68b04c6c23964a02572c",
   "promptHash": "7ab2efc4d416dbeeb34a0e2d3cc797ac660749509537011b4ea431707a52a0ba",
   "result": {
     "overallLevel": "特别值得读",
-    "headline": "数据审计与双环境上限定位把问题从模型能力转向证据忠实性，且已用强基线及时纠偏论文主张",
-    "overviewSentence": "钱加宇本周完成清洁 split、oracle/predicted 双环境上限和 9B 基线，发现主要瓶颈是工具证据忠实性而非模型容量，并把 Paper A 主张及时收窄到反事实忠实项的主效应验证。",
-    "shortRead": "硬进展：清洁 422,904 行训练集 + 97.8% 反事实配对；oracle 环境上限 0.674，predicted 0.419；Prompted-9B 的 27.4pp content gain 推翻了原 novelty。判断：值得继续并收窄题目，进入 Gate 2 前锁定 RL 主效应设计。下一步：冻结 oracle v3 cache，完成 10% 档 A/B/F 实验，启动资源账本。",
-    "levelRationale": "该周报达到特别值得读：硬进展不是泛泛描述，而是给出清洁 split 数量、双环境上限、Gate 1 通过率和强基线反事实结果；认知上完成从“模型不会推理”到“工具世界不忠实”的归因切换，且 Prompted-9B content gain 直接纠偏了论文主张；项目管理有阶段、原计划 vs 实际、偏差原因、纠偏动作和最小可执行计划；元认知反思尤其清晰。唯一待验证是 Gate 2 主效应，但周报已把它标注为 C 级证据，没有提前下结论。",
-    "sameWeekPosition": "按本周标准，这份周报属于较值得优先阅读的一类；不参与具体名次比较，但它在硬进展、认知增量、价值判断和下周动作质量上均明显高于一般周报。",
+    "headline": "从数据审计到证据环境分离，及时证伪原主张并转向可检验的忠实性奖励",
+    "overviewSentence": "本周在数据质量、双环境上限和冷启动基线三线并进，用强基线证伪原主张并锁定可检验的下一 Gate。",
+    "shortRead": "本周完成清洁训练集与反事实配对，建立 oracle/predicted 双证据环境，并通过 9B 冷启动 Gate 1；最重要的发现是 Prompted-9B 已具备 content gain，促使主张改为反事实奖励提高 faithful rate 且不牺牲准确率。项目管理清晰，元认知反思深刻，但主效应尚待 Gate 2 验证。",
+    "levelRationale": "本周围绕“答案跟着证据走”形成硬进展闭环：数据缺陷被系统审计并修复，97.8% 的配对覆盖率让反事实奖励可计算；双环境把证据上限与策略上限分开，直接定位瓶颈到病灶证据层；9B 冷启动通过 Gate 1，且有强基线结果及时推翻原主张。CoT 增量明确，CoT's CoT 给出两个可自动化沉淀的认知模块，Brainary 映射到可验收链。价值判断给出 KEEP 条件和继续条件，金额估计附有计算口径但未与资源账本对齐。项目管理有 Gate 阶梯和最小可执行计划，元认知变化非常突出，表现为问题归因、指标不等于主张、Gate 是科学承诺。证据等级自评诚实，A/B 级结果支撑充分，C 级主张未提前写成结论。综合硬进展、主题价值、项目管理与元认知，达到“特别值得读”。",
+    "sameWeekPosition": "按本周标准，这份周报属于较值得优先阅读的一类，其信息密度与决策价值明显高于一般进度汇报；但它仍处于主效应未确认阶段，老师应重点盯 Gate 2 的预注册与结果。",
     "highlightedSignals": [
-      "反事实配对从“随机换病人”改为“必须换到答案不同的病人”，将奖励歧义从 38.7% 降到 0，覆盖 97.8% benchmark。",
-      "oracle/predicted 环境上限 0.674 vs 0.419，第一次让证据获取误差与策略使用误差分开测量。",
-      "Prompted-9B 未训练就有 27.4pp content gain，证伪了“只有 CF-GRPO 才产生 content gain”，作者主动修改 Paper A 主张。",
-      "四类数据缺陷被量化：训练/benchmark 病例重叠、轨迹级 split、官方轨迹答案不可达、cache 不一致。",
-      "下周最小计划已有 Gate 2 预注册标准：F faithful rate 显著高于 A/B 且 accuracy 不下降超过 1pp。"
+      "清洁训练集 422,904 行 / 8,266 例，Agent-SFT 去重后 23,959 条并按病例划分",
+      "反事实配对覆盖率 97.8%，消除 38.7% 旧配对中的奖励歧义",
+      "oracle 环境上限 0.674，predicted 环境上限 0.419，双环境分离证据获取与证据使用",
+      "Gate 1 通过：严格 parse 率 0.9575、留出题准确率 0.605、STOP 率 0.965",
+      "Prompted-9B 已有 content gain 27.4 pp，原主张被证伪并快速改写为 faithful rate 主效应",
+      "明确继续条件：Gate 2 中 F 的 faithful rate 显著高于 A/B 且准确率不下降"
     ],
     "focusDimensions": {
       "valueJudgment": {
         "read": "非常好",
-        "evidence": "明确 KEEP 但收窄题目；给出买家、通用性、护城河、交付物与继续条件；金额估值 35+45+50=130 万元，且注明不代表现金收入，最终取决于 Gate 2。",
-        "nextLift": "把金额估值拆分到可验证里程碑成本，补充 GPU-hours / API token 账本，让期权价值更可审计。"
+        "evidence": "第6节明确判断题目值得继续，给出买单方、通用性、护城河、可交付物和继续条件；第7节给出130万元人民币的合计估计，并注明不代表现金收入，最终价值取决于 Gate 2 与论文可复现结论。",
+        "nextLift": "金额估计可以进一步从单一数值改为区间期权，并把计算假设与已记录资源成本分开，便于后续对外说明价值边界。"
       },
       "projectManagement": {
         "read": "非常好",
-        "evidence": "有阶段、原计划 vs 实际、偏差原因、纠偏、下周最小计划；虽然小时账本缺失，但已明确下周起按 run 记录 wall-clock / GPU-hours / API token。",
-        "nextLift": "把下周计划中的 Gate 2 定义关联到具体脚本和输出 artifact，建立实验预注册版本，避免门槛移动。"
+        "evidence": "第9节给出当前阶段、原计划 vs 实际、进度判断、资源/成本、依赖、偏差原因和纠偏动作；下周最小可执行计划五条具体且可检查。",
+        "nextLift": "可补上 run 级 wall-clock、GPU-hours、API token 与失败原因账本，让纠偏动作有可追踪的资源证据；把 Gate 2 定义、时间和结果记录在独立版本化日志中。"
       },
       "metacognition": {
         "read": "特别值得读",
-        "evidence": "三条 meta-cognition 准确反映问题归因失败、指标变好不等于主张成立、Gate 是科学承诺；尤其是 Prompted-9B 27.4pp content gain 直接否证原 novelty 时选择改主张而非隐藏基线。",
-        "nextLift": "将“指标变好不等于主张成立”扩展为可复用检查表，在每次 RL 结果后自动触发反事实基线对照。"
+        "evidence": "第5节提出三个元认知变化：模型失败常是问题归因失败、指标变好不等于主张成立、Gate 既是项目管理工具也是科学承诺；第3节 CoT's CoT 1 和 2 说明如何把忠实性转化为学习信号以及先校准世界再训练 Agent。",
+        "nextLift": "可将这三条元认知变化转成可复用的决策清单，在每次 Gate 前强制自检“失败归因是否已拆分”“好指标是否在替代主张”“Gate 修改是否留痕”。"
       }
     },
     "growthOpportunities": [
-      "Gate 2 主效应尚未完成，建议把“F 比 A/B 高且准确率不下降”的统计检验与最小效应量提前固定，避免事后解释。",
-      "时间账本缺失已经识别，可从最小脚本开始，每周自动生成 wall-clock 与 GPU-hours 摘要并附在周报末尾。",
-      "oracle 训练池 cache 仍在构建，建议下周将 cache 构建进度、版本哈希和验证指标作为第一优先级，避免主实验依赖未冻结数据。",
-      "自动化 Gate 已列出，但尚未说明失败时如何阻断；可增加失败告警模板，让所有 Gate 输出统一包含 pass/fail、原因和阻断路径。"
+      "资源/成本账本仍缺失，可建立 run 级记录，用 wall-clock、GPU-hours、API token 和失败原因补充金额估计。",
+      "Gate 2 的新主张已写清，但尚未看到 A/B/F/F-OLDPAIR 的种子和阈值预注册文件；开跑前可冻结配置。",
+      "预测环境迁移实验的失败分析路径可更具体，比如先报告各证据子类一致率，再决定转分析论文。",
+      "CoT's CoT 建议沉淀形式很完整，下一步可把 builder、reward、evaluator 作为独立模块接入 Brainary，减少人工拼接。"
     ],
     "teacherAction": {
       "readOriginal": true,
       "meetingQuestions": [
-        "你如何证明 F 的 faithful rate 提升不是来自训练分布偏移，而是反事实奖励带来的证据使用变化？",
-        "如果 oracle 环境 F 主效应未达到 Gate 2 门槛，你准备如何把 benchmark/audit 分析写成足量论文？",
-        "你提到的“停止使用官方轨迹做冷启动”具体在数据版本中如何追溯，能否共享清洗后的 split 哈希？"
+        "如果 Gate 2 两种子中 F 的 faithful rate 未显著高于 A/B，你会优先排查奖励、证据配对还是策略初始化？",
+        "Prompted-9B 已有 content gain 后，你如何设计消融来证明 F 奖励的增量来自忠实性而不是教师策略的残余影响？",
+        "oracle 环境上限 0.674，你能否给出每个证据子类的可解释上限，避免上限差异被审稿人当作环境过拟合？",
+        "下周冻结 oracle v3 cache 和 Gate 2 定义后，你会在会议前提供哪一版可复现 artifact 给老师检查？"
       ],
       "nextWeekWatch": [
-        "oracle v3 cache 冻结报告",
-        "Gate 2 预注册定义与协议哈希",
-        "A/B/F/F-OLDPAIR 10% 档结果",
-        "资源账本启动情况"
+        "Gate 2 是否开跑前锁定，A/B/F/F-OLDPAIR 10% 档、两种子和全 benchmark 评测结果是否按承诺完成",
+        "oracle 训练池 v3 cache 是否按时冻结并通过 Gate 0，与 benchmark cache 的一致性报告",
+        "资源账本是否开始记录 run 级 wall-clock、GPU-hours、API token 和失败原因",
+        "论文草稿是否按新主张更新，避免回到“只有 CF-GRPO 产生 content gain”的旧表述"
       ]
     },
     "studentFeedback": {
-      "summary": "本周你在数据审计、双环境拆分和基线纠偏上进展扎实，让研究问题从“模型不会推理”重新聚焦到“工具世界是否忠实”，这是非常有价值的认知增量；下一步关键是锁定 Gate 2 并完成最小可执行主实验。",
+      "summary": "这周你在数据、环境和基线三线推进都很扎实，更难得的是你用强基线及时改写主张，而不是护着原假设；下一步把 Gate 2 预注册和资源账本做实，就会形成完整可复现的研究链。",
       "whatYouDidWell": [
-        "发现并量化四类数据缺陷，且把反事实配对改成答案必须变化，消除了 38.7% 的奖励歧义。",
-        "用 oracle/predicted 双环境上限把失败来源分成证据层与策略层，而不是简单换大模型。",
-        "在 Prompted-9B 强基线结果否证原主张时，主动修改 Paper A 主张并保留 content gain 作为伴随指标，避免隐藏强基线。"
+        "系统审计出四类数据缺陷，并把反事实改成答案必须变化的配对，直接消除奖励歧义；97.8% 的覆盖率是可量化成果。",
+        "建立 oracle/predicted 双环境，把证据获取与证据使用分开，并提供规则上限 0.674 和 0.419，定位瓶颈清晰。",
+        "Gate 1 通过后没有提前庆祝，而是用 Prompted-9B 的 content gain 推翻自身原主张，并调整论文主效应；这是非常成熟的科学判断。"
       ],
       "nextStep": [
-        "下周冻结 oracle v3 cache 和 Gate 2 预注册，不要在实验开始后移动门槛。",
-        "完成 smoke 和 10% 档 A/B/F/F-OLDPAIR 后，先报告 faithful rate 与 accuracy 联合分布，再决定是否扩全量。",
-        "开始按 run 记录 wall-clock、GPU-hours、API token 和失败原因，补齐本周缺失的资源账本。"
+        "下周把 Gate 2 的 A/B/F/F-OLDPAIR 配置、种子和阈值在开跑前写成版本化文件，并同步给老师。",
+        "开始记录每个 run 的 wall-clock、GPU-hours、API token、失败原因，让资源账本和金额估计一一对应。",
+        "若 F 在两种子中未显著高于 A/B，提前准备可转向的 benchmark/audit 分析框架，避免临时决策。"
       ],
-      "suggestedRewrite": "下周周报可以这样写：‘已完成 X，产出 Y 个 artifact；Gate 2 进入条件为 F 的 faithful rate 高于 A/B 且 own 准确率下降不超过 1 pp，已保存协议哈希；A/B/F 已完成 n 步，faithful rate 为 a/b/c，accuracy 为 d/e/f；因此下一步是……’"
+      "suggestedRewrite": "下周周报可以按“本周结论一句话 + 三个 Gate 的硬指标 + 未决问题 + 下一步动作”开头，例如：‘本周已锁定数据与配对，oracle 和 predicted 环境上限分别为 0.674 和 0.419，Prompted-9B 基线使主效应改为 faithful rate；尚未完成 oracle 训练池 v3 cache 和 Gate 2 主实验，下周将预注册后跑 A/B/F。’ 这样老师一眼就能看到关键结论和待办。"
     },
     "evidenceLinks": [
-      "1.1 清洁训练与评测底座",
-      "1.2 oracle/predicted 双工具环境",
-      "1.3 9B 冷启动与基线",
-      "6. 题目是否值得做",
-      "7. 价值观总结（金额）",
-      "9. 项目管理",
-      "10. 自动化科研与 Agent 转化路径"
+      "第1.1节：清洁训练集与反事实配对覆盖率",
+      "第1.2节：双环境上限与瓶颈定位",
+      "第1.3节：9B 冷启动 Gate 1 与基线证伪",
+      "第3节：CoT's CoT 1 与 2 的认知增量",
+      "第5节：元认知新理解",
+      "第6节：题目价值判断与继续条件",
+      "第9节：项目管理与下周最小计划"
     ]
   }
 }
