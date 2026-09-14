@@ -1,0 +1,172 @@
+{
+  "key": "week:2026-09-13:briefing",
+  "generatedAt": "2026-09-14T01:02:34.708Z",
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "reasoningEffort": "high",
+  "inputHash": "bf0f1369d74e43d72e8dd8019aac30608ba14f8c563943a3d57a9798b94a2d42",
+  "contentHash": "bf0f1369d74e43d72e8dd8019aac30608ba14f8c563943a3d57a9798b94a2d42",
+  "promptHash": "fd044858c100ec630703bd42902fd3fddf90c8cba2723bb99c9bbfecea4fd4c3",
+  "result": {
+    "headline": "周报批处理（2026-09-13）：多个硬进展可复核，但证据等级分化明显；记忆、规约、强化学习与红队方向出现结构性认知增量",
+    "executiveSummary": [
+      "本周36人提交、44人未交，提交率45%；需优先催交并锁定关键项目阻塞。",
+      "硬进展集中：陈华宝发现edge依赖的gate分支结构；钱加宇定位GRPO LoRA dropout污染并重建环境可判定率；王溯源四槽位规约5/5检出；黄勋无指纹conlang ASR 48%且模板负增益；隋浩提出记忆洗白攻击使现有防御ASR达68%。",
+      "多数项目证据等级仍为B/C：设计层或初测结果多，端到端验证、独立标注、跨数据集泛化尚未闭环。",
+      "老师未知项高频出现：edge gate、环境可控性前置变量、信任信号可洗白、越狱模板负增益、跨数据集pass@k不等于结论泛化、知识抽象独立价值。",
+      "关键风险：钱加宇阳性对照未重跑；陈华宝gate仅1样本；王溯源实例化与差分验证缺失；乔伟连续三周无实验数据；多人标注一致性未做。",
+      "自动化沉淀方向明确：memory schema需分支/树状、evaluator需分阶段与风险调整、workflow需根因诊断、session管理需单一主线。",
+      "下周最小可验证动作多为小样本、独立标注、消融或阳性对照；教授应要求锁定这些gate而非扩大范围。"
+    ],
+    "sections": {
+      "keyProgress": {
+        "title": "关键硬进展",
+        "people": [
+          "陈华宝",
+          "钱加宇",
+          "王溯源",
+          "黄勋",
+          "隋浩",
+          "冯亚林",
+          "葛梦梦",
+          "胡志超"
+        ],
+        "whyItMatters": "这些进展产生可复核数字或结构性发现，是后续主张的支点",
+        "evidence": "陈华宝：语义匹配版precision从67%到100%，并区分pairwise与gate依赖；钱加宇：追到LoRA dropout污染，不变量ratio由0.098升到15且爆表，已加eval()与哨兵；王溯源：5个真实缺陷全部检出，7项阴性对照全部正确，四槽位规约差分验证通过；黄勋：裸conlang ASR 48%，AIM降至26%，DAN 6.0降至18%；隋浩：基于论文数据，现有防御在laundering攻击下ASR高达68%；冯亚林：Event-B I1S2最终PO消解率85%以上，但属初步证据；葛梦梦：路径发现准确率68.3%、误报率31.7%，误报集中在理论可达但被内置限流；胡志超：ASAP在CADETS+FLASH上F1 0.995，FP从1003降到9。",
+        "action": "本周优先核验这些人的最新数据，要求补充证据等级与失败模式，不接受未经验证的描述性结论。"
+      },
+      "teacherUnknown": {
+        "title": "老师原本不知道的关键认知",
+        "people": [
+          "陈华宝",
+          "钱加宇",
+          "隋浩",
+          "黄勋",
+          "王溯源",
+          "徐一嘉",
+          "Kevin Constantine Halim",
+          "姚广宇"
+        ],
+        "whyItMatters": "这些是真正新增认知，可能改变研究设计或评估标尺",
+        "evidence": "陈华宝：edge依赖可以是一对多的gate分支；钱加宇：Agentic RL需把环境是否可控设为前置变量；隋浩：最脆弱的不是检测器而是检测器依赖的信任信号，laundering攻击可洗白；黄勋：经典越狱模板因特征过重反而触发防御，纯中性裸框架才是窄窗；王溯源：判定与寻址必须是两个槽位，一栏双职是结构性缺陷；徐一嘉：semantic evaluation应从raw coverage转向risk-adjusted coverage；Kevin：跨数据集pass@k一致只证明模型稳定性，不证明发现泛化；姚广宇：知识抽象的核心价值可能是控制知识库增长带来的检索退化，而非单纯提升强模型成功率。",
+        "action": "对每个未知项指定负责人下周给出最小验证，尤其是钱加宇重跑阳性对照、徐一嘉补risk-adjusted基准、隋浩形成laundering攻击评测集。"
+      },
+      "risks": {
+        "title": "风险与阻塞",
+        "people": [
+          "钱加宇",
+          "陈华宝",
+          "乔伟",
+          "王溯源",
+          "葛梦梦",
+          "王慧丽",
+          "Kevin Constantine Halim",
+          "冯亚林"
+        ],
+        "whyItMatters": "这些风险若不关闭，论文/系统主张无法成立或交付延期",
+        "evidence": "钱加宇：Gate 2形式上失败，阳性对照未重跑，干净GRPO尚未检验；陈华宝：gate edge仅在1个样本上观察；乔伟：连续第三周无实验数据，设计层收益边际递减，原型动工第三次顺延风险；王溯源：已知事实仍由人工写出，实例化与差分验证步骤为空；葛梦梦：taxonomy类别判定仍为单人标注，无一致性证据；王慧丽：47个恶意样本漏报，跨函数/跨文件数据流覆盖不足；Kevin：trace annotation未完成，跨数据集发现泛化尚不能声称；冯亚林：海通业务方对问卷/Demo价值判断不一致，缺少稳定Grounding和评价函数。",
+        "action": "下周固定gate：钱加宇阳性对照不通过则撤回A/B/F比较；乔伟若下周一前不能跑通最小回路，触发范围决策；陈华宝和王溯源必须在本周内完成结构图或补第二个样本/差分验证。"
+      },
+      "followUps": {
+        "title": "下周最小可验证动作（需盯办）",
+        "people": [
+          "陈华宝",
+          "钱加宇",
+          "王溯源",
+          "葛梦梦",
+          "乔伟",
+          "王慧丽",
+          "冯亚林",
+          "徐一嘉",
+          "姚广宇",
+          "孙晓",
+          "周子阳",
+          "喻宏伟"
+        ],
+        "whyItMatters": "这些动作若完成，本周进展才能从描述变为可信证据",
+        "evidence": "陈华宝：把2个样本依赖结构画成图，检查两种类型能否共用字段；钱加宇：重跑干净阳性对照，要求ratio哨兵、学习斜率和rollout指标同时正常；王溯源：补自动提取已知事实，验证从175候选到实例化与差分验证；葛梦梦：3人独立标注60条并报告Fleiss' κ，对限流误报补充过滤规则；乔伟：当面汇报锁定路线，进代码或继续细化二选一，若进代码则跑通检测-触发-双路径切换；王慧丽：完成FN样本系统分型，新增或改进一条规则；冯亚林：固定模型与提示词，在27案例上完成I1S2端到端并与Baseline比较；徐一嘉：完成minimal-context的risk-adjusted benchmark验证；姚广宇：固定模型和任务，控制知识量完成三组对照；孙晓：逐条阅读6个案例的真实标注与裁决，建立首批Gold；周子阳：选择一个简单新增功能，以显式operator驱动局部patch、测试和回读；喻宏伟：完成消融与人工标注影响分析Gold Set。",
+        "action": "将以上纳入下周检查点，只接受已完成gate的结果；未完成者需明确原因和新的截止时间。"
+      },
+      "assets": {
+        "title": "可沉淀资产与自动化路径",
+        "people": [
+          "陈华宝",
+          "王溯源",
+          "钱加宇",
+          "隋浩",
+          "徐一嘉",
+          "周振宏",
+          "李梅",
+          "孙开然",
+          "胡连宇",
+          "王慧丽",
+          "喻宏伟"
+        ],
+        "whyItMatters": "这些资产可直接转化为模块、schema、workflow或benchmark，是Brainary的复用基础",
+        "evidence": "陈华宝：branch memory schema（pairwise/gate）；王溯源：四槽位规约结构、五级迁移分级、结构匹配寻址；钱加宇：GRPO不变量哨兵、环境可判定率探针、selective abstention reward；隋浩：laundering攻击评测集、记忆信任传播路径图谱；徐一嘉：risk-adjusted benchmark、proof graph IR、evidence value routing；周振宏：adaptive LTM gate、model adapter layer、auto-benchmark workflow；李梅：session manager、主线任务记录schema；孙开然：agent role/workspace schema、collaboration protocol；胡连宇：dynamic perception controller、memory→attention调节日志；王慧丽：MalSkill静态知识图谱、failure-mode rule-routing；喻宏伟：Change IR Builder、Impact Analyzer、Feedback-driven Refinement。",
+        "action": "要求各负责人明确schema字段、接口与评价协议，两周内完成可运行切片；对已有多轮设计的项目，强制进入代码实现。"
+      },
+      "peopleToRead": {
+        "title": "本周应优先阅读的人",
+        "people": [
+          "陈华宝",
+          "钱加宇",
+          "隋浩",
+          "王溯源",
+          "黄勋",
+          "徐一嘉",
+          "姚广宇",
+          "吴俊浩"
+        ],
+        "whyItMatters": "这些人的CoT's CoT提供新认知或高杠杆方法修正，值得教授直接反馈",
+        "evidence": "陈华宝：gate edge分支结构，memory依赖可能需树状表示；钱加宇：环境可判定性作为Agentic RL前置变量；隋浩：防御的信任信号可被洗白，攻击的是检测器脚下的大地；王溯源：判定与寻址槽位分离，表示格式决定可判定性；黄勋：越狱模板负增益、无指纹载体窄窗；徐一嘉：可信agent核心是最小充分proof构建；姚广宇：知识抽象价值与控制检索退化；吴俊浩：L0-L4人脑对应、状态依赖路由与多时间尺度。",
+        "action": "教授本周重点阅读这些周报原文，并对其中的unknown认知和gate给予明确指示。"
+      }
+    },
+    "sectionCards": [
+      {
+        "id": "key-progress",
+        "title": "关键硬进展",
+        "oneLine": "多个项目产出可复核数字，但需区分硬数据与设计稿",
+        "count": 12
+      },
+      {
+        "id": "teacher-unknown",
+        "title": "老师原本不知道的关键认知",
+        "oneLine": "8个高频未知项集中在记忆结构、环境可控性、信任信号与评估标尺",
+        "count": 8
+      },
+      {
+        "id": "risks",
+        "title": "风险与阻塞",
+        "oneLine": "阳性对照、多标注、实例化验证与业务验收是主要断层",
+        "count": 10
+      },
+      {
+        "id": "follow-ups",
+        "title": "下周最小可验证动作",
+        "oneLine": "重跑、标注、差分验证、原型跑通与消融是核心 gate",
+        "count": 14
+      },
+      {
+        "id": "assets",
+        "title": "可沉淀资产与自动化路径",
+        "oneLine": "branch memory、四槽位规约、不变量哨兵等可作为模块落地",
+        "count": 11
+      },
+      {
+        "id": "people-to-read",
+        "title": "本周应优先阅读的人",
+        "oneLine": "陈华宝、钱加宇、隋浩、王溯源、黄勋等提供高杠杆新认知",
+        "count": 8
+      }
+    ],
+    "closingAdvice": [
+      "本周要求钱加宇先通过干净阳性对照，再谈方法比较；任何RL结果未过不变量哨兵不得进入论文主张。",
+      "对陈华宝gate edge和王溯源四槽位，要求本周内把结构图或schema定稿，不做泛化扩展，但必须补第二个样本或差分验证。",
+      "对乔伟等设计层项目，给出明确gate：下周一前要么跑通最小回路，要么缩小范围或终止；连续三周无实验数据必须触发范围决策。",
+      "对隋浩memory laundering和黄勋conlang的“老师未知”发现，建议立即组织一次小规模研讨，形成攻击评测协议与防御锚方案。",
+      "对未提交44人，请助教在24小时内催交；缺报者不得进入下周资源分配，除非有明确科研阻塞说明。"
+    ]
+  }
+}
