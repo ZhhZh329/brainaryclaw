@@ -1,394 +1,156 @@
 {
   "key": "week:2026-09-13:briefing",
-  "generatedAt": "2026-09-14T10:05:54.337Z",
+  "generatedAt": "2026-09-16T06:01:38.957Z",
   "provider": "deepseek",
   "model": "deepseek-v4-pro",
   "reasoningEffort": "high",
-  "inputHash": "bfb16f9374320470a75242064a2f60d27ee8f2a405997904721b49e917267ef1",
-  "contentHash": "bfb16f9374320470a75242064a2f60d27ee8f2a405997904721b49e917267ef1",
+  "inputHash": "80982f80cc9569c59e3391f0b8a0de24df6f2b36018ac77d78b4a338d434563a",
+  "contentHash": "80982f80cc9569c59e3391f0b8a0de24df6f2b36018ac77d78b4a338d434563a",
   "promptHash": "fd044858c100ec630703bd42902fd3fddf90c8cba2723bb99c9bbfecea4fd4c3",
   "result": {
-    "headline": "本周关键突破：RL环境可控性、gate edge分支、四槽位规约与记忆清洗攻击；但乔伟三周无实验、孔紫乔截稿风险需立即干预",
-    "executiveSummary": [
-      "钱佳宇查出GRPO训练被LoRA dropout污染，撤回阴性结论，重建三档环境上限，提出环境可控性应作为Agentic RL前置变量。",
-      "王苏源发现现有规约格式'判定落点与检索键一栏双职'的结构性缺陷，四槽位规约在5个真实缺陷上全找到且阴性对照全对。",
-      "陈华宝发现edge依赖存在一对多gate edge分支结构，需升级edge_role表示。",
-      "隋昊揭示memory laundering攻击：现有防御ASR高达68%，信任信号可被洗白，主张写入时绑定来源。",
-      "黄迅实验证明越狱模板负增益，裸conlang框架ASR最高，附加层均触发防御指纹。",
-      "乔伟连续三周无实验数据，设计层边际递减，原型动工面临第三次顺延风险。",
-      "孔紫乔FSE截稿仅约20天，实验问题未定位，需在9月19日前做可投/缩题/转下一轮决策。",
-      "本周36/81提交，45人未交，需排查原因并跟进。"
-    ],
+    "headline": "本周硬进展分化：GRPO 审计揭露 LoRA dropout 污染、内核规约四槽位与恶意 Skill 图谱形成闭环，但周报提交率仅 46% 且多个项目仍停在设计与小样本证据。",
+    "executiveSummary": "本周 37/81 人按时提交周报，44 人缺失，提交率不足一半，信息盲区明显。硬进展集中在：钱加宇撤回被污染的 GRPO 阴性结论并定位环境可判定性瓶颈；王素媛用四槽位规约在 5 个真实缺陷上全部命中，现有工具只找到 1 个；王慧丽完成 200 样本恶意 Skill 静态图谱，8 类规则首轮评估；郭文博华为项目交付量大但新增 Windows 移植与第三方 API 不稳定性两个风险。老师原本不知道的新认知包括：边依赖存在 gate 分支结构、越狱模板负增益、Agent 记忆 laundering 攻击、RL 前置环境可控性等。主要风险是多项研究停留在设计或小样本，FSE 截稿临近，以及多名学生连续无实验数据。建议下周优先推动 GRPO 干净重跑、华为风险决策、标注一致性验证和关键项目的最小闭环。",
     "sections": {
-      "keyProgress": [
-        {
-          "title": "GRPO实现审计与Agentic RL环境前置变量",
-          "people": [
-            "钱佳宇"
-          ],
-          "whyItMatters": "发现训练链被LoRA dropout污染导致阴性结论无效，重建三档环境上限，证明端到端差距主要来自环境可判定性而非策略能力。",
-          "evidence": "LoRA dropout=0.05时ratio噪声，梯度范数从0.098升至15；三档环境上限：oracle 0.9153、只读图像0.7122、predicted 0.5672；加入selective abstention reward后有效组从39.8%升至56.0%。",
-          "action": "重跑干净阳性对照，通过后才允许重新提交A/B/F。"
-        },
-        {
-          "title": "四槽位规约结构解决现有工具失败",
-          "people": [
-            "王苏源"
-          ],
-          "whyItMatters": "将规约拆为目标/绑定关系/已知事实/判定条件，分离判定落点与检索键，避免语义污染迁移键，在真实缺陷上表现全面优于现有工具。",
-          "evidence": "现有工具5个缺陷只找1个且为原址对照；四槽位规约5个全找到，7项阴性对照全对；结构匹配筛出175个候选，目标proc_bus_pci_read在其中。",
-          "action": "下周验证实例化与验证步骤，推进已知事实自动提取。"
-        },
-        {
-          "title": "gate edge分支结构建模",
-          "people": [
-            "陈华宝"
-          ],
-          "whyItMatters": "发现edge依赖不只是pairwise，存在一对多分支开关，需要更新edge_role表示结构，否则会漏掉gate edge一次性改变多条边角色。",
-          "evidence": "样本三规则定稿；HCC/胆管癌样本中病史边同时决定转移瘤相关边和强化模式边角色；形成edge_dependency_structure表，含dependency_type字段。",
-          "action": "画结构图，检查pairwise和gate能否用同一schema表示。"
-        },
-        {
-          "title": "Memory laundering攻击与防御原则",
-          "people": [
-            "隋昊"
-          ],
-          "whyItMatters": "现防御内容检测和信任评分可被语义变换环节洗白，攻击ASR高达68%，必须转向写入时绑定来源与不可篡改权限控制。",
-          "evidence": "基于本周精读论文实验数据：现有防御在laundering攻击下ASR 68%；三条通道（摘要压缩、工具回显、多源整合）均可程序化构造。",
-          "action": "沉淀为laundering攻击评测集和可验证记忆治理框架。"
-        },
-        {
-          "title": "越狱模板负增益与裸conlang窄窗",
-          "people": [
-            "黄迅"
-          ],
-          "whyItMatters": "推翻传统红队模板思维，证明所有附加层如DAN、AIM均因指纹反噬降低成功率，只有纯中性无指纹载体能有效突破。",
-          "evidence": "五档思考强度全落在40-48%；裸conlang ASR 48%，AIM降至26%，DAN 6.0降至18%；空响应为过度思考崩塌而非安全拒绝。",
-          "action": "沉淀为无指纹纯度测试集与evaluator。"
-        },
-        {
-          "title": "需求驱动软件维护双向影响修订",
-          "people": [
-            "喻宏伟"
-          ],
-          "whyItMatters": "在多项目对照中证明测试反馈驱动的IR修订优于单纯代码修改，成功率显著提升，为需求维护提供可复用闭环。",
-          "evidence": "基于NL2RepoBench 10项目30任务，P2双向影响修订成功率63.3%，较B3直接测试反馈修订提高13.3个百分点；P2成功任务无新增回归。",
-          "action": "下周标注影响分析Gold Set，进行消融实验。"
-        }
-      ],
-      "teacherUnknown": [
-        {
-          "title": "环境是否可控应设为Agentic RL前置变量",
-          "people": [
-            "钱佳宇"
-          ],
-          "whyItMatters": "证据缺失使所有rollout都答不对，reward混入环境项，组基线无法消除，需同时比较oracle/predicted可判定子集。",
-          "evidence": "可判定子集上Agent准确率几乎不受环境影响（oracle 0.8819, predicted 0.8893），端到端差距主要来自可判定占比。",
-          "action": "将环境可判定率纳入RL训练和评估协议。"
-        },
-        {
-          "title": "edge依赖度不是固定为1，存在gate edge",
-          "people": [
-            "陈华宝"
-          ],
-          "whyItMatters": "某些边作为分支开关一次性重新分配整组边角色，需要树状/分支表示，仅靠统计命中率无法暴露。",
-          "evidence": "HCC/胆管癌样本中肿瘤病史边同时切换转移瘤和强化模式两组边的critical/supporting分配。",
-          "action": "更新memory schema支持分支结构。"
-        },
-        {
-          "title": "信任信号可被洗白，事后补丁式防御失效",
-          "people": [
-            "隋昊"
-          ],
-          "whyItMatters": "攻击者可利用agent自身的summarization、可信工具回显等合法变换抹除恶意特征，使内容检测和信任评分失效。",
-          "evidence": "现有防御在laundering攻击下ASR达68%，而主流防御论文威胁模型未覆盖。",
-          "action": "写入时绑定来源（provenance）、版本化与策略感知保留。"
-        },
-        {
-          "title": "越狱模板指纹反噬，裸conlang是唯一窄窗",
-          "people": [
-            "黄迅"
-          ],
-          "whyItMatters": "安全对齐层深度模式匹配使模板越复杂越易被标定为恶意注入，任何显式包装均为负增益。",
-          "evidence": "DAN 6.0、AIM等模板使ASR从基线48%降至18-26%。",
-          "action": "将评估重点转向信息编码本质，建立无指纹纯度测试集。"
-        },
-        {
-          "title": "semantic evaluation应转向risk-adjusted coverage",
-          "people": [
-            "徐一佳"
-          ],
-          "whyItMatters": "minimal context基本保留有效accept同时降低unsupported pass，abstain本身应进入capability definition。",
-          "evidence": "24固定case对照：full-context 19通过3 unsupported，minimal-context 18通过1 unsupported。",
-          "action": "沉淀为risk-adjusted benchmark。"
-        },
-        {
-          "title": "人脑L0-L2具体生理机制细节",
-          "people": [
-            "吴俊豪"
-          ],
-          "whyItMatters": "提供肌梭放电、74ms握力调整等具体入口，使分层控制从抽象术语变为可验证机制。",
-          "evidence": "微刺激肌梭不产生可报告感觉；滑动后74±9ms握力比调整；L0受高层目标提前影响（准备期肌梭放电改变）。",
-          "action": "沉淀为具身接口、层间调度和冲突评测。"
-        }
-      ],
-      "risks": [
-        {
-          "title": "乔伟三周无实验数据，设计层收益边际递减",
-          "people": [
-            "乔伟"
-          ],
-          "whyItMatters": "原型动工存在第三次顺延风险，需老师介入范围决策，避免设计空转。",
-          "evidence": "连续三周无实验数据；方案新概念增量小于前两周；声东击西模块可计算性未定义。",
-          "action": "下周当面汇报锁定路线，进代码或继续细化二选一。"
-        },
-        {
-          "title": "钱佳宇干净阳性对照未通过，RL结论不可提交",
-          "people": [
-            "钱佳宇"
-          ],
-          "whyItMatters": "Gate 2失败但训练链被污染，当前不能声称CF-GRPO学不动，也不能提交A/B/F比较。",
-          "evidence": "LoRA dropout导致importance ratio噪声，阳性对照A无学习斜率。",
-          "action": "重跑干净准确率阳性对照，通过后才进入方法比较。"
-        },
-        {
-          "title": "四槽位规约的已知事实槽位目前人工写出",
-          "people": [
-            "王苏源"
-          ],
-          "whyItMatters": "自动提取是关键证据，否则方法不能证明可扩展，且可能被审稿质疑。",
-          "evidence": "三条规约的已知事实栏由人工从代码结构写出，尚未自动产出。",
-          "action": "下周实现自动提取并验证。"
-        },
-        {
-          "title": "孔紫乔FSE截稿风险，实验问题未定位",
-          "people": [
-            "孔紫乔"
-          ],
-          "whyItMatters": "距截稿约20天，实验问题不解决可能无法投出，需及时缩题或转下一轮。",
-          "evidence": "方法论基本成形但实验有问题，尚未确认能否赶上FSE。",
-          "action": "9月19日前形成可投/缩题重跑/转下一轮明确决策。"
-        },
-        {
-          "title": "海通业务缺少共同评价标准",
-          "people": [
-            "冯亚林"
-          ],
-          "whyItMatters": "不同角色对问卷和Demo价值判断不一致，技术多做不一定业务效果，项目验收风险。",
-          "evidence": "刘总认为问卷重要，一线顾问不看重；Demo过强可能抬高客户预期。",
-          "action": "采用平台优先交付，通过测试和Issue驱动业务意见转化为规格。"
-        },
-        {
-          "title": "gate edge结构仅1个样本，schema未定稿",
-          "people": [
-            "陈华宝"
-          ],
-          "whyItMatters": "依赖结构复杂，未定稿无法推广，且证据等级低。",
-          "evidence": "gate edge目前只在1个鉴别诊断样本中观察到。",
-          "action": "下周画结构图，检查两种类型能否统一表示。"
-        }
-      ],
-      "followUps": [
-        {
-          "title": "乔伟路线锁定与原型动工",
-          "people": [
-            "乔伟"
-          ],
-          "whyItMatters": "防止再次顺延，确保资源投入有效，建议老师强制选择。",
-          "evidence": "若再次顺延触发范围决策。",
-          "action": "下周汇报对齐后锁定，进代码或继续细化二选一。"
-        },
-        {
-          "title": "钱佳宇干净阳性对照重跑",
-          "people": [
-            "钱佳宇"
-          ],
-          "whyItMatters": "验证GRPO训练链修复有效，为后续A/B/F比较建立基础。",
-          "evidence": "已固定model.eval()并增加哨兵和不变量测试。",
-          "action": "重跑准确率阳性对照，要求ratio哨兵、学习斜率同时正常。"
-        },
-        {
-          "title": "王苏源自动提取已知事实与实例化验证",
-          "people": [
-            "王苏源"
-          ],
-          "whyItMatters": "补足四槽位规约自动化的关键空缺，验证方法可扩展性。",
-          "evidence": "迁移寻址已验证，但实例化与验证步骤为空。",
-          "action": "下周完成从175个候选到具体规约生成并验证的流程。"
-        },
-        {
-          "title": "孔紫乔FSE投稿决策",
-          "people": [
-            "孔紫乔"
-          ],
-          "whyItMatters": "时间紧迫，必须基于最小可辩护贡献做决定，避免盲目扩实验。",
-          "evidence": "FSE完整投稿截止2026-10-02，实验闭环是关键路径。",
-          "action": "固定3-5个案例，9月19日前给出决策。"
-        },
-        {
-          "title": "李梅完成LLM judge与批量实验",
-          "people": [
-            "李梅"
-          ],
-          "whyItMatters": "AgentSearchBench基础设施已就绪，但judge未完成，无法出baseline结果。",
-          "evidence": "已生成1,562个组件，检索器覆盖四类模型，但LLM judge未完成。",
-          "action": "下周完成judge，批量实验并对比baseline。"
-        },
-        {
-          "title": "周子阳源码闭环验证",
-          "people": [
-            "周子阳"
-          ],
-          "whyItMatters": "需求Working Memory接入已完成20/20测试，但源码修改和回读未验证，不能说明需求落地。",
-          "evidence": "当前通路停在计划代码Working Memory，没有修改源码或回读验证。",
-          "action": "选择简单新增功能，用显式operator驱动局部patch、测试和回读比较。"
-        }
-      ],
-      "assets": [
-        {
-          "title": "edge_dependency_structure表与gate edge概念",
-          "people": [
-            "陈华宝"
-          ],
-          "whyItMatters": "提供edge依赖的branch数据结构，可作为memory schema升级基础。",
-          "evidence": "字段含sample_id、dependency_type、gate_edge、affected_edge_set、branch_condition。"
-        },
-        {
-          "title": "三档环境上限表与训练池探针",
-          "people": [
-            "钱佳宇"
-          ],
-          "whyItMatters": "为Agentic RL提供环境可判定性量化工具，支持reward设计和训练诊断。",
-          "evidence": "Oracle 0.9153, 只读图像0.7122, predicted 0.5672；探针显示abstention reward提升有效组41%。"
-        },
-        {
-          "title": "四槽位规约结构与结构匹配寻址",
-          "people": [
-            "王苏源"
-          ],
-          "whyItMatters": "解决规约可判定性与可迁移性冲突，可复用于内核缺陷检测。",
-          "evidence": "5个缺陷全找到，7项阴性对照全对，结构匹配筛出175候选。"
-        },
-        {
-          "title": "conlang受控实验矩阵",
-          "people": [
-            "黄迅"
-          ],
-          "whyItMatters": "提供无指纹越狱评估的基准数据，可沉淀为红队evaluation protocol。",
-          "evidence": "五档思考强度、四类改写、四类模板的全面实验数据。"
-        },
-        {
-          "title": "双向影响修订方法",
-          "people": [
-            "喻宏伟"
-          ],
-          "whyItMatters": "在需求维护中形成可复用的Change IR Builder、Impact Analyzer、Feedback-driven Refinement。",
-          "evidence": "30任务对照实验，P2成功率63.3%，消融需进一步。"
-        },
-        {
-          "title": "恶意Skill静态知识图谱",
-          "people": [
-            "王慧丽"
-          ],
-          "whyItMatters": "11,414节点8,751关系的跨工件证据图，为安全检测提供可审核接口。",
-          "evidence": "200样本验证集，8类规则，24项自动化测试通过；FP极低。"
-        }
-      ],
-      "peopleToRead": [
-        {
-          "title": "乔伟：设计空转风险，需老师介入",
-          "people": [
-            "乔伟"
-          ],
-          "whyItMatters": "连续三周无实验数据，方案边际收益递减，若不锁定路线可能继续拖延。",
-          "evidence": "本周方案新概念增量小于前两周，原型动工存在第三次顺延风险。"
-        },
-        {
-          "title": "钱佳宇：关键突破但需验证",
-          "people": [
-            "钱佳宇"
-          ],
-          "whyItMatters": "发现GRPO污染根因并重建环境基线，是Agentic RL的重要认知，但结论未定。",
-          "evidence": "已修复LoRA dropout，但干净阳性对照尚未通过。"
-        },
-        {
-          "title": "王苏源：方法潜力大，需推进自动化",
-          "people": [
-            "王苏源"
-          ],
-          "whyItMatters": "四槽位规约结构在其他领域可能通用，但已知事实自动提取是关键瓶颈。",
-          "evidence": "结构匹配和判定分离已见成效，但人工写已知事实限制扩展。"
-        },
-        {
-          "title": "陈华宝：新概念但证据不足",
-          "people": [
-            "陈华宝"
-          ],
-          "whyItMatters": "gate edge分支依赖若成立将改变edge_role建模，但仅1个样本，需谨慎。",
-          "evidence": "HCC/胆管癌样本显示一对多依赖，但尚未推广。"
-        },
-        {
-          "title": "冯亚林：企业项目需对齐业务",
-          "people": [
-            "冯亚林"
-          ],
-          "whyItMatters": "海通项目交付在即，但业务评价标准缺失可能导致验收失败。",
-          "evidence": "不同角色对问卷价值判断相反，技术多做不一定提升业务效果。"
-        },
-        {
-          "title": "孔紫乔：时间紧迫，需立即决策",
-          "people": [
-            "孔紫乔"
-          ],
-          "whyItMatters": "FSE截稿临近，实验问题未定位，需老师提供指导帮助缩题或调整。",
-          "evidence": "方法论基本成形，但实验出现问题，9月19日前需决策。"
-        }
-      ]
+      "keyProgress": {
+        "title": "关键硬进展",
+        "people": [
+          "钱加宇",
+          "王素媛",
+          "王慧丽",
+          "郭文博",
+          "陈华宝",
+          "李乾坤",
+          "胡智超",
+          "周振宏",
+          "喻宏伟",
+          "李美"
+        ],
+        "whyItMatters": "这些进展提供了可验证的数字或结构闭环，是本周最有决策价值的产出，决定了下一步资源投向。",
+        "evidence": "钱加宇：定位 GRPO LoRA dropout 污染，环境三档上限 oracle 0.9153 / image-only 0.7122 / predicted 0.5672；王素媛：四槽位规约 5/5 命中缺陷、7 项阴性对照全对，现有工具仅 1/5；王慧丽：静态图谱 200 样本、11414 节点、8751 关系，规则 8 类，24 项测试通过，但 47 个漏报；郭文博：华为 75 家族交付 74 通过，110 变种 100 通过，又交付 330 家族样本；陈华宝：发现 gate edge 分支依赖，语义匹配使 precision 由 67% 升至 100%；李乾坤：3D 感知融合病理空间推理指标涨 10 个点；胡智超：ASAP 预筛在 CADETS 上 F1 从 0.9622 升至 0.9950，FP 降 99.1%；周振宏：Audio LTM 可学习门控避免全增强对 ASR 的伤害；喻宏伟：双向影响修订成功率 63.3%，较测试反馈修订提升 13.3pp；李美：AgentSpec 检索基础设施 1562 个组件、四类检索器。",
+        "action": "将上述硬进展纳入下周验收清单，重点复核钱加宇、王素媛、王慧丽的结果，并推动最小可复现证据落地。"
+      },
+      "teacherUnknown": {
+        "title": "老师原本不知道的新认知",
+        "people": [
+          "陈华宝",
+          "黄勋",
+          "钱加宇",
+          "隋昊",
+          "姚光宇"
+        ],
+        "whyItMatters": "这些是一线研究中新涌现的结构性认知，可能影响 Brainary 的表示层、风险建模和 RL 方法设计，属于老师需要优先吸收的增量。",
+        "evidence": "陈华宝：部分 edge 是 gate edge，一次性切换后续一组边的 role，需分支/树状 memory schema；黄勋：经典越狱模板（DAN 6.0、AIM）触发防御指纹反噬，ASR 从基线 48% 被压制到 18%，裸 conlang 是最强单板；钱加宇：医学工具 Agentic RL 必须把“环境是否可控”作为前置变量，组基线无法消除环境不可判定项；隋昊：Agent 记忆 laundering 攻击使现有防御 ASR 高达 68%（文献数据），且事后补丁式安全在持久化记忆上注定失效；姚光宇：知识抽象的核心价值是控制知识库增长带来的检索退化与执行方差，而非单纯提升平均成功率。",
+        "action": "要求相关学生在下次汇报中将上述认知转化为可验证的 schema / protocol / benchmark 设计。"
+      },
+      "risks": {
+        "title": "主要风险",
+        "people": [
+          "郭文博",
+          "钱加宇",
+          "孔梓乔",
+          "乔伟",
+          "高萌萌",
+          "王素媛",
+          "孙婉婷",
+          "全体未提交者"
+        ],
+        "whyItMatters": "这些风险直接影响交付、投稿和实验可信度，若不被管理将拖累多条主线。",
+        "evidence": "周报提交率仅 37/81，44 人未交；华为出现 Windows 版移植工作量和第三方 API 不稳定两个新增风险，需老师决策；钱加宇 GRPO 阴性结论已撤回，需重跑干净阳性对照，且受污染结果不能用于论文主张；孔梓乔 FSE 截稿仅剩约 20 天，实验有效性未定位；乔伟连续第三周无实验数据，声东击西模块可计算性未定义，存在第三次顺延风险；高萌萌 taxonomy 为单人标注，缺一致性证据，评审风险高；王素媛四槽位规约的“已知事实”仍为人工写出，迁移实例化尚未验证；孙婉婷 KORR 复现尚未开始，存在环境搭建与 Sim-to-Real 不确定性；多个项目（孙晓 T/C/A 标注、姚光宇知识压缩、喻宏伟需求维护）仍为开发集/小样本结果，泛化性未知。",
+        "action": "本周内对华为两个风险给出明确决策；对未提交者发出限期补交；要求高萌萌安排 3 人独立标注；要求乔伟锁定原型启动时间，否则触发范围决策。"
+      },
+      "followUps": {
+        "title": "下周行动建议",
+        "people": [
+          "钱加宇",
+          "王素媛",
+          "王慧丽",
+          "高萌萌",
+          "孙婉婷",
+          "郭文博",
+          "李美",
+          "姚光宇",
+          "喻宏伟"
+        ],
+        "whyItMatters": "这些是最小可验证动作，决定本周硬进展能否转化为可发表的证据。",
+        "evidence": "钱加宇：重跑干净准确率阳性对照，要求 ratio 哨兵、学习斜率和 rollout 指标同时正常后再提交 A/B/F；王素媛：补上自动提取“已知事实”的硬证据，完成 175 个候选位置的实例化与验证，并引入差分验证判别力；王慧丽：对 47 个 FN 样本分型，为占比最高漏报类别新增/改进一条规则；高萌萌：组织 3 人独立标注 60 条样本并报告 Fleiss' κ，补误报过滤规则，挑选 3 条高危路径做端到端可利用性验证；孙婉婷：在 Linux+NVIDIA 环境安装 KORR/Isaac Gym/FurnitureBench，复现 one_leg 并交付数据流记录；郭文博：推动华为 Windows 版决策与第三方 API 稳定性替代方案；李美：完成 LLM judge，跑批量实验与 baseline 对比；姚光宇：固定模型与任务，控制知识量，完成 RAG/抽象知识库/无知识库三组对照；喻宏伟：建立影响分析 Gold Set，完成至少 3 次重复实验和消融。",
+        "action": "请老师在各下周汇报中抽查上述动作是否按最小验收标准完成。"
+      },
+      "assets": {
+        "title": "沉淀中的新资产",
+        "people": [
+          "陈华宝",
+          "王素媛",
+          "王慧丽",
+          "李美",
+          "黄勋",
+          "孙晓",
+          "周振宏",
+          "黄奕坦",
+          "吴俊豪"
+        ],
+        "whyItMatters": "这些模块、schema、benchmark 和数据是未来可复用资产，需要被显式纳入 Brainary 或项目库。",
+        "evidence": "陈华宝：edge_dependency_structure 表、path_confidence_v3.1 分支结构草案、checklist 语义匹配规范 v1.3；王素媛：四槽位规约结构（目标/绑定关系/已知事实/判定条件）、五档迁移分级、差分验证协议；王慧丽：恶意 Skill 静态知识图谱（11414 节点、8751 关系）、8 类静态检测规则、FN 分型框架；李美：AgentSpec Registry（1562 组件）、Tool Registry、四类检索器、Microsoft Agent Framework 适配；黄勋：conlang 红队实验矩阵、经典模板注入模块、词表自增长功能；孙晓：ALEM T/C/A 轨迹采集模块、ISO/DIT++ 独立双标注与裁决链路、88 条候选标注集；周振宏：Audio LTM learned gate、Auto-benchmark model adapter layer；黄奕坦：Social Privilege IR v0、Privilege Differential v0；吴俊豪：L0-L4 人脑映射 schema 草案、activity schema 与回放协议设计。",
+        "action": "指定专人管理资产清单，将已通过验证的资产纳入下一轮 Brainary 能力映射。"
+      },
+      "peopleToRead": {
+        "title": "本周值得重点阅读的人",
+        "people": [
+          "钱加宇",
+          "隋昊",
+          "王素媛",
+          "陈华宝",
+          "郭文博",
+          "黄勋"
+        ],
+        "whyItMatters": "六人分别贡献了 RL 纠偏、安全威胁模型、表示层缺陷、依赖结构、跨生态模型和红队负增益等高信号认知，代表了本周增量最高的工作。",
+        "evidence": "钱加宇的 GRPO 实现审计与环境可判定性重构是方法论级纠偏；隋昊的 laundering 攻击与信任信号完整性为 Agent 记忆安全找到原理级 gap；王素媛的四槽位规约证明“判定落点与检索键必须分离”，可推广到多类表示设计；陈华宝的 gate edge 分支结构指出 memory 依赖需要树状表示；郭文博将华为三桶抽象为统一行为模型投影算子，形成跨生态主线；黄勋用实验证明越狱模板负增益，重塑红队评估标尺。",
+        "action": "建议老师下周一对一或小组会议优先听这六人汇报，并要求他们给出下一步最小验证方案。"
+      }
     },
     "sectionCards": [
       {
         "id": "key-progress",
-        "title": "关键进展",
-        "oneLine": "GRPO污染修复、四槽位规约、gate edge、memory laundering、裸conlang等多项硬进展",
-        "count": 6
+        "title": "关键硬进展",
+        "oneLine": "GRPO 审计、内核四槽位规约、恶意 Skill 图谱和华为交付构成本周四大硬产出。",
+        "count": 12
       },
       {
         "id": "teacher-unknown",
-        "title": "老师原本不知道",
-        "oneLine": "环境可控性前置、gate edge、laundering、裸conlang窄窗、risk-adjusted coverage、人脑L0-L2细节",
-        "count": 6
+        "title": "老师原本不知道的认知",
+        "oneLine": "五条新认知直指表示层、风险建模和 RL 前置条件，需尽快转化。",
+        "count": 5
       },
       {
         "id": "risks",
-        "title": "风险与问题",
-        "oneLine": "乔伟三周无实验、钱佳宇阳性对照未过、王苏源人工依赖、孔紫乔截稿、海通业务标准缺失、gate edge样本少",
-        "count": 6
+        "title": "主要风险",
+        "oneLine": "提交率不足一半、华为双风险、GRPO 污染、FSE 截稿和多项目证据薄是本周主要威胁。",
+        "count": 8
       },
       {
         "id": "follow-ups",
-        "title": "下周跟进",
-        "oneLine": "锁定乔伟路线、重跑干净对照、自动提取已知事实、FSE决策、完成LLM judge、源码闭环",
-        "count": 6
+        "title": "下周行动建议",
+        "oneLine": "建议以钱加宇干净重跑、王素媛规则实例化、王慧丽 FN 分型和高萌萌标注一致性为抓手。",
+        "count": 9
       },
       {
         "id": "assets",
-        "title": "沉淀资产",
-        "oneLine": "edge依赖表、环境上限表、四槽位规约、红队矩阵、双向影响修订、恶意Skill KG",
-        "count": 6
+        "title": "沉淀中的新资产",
+        "oneLine": "从 gate edge schema 到四槽位规约，多项可复用模块和数据进入资产化阶段。",
+        "count": 10
       },
       {
         "id": "people-to-read",
-        "title": "重点关注人物",
-        "oneLine": "乔伟、钱佳宇、王苏源、陈华宝、冯亚林、孔紫乔",
+        "title": "本周值得重点阅读的人",
+        "oneLine": "钱加宇、隋昊、王素媛、陈华宝、郭文博、黄勋六人贡献了最高信噪比的工作。",
         "count": 6
       }
     ],
     "closingAdvice": [
-      "对乔伟设置硬性截止，强制下周当面锁定路线，若再次顺延则启动范围决策，避免设计层无限期空转。",
-      "优先支持钱佳宇完成干净阳性对照，这是Agentic RL方法可信度的基础，通过后才允许继续比较A/B/F。",
-      "推动王苏源自动提取“已知事实”，这是四槽位规约从人工验证走向可扩展方法的关键一步，可安排助手协助。",
-      "关注孔紫乔论文截稿，要求其9月19日前给出清晰决策，并提供必要资源协助缩题或实验定位。",
-      "本周45人未提交报告，需排查原因，对连续未交者进行提醒或跟进，确保下周信息完整。"
+      "优先解决华为项目两个新增风险：Windows 版是否投入、第三方 API 是否换成稳定渠道或自建，请老师本周内拍板，否则生成侧产能会继续被卡。",
+      "支持钱加宇完成干净的 GRPO 阳性对照重跑，不要因 Gate 2 形式失败而否定整个方向；同时要求所有 RL 比较必须通过不变量哨兵后才可写入论文主张。",
+      "针对 44 名未提交周报的学生，建议限期补交并明确信息缺口，避免决策在盲区中做出；对连续三周无实验数据的乔伟，本周必须锁定原型启动或触发范围决策。",
+      "推动王素媛四槽位规约的“已知事实”自动提取和迁移实例化，这是该工作能否从演示升为方法的命门；同时关注王慧丽 47 个漏报的 FN 分型，避免静态规则被误当完整判定器。",
+      "关注隋昊提出的 Agent 记忆 laundering 攻击，其“信任信号完整性”问题可能成为 Brainary 记忆治理的支点，建议尽快安排一次专题讨论，将威胁模型形式化。"
     ]
   }
 }
