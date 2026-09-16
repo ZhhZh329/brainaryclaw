@@ -1,79 +1,83 @@
 {
   "key": "person:zhou-zhenhong:2026-09-13:horizontal",
-  "generatedAt": "2026-09-14T10:05:02.684Z",
+  "generatedAt": "2026-09-16T05:03:58.080Z",
   "provider": "deepseek",
   "model": "deepseek-v4-pro",
   "reasoningEffort": "high",
-  "inputHash": "aa34ad3497b8884a705d8b6b63f9cacc66bd81a8a78579c87b329d1fcdbab7a8",
-  "contentHash": "aa34ad3497b8884a705d8b6b63f9cacc66bd81a8a78579c87b329d1fcdbab7a8",
+  "inputHash": "bf66a3b91b0d92b0cda7622a5b99cb4f1e019f58cd5e8f7a3566cf87f7ea7501",
+  "contentHash": "bf66a3b91b0d92b0cda7622a5b99cb4f1e019f58cd5e8f7a3566cf87f7ea7501",
   "promptHash": "7ab2efc4d416dbeeb34a0e2d3cc797ac660749509537011b4ea431707a52a0ba",
   "result": {
-    "overallLevel": "非常好",
-    "headline": "双主线推进：自适应LTM门控与跨生成模型Auto-benchmark适配层",
-    "overviewSentence": "本周周报以实验证据驱动，在音频LTM中验证完整增强的副作用并引入可学习门控，在Auto-benchmark中通过Luna暴露协议差异并设计模型适配层，认知增量聚焦于使用强度控制与模型-系统隔离，项目管理与价值判断清晰，值得优先阅读。",
-    "shortRead": "任务一确认完整PCA增强使WER从23.07%恶化至33.75%，引入learned gate后基本避免退化（约23.5%），平均gate值随token损失权重变化，说明模型正在学习调节记忆介入程度。任务二换用Luna生成基准，发现字段名、约束schema、输出顺序不稳定等问题，新增model adapter layer（含字段别名归一化、约束schema归一化、失败重试、校验硬门控），并将DeepSeek与Luna接入统一评测协议。两个方向的CoT's CoT均标A级证据：一是记忆关键在于使用强度控制而非检索；二是通用Auto-research需要隔离模型生成与系统执行。",
-    "levelRationale": "该周报在两个研究主线上均呈现硬数据与具体实现，不仅记录了做了什么，还提炼出可迁移的设计原则（自适应记忆利用、模型适配层），并给出了清晰的价值判断（各100万）与自动化沉淀形式；项目管理有明确的阶段、卡点、关键路径与下周纠偏；元认知从具体实验现象上升到对‘信任度管理’的统一理解，因此达到‘非常好’。",
+    "overallLevel": "特别值得读",
+    "headline": "两条主线均从“能不能用”推进到“何时该用/如何隔离模型差异”，并以可验证数据支撑。",
+    "overviewSentence": "本周报告在Audio Adaptive LTM与Auto-benchmark两条主线上均形成A级证据的认知增量，并清晰呈现项目管理与元认知变化，属于较值得优先阅读的一类。",
+    "shortRead": "周报展示两条主线：Audio LTM从固定PCA增强转向learned gate，避免ASR退化；Auto-benchmark从DeepSeek扩展到Luna，发现跨模型输出协议差异并引入model adapter。关键硬进展包括WER数据与gate开启程度，以及Luna生成/拒绝数据。元认知提升为“对模型中间结果的信任度管理”。两个方向估值均100万人民币。项目管理有明确纠偏和下周动作。",
+    "levelRationale": "这份周报达到“特别值得读”，因为它同时具备硬数据、认知增量和可执行的项目管理。Audio线用WER从23.07%恶化到33.75%，再用learned gate基本拉回23.52%–24.43%，证明memory使用强度是真实问题；gate平均g值随训练目标变化，说明不是固定开关。Auto线从Luna与DeepSeek的字段、schema、顺序差异，抽象出model adapter layer，保护主流程的generator-independence。两个CoT's CoT均标注自动化潜力高，并给出adaptive LTM module、memory gating policy、unified schema、validator等沉淀形式。元认知从“有没有经验/输出”转向“中间结果应被信任多少”，证据等级两条均为A。项目管理关键路径明确，下周纠偏清晰。仍需提升的是Audio learned gate尚未产生正向收益、Coding生成有效率仍有提升空间，但问题真实、路线明确，因此优先读价值很高。",
     "sameWeekPosition": "按本周研究管理标准，这份周报属于较值得优先阅读的一类。",
     "highlightedSignals": [
-      "用WER对比直接证明完整PCA增强的副作用，并展示learned gate下平均gate值随损失权重的变化，证据具体。",
-      "从Luna换模型暴露的字段不一致、schema差异、顺序不稳定等问题，推动设计model adapter layer，体现系统化抽象。",
-      "两个任务的CoT's CoT均自评A级，并给出自动化潜力高与建议沉淀模块。",
-      "两个方向均给出100万人民币的估值及计算依据，价值判断不空泛。"
+      "Audio LTM 用WER数据证明完整PCA无差别增强会伤害ASR：23.07% → 33.75%，learned gate基本拉回23.52%–24.43%。",
+      "Gate开启程度随训练目标变化：λ_token=1.0平均g=0.652；λ_token=0.1平均g=0.380；λ_token=0平均g=0.351，证明不是固定开关。",
+      "Auto-benchmark发现换Luna后主要差异是输出协议而非研究逻辑，并新增model adapter layer（field alias、constraint schema、retry、resume、validator hard gate）。",
+      "Coding MBPP为得到5条有效数据生成34个候选、拒绝30个，暴露domain对generator能力要求差异。",
+      "两个CoT's CoT均标注自动化潜力高，并给出adaptive LTM module、memory gating policy、unified schema、validator等沉淀形式。"
     ],
     "focusDimensions": {
       "valueJudgment": {
-        "read": "学生对两个研究主题都给出了明确的价值判断：Audio Adaptive Perceptual LTM估计价值100万，Auto-research Generator-independent Benchmark Workflow估计价值100万，并分别说明了计算方法和参考依据，强调通用能力与可复用价值。",
-        "evidence": "周报中明确写出估计价值、计算方法、参考依据（如WER数据证明问题真实存在，跨模型schema问题证明工程必要性），并指出谁为能力买单及最终沉淀形式。",
-        "nextLift": "下一步可进一步细化价值链条：例如将adaptive LTM模块可能带来的任务提升量化到具体业务场景，或对比已有方案（如固定增强）的增量收益；Auto-benchmark可补充不同生成器下benchmark质量差异对下游评估结论的影响，以强化‘为什么必须generator-independent’的价值论证。"
+        "read": "两个方向均被明确判断为真实且值得继续，分别给出100万人民币估值与计算依据。",
+        "evidence": "Audio：完整PCA造成的ASR退化证明memory utilization strength是真实问题；Auto：DeepSeek与Luna的实际schema/字段/顺序差异证明model-independent workflow是工程问题。两者均写明谁会买单、最终沉淀形式。",
+        "nextLift": "下一步可把估值从“方向估算”细化为可验证里程碑，例如：learned gate实现WER正向改善的预期增量；adapter使Coding有效率从5/34提升到多少，以及对应的资源或时间成本。"
       },
       "projectManagement": {
-        "read": "两个任务分别给出了当前阶段、进度状态、主要任务、卡点、是否关键路径以及下周纠偏；项目管理粒度清晰，且明确指出没有方向性卡点，主要聚焦机制分析与跨生成器验证。",
-        "evidence": "Audio LTM当前阶段为adaptive gating/ablation/mechanism analysis，下周纠偏为不增加新LTM表示方式，优先分析gating机制；Auto-benchmark当前阶段为cross-generator validation/system abstraction，下周纠偏为优先稳定adapter+validator，不针对Luna单独重写workflow。",
-        "nextLift": "建议在项目管理中增加里程碑判断条件：例如Audio LTM达到什么WER改善或gate可解释性标准即可进入下一阶段；Auto-benchmark完成Luna版本后如何判定workflow具备generator-independent稳定性，可提前定义量化验收指标。"
+        "read": "两条线都处于关键路径上，进度符合预期，且有清晰的卡点识别与下周纠偏。",
+        "evidence": "Audio明确当前阶段为adaptive gating/ablation/mechanism analysis，下周纠偏为“不继续增加新的LTM表示方式，优先把adaptive gating机制分析清楚”；Auto明确优先稳定adapter + validator，不针对Luna单独重写workflow。",
+        "nextLift": "可以补充短期截止日期或里程碑（例如第几周完成gate positive gain验证，第几周完成Luna版并比较排序一致性），让“符合预期”有更可追踪的标准。"
       },
       "metacognition": {
-        "read": "学生从两个实验现象中提炼出统一的元认知主题：对模型自身中间结果的信任度管理。Audio LTM中表现为记忆介入强度控制，Auto-benchmark中表现为对LLM输出格式与正确性的校验与适配。",
-        "evidence": "周报明确写出‘新的理解是什么：Meta-cognition不只是判断有没有相关经验，还应该判断经验现在到底应该影响多少’，并指出两件事本质上都是‘对模型自身中间结果的信任度管理’，同时给出未来可变成的模块清单。",
-        "nextLift": "可将这种‘信任度管理’进一步抽象为可复用的评估框架：例如定义trust score来衡量当前observation reliability与memory reliability，并将其作为gate输入的显式特征；在Auto-benchmark中可增加对generator输出可信度的预判模块，减少无效重试。"
+        "read": "本周最重要的元认知变化是从“有没有相关经验/输出”转向“中间结果应该被信任多少”。",
+        "evidence": "Audio LTM意识到memory有用不等于应该一直被使用；Auto-benchmark意识到LLM输出不能完全信任，必须通过adapter + validator约束。两条线被统一为“对模型自身中间结果的信任度管理”。报告写明未来可变成confidence-aware memory policy、validator、calibration mechanism、self-monitoring policy。",
+        "nextLift": "下一次可以尝试把这种“信任度管理”写成一个可迁移的决策规则：什么条件下用当前observation、什么条件下用memory/模型输出，并把该规则用在两条线之外的一个新场景做初步验证。"
       }
     },
     "growthOpportunities": [
-      "Audio LTM目前learned gate主要实现了‘避免大幅退化’，尚未带来超过baseline的正向收益；下一步可设计更精细的token-level分析，如比较高g token与混音破坏程度的相关性，或引入可解释性工具定位gate真正关注的语音属性。",
-      "Auto-benchmark在Coding域的有效率较低（34候选仅5有效），可考虑将生成失败模式分类并回馈到generator prompt或adapter预处理中，同时评估是否需要对不同domain采用不同的生成策略。",
-      "两个方向的价值估计均为100万，虽有理据，但可进一步与实际应用场景（如多模态Agent产品、Auto-research平台）挂钩，形成更可沟通的价值叙事。"
+      "Audio LTM目前learned gate主要实现preservation，尚未带来明显超过原baseline的WER改善；下一步可以把目标从“避免退化”提升到“正向收益”，并定义可接受的最小正向增益。",
+      "Auto-benchmark的Coding领域生成有效率仍有提升空间，建议在保持model adapter不变的前提下，为Coding设计专门的validator或自检步骤，记录候选拒绝原因分布，以判断是模型能力还是schema约束过严。",
+      "两条线都涉及gate/adapter等机制，可以在后续周报中增加一个统一图示或状态机，说明memory使用强度/模型输出信任度的决策路径，便于沉淀为通用模块。",
+      "价值估算目前为方向级，若能在下阶段加入可量化的里程碑价值，将更有助于判断投入优先级。"
     ],
     "teacherAction": {
       "readOriginal": true,
       "meetingQuestions": [
-        "在Audio LTM中，你如何判断learned gate真正找到了‘应该增强’的token，而不只是通过压低整体g值来避免伤害？是否有token-level的可视化或统计证据？",
-        "Model adapter层中的validator hard gate如何平衡严格性与召回率？在Luna生成的大量合法但顺序不同的数据被错误拒绝的情况下，你的归一化策略具体如何保持语义等价？",
-        "如果下周learned gate仍然无法超过baseline WER，你会选择继续调参还是重新审视gating的输入特征或训练目标？",
-        "Auto-benchmark完成Luna版本后，你计划用哪些指标判定workflow真正具有generator-independent稳定性？是否考虑加入更多生成模型（如开源小模型）进行压力测试？"
+        "Audio LTM：如果下周gate仍不能带来正向WER改善，你会如何区分是gate结构不够、loss权重不对，还是任务本身已经没有可恢复的信息？",
+        "Auto-benchmark：Coding MBPP有效候选只有5/34，这些拒绝主要是validator过严还是Luna生成能力不足？你准备如何用数据判断？",
+        "两个CoT's CoT都强调“信任度管理/使用强度控制”，你能否在下一次周报里给出一个统一的meta-policy伪代码，把两条线纳入同一个框架？",
+        "两个方向都估值100万，如果资源只能先推一个，你用什么证据决定先做哪一个？"
       ],
       "nextWeekWatch": [
-        "Audio LTM是否出现正向WER改善，或gate权重与混音破坏程度呈现显著相关性。",
-        "Auto-benchmark Luna版本是否完成并接入统一评测pipeline，开始输出跨生成器benchmark质量比较。",
-        "model adapter层是否有效降低了Coding域的错误拒绝率，validator hard gate的误拒率是否有量化报告。"
+        "Audio：是否出现learned gate相对original mixed WER的正向收益，以及g值与token-level error type（S/D/I）是否形成可解释关联。",
+        "Auto：Luna版是否接入统一evaluation pipeline，且model adapter是否稳定吸收字段/schema/顺序差异；Coding有效率是否提升。",
+        "两条线是否开始产出可复用的module雏形（如adaptive LTM module、model adapter的配置文件/校验规则）。"
       ]
     },
     "studentFeedback": {
-      "summary": "本周周报在两个方向上都用扎实的实验证据推动了认知升级：你不仅证明了完整PCA增强的副作用并引入自适应门控，还从Luna换模型暴露的协议差异中抽象出model adapter层，项目管理与价值判断也很清晰，继续保持这种‘用数据逼出设计原则’的节奏。",
+      "summary": "本周周报把两条主线都推进到下一层问题，证据扎实、元认知提升明显，下一步关键是让机制从“避免伤害/隔离差异”走向“带来可验证收益”。",
       "whatYouDidWell": [
-        "你通过WER对比直接暴露了完整增强的缺陷，并展示learned gate下平均g值随权重变化，证据链完整、有说服力。",
-        "你没有针对Luna重写流程，而是设计adapter层隔离模型输出与系统结构，这种抽象意识值得肯定。",
-        "两个任务都给出了明确的卡点、关键路径和下周纠偏，项目管理颗粒度很好，没有让工作发散。"
+        "你没有停留在“LTM能增强representation”，而是用WER数据主动检验增强强度，发现完整PCA会伤害ASR，并设计learned gate，这是很好的机制级推进。",
+        "Auto-benchmark没有把Luna的不兼容当作bug打补丁，而是抽象为model adapter layer，保护了主流程的generator-independence，体现了系统化设计能力。",
+        "你能把两条看起来不同的线统一到“对模型中间结果的信任度管理”，并写出高自动化潜力的沉淀形式，说明元认知已经在从具体实验向通用能力跃迁。"
       ],
       "nextStep": [
-        "下一步重点解决learned gate从‘避免伤害’到‘正向收益’的跨越，建议设计token-level诊断，例如比较g值与token在混音前后的representation变化，找出真正需要记忆介入的模式。",
-        "Auto-benchmark可进一步将Luna与DeepSeek在多个domain上的拒绝原因归类，反向优化adapter的归一化规则或增加generator-specific的前置处理，尤其针对Coding低有效率问题。",
-        "在价值判断上，可尝试将两个方向的能力模块与一个具体的下游产品/研究场景绑定，估算其带来的效率提升或错误率下降，让100万估值更有落地感。"
+        "下一步为Audio learned gate设定一个可检验的正向目标：例如在保持representation recovery的前提下，WER低于original baseline的某个幅度，并记录实现该目标所调整的loss权重。",
+        "对Auto-benchmark Coding生成有效率仍有提升空间的部分做一次失败归因表，区分generator输出问题、schema问题、test case闭环问题，决定是加强adapter/validator还是为Coding单独增加前置校验。",
+        "下周周报可以更清晰地写出“如果下周达到什么指标，就说明当前方向继续；如果达不到，准备切换的小动作是什么”，让决策阈值更明确。"
       ],
-      "suggestedRewrite": "下周周报可以增加一个‘本周关键决策与因果链’小节，例如：因为完整PCA使WER恶化至33.75%，所以引入learned gate；因为Luna字段名不一致导致pipeline断裂，所以设计model adapter；这样读者能在30秒内抓住你的研究演进逻辑，而不用在细节中自行拼凑。"
+      "suggestedRewrite": "比如下周周报可以这样写：“本周Audio LTM的目标从preservation提升为positive gain：计划在λ_token∈[0.1,1.0]内完成3组对比，若learned gate的WER仍不低于original baseline 23.07%，我将增加token-level error type与g值的联合分析，并尝试在gate输入端加入noise-level或confidence特征；若仍无改善，则考虑将gate改为memory strength的离散策略。Auto-benchmark将优先完成Luna版并输出adapter收拒原因分布，以决定是否只对Coding domain增加额外pre-validator。”"
     },
     "evidenceLinks": [
-      "周报原文中‘任务一’部分的WER对比数据（原始23.07%、完整PCA33.75%、learned gate约23.5%）和平均gate值随λ_token变化（1.0→0.652, 0.1→0.380, 0→0.351）。",
-      "周报原文中‘任务二’部分的Luna字段不一致案例（task_type vs function_level_python_programming）、Coding有效率数据（34候选5有效）、以及model adapter层组件列表。",
-      "周报原文中‘CoT's CoT’及‘证据等级’部分自评A级，以及‘自动化科研转化路径’中建议沉淀的模块名称。"
+      "Audio LTM：原始混音WER 23.07% → 完整PCA 33.75% → learned gate 23.52%–24.43%；gate平均g值0.652/0.380/0.351。",
+      "Auto-benchmark：Luna生成7个数据集；MBPP为5条有效数据生成34候选、拒绝30。",
+      "CoT's CoT证据等级：两条均为A。",
+      "价值判断：两个方向各估计100万人民币，并写明真实问题、买单方、沉淀形式。",
+      "项目管理：两条线均标注关键路径为是，下周纠偏明确不增加新表示/不针对Luna重写workflow。"
     ]
   }
 }
