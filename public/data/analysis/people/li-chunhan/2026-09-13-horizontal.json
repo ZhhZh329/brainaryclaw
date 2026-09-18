@@ -1,86 +1,79 @@
 {
   "key": "person:li-chunhan:2026-09-13:horizontal",
-  "generatedAt": "2026-09-16T04:03:41.687Z",
+  "generatedAt": "2026-09-18T06:04:22.367Z",
   "provider": "deepseek",
   "model": "deepseek-v4-pro",
   "reasoningEffort": "high",
-  "inputHash": "eff0e8ca117413262d40e9f9bd33e094ba31b9cdc1c344375a127eb761f51367",
-  "contentHash": "eff0e8ca117413262d40e9f9bd33e094ba31b9cdc1c344375a127eb761f51367",
+  "inputHash": "895c85a0bcd6d224b37d67695a75356d88e21772d08fd1e685cbef160ba06a2e",
+  "contentHash": "895c85a0bcd6d224b37d67695a75356d88e21772d08fd1e685cbef160ba06a2e",
   "promptHash": "7ab2efc4d416dbeeb34a0e2d3cc797ac660749509537011b4ea431707a52a0ba",
   "result": {
-    "overallLevel": "非常好",
-    "headline": "从术语混用到可复现主线的VLM少样本冷启动方案",
-    "overviewSentence": "本周完成VLM-IAD范式梳理与三类评价协议厘清，提出Few-shot Open-World Defect Detection主线并给出可复现实验方案，认知增量与价值判断突出，但尚无自有实验结果。",
-    "shortRead": "硬进展表现为文献整合与实验设计；认知增量在于异常语义动态漂移、评价协议不可横比；价值判断避开MVTec饱和点，主张VLM冷启动+YOLO下游；项目管理给出GPU小时与多seed设定；元认知上主动识别术语、指标、幻觉陷阱。",
-    "levelRationale": "这份周报达到“非常好”，因为它在认知增量、价值判断和项目管理上都明显超过一般调研周报：把2024-2026年VLM-IAD范式演进串成清晰主线，明确三类问题协议差异，提出避开饱和基准的新问题，并给出资源预算与复现路径。未给“特别值得读”，是因为目前仍以文献整合和方案设计为主，尚无自有实验结果或代码级证据支撑。",
-    "sameWeekPosition": "按本周研究管理标准，这份周报属于较值得优先阅读的一类，适合作为主线方向讨论的起点。",
+    "overallLevel": "特别值得读",
+    "headline": "从 PromptAD 到 DriftAD 的 VLM-IAD 演进梳理，落地 Few-shot Open-World Defect Detection 主线",
+    "overviewSentence": "这份周报完成了 2024—2026 年 VLM-IAD 范式演进与评价协议厘清，提出以 normal-only VLM 冷启动、YOLOE 定位并蒸馏到实时 student 的主线，并给出可复现实验预算与下周行动。",
+    "shortRead": "本周学生聚焦 VLM 路线，系统梳理了 PromptAD、IIPAD、DriftAD 等少样本工业缺陷识别工作，显式区分 FSAD、跨类 zero-shot VLM、少样本 defect detection 三类问题及其评价协议，避免术语混用。进一步指出 MVTec 1/2/4-shot 已饱和，应改用 AD2/Real-IAD/NEU-DET/PCB 组合提升辨识度。最有价值的是把研究主线收敛为 Few-shot Open-World Defect Detection：VLM 发现未知缺陷，YOLOE 语义化定位，蒸馏到实时 YOLO student，并给出 150—350 GPU·h 的复现预算。下周计划从 PromptAD→IIPAD→DriftAD 基线复现开始，加入无合成异常 ablation 与外域评价。",
+    "levelRationale": "这份周报在硬进展、认知增量、价值判断、项目管理、元认知变化上都达到很高的研究管理标准。硬进展方面完成了系统调研和可落地实验方案；认知上把易混的 zero-shot/few-shot 协议与 AUROC/mAP 指标拆开；价值判断明确不刷饱和的 MVTec 少数点，而转向工业冷启动与 open-world 主线；项目管理有资源预算、后续步骤和时间投入；元认知上多次识别术语混用、预印本局限、MLLM 幻觉、shortcut 隐患等认知陷阱，符合特别值得读的一类。",
+    "sameWeekPosition": "按本周标准，这份周报属于较值得优先阅读的一类，其研究判断和行动规划对老师下一步讨论有直接帮助。",
     "highlightedSignals": [
-      "主动区分FSAD/跨类zero-shot/少样本detection三类协议，避免AUROC与mAP横比。",
-      "提出Few-shot Open-World Defect Detection，把VLM定位为冷启动anomaly gate，YOLO为下游语义化检测器。",
-      "指出MVTec 1/2/4-shot已饱和，转向AD2/Real-IAD/NEU-DET等更有辨识度的组合基准。",
-      "明确MLLM幻觉风险，主张旁路解释与辅助复核，而非最终质量闸门。",
-      "给出150–350 GPU·h、每K-shot 5 seeds、严格跨数据集设计的可复现方案。",
-      "对DriftAD动态text drift与IIPAD instance prompt的融合提出具体增长点。"
+      "把 FSAD / 跨类 zero-shot VLM / 少样本 defect detection 三类问题协议显式分开，避免后续指标不可比",
+      "识别出 MVTec 1/2/4-shot 已饱和，主动引入 AD2 / Real-IAD / NEU-DET / PCB 组合提升研究辨识度",
+      "提出 Few-shot Open-World Defect Detection 的 VLM 冷启动 + YOLOE 定位 + 蒸馏到实时 student 闭环",
+      "给出可复现实验预算：3 数据集 × 3 shots × 5 seeds 约 150—350 GPU·h，下周投入约 40h",
+      "将 MLLM 明确定位为解释与辅助复核旁路，提出 factuality / abstention / reasoning-calibration 等上线前一等指标"
     ],
     "focusDimensions": {
       "valueJudgment": {
-        "read": "价值判断已从“再刷MVTec 0.2 AUROC”转向“Few-shot Open-World Defect Detection”，并以VLM as anomaly gate、YOLO as downstream deployment重新定义关系。",
-        "evidence": "“缺陷样本极少甚至没有时，不应先训普通YOLO，而应以normal-only VLM/FSAD建anomaly gate做冷启动”；“MVTec 1/2/4-shot已饱和（97–99% AUROC）”；“MLLM现阶段更适合做解释、知识检索、辅助复核的旁路，而非最终质量闸门”。",
-        "nextLift": "下一步可把“金额价值”量化：将该主线对应到产线漏检成本、冷启动节省的标注预算与上线周期，明确一个可验证的最小可行验证（MVP）指标。"
+        "read": "主题价值判断清晰且有方向感，没有停留在刷点，而是把研究问题拉到工业冷启动与开放世界缺陷检测的主线上。",
+        "evidence": "2.4 工业落地路线与 VLM↔YOLO 关系重定义；3 问题解决中 MVTec 饱和改为更有辨识度组合；5 希望老师学到的 2026 最值得做的问题。",
+        "nextLift": "下一步可以把‘产线价值’进一步落到具体优先指标，例如正常图误杀率、未知缺陷召回和人工复核成本，而不只报告 AUROC。"
       },
       "projectManagement": {
-        "read": "项目管理已体现为基线选择、数据/seed/GPU预算与下周动作的闭环；但尚无执行阶段或风险退出判据。",
-        "evidence": "“PromptAD→IIPAD→DriftAD（2024→2025→2026强基线）”；“完整3数据集×3 shots×5 seeds约150–350 GPU·h”；“下周约40h（复现实验+数据准备）”。",
-        "nextLift": "可把复现拆成“最小可跑通—基线复现—增长点消融”三个阶段，每阶段设退出判据，避免在150–350 GPU·h中迷失。"
+        "read": "项目管理到位，从任务拆解、资源估算到下周执行路径都有清晰交代，便于老师追踪和迭代。",
+        "evidence": "2.5 可复现实验方案与资源整理；6 投入时间本周约 32h、下周约 40h，并列出 3 数据集 × 3 shots × 5 seeds 约 150—350 GPU·h。",
+        "nextLift": "可以在下周周报中增加一个简短的里程碑表：已完成、进行中、卡点分别是什么，让老师一眼看到推进速度。"
       },
       "metacognition": {
-        "read": "元认知变化明显，能主动识别术语混用、指标不可比、MVTec饱和、MLLM幻觉等陷阱，并给出显式协议。",
-        "evidence": "“zero-shot/few-shot术语混用导致结论不可比”；“AUROC 98% ≠ mAP 98%”；“test set绝不参与prompt/threshold/checkpoint选择”；“MLLM幻觉风险→增加factuality、abstention rate、reasoning calibration等显式指标”。",
-        "nextLift": "可进一步记录决策背后的假设与反证：如果DriftAD复现不达预期，将降级为组件研究还是更换主线？把这一备选路径写入下周。"
+        "read": "元认知变化明显，主动识别术语混用、指标不可比、预印本与真实产线差距、MLLM 幻觉等多类认知陷阱。",
+        "evidence": "3 本周遇到的问题及解决方案 1/2/3/5；2.1 关键认知中明确指出 DriftAD 仍为新预印本需独立复现与跨域验证，1-shot 97.2 不等于真实产线 1 张就够。",
+        "nextLift": "可以增加一个‘我对该判断的信心 + 反证条件’小节，例如如果 DriftAD 在 AD2 掉点超过 X 就回退，让元认知判断更可复核。"
       }
     },
     "growthOpportunities": [
-      "自有实验证据缺失：本周仍在文献与设计层，下周应产出至少一个最小可运行baseline数字。",
-      "Brainary映射尚未显式化：动态text drift与instance prompt分别对应何种先验/注意机制，可在下周周报中写清。",
-      "自动化沉淀路径可以更具体：除了蒸馏到实时student，还应说明伪标注、active learning与uncertainty head如何串成自动化闭环。",
-      "DriftAD复现风险尚未设定退出判据：建议明确“若复现差异超过X%，则切换为组件消融”的备选。"
+      "把本次调研整理成一份可复用的任务协议与指标说明文档，帮助团队避免 repeated 术语混用和 AUROC/mAP 误读。",
+      "下一周在复现实验开始前，先明确失败判据：如果 DriftAD 在跨域测试上明显弱于预期，应如何调整融合路径或回退到 IIPAD 基线。",
+      "对 YOLOE 蒸馏所需的缺陷框/掩膜最小数量、人工复核阈值等，建议提前和工业伙伴对齐，以便实验结论能直接映射到产线成本。"
     ],
     "teacherAction": {
       "readOriginal": true,
       "meetingQuestions": [
-        "你判断DriftAD复现中最大的不确定性是数据域、训练稳定还是评价指标？",
-        "如果VLM anomaly gate误杀率突然升高，你会先检查support normal、prompt drift还是阈值策略？",
-        "本周能否先给出一个最小可运行baseline，而不是完整3数据集×3shots×5seeds？",
-        "MLLM旁路与VLM闸门之间的否决/升级规则是什么？",
-        "Few-shot Open-World Defect Detection这条主线中，哪一个组件是你最想先证伪的？"
+        "你计划先复现 DriftAD 的哪一部分？如果跨数据集掉点明显，回退方案是什么？",
+        "在 VLM→YOLOE→YOLO11 蒸馏中，最少需要多少缺陷框/掩膜？这个数量如何通过实验确定？",
+        "如何设计实验来验证 DriftAD 的语义词漂移不会引入 OOD shortcut？是否考虑无合成异常 ablation 之外的语义校准？"
       ],
       "nextWeekWatch": [
-        "是否真正跑通PromptAD/IIPAD/DriftAD官方仓库并产出首个复现数字。",
-        "是否落实uncertainty head与无合成异常ablation设计。",
-        "是否给出至少一个可解释的考核指标（AUPR/FPR@95TPR）。",
-        "是否把DriftAD与IIPAD的融合想法写成可执行的最小消融。"
+        "是否输出 PromptAD / IIPAD / DriftAD 基线结果，并报告多 seed mean±std 和 FPR@95TPR",
+        "是否跑通 YOLOE-v8-S + YOLO11s 官方 fine-tuning / reparameterization 链路",
+        "是否按计划使用 AD2 / Real-IAD 作为外域测试，并报告正常图误杀率与未知缺陷召回"
       ]
     },
     "studentFeedback": {
-      "summary": "本周你把零散文献整理成可执行主线，并主动识别了评价协议与饱和点问题，这是一份很扎实的周报。",
+      "summary": "这周你把研究主线从零散 SOTA 拉到了工业冷启动闭环，问题拆解清晰、实验设计有落地感，继续保持这种判断力。",
       "whatYouDidWell": [
-        "清楚区分FSAD/zero-shot/defect detection三类协议，避免数字横比。",
-        "把VLM与YOLO关系重定义为冷启动+下游部署，而不是对立。",
-        "给出了资源预算与下周计划，使复现可管理。"
+        "把 FSAD、跨类 zero-shot VLM、少样本 defect detection 三类问题显式分开，避免了后续指标和结论的混淆。",
+        "准确识别 MVTec 1/2/4-shot 已经饱和，主动引入 AD2 / Real-IAD / NEU-DET / PCB 组合提升研究辨识度。",
+        "把 MLLM 定位为辅助解释与复核旁路，并提出了 factuality、abstention、reasoning-calibration 等上线前一等指标，体现了对落地风险的清醒认知。"
       ],
       "nextStep": [
-        "下周先跑通最小可运行baseline并产出第一个数字，哪怕只在一个数据集一个shot上。",
-        "把Brainary映射显式写出来：动态text drift与instance prompt对应哪种先验/注意机制。",
-        "为DriftAD复现设置明确的成功/失败判据，避免长时间无产出。"
+        "下周先跑通 PromptAD→IIPAD→DriftAD 三基线，至少 5 seeds 报 mean±std，并优先看 FPR@95TPR 与正常图误杀率。",
+        "把‘无合成异常’ablation 和 AD2 / Real-IAD 外域验证做进去，直接检验 DriftAD 的 shortcut 问题。",
+        "用里程碑表把每天/每两天进度可视化，减少复现调试阶段的不确定性，也方便老师快速定位卡点。"
       ],
-      "suggestedRewrite": "下周周报可以这样写：『本周完成PromptAD基线复现，MVTec 1-shot image AUROC xx（文献95.7），已定位到复现差异来自support set采样；下周将继续IIPAD，并记录每K-shot的FPR@95TPR与5-seed std。』这样可以同时呈现硬进展、证据与决策。"
+      "suggestedRewrite": "建议下周周报开头用三行写清：①本周已完成基线与数据准备（MVTec/VisA/AD2，每类 1/2/4 张正常图）；②DriftAD 复现当前 epoch 数与 GPU 消耗；③下一步按 5 seeds 跑外域测试并优先报 FPR@95TPR 与正常图误杀率。"
     },
     "evidenceLinks": [
-      "DriftAD（arXiv 2026-08-24）：MVTec 1/2/4-shot image/pixel 97.2/96.8、97.7/97.0、98.0/97.2；1-shot平均95.2。",
-      "PromptAD（CVPR2024）：MVTec 1/2/4-shot image-AUROC 94.6/95.7/96.6。",
-      "IIPAD（ICLR2025）：MVTec 1/2/4-shot pixel 96.4/96.7/97.0。",
-      "Anomaly-OneVision（CVPR2025）：MLLM输出defect description/cause/reasoning，仍会hallucinate。",
-      "YOLO-World（CVPR2024）与YOLOE（ICCV2025）：open-vocab与实时部署汇合。"
+      "2.1 VLM-IAD 范式演进（2024→2026，主线）：DriftAD 代表范式从 PromptAD 的全局单一 anomaly concept 升级为不同层/空间/query 拥有不同异常语义；其仍为新预印本，需独立复现与跨域验证。",
+      "2.2 三类问题与评价协议厘清：显式区分 FSAD / 跨类 zero-shot VLM / 少样本 defect detection；AUROC 98% ≠ mAP 98%。",
+      "2.5 可复现实验方案与资源整理：PromptAD→IIPAD→DriftAD 强基线；3 数据集 × 3 shots × 5 seeds 约 150—350 GPU·h，人工标注 0 张 defect bbox。"
     ]
   }
 }
