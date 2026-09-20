@@ -427,6 +427,34 @@ function buildTeacherUnknownSummary(reports, weeks) {
 
 async function collectReports(registry, nameAliases) {
   const { byId, byName } = registryIndexes(registry);
+  const availableInboundFiles = await exists(inboundDir)
+    ? (await fs.readdir(inboundDir, { withFileTypes: true }))
+      .filter((entry) => entry.isFile() && entry.name.endsWith(".md"))
+      .map((entry) => entry.name)
+      .sort()
+    : [];
+  const inboundByName = new Map(availableInboundFiles.map((file) => [file.toLowerCase(), file]));
+
+  const resolveAttachedMarkdown = async (rawText) => {
+    const match = String(rawText || "").match(/media:\/\/inbound\/([^\r\n]+\.md)/i);
+    if (!match) return null;
+    let referencedName = path.basename(match[1].trim());
+    try {
+      referencedName = decodeURIComponent(referencedName);
+    } catch {}
+    const candidates = [referencedName, referencedName.replace(/^input-/i, "")];
+    let inboundFile = candidates.map((candidate) => inboundByName.get(candidate.toLowerCase())).find(Boolean);
+    if (!inboundFile) {
+      const uuid = referencedName.match(/([0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12})\.md$/i)?.[1];
+      if (uuid) inboundFile = availableInboundFiles.find((file) => file.toLowerCase().endsWith(`${uuid.toLowerCase()}.md`));
+    }
+    if (!inboundFile) return null;
+    return {
+      rawText: await fs.readFile(path.join(inboundDir, inboundFile), "utf8"),
+      sourceName: inboundFile
+    };
+  };
+
   const weeks = (await fs.readdir(reportsDir, { withFileTypes: true }))
     .filter((entry) => entry.isDirectory())
     .map((entry) => entry.name)
@@ -444,7 +472,8 @@ async function collectReports(registry, nameAliases) {
       const fallbackName = path.basename(file, ".json");
       const data = await readReportJson(sourcePath, week, fallbackName);
       const name = data.name || fallbackName;
-      const rawText = data.raw_text || "";
+      const attachedMarkdown = await resolveAttachedMarkdown(data.raw_text);
+      const rawText = attachedMarkdown?.rawText || data.raw_text || "";
       reports.push({
         id: `${week}/${slugify(name)}`,
         week,
@@ -458,7 +487,8 @@ async function collectReports(registry, nameAliases) {
         rawText,
         excerpt: snippet(rawText, 260),
         keywords: keywordScore(rawText).map((item) => item.word),
-        qualityScore: reportQuality(data)
+        qualityScore: reportQuality({ ...data, raw_text: rawText }),
+        ...(attachedMarkdown ? { sourceKind: "attached-md", sourceName: attachedMarkdown.sourceName } : {})
       });
     }
   }
@@ -469,11 +499,7 @@ async function collectReports(registry, nameAliases) {
       const name = member?.name || report.name;
       return `${report.week}/${identityKeyFromParts(userId, name)}`;
     }));
-    const inboundFiles = (await fs.readdir(inboundDir, { withFileTypes: true }))
-      .filter((entry) => entry.isFile() && entry.name.endsWith(".md"))
-      .map((entry) => entry.name)
-      .sort();
-    for (const file of inboundFiles) {
+    for (const file of availableInboundFiles) {
       const parsed = parseInboundReportFileName(file);
       if (!parsed?.week || excludedWeeks.has(parsed.week) || !isSundayWeek(parsed.week)) continue;
       const canonicalName = nameAliases[parsed.originalName] || parsed.originalName;
