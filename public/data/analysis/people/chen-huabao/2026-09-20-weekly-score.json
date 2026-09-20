@@ -1,0 +1,56 @@
+{
+  "key": "person:chen-huabao:2026-09-20:weekly-score",
+  "generatedAt": "2026-09-20T04:01:00.711Z",
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "reasoningEffort": "high",
+  "inputHash": "0b79efcf519d06e933113baa5668288c3012e70e43e522d140dc3ceee60fb88a",
+  "contentHash": "0b79efcf519d06e933113baa5668288c3012e70e43e522d140dc3ceee60fb88a",
+  "promptHash": "dd5205e0146f7bfc74cbfb84ed9fc44caa48090dca3cd84f010cf05b11b06e18",
+  "result": {
+    "hardProgress": {
+      "score": 18,
+      "reason": "实现path_confidence三版本引擎及三类拒答枚举；18条用例上v2/v3/v4分别12/15/18正确，完成版本回归并区分修好/弄坏；构造18条回归基准和100条关系核验变异测试集；发现两个可复现失败模式（无适用性层的过度拒答；无护栏模糊匹配放行语义相反关系）。",
+      "missingEvidence": "18条用例的预期答案、置信度映射及阈值未经专家确认；norm_v2未调用embedding/LLM，真实KGR-10验证尚未执行。"
+    },
+    "cognitiveIncrement": {
+      "score": 13,
+      "reason": "四条认知更新均来自实验，尤其“规则升级可能非单调改进需成组回归”“gate不确定性向下游传播”有明确机制；“语义匹配价值在方向+否定护栏”纠正了模糊匹配precision说法。",
+      "missingEvidence": "认知更新主要基于小样本和构造性benchmark，未在真实数据上验证，也未形成可复用规则/策略资产。"
+    },
+    "cot2Depth": {
+      "score": 13,
+      "reason": "三条CoT's CoT都明确区分了“老师是否知道—为什么不知道/未吸收—信息差—新增认知—自动化潜力—建议沉淀形式”，并给出证据等级B；特别是对规则升级评价口径（净修复）和变异测试集缺失的反思有深度。",
+      "missingEvidence": "自动化潜力均为高但未实际实施，建议沉淀形式仍停留在设想；证据等级B为学生自评，无外部校准。"
+    },
+    "brainaryMapping": {
+      "score": 8,
+      "reason": "三条映射分别对应cognitive control/reasoning、benchmark/evaluation/calibration/risk modeling、cognitive control/workflow management，且给出了适用性门控记忆激活、router-confidence传播+gate字段等具体沉淀方向。",
+      "missingEvidence": "无Brainary模块/能力的具体行为验证或量化指标，属于从实验到能力的理论映射。"
+    },
+    "monetaryValue": {
+      "score": 6,
+      "reason": "周报说明了题目的真实问题——医学MLLM推理需要证据必要性、分支适用性和验证工具可信性，有临床推理价值；但未给出任何经济/转化价值判断、项目级别收益或成本效益分析。",
+      "missingEvidence": "缺少对题目货币价值、临床落地路径、资源投入/产出或可持续资助的说明。"
+    },
+    "projectManagement": {
+      "score": 12,
+      "reason": "两任务均给出做了什么、新增硬进展、新实验、新benchmark、失败模式、卡点和下周最小可验证动作，结构完整，且任务间有知识复用（回归思想在引擎和核验器两侧同时出现）。",
+      "missingEvidence": "未给出任务优先级、时间估算、依赖关系、风险缓冲和资源安排；18条用例专家确认时间点未明确。"
+    },
+    "nextAction": {
+      "score": 8,
+      "reason": "下周动作具体可执行：引擎接KGR-10统计gate结构占比；真实KGR-10三元组跑norm_v2并只对表外未命中调用LLM语义匹配器，再用44条对抗集回归。",
+      "missingEvidence": "未给出两步动作的成功标准、预期样本量和完成定义；调用LLM的预算/工具选择未明确。"
+    },
+    "evidenceQuality": {
+      "score": 4,
+      "reason": "提供大量数值结果（12/18、15/18、18/18；44条零放行；否定放行随阈值变化），并识别构造性结果局限（别名改写全通过不代表真实覆盖率）；但还未经过外部模型和专家确认。",
+      "missingEvidence": "18条用例黄金标签未经专家确认；实验没有提供完整混淆矩阵或统计显著性；变异测试的阈值扫描结果呈现不完整。"
+    },
+    "totalScore": 82,
+    "tier": "A",
+    "oneLineJudgment": "本周以可执行回归和变异测试验证了两个失败模式，硬进展扎实，但规则/基准的专家确认与真实数据验证仍是缺口。",
+    "professorFollowUp": "请优先安排18条用例的专家标注与置信度阈值确认；推动学生在下周把norm_v2接真实KGR-10并记录加入LLM后的44条对抗回归结果；同时可将“rule-as-code+强制回归闸门”作为agent policy候选，纳入自动化科研流程。"
+  }
+}

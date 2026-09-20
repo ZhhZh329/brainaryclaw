@@ -1,88 +1,91 @@
 {
   "key": "person:huang-yitan:2026-09-20:horizontal",
-  "generatedAt": "2026-09-20T02:02:03.578Z",
+  "generatedAt": "2026-09-20T04:02:22.063Z",
   "provider": "deepseek",
   "model": "deepseek-v4-pro",
   "reasoningEffort": "high",
-  "inputHash": "16ea8a585080eb8d4b7a91fb7bbd6087859881bb5940691594c25fb5570dbbb8",
-  "contentHash": "16ea8a585080eb8d4b7a91fb7bbd6087859881bb5940691594c25fb5570dbbb8",
+  "inputHash": "0bfaa65d4e4410360ff2a6e4e723f396bca9e1747253cc6a91d33cda9a30aa75",
+  "contentHash": "0bfaa65d4e4410360ff2a6e4e723f396bca9e1747253cc6a91d33cda9a30aa75",
   "promptHash": "7ab2efc4d416dbeeb34a0e2d3cc797ac660749509537011b4ea431707a52a0ba",
   "result": {
     "overallLevel": "非常好",
-    "headline": "从社会结构到可执行权限推理：四层动态 Privilege 状态与三模块反事实 MVP 架构收敛",
-    "overviewSentence": "本周把 privilege 从宽泛的社会结构概念凝聚为 EvidenceBundle→PrivilegeAtom→Dynamic Graph→PrivilegeState 四层结构，并配套 Structure Parser、Graph Resolver、Counterfactual Validator 与 Payroll intern 三状态 case，项目管理清晰，下周将跑通最小 pure-inference 闭环。",
-    "shortRead": "值得优先读：重点看第2、5、6、9节，理解架构收敛、元认知分类、停损条件和下周最小可验证动作。",
-    "levelRationale": "硬进展方面形成了9个 v0 级 schema、接口、算法与 case，虽然尚无真实 corpus 评测结果，但把问题从概念推到了可实施模块边界；认知增量给出5条具体转变，CoT's CoT 四条均为 B 级且有模型和案例支撑；Brainary 映射覆盖从根问题到监控的完整路径；价值判断、金额价值和停损条件完整；项目管理有偏差原因与纠偏动作；元认知从 confidence 细化到证据缺失/冲突/规范空白三类路由。因此本周属于较值得优先阅读的一类，达到“非常好”等级。未能到“特别值得读”是因为最小闭环尚未真正跑通，atom P/R/F1、path recall、flip accuracy 等关键证据仍停留在计划层。",
-    "sameWeekPosition": "按本周标准，这份周报属于较值得优先阅读的一类，尤其在架构收敛、项目管理和元认知细化方面表现突出。",
+    "headline": "将宽泛的权限社会结构问题收敛为三个可验证模块，并以最小案例锁定接口和指标，具备很强的本周优先阅读价值。",
+    "overviewSentence": "这份周报把分散的组织证据压缩成带 provenance 的动态 PrivilegeState，并给出三模块 MVP 与反事实验证的最小闭环，属于较值得优先阅读的一类。",
+    "shortRead": "亮点是 EvidenceBundle→PrivilegeAtom→Dynamic Graph→PrivilegeState 四层证据链，以及六类 structural mutation 的 flip/no-flip 设计。项目管理清晰，价值判断有停损条件，元认知从 confidence 深化为 unknown 分类路由。下周最需要做的是把设计跑成真实指标。",
+    "levelRationale": "硬进展明确：四个 v0 数据结构/接口、三模块 I/O 与评测矩阵、counterfactual mutation library 和 Payroll intern 三状态 case 均已固定，远超空泛概念。认知增量与 CoT's CoT 均落地到具体模型和最小案例，证据等级清楚标为 B。Brainary 映射覆盖 12 个能力维度，元认知从“反思哪里可能错”推进到“区分证据缺失、冲突和规范空白并路由到不同动作”。价值判断不仅给出 11 万元估计，还有明确的停损条件和 KEEP/REFINE 结论。项目管理对原计划偏差、下周小时预算、依赖关系都处理得很好。因此评为“非常好”。尚未给到“特别值得读”，主要因为还没有真实语料上的 atom P/R/F1、path recall 或 flip accuracy，所有结论仍是设计层面的强推理。",
+    "sameWeekPosition": "按本周提交的 21 份周报的研究管理标准，这份周报属于较值得优先阅读的一类，尤其适合老师快速掌握主线收敛方向和下一周可验证动作。",
     "highlightedSignals": [
-      "将宽泛的 Constitution/Social Privilege 收敛为 EvidenceBundle→PrivilegeAtom→Dynamic Graph→PrivilegeState 四层可运行结构，每层都有 provenance、时间与版本。",
-      "Graph Resolver 明确 hard constraints 先于 learned reranker，高风险 deny 不能被模型分数越过。",
-      "Counterfactual Validator 用六类 mutation 区分 expected flip 与 must-not-flip，为反事实提供归因和 hard-negative 生成接口。",
-      "元认知不再只是 confidence，而是识别证据缺失、证据冲突与规范空白，并路由到 ASK、ABSTAIN 或 Constitution amendment。",
-      "项目管理给出原计划vs实际、偏差原因、纠偏动作和下周预计投入，自动转化路径把卡点定位到可运行 fixture 与确定性 Resolver。"
+      "EvidenceBundle 保留 source/timestamp/version/scope/source_span，避免 provenance 在处理中丢失。",
+      "PrivilegeAtom 用 rule_layer 分开 formal rule 与 rule-in-use，冲突不覆盖而保留为 contradiction。",
+      "Dynamic Privilege Graph 支持按 principal/task/time 做 temporal slice，避免全图扩散。",
+      "PrivilegeState 输出 relation path、contradictions、missing_preconditions、ASK/ABSTAIN 路由，不只 allow/deny。",
+      "Counterfactual mutation 固定 role/tenant/relation/delegation/time/memory 六类，并要求 expected flip 或 must-not-flip。",
+      "模块级评测矩阵可定位错误来自抽取、检索、裁决还是不稳定性。",
+      "价值判断包含停损条件：若动态图无增益则收缩为 provenance-aware policy evaluator。"
     ],
     "focusDimensions": {
       "valueJudgment": {
-        "read": "很好",
-        "evidence": "周报第6节给出真实问题、付费方、局部到通用能力判断、做成后沉淀形式以及停损条件；第7节用 1.5-2 周工作量和 3 倍复用倍数估算任务一 5 万、任务二 6 万，总计 11 万，并解释价值来源。",
-        "nextLift": "下一步可将金额估算与可验证结果绑定，例如在跑出 atom P/R/F1、path recall 和 flip accuracy 后重新校准价值区间，并补充更具体的客户/产品假设。"
+        "read": "本周价值判断达到很高水平，既区分局部入口与通用能力，又给出可执行的停损条件，而不是泛泛地说“值得做”。",
+        "evidence": "周报第 6 节明确结论 KEEP/REFINE，并给出两个停损条件：若 Dynamic Graph 无法比结构化 policy table 提高 path recall/解释完整性/mutation consistency，则收缩为 provenance-aware policy evaluator；若 Counterfactual Validator 无法稳定生成 hard negatives，则保留为 regression test 工具。第 7 节给出任务一 5 万、任务二 6 万，总计 11 万人民币，并说明按 1.5–2 周工作量和 3 倍复用系数估算。",
+        "nextLift": "下周需要把价值判断从纸面推向小规模证据：用最小 Payroll intern fixture 证明 Dynamic Graph 相比静态 policy table 确实能提升 path recall 或解释完整性；同时检查 mutation tests 是否稳定产出可复用的 hard negatives。若指标不达预期，应触发已写好的停损条件，而不是继续扩大 schema。"
       },
       "projectManagement": {
-        "read": "非常好",
-        "evidence": "第9节两个项目分别给出原计划vs实际、实际投入时间估计、下周投入、关键里程碑、依赖与关键路径、token 成本、偏差原因和纠偏动作；第10节明确转化门槛和卡点，显示项目已进入编码前最后准备。",
-        "nextLift": "下周可以补上实际计时和真实 token 消耗，让项目复盘从估计变为事实；如果实现受阻，按模块指标定位并先回滚对应模块，避免过早引入 learned reranker。"
+        "read": "项目管理非常扎实，两个项目分别给出阶段、时间、资源、依赖、成本、原计划与实际偏差、纠偏动作，并且对下周任务做了小时级拆分。",
+        "evidence": "周报第 9 节：项目一当前阶段为“架构建模完成/最小数据与实现前”，项目二为“算法与接口完成/MVP 编码前”。原计划是 Constitution 编译和 12 组成对反事实，实际收敛为 EvidenceBundle/PrivilegeState 和三模块接口，偏差原因写为“方法调整/优化”。下周预计投入 12 和 16 小时，并把 Parser/Resolver/Validator 编码、12 个 mutation tests 分别估算，关键路径也明确。Token 成本约 27–32 美元，无瓶颈。",
+        "nextLift": "下周应记录真实投入工时和 token 消耗，把金额价值估计换成基于实际开销的复盘，否则只能停在估算层。同时建议在周中设一个检查点：如果周三还没有跑出第一个 Baseline→Deny 的 receipt，就应冻结新增字段，先完成最小闭环。"
       },
       "metacognition": {
-        "read": "很好",
-        "evidence": "第5节把元认知具体化为“知道授权判断依赖哪条证据路径，以及这条路径在哪一步可能不完整”；PrivilegeState 输出 contradictions 和 missing preconditions；第3节 CoT's CoT 3 区分 evidence missing、contradiction、normative gap 并路由到 ASK/ABSTAIN/amendment。",
-        "nextLift": "下一步可以在真实 fixture 上统计三类 unknown 的分布与路由命中率，验证“知道自己为什么不知道”能否稳定触发补证据、冲突裁决或规则修订，而不仅停留在 schema 设计。"
+        "read": "元认知变化明显：从“输出 confidence”深化到“识别自己为什么不知道”，并把不同无知路由到不同控制动作，这是本周最值得老师关注的一点。",
+        "evidence": "周报第 5 节把元认知表述为“系统必须知道自己的授权判断依赖哪条证据路径，以及这条路径在哪一步可能不完整”。PrivilegeState 同时输出 evidence refs、contradictions、missing preconditions；Resolver 对 missing precondition 返回 ASK，对 critical contradiction 返回 ABSTAIN，规则空白进入 Constitution amendment。CoT's CoT 3 又细化为三类 unknown：证据未加载、证据冲突、规则空白，并指出多数校准只比较概率与标签，没有区分这三者。",
+        "nextLift": "下一步需要验证未知分类的可分性：用带标注的数据测试 missing precondition、contradiction 和 normative gap 是否能被可靠区分，避免把三者混成低 confidence。同时要确保 Oracle 和 expected transition 的生成独立于 Resolver，否则元认知监控会变成自证。"
       }
     },
     "growthOpportunities": [
-      "从设计图到可运行 fixture：当前硬进展集中在 schema 与接口，尚未报告真实 corpus 上的 atom P/R/F1、path recall 或 flip accuracy；下周跑通 Payroll intern 最小闭环后，证据等级有望从 B 提升到 A。",
-      "将估算变成事实：实际投入时间和 token 消耗目前为保守估计，建议增加轻量时间与成本记录，让项目复盘更可复用。",
-      "固定 Oracle 与 invariant：反事实的 expected flip 需要独立于 Resolver 的规则文件，建议提前冻结，避免自证偏差。"
+      "从架构设计切换到最小运行：下周的核心不是再增加图和状态字段，而是用确定性代码跑通 Payroll intern 的三状态，否则会停留在 schema 层。",
+      "Oracle 独立性：expected flip / must-not-flip 不能由待测 Resolver 自己生成，建议先用手工规则或人工标注固定 invariant，否则反事实验证会失去归因能力。",
+      "实际成本记录：本周 token 和工时都写“未精确记录”，下周需记录真实值，让金额价值估计更可审计。",
+      "Entity resolution 风险：同名角色或跨组织资源错误归并会在图中放大，建议先用确定性 entity id 和手工 ground truth，隔离消歧问题。"
     ],
     "teacherAction": {
       "readOriginal": true,
       "meetingQuestions": [
-        "下周 Payroll intern 三状态 case 的 ground truth 和 missing precondition 怎么标？你准备用哪些确定性规则生成 expected transition？",
-        "如果 Graph Resolver 的 path recall 不达预期，你会先修 entity resolution、hard constraints 还是 relation expansion？停损条件如何触发？",
-        "在缺失授权与证据未加载之间，你准备怎样在 fixture 中显式编码两种不同的 missing precondition？",
-        "金额价值从 5万/6万如何随实验结果更新？你会用哪些指标作为是否继续投入的停损门槛？"
+        "你如何保证 Counterfactual Validator 的 Oracle 和 expected transition 不是由待测系统自己产生的？",
+        "如果下周 atom P/R/F1 或 path recall 较低，你准备先收缩哪一部分？是解析、图检索还是反事实验证？",
+        "Dynamic Graph 相比静态 policy table，你预期在哪些具体 case 上会有显著增益？有没有一个最小反例可以证明必要性？",
+        "金额价值 11 万里的 3 倍复用系数来自什么假设？如果只作为内部研究资产，你愿意降到多少？",
+        "你打算把 Payroll intern fixture 和 30–50 atoms 做成可复现的最小数据集吗？这对后续 benchmark 和论文合作价值很大。"
       ],
       "nextWeekWatch": [
-        "是否交付 Payroll intern 的 EvidenceBundle、30-50 条 PrivilegeAtom 和最小动态图。",
-        "是否输出三个状态的 relation path、missing preconditions、contradictions 与 receipt。",
-        "是否完成 12 个以上 expected flip/must-not-flip mutation tests，并报告 atom P/R/F1、path recall、decision F1、abstain calibration、flip accuracy。",
-        "是否严格控制没有提前训练 reranker，保持 pure inference 基线。"
+        "是否真正产出 atom P/R/F1、provenance hit rate、path recall、decision F1 等指标，而不只是 schema 更新。",
+        "Payroll intern 三状态是否都能返回预期的 relation path 和 missing preconditions。",
+        "12 个 mutation tests 是否真的运行，并记录 flip/no-flip 通过率。",
+        "Oracle 与 Resolver 是否独立；expected transition 是否有独立 invariant 文件。",
+        "是否开始记录实际工时和 token 消耗，用来复盘金额价值估计。"
       ]
     },
     "studentFeedback": {
-      "summary": "本周你把宽泛的 privilege 研究收敛成了清晰的可执行架构，并把价值、风险和下一步都写得很清楚，下周只要跑通 Payroll intern 最小闭环并回报模块指标，就能完成一次从设计到验证的关键跨越。",
+      "summary": "本周你把宽泛的权限社会结构问题收敛成三道可验证模块和一个最小案例，对价值、停损和元认知都有清晰思考，下一步关键是让设计落地为可运行的小数据闭环。",
       "whatYouDidWell": [
-        "把 EvidenceBundle、PrivilegeAtom、Dynamic Graph、PrivilegeState 四层结构设计得环环相扣，使权限判断从静态角色升级为可追溯证据路径。",
-        "没有急着训练模型，而是先拆分 Parser/Resolver/Validator 三个模块和六类 mutation，错误定位和反事实测试都具备可操作性。",
-        "价值判断、停损条件和项目管理写得很扎实，特别是偏差原因和下周最小动作，让老师能一眼看到你的研究管理成熟度。"
+        "EvidenceBundle 到 PrivilegeState 的四层模型把 privilege 从静态属性转为可审计的关系路径，保留了 provenance、contradiction 和 missing precondition，避免了黑盒 allow/deny。",
+        "模块级评测矩阵和六类 structural mutation 让错误来源可定位，并能生成带预期的 hard negatives，不是随机改 ID。",
+        "项目管理诚实清楚：原计划与实际差距、下周小时预算、关键路径和停损条件都写得明白，方便和老师对齐。"
       ],
       "nextStep": [
-        "下周先固定 Payroll intern 的最小 EvidenceBundle 和 ground truth，再编码 schema validator 和 deterministic Resolver，确保不提前引入 learned reranker。",
-        "为每个 mutation 先写独立 invariant 文件，明确 expected flip 与 must-not-flip；运行后把失败样本保留为 bug case。",
-        "记录实际耗时和 token，后续用实验结果重新校准金额价值，不要只停留在估算。"
+        "下周优先实现确定性 Parser/Resolver/Validator，先用手工 entity id 跑通 Payroll intern 三状态，不急着训练 learned reranker。",
+        "提前写死 Oracle 和 expected transition，最好用独立 invariant 文件或人工标注，避免用待测系统自证。",
+        "记录实际工时和 token 消耗，把金额价值估计更新为基于真实开销的复盘，也便于后续报成本。"
       ],
-      "suggestedRewrite": "下周周报可以这样写：开篇先给出“已完成/未完成/下周验证”三行摘要；每个任务都直接列出运行结果、失败样本和指标，而不只是描述 schema；最后在价值估算后附上哪些实验证据会支撑或推翻当前估算。"
+      "suggestedRewrite": "下周周报可先列出三个关键结果：Payroll intern 三状态的 relation path 与 missing preconditions；12 个 mutation tests 的 flip/no-flip 通过率；atom 抽取 P/R/F1 与 provenance hit rate。然后用一小节写这些结果如何验证或否定 Dynamic Graph 优于静态 policy table，并把金额价值估计更新为基于实际工时和 token 成本。"
     },
     "evidenceLinks": [
-      "周报第1节任务一：EvidenceBundle、PrivilegeAtom、Dynamic Privilege Graph、PrivilegeState 设计",
-      "周报第1节任务二：三模块接口、Graph Resolution Algorithm、Counterfactual Mutation Library、Payroll Intern case",
-      "周报第2节 CoT 增量",
-      "周报第3节 CoT's CoT 四条",
-      "周报第4节 Brainary 关联",
-      "周报第5节 meta-cognition",
-      "周报第6节 题目价值",
-      "周报第7节 价值观总结",
-      "周报第9节 项目管理",
-      "周报第10节 自动化科研转化路径"
+      "周报第 1 节：EvidenceBundle v0、PrivilegeAtom Schema v0、Dynamic Privilege Graph v0、PrivilegeState Runtime Contract v0",
+      "周报第 2/3 节：CoT 增量与 CoT's CoT（证据等级 B）",
+      "周报第 4 节：Brainary 关联映射",
+      "周报第 5 节：对 meta-cognition 的新理解",
+      "周报第 6 节：题目是否值得做（KEEP/REFINE、停损条件）",
+      "周报第 7 节：价值观总结（金额价值 11 万）",
+      "周报第 9 节：项目管理（两个项目时间/资源/纠偏）",
+      "周报第 10 节：自动化科研转化路径"
     ]
   }
 }
