@@ -34,6 +34,8 @@ const minValidReportChars = Number(process.env.WEEKREP_MIN_VALID_REPORT_CHARS ||
 const personWeekPolicy = process.env.WEEKREP_PERSON_WEEK_ANALYSIS_POLICY || "on-change";
 const reanalyzeOnPromptChange = process.env.WEEKREP_REANALYZE_ON_PROMPT_CHANGE === "1";
 const maxGeneratedPerRun = Math.max(0, Number(process.env.WEEKREP_ANALYZE_MAX_GENERATED_PER_RUN || 0));
+const maxReportAnalysisChars = Math.max(1000, Number(process.env.WEEKREP_ANALYZE_MAX_REPORT_CHARS || 120000));
+const maxModelInputChars = Math.max(10000, Number(process.env.WEEKREP_ANALYZE_MAX_INPUT_CHARS || 600000));
 const allowOpenInnovationWeek = process.env.WEEKREP_INNOVATION_ALLOW_OPEN_WEEK === "1";
 const refreshInnovationWeek = process.env.WEEKREP_INNOVATION_REFRESH_WEEK === "1";
 let generatedStarted = 0;
@@ -82,13 +84,60 @@ const slug = (value) => {
 };
 const pastDeadline = (week) => week?.pastDeadline === true || Date.now() > Date.parse(week?.deadline || "");
 
+function truncateAnalysisText(value, maxChars) {
+  const text = String(value || "");
+  if (text.length <= maxChars) return text;
+  const marker = `\n\n[内容过长，已从 ${text.length} 字符截断；中间内容省略]\n\n`;
+  const available = Math.max(0, maxChars - marker.length);
+  const headLength = Math.floor(available * 0.8);
+  return `${text.slice(0, headLength)}${marker}${text.slice(text.length - (available - headLength))}`;
+}
+
+function compactAnalysisText(value) {
+  const text = String(value || "").replace(
+    /data:[^,]{1,200};base64,[A-Za-z0-9+/=\r\n]+/gi,
+    "[嵌入的二进制媒体已省略]"
+  );
+  return truncateAnalysisText(text, maxReportAnalysisChars);
+}
+
+function shrinkInputStrings(value, ratio) {
+  if (typeof value === "string") {
+    const target = Math.max(200, Math.floor(value.length * ratio));
+    return truncateAnalysisText(value, target);
+  }
+  if (Array.isArray(value)) return value.map((item) => shrinkInputStrings(item, ratio));
+  if (value && typeof value === "object") {
+    return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, shrinkInputStrings(item, ratio)]));
+  }
+  return value;
+}
+
+function serializeModelInput(input) {
+  let fitted = input;
+  let serialized = JSON.stringify(fitted);
+  for (let attempt = 0; serialized.length > maxModelInputChars && attempt < 4; attempt += 1) {
+    const ratio = Math.max(0.05, (maxModelInputChars / serialized.length) * 0.9);
+    fitted = shrinkInputStrings(fitted, ratio);
+    serialized = JSON.stringify(fitted);
+  }
+  if (serialized.length > maxModelInputChars) {
+    serialized = JSON.stringify({
+      truncated: true,
+      note: "输入整体过长，已保留首尾摘要。",
+      excerpt: truncateAnalysisText(serialized, maxModelInputChars - 120)
+    });
+  }
+  return serialized;
+}
+
 function compactReport(report) {
   return {
     week: report.week,
     name: report.name,
     userId: report.userId || "",
     submittedAt: report.submittedAt || report.updatedAt || report.createdAt || "",
-    rawText: report.rawText
+    rawText: compactAnalysisText(report.rawText)
   };
 }
 
@@ -258,6 +307,7 @@ async function callModel({ system, prompt, input }) {
       reason: provider === "deepseek" ? "DEEPSEEK_API_KEY is not set" : "OPENAI_API_KEY is not set"
     };
   }
+  const serializedInput = serializeModelInput(input);
 
   if (provider === "deepseek") {
     const response = await fetchWithRetry("DeepSeek", "https://api.deepseek.com/chat/completions", {
@@ -270,7 +320,7 @@ async function callModel({ system, prompt, input }) {
         model,
         messages: [
           { role: "system", content: system },
-          { role: "user", content: `${prompt}\n\nINPUT JSON:\n${JSON.stringify(input)}` }
+          { role: "user", content: `${prompt}\n\nINPUT JSON:\n${serializedInput}` }
         ],
         thinking: { type: process.env.DEEPSEEK_THINKING || "enabled" },
         reasoning_effort: reasoningEffort,
@@ -304,7 +354,7 @@ async function callModel({ system, prompt, input }) {
         },
         {
           role: "user",
-          content: [{ type: "input_text", text: `${prompt}\n\nINPUT JSON:\n${JSON.stringify(input)}` }]
+          content: [{ type: "input_text", text: `${prompt}\n\nINPUT JSON:\n${serializedInput}` }]
         }
       ]
     })
