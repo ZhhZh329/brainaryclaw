@@ -1,0 +1,76 @@
+{
+  "key": "person:wang-huili:2026-09-20:horizontal",
+  "generatedAt": "2026-09-20T15:02:14.887Z",
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "reasoningEffort": "high",
+  "inputHash": "de1bf07c8bd6cd8d8b0354ddb3187b386745c3992c90beeec3524d7280051067",
+  "contentHash": "de1bf07c8bd6cd8d8b0354ddb3187b386745c3992c90beeec3524d7280051067",
+  "promptHash": "7ab2efc4d416dbeeb34a0e2d3cc797ac660749509537011b4ea431707a52a0ba",
+  "result": {
+    "overallLevel": "特别值得读",
+    "headline": "passed 标签歧义被数据揭示：动态 KG 需要五类证据状态而不是单一通过标签",
+    "overviewSentence": "Wang Huili 完成 3757 样本的运行时验证分析，发现 PI 通过率与触发率显著背离，提出将 passed 标签拆分为触发、检测/拒绝、无效、基础设施失败和证据缺失五类状态，并规划为动态 KG 的四个自动化模块。",
+    "shortRead": "本周 Wang Huili 用 3,757 个样本的运行时验证数据，发现 PI 的 passed 通过率高达 76.2% 但实际触发率仅 10.1%，揭示同一标签可能表示攻击成功或攻击被检测。由此提出动态 KG 应保存 triggered、detected/refused、ineffective、infrastructure failure 和 missing evidence 五类状态，并对应四条自动化模块路径。",
+    "levelRationale": "这份周报的硬进展有明确数字支撑（98.9% 覆盖率和 86.5% 通过率），认知增量从数据异常推进到对 passed 标签语义歧义的修正，CoT's CoT 进一步把运行证据路径确立为基本分析单位，Brainary 映射覆盖 memory、reasoning、provenance、risk modeling 和 cognitive control，自动化路径清晰。因此值得优先阅读。提升空间在于证据附件和下周计划可进一步量化。",
+    "sameWeekPosition": "按本周标准，这份周报属于较值得优先阅读的一类。",
+    "highlightedSignals": [
+      "用 PI 通过率与触发率的显著偏离，识别出 passed 标签不能直接等同攻击成功这一关键问题。",
+      "提出五类运行结果状态（triggered、detected/refused、ineffective、infrastructure failure、missing evidence），把认知修正落到可操作的数据模型。",
+      "将动态 KG 定位为 evidence-aware memory，并给出四个自动化模块的闭环设计。"
+    ],
+    "focusDimensions": {
+      "valueJudgment": {
+        "read": "非常好：本周发现具有研究价值，因为 passed 标签的语义歧义直接威胁运行时安全结论的可靠性，而五类状态拆分是从数据到模型的关键修正。",
+        "evidence": "3,717 个有效样本中，PI 通过率 76.2% 但实际触发率仅 10.1%，说明约 66% 的 PI 通过样本并未成功触发；CI/MIXED 触发率 94.7%/96.1% 形成对照。",
+        "nextLift": "可进一步把该发现与具体安全决策后果绑定，例如估算如果不拆分状态，误判率会给下游风险建模带来多少错误判断。"
+      },
+      "projectManagement": {
+        "read": "很好：下周计划已经列出补齐缺失证据、重跑超时、统一口径，且自动化模块一/二/三/四形成清晰顺序。",
+        "evidence": "原文列出数据映射与建图、证据对齐与状态更新、攻击路径分析、补证与实验调度四个模块，并给出每个模块的输入输出职责。",
+        "nextLift": "可以把下周任务进一步细化为带截止时间和验收条件的任务项，例如先处理 39 条缺失证据中影响最大的 PI passed 但未触发样本。"
+      },
+      "metacognition": {
+        "read": "非常好：元认知提升显著，从‘知道结论’推进到‘知道结论由哪条证据路径产生’，并提出可执行的图状态检查与补证决策。",
+        "evidence": "原文明确说‘系统不仅要知道当前结论是什么，还要知道该结论由哪条证据路径产生…’，并指出动态 KG 显式保存证据来源、时间、置信度、缺失状态和反证关系。",
+        "nextLift": "下一步可以把这个元认知操作定义成自动触发的查询或规则，例如‘当 passed=true 且触发率为空时，生成一条检测/拒绝路径待验证’。"
+      }
+    },
+    "growthOpportunities": [
+      "可附上原始数据文件或关键样本截图，让读者直接看到 PI passed 但未触发的证据路径。",
+      "下周可以把‘统一统计口径’具体化为一组定义，明确 triggered、detected/refused、ineffective 等标签的判定标准。",
+      "自动化模块的 schema 尚未给出，下周可以先画出最小节点—边模型，便于评审落地。"
+    ],
+    "teacherAction": {
+      "readOriginal": true,
+      "meetingQuestions": [
+        "你能否展示 PI 样本中 passed 但未触发的一个具体证据路径，说明检测/拒绝的证据来源？",
+        "五类状态中 ‘ineffective’ 和 ‘infrastructure failure’ 的边界如何自动判定？冲突证据如何处理？",
+        "下周补齐缺失证据和重跑超时的优先级标准是什么？哪些样本会先进入人工复核？",
+        "动态 KG 的事件—证据—状态图，是否已经形成 schema 或最小可行图？"
+      ],
+      "nextWeekWatch": [
+        "是否给出统一统计口径和每个模块的输入/输出 schema。",
+        "是否附上一张关键路径的可视化，例如 PI passed 但触发 vs 检测的对比。",
+        "是否明确状态更新的置信度阈值和补证任务优先级。"
+      ]
+    },
+    "studentFeedback": {
+      "summary": "你本周把一次看似普通的数据验收，提升到对‘passed’标签歧义的认知修正，并明确了下周可执行的动态 KG 状态建模路径，这是很有价值的一次周报。",
+      "whatYouDidWell": [
+        "用 98.9% 覆盖率、86.5% 通过率与 56.2% 触发率的对比，让数据自己说出问题。",
+        "从 PI 通过率与触发率的背离，提炼出‘相同 passed 可能代表攻击成功或攻击被发现’这一关键认知。",
+        "把动态 KG 建模为五类状态和四个自动化模块，使认知更新直接落到可执行的工程路径。"
+      ],
+      "nextStep": [
+        "下周可以给每个状态补充 1-2 个真实样本的证据路径截图或文字示例。",
+        "把‘补齐缺失证据、重跑超时’拆成带优先级和验收标准的任务清单。",
+        "为动态 KG schema 画一个最小版本，哪怕只是节点—边清单。"
+      ],
+      "suggestedRewrite": "下周周报可以先给一张表：样本 ID | 原始 passed 值 | 实际状态（触发/检测/无效/基础设施失败/缺失证据） | 关键证据路径 | 需要补证的行动；再说明统一统计口径后的数字变化，以及每个自动化模块的输入输出 schema。"
+    },
+    "evidenceLinks": [
+      "原文数字证据：3,757 个预期样本，3,717 个有效证据，98.9% 覆盖率，86.5% 验证通过率，56.2% 实际触发率；未附外部链接或图表。"
+    ]
+  }
+}
