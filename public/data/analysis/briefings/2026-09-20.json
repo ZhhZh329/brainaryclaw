@@ -1,0 +1,214 @@
+{
+  "key": "week:2026-09-20:briefing",
+  "generatedAt": "2026-09-21T04:01:21.943Z",
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "reasoningEffort": "high",
+  "inputHash": "d5fbfab1488f9b3ff8c8d665253eecb2cf0194de8873f5cb012e9b298da484ea",
+  "contentHash": "d5fbfab1488f9b3ff8c8d665253eecb2cf0194de8873f5cb012e9b298da484ea",
+  "promptHash": "fd044858c100ec630703bd42902fd3fddf90c8cba2723bb99c9bbfecea4fd4c3",
+  "result": {
+    "headline": "本周 38 份周报呈现硬证据与认知升级并行：多个项目进入投稿/交付节点，但自动化瓶颈从“推理”转向“环境感知”与“证据闭环”。",
+    "executiveSummary": [
+      "本周提交 38/79，缺交 41 人，提交率不足一半；但已提交报告中涌现多项高证据等级进展（A/B 级）。",
+      "硬进展集中在：安全（13 个 Linux 0-day、PyCache Trap 完稿）、评测审计（特性 benchmark 测试充分性空白）、Agent 能力边界（医学工具、权限动态变化）与知识注入（需求工程编译为可执行判据）。",
+      "多条认知线索收敛到同一结构问题：约束型系统/防御机制的价值必须通过反事实或回归检验，而非目标用例的前向改进。",
+      "多名学生反复指出环境感知接口是自动化的第一瓶颈：设计层完备性不等于可实现性，人肉执行会暴露信号来源缺口。",
+      "多项工作仍停留在概念或小规模验证，证据级别 B/C 居多；部分价值估算缺少成本或市场依据，需警惕过度承诺。",
+      "本周最值得教授关注的是：从“流量安全”到“状态安全”的范式迁移——Agent 记忆需要修复而非仅拦截；以及安全判断必须绑定对象与状态，否则静态审核结论会失效。",
+      "后续管理重点：推动已成熟项目进入正式对照/benchmark 验证，避免只展示链路不展示增量收益；同时补足缺交周报的覆盖。"
+    ],
+    "sections": {
+      "keyProgress": [
+        {
+          "title": "并发漏洞检测获 13 个真实 Linux 0-day（内存屏障缺失）",
+          "people": "梁睿超",
+          "whyItMatters": "13 个 Linux 7.2.6 0-day 经静态分析确认，是“连接提议+符号检查”分工的硬验证，将关系恢复从异步生命周期扩展到内存序 happens-before。",
+          "evidence": "证据 A：13 个 0-day 静态分析确认；事件识别覆盖率从 17% 提升至 78%。",
+          "action": "加速从静态确认到 PoC 与披露材料的自动化 workflow；确保后续关系恢复模块复用该案例。"
+        },
+        {
+          "title": "PyCache Trap 论文完成并进入 ICLR 投稿阶段",
+          "people": "廖杰",
+          "whyItMatters": "将具体缓存攻击抽象为“静态审核与运行时执行的 trust gap”，为 Agent/Skill 安全提供新的边界定义。",
+          "evidence": "论文全文完成，核心实验与论证闭环；证据等级 A（有实验与完整论文证据链）。",
+          "action": "完成投稿前 claim-evidence 对齐检查，并将 trust continuity 能力独立沉淀为 runtime security benchmark/module。"
+        },
+        {
+          "title": "特性类 benchmark 审计发现“测试充分性”整列空白",
+          "people": "沈奇伟",
+          "whyItMatters": "增量开发最关键的回归率指标建立在一组从未验证过充分性的测试上，现有回归数字可能被高估；变异测试可成为新的研究落点。",
+          "evidence": "8 个特性类 benchmark 按 7 项校验对照，“测试充分性”无一通过；FeatBench 失败中回归性实现占 73.6%。",
+          "action": "下周抽 20 题手工审计并考虑变异注入，验证或推翻“回归数字被高估”的推断；若成立，则新增 benchmark soundness 审计方向。"
+        },
+        {
+          "title": "医学工具 Agent 学习“工具能力边界”，跨环境迁移降低虚报",
+          "people": "钱佳宇",
+          "whyItMatters": "证明能力边界可通过受控扰动学习，而非为每个环境重新训练；同时指出旧反事实奖励会奖励忽略证据的行为。",
+          "evidence": "VISTA3D 证据缺口上虚报降低 12.35 pp，无效调用减少 0.221 次/题，准确率无显著下降（B 级，测试用于开发、第二种子未完成）。",
+          "action": "补全 v4.1 与第二种子，并优化“何时回答/继续探查/交接”的决策边界，降低过度保守代价。"
+        }
+      ],
+      "teacherUnknown": [
+        {
+          "title": "规则升级需要回归测试，评价口径应为净修复",
+          "people": "陈华宝",
+          "whyItMatters": "人工复核只有前向视角，可执行回归才能暴露弄坏历史正确行为的风险；问题条件化必须配套适用性层。",
+          "evidence": "18 条用例上 v3→v4 修好 3 条但弄坏 1 条；变异测试中 norm_v2 在对抗用例零放行但自然改写覆盖不足（B）。",
+          "action": "沉淀为 harness+agent policy：任何规则/策略变更必须在全部历史用例上回归，同时报告 fixed 与 broke 数。"
+        },
+        {
+          "title": "自进化有两条硬边界：循环不创造能力，自我知识会过期",
+          "people": "梁睿超",
+          "whyItMatters": "MetaRSI 两条定律防止过度承诺：内部循环只重分配已有能力，新能力必须外部 grounding；self-model 需过期重描述机制。",
+          "evidence": "四条独立路径（神经科学、组织学习、RSI、神经-符号）收敛；前沿论文论断（B 级，未在自系统验证）。",
+          "action": "将边界规则写入 agent 出厂结构，并实现 self-model 过期重描述机制。"
+        },
+        {
+          "title": "安全判断必须绑定对象 identity 与执行状态",
+          "people": "廖杰",
+          "whyItMatters": "安全标签应包含判断对象、依据、有效条件；对象变化后旧结论需重新验证，否则“静态审核通过≠运行时可信”。",
+          "evidence": "PyCache Trap 实验与完整论文证据链（A 级）。",
+          "action": "在 Brainary 中实现 trust-aware memory 结构，记录 Object+Version/State+Evidence+Validity。"
+        },
+        {
+          "title": "Memory poisoning 防御领域只做了拦截，从未做修复",
+          "people": "隋浩",
+          "whyItMatters": "流量安全范式不适用于持久化状态；拦截不能修复已派生的污染，安全目标应从不可攻破转为可恢复。",
+          "evidence": "盘点防御侧代表作命中后动作全部为丢弃/隔离/拒绝/回滚，无修复能力；上周 laundering 攻击 ASR 68%（B 级联合推导）。",
+          "action": "开辟记忆修复方向：检测→定位→修复→验证闭环，并建设 Memory Repair Benchmark。"
+        }
+      ],
+      "risks": [
+        {
+          "title": "自动化第一瓶颈是环境感知接口，而非推理能力",
+          "people": "乔伟",
+          "whyItMatters": "现有环境接口仅暴露约三分之一摩擦力信号；缺少感知接口，元认知层在对抗场景中失明。",
+          "evidence": "人肉扮演三层控制器的案例中，十余项信号仅约三分之一可直接结构化获取（B 级操作观察，未系统量化）。",
+          "action": "下周围绕 golden trace 标注 schema 固化信号来源与可得性，并翻译成环境接口改造需求清单。"
+        },
+        {
+          "title": "多数项目证据级别为 B/C，部分价值估算缺少依据",
+          "people": "多份报告",
+          "whyItMatters": "许多认知增量未经过系统验证，只有单个案例或小样本；价值金额多按人工工时估算，未绑定可量化收益。",
+          "evidence": "例如：状态有效性传播（廖泽钦）无闭环实验；AI Coding 平台 SoW 无实施效果验证；部分报告估值数千至百万但计算口径模糊。",
+          "action": "要求后续报告明确证据级别与验证计划；对高价值声明建立正式对照或用户验证。"
+        },
+        {
+          "title": "投稿/交付项目普遍存在证据链未闭合",
+          "people": "孔梓乔、雷天宇等",
+          "whyItMatters": "连续维护 benchmark 设计仍未建成，RAVEL 进化策略未明确，海通智能体缺乏统一验收样例与指标。",
+          "evidence": "孔梓乔：合约审计实验问题未定位；雷天宇：evolution 部分核心逻辑未明确；孙伟松：验收样例、阈值、归因规范缺失。",
+          "action": "对每个投稿/交付目标建立 claim-evidence matrix，明确缺口，禁止在证据不足时继续扩展外围工作。"
+        }
+      ],
+      "followUps": [
+        {
+          "title": "建立可执行回归与变异测试作为标准工作流",
+          "people": "陈华宝、沈奇伟等",
+          "whyItMatters": "规则升级、评测器变更、防御机制评估都需要反事实或回归验证，否则改进可能是伪改进。",
+          "evidence": "陈华宝路径 confidence 引擎三版本回归；沈奇伟计划对 benchmark 注入变异测试；冯业博反事实评估 harness 需求。",
+          "action": "推动组内共享回归/变异测试模板，在下次迭代前强制运行。"
+        },
+        {
+          "title": "补齐环境感知接口并实现人机同构替换",
+          "people": "乔伟、陈华宝等",
+          "whyItMatters": "环境感知缺口是自动化落地的前置条件；手动案例应转为可复用的 golden trace 和接口规格。",
+          "evidence": "乔伟下周将产出 golden trace 标注 schema v1.0 与环境接口改造需求；陈华宝需将引擎接入 KGR-10。",
+          "action": "为感知层模块分配工程师，优先打通 EDR 告警流等结构化信号。"
+        },
+        {
+          "title": "对已跑通链路进行冻结对照，验证真实增量",
+          "people": "张浩楠、钱佳宇、谢茂毅等",
+          "whyItMatters": "“记忆被检索到”不等于“记忆有收益”；必须区分模型本身能力与记忆带来的改进。",
+          "evidence": "张浩楠：LTM 已跨任务交付但无无记忆对照；钱佳宇：CF-GRPO 步数对齐后零效应；谢茂毅：Stage Removal 小规模但需复现趋势。",
+          "action": "下周为 LTM/RL 方法各设计一个同预算冻结对照，先回答“是否有效”再决定是否扩大规模。"
+        }
+      ],
+      "assets": [
+        {
+          "title": "对抗性变异测试集与核验器 benchmark",
+          "people": "陈华宝",
+          "whyItMatters": "可迁移到任何三元组质检工具，填补放行方向对抗样本的评测空白。",
+          "evidence": "44 条对抗用例（缺失/颠倒/否定）已构成变异测试集，norm_v2 零放行。",
+          "action": "沉淀为独立 benchmark，并纳入 Brainary 的 evaluation 层。"
+        },
+        {
+          "title": "反事实评估 harness 与约束型系统评估 checklist",
+          "people": "冯业博",
+          "whyItMatters": "统一构造对照组，自动记录假设与可信度，使治理层/gate 的价值可被审计。",
+          "evidence": "quant-agent 三类反事实实验（E3/E4/E5）均手动编写脚本，显示需要通用接口。",
+          "action": "开发 counterfactual-evaluation harness，集成到 Brainary 的 monitoring/evaluation 模块。"
+        },
+        {
+          "title": "结构化记忆 schema：行存储+六原语+领域本体",
+          "people": "史俊杰",
+          "whyItMatters": "知识注入从段落文本转向可执行判据+出处，使长期记忆与工作记忆统一；提供不依赖向量检索的路线。",
+          "evidence": "需求工程 19 件工件重构后对象 15→9、步骤 19→13、DFD 四项违例归零（A 级）。",
+          "action": "抽取“方法论书籍→类模型/算子/判据”编译 workflow，形成 Brainary 的结构化记忆模块。"
+        }
+      ],
+      "peopleToRead": [
+        {
+          "title": "梁睿超：多条独立路径收敛到自进化边界，且手握 13 个 0-day 硬证据",
+          "people": "梁睿超",
+          "whyItMatters": "理论深度与实证硬度兼具，其 TCB 化 agent 结构建议可能成为组内自进化系统的安全基础。",
+          "evidence": "CoT's CoT 1-3 均含高价值洞察；13 个 0-day 后仍需跟进跨子系统迁移优化。",
+          "action": "建议教授重点关注其 TCB 化 agent 结构与替换测试清单，邀请其在组会分享。"
+        },
+        {
+          "title": "隋浩：指出 memory poisoning 防御领域整体空白，开启修复范式",
+          "people": "隋浩",
+          "whyItMatters": "“拦截 vs 修复”的区分是领域级 gap，可能开辟新研究方向并带动后续工作。",
+          "evidence": "对防御动作空间的逐篇盘点证据扎实，逻辑链条完整。",
+          "action": "尽快将其动机整理成研究 proposal，并评估 Memory Repair Benchmark 的可行性。"
+        }
+      ]
+    },
+    "sectionCards": [
+      {
+        "id": "key-progress",
+        "title": "关键进展",
+        "oneLine": "安全与评测方向出现硬证据，多个项目进入投稿/交付冲刺。",
+        "count": 4
+      },
+      {
+        "id": "teacher-unknown",
+        "title": "老师不知道的新知",
+        "oneLine": "回归测试、自进化边界、安全判断对象绑定、记忆修复等四条核心认知升级。",
+        "count": 4
+      },
+      {
+        "id": "risks",
+        "title": "风险与阻碍",
+        "oneLine": "环境感知接口缺失、证据级别不足与验收标准未统一是主要瓶颈。",
+        "count": 3
+      },
+      {
+        "id": "follow-ups",
+        "title": "后续行动",
+        "oneLine": "推动回归/变异测试、冻结对照与环境接口改造。",
+        "count": 3
+      },
+      {
+        "id": "assets",
+        "title": "沉淀资产",
+        "oneLine": "变异测试集、反事实 harness、结构化记忆 schema 等可复用模块。",
+        "count": 3
+      },
+      {
+        "id": "people-to-read",
+        "title": "值得关注的人",
+        "oneLine": "梁睿超与隋浩的理论/实证贡献最突出。",
+        "count": 2
+      }
+    ],
+    "closingAdvice": [
+      "优先推动梁睿超的 13 个 0-day 路径转为可复现 workflow，并以其 TCB 化 agent 结构作为组内自进化安全基线。",
+      "将隋浩的“记忆修复”方向纳入 Brainary 路线图，评估成立专项或 benchmark 的机会。",
+      "要求所有涉及策略/规则变更的项目必须附带回归测试或变异测试结果，否则不予审查。",
+      "针对环境感知缺口，本周内指定工程负责人，先完成乔伟提出的接口改造需求清单并开始实现。",
+      "对金额估值超过 10 万的项目，要求提供成本结构或替代方案对比，防止价值估算泡沫。"
+    ]
+  }
+}
