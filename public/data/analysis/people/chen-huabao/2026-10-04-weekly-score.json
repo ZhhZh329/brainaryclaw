@@ -1,0 +1,56 @@
+{
+  "key": "person:chen-huabao:2026-10-04:weekly-score",
+  "generatedAt": "2026-10-04T10:01:10.450Z",
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "reasoningEffort": "high",
+  "inputHash": "5854905d5adf80cd6b5c9076e0dabb8f6fb8da7c831bfd6862c794ddf340d6f7",
+  "contentHash": "5854905d5adf80cd6b5c9076e0dabb8f6fb8da7c831bfd6862c794ddf340d6f7",
+  "promptHash": "dd5205e0146f7bfc74cbfb84ed9fc44caa48090dca3cd84f010cf05b11b06e18",
+  "result": {
+    "hardProgress": {
+      "score": 11,
+      "reason": "本周有可复现的输入门控函数和4类边界扰动样本，实际运行得到逐项结果JSON，且原有样例未被门控误拦，属于工程上的硬进展；但新增数据仅为4条同源人工构造软件测试记录，没有临床数据、医学结论或模型性能结果，边界缺陷尚未在真实接口数据中验证。",
+      "missingEvidence": "缺少脱敏真实接口输出的同类缺陷验证；缺少独立构造样例；缺少专家确认和基准测试结果。"
+    },
+    "cognitiveIncrement": {
+      "score": 12,
+      "reason": "CoT增量明确区分了readiness gate字段一致性与字段填写检查、hold_for_review与abstain两种拒绝语义，并认识到同源构造测试不能替代独立验证。认知推进较清晰，但主要围绕工程边界缺陷，尚未上升到医学推理机制或模型校准的新认知。",
+      "missingEvidence": "缺少对真实数据分布下输入破坏发生率的量化证据；缺少对医学决策影响的假设检验。"
+    },
+    "cot2Depth": {
+      "score": 12,
+      "reason": "两个CoT's CoT都具备深度：指出置信度判断必须以输入有效性为条件，并给出input_valid、evidence_sufficient、answer_action分层记录方案；指出不同拒绝原因必须映射不同自动化动作。但两处均标注老师原本不知道吗为否，新增的老师级认知有限。",
+      "missingEvidence": "缺少自动修复或reason-to-action映射在真实评测中提高效率的验证；缺少input validator接入主流程后的效果数据。"
+    },
+    "brainaryMapping": {
+      "score": 8,
+      "reason": "提出两个老师原本不知道的能力映射：failure type classifier对应evaluation/risk modeling/reasoning，拒答校准度量对应calibration/safety/cognitive control，并解释了过去映射的盲点，可能沉淀为evaluation meta-analyzer和abstention monitor模块。映射新颖且具体，但尚未实际接入Brainary或与已有评估项对齐验证。",
+      "missingEvidence": "缺少与Brainary能力模块对齐的实证；缺少映射后对系统行为的干预实验。"
+    },
+    "monetaryValue": {
+      "score": 7,
+      "reason": "对failure_type分类器和拒答校准度量分别估算了4-8万元和3-6万元价值，给出了复用场景和计算方法，并说明了正确率与拒答P/R差异可能阻止错误采纳。价值判断有方法层依据，但估值依赖经验成本假设和主观项目数，未经过客户或市场验证。",
+      "missingEvidence": "缺少客户访谈、市场参考价或专家评价；缺少3-5个类似项目的实际证据；缺少对临床验证返工成本的具体案例。"
+    },
+    "projectManagement": {
+      "score": 12,
+      "reason": "项目管理较完整：明确Stage 1收尾、投入32小时、资源规划、关键路径和依赖关系，纠偏动作具体且不扩新任务。但瓶颈写暂无，对真实接口数据获取失败的风险预案不足，缺少阶段验收标准和时间节点。",
+      "missingEvidence": "缺少里程碑日期、验收标准；缺少独立数据获取失败时的替代计划；缺少对关键路径延期的量化风险估计。"
+    },
+    "nextAction": {
+      "score": 8,
+      "reason": "下周动作可验证：任务一选取脱敏真实接口输出或补充独立构造样例，任务二接入实际调用入口并验证误拦截。纠偏动作也具体到3条低证据关键边和2个relation missing样本。但未指定负责人、截止时间和误拦截率等量化完成标准。",
+      "missingEvidence": "缺少next action的责任人、截止时间和量化验收指标；缺少真实接口数据获取的可行性确认。"
+    },
+    "evidenceQuality": {
+      "score": 3,
+      "reason": "本周证据均为同源人工构造测试，仅覆盖4类扰动、4条软件测试记录，未经过独立数据、专家确认或benchmark验证。周报自身也标为证据等级B，外部有效性很低。",
+      "missingEvidence": "缺少独立测试集、真实临床或接口数据、专家确认、模型性能对比和可复现benchmark。"
+    },
+    "totalScore": 73,
+    "tier": "B",
+    "oneLineJudgment": "本周是扎实的输入门控工程验证周，形成了可复现失败样本和独立门控函数，但证据仍停留在同源构造测试，尚未进入真实接口与临床可靠性验证。",
+    "professorFollowUp": "老师应从本周学到：输入有效性不是置信度计算的可选前置条件，空证据默认输出0.95说明系统设计把输入无效与证据不足混在了一起。建议跟进三件事：一是推动获取脱敏真实接口输出，验证同类边界缺陷是否在真实数据中出现；二是要求后续所有置信度输出必须先过input_valid，并把input_invalid、evidence_sufficient和answer_action分层记录；三是不要把v3的83%正确率单独作为采纳依据，必须与拒答P/R共同判决。"
+  }
+}
