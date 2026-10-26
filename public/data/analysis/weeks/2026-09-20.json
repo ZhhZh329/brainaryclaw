@@ -1,150 +1,141 @@
 {
   "key": "week:2026-09-20:horizontal",
-  "generatedAt": "2026-10-26T08:08:57.869Z",
+  "generatedAt": "2026-10-26T09:03:32.191Z",
   "provider": "deepseek",
   "model": "deepseek-v4-pro",
   "reasoningEffort": "high",
-  "inputHash": "73d190601576834a95126eb70854dcb8d9414f7e71ac57b0f4606f8786ee914f",
-  "contentHash": "73d190601576834a95126eb70854dcb8d9414f7e71ac57b0f4606f8786ee914f",
+  "inputHash": "9ae8bd8fe0d3499ce4354ad7702c1fc82df8a1599436c6095d2c7396bb3a4396",
+  "contentHash": "9ae8bd8fe0d3499ce4354ad7702c1fc82df8a1599436c6095d2c7396bb3a4396",
   "promptHash": "d5dbdfc5549acc1104e527368173d8297b203b85695a994e292ae089aedc6b71",
   "result": {
-    "submissionStatus": "本周 79 人名单中已提交 39 人，未提交 40 人。已提交周报整体质量分化：约四分之一有硬实验数据，三分之一仍处于设计或 survey 阶段，少数存在 deadline 风险。",
-    "overallRead": "本周最强信号集中在反事实评估、规则可执行化、工具能力边界、安全对象连续性和 benchmark 可信度五个方向。冯业博、钱加宇、王苏源、黄汛、梁瑞超等给出了可复用的硬证据和方法论；陈华宝、石俊杰证明知识注入必须转成可回归判据；沈奇伟、周振宏把评测本身变成研究问题。主要风险是大量课题尚缺冻结对照、最终评测和成本账本，部分项目优先级冲突（如冯业博 TSC 停滞、孔梓乔 FSE 截稿）。老师下周应优先裁断投稿决策、冻结评测 gate、收缩纯设计课题，并推动跨项目沉淀评测与记忆基础设施。",
+    "submissionStatus": "已提交 39 人，未提交 40 人。已提交者中存在少数报告信息量极低或仅占位，未提交者需要催办。",
+    "overallRead": "本周报告呈现几条高价值主线：一是把“结果指标”与“真实机制”分层验证，防止看到高 TAR、高准确率就误判攻击或能力成立；二是把约束/治理型系统的价值放进反事实框架评估，典型如量化治理层用账面收益换尾部保护；三是把知识注入从文本提示升级为可执行判据、算子或规则，并配套回归与变异测试；四是多个安全方向发现“动作空间残缺”，如记忆投毒只有拦截无修复、权限判断缺少对象连续性。整体上，有真实实验与证据闭环的报告排名靠前，纯设计或调研报告暂后排。",
     "ranking": [
       {
         "rank": 1,
-        "name": "冯业博",
-        "signal": "用反事实评估重新定位治理层价值：quant-agent 消融显示每加一层治理账面收益降一档，但 beta 从 0.83 压到 0.16、崩盘窗口只亏 0.31%；退出决策实现的 755 美元对应 regret 19,913 美元；gate 曾拦截的 learning 经 replay 证明是 inert。",
-        "rationale": "硬进展极强：从 decision trace 重算 E2-E8，squeeze-hunter P1 统一持仓核心（404 通过/3 失败），UBRI proposal 提交。CoT's CoT 深刻：约束型系统必须构造“没有发生的事”来评估。证据 B，可转化为 counterfactual-evaluation harness。"
+        "name": "梁睿超",
+        "signal": "13 个 Linux 0-day 静态确认 + RSI 边界与 TCB 化 agent 结构",
+        "reason": "硬进展最高：内存屏障缺失检测的 13 个 0-day 是安全方向最硬的证据；同时把递归自改进三篇与连接/符号框架收敛到“检查器必须在循环外且可审计”，证据等级部分 A。项目管理和下一动作清晰，价值估算有依据。",
+        "evidenceLevel": "A（0-day）；B（理论收敛）"
       },
       {
         "rank": 2,
-        "name": "钱加宇",
-        "signal": "医学工具 Agent 能力边界 RL：仅在 Oracle 中扰动工具能力，零样本迁移到 VISTA3D 后证据缺口虚报下降 12.35pp，无效调用减少 0.221/题，准确率无显著下降。",
-        "rationale": "硬实验强，且排除了旧 GRPO 奖励方向错误（AtlasNet 22%-25% 的 E/gold 冲突）。CoT's CoT：world model 应包含工具能力状态；评测必须沿 policy-vs-E、E-vs-gold、policy-vs-gold 三层拆开。证据 A/B，但 test 已用于开发，必须冻结最终评测后才能投稿。"
+        "name": "冯业博",
+        "signal": "quant-agent 从叙事改为 trace 实证，反事实评估治理层；squeeze-hunter P1 统一持仓核心",
+        "reason": "实证重构力度大：E2-E8 揭示技术评级 BUY 前瞻收益为负、治理层账面收益降但 beta 0.16、卖飞 regret $19,913 对 $755；P1 把回测与实盘决策合一。CoT's CoT 提出约束型系统必须构造反事实。项目管理准确指出 TSC 停滞风险。",
+        "evidenceLevel": "A（实证数据）；B（方法论推论）"
       },
       {
         "rank": 3,
-        "name": "王苏源",
-        "signal": "补丁→规约→迁移端到端跑通：从 2022 年 cgroup 补丁出发，在 PCI 修复前树上判出四年后才被人工发现的 proc_bus_pci_read 缺陷；同行工具 BugAuditor/SpecAuditor 检索键只能是函数名，是硬边界。",
-        "rationale": "流水线重建后 6 案例差分全过，同框架候选召回 12/12、TP9/FP0；竞品边界读至提示词原文，纠正了自身归类错误。CoT's CoT：组件职责位置决定项目走向，证据 B+/A-。"
+        "name": "黄迅",
+        "signal": "三项目机制级归因：conlang 多模型安全姿势矩阵、SkillDoS 机制激活、WebDoS 观测系统校准",
+        "reason": "三个独立反例支撑同一结论：最终可观测结果不能代表真实机制；A 级证据。conlang 安全姿势探针（qwen 0%、mimo 72-85%）直接改变红队研究问题。对校准层与 evaluator 的沉淀路径明确。",
+        "evidenceLevel": "A（CoT's CoT 1/2 均有直接实验）"
       },
       {
         "rank": 4,
-        "name": "黄汛",
-        "signal": "三个项目共同证明最终可观测结果不能直接代表真实机制：qwen conlang 格式覆盖 99% 但 ASR 0%；SkillDoS TAR 3.69x 但机制未激活；WebDoS 页面异常但实为观测器误判。",
-        "rationale": "多项目硬数据支撑“真实机制→观测系统→最终指标”三层分层。CoT's CoT 证据 A，可直接沉淀为统一 calibration/evaluator layer，是 Brainary 的重要新增能力。"
+        "name": "钱加宇",
+        "signal": "工具能力扰动 RL 跨环境迁移：VISTA3D 虚报 -12.35pp、交接 +11.2pp",
+        "reason": "用受控扰动训练能力边界意识，效果随真实环境缺口比例增大；同时审计出旧奖励与环境证据冲突，A 级证据。诚实标注 test_used_for_development，项目管理和下一步 Pareto 门控清晰。",
+        "evidenceLevel": "A（奖励冲突）；B（单种子跨环境）"
       },
       {
         "rank": 5,
-        "name": "梁瑞超",
-        "signal": "13 个 Linux 7.2.6 内存屏障缺失 0-day 经静态分析确认；同时汇合 RSI 三篇与连接/符号框架，指出安全自进化闭合的前提是循环外可审计检查器。",
-        "rationale": "0-day 是最硬的价值信号，恢复了内存序 happens-before 关系。CoT's CoT：检查器必须有闭合形式语义，不能用 LLM 当稽核者，证据 0-day A、理论 B。"
+        "name": "王溯源",
+        "signal": "规约迁移方向纠偏，重建流水线命中跨子系统真实缺陷",
+        "reason": "前半周十余轮无端到端产出，后半周定位到事件图职责错位并换道，6 案例差分通过、cgroup→PCI 判出四年后缺陷。对竞品做原文级边界审计，CoT's CoT 有 B+/A- 证据。下一动作针对精度瓶颈。",
+        "evidenceLevel": "A-（竞品边界）；B+（组件职责对照）"
       },
       {
         "rank": 6,
         "name": "陈华宝",
-        "signal": "edge_role 规则三版本回归：v4 在 18 条用例上 18/18，并发现 question-conditioned 升级会修好 4 条同时弄坏 1 条；语义匹配 44 条对抗用例零放行，但天然法改写仍漏 3-7 条。",
-        "rationale": "小样本但方法学价值高：规则改动必须成组回归并报告净修复；语义匹配的护栏比相似度阈值更关键。证据 B，可沉淀为 rule-as-code harness 与变异测试集。"
+        "signal": "edge_role 三版本回归 + 变异测试，发现规则升级需适用性层",
+        "reason": "用 18 条回归用例证明 v3 修好 4 条但弄坏 1 条；变异测试 norm_v2 对 44 条对抗性零放行。硬进展虽小但方法学完整：规则改动必须成组升级并回归。",
+        "evidenceLevel": "B"
       },
       {
         "rank": 7,
-        "name": "石俊杰",
-        "signal": "把领域工程教材编译成类模型+六原语+带出处判据后，业务对象 15→9、用例步数 19→13、DFD 四类违例全部归零。",
-        "rationale": "证明知识注入的有效单位是可执行判据而非文本；失败三分类（方法知识/职责错配/领域知识）可直接路由。证据 A，对未来 Brainary 结构化记忆和六原语推理模块有直接贡献。"
+        "name": "乔伟",
+        "signal": "人肉 golden trace 完整 APT 案例，感知接口是第一瓶颈",
+        "reason": "三周设计空窗被打破，三条触发条件各验证一次；手动案例暴露“信号从哪来”的结构缺口，形成 B 级证据。五层分解+决策点对齐率提供开发期弱证据路径。团队扩容增加执行力。",
+        "evidenceLevel": "B（案例）；C（对齐率设计）"
       },
       {
         "rank": 8,
-        "name": "沈奇伟",
-        "signal": "增量代码开发 benchmark 筛选发现 8 个特性类 benchmark 的“测试充分性”整列为 ✗；SWE-Milestone 连续做 ≤38% 而单独做 >80%，FeatBench 失败中 73.6% 是回归性实现。",
-        "rationale": "高杠杆：把 benchmark soundness 审计本身变成研究问题，并避免无效实验成本。CoT's CoT：未编码成约束的教训不会自动迁移到下一次执行，证据 A。"
+        "name": "沈起伟",
+        "signal": "增量开发 benchmark 筛选，发现测试充分性整列空白",
+        "reason": "选题决策基于扎实的 negative evidence（UI 方向被 IWC-Bench 做掉）；横向对照 8 个特性类 benchmark 无一个验证测试充分性，提出变异注入审计方向。13 条 soundness 清单可复用，避免无效实验价值高。",
+        "evidenceLevel": "A（复发错误案例）；B（充分性空白推断）"
       },
       {
         "rank": 9,
-        "name": "乔伟",
-        "signal": "手动扮演三层控制器跑通 APT 案例，发现自动化元认知第一瓶颈是环境感知接口而非推理能力；黄金 trace 可同时作规格、验收基准和 benchmark 标注。",
-        "rationale": "三周设计空窗被打破，获得 B 级证据；感知接口覆盖率约三分之一这一缺口在实操中才显形。CoT's CoT 可落为 golden trace 标注 schema、decision-point 对齐率，并直接回补 Brainary Monitoring 输入侧。"
+        "name": "石俊杰",
+        "signal": "需求工程知识编译为可执行判据，量化成果显著",
+        "reason": "把教材知识拆成类模型+算子+判据，BDD 对象 15→9、DFD 四项违例归零、最长步骤 19→13，均有实测。引入领域本体作为长期记忆的下一步明确。",
+        "evidenceLevel": "A（任务1量化结果）；C（领域记忆方向）"
       },
       {
         "rank": 10,
         "name": "周振宏",
-        "signal": "Idea2AutoEval 跨 4 类任务、8 组 benchmark setting、两个生成器验证自动评测层的稳定性；Audio LTM 在 20 类声音、3 个 ALLM 上证明 clean memory 能修复被干扰的 representation。",
-        "rationale": "两篇论文实验完整、证据 A；前者服务 Brainary evaluation reliability，后者把 LTM 从文本扩展到感知经验，均具备较高沉淀价值。"
+        "signal": "Idea2AutoEval 与 Audio LTM 两篇论文收敛，实验规模大",
+        "reason": "AutoEval 跨 4 域 8 设置两种生成模型；Audio LTM 跨 20 类 3 个 ALLM。共同认知：可靠 evaluation layer 和 LTM 作为 perception prior。处于论文收尾，硬进展扎实。",
+        "evidenceLevel": "A（主实验）"
+      },
+      {
+        "rank": 11,
+        "name": "廖杰",
+        "signal": "PyCache Trap 完成 ICLR 论文，抽象为审核-执行 trust gap",
+        "reason": "证据链闭环，贡献明确：安全结论必须绑定判断对象，否则静态审核通过不等于运行时可信。CoT's CoT 1 证据 A。下一阶段应沉淀 runtime consistency 能力。",
+        "evidenceLevel": "A（论文证据链）"
+      },
+      {
+        "rank": 12,
+        "name": "葛蒙蒙",
+        "signal": "MultiAgentsDos taxonomy 重构，26 系统 78 风险点，24% 仅交互触发",
+        "reason": "按约束机制维度分类使交互型风险浮现，与 4×12 作用面分类形成对比；给 global-to-local 约束卡提供反例。硬进展有统计但尚未形成完整检测闭环，排名稍后。",
+        "evidenceLevel": "B"
       }
     ],
     "topSignals": [
-      "反事实评估成为强方法：约束型系统（风控、gate、防御）的价值必须用“避免了什么”而不是“产出了什么”度量，冯业博的消融和退出 regret、陈华宝的规则回归都给出可复用口径。",
-      "评价对象与真实机制必须分层：钱加宇的 E vs gold、黄汛的机制激活 vs 资源放大、王慧丽的 passed 标签歧义，均要求把模型输出、观测证据和评测 gold 拆开。",
-      "可执行化知识注入有效：石俊杰的教材编译、陈华宝的规则版本化、王苏源的规约迁移都证明知识必须转成可回归的判据/规则/代码，而不是文本。",
-      "工具能力边界与状态连续性成为核心瓶颈：钱加宇的缺口感知 RL、乔伟的感知接口、李梅的 session 主线账本、颜文浩的动态状态安全。",
-      "Benchmark 可信度本身成为研究问题：沈奇伟发现测试充分性整列空白，周振宏的 evaluation layer、周子阳的维护 benchmark 设计都指向评测要先自洽。",
-      "安全研究从拦截转向修复/对象连续性：隋昊的 memory repair 空白、廖杰的 trust continuity、王慧丽的动态 KG、黄奕坦的 privilege 证据路径。",
-      "结构化记忆（图谱/Knowledge Object）是审计基础：黄奕坦的 PrivilegeAtom、吴嘉辉的 Rule KB、王慧丽的动态 KG 都在把记忆变成带 provenance、状态和置信度的资产。"
+      "约束型系统的价值必须用反事实评估，而不能只看账面产出（冯业博）。",
+      "最终可观测结果与真实机制必须分层验证：低 ASR 不代表没理解，高 TAR 不代表攻击激活，页面异常不代表平台失败（黄迅）。",
+      "工具能力边界可以通过能力扰动训练并跨环境迁移，前提是将工具状态纳入 world model（钱加宇）。",
+      "组件放错职责位置会导致整个项目偏离，判断标准是治理/纪律增长是否快于端到端产出（王溯源）。",
+      "规则升级必须配套回归与变异测试，评价单位是净修复而非目标用例是否变好（陈华宝）。",
+      "自动化元认知的第一瓶颈是环境感知接口，不是推理能力；词表必须登记信号来源与可得性（乔伟）。",
+      "增量开发的核心指标是回归率，但现有 benchmark 的测试充分性从未被审计，本身就是研究问题（沈起伟）。",
+      "知识注入的有效单位是可执行判据/算子，而不是段落文本或更长提示词（石俊杰）。",
+      "权限判断必须保留 provenance、冲突和缺失前提，并把 ASK/ABSTAIN 作为一等输出（黄逸潭）。",
+      "安全动作空间审计发现 memory poisoning 领域只做拦截没有修复，防御目标应从不可攻破转向可恢复（隋浩）。"
     ],
     "commonRisks": [
-      "缺少冻结最终评测或成对对照：钱加宇、李梅、张浩楠、姚光宇的实验仍使用开发集或只有单次成功，不足以支撑因果结论。",
-      "设计层超前于实证：黄奕坦、隋昊、吴嘉辉、颜文浩、杨金城主要交付 schema/设计/survey，尚无实验数据。",
-      "项目管理与成本账本缺失：多数周报未记录工时/token/API；孙维松、孔梓乔等存在 deadline 风险，冯业博 TSC 停滞。",
-      "金额估值口径混乱，从 750 元到 500 万不等，缺乏统一折算规则，难以横向比较。",
-      "竞争工作/benchmark 状态未及时更新：沈奇伟 FeatureBench hard 依据过时、王苏源竞品归类曾错、冯业博 TSC 未动。",
-      "多个课题仍停留在设计或 survey，可能方向漂移：闫文浩、杨金城、苗中奇等需要老师介入收敛。"
+      "多个实验数字仍使用 development test 或未做一次性冻结评测，如钱加宇的 test_used_for_development、冯业博的 E4 单边上涨样本。",
+      "大量报告停留在设计、调研或伪代码阶段，未跑通最小闭环（黄逸潭、吴嘉辉、严文昊等），价值估算远超证据支撑。",
+      "部分高价值结论依赖人工 walkthrough 或单一样本，尚未自动化或扩大验证，如乔伟的 golden trace、王慧丽的动态 KG 分析。",
+      "benchmark 与评测器自身可信度未充分验证：沈起伟发现测试充分性空白，周子阳指出评测器会误判派生变化。",
+      "截止日期压力下易压缩验证：孔梓乔 FSE 实验仍未稳定，冯业博 TSC 停滞且距 10-28 仅五周。",
+      "安全/治理类价值估算普遍偏高且缺少合同或市场锚点（郭文博、孔梓乔、部分同学），需要老师校准。",
+      "多个研究在负结果出现后尚未形成正向贡献转化，如姚光宇的 PEW 知识注入未见稳定性收益。",
+      "项目间存在相似的“连续性”问题（Kong 的 ActiveTurn、李梅的 session mainline、王溯源的方向漂移），需要统一的状态/约束 schema 才能互相借鉴。"
     ],
     "collaborationCandidates": [
-      {
-        "participants": [
-          "冯业博",
-          "钱加宇"
-        ],
-        "reason": "反事实/冻结评测与证据 ledger 互补，可共建 counterfactual-evaluation + final-eval lock 机制。"
-      },
-      {
-        "participants": [
-          "陈华宝",
-          "石俊杰"
-        ],
-        "reason": "规则可执行化与判据编译 workflow 同源，可沉淀 rule-as-code harness 与判据库。"
-      },
-      {
-        "participants": [
-          "黄汛",
-          "乔伟",
-          "王慧丽"
-        ],
-        "reason": "观测可靠性/机制归因与感知接口/动态 KG 可合并为统一 calibration & provenance 层，解决指标与真实机制脱节问题。"
-      },
-      {
-        "participants": [
-          "沈奇伟",
-          "周振宏",
-          "周子阳"
-        ],
-        "reason": "benchmark 可信度审计与自动评测生成/维护协议互补，可共建 benchmark registry + soundness evaluator。"
-      },
-      {
-        "participants": [
-          "黄奕坦",
-          "吴嘉辉",
-          "苗中奇"
-        ],
-        "reason": "结构化记忆与 Knowledge Object/Rule KB 可形成 Brainary memory schema 统一设计，减少碎片化。"
-      },
-      {
-        "participants": [
-          "王苏源",
-          "梁瑞超",
-          "谢茂一"
-        ],
-        "reason": "内核缺陷挖掘与验证成本管理可共享 candidate filtering/ranking 与规约迁移经验。"
-      }
+      "冯业博 × 隋浩：冯业博的反事实评估 harness 可用于隋浩的 memory poisoning 修复评测；隋浩的动作空间审计可帮冯业博检验治理层“没有发生的事”如何度量。",
+      "梁睿超 × 冯业博：梁睿超的 RSI/TCB 边界与冯业博的不可变内核 vs 可演化外围高度呼应，可共同提炼自演化 agent 的安全结构标准。",
+      "钱加宇 × 王慧丽：钱加宇的工具能力状态与王慧丽的动态 KG 证据路径都解决“当前证据是否支持行动”，可合并设计 evidence-aware tool orchestrator。",
+      "乔伟 × 沈起伟：乔伟的感知接口瓶颈与沈起伟的 benchmark soundness 都关注“验证系统自身的可信度”，可共同开发 evaluation protocol 的感知层校验。",
+      "石俊杰 × 周振宏：石俊杰的行业长期记忆 schema 与周振宏的 Audio LTM 都涉及结构化记忆作为推理先验，可对比知识注入与感知记忆的评估方法。",
+      "李廖泽钦 × 黄逸潭：状态有效性传播（李廖泽钦）与 privilege 动态关系路径（黄逸潭）都依赖带 provenance 的图状态，可共享 memory schema 和失效传播算法。"
     ],
     "teacherChecklist": [
-      "本周最重要的决策：对冯业博的 WWW 投稿和 TSC 风险做优先级裁定，TSC 只剩五周且三组实验未做。",
-      "对钱加宇最终评测做 gate：要求冻结方案后一次性评测，禁止用 test_used_for_development 数字投稿。",
-      "对沈奇伟三个候选切入点本周定一个：增量性指标、scope creep 约束，还是 benchmark 测试充分性审计。",
-      "审查并收缩仅有设计/survey 的课题：黄奕坦、隋昊、吴嘉辉、颜文浩、杨金城、苗中奇，明确下一步最小实验。",
-      "统一金额与工时/token 记账规范，避免虚假精确和横向不可比。",
-      "对孔梓乔 FSE deadline、廖杰 ICLR 投稿前终审给予快速 review。",
-      "考虑建立跨项目资产：benchmark registry、rule-as-code harness、counterfactual evaluation harness、structured memory schema。"
+      "确认钱加宇的冻结方案与最终评测门槛，要求 v4.1 第二种子并锁定一次性评测。",
+      "跟进冯业博 TSC 停滞问题，明确下周优先级并协调资源。",
+      "审核梁睿超 0-day 的负责任披露路径与法律/安全边界。",
+      "确认乔伟路线变化（手动案例先行）与团队分工，并批准下一步对齐率实验。",
+      "要求沈起伟将 benchmark 测试充分性审计的 20 题手工审核结果下周带回。",
+      "对吴嘉辉、黄逸潭、隋浩等纯设计报告，要求提供最小可验证闭环的具体日期。",
+      "提醒高价值估算的学生（郭文博、梁睿超、孔梓乔等）提供合同、赏金或外部价格锚点。",
+      "评估是否将“组件职责位置审计”和“动作空间审计”沉淀为组内通用 workflow，避免多人重复方向漂移。",
+      "本周可考虑安排一次短会，对齐“约束系统反事实评估”与“memory poisoning 修复”两个潜在合作方向。"
     ]
   }
 }

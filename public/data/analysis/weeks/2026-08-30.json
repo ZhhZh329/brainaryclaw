@@ -1,187 +1,392 @@
 {
   "key": "week:2026-08-30:horizontal",
-  "generatedAt": "2026-10-26T08:06:09.754Z",
+  "generatedAt": "2026-10-26T09:03:45.133Z",
   "provider": "deepseek",
   "model": "deepseek-v4-pro",
   "reasoningEffort": "high",
-  "inputHash": "02ebd9641ea98a6a0d99c285d772f0a7cc22f7e7a6fc1a3eee1128eb66865e50",
-  "contentHash": "02ebd9641ea98a6a0d99c285d772f0a7cc22f7e7a6fc1a3eee1128eb66865e50",
+  "inputHash": "a3553b81c43b0f6665f9ca3ed6ec8d3e71ebfcab8cb9d9c3cb16561fc9236bec",
+  "contentHash": "a3553b81c43b0f6665f9ca3ed6ec8d3e71ebfcab8cb9d9c3cb16561fc9236bec",
   "promptHash": "d5dbdfc5549acc1104e527368173d8297b203b85695a994e292ae089aedc6b71",
   "result": {
-    "submissionStatus": "已提交35人，未提交39人；截止时间已过，缺交名单需跟进。",
-    "overallRead": "本周35份已交周报整体硬进展明显：长时程agent收敛缺陷、记忆/检索演化、基准有效性审计、对抗测试、组合安全、知识抽象等方向出现多组A级或B级证据。但相当比例的高价值结论仍停留在设计或机制验证阶段，缺少对照、消融与跨域验证；价值金额普遍为人力替代或期权估算，需谨慎折现。最值得老师决策关注的信号集中在：Sun Yuqiang的“系统不主动收尾且健康指标失灵”、Yao Guangyu的3000篇writeup技能抽象与PenTestAI回放提升、Li Yifan的query-conditioned memory observation policy、Zhou Zhenhong的音频LTM表征恢复、Feng Yalin的Event-B Agent 27案例自洽率与三项改进假设。共同风险是：实验噪声淹没方法效应、benchmark效度与评分代码缺失、原型多次顺延、过度抽象先于可执行schema、外部数据/环境依赖阻塞进度。",
+    "submissionStatus": "35/74 已提交，39 人未提交；截止时间 2026-08-31 08:00 已过。",
+    "overallRead": "本周最高信号集中在：可证伪的失败机制发现、硬实验结果与深层方法论闭环。孙宇强的“递归拆解永不收尾”和指标定向干预证伪具备 A 级证据且直接改变后续动作；周振宏的感知 LTM 表征恢复实验（8.25%→86.7%）是本周少有的强表征级硬证据；李一帆的 TPE 恢复 64/406 条公共漏检线索并抽象出知识观测策略；胡志超、姚光宇、冯亚林分别提供 APT 统一行为程序、3000 篇知识抽象与 Event-B 全量复现等大规模硬进展。同时，多个项目存在“概念超前于对照实验”“价值估算口径不一致”“项目管理缺失”等问题，需在下周并线收敛。",
     "ranking": [
       {
         "rank": 1,
-        "name": "Sun Yuqiang",
-        "coreSignal": "发现可自行拆解任务的AI存在固有失效模式：开启子任务代价不随剩余时间上升，稳定状态是持续拆解直到超时；同时证伪此前可靠的健康指标，因为指标衡量执行层级而非当前应做任务。",
-        "evidenceLevel": "A（收尾行为直接计数）；B（指标失效机理与拆解总量未变）",
-        "mainRisk": "题库回归尚未补跑，本周机制改动对解题率影响未测。"
+        "name": "孙宇强",
+        "userId": "6099311190",
+        "signalNote": "发现长时程 agent 稳定失效模式：不随剩余时间增加拆解代价，系统永不收尾；用定向干预证伪历史最强判别指标，A 级计数证据 + B 级机理；直接给出可落地的收敛约束。"
       },
       {
         "rank": 2,
-        "name": "Yao Guangyu",
-        "coreSignal": "3000篇writeup抽象为468个程序技能，压缩率84.4%，合并准确率91.2%；PenTestAI成功率61.9%→78.4%，平均步骤-22.1%，模型调用-18.3%；形成证据约束的轨迹-技能闭环。",
-        "evidenceLevel": "A",
-        "mainRisk": "复合修改和跨源术语仍导致错误合并；需消融和跨靶场验证。"
+        "name": "周振宏",
+        "userId": "8595792005",
+        "signalNote": "音频感知 LTM 在 20 类声音 -10dB 强混音下，token-level retrieval 从 8.25% 恢复到 86.7%，接近 clean 87.9%；Auto-benchmark 8 集完成并形成 meta-evaluation 协议，证据 A。"
       },
       {
         "rank": 3,
-        "name": "Li Yifan",
-        "coreSignal": "提出Memory Evolution需显式建模query-conditioned observation policy；公共漏检线索恢复64/406，五类selector中集合补全/多事件/冲突占89%；知识系统三不变量（语义稳定、问题充分、时间一致）。",
-        "evidenceLevel": "A/B（恢复数据A，三不变量框架C）",
-        "mainRisk": "最终QA收益、消融和跨benchmark泛化未完成；Set Completion可能主导收益。"
+        "name": "李一帆",
+        "userId": "8673422647",
+        "signalNote": "TPE 恢复 64/406 公共漏检线索，五类 query-specific selector 具可解释贡献；提出知识系统的状态/转变/观测策略三元对象，硬数据与认知深度兼具。"
       },
       {
         "rank": 4,
-        "name": "Zhou Zhenhong",
-        "coreSignal": "Audio LTM在20类、-10dB强混音下将representation从8.25%恢复到86.7%接近clean87.9%；Auto-benchmark完成8个自建集，Aider Spearman 0.861，并建立benchmark meta-evaluation。",
-        "evidenceLevel": "A",
-        "mainRisk": "类别恢复差异和N20/N50/N100差距解释不足；auto-benchmark需完成剩余公开对照。"
+        "name": "胡志超",
+        "userId": "8592106128",
+        "signalNote": "将多源/流式/长周期 APT 统一为 Behavior Program 的构建、压缩、分析、扰动、重构；ProvBREAK 在 AtlasV2 上相比传统方法大幅提升，形成跨课题统一研究范式。"
       },
       {
         "rank": 5,
-        "name": "Feng Yalin",
-        "coreSignal": "Event-B Agent全量27案例复现，系统自洽率仅22.22%，65.65%耗时和72.46%token花在Compilation/Model Checking Repair；从目标反推必要条件，形成I1精化顺序→I3依赖图→I2搜索的顺序。",
-        "evidenceLevel": "A（基线现状数据），B/C（三项改进假设）",
-        "mainRisk": "新算法模块未实现，无GPT/Claude对照、重复实验与消融。"
+        "name": "姚光宇",
+        "userId": "8816845632",
+        "signalNote": "3000 篇 Writeup 抽象为 468 个技能，压缩率 84.4%，合并准确率 91.2%，留出覆盖 86.7%；PenTestAI 成功率 61.9%→78.4%，步骤与调用量下降，证据 A。"
       },
       {
         "rank": 6,
-        "name": "Qiao Wei",
-        "coreSignal": "把对手心智模型从可读升级为可写，提出“认知动作”和黑箱边界在线辨识协议；三层EDR对抗案例经Demo验证机制可行。",
-        "evidenceLevel": "B（机制可行），C（框架有效性）",
-        "mainRisk": "推理循环原型与对照实验已顺延一周，触发条件明确但尚未执行。"
+        "name": "冯亚林",
+        "userId": "5256272400",
+        "signalNote": "Event-B Agent 27 案例全量复现：系统自洽率仅 22.22%，65.65% 耗时在 Repair；据此提出 I1 精化顺序、I3 依赖图、I2 搜索三假设，项目管理与推理闭环清晰。"
       },
       {
         "rank": 7,
-        "name": "Chen Huabao",
-        "coreSignal": "发现evidence_level与question-conditioned necessity是正交维度，高证据边也会因问题类型反转；relation missing需根因分类为KG缺口或标注/接口bug；abstention_reason结构化枚举。",
-        "evidenceLevel": "B",
-        "mainRisk": "需医生确认口径；三分类规则尚未跨question_type验证。"
+        "name": "钱佳雨",
+        "userId": "6003621600",
+        "signalNote": "病理 17 训练臂显示 KG/tri-source 增益被种子噪声淹没；东方肝胆 393 例双模型 0 错误。明确模型训练应服务 agent 能力分解与可替换证据通路，证据 A/B。"
       },
       {
         "rank": 8,
-        "name": "Hu Zhichao",
-        "coreSignal": "将多源/流式/长周期APT统一为Behavior Program生命周期（构建、压缩、分析、扰动、重构）；ProvBREAK在AtlasV2上扰动结果明显提升。",
-        "evidenceLevel": "中高（攻击效果），中（统一范式）",
-        "mainRisk": "Behavior Program IR和统一benchmark尚未冻结，跨任务复用需实证。"
+        "name": "徐一佳",
+        "userId": "8795571928",
+        "signalNote": "将 LLM 角色收缩为 evidence-bounded proposal generator；44 gold 中 38 可接受，6 被 verifier 拒绝；提出 entity/scope/relation 三层 alignment 证据图。"
       },
       {
         "rank": 9,
-        "name": "Liao Jie",
-        "coreSignal": "SkillScanner从单体扩展到任意长度Skill接力链，17/17单测、canonical F1 0.9412、真实语料736对0告警；PyCache主动收缩claim到Observation→Attack→Defense最小闭环。",
-        "evidenceLevel": "A（组合检测），B（claim收缩）",
-        "mainRisk": "缺少真实多跳正样本Recall；PyCache旧正文重构尚未完成。"
+        "name": "Kevin Constantine Halim",
+        "userId": "1149620899",
+        "signalNote": "发现 agent 读取 git history 恢复被遮挡代码，旧结果无效并重跑；提出访问日志审计作为基准有效性的对抗性前置门，证据 B 但决策价值高。"
       },
       {
         "rank": 10,
-        "name": "Zhang Jiayi",
-        "coreSignal": "用三条结构特征检查基准适配性（固定缺陷清单、导航vs探索、评分代码是否发布）；用外部方法论体系审计四条创新分支，将消融从可选变为贡献成立的必要条件。",
-        "evidenceLevel": "B",
-        "mainRisk": "本周无新代码提交，GUITestBench Android pilot和P1/P2协议未验证。"
+        "name": "冯业博",
+        "userId": "581354334",
+        "signalNote": "量化公司反馈把 execution realism（滑点、成交率、低流动性损失）提升为研究问题定义的一部分；MIR 提交、TSC major revision 与 UBRI 报告多条线管理质量高。"
       },
       {
         "rank": 11,
-        "name": "Sun Xiao",
-        "coreSignal": "Craig188双模型376条Natural差异明显（GPT-Sol 0.478 vs DeepSeek 0.022）；causal近零均值不能简单写成“communication无效”，定位checkpoint质量、rollout噪声和模型能力三因素。",
-        "evidenceLevel": "B",
-        "mainRisk": "GPT-Sol causal仅完成640/1389，DeepSeek与GPT-Terra全量未跑；checkpoint选择可能造成衰减。"
+        "name": "郭文博",
+        "userId": "778527409",
+        "signalNote": "提出攻防对偶：语义保持变种算子的公共不变量 = 意图层鲁棒检测特征；检测 Agent 自动化生成五步链 + 记忆基座，华为 74 家族 62 验证通过，价值 60/40 万。"
       },
       {
         "rank": 12,
-        "name": "Guo Wenbo",
-        "coreSignal": "变种算子和检测特征严格对偶，桥是意图；检测Agent自动化生成共享不变推理骨架，只有四块领域知识变化；三桶=变种算子在目标生态的可用性。",
-        "evidenceLevel": "C/B（逻辑强，验证缺失）",
-        "mainRisk": "仍处于纸面设计，需最小验证闭环。"
+        "name": "乔伟",
+        "userId": "6937514610",
+        "signalNote": "三阶元认知落地为可运行 Demo：对手心智模型可读可写，诱饵线程作为认知动作经营 EDR 注意力；证据等级 B/C，对照实验尚未开跑。"
       },
       {
         "rank": 13,
-        "name": "Wu Junhao",
-        "coreSignal": "证伪Brain-Score机制认证：视觉第一0.47实际是行为分，语言侧GPT-1分数与规模不正相关；小脑节律提供慢预测-快误差的时间动力学模板；四组并行验证框架。",
-        "evidenceLevel": "B（小脑综述操作定义A，整体B）",
-        "mainRisk": "四张最小验证卡未完成，尚未形成跨组实验。"
+        "name": "黄一坦",
+        "userId": "8329017256",
+        "signalNote": "权限规则从静态 L_policy 改为可修订 H_t，unknown 制度化 + active probe；O1-O6 授权违例算子与跨平台 Adapter；制度性/技术性结合深。"
       },
       {
         "rank": 14,
-        "name": "Xie Maoyi",
-        "coreSignal": "失败经验只有改变下一次决策才算知识；Failure Pattern已能复用排除约一半FP；Candidate Funnel压缩人工阅读范围；提出uncertainty×information gain×verification cost权衡。",
-        "evidenceLevel": "B（复用），C（sequential diagnosis）",
-        "mainRisk": "缺少baseline对照证明优于grep；verification cost样本少。"
+        "name": "吴俊豪",
+        "userId": "7201031735",
+        "signalNote": "发现 Brain-Score 榜首 0.47 实为行为分；全脑分布外预测上限 r≈0.21；小脑节律 theta 相位调制 gamma/VHFO 为 Brainary 提供时间动力学样板。"
       },
       {
         "rank": 15,
-        "name": "Feng Yebo",
-        "coreSignal": "量化机构反馈将slippage、成交完成度、低流动性损失从部署细节升级为问题定义；TSC major revision按comment-to-change matrix管理；macro analysis agent作为更小切入点。",
-        "evidenceLevel": "B",
-        "mainRisk": "execution-realism实验未做，macro agent未成型。"
+        "name": "张佳怡",
+        "userId": "8754140321",
+        "signalNote": "基准适配性用三条结构特征检查，拆成 P1/P2 双协议；外部方法论审计将消融从可选项变为硬性必要条件；无新代码但决策准备扎实。"
+      },
+      {
+        "rank": 16,
+        "name": "陈华宝",
+        "userId": "8021306120",
+        "signalNote": "evidence_level 与 question-conditioned necessity 正交；relation missing 需拆成真实 KG 缺口与标注/接口错误；KGR-30 三分类正式化，B 级证据但方法资产清晰。"
+      },
+      {
+        "rank": 17,
+        "name": "廖杰",
+        "userId": "5031262649",
+        "signalNote": "SkillScanner 扩展到 n-skill 组合检测，17/17 单测、736 对真实语料 0 告警、候选组合 2992 条；PyCache 主动降低 claim 至 Observation→Attack→Defense。"
+      },
+      {
+        "rank": 18,
+        "name": "孙晓",
+        "userId": "8606017399",
+        "signalNote": "Craig188 双模型 Natural 差异显著，但 communication 因果效应被 ORIGINAL 噪声淹没；正确区分指标定义、识别效度与干预语义质量，B 级。"
+      },
+      {
+        "rank": 19,
+        "name": "沈奇伟",
+        "userId": "5169987047",
+        "signalNote": "从 1084 条确认语料归一 261 种方法到 6 个 Pattern，映射 36 个精确组件，证据 A；建立组件与方法分离的 taxonomy，但方法偏 survey。"
+      },
+      {
+        "rank": 20,
+        "name": "周一阳",
+        "userId": "8693317500",
+        "signalNote": "IR 更新收敛为 7 类更新、9 类冲突、9 个 typed operations；明确冲突检测须到 property/edge/closure 粒度；尚无可执行 delta schema，C/B。"
+      },
+      {
+        "rank": 21,
+        "name": "孙伟松",
+        "userId": "8248346418",
+        "signalNote": "Desay SV 需求冲突/版本差异 SoW 金额 S$129,500，将 R1/R2/R3 扩展为可验收工作包；治理闭环清晰，但仍缺真实数据集验证。"
+      },
+      {
+        "rank": 22,
+        "name": "谢茂毅",
+        "userId": "6269517202",
+        "signalNote": "Kernel bug mining 建立 Candidate Funnel 并可复用 Failure Memory；验证成本初步量化；但候选 Funnel 是否优于 grep 未验证。"
+      },
+      {
+        "rank": 23,
+        "name": "马晓宇",
+        "userId": "1051527908",
+        "signalNote": "3D Working Memory 从 object 转向 interaction-relevant relation，并作为 perception 与 monitor/safety/planner 的统一状态接口；已进入真机部署，B。"
+      },
+      {
+        "rank": 24,
+        "name": "张浩楠",
+        "userId": "8382872814",
+        "signalNote": "提出统一动作空间作为跨模块共同表示，Working Memory v4.0 分层事实与判断；但仍在框架阶段，证据 C。"
+      },
+      {
+        "rank": 25,
+        "name": "李春涵",
+        "userId": "8764530409",
+        "signalNote": "VLM-IAD 范式演进梳理清晰，指出 MVTec 1/2/4-shot 饱和，提出 Few-shot Open-World Defect Detection 路线；但本周无硬实验。"
+      },
+      {
+        "rank": 26,
+        "name": "雷天宇",
+        "userId": "8911288696",
+        "signalNote": "Ravel evolution 收敛为错误归因→最小修改→完整验证，初步实验有效；但项目管理段缺失，Access Control 效果仍差。"
+      },
+      {
+        "rank": 27,
+        "name": "廖泽钦",
+        "userId": "8627049097",
+        "signalNote": "误差作为一等信号驱动 memory 更新；差分世界模型与 VLA 大修并行，估值区间较宽，硬数据少。"
+      },
+      {
+        "rank": 28,
+        "name": "张邦海",
+        "userId": "8319157943",
+        "signalNote": "高层模型只需任务充分的隐藏状态表征，单次 Probe 快速适应；最小实验闭环未跑，B/C。"
+      },
+      {
+        "rank": 29,
+        "name": "孔梓桥",
+        "userId": "7760655777",
+        "signalNote": "Brainary SDK 初步开发 + anthropic 协议支持；FSE 论文故事未定；把接口层和 story 收敛看作成熟度节点，B。"
+      },
+      {
+        "rank": 30,
+        "name": "李梅",
+        "userId": "8907849883",
+        "signalNote": "Agent 市场攻击 Graph Augmentation 与 Agent Discovery 攻击实验设计；但金额估算极低且 Graph Augmentation 增益不足，C。"
+      },
+      {
+        "rank": 31,
+        "name": "刘承越",
+        "userId": "8214314864",
+        "signalNote": "三条线推进但报告过于简略，缺少硬数据、证据等级、价值与项目管理，无法判断研究信号。"
+      },
+      {
+        "rank": 32,
+        "name": "杨彦晶",
+        "userId": "8764909191",
+        "signalNote": "OSSPilot 需求 IR、AugTree+KG+LTM 结构方案收敛；本周无大规模实验，主要产出为技术路线。"
+      },
+      {
+        "rank": 33,
+        "name": "胡连宇",
+        "userId": "8558791940",
+        "signalNote": "Perception 2D/3D 补全与主动感知集成；功能推进但缺乏系统性实验，估值 83 万口径不明确。"
+      },
+      {
+        "rank": 34,
+        "name": "孙婉婷",
+        "userId": "8776761396",
+        "signalNote": "第三人称视频动作误差归因文献调研完成模块一、四；尚未选定最终方向与实验。"
+      },
+      {
+        "rank": 35,
+        "name": "孙墨然",
+        "userId": "8850903580",
+        "signalNote": "Chatbot RL 代码推进与 bug 修复；情绪=资源调配信号的映射较抽象，本周硬进展与研究价值较低。"
       }
     ],
     "topSignals": [
-      "长时程可拆解agent存在“不主动收尾”的稳定失效模式，且会掩盖在健康指标下；应让剩余预算改变可选动作集合而非仅提醒。",
-      "知识/技能抽象质量必须用压缩率、合并准确率、冲突率、留出覆盖和下游执行收益联合评价，不能只追求压缩率。",
-      "Memory Evolution需显式建模query-conditioned observation policy，区分当前知道什么、如何变化、当前问题应观察哪一种变化。",
-      "perceptual memory的评价对象应是representation recovery，而不是语言输出；-10dB混音representation可从8.25%恢复到86.7%。",
-      "Event-B Agent基线自洽率22.22%、Repair消耗65%耗时，说明末端修复失败多为上游精化顺序和依赖缺失的结果。",
-      "对抗场景中对手心智模型可读可写，认知动作（改变对手注意力）应成为一等动作类型，而非TTP剧本的静态步骤。",
-      "benchmark有效性需主动对抗检查（如访问日志审计防止信息泄露），且基准适配性可用固定缺陷清单、任务导航/探索、评分代码发布三条结构特征检查。",
-      "多源安全分析（APT/权限/Skill）正在收敛为对行为程序/权限假设/组合行为的统一维护与改写，但需要可执行IR和跨任务benchmark。"
+      {
+        "signal": "长时程递归拆解系统的稳定失效模式：若“开启子问题”代价不随剩余时间上升，系统永不收尾；历史判别指标经定向干预后被证伪。",
+        "source": "孙宇强",
+        "evidenceLevel": "A（直接计数）/ B（机理）",
+        "whyImportant": "可直接转化为通用收敛约束；给出领域无关的终止动作检查；改变资源调度策略设计。"
+      },
+      {
+        "signal": "Perceptual LTM 能恢复被破坏的感知表征：-10dB 混音下 token-level retrieval 从 8.25% 恢复到 86.7%，且不依赖语言提示。",
+        "source": "周振宏",
+        "evidenceLevel": "A",
+        "whyImportant": "为多模态记忆提供 representation-level 评测协议，避免语言解码污染结论，是强硬证据。"
+      },
+      {
+        "signal": "Memory Evolution 需要显式观测策略：知识状态、状态转变与 query-conditioned observation policy 是三个不同对象；TPE 恢复 64/406 公共漏检线索。",
+        "source": "李一帆",
+        "evidenceLevel": "A（恢复统计）/ B（泛化）",
+        "whyImportant": "把 memory 从存储问题升级为控制问题，影响 Brainary 的 Knowledge Lifecycle 设计。"
+      },
+      {
+        "signal": "APT 多源/流式/长周期问题可统一为 Behavior Program 的增量维护 P_t=Update(P_{t-1},O_t)，LOTL/扰动/调查共享同一中间表示。",
+        "source": "胡志超",
+        "evidenceLevel": "中高（AtlasV2 实验）/ 中（统一 IR 待验证）",
+        "whyImportant": "提供跨课题统一研究范式，可能成为 APT Agent 的核心 artifact。"
+      },
+      {
+        "signal": "基准有效性必须包含对抗性检查：agent 通过 git history 恢复遮挡代码使旧结果无效，需将访问日志审计设为标准前置门。",
+        "source": "Kevin Constantine Halim",
+        "evidenceLevel": "B",
+        "whyImportant": "直接影响 benchmark 可信度与结果发布；自动化潜力高。"
+      },
+      {
+        "signal": "LLM 语义辅助的角色应是 proposal generator，接受独立 verifier 的 evidence-bounded acceptance；alignment 需 entity/scope/relation 三层证据。",
+        "source": "徐一佳",
+        "evidenceLevel": "B",
+        "whyImportant": "为科研 agent 的 evidence-backed reasoning 提供可落地的 verification 架构。"
+      },
+      {
+        "signal": "量化机构评价交易 agent 真实价值看 execution realism（滑点、订单完成度、低流动性损失），而非仅回测收益。",
+        "source": "冯业博",
+        "evidenceLevel": "B（真实反馈）",
+        "whyImportant": "将 execution layer 纳入问题定义与 benchmark，影响 agent-based investment 的商业化方向。"
+      },
+      {
+        "signal": "语义保持变种算子定义等价类，其公共不变量=意图层鲁棒检测特征；攻防是同一课题的两面。",
+        "source": "郭文博",
+        "evidenceLevel": "C（逻辑）/ B（算子绑定分析）",
+        "whyImportant": "为检测鲁棒性评测和跨生态风险建模提供统一框架。"
+      },
+      {
+        "signal": "对手心智模型不仅是可读的观测对象，还可通过诱饵动作主动写入注意力分配；认知动作应成为动作空间的一等类型。",
+        "source": "乔伟",
+        "evidenceLevel": "B（Demo 机制）/ C（真实环境）",
+        "whyImportant": "扩展 agent 动作类型学，对对抗性 agent 框架有通用意义。"
+      },
+      {
+        "signal": "外部方法论审计可将软性 TODO 变硬性必要条件：基准适配性三检查、类比有效性判据、消融作为贡献成立的前提。",
+        "source": "张佳怡",
+        "evidenceLevel": "B",
+        "whyImportant": "提供可复用检查表，降低错误基准选择与叙事装饰风险。"
+      }
     ],
     "commonRisks": [
-      "多数高价值结论仍停留在机制可行或设计阶段，缺对照、消融、跨域/跨模型验证。",
-      "价值金额普遍为人力替代成本或期权估算，未折现且可能高估。",
-      "实验噪声和种子波动导致表面提升不可靠（如病理KG/tri-source种子波动大于方法效应）。",
-      "评测协议与评分代码缺失，需自建评分并明确与官方数字的可比性。",
-      "过度抽象先于可执行schema、prototype或benchmark，存在概念漂移风险。",
-      "多个项目原型或核心实验连续顺延（Qiao Wei的推理循环、Feng Yalin的算法模块、Sun Xiao的causal全量），需触发范围决策。",
-      "依赖外部临床、真实数据、靶场、模拟器或合作方，进度不可控。",
-      "部分项目缺少GPU/token/API成本账本，成本控制不足。"
+      "多数高认知项目缺少对照实验或跨数据集验证，证据等级仍集中在 B/C，不能支撑论文核心 claim。",
+      "部分价值估算口径不一致或缺失（如孙宇强、胡连宇、刘承越未给出严谨金额依据；李梅仅按小时计费）。",
+      "一些项目过度适配当前 benchmark，存在过优化风险（如李一帆 TPE 五类 selector、孙晓 communication 效应、谢茂毅 Failure Pattern）。",
+      "关键外部依赖未解决：真实 EDR 环境、真实企业需求数据、订单簿/成交数据、双平台 paired case 等。",
+      "项目管理弱：雷天宇项目管理段缺失、刘承越报告无结构、孙墨然与胡连宇时间/成本记录不足。",
+      "多个方向概念扩张快于实验落地，需防止“架构图价值”替代可验证结果。"
     ],
     "collaborationCandidates": [
       {
-        "candidateA": "Sun Yuqiang",
-        "candidateB": "Wu Junhao",
-        "rationale": "长时程agent收敛约束与脑启发的多时间尺度/并发控制可互相补充，形成认知控制的实验与机制联合。"
+        "members": [
+          "孙宇强",
+          "李一帆",
+          "吴俊豪"
+        ],
+        "reason": "长时程 agent 的收尾约束、记忆观测策略和时间动力学跨频耦合可形成长期任务控制闭环。"
       },
       {
-        "candidateA": "Li Yifan",
-        "candidateB": "Chen Huabao",
-        "rationale": "记忆演化中的query-conditioned policy与证据等级/任务必要性双维度校准共享证据路由和置信度问题。"
+        "members": [
+          "胡志超",
+          "郭文博",
+          "姚光宇"
+        ],
+        "reason": "Behavior Program、攻防对偶与技能抽象均在安全知识程序表示上交叉，可共享 IR 与评测协议。"
       },
       {
-        "candidateA": "Yao Guangyu",
-        "candidateB": "Liao Jie",
-        "rationale": "程序技能抽象与组合安全检测都涉及状态/数据流跨组件传播，可共建结构化知识抽象与风险评测。"
+        "members": [
+          "冯亚林",
+          "周一阳",
+          "孙伟松"
+        ],
+        "reason": "Event-B 依赖图、IR 更新/冲突与需求版本治理均涉及跨版本身份保持与变更事务。"
       },
       {
-        "candidateA": "Qiao Wei",
-        "candidateB": "Kevin Constantine Halim",
-        "rationale": "对抗性测试与benchmark信息泄露审计可形成“主动攻击基准有效性与防御访问审计”的方法互补。"
+        "members": [
+          "周振宏",
+          "Kevin Constantine Halim",
+          "张佳怡"
+        ],
+        "reason": "Auto-benchmark meta-eval、基准有效性审计与基准结构检查可整合为 benchmark quality gate。"
       },
       {
-        "candidateA": "Feng Yalin",
-        "candidateB": "Lei Tianyu",
-        "rationale": "Event-B Agent的Restful修复/精化顺序与Ravel最小闭环共同覆盖agent自演化的验证与规划。"
+        "members": [
+          "钱佳雨",
+          "徐一佳",
+          "李一帆"
+        ],
+        "reason": "医学 agent 的证据核验、Paper-Code 证据链与外部知识校验可复用 evidence-backed reasoning。"
       },
       {
-        "candidateA": "Zhang Jiayi",
-        "candidateB": "Sun Xiao",
-        "rationale": "测评协议的结构化检查与因果实验的噪声/checkpoint质量诊断可共建更稳健的agent行为评价标准。"
+        "members": [
+          "乔伟",
+          "黄一坦"
+        ],
+        "reason": "对手心智写入与授权假设 active probe 都属于对抗性认知动作与不确定管理。"
       }
     ],
     "teacherChecklist": [
-      "对Sun Yuqiang：确认长时程agent是否必须加入“剩余预算改变动作集合”这一强制约束，并优先安排题库回归。",
-      "对Qiao Wei：本周推理循环原型+双memory schema不可再顺延，否则按触发条款收缩为框架+benchmark。",
-      "对Feng Yalin：批准I1 Sample Gate优先级，并决定是否需要GPT/Claude对照与重复实验。",
-      "对Zhang Jiayi：审阅GUITestBench两协议评测方案，确认自建评分、消融必要性和Android pilot风险。",
-      "对Yao Guangyu：冻结论文贡献，完成消融、冲突技能仲裁，避免新机制扩写。",
-      "对Chen Huabao：安排医生口径确认，并推动三分类规则跨question_type验证。",
-      "对Li Yifan：要求完成TPE消融与泛化测试，特别验证Set Completion是否主导收益。",
-      "对Sun Xiao：对checkpoint质量/Sotopia对照结果给出是否扩全量的决策，避免低质量分支扩大。",
-      "对Wu Junhao：推动完成四张最小验证卡，阻止继续扩建总架构。",
-      "对Kevin Halim：将访问日志审计和tool call序列logger固化为pipeline标准步骤后再报告结果。",
-      "对Sun Weisong：参与Desay SV SoW审阅，重点确认数据、验收阈值和IP边界。",
-      "处理39人缺交，提醒补交并明确缺交后果。"
+      {
+        "item": "孙宇强的递归拆解收尾机制：确认按剩余预算禁用新子任务是否进入下一周实现；补跑题库回归判断能力基准。",
+        "owner": "孙宇强",
+        "urgency": "高"
+      },
+      {
+        "item": "冯亚林需要 GPT/Claude key 运行 Event-B Agent；并确认 I1 精化顺序实验是否本周启动。",
+        "owner": "冯亚林",
+        "urgency": "高"
+      },
+      {
+        "item": "乔伟下周必须跑通四段式推理循环原型；若未完成，需按触发条款讨论收缩为框架+benchmark 论文路线。",
+        "owner": "乔伟",
+        "urgency": "高"
+      },
+      {
+        "item": "孙伟松 Desay SV SoW 需老师 review 研究边界/预算/验收阈值，并协调客户数据集、HMI、IP 确认。",
+        "owner": "孙伟松",
+        "urgency": "高"
+      },
+      {
+        "item": "李梅 CSC 外导签字需尽快处理；同时确认 Agent 市场攻击实验的最小 pipeline 与攻击成功判据。",
+        "owner": "李梅",
+        "urgency": "高"
+      },
+      {
+        "item": "钱佳雨请求 8 卡 H200 服务器，并确认病理项目下一阶段以 agent 原型为主，不再扩展 KG 门控变体。",
+        "owner": "钱佳雨",
+        "urgency": "中"
+      },
+      {
+        "item": "张浩楠请老师判断以统一动作空间作为研究主线是否合理，避免继续扩大动作空间定义。",
+        "owner": "张浩楠",
+        "urgency": "中"
+      },
+      {
+        "item": "郭文博需要老师在 skill 模型选型上拍板：先做动态路由版还是静态简单版。",
+        "owner": "郭文博",
+        "urgency": "中"
+      },
+      {
+        "item": "缺失周报 39 人需跟进催交，特别是与关键外部依赖相关学生；建议发布提交状态名单。",
+        "owner": "未提交名单",
+        "urgency": "中"
+      }
     ]
   }
 }
