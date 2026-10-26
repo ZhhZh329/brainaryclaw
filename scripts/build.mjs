@@ -78,6 +78,8 @@ function isSundayWeek(value) {
 }
 
 function slugify(value) {
+  // Preserve existing links and analysis keys after this spelling correction.
+  if (String(value).trim().toLowerCase() === "sun wanting") return "sun-wangting";
   const slug = String(value || "")
     .normalize("NFKD")
     .replace(/[^\p{Letter}\p{Number}\s-]/gu, "")
