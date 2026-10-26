@@ -1,139 +1,140 @@
 {
   "key": "week:2026-09-13:horizontal",
-  "generatedAt": "2026-09-18T08:03:13.209Z",
+  "generatedAt": "2026-10-26T08:07:21.597Z",
   "provider": "deepseek",
   "model": "deepseek-v4-pro",
   "reasoningEffort": "high",
-  "inputHash": "0aa7c7f831637145bd9586206328753650f512b9be0189648f805390c6ebe068",
-  "contentHash": "0aa7c7f831637145bd9586206328753650f512b9be0189648f805390c6ebe068",
+  "inputHash": "5541fb6291b6d51a1c765aab7d27ee2d9e055f539c54c76381054ce88cde9033",
+  "contentHash": "5541fb6291b6d51a1c765aab7d27ee2d9e055f539c54c76381054ce88cde9033",
   "promptHash": "d5dbdfc5549acc1104e527368173d8297b203b85695a994e292ae089aedc6b71",
   "result": {
-    "submissionStatus": "本周提交 37 人，缺失 41 人；总体提交率约 47%。",
-    "overallRead": "本周多条研究线出现高价值硬进展和关键认知修正，尤其集中在训练管道审计、规约表示缺陷、红队模板失效和跨生态模型闭环。但仍有较多项目停留在设计或文献阶段，实验证据不足，部分项目管理信息缺失。强信号多来自能提供可核验数字和失败归因的工作。",
+    "submissionStatus": "本周应提交周报的 roster 共 81 人（含 2 个缺少 userId 的提交记录），其中 38 人已提交，43 人未提交。已提交报告中多数包含硬进展与认知增量，但证据层级和落地程度差异大。",
+    "overallRead": "本周整体研究信号质量分层明显：安全测试、内核缺陷检测、Agent RL 审计、Audio memory 等方向出现了可核验的硬数据（如 FP 下降 99%、LoRA dropout 污染修复、5/5 对比、WER 退化与门控恢复等）；而部分项目仍停留在设计周/文献周，连续无实验证据。需要警惕设计层收益递减和多人同质竞争。",
     "ranking": [
       {
         "rank": 1,
-        "name": "钱加宇",
-        "project": "Paper A · 医学工具 Agent 证据充分性与 RL",
-        "signalStrength": "极强",
-        "reason": "发现 LoRA dropout 污染整个 GRPO 梯度链，撤回无效结论；重建 oracle/image-only/predicted 三档环境上限（0.9153/0.7122/0.5672），证明端到端差距主要由环境可判定性决定，而非策略忠实性；abstention reward 在不可判定子集恢复约 24–26 pp 有效组；证据 A/B 级，金额估算 125 万，下一步 P0 清晰，项目管理敢于自我否定。"
+        "name": "胡智超",
+        "signal": "ASAP 预筛在 CADETS+FLASH 上将 FP 从 1003 降到 9，F1 升到 0.9950，CPU 降低 21%；同时将 Program 作为 APT 攻防统一中间语言，并完成 SAME 鲁棒性矩阵设计。",
+        "reason": "证据等级高（可复现数字），覆盖任务关键路径，跨模块方法论有 Brainary 状态层贡献。"
       },
       {
         "rank": 2,
-        "name": "王素媛",
-        "project": "内核缺陷检测的规约供给",
-        "signalStrength": "极强",
-        "reason": "现有工具 5 个缺陷仅找到 1 个（且为原址对照），自己方案 5 中 5，7 项阴性对照全对；诊断出『实体，约束』二元格式中一栏双职的结构性缺陷，提出四槽位规约和『抽象只用于寻址，绝不用于判定』；结构键寻址在 175 个候选中命中目标，证据 B+，时间切分前瞻实验已冻结。"
+        "name": "钱加宇",
+        "signal": "发现 GRPO 旧梯子被 LoRA dropout 污染，重建 oracle/image-only/predicted 三档环境上限（0.9153/0.7122/0.5672），提出环境可判定率作为 RL 前向变量。",
+        "reason": "实现审计和阳性对照逻辑严谨，证据等级 A/B，直接改变论文主张与下一步实验。"
       },
       {
         "rank": 3,
-        "name": "胡智超",
-        "project": "APT 攻防统一 Program 主线 + ASAP + SAME",
-        "signalStrength": "极强",
-        "reason": "ASAP 在 CADETS+FLASH 上 FP 从 1003 降至 9，F1 提升至 0.9950，CPU 降低 21%；SAME 已固定 6×4×6 实验矩阵，Semantic-Equivalent 攻击明显强于 ProvNinja；Behavior Program 提升为 Perception 与攻防统一状态，硬证据高，项目管理依赖关系清晰。"
+        "name": "王溯源",
+        "signal": "内核缺陷检测现有工具只找到 1/5，而四槽位规约 5/5 命中，7 项阴性对照全对；提出判定落点与检索键必须分槽，并验证寻址 175 候选命中目标。",
+        "reason": "小规模但机制级证据，原址对照设计强，表示层认知增量具有可推广性。"
       },
       {
         "rank": 4,
-        "name": "黄勋",
-        "project": "构造语言红队与推理型 DoS",
-        "signalStrength": "极强",
-        "reason": "实验证明经典越狱模板（DAN/AIM）会造成负增益，裸 conlang ASR 48% vs 模板 18%；SkillDoS Stage1 落地，231 项测试全绿，openclaw 上 thinking 放大 11x；WebDoS 完成 DeepSeek 5 账号池化，发现免费档 28% 静默丢弃；证据 A，金额 195 万，CoT 提出意图指纹与登录事件驱动互踢等新认知。"
+        "name": "黄迅",
+        "signal": "构造语言红队实验显示裸 conlang ASR 48%，接入 AIM/DAN 模板降至 26%/18%，确认越狱模板负增益；SkillDoS 实测 11x 思考放大，WebDoS 平台实现多账号池。",
+        "reason": "证据等级 A（真实平台数据），直接推翻传统红队假设，对 risk modeling 与自动化安全评测有高价值。"
       },
       {
         "rank": 5,
-        "name": "徐一家",
-        "project": "可信 research agent 的证据优化",
-        "signalStrength": "强",
-        "reason": "完成 full/minimal context 对照，minimal 将 unsupported inference 从 3 降至 1；5 个 relation 中 3 个通过 proof graph verifier；12 个 uncertain case 上证据定向获取使 action 数下降 30%；三个 CoT 统一为『有限预算下构建最小充分 proof』，证据 A/B，金额 150 万，下一步量化成本价值。"
+        "name": "许艺嘉",
+        "signal": "在 24 个 hard case 上证明 minimal-context 保留有效 accept 同时减少 unsupported inference；5 个 relation 建立 proof graph；12 个 uncertain case 的 evidence acquisition 平均 action 下降 30%。",
+        "reason": "三个小实验都有数据，证据 A/B，将可信研究 agent 统一为有限预算下最小充分 proof 构建问题。"
       },
       {
         "rank": 6,
-        "name": "冯亚林",
-        "project": "海通交付与 Event-B Refinement",
-        "signalStrength": "强",
-        "reason": "海通文件修剪 69 个、净删 8171 行，64 项测试通过；Event-B I1S2 策略使精化深度到 5 层，PO 消解率 85% 以上；CoT 指出没有 SOP 时 Agent 应先做冷启动共识、认知控制必须改变搜索空间；项目管理详细，金额 8 万，主动提请老师确认优先级。"
+        "name": "周振宏",
+        "signal": "Audio LTM 受完整 PCA enhancement 影响 WER 从 23.07% 退化到 33.75%，learned gate 拉回约 23.5%；Auto-benchmark 跨 DeepSeek/Luna 暴露 schema 不一致并实现 model adapter。",
+        "reason": "证据等级 A，提出 memory 使用强度控制问题，跨生成器工作流抽象具有通用工程价值。"
       },
       {
         "rank": 7,
-        "name": "郭文博",
-        "project": "华为项目与跨生态统一行为模型",
-        "signalStrength": "强",
-        "reason": "华为侧 405 个家族、110 个变种、两个 Agent 和桌面端全部交付，验证 74/75、100/110；Research 主线收成闭环：统一行为模型→生态投影→对抗生成→检测共演化；CoT 将华为三桶升格为通用投影算子；项目管理识别 Windows 版和 API 稳定性两个新风险。"
+        "name": "葛梦梦",
+        "signal": "MultiAgentsDos 重新分类 53 条路径为 47 条（6 条合并、6 条剔除），扫描 7 框架产出 214 候选，人工复核 120 条准确率 68.3%；识别单人标注一致性风险。",
+        "reason": "ICLR 投稿冲刺，分类学改造有硬数据，多人标注计划针对评审弱点。"
       },
       {
         "rank": 8,
-        "name": "周振宏",
-        "project": "Audio LTM learned gate 与 Auto-benchmark adapter",
-        "signalStrength": "强",
-        "reason": "完整 PCA enhancement 导致 ASR WER 从 23.07% 退化到 33.75%，learned gate 拉回 23.5%；Auto-benchmark 换模型发现字段/schema 不一致，Model Adapter Layer 隔离模型与系统；两条线均有硬数字，证据 A，价值各 100 万。"
+        "name": "眭浩",
+        "signal": "从防御侧精读中确立 laundering 攻击：现有防御依赖的信任信号可被 summarization/可信工具回显/伪造佐证洗白，已有论文实验 ASR 68%。",
+        "reason": "安全 gap 原理级深刻，证据等级 B，直接构造新论文 motivation 和未来攻防评测。"
       },
       {
         "rank": 9,
-        "name": "王慧丽",
-        "project": "恶意 Skill 静态知识图谱",
-        "signalStrength": "中强",
-        "reason": "完成 200 样本端到端构建，11414 节点、8751 关系，8 类规则，24 项测试全过；47 个恶意样本漏报待分型；CoT 强调图谱作为可审核证据接口、按失效模式调度分析器，证据 A，认知增量清晰。"
+        "name": "谢茂义",
+        "signal": "第二轮 18 个 unseen case 复现，人工深入阅读 34→22，平均时间 29→21 分钟；动态验证 3 候选得到 1 确认、1 排除、1 未决。",
+        "reason": "有可复制数据和漏斗成本观察，证据 A/B，方法定位从 bug detector 收敛为 human-in-the-loop。"
       },
       {
         "rank": 10,
-        "name": "喻宏伟",
-        "project": "需求驱动软件维护",
-        "signalStrength": "中强",
-        "reason": "30 个任务对照实验，P2 双向影响修订成功率 63.3%，较测试反馈修订高 13.3pp；CoT 明确 IR 应该是可更新的控制层而非一次性说明文件；证据 A，但结果属开发集，下一步需建立 Gold Set 和消融。"
+        "name": "余宏伟",
+        "signal": "NL2RepoBench 10 项目 30 需求上，双向影响修订方法成功 19/30（63.3%），较直接测试反馈修订 50% 提升 13.3pp；并准备消融。",
+        "reason": "多项目对照有结果，虽然为开发集，但面向代码维护的 workbench 可复用。"
       }
     ],
     "topSignals": [
-      "训练管道审计是硬约束：钱加宇发现 LoRA dropout 污染 GRPO，证明阳性对照和不变量哨兵比最终 reward 更能暴露静默错误。",
-      "表示格式缺陷比模型能力更根本：王素媛发现『实体，约束』二元组一栏双职导致迁移断裂，拆分槽位后漏报即变命中。",
-      "安全对抗出现范式转移：黄勋证明经典越狱模板在深度推理模型上产生负增益，中性裸框架才是有效窄窗；眭浩发现 memory poisoning 的 laundering 攻击可把毒洗白（ASR 68%）。",
-      "环境可判定性成为 Agentic RL 的前置变量：钱加宇证明端到端差距由证据环境决定，abstain 是 credit assignment 动作。",
-      "多项目从设计层进入硬实验：冯亚林、王素媛、胡智超、周振宏等均提供可核验数字和有对照的失败归因。",
-      "跨生态统一行为模型闭环成型：郭文博将华为三桶、对抗生成、检测共演化整合为生态无关的行为语义层，具备复用和迁移价值。"
+      "可验证硬数据出现在多个方向：内核缺陷检测 5/5 vs 1/5、ASAP FP -99%、GRPO dropout 污染修复、红队模板负增益、Audio WER 门控恢复。",
+      "高证据项目普遍围绕证据链与可判定性：Environment Decidability、原址对照、阳性对照、不变式哨兵等成为新的方法论。",
+      "设计层收益递减开始显性化：如 Qiao Wei 连续三周无实验，值判断和路线锁定成为急迫管理问题。",
+      "多人同质竞争在内核缺陷检测与 Agent 安全领域出现，需要整合。",
+      "部分价值估算严重虚高，与本周证据不匹配。"
     ],
     "commonRisks": [
-      "实验证据缺失：乔伟、李春寒、潘良瑞、吴俊豪、杨金成、闫文浩、沈其伟、孙凯然、孙茂然、孙婉婷等仍停留在设计/文献/调研阶段，无新实验数据。",
-      "证据等级偏低且不明确：多个项目自我评估为 B/C，但部分报告金额估算却很高，存在价值推理与证据强度不匹配。",
-      "截止日期压力：钱加宇 Paper A 需在 9/16 前冻结主张；孔自乔 FSE 10/02 截止，实验未闭环；李乾坤 ICLR 初稿冲刺。",
-      "项目管理信息缺失：雷天宇、潘良瑞等项目管理部分空白；多人未记录 Token/成本；部分周报投入时间缺失。",
-      "工程风险：郭文博 Windows 版移植和第三方 API 不稳定；黄勋 ChatGLM 每日额度限制、Kimi 互踢；冯亚林海通业务标准缺失。",
-      "范围蔓延：乔伟连续三周设计层，原型顺延；冯亚林海通投入超计划；李梅赶 due 时任务切换失控。"
+      "多个项目连续数周停留在设计/文献阶段，没有实验数据（如 Qiao Wei 三周、Hu Lianyu 无量化、Kong Ziqiao 等）。",
+      "证据等级与价值估算不匹配：Kong Ziqiao 平台潜在 10 亿元、Hu Zhichao 3000万+500万，但都缺乏客户验证或完整基准。",
+      "同质项目可能内耗：内核缺陷检测/规约方向有胡智超、谢茂义、王溯源等多人，需明确分工。",
+      "实验设计缺少独立验证：Yu Hongwei 明确为开发集结果，Ge Mengmeng 准确率 68.3% 但人工复核一致性待补。",
+      "项目管理信息不完整：token/成本记录、投入时间缺失，价值估算随意。",
+      "大量提交缺失（43人），可能影响项目全局协调。"
     ],
     "collaborationCandidates": [
       {
-        "participants": "陈华宝 × 李乾坤",
-        "topic": "病理知识图谱中的规则依赖与语义匹配",
-        "rationale": "陈华宝的 gate edge 分支结构和 semantic matching 假阳性修复，可直接服务于李乾坤的细胞分子级病理库和 KG-图像对齐，提升医学规则核验质量。"
+        "names": [
+          "王溯源",
+          "谢茂义",
+          "胡智超"
+        ],
+        "reason": "内核缺陷检测与验证：王溯源的四槽位规约和谢茂义的动态验证漏斗、胡智超的 ASAP 前端可以串成一条“预筛-规约-确认”流水线。"
       },
       {
-        "participants": "眭浩 × 黄一坦 × 乔伟",
-        "topic": "Agent 安全与信任信号建模",
-        "rationale": "眭浩的 memory laundering 攻击与黄一坦的 privilege 建模都涉及信任信号可洗白/可解释问题，乔伟的声东击西诱导策略可提供对抗反馈，三者可共建 Agent 安全中间件。"
+        "names": [
+          "钱加宇",
+          "许艺嘉"
+        ],
+        "reason": "证据价值与 credit assignment：钱加宇的环境可判定率与 abstention credit，许艺嘉的 evidence value ranking 可以合并成 cost-aware agentic RL 框架。"
       },
       {
-        "participants": "胡智超 × 郭文博",
-        "topic": "统一跨生态行为模型与 APT 检测",
-        "rationale": "胡智超的 Behavior Program 和 SAME 语义等价攻击评测，与郭文博的跨生态统一行为模型闭环高度互补，可共享行为语义本体和检测器鲁棒性评测。"
+        "names": [
+          "冯亚林",
+          "孔梓乔"
+        ],
+        "reason": "Agent OS 落地与元认知框架：冯亚林的海通项目需要 Grounding Readiness Check，孔梓乔负责 Brainary TUI/runtime 契约，可共用对象模型。"
       },
       {
-        "participants": "徐一家 × 钱加宇 × 周振宏",
-        "topic": "证据充分性与 RL 审计",
-        "rationale": "徐一家的 value-of-information 证据获取与钱加宇的环境可判定性、周振宏的 memory 使用强度控制，都可统一为『有限预算下的证据控制与信任校准』模块。"
+        "names": [
+          "眭浩",
+          "李梅"
+        ],
+        "reason": "Agent 采购与记忆安全：眭浩的 memory poisoning laundering 攻击评测可直接用于李梅的 AgentSpec Selection 投毒场景。"
       },
       {
-        "participants": "冯亚林 × 孙伟松",
-        "topic": "企业 AI 落地与 Agent OS 交付",
-        "rationale": "冯亚林的海通冷启动共识和孙伟松的客户准备度编码，可形成企业 AI Coding/Agent 落地的评估工作流，避免在无 SOP 时盲目扩张。"
+        "names": [
+          "周振宏",
+          "胡连宇"
+        ],
+        "reason": "记忆使用强度与感知耦合：周振宏 learned gate 控制 LTM 对当前 observation 的影响，胡连宇研究 memory 调制 attention，两者可共享 policy 与 evaluation。"
       }
     ],
     "teacherChecklist": [
-      "钱加宇 Paper A 主张需在 9/16 前冻结，请确认是否支持『evidence sufficiency + selective credit assignment』主线或转为环境审计论文。",
-      "郭文博华为项目需要投入 Windows 版移植和 API 稳定性，请明确是否投人、是否更换稳定 API 或自建模型。",
-      "冯亚林申请下周 70% 以上精力投入海通交付，请确认是否同意并关注 Event-B 实验延期。",
-      "乔伟声东击西需锁定路线：进代码还是继续补规格，请当面汇报时决策；若第三次顺延，需主动收缩范围。",
-      "王素媛已知事实自动提取是最高优先级，若不能打通，前期对比结论只能算半成，请关注其前瞻性实验准备。",
-      "孔自乔 FSE 投稿仅剩约 20 天，实验问题尚未定位，请在一周内决策是否缩题或转投。",
-      "王慧丽漏报 47 个恶意样本需系统分型，请支持其按失效模式调度分析器而非继续堆规则。",
-      "李乾坤 3D 表征算力开销大，分子级知识对齐存在语义鸿沟，需关注是否有足够的算力和跨模态对比学习方案。"
+      "对 Qiao Wei 锁定路线：进代码还是补规格，避免第三次顺延，可在下周汇报时现场拍板。",
+      "协调内核缺陷检测三人组（王溯源、谢茂义、胡智超）边界，合并或拆分，避免同一问题重复投标。",
+      "与孔梓乔确认 FSE 10-02 截止的实验闭环，9/19 前必须定位实验问题和最小可辩护贡献。",
+      "评估郭文博华为 Windows 移植和生成侧 API 稳定性，需要老师定是否投人和换用稳定 API。",
+      "审核冯亚林海通交付范围，确保不超过 SOW，下周是否以 70% 精力投入海通需老师确认。",
+      "推动高证据项目（钱加宇、胡智超、王溯源、黄迅、周振宏）把实验资产转化为 benchmark/workflow/module，而不是只写进周报。",
+      "统一价值估算口径：对 10 亿/3000万等大额估算要求提供验证路径或阶段折减依据，避免误导决策。",
+      "关注缺失 43 人的补交，排查是否有项目关键成员失联。",
+      "对连续无实验项目启动纠偏：如 Hu Lianyu、Sun Moran 等，要求给出最小实验或停止条件。"
     ]
   }
 }

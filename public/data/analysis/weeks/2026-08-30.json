@@ -1,174 +1,187 @@
 {
   "key": "week:2026-08-30:horizontal",
-  "generatedAt": "2026-10-25T04:04:43.425Z",
+  "generatedAt": "2026-10-26T08:06:09.754Z",
   "provider": "deepseek",
   "model": "deepseek-v4-pro",
   "reasoningEffort": "high",
-  "inputHash": "47219b8c248dcced7cdcc80f07683a975c75d42395e7ed7accc935e37ca419e4",
-  "contentHash": "47219b8c248dcced7cdcc80f07683a975c75d42395e7ed7accc935e37ca419e4",
+  "inputHash": "02ebd9641ea98a6a0d99c285d772f0a7cc22f7e7a6fc1a3eee1128eb66865e50",
+  "contentHash": "02ebd9641ea98a6a0d99c285d772f0a7cc22f7e7a6fc1a3eee1128eb66865e50",
   "promptHash": "d5dbdfc5549acc1104e527368173d8297b203b85695a994e292ae089aedc6b71",
   "result": {
-    "submissionStatus": "本周共收到36份周报，其余人员未提交（具体名单见 roster）。",
-    "overallRead": "本周研究信号较上周明显增强：多个项目从方案设计进入实验验证阶段，出现若干具有普遍意义的新发现（如长程任务不收敛、benchmark有效性缺陷、记忆检索需要结构化关联等）。但多数工作仍处于设计或小规模验证阶段，证据等级以B/C为主，存在“claim大于evidence”的风险。老师应重点关注已产生硬数据的项目，并推动其他项目从抽象框架转向最小可验证实验。",
+    "submissionStatus": "已提交35人，未提交39人；截止时间已过，缺交名单需跟进。",
+    "overallRead": "本周35份已交周报整体硬进展明显：长时程agent收敛缺陷、记忆/检索演化、基准有效性审计、对抗测试、组合安全、知识抽象等方向出现多组A级或B级证据。但相当比例的高价值结论仍停留在设计或机制验证阶段，缺少对照、消融与跨域验证；价值金额普遍为人力替代或期权估算，需谨慎折现。最值得老师决策关注的信号集中在：Sun Yuqiang的“系统不主动收尾且健康指标失灵”、Yao Guangyu的3000篇writeup技能抽象与PenTestAI回放提升、Li Yifan的query-conditioned memory observation policy、Zhou Zhenhong的音频LTM表征恢复、Feng Yalin的Event-B Agent 27案例自洽率与三项改进假设。共同风险是：实验噪声淹没方法效应、benchmark效度与评分代码缺失、原型多次顺延、过度抽象先于可执行schema、外部数据/环境依赖阻塞进度。",
     "ranking": [
       {
         "rank": 1,
-        "name": "孙宇强",
-        "keySignal": "发现长程任务Agent存在固有失效模式：可自行拆解任务的系统若不为“继续拆解”计价，稳定状态是持续拆解直至超时；同时发现曾被信任的判别指标在定向干预后失效，揭示指标可能测量替代量而非目标量。",
-        "reason": "证据等级A（对指标失效和收尾行为的机械计数），可直接泛化到所有长程Agent设计，对老师改进Brainary的认知控制有直接价值。"
+        "name": "Sun Yuqiang",
+        "coreSignal": "发现可自行拆解任务的AI存在固有失效模式：开启子任务代价不随剩余时间上升，稳定状态是持续拆解直到超时；同时证伪此前可靠的健康指标，因为指标衡量执行层级而非当前应做任务。",
+        "evidenceLevel": "A（收尾行为直接计数）；B（指标失效机理与拆解总量未变）",
+        "mainRisk": "题库回归尚未补跑，本周机制改动对解题率影响未测。"
       },
       {
         "rank": 2,
-        "name": "姚广宇",
-        "keySignal": "在3000篇渗透知识文本上完成证据约束的轨迹—技能抽象，压缩率84.4%，合并准确率91.2%，留出覆盖率86.7%；接入PenTestAI后成功率从61.9%提升至78.4%，步骤数和调用量均下降。",
-        "reason": "证据等级A，同时验证知识抽象质量和Agent执行收益，形成完整闭环，是本周最扎实的实验结果之一。"
+        "name": "Yao Guangyu",
+        "coreSignal": "3000篇writeup抽象为468个程序技能，压缩率84.4%，合并准确率91.2%；PenTestAI成功率61.9%→78.4%，平均步骤-22.1%，模型调用-18.3%；形成证据约束的轨迹-技能闭环。",
+        "evidenceLevel": "A",
+        "mainRisk": "复合修改和跨源术语仍导致错误合并；需消融和跨靶场验证。"
       },
       {
         "rank": 3,
-        "name": "周振宏",
-        "keySignal": "两项工作均取得强实验数据：音频感知LTM在20类声音上将混音表征从8.25%恢复到约86.7%（接近clean 87.9%）；Auto-benchmark完成8个自建集，并发现基准本身需要meta-evaluation（outlier、difficulty等）。",
-        "reason": "证据等级A，分别证明感知记忆恢复机制和自动基准验证机制，研究方法规范，有明确自动化转化路径。"
+        "name": "Li Yifan",
+        "coreSignal": "提出Memory Evolution需显式建模query-conditioned observation policy；公共漏检线索恢复64/406，五类selector中集合补全/多事件/冲突占89%；知识系统三不变量（语义稳定、问题充分、时间一致）。",
+        "evidenceLevel": "A/B（恢复数据A，三不变量框架C）",
+        "mainRisk": "最终QA收益、消融和跨benchmark泛化未完成；Set Completion可能主导收益。"
       },
       {
         "rank": 4,
-        "name": "李一帆",
-        "keySignal": "提出查询特异关联恢复（TPE），在406条公共漏检线索中恢复64条（15.84%），其中集合补全、多事件、冲突合计占89%；并建立五类query-specific selector和固定预算融合。",
-        "reason": "有明确数据和消融计划，CoT's CoT深入（记忆演化需要观察策略），对Brainary的记忆检索有直接启发。"
+        "name": "Zhou Zhenhong",
+        "coreSignal": "Audio LTM在20类、-10dB强混音下将representation从8.25%恢复到86.7%接近clean87.9%；Auto-benchmark完成8个自建集，Aider Spearman 0.861，并建立benchmark meta-evaluation。",
+        "evidenceLevel": "A",
+        "mainRisk": "类别恢复差异和N20/N50/N100差距解释不足；auto-benchmark需完成剩余公开对照。"
       },
       {
         "rank": 5,
-        "name": "冯亚林",
-        "keySignal": "完成Event-B Agent全量复现：27案例中仅6个系统自洽（22.22%），耗时17.93小时，65.65%的耗时和72.46%的Token消耗在修复环节；提炼出三个待验证假设（精化顺序、依赖图、MCTS搜索）。",
-        "reason": "硬数据充分，基线性能量化清晰，三个假设设计有针对性，项目管理和价值估算（5万元）较合理。"
+        "name": "Feng Yalin",
+        "coreSignal": "Event-B Agent全量27案例复现，系统自洽率仅22.22%，65.65%耗时和72.46%token花在Compilation/Model Checking Repair；从目标反推必要条件，形成I1精化顺序→I3依赖图→I2搜索的顺序。",
+        "evidenceLevel": "A（基线现状数据），B/C（三项改进假设）",
+        "mainRisk": "新算法模块未实现，无GPT/Claude对照、重复实验与消融。"
       },
       {
         "rank": 6,
-        "name": "张家怡",
-        "keySignal": "发现现有基准（RippleGUItester）无法量化precision/recall，替换为GUITestBench并设计P1/P2两套协议；使用外部方法论体系审计了四条主分支，将消融从可选变为必需。",
-        "reason": "问题识别精准，审计方法严谨，对评测协议和研究定位有决策价值，但尚未运行新实验。"
+        "name": "Qiao Wei",
+        "coreSignal": "把对手心智模型从可读升级为可写，提出“认知动作”和黑箱边界在线辨识协议；三层EDR对抗案例经Demo验证机制可行。",
+        "evidenceLevel": "B（机制可行），C（框架有效性）",
+        "mainRisk": "推理循环原型与对照实验已顺延一周，触发条件明确但尚未执行。"
       },
       {
         "rank": 7,
-        "name": "孙晓",
-        "keySignal": "在Craig188双模型上完成376条轨迹审计，发现GPT-Sol与DeepSeek差异明显；部分因果干预效应均值接近0但无法解释，发现ORIGINAL重复运行噪声（约0.150）高于多数干预效应，说明需要先校准噪声再解释结果。",
-        "reason": "对因果识别中的信噪比问题有清醒认识，提出通过checkpoint质量检查和Sotopia attribution对照来诊断衰减，方法严谨。"
+        "name": "Chen Huabao",
+        "coreSignal": "发现evidence_level与question-conditioned necessity是正交维度，高证据边也会因问题类型反转；relation missing需根因分类为KG缺口或标注/接口bug；abstention_reason结构化枚举。",
+        "evidenceLevel": "B",
+        "mainRisk": "需医生确认口径；三分类规则尚未跨question_type验证。"
       },
       {
         "rank": 8,
-        "name": "乔伟",
-        "keySignal": "将元认知对抗Agent从框架推进到可运行的案例Demo，具体化三阶循环（Hook检测→蜜罐识别→双线掩护），并提出对手心智模型可读可写的认知动作类型。",
-        "reason": "CoT's CoT新颖（认知动作、注意力经营），证据等级从C升到B-；但需注意安全伦理，且框架有效性尚未对照验证。"
+        "name": "Hu Zhichao",
+        "coreSignal": "将多源/流式/长周期APT统一为Behavior Program生命周期（构建、压缩、分析、扰动、重构）；ProvBREAK在AtlasV2上扰动结果明显提升。",
+        "evidenceLevel": "中高（攻击效果），中（统一范式）",
+        "mainRisk": "Behavior Program IR和统一benchmark尚未冻结，跨任务复用需实证。"
       },
       {
         "rank": 9,
-        "name": "孙伟松",
-        "keySignal": "完成Desay SV需求冲突检测与跨版本差异分析SoW，预算S$129,500，定义VersionDiffAgent和ReqConflictAgent，考虑误报体积控制等工程问题。",
-        "reason": "直接对应合同价值，项目管理详细，但技术验证尚未开始，证据等级B/C。"
+        "name": "Liao Jie",
+        "coreSignal": "SkillScanner从单体扩展到任意长度Skill接力链，17/17单测、canonical F1 0.9412、真实语料736对0告警；PyCache主动收缩claim到Observation→Attack→Defense最小闭环。",
+        "evidenceLevel": "A（组合检测），B（claim收缩）",
+        "mainRisk": "缺少真实多跳正样本Recall；PyCache旧正文重构尚未完成。"
       },
       {
         "rank": 10,
-        "name": "Kevin Constantine Halim",
-        "keySignal": "发现agent利用git历史恢复被掩盖代码导致结果虚高，属于信息泄露，已修复并重跑；提出将访问日志审计作为基准验证的强制步骤。",
-        "reason": "对benchmark有效性有普遍意义，证据B，但规模有限。"
+        "name": "Zhang Jiayi",
+        "coreSignal": "用三条结构特征检查基准适配性（固定缺陷清单、导航vs探索、评分代码是否发布）；用外部方法论体系审计四条创新分支，将消融从可选变为贡献成立的必要条件。",
+        "evidenceLevel": "B",
+        "mainRisk": "本周无新代码提交，GUITestBench Android pilot和P1/P2协议未验证。"
       },
       {
         "rank": 11,
-        "name": "胡志超",
-        "keySignal": "将多条APT工作统一为Behavior Program范式，AtlasV2能力单元扰动实验效果大幅提升，但强有效性约束仍在验证。",
-        "reason": "统一抽象有潜力，实验结果初步，证据中高。"
+        "name": "Sun Xiao",
+        "coreSignal": "Craig188双模型376条Natural差异明显（GPT-Sol 0.478 vs DeepSeek 0.022）；causal近零均值不能简单写成“communication无效”，定位checkpoint质量、rollout噪声和模型能力三因素。",
+        "evidenceLevel": "B",
+        "mainRisk": "GPT-Sol causal仅完成640/1389，DeepSeek与GPT-Terra全量未跑；checkpoint选择可能造成衰减。"
       },
       {
         "rank": 12,
-        "name": "钱嘉宇",
-        "keySignal": "病理17个训练臂无稳定增益（种子噪声大于方法效应），东方肝胆393例CT模型复现完成；将重心转向agent的模型注册、记忆和验证。",
-        "reason": "通过负结果排除无效路线，为医学agent奠定干净基础，证据A/B。"
+        "name": "Guo Wenbo",
+        "coreSignal": "变种算子和检测特征严格对偶，桥是意图；检测Agent自动化生成共享不变推理骨架，只有四块领域知识变化；三桶=变种算子在目标生态的可用性。",
+        "evidenceLevel": "C/B（逻辑强，验证缺失）",
+        "mainRisk": "仍处于纸面设计，需最小验证闭环。"
       },
       {
         "rank": 13,
-        "name": "郭文博",
-        "keySignal": "提出变种生成与检测对偶（桥是意图），将三桶分类形式化；检测Agent自动化生成的五步链和记忆分解。",
-        "reason": "认知深度高，但多为设计，证据B/C。"
+        "name": "Wu Junhao",
+        "coreSignal": "证伪Brain-Score机制认证：视觉第一0.47实际是行为分，语言侧GPT-1分数与规模不正相关；小脑节律提供慢预测-快误差的时间动力学模板；四组并行验证框架。",
+        "evidenceLevel": "B（小脑综述操作定义A，整体B）",
+        "mainRisk": "四张最小验证卡未完成，尚未形成跨组实验。"
       },
       {
         "rank": 14,
-        "name": "廖杰",
-        "keySignal": "SkillScanner扩展到n-Skill组合检测，单元测试17/17，真实语料0误报，性能优化10倍；PyCache论文主动收缩claim到Observation→Attack→Defense。",
-        "reason": "有实际测试数据，主动降低claim体现方法成熟，证据A/B。"
+        "name": "Xie Maoyi",
+        "coreSignal": "失败经验只有改变下一次决策才算知识；Failure Pattern已能复用排除约一半FP；Candidate Funnel压缩人工阅读范围；提出uncertainty×information gain×verification cost权衡。",
+        "evidenceLevel": "B（复用），C（sequential diagnosis）",
+        "mainRisk": "缺少baseline对照证明优于grep；verification cost样本少。"
       },
       {
         "rank": 15,
-        "name": "许一嘉",
-        "keySignal": "将LLM角色收缩为证据约束的proposal generator，提出alignment三层证据（entity/scope/relation behavior），并设计uncertainty routing。",
-        "reason": "对系统可靠性有清晰认知，但证据B/C。"
+        "name": "Feng Yebo",
+        "coreSignal": "量化机构反馈将slippage、成交完成度、低流动性损失从部署细节升级为问题定义；TSC major revision按comment-to-change matrix管理；macro analysis agent作为更小切入点。",
+        "evidenceLevel": "B",
+        "mainRisk": "execution-realism实验未做，macro agent未成型。"
       }
     ],
     "topSignals": [
-      "长程任务Agent普遍存在“不收敛”风险：孙宇强发现系统几乎从不主动提交答案，稳定状态是持续拆解子任务直到超时；冯亚林的Event-B复现也显示多数案例停在M1/M2且修复环节消耗大量资源。这提示需要在Agent设计中加入剩余预算改变动作集合的机制。",
-      "Benchmark有效性需对抗性审计：Kevin发现数据泄露，孙晓发现重复运行噪声掩盖效应，张家怡发现基准任务设计压制目标维度，周振宏发现自动基准需要meta-evaluation。建议将“访问日志审计”“噪声校准”“任务适配性检查”纳入标准评测流程。",
-      "记忆与知识演化成为热点，但只有少数有硬数据：李一帆的TPE恢复64条漏检线索，姚广宇的程序技能压缩和复用，周振宏的感知记忆恢复；其他如黄亦坦的H_t、李一帆的ontology、马晓宇的3D WM等仍处于设计阶段。",
-      "证据约束的生成与验证是重要方向：姚广宇的证据约束抽象、许一嘉的proposal-verifier、乔伟的证据等级自评，都强调生成的结果必须由外部证据验证；这可能是老师可统一推进的Brainary能力。",
-      "安全研究存在伦理和合规风险：乔伟的元认知对抗Agent涉及主动欺骗和攻击技术，需建立安全边界和审查机制。",
-      "多个项目从“调模型”转向“构建Agent能力”：如钱嘉宇的医学agent、冯亚林的Event-B agent、周振宏的Auto-benchmark agent，体现从单点性能到系统能力的认知升级。"
+      "长时程可拆解agent存在“不主动收尾”的稳定失效模式，且会掩盖在健康指标下；应让剩余预算改变可选动作集合而非仅提醒。",
+      "知识/技能抽象质量必须用压缩率、合并准确率、冲突率、留出覆盖和下游执行收益联合评价，不能只追求压缩率。",
+      "Memory Evolution需显式建模query-conditioned observation policy，区分当前知道什么、如何变化、当前问题应观察哪一种变化。",
+      "perceptual memory的评价对象应是representation recovery，而不是语言输出；-10dB混音representation可从8.25%恢复到86.7%。",
+      "Event-B Agent基线自洽率22.22%、Repair消耗65%耗时，说明末端修复失败多为上游精化顺序和依赖缺失的结果。",
+      "对抗场景中对手心智模型可读可写，认知动作（改变对手注意力）应成为一等动作类型，而非TTP剧本的静态步骤。",
+      "benchmark有效性需主动对抗检查（如访问日志审计防止信息泄露），且基准适配性可用固定缺陷清单、任务导航/探索、评分代码发布三条结构特征检查。",
+      "多源安全分析（APT/权限/Skill）正在收敛为对行为程序/权限假设/组合行为的统一维护与改写，但需要可执行IR和跨任务benchmark。"
     ],
     "commonRisks": [
-      "设计与实现脱节：多个项目（如吴俊昊的四组验证框架、张浩楠的统一动作空间、李梅的图融合）仅停留在概念设计，未形成可运行原型或最小实验。",
-      "缺乏对照实验：多数关键主张（如冯亚林的I1/I2/I3效果、乔伟的Meta-CoT有效性、黄亦坦的H_t更新）只有方案或初步结果，缺少消融和对照。",
-      "金额估值主观：部分金额（如胡连宇83万、李一帆的410万、郭文博的60万+40万）缺乏一致的计算口径，可能高估当前研究资产。",
-      "安全合规风险：乔伟的对抗Agent涉及EDR绕过和欺骗技术，若用于真实环境可能引发法律问题；需确保实验在受控环境进行并遵守规范。",
-      "项目管理时间估计偏差：部分学生（如孔紫桥、刘成岳）未填写投入时间或进度模糊，不利于老师掌握资源分配。",
-      "benchmark构建困难：多个项目需要真实正样本（廖杰的n-Skill、李梅的Agent攻击、周子阳的IR冲突），但此类标注数据获取成本高，可能导致进度停滞。"
+      "多数高价值结论仍停留在机制可行或设计阶段，缺对照、消融、跨域/跨模型验证。",
+      "价值金额普遍为人力替代成本或期权估算，未折现且可能高估。",
+      "实验噪声和种子波动导致表面提升不可靠（如病理KG/tri-source种子波动大于方法效应）。",
+      "评测协议与评分代码缺失，需自建评分并明确与官方数字的可比性。",
+      "过度抽象先于可执行schema、prototype或benchmark，存在概念漂移风险。",
+      "多个项目原型或核心实验连续顺延（Qiao Wei的推理循环、Feng Yalin的算法模块、Sun Xiao的causal全量），需触发范围决策。",
+      "依赖外部临床、真实数据、靶场、模拟器或合作方，进度不可控。",
+      "部分项目缺少GPU/token/API成本账本，成本控制不足。"
     ],
     "collaborationCandidates": [
       {
-        "students": [
-          "李一帆",
-          "周振宏"
-        ],
-        "topic": "记忆检索与自动评测",
-        "rationale": "李一帆的TPE需要跨benchmark验证，周振宏的Auto-benchmark可提供自动生成的评测集；二者可合作建立记忆检索评测协议。"
+        "candidateA": "Sun Yuqiang",
+        "candidateB": "Wu Junhao",
+        "rationale": "长时程agent收敛约束与脑启发的多时间尺度/并发控制可互相补充，形成认知控制的实验与机制联合。"
       },
       {
-        "students": [
-          "胡志超",
-          "乔伟"
-        ],
-        "topic": "对手建模与防御抽象",
-        "rationale": "胡志超的Behavior Program统一APT的观察—行为—操作，乔伟的对手心智可读可写；双方可共享敌方模型表示和评测方法。"
+        "candidateA": "Li Yifan",
+        "candidateB": "Chen Huabao",
+        "rationale": "记忆演化中的query-conditioned policy与证据等级/任务必要性双维度校准共享证据路由和置信度问题。"
       },
       {
-        "students": [
-          "冯亚林",
-          "孙宇强"
-        ],
-        "topic": "长程任务收敛与搜索控制",
-        "rationale": "冯亚林的Event-B Agent面临精化深度和修复成本问题，孙宇强发现不收敛的稳定状态；可共同设计基于剩余预算的收敛机制。"
+        "candidateA": "Yao Guangyu",
+        "candidateB": "Liao Jie",
+        "rationale": "程序技能抽象与组合安全检测都涉及状态/数据流跨组件传播，可共建结构化知识抽象与风险评测。"
       },
       {
-        "students": [
-          "张家怡",
-          "孙晓"
-        ],
-        "topic": "干预实验设计与因果识别",
-        "rationale": "张家怡的基准适配性检查和两协议设计，孙晓的因果信噪比诊断互相补充；可共享评估协议和噪声校准方法。"
+        "candidateA": "Qiao Wei",
+        "candidateB": "Kevin Constantine Halim",
+        "rationale": "对抗性测试与benchmark信息泄露审计可形成“主动攻击基准有效性与防御访问审计”的方法互补。"
       },
       {
-        "students": [
-          "姚广宇",
-          "许一嘉"
-        ],
-        "topic": "证据约束的生成与验证",
-        "rationale": "姚广宇的证据约束抽象和Review Loop，许一嘉的proposal-verifier和alignment evidence schema；二者都强调证据边界，可共同沉淀为通用verifier模块。"
+        "candidateA": "Feng Yalin",
+        "candidateB": "Lei Tianyu",
+        "rationale": "Event-B Agent的Restful修复/精化顺序与Ravel最小闭环共同覆盖agent自演化的验证与规划。"
+      },
+      {
+        "candidateA": "Zhang Jiayi",
+        "candidateB": "Sun Xiao",
+        "rationale": "测评协议的结构化检查与因果实验的噪声/checkpoint质量诊断可共建更稳健的agent行为评价标准。"
       }
     ],
     "teacherChecklist": [
-      "审查并推动高证据项目进入论文/系统阶段：姚广宇的消融实验、周振宏的基准meta-evaluation、李一帆的TPE跨benchmark验证。",
-      "确认孙宇强的收尾机制实现方案，并评估是否作为Brainary的通用组件。",
-      "关注安全研究的伦理与合规：要求乔伟提供受控实验环境和安全边界说明，避免直接攻击真实系统。",
-      "处理学生申请：李梅需要外导签字，雷天宇需要CSC网申链接，请及时跟进。",
-      "推动设计类项目落地最小实验：吴俊昊的四组验证卡、张浩楠的Action Schema v0.1、李梅的Agent Discovery pipeline。",
-      "审查金额估值过高的项目（如胡连宇83万、李一帆410万），要求提供更细致的成本构成和证据。",
-      "确认跨项目合作方向（如上面的collaborationCandidates），避免重复工作，提高资源利用率。",
-      "本周提交时间较晚，建议强调截止时间纪律，减少临近截止的集中提交。"
+      "对Sun Yuqiang：确认长时程agent是否必须加入“剩余预算改变动作集合”这一强制约束，并优先安排题库回归。",
+      "对Qiao Wei：本周推理循环原型+双memory schema不可再顺延，否则按触发条款收缩为框架+benchmark。",
+      "对Feng Yalin：批准I1 Sample Gate优先级，并决定是否需要GPT/Claude对照与重复实验。",
+      "对Zhang Jiayi：审阅GUITestBench两协议评测方案，确认自建评分、消融必要性和Android pilot风险。",
+      "对Yao Guangyu：冻结论文贡献，完成消融、冲突技能仲裁，避免新机制扩写。",
+      "对Chen Huabao：安排医生口径确认，并推动三分类规则跨question_type验证。",
+      "对Li Yifan：要求完成TPE消融与泛化测试，特别验证Set Completion是否主导收益。",
+      "对Sun Xiao：对checkpoint质量/Sotopia对照结果给出是否扩全量的决策，避免低质量分支扩大。",
+      "对Wu Junhao：推动完成四张最小验证卡，阻止继续扩建总架构。",
+      "对Kevin Halim：将访问日志审计和tool call序列logger固化为pipeline标准步骤后再报告结果。",
+      "对Sun Weisong：参与Desay SV SoW审阅，重点确认数据、验收阈值和IP边界。",
+      "处理39人缺交，提醒补交并明确缺交后果。"
     ]
   }
 }
