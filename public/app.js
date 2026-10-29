@@ -382,19 +382,7 @@ function latestAvailableBriefingWeek() {
 }
 
 function md(text) {
-  const blocks = esc(text || "").split(/\n{2,}/);
-  return blocks.map((block) => {
-    const line = block.trim();
-    if (!line) return "";
-    if (line.startsWith("### ")) return `<h3>${line.slice(4)}</h3>`;
-    if (line.startsWith("## ")) return `<h2>${line.slice(3)}</h2>`;
-    if (line.startsWith("# ")) return `<h1>${line.slice(2)}</h1>`;
-    if (/^[-*•]\s/m.test(line)) {
-      const items = line.split(/\n/).map((item) => item.replace(/^[-*•]\s*/, "").trim()).filter(Boolean);
-      return `<ul>${items.map((item) => `<li>${item}</li>`).join("")}</ul>`;
-    }
-    return `<p>${line.replace(/\n/g, "<br>")}</p>`;
-  }).join("");
+  return ReportMarkdown.render(text);
 }
 
 function reportCard(report, meta = "", options = {}) {
