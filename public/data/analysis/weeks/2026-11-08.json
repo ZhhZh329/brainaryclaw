@@ -1,0 +1,142 @@
+{
+  "key": "week:2026-11-08:horizontal",
+  "generatedAt": "2026-11-09T00:05:33.535Z",
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "reasoningEffort": "high",
+  "inputHash": "65483dae7a082ce3810184c89cafaec8fdc202f95748433adcf3c8084816454e",
+  "contentHash": "65483dae7a082ce3810184c89cafaec8fdc202f95748433adcf3c8084816454e",
+  "promptHash": "d5dbdfc5549acc1104e527368173d8297b203b85695a994e292ae089aedc6b71",
+  "result": {
+    "submissionStatus": "已提交33人，缺失58人（以roster中missing状态计数）",
+    "overallRead": "本周周报呈现强技术实证与若干未闭环问题并存的局面。最突出的决策信号是沈其伟发现基准起点与仓库起点不一致的隐藏机制，证据等级A且老师原本未知，直接关系方法可信度；徐一加通过小规模对照证明证据边际贡献与成本敏感策略的重要性；张逸鹤的AIOS驻留控制实验有显著收益但需分离任务语义贡献。多数报告具备明确的硬数据、CoT's CoT 和自动化路径，但普遍存在噪声未测量、实际工时与成本未记录、负结果处理不当等风险。老师应优先关注强信号学生的实验口径与下一步收敛方向。",
+    "ranking": [
+      {
+        "rank": 1,
+        "student": "沈其伟",
+        "signal": "发现SWE-Milestone基准起点与仓库起点不一致：预置了生成代码、可改写测试和[ENV-PATCH]占位代码，且论文未记载。该不一致会伪装成自身bug，导致错误归因。提出运行前逐文件diff的环境契约检查，成本为零，证据等级A。",
+        "evidenceLevel": "A",
+        "brainaryRelevance": "高：风险建模、校准、认知控制",
+        "nextActionQuality": "高：先测navidrome噪声基线（重复3次，缓存命中成本近零），再跑留出集。",
+        "decisionValue": "极高：直接决定现有开发集分数是否可信，影响毕业课题主线。"
+      },
+      {
+        "rank": 2,
+        "student": "徐一加",
+        "signal": "通过10组部分依赖证据对照，证明简单去重会损失边际信息，dependency-aware weighting在9/10组与人工一致；两种成本场景显示confidence policy无全局最优，需按错误外推与探索成本调整；5个minimal probe中负结果同样具有决策价值。",
+        "evidenceLevel": "A（policy对照）/B（evidence weighting）",
+        "brainaryRelevance": "高：memory、reasoning、calibration、cognitive control",
+        "nextActionQuality": "高：将dependency-aware weighting接入belief updater，增加policy out-of-sample测试。",
+        "decisionValue": "高：将创新推理从预测准确率转向决策价值，可直接指导自动化科研资源分配。"
+      },
+      {
+        "rank": 3,
+        "student": "张逸鹤",
+        "signal": "AIOS G2实验显示整件委托驻留控制（S-res）在17件后台负载下吞吐从26.39提升至124.92步/分钟，重算比例从87.36%降至5.12%，同时改善交互延迟。但尚未与盲策略对照，无法归因于任务语义。提出G3消融设计以分离贡献。",
+        "evidenceLevel": "B（G2内部策略比较为A，但语义贡献未验证）",
+        "brainaryRelevance": "高：memory、cognitive control、workflow management、evaluation",
+        "nextActionQuality": "高：完成G3的S-res vs S-blind对照，明确任务语义增量价值。",
+        "decisionValue": "高：决定Agent OS是否需要在调度中理解任务意图，影响系统设计方向。"
+      },
+      {
+        "rank": 4,
+        "student": "胡志超",
+        "signal": "EviLog跨域少样本校正将BGL→Thunderbird的F1从70.26%提升至93.20%（200样本），并发现知识库与LLM互补（知识库正确而LLM错误49.28%）；ASAP揭示同一压缩策略对不同检测器的相反影响（FLASH 0.9623→0.9993，MAGIC 0.9441→0.5472）；Program自动构造1000条日志，F1 31.17%但存在误报。",
+        "evidenceLevel": "高（特定任务有对照）；自动感知策略调度未证实",
+        "brainaryRelevance": "高：Perception、Evidence、Calibration",
+        "nextActionQuality": "中高：补齐Direct F→H、Raw-log RAG等消融，统一成本口径。",
+        "decisionValue": "高：三项工作形成感知-证据-决策闭环的实证材料，但需严格区分人工配置与自动元控制。"
+      },
+      {
+        "rank": 5,
+        "student": "张先浩",
+        "signal": "FairGovern静态恢复11字段Mechanism IR，35套源码覆盖率63.49%，平均2.44秒/套；Agent Defense采用最小对照，目标效应未复现（恶意附注增加确认未出现），并记录官方评分与真实状态不一致的反例。提出停止同类扩样，回到可区分机制。",
+        "evidenceLevel": "A（静态恢复）、A（动作证据区分）、B（停止条件）",
+        "brainaryRelevance": "高：reasoning、cognitive control、memory schema、evaluator",
+        "nextActionQuality": "高：选取3条语义变体验证归一化，停止旧候选，转向可判别任务。",
+        "decisionValue": "高：负结果管理和字段级任务队列设计具有通用价值，避免资源浪费。"
+      },
+      {
+        "rank": 6,
+        "student": "马晓宇",
+        "signal": "Episodic Memory从固定流程抽象为三层认知Operator（觉察/觉知/觉悟）驱动七个执行Operator，并完成真实机械臂的Working Memory与Episodic Memory集成设计；Memory-enhanced WAM在LIBERO和RoboTwin上观察到明显提升（未给具体数值）。",
+        "evidenceLevel": "B（架构设计）；A（WAM实验初步，需消融）",
+        "brainaryRelevance": "高：memory、cognitive control、tool orchestration",
+        "nextActionQuality": "高：完成接口联调，通过消融验证三层认知结构的必要性。",
+        "decisionValue": "中高：为Brainary的记忆系统提供可执行的架构参考，但需防止过度设计。"
+      },
+      {
+        "rank": 7,
+        "student": "吴俊豪",
+        "signal": "数字大脑V1学习核在15项神经指标平均分由0.563提升到0.713，明度方向一致数24/34；整理V2→V1等41条反馈证据；600节点/506连线补充细胞与连接数据；噬菌体Agent完成闭环并跨会话接续，证据等级A（工程）。",
+        "evidenceLevel": "A（工程闭环）、B（科学贡献）",
+        "brainaryRelevance": "高：memory、reasoning、cognitive control、evaluation",
+        "nextActionQuality": "高：完成三组数据整合，为V2选择第一个可验收功能。",
+        "decisionValue": "中高：数字大脑与噬菌体Agent均提供可复用基础设施，但领域独立性需验证。"
+      },
+      {
+        "rank": 8,
+        "student": "冯亚林",
+        "signal": "知识图谱构建五层Named Graphs 49,303条四元组，SQuAD固定百题中50道可回答题Top-3证据覆盖率92%；Refinement智能体整理生成中验证范式（LLMLift、ChopChop）；瓴知评审MCP接入、中文HTML导出通过本地测试。",
+        "evidenceLevel": "B（证据覆盖率可运行，未测本体增益）",
+        "brainaryRelevance": "高：grounding、workflow management、tool orchestration",
+        "nextActionQuality": "高：选择一个制造业场景完成SHACL校验和业务查询样例。",
+        "decisionValue": "中高：跨项目协作潜力大，但需收敛到可验证的业务问题。"
+      },
+      {
+        "rank": 9,
+        "student": "杨彦景",
+        "signal": "Deep RCA接入Meta-CoRSI，DeepSWE-20能力从8/20→12/20→16/20（后两者为过程累计），恢复8个原失败任务全部通过F2P/P2P；PoA完成cattrs端到端验收reward=1。",
+        "evidenceLevel": "B（同任务恢复，泛化未验证）",
+        "brainaryRelevance": "高：memory、reasoning、cognitive control",
+        "nextActionQuality": "高：建立source-task/held-out-target泛化实验。",
+        "decisionValue": "中高：RCA知识固化后泛化能力是关键，决定能否转化为通用修复能力。"
+      },
+      {
+        "rank": 10,
+        "student": "王慧丽",
+        "signal": "重新设计攻击元素表为“对象域×变换方式”交互表，42个候选操作并实现组合接口四类结果（可连接、缺条件、冲突、未知），14项结构规则用例通过。",
+        "evidenceLevel": "B（受控案例）",
+        "brainaryRelevance": "高：memory、reasoning、cognitive control、evaluation",
+        "nextActionQuality": "高：建立独立复核组合案例，检查漏报误报。",
+        "decisionValue": "中：组合约束表示具有迁移潜力，但需证明实际收益。"
+      }
+    ],
+    "topSignals": [
+      "基准环境与假设环境不一致会伪装成方法自身bug，应在运行前进行逐文件diff检查，成本为零（沈其伟，证据A）。",
+      "证据价值应由条件信息增益决定，而非证据数量或简单来源去重；部分依赖证据仍可提供边际区分能力（徐一加，证据B）。",
+      "置信度策略没有全局最优，必须根据错误外推成本与探索成本动态调整（徐一加，证据A）。",
+      "负结果与无法判定必须分开：前者需要重新审视机制，后者需要补证据，不能都写成‘策略无效’（张逸鹤、张先浩）。",
+      "研究阶段完成应由实际产物和运行凭证判断，启动文档不能代替实验状态（钱嘉宇、张先浩）。",
+      "任务语义贡献需通过消融对照证明，例如整件驻留控制需与盲策略比较（张逸鹤）。",
+      "静态分析应输出已恢复规则、证据和未解决字段，只把剩余任务交给agent（张先浩）。",
+      "行动证据需同时记录意图、授权、调度和效果，否则评分可能误判（张先浩）。"
+    ],
+    "commonRisks": [
+      "噪声未测量：多个学生分数波动无法解释，却继续调整策略（沈其伟、张浩楠等）。",
+      "证据不足被包装成结论：部分学生将调研、设计或模拟结果表述为已验证能力（李梅、苗忠奇等）。",
+      "实际工时与成本未记录：多数报告未提供可核实的工时和token账本，仅用估算值（冯亚林、胡志超等）。",
+      "人工标注依赖：证据权重、依赖关系等仍依赖人工，泛化未验证（徐一加、陈华宝）。",
+      "目标效应未复现却继续扩样：部分学生未及时停止弱化候选（张先浩已纠正，但其他学生存在风险）。",
+      "金额估值过度乐观：部分报告给出百万级潜在价值但无市场验证（徐一加、眭浩、张浩楠）。",
+      "项目管理中关键路径不明确：少数报告未指明延期对下游的影响（郭文博、刘晨越）。"
+    ],
+    "collaborationCandidates": [
+      "沈其伟与张逸鹤：基准环境契约检查与实验噪声基线可合并为通用研究质量检查模块。",
+      "张先浩与胡志超：静态恢复的字段级任务队列与感知证据状态可整合为统一的证据状态管理。",
+      "马晓宇与吴俊豪：记忆架构（Episodic Memory）与数字大脑状态卡可共享状态字段和验证协议。",
+      "冯亚林与黄一坦：行业本体建设与授权模型可在任务授权与知识图谱表示上互补。",
+      "徐一加与张逸鹤：成本敏感控制器与任务级驻留控制可结合用于优化科研资源调度。"
+    ],
+    "teacherChecklist": [
+      "优先与沈其伟确认三处实验口径：生成实验输入是否统一、检索是否包含仓库表示、baseline数字重跑还是引用；并推动其完成噪声基线。",
+      "与张逸鹤确认G3结果：若盲策略达到同等收益，应收缩任务语义主张，保留资源控制能力。",
+      "与徐一加确认成本假设的合理性与标注标准，避免根据同一样本反复调参。",
+      "要求胡志超明确自动感知策略与人工配置的边界，以及ASAP/Program消融实验的优先级。",
+      "关注缺失学生（58人）尤其是郭文博等提交但进展薄弱的报告，需跟进其研究资源与方向。",
+      "对张先浩的Agent Defense负结果予以认可，并确认其转向可判别任务的计划。",
+      "提醒马晓宇在架构复杂度上设定消融验证门槛，避免无限增加层次。",
+      "检查冯亚林、黄一坦等跨项目合作的接口与分工，避免重复建设。"
+    ]
+  }
+}
