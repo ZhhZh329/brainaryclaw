@@ -1,74 +1,87 @@
 {
   "key": "person:li-chunhan:2026-05-17:horizontal",
-  "generatedAt": "2026-08-03T05:02:16.962Z",
+  "generatedAt": "2026-11-11T10:01:48.883Z",
   "provider": "deepseek",
   "model": "deepseek-v4-pro",
   "reasoningEffort": "high",
-  "inputHash": "06ef80624cbf71f6cb0ca02702459adb6e2c0cb15e92a247231bb168722d3275",
-  "contentHash": "06ef80624cbf71f6cb0ca02702459adb6e2c0cb15e92a247231bb168722d3275",
+  "inputHash": "9c40d038eace3bb71423260eaa823d747e12f6232e2e36d767b61d3dfccf78f4",
+  "contentHash": "9c40d038eace3bb71423260eaa823d747e12f6232e2e36d767b61d3dfccf78f4",
   "promptHash": "7ab2efc4d416dbeeb34a0e2d3cc797ac660749509537011b4ea431707a52a0ba",
   "result": {
     "overallLevel": "非常好",
-    "headline": "从单Encoder多源特征分解到双条件动态路由，并预接时序差分记忆，实现感知-决策-记忆一体化设计",
-    "overviewSentence": "提出将DINOv3内部多源特征按视觉子能力通道分解，设计query/frame双条件Router动态调用，并将时序差分作为感知输入与短期记忆边，形成一体化方案，本周已完成方案设计与初步探针实验。",
-    "shortRead": "本周聚焦于视觉特征的多通道动态分解与调用，从failure-driven视角出发，不再外挂新Encoder，而是利用DINOv3内部的层级和token特征作为多源通道，并设计了一个同时接收文本query和当前frame信息的Router，动态决定调用哪些通道。在此基础上，进一步引入前后帧差分作为时序通道，既作为Router的输入，又作为短期记忆的节点边定义，将感知和记忆统一。本周已完成各通道的初步探针实验和Router方案设计，证据等级为C，但概念创新和工程价值高，估值约140万人民币。元认知从failure归因前移到事前通道预估，体现meta-cognition的深化。",
-    "levelRationale": "硬进展包括特征分解探针与Router方案；认知增量系统化，提出内部多源特征等价于多通道、双条件路由等新认知；价值判断清晰，估值具体且合理；项目管理时间规划明确；元认知有实质推进，从事后归因进化为事前预估；但实验证据等级目前为C，尚未跑通端到端训练，故综合评为“非常好”。",
-    "sameWeekPosition": "在本周的41份提交中，这份周报在系统性和设计创新上表现突出，属于非常值得优先阅读的一类。",
+    "headline": "多通道特征分解与双条件 Router 的设计闭环清晰，但证据等级仍在 C 级，建议优先关注跨 encoder 验证与训练消融",
+    "overviewSentence": "本周将视觉特征从统一 embedding 分解为多子能力通道，并设计 query/frame 双条件 Router 与时序差分节点边，认知增量清晰、项目管理明确，属于较值得优先阅读的一类。",
+    "shortRead": "本周硬进展是 DINOv3 内部多源特征 probe 和 Router 雏形设计；CoT 增量体现在把视觉特征按失败类型分解为轮廓/颜色/材质/物体/空间/时序通道，并把 meta-cognition 从事后归因前移到事前选路。价值判断与自动化沉淀较具体，但证据等级均为 C，需要跨 encoder 和训练验证。",
+    "levelRationale": "给出“非常好”是因为：硬进展有真实初步 probe 而非空想；CoT 与 CoT's CoT 形成从 failure mode 到特征通道与路由的双层假设；Brainary 映射到 perception/workflow/memory 三块；金额估值和自动化路径具体。未给“特别值得读”主要在于证据等级仍为 C，单 encoder 初步探针和小规模 Router 方案还未形成可复用的强证据。",
+    "sameWeekPosition": "按本周标准，这份周报属于较值得优先阅读的一类。",
     "highlightedSignals": [
-      "动态特征路由从Encoder内部挖掘多源特征，而非外挂模型，参数与推理更高效",
-      "将时序差分同时作为感知输入和短期记忆边，统一了感知与记忆两个模块的语义"
+      "把视觉特征从单一 embedding 分解为轮廓/颜色/材质/物体/空间/时序多通道，并映射到 LMEE-Bench 四类失败",
+      "单 encoder 内部多源思路：不急着外挂 encoder，先利用 DINOv3 不同 layer 和 token，保持推理高效",
+      "提出 query-aware + frame-aware 双条件 Router，把 meta-cognition 从事后纠错前移到事前选路",
+      "把前后帧差分同时作为 perception 输入和 short-term memory 节点边，统一 perception 与 memory 语义",
+      "金额估值与自动化沉淀路径具体，给出 60万/80万价值和 agent 化两个门槛"
     ],
     "focusDimensions": {
       "valueJudgment": {
-        "read": "非常好",
-        "evidence": "给出了每个模块的估值及理由（特征分解60万人民币，Router+时序80万人民币），估值依据明确且与业界成本对标。",
-        "nextLift": "可进一步量化模块之间的协同增益，给出整体方案的价值上限，以支撑更准确的投资决策。"
+        "read": "很好",
+        "evidence": "周报第7条给出 DINOv3 内部多源特征 probe + failure-type 关联估值约 60 万人民币，query-aware × frame-aware Router 雏形 + 时序差分接口设计估值约 80 万人民币，并说明价值理由。",
+        "nextLift": "可把金额估值与下一步实验成本对应，形成投入-产出表，便于老师判断资源优先级和是否值得投入更多算力。"
       },
       "projectManagement": {
         "read": "很好",
-        "evidence": "明确了当前阶段（实验→模块化重构），本周与下周的时间规划清晰，投入时间约28h，下周计划具体到验证目标与消融类别。",
-        "nextLift": "可增加风险管理，如Router训练样本构造的难度预估与备选路径，使项目推进更稳健。"
+        "evidence": "周报第9条明确当前阶段为实验→模块化重构，本周完成方案与初步 probe，下周计划具体到 SigLIP/RADIO 交叉验证和 Counting/Attribute 消融，投入时间 28h/30h。",
+        "nextLift": "可把每周实验拆成可验证的小 checkpoint（如关联矩阵 v0.1、Router 训练脚本），并说明失败时的回退口径，进一步降低执行不确定性。"
       },
       "metacognition": {
         "read": "非常好",
-        "evidence": "提出元认知从事后归因前移到事前特征通道预估，并设计了对应的通道置信度向量，贴近人脑前额叶的top-down调制。",
-        "nextLift": "可进一步量化这种事前预估对failure reduction的贡献，并与事后归因对比，明确两种策略的适用范围。"
+        "evidence": "周报第5条指出 meta-cognition 不只是 failure mode 自我归因，还应对当前需要哪几路特征进行预估，输出特征通道置信度向量，从事后纠错前移到事前选路，更贴近前额叶 top-down 调制。",
+        "nextLift": "可进一步定义事前选路置信度向量与事后归因梯度信号如何互相更新，形成闭环元认知协议，让 Router 从静态选路走向自适应调整。"
       }
     },
     "growthOpportunities": [
-      "当前各条COT's COT证据等级均为C，建议下周在SigLIP/RADIO交叉验证和Router训练实验中尽快将关键结论提升至B级，增强说服力。",
-      "价值估值可考虑与基线方案（如通用多encoder融合）的绝对提升值对比，使估值更有依据。",
-      "项目管理中可补充训练样本构造的风险评估及备用方案，例如若LMEE弱监督噪声大时如何清洗或设计强监督。"
+      "证据等级目前为 C，建议下周先在 SigLIP/RADIO 上做同一组 probe，把 feature-source × failure-type 关联从单 encoder 扩展到 multi-encoder，至少提升到 B 级再下架构结论。",
+      "Router 训练监督目前只有 LMEE failure 类别弱监督，可增加一组 oracle 通道权重（基于人工标注或显著性图）作为上界，用于判断 Router 学习上限。",
+      "时序差分作为节点边的方案本周尚未跑实验，下周可先给出 patch-level cosine / optical-flow proxy 的数值分布，验证 State 类 failure 上是否可分。"
     ],
     "teacherAction": {
       "readOriginal": true,
       "meetingQuestions": [
-        "Router的训练样本如何从LMEE failure自动生成？若噪声较大，备选方案是什么？",
-        "时序差分作为记忆边的具体实现和训练方式已有初步设想吗？如何保证差分特征与perception通道的梯度连通？",
-        "双条件Router的设计中，query和frame的条件如何融合？当前草案是拼接还是注意力机制？",
-        "下周若在SigLIP/RADIO上发现特征分解不可迁移，是否考虑回退到外挂encoder的方案？"
+        "你打算如何构造 Router 训练的正负样本？如果只有 failure 类别弱监督，会不会导致通道权重坍缩到少数几个通道？",
+        "下周的 SigLIP/RADIO 交叉验证，你准备保留同一组 failure 样本吗？会怎么衡量“内部多源够用”成立与否？",
+        "时序差分同时作为 perception 输入和 memory 节点边，你打算怎么设定消融，证明它比直接 concat 差分特征更有增益？",
+        "60万/80万金额估值对应哪些可交付物？如果下周 Router 训练不达预期，你会砍掉哪个部分？"
       ],
       "nextWeekWatch": [
-        "是否在SigLIP/RADIO上获得了内部分解的可迁移证据？",
-        "Router在Counting和Attribute两类failure上的消融实验是否开始跑？",
-        "时序差分探针的结果和特征可分性是否支撑其作为独立通道？",
-        "训练样本的构造进度与质量。"
+        "是否提交 SigLIP/RADIO 上通道-failure 关联矩阵的最小版本",
+        "Router 雏形是否在 Counting/Attribute 上完成训练并给出硬路由/软路由对照",
+        "前后帧差分 probe 是否给出至少一个 State 类 failure 的定量结果",
+        "是否把本周方案收敛为可复用的 feature-source × failure-type 关联表或 agent 输入"
       ]
     },
     "studentFeedback": {
-      "summary": "本周，你在视觉特征分解与动态路由的系统化设计上取得了高质量进展，尤其是从单Encoder内部挖掘多源特征和双条件Router的想法，展现了很强的认知深度。",
+      "summary": "本周你把视觉特征从单一 embedding 拆成多通道，并把 meta-cognition 前移到事前选路，这个闭环很有价值；下一步要用跨 encoder 和真实训练把 C 级证据做上去。",
       "whatYouDidWell": [
-        "系统地从failure types出发，将视觉能力分解为多通道，并关联到DINOv3的不同特征，逻辑连贯且可直接指导Router设计。",
-        "提出query/frame双条件路由，将meta-cognition前移到事前预估，创新性强且贴近认知科学。",
-        "将时序差分作为感知输入和记忆边，统一了感知与记忆框架，为后续工程化提供了干净的概念schema。"
+        "能沿用 failure-driven 思路，把四类失败映射到轮廓/颜色/材质/物体/空间/时序等具体通道，而不是笼统加 encoder。",
+        "对 DINOv3 内部 layer/token 做了初步 probe，并诚实标注证据等级 C，说明你清楚当前结论边界。",
+        "项目管理清楚，下周计划具体到 SigLIP/RADIO 和 LMEE-Bench 消融，且有时间预算。"
       ],
       "nextStep": [
-        "下周尽快在SigLIP/RADIO上验证内部特征分解的可迁移性，将证据等级提升至B，增强结论的通用性。",
-        "实现Router雏形并开始在Counting/Attribute上做消融，获取初步结果，验证双条件路由的有效性。",
-        "明确Router训练样本的构造流程，针对LMEE弱监督的噪声设计清洗或置信度加权策略，确保训练信号质量。"
+        "下周先完成 SigLIP/RADIO 上的通道-failure 关联矩阵，把证据等级从 C 提到至少 B，再决定是否外挂 encoder。",
+        "为 Router 增加一个 oracle 通道权重上界（人工标注或显著性图），避免只用 failure 类别弱监督导致路由退化。",
+        "给时序差分特征跑一个最小数值 probe（如 State 类正负样本的 patch-level cosine 分布），先把方案从设计落到可复现数据。"
       ],
-      "suggestedRewrite": "下周计划部分可以更具体地写出Router训练的实验设置，例如：“在LMEE-Bench中抽取Counting和Attribute两类failure各200条，按90/10划分train/val。使用failure类别作为弱监督，训练Router输出通道权重的softmax，目标是最小化与真实failure类别所对应的通道分布的KL散度。评价指标为top-k通道召回率和下游VQA准确率提升。”"
+      "suggestedRewrite": "下周周报可以这样写：在“本周实验/设计要点”后增加一个“能证明/未能证明”小节，例如“DINOv3 浅层 patch 对 Counting 类 probe 精度为 xx，但对 SigLIP 尚未验证，因此 feature-source × failure-type 关联仍是 C 级证据；下一步先用同一组失败样本在 SigLIP/RADIO 上复跑得到矩阵 v0.1，再决定 Router 输入通道数”。"
     },
-    "evidenceLinks": []
+    "evidenceLinks": [
+      "1.本周核心任务",
+      "2.CoT 增量",
+      "3.CoT's CoT 1/2/3",
+      "4.Brainary 关联",
+      "5.meta-cognition 新理解",
+      "7.价值观总结",
+      "9.项目管理",
+      "12.本周实验/设计要点",
+      "13.下周计划"
+    ]
   }
 }
