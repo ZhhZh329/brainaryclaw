@@ -1,82 +1,85 @@
 {
   "key": "person:xie-maoyi:2026-04-26:horizontal",
-  "generatedAt": "2026-08-05T20:02:51.200Z",
+  "generatedAt": "2026-11-12T10:02:32.171Z",
   "provider": "deepseek",
   "model": "deepseek-v4-pro",
   "reasoningEffort": "high",
-  "inputHash": "0b488cbdb337c9ed981f18927c902d981ae74b7fa61917721ef8d3855d81c41c",
-  "contentHash": "0b488cbdb337c9ed981f18927c902d981ae74b7fa61917721ef8d3855d81c41c",
+  "inputHash": "8fed74d931754469723d6037f35272fd00a1dfd9452fce4145a311ba2c450018",
+  "contentHash": "8fed74d931754469723d6037f35272fd00a1dfd9452fce4145a311ba2c450018",
   "promptHash": "7ab2efc4d416dbeeb34a0e2d3cc797ac660749509537011b4ea431707a52a0ba",
   "result": {
-    "overallLevel": "非常好",
-    "headline": "在故障定位流水线中实现候选空间控制与推理引导，方向明确并开始收敛",
-    "overviewSentence": "本周通过calltree优化、bug-type推理v2、候选过滤和KernelLocator原型，将RC保留率提升至92.6%，Top-5命中率提升至48.1%，同时方法论开始收敛。",
-    "shortRead": "谢茂怡本周在故障定位的多个子任务上取得扎实进展：calltree RC保留率从81%提高到92.6%，bug-type引导的推理Top-5命中率从40.7%上升到48.1%，候选过滤大幅缩小搜索空间而未损失性能，KernelLocator原型进一步压缩候选并保持Top-10。本周最重要的认知是“控制搜索空间比增强模型能力更重要”，并提炼出“候选生成→剪枝→推理”的流水线思路。项目管理上已进入方法收敛阶段，投入40小时，进度略好于预期。价值判断清晰，过滤模块被定位为潜在核心模块（15万）。整体而言，本周是方法雏形形成的关键一周，值得优先阅读。",
-    "levelRationale": "本报告符合“非常好”等级：硬进展显著（多个指标明显提升），认知增量明确（提出了pipeline阶段划分、搜索空间优先于模型能力等），CoT's CoT提炼到位且有证据支持，价值判断将过滤模块定位为核心并给出15万估价，项目管理显示进展略好于预期并主动纠偏，元认知有“减少无关信息比增加信息更关键”的可沉淀认识。因此，该报告在研究管理标准下表现优秀。",
-    "sameWeekPosition": "在本周提交的周报中，该报告因方法收敛、多任务并行进展显著且认知增量清晰，属于较值得优先阅读的一类。",
+    "overallLevel": "特别值得读",
+    "headline": "从修补 calltree 转向“候选空间压缩 + 推理引导”，量化提升明显，方法论开始收敛",
+    "overviewSentence": "谢茂毅本周在 fault localization 上实现候选空间压缩与 bug-type 引导推理双线推进，多项量化指标同步提升，并明确“prune-first”元认知策略。",
+    "shortRead": "本周硬进展集中在：RC 保留率从 81% 提升到 92.6%，Bug-Type Top-10 从 59.3% 提升到 66.7%，候选函数从约 400 降到 120–150 且 Top-10 不降，KCOV 新增 2 个 RC-in-CT。认知上提出 candidate generation→pruning→reasoning 三段式，并转向 prune-first 策略。项目管理上发现 calltree 提升有限后主动纠偏到 filtering+reasoning，下周动作均为可验证最小闭环。",
+    "levelRationale": "这份周报的硬进展扎实：5 个任务都有量化指标、失败模式和下周最小动作，且多个指标同步提升。认知增量清晰，CoT's CoT 三条中有两条证据等级 A，提炼出候选生成→剪枝→推理的三段式，并进一步抽象出 prune-first 的元认知策略。价值判断明确，给出了任务级金额价值，并指出 candidate filtering 是潜在核心模块。项目管理主动，发现 calltree 提升有限后迅速纠偏，投入 40 小时、进度略好于预期。自动化沉淀路径清楚，优先转化为 FL pipeline 与 pruning+reasoning 模块。因此按本周研究管理标准，这份周报属于特别值得优先阅读的一类。",
+    "sameWeekPosition": "按本周标准，这份周报属于较值得优先阅读的一类。",
     "highlightedSignals": [
-      "RC保留率提升至92.6%",
-      "候选过滤稳定缩小搜索空间至120-150且未损失Top-10性能",
-      "CoT提炼出清晰的“候选生成→剪枝→推理”流水线结构"
+      "RC 保留率 22/27→25/27，即 81%→92.6%",
+      "Bug-Type Top-10 从 59.3% 提升到 66.7%，Top-5 从 40.7% 提升到 48.1%",
+      "Candidate Filtering 将候选数量从约 400 降到 120–150，Top-10 不降",
+      "KCOV_REMOTE 在 3/5 bug 上收集到数据，新增 2 个 RC-in-CT",
+      "KernelLocator 将候选进一步从 120 降到 60–80，小规模测试 Top-10 未下降",
+      "CoT's CoT 提出 candidate generation→pruning→reasoning 三段式，证据等级 A",
+      "项目管理从 calltree 主动纠偏到 filtering+reasoning，方向明确"
     ],
     "focusDimensions": {
       "valueJudgment": {
         "read": "非常好",
-        "evidence": "任务3候选过滤估价15万，被定位为潜在核心模块；报告明确提出“已经从探索问题进入形成方法雏形阶段”，方向判断清晰。",
-        "nextLift": "可进一步验证过滤模块的泛化能力，并量化过滤在不同bug类型上的表现。"
+        "evidence": "本周更新判断为“方向进一步明确”且进入“形成方法雏形”阶段；给出了任务级金额价值：任务 3 candidate filtering 价值 15 万（潜在核心模块），任务 2 Bug-Type v2 价值 12 万，任务 1 calltree 优化价值 5 万，任务 5 KernelLocator 价值 6 万，任务 4 KCOV_REMOTE 价值 4 万；明确性能提升关键不在 trace 而在候选空间控制与 bug-type 引导。",
+        "nextLift": "下一步可以把金额价值进一步绑定到“可复用模块/可自动化模块”上，并给出是否继续投入的阈值判据，尤其是对 KCOV_REMOTE 这种成本较高的任务，以免价值判断停留在主观估算。"
       },
       "projectManagement": {
         "read": "很好",
-        "evidence": "本周投入约40小时，进度判断略好于预期；主动识别calltree提升有限的偏差，并纠偏转向filtering+reasoning。",
-        "nextLift": "建议结构化跟踪各任务的时间分配与里程碑，设立周度check-point。"
+        "evidence": "当前阶段明确为“方法收敛阶段”，本周投入约 40 小时，进度判断为略好于预期；偏差识别为“calltree 提升有限”，并主动纠偏到 filtering+reasoning；每个任务都给出了下周最小可验证动作，项目节奏清晰。",
+        "nextLift": "下一步可以引入更轻量的风险/成本编码，例如给 KCOV_REMOTE、KernelLocator、结构化压缩等方向标注 go/no-go 条件，避免多线并行时出现资源稀释。"
       },
       "metacognition": {
         "read": "非常好",
-        "evidence": "明确提出“在复杂问题中，减少无关信息比增加信息更关键”，并计划转化为agent policy（prune-first）。",
-        "nextLift": "将此认识形式化为pruning策略的评估标准，并探索在不同领域的迁移性。"
+        "evidence": "新理解提出“在复杂问题中，减少无关信息比增加信息更关键”，并转化为 prune-first 的 agent policy；CoT's CoT 明确“控制 search space 比增强模型能力更重要”，且标注证据等级 A；已经从具体实验结果上升到可迁移的策略。",
+        "nextLift": "下一步可以把 prune-first 策略固化为 pipeline 的默认步骤，并用 ablation 实验验证它在不同规模上的稳定性，从而把元认知结论变成可复用的研究资产。"
       }
     },
     "growthOpportunities": [
-      "calltree变长导致的LLM attention分散可通过结构化压缩更精细地解决",
-      "prompt规则堆叠可尝试统一reasoning schema，使推理结构化",
-      "过滤规则粗糙可引入保底机制避免误删RC，并探索adaptive策略",
-      "KernelLocator缺少data-flow信息，可引入更明确的依赖关系（如数据流/状态变化）"
+      "Bug-Type prompt 仍然是规则堆叠，可以在这周完成最小 reasoning schema 的抽象，把“低频函数优先”“资源生命周期/状态变化”“避免 crash-site 附近函数”等规则整合成统一的决策框架。",
+      "Candidate Filtering 存在 2 个误删 RC 的 case，下一步需要设计保底机制，例如对低频但语义关键的函数保留通道，并回到 27 bugs 全量验证恢复情况。",
+      "KCOV_REMOTE 稳定性不足且 kernel 修改成本高，建议本周给出明确的继续扩大/收敛的判据，避免下一周仍停留在试探阶段。"
     ],
     "teacherAction": {
       "readOriginal": true,
       "meetingQuestions": [
-        "你如何评估过滤模块的泛化能力？是否有在更多bug上测试的计划？",
-        "在calltree长度与RC保留的trade-off中，你倾向于更长的calltree还是更保真？为什么？",
-        "你提到的统一reasoning schema可能是什么样的结构？如何与现有prompt规则整合？",
-        "KCOV_REMOTE是否值得继续投入？你的决策依据是什么？"
+        "候选过滤的 2 个误删 RC 具体发生在哪类函数上？如果引入保底机制，你预计恢复后候选数量会上升到多少？",
+        "如果要把 Bug-Type prompt 抽象为统一 reasoning schema，第一个最小 schema 会包含哪些变量和步骤？",
+        "KCOV_REMOTE 的进一步扩大，你的成本收益阈值是什么？如果下一周仍只能稳定在 3/5，是否应该暂停这个方向？"
       ],
       "nextWeekWatch": [
-        "过滤模块的误删率控制与adaptive策略",
-        "reasoning schema的原型设计",
-        "calltree结构化压缩的实验结果",
-        "KernelLocator中data-flow依赖的引入方法"
+        "是否完成结构化压缩并观察 RC 保留与可读性的平衡变化",
+        "是否给 candidate filtering 增加保底机制，并在 27 bugs 上重新验证 Top-10 与误删数量",
+        "是否对 KCOV_REMOTE 给出 go/no-go 决策，而不是继续无约束扩大"
       ]
     },
     "studentFeedback": {
-      "summary": "茂怡，本周进展扎实，尤其是在候选过滤和bug-type推理上的提升让方法论开始收敛，很好。",
+      "summary": "小谢，这周你的推进很扎实，尤其从 calltree 修补转向“控制候选空间 + 引导推理”是一条对的路径；下一步要把规则逐渐抽象成可复用的模块，并给关键卡点设置明确的 go/no-go 判据。",
       "whatYouDidWell": [
-        "多任务并行推进，每个任务都有明确的数据和进展，体现了很强的执行力和系统性。",
-        "成功提炼出“候选生成→剪枝→推理”的流水线思路，并定位了过滤模块的核心价值。",
-        "主动识别偏差并纠偏，将重心从calltree转向filtering+reasoning，展现了良好的项目管理意识。"
+        "用可量化指标呈现进展，5 个任务都有硬数据，并明确区分“提升了什么、新失败模式是什么”。",
+        "CoT's CoT 提炼出了候选生成→剪枝→推理的三段式，并把证据等级标注为 A/B，说明有意识区分证据强度。",
+        "项目管理上发现 calltree 提升有限后主动纠偏到 filtering+reasoning，并明确每个任务的下周最小可验证动作。"
       ],
       "nextStep": [
-        "在下周，为过滤模块引入保底机制，减少误删RC，并尝试adaptive策略，进一步巩固这一核心方向。",
-        "开始设计bug-type reasoning的统一schema，从规则堆叠走向结构化推理，这可能是提升鲁棒性的关键。",
-        "继续推进KernelLocator，加入data-flow信息，有望进一步压缩搜索空间且提升准确率。"
+        "把 Bug-Type prompt 从规则堆叠转向统一 reasoning schema，先做一个最小可泛化的模板，而不是继续加规则。",
+        "为 filtering 增加保底机制，先确保 2 个误删 RC 的 case 能恢复，再谈进一步压缩。",
+        "对 KCOV_REMOTE 给出明确的成本/收益判据，避免继续投入但没形成决策。"
       ],
-      "suggestedRewrite": "建议下周在任务部分对每个任务明确写出“关键假设”“验证计划”和“风险”。例如过滤模块可写：“假设：低频函数优先和子系统过滤能安全缩小搜索空间；验证计划：在27个bug上测试Top-10命中率，并单独统计误删率；风险：可能误删RC，需保底机制”。这样更便于老师快速把握你的研究逻辑。"
+      "suggestedRewrite": "下周周报中，每个任务建议固定用“目标—做了什么—硬进展（数字）—失败模式—卡点—下周最小动作—是否值得继续投入（金额/价值判断）”七段式，并把 CoT's CoT 单列；例如任务 3 可写为：候选过滤目标是把搜索空间从 400 降到 100 以下且不损失 Top-10；本周已降到 120–150，Top-10 持平，但误删 2 个 RC；下周用保底机制恢复这 2 个 RC 后再做 27 bugs 全量验证。"
     },
     "evidenceLinks": [
-      "RC保留率从81%提升至92.6%（新增硬进展）",
-      "Bug-Type推理Top-5命中率从40.7%提升至48.1%",
-      "候选过滤将函数数量从~400降至120-150，Top-10持平",
-      "CoT's CoT中提炼出“候选生成→候选剪枝→推理”的关键步骤",
-      "元认知新理解：“减少无关信息比增加信息更关键”"
+      "RC 保留率 22/27→25/27，即 81%→92.6%",
+      "Bug-Type Top-10 16/27→18/27，即 59.3%→66.7%",
+      "Candidate Filtering 候选数量从约 400 降到 120–150，27 bugs 上 Top-10 持平",
+      "KCOV_REMOTE 在 3/5 bug 上收集到数据，65 bug 子集 RC 覆盖 24→26",
+      "KernelLocator 候选进一步从 120 降到 60–80，小规模测试 Top-10 未下降",
+      "项目管理：投入约 40 小时，进度略好于预期，纠偏转向 filtering+reasoning",
+      "金额价值：任务 3 candidate filtering 15 万（潜在核心模块），任务 2 Bug-Type v2 12 万，任务 5 KernelLocator 6 万"
     ]
   }
 }

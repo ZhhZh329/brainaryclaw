@@ -1,80 +1,84 @@
 {
   "key": "person:xie-maoyi:2026-04-19:horizontal",
-  "generatedAt": "2026-08-05T20:02:39.572Z",
+  "generatedAt": "2026-11-12T10:02:41.215Z",
   "provider": "deepseek",
   "model": "deepseek-v4-pro",
   "reasoningEffort": "high",
-  "inputHash": "3aedd17fb16607f23a51e53e83c327f04ae1c0cfc0080dcff7670f65d3ef1690",
-  "contentHash": "3aedd17fb16607f23a51e53e83c327f04ae1c0cfc0080dcff7670f65d3ef1690",
+  "inputHash": "829737252e84cc0e2c910a6948ed126e0b46089ce1d56fa2f2c2ac471f0a789f",
+  "contentHash": "829737252e84cc0e2c910a6948ed126e0b46089ce1d56fa2f2c2ac471f0a789f",
   "promptHash": "7ab2efc4d416dbeeb34a0e2d3cc797ac660749509537011b4ea431707a52a0ba",
   "result": {
     "overallLevel": "特别值得读",
-    "headline": "系统实验揭示kernel crash定位核心瓶颈，bug-type推理将Top-10准确率从3.7%提升至59.3%",
-    "overviewSentence": "本周通过大规模故障注入实验，明确了信息可见性与推理引导的双重作用，发现结合bug类型提示可将LLM定位性能从近乎失效提升至实用水平，形成清晰的论文贡献点。",
-    "shortRead": "本周完成65个kernel crash bugs的系统分析，将问题分为RC在BT、不在BT但在calltree、不在calltree三类。关键发现：当崩溃报告不包含根因时，LLM几乎完全失效；仅提供calltree提升有限（3.7%→18.5%），但结合bug-type specific prompt后，Top-10飙升至59.3%。这证明瓶颈在于推理引导而非信息量。项目管理从pipeline搭建转向方法验证，认知迭代清晰，形成结构化CoT，并明确calltree的条件价值。下周将深化失败案例分析和prompt refinement。",
-    "levelRationale": "硬进展突出：针对27个最难案例实现大幅提升；认知增量深刻：拆解了‘信息可见性’与‘候选空间推理’两个独立维度；价值判断清晰：题目成立且有论文信号；项目管理：已从数据准备进入方法验证，及时纠偏；元认知变化显著：从‘堆数据’转向‘引导推理’。证据链条完整，数据详实，符合‘特别值得读’等级。",
-    "sameWeekPosition": "按本周研究管理标准，这份周报属于较值得优先阅读的一类。",
+    "headline": "从calltree数据增强转向bug-type aware reasoning，在RC不在BT的子集上把Top-10从3.7%提升到59.3%，并抽象出信息可见性与推理引导两层问题。",
+    "overviewSentence": "本周完成65个kernel crash bugs系统分析，证明瓶颈不是模型能力而是信息缺失，并借bug-type prompt把非BT场景Top-10从3.7%提升到59.3%，同时沉淀出coverage/reasoning两段式研究框架。",
+    "shortRead": "本周硬进展突出：完成65 bugs评估，发现RC不在BT时baseline几乎失效（Top-10约3.7%）；phased calltree保留率81%，但单独只把Top-10提到18.5%；最关键的是引入bug-type specific prompt后，27个RC-in-CT bugs的Top-10提升到59.3%，Top-1从0到18.5%。负结果清晰：RC已在BT时calltree无提升甚至略降，说明calltree价值是条件性的。项目管理出现重要纠偏：从数据增强转向推理机制。下周动作具体：聚焦6个失败case、建立decision rule、调整MAX_PHASES。CoT's CoT证据等级A，抽象出信息覆盖与候选空间推理两层，适合优先阅读。",
+    "levelRationale": "这份周报达到特别值得读：硬进展有可复核数字，证据等级A；证伪路径明确（calltree不是普遍提升）；认知增量清晰，把问题从“给更多trace”重构为“信息是否可见+如何在候选空间推理”；CoT's CoT抽象出可沉淀的benchmark、decision module、candidate pruning；项目管理有里程碑、投入约40小时、纠偏方向合理；价值判断给出金额估算并指出可写论文信号。下周动作不是泛泛而谈，而是针对6个失败case和MAX_PHASES的窄动作。",
+    "sameWeekPosition": "按本周标准，这份周报属于较值得优先阅读的一类。",
     "highlightedSignals": [
-      "在RC不在BT场景下，baseline几乎完全失败，但bug-type prompt将Top-10提升至59.3%",
-      "发现calltree的价值是条件性的，仅在RC不在BT时有效",
-      "认知升至方法论高度：fault localization可拆解为信息覆盖与推理选择两个独立问题",
-      "明确了LLM瓶颈在于大搜索空间中的选择而非代码理解",
-      "项目管理主动纠偏：从数据增强转向推理机制",
-      "获得高质量负结果，划定calltree适用范围"
+      "硬进展可复核：Baseline 1/27 → Phased CT 5/27 → Bug-Type Final 16/27，Top-10从3.7%到59.3%。",
+      "负结果清晰：RC-in-BT场景下+calltree无提升甚至略降，明确calltree是条件性信息补充。",
+      "CoT's CoT质量高：三条均证据等级A，并能落到benchmark、decision module、candidate pruning等自动化沉淀。",
+      "纠偏合理：从“数据增强”转向“推理机制”，说明不是盲目堆信息。",
+      "价值判断成熟：方向成立且出现可写论文信号，并给出金额价值估算，核心任务金额最高。"
     ],
     "focusDimensions": {
       "valueJudgment": {
-        "read": "特别值得读",
-        "evidence": "明确指出题目成立且有可写论文的信号，bug-type方法成为核心贡献点，Top-10提升幅度大，应用前景明确。",
-        "nextLift": "进一步细化贡献描述，与现有工作对比，强化论文创新点。需要将heuristic提示转化为结构化推理模块，并进行消融实验。"
+        "read": "非常好",
+        "evidence": "报告明确判断方向成立且已有可写论文信号，并给出任务1-5金额价值估算，Bug-Type prompt为15万，其他5-6万；同时诚实指出方法仍偏heuristic、需要结构化表达，没有把当前结果夸大为成熟方法。",
+        "nextLift": "下一步可以把“可写论文信号”拆成最小可发表贡献点，并给金额估算附上换算口径，例如按实验验证成本、论文贡献度或可复用资产折算，让价值判断更容易被老师复核。"
       },
       "projectManagement": {
         "read": "非常好",
-        "evidence": "阶段明确：已从pipeline搭建进入方法验证；里程碑设定（Bug-Type方法验证✅）；发现偏差后及时纠偏（从数据增强转向推理机制）；工作量约40小时。",
-        "nextLift": "确立决策规则（何时引入calltree）、固化实验pipeline、规划论文写作里程碑和时间表。"
+        "evidence": "当前阶段从pipeline搭建转向方法验证，投入约40小时，关键里程碑明确；出现偏差后及时纠偏：从calltree数据增强转向推理机制；下周动作具体到MAX_PHASES 8→15~20、分析6个失败case、构建decision rule。",
+        "nextLift": "建议增加每周决策点：在什么条件下继续投入calltree优化、什么条件下转为纯reasoning模块；同时把负结果纳入论文叙事，避免后续实验只围绕单一指标优化。"
       },
       "metacognition": {
-        "read": "特别值得读",
-        "evidence": "形成三个CoT's CoT，将定位拆解为coverage和reasoning，认识到calltree的条件价值，并指出LLM的核心困难是候选空间选择；认知迭代有推翻先前假设（'只要给calltree就会提升'被证伪）。",
-        "nextLift": "将这些元认知沉淀为可复用的reasoning模块和benchmark，推进自动化科研路径。"
+        "read": "非常好",
+        "evidence": "明确写出证伪路径：“只要给calltree就会提升”❌、“更多trace=更好效果”❌；CoT's CoT将fault localization重构为coverage和reasoning两层；三条CoT's CoT都标了证据等级A，显示元认知清晰。",
+        "nextLift": "可以进一步记录“为什么一开始会相信calltree数据增强”的思考过程，把纠偏机制变成可复用的团队复盘模板；同时为下周6个失败case预先写下假设，验证后再对照。"
       }
     },
     "growthOpportunities": [
-      "calltree构建的噪声过滤规则可进一步形式化，减少误杀",
-      "prompt设计目前仍为启发式，可探索结构化推理模板（如思维链）",
-      "数据pipeline的清理和固化有助于论文可复现性",
-      "当前27个案例仍可能过拟合，需在更大数据集上验证泛化性"
+      "当前calltree存在长度两难：太短丢RC、太长LLM无法处理，可把“行数/phase数”作为受控变量而不是仅靠调MAX_PHASES。",
+      "Bug-Type prompt仍偏heuristic，缺少结构化推理；可以把6个失败case拆成信息表示、候选空间过大、线索被噪声淹没三类，避免只做语义微调。",
+      "尚未建立calltree使用decision rule；建议用RC-in-BT的负结果和RC-in-CT的正结果，写出一个可执行的trigger表。",
+      "CoT's CoT中的coverage/reasoning两层虽然清晰，但尚未沉淀成benchmark或evaluation split；可下周先把27个RC-in-CT bugs变成固定评估集。"
     ],
     "teacherAction": {
       "readOriginal": true,
       "meetingQuestions": [
-        "你打算如何将bug-type prompt结构化，避免启发式设计？",
-        "calltree的条件使用规则具体是什么？能否自动判定何时调用？",
-        "6个失败案例的共性是什么？是否与bug类型或代码特征相关？",
-        "如何将当前的方法论沉淀为benchmark和公开数据集？",
-        "论文的核心实验设计是什么？是否需要增加对比方法？"
+        "你如何定义Bug-Type aware reasoning和普通chain-of-thought的边界？它是否只是增加了领域提示，还是真正改变了候选函数选择策略？",
+        "在6个失败case中，RC在calltree但GPT未找到，你判断主要是信息表示问题、候选空间过大，还是提示没有约束到正确语义？",
+        "如果要把当前结果写成论文，最小可发表的贡献是哪一个：bug-type prompt、calltree conditional decision rule，还是coverage/reasoning两段式框架？",
+        "你的金额价值估算中，Bug-Type prompt值15万，其他任务5-6万，这个比例背后的依据是什么？"
       ],
       "nextWeekWatch": [
-        "结构化reasoning模块的初步设计",
-        "决策规则（何时用calltree）的伪代码或决策树",
-        "扩大验证集后的效果稳定性",
-        "paper outline或related work梳理"
+        "是否对6个失败case完成分类并给出每类最小修复动作；",
+        "是否产出calltree使用decision rule的触发条件/不触发条件；",
+        "是否把CoT's CoT中的coverage/reasoning两层沉淀为固定评估集或benchmark；",
+        "是否控制住只调MAX_PHASES的冲动，先做结构化假设再实验。"
       ]
     },
     "studentFeedback": {
-      "summary": "本周你取得了关键突破：在kernel crash定位最难的场景下，通过bug-type推理将准确率从几乎为零提升到实用水平，并形成了深刻的方法论认识。这份周报是高质量的研究进展报告，展示了清晰的问题拆解和严谨的实验逻辑。",
+      "summary": "你的周报已经把“数据增强”问题重构成“信息可见+推理引导”，并用59.3%的结果证明方向，这是本周最有价值的进展。",
       "whatYouDidWell": [
-        "系统性实验：将问题划分三类，逐一验证，获得可靠结论。",
-        "认知升华：不是简单汇报结果，而是提炼出'信息可见性'与'推理选择'两个独立维度，并意识到LLM的瓶颈在于候选空间搜索。",
-        "负结果的价值：明确calltree的条件作用，避免了后续无用功，并及时转向推理引导。"
+        "你完成了从calltree方法对比到Bug-Type prompt的系统性验证，Top-10从3.7%提升到59.3%，证据链清晰，结论可信。",
+        "你明确记录了负结果和证伪路径，说明你没有为了好看只报正结果，而是开始管理研究假设。",
+        "你给出了金额价值判断和纠偏方向，从数据增强转向推理机制，说明你在做项目管理而不是只做实验。"
       ],
       "nextStep": [
-        "将bug-type prompt从启发式升级为结构化推理机制，例如引入逐步分析模板。",
-        "对6个失败案例进行根因分析，总结LLM的常见出错模式，用于prompt改进。",
-        "固化数据pipeline，确保实验可复现，为论文做准备。"
+        "下周聚焦6个失败case，把原因拆成信息表示、选择策略、提示结构三类，避免只做prompt微调。",
+        "把calltree适用条件写成一个decision rule，给出何时引入、何时不引入的表格。",
+        "尝试把CoT's CoT中的coverage/reasoning两层写成可复用模块或评估集，降低后续实验的重复成本。"
       ],
-      "suggestedRewrite": "下周周报可以像这样写得更清楚：'本周在RC-not-in-BT的27个案例上，对比了baseline、calltree和bug-type prompt三个条件的Top-10准确率：1/27, 5/27, 16/27。结合上周的CT构建经验，我们发现提升的关键不是增加trace行数，而是根据bug类型设计定向推理指引。例如，UAF类指定关注free路径上的函数，避免了LLM在大量无关函数中迷失。失败案例的分析表明...' 这种写法能让人一眼看出方法和实验的对应关系。"
+      "suggestedRewrite": "下周周报可以这样写：“在RC-in-CT 27个bug上，我先对比baseline/phased CT/bug-type prompt，得到Top-10 3.7%/18.5%/59.3%；然后对6个失败case按‘RC表示缺失/候选空间过大/线索被噪声淹没’分类，并给出每类的最小修复动作。我的核心增量判断是：下一步不是增加calltree信息，而是建立trigger条件与结构化推理模板。”——把结果、失败分类和下一步动作绑定，避免只写数字和卡点。"
     },
-    "evidenceLinks": []
+    "evidenceLinks": [
+      "报告中任务1：RC在BT（56个）Top-10 85.7%，RC不在BT（27个）baseline Top-10约3.7%。",
+      "报告中任务3：Baseline Top-10 1/27，+calltree Top-10 5/27（约18.5%）。",
+      "报告中任务4：Baseline 1/27，Phased CT 5/27，Bug-Type Final 16/27（59.3%），Top-5 0到40.7%，Top-1 0到18.5%。",
+      "报告中任务5：RC-in-BT baseline 85.7%，+calltree无提升甚至略下降。",
+      "报告中CoT's CoT三条均证据等级A，分别指向benchmark、decision module、candidate pruning。"
+    ]
   }
 }
