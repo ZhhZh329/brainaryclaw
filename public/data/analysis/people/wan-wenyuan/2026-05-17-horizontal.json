@@ -1,77 +1,87 @@
 {
   "key": "person:wan-wenyuan:2026-05-17:horizontal",
-  "generatedAt": "2026-08-05T15:04:20.563Z",
+  "generatedAt": "2026-11-12T05:02:14.793Z",
   "provider": "deepseek",
   "model": "deepseek-v4-pro",
   "reasoningEffort": "high",
-  "inputHash": "3542e9b8d908afc647daec68850f071a9581f34f948e773bcfd5a3cebb7dcee1",
-  "contentHash": "3542e9b8d908afc647daec68850f071a9581f34f948e773bcfd5a3cebb7dcee1",
+  "inputHash": "36746c413f2f8223e431e4487747ce5abdd246e79cb17a861ba130aca9d2b012",
+  "contentHash": "36746c413f2f8223e431e4487747ce5abdd246e79cb17a861ba130aca9d2b012",
   "promptHash": "7ab2efc4d416dbeeb34a0e2d3cc797ac660749509537011b4ea431707a52a0ba",
   "result": {
     "overallLevel": "非常好",
-    "headline": "通过全量消融实验发现bbox证据不能无条件塞入上下文，并厘清内外注意力双路线",
-    "overviewSentence": "周报基于扎实的全集消融实验，明确指出了文本bbox memory的适用边界，并提出了可操作的外部文本约束与内部adapter训练双线路线，认知增量和转化潜力均较高。",
-    "shortRead": "全量实验证实直接塞bbox context整体无益，但定位问题有正向信号；由此推导出外部attention需约束文本输入、内部attention通过adapter内化知识的两层路线，项目管理清晰，下周动作具体。",
-    "levelRationale": "基于LMEE-Bench全量405题消融实验，获得了关于文本memory副作用的明确认知增量，CoT's CoT有证据等级A/B支撑；内部/外部attention双路线规划清晰，价值判断和金额估算合理；项目管理时间、资源、依赖、纠偏均很到位；元认知上意识到证据选择前判断的重要性。虽结果未达预期，但实验设计严谨，认知收敛明确，符合‘非常好’的标准。",
-    "sameWeekPosition": "按本周研究管理标准，该周报属于较值得优先阅读的一类，因其提供了明确的实验结论和可执行的下一步计划。",
+    "headline": "405题ablation证明text-box memory不能无条件塞入context，需按问题类型约束；内外部attention路线清晰并已转入下一阶段schema/adapter设计。",
+    "overviewSentence": "Wan Wenyuan完成LMEE-Bench 405题context memory ablation，发现bbox evidence整体持平略降但定位类问题有正向信号，并形成外部文本约束加内部adapter的下一阶段路线。",
+    "shortRead": "本周最有价值的硬进展是完成LMEE-Bench full set 405题的no-memory与generated bbox-memory对比实验：整体accuracy从73.33%降到73.09%，说明无条件把bbox evidence塞入context无法作为通用增强方法；但定位类问题有正向信号，属性、计数、全局状态类问题可能被局部坐标误导。基于这一失败模式，学生把后续路线收敛为外部attention用可约束的文本memory，内部attention用adapter把task-relevant关注能力内化进模型参数。项目管理记录具体，包括20-25小时投入、关键路径依赖、纠偏动作和需要老师确认的两个路线判断。自动化沉淀方向明确，包含context memory ablation workflow、text-box memory schema、relevance selector和adapter training dataset format。",
+    "levelRationale": "这份周报达到“非常好”的等级。硬证据充分：405题full set ablation直接支撑CoT's CoT证据等级A，并给出了no-memory 73.33%与bbox-memory 73.09%的量化结果。认知增量明确，学生把“text-box memory不是无条件增强项”提炼为对任务类型和证据适用性的边界判断，而不是简单报告一个失败的结果。价值判断、项目管理和元认知变化三项均达到较高水平：价值判断给出了三个可讨论的估值及计算方法；项目管理把阶段、依赖、关键路径、纠偏动作都写清楚；元认知从“回答后检查”升级到“回答前判断证据是否该使用”。本周未达到“特别值得读”的原因不是质量不足，而是内部adapter路线仍处于样例设计的前期阶段，尚未产生训练或验证结论；同时按问题类型分评的量化结果还未落到每一类问题的accuracy变化上。若下周完成分类型评估并给出最小schema示例，很容易进入“特别值得读”。",
+    "sameWeekPosition": "按本周标准，这份周报属于较值得优先阅读的一类。",
     "highlightedSignals": [
-      "全量消融实验（405题）完成，获得整体准确率对比",
-      "发现bbox context在定位类问题和属性/计数/全局问题上的对立效果",
-      "提出内部attention(adapter)和外部attention(文本memory约束)的双线路线",
-      "CoT's CoT中强调memory的副作用与任务适用性绑定",
-      "元认知意识到证据选择应在回答前判断",
-      "项目管理中明确依赖和关键路径",
-      "自动化潜力高，建议沉淀为memory schema和ablation workflow"
+      "LMEE-Bench full set 405题context memory ablation，no-memory 73.33% vs generated bbox-memory 73.09%，给出整体结论和失败模式。",
+      "CoT's CoT证据等级A/B清晰，蒸馏出“外部memory不是越多越好，额外context本身是attention干预”的可复用认知。",
+      "价值判断给出三项估值及计算方法，说明该工作不是纯实验，而是有明确可沉淀的研发资产。",
+      "项目管理完整性高：时间投入、依赖关系、关键路径、纠偏动作和需要老师确认的问题都明确。",
+      "自动化转化路径具体到context memory ablation workflow、text-box memory schema、relevance selector、adapter training dataset。",
+      "元认知变化可操作：从“回答后检查对错”扩展到“回答前判断该不该使用这条视觉证据”。"
     ],
     "focusDimensions": {
       "valueJudgment": {
-        "read": "对题目价值的判断很清晰，定位解决了具身VLM中视觉证据如何进入推理的通用问题，并给出了分任务的具体金额估算。",
-        "evidence": "报告第6节指出解决通用能力，谁买单明确，并有论文、benchmark等沉淀形式；第7节将三个任务分别估价为50万、40万、80万，并说明了计算方法。",
-        "nextLift": "建议在后续周报中补充价值参照系，例如与行业同等模块的成本对比或该方向在项目整体中的优先级排序，让价值判断更立体。"
+        "read": "很好",
+        "evidence": "周报对LMEE-Bench context memory ablation workflow估值50万、text-box memory schema估值40万、内部attention adapter路线估值80万，并给出计算方法和参考依据，能帮助老师判断哪些方向值得优先投入。",
+        "nextLift": "可以把价值判断从内部估算进一步落到可验证指标，例如将ablation workflow的复用次数、节省的试错轮数，或adapter模块在多任务上的预期收益写成可追踪目标。"
       },
       "projectManagement": {
-        "read": "项目管理非常细致，有明确的阶段、时间投入、里程碑、资源需求和纠偏动作，关键路径识别清楚。",
-        "evidence": "第9节列出了原计划vs实际完成、投入时间、下周计划、依赖关系、进度判断、纠偏动作等，并标记了该项目为关键路径。",
-        "nextLift": "可进一步细化内部adapter路线的时间节点，并考虑增加风险预案，比如若Chunhan的检测结果延迟，如何用替代方案推进外部schema设计。"
+        "read": "非常好",
+        "evidence": "周报明确当前阶段、本周实际完成任务、投入20-25小时、下周预计20小时、依赖Chunhan检测/分割结果、关键路径标记为是，并给出偏差原因和纠偏动作，项目管理非常清楚。",
+        "nextLift": "可以在下周一就为“定位/非定位问题分评”设定一个小里程碑，比如分类型accuracy表格初稿，并把需要老师确认的两点提前排序，让meeting讨论更聚焦。"
       },
       "metacognition": {
-        "read": "元认知有实质进展，认识到回答前需判断是否使用视觉证据，并且实验证实了context的副作用。",
-        "evidence": "第5节明确写出新理解，并规划了未来可沉淀的5条机制（规则、调度、监控等）。",
-        "nextLift": "建议把这一元认知规则显式化为可操作的‘evidence准入checklist’，在后续实验中加入‘副作用检测’流程，使其成为可重复的认知控制模块。"
+        "read": "非常好",
+        "evidence": "周报明确写出“meta-cognition不只是回答后检查对错，也包括回答前判断我该不该使用这条视觉证据”，并进一步转化为明确规则、调度策略、监控机制、agent policy、cognitive control module五条可沉淀路径。",
+        "nextLift": "可以将这个元认知理解做成一个轻量checklist或策略模板，下周在内部实验前先写上“什么证据可进入context，什么证据禁止进入”，即使只用于自己的实验日志也是增量。"
       }
     },
     "growthOpportunities": [
-      "在外部attention文本schema设计中，可以更早地与Chunhan对齐检测/分割结果，以加速输入选择的收敛。",
-      "设计adapter样例时，可与老师或胡连宇讨论监督信号的具体形式，确保与项目整体目标一致。",
-      "下周周报可增加错误类型分布分析，例如按问题类型统计bbox-memory带来的正确变化与错误变化数量，以更精细地指导适用性判断。"
+      "把LMEE-Bench结果按问题类型拆分，分别报告定位、属性、计数、全局状态的accuracy变化，用分类型数据替代“定位类有正向信号”的定性描述。",
+      "为外部attention文本memory写出一版最小schema示例，明确目标物体、坐标、证据来源、适用问题类型四个字段，并明确什么证据不应写入context。",
+      "为内部attention adapter准备少量样例格式，只验证输入输出结构和监督信号是否合理，不必急于训练，以便老师判断路线是否可行。",
+      "把no-memory与bbox-memory对比中“答案被错误改变”的题目单独列出，作为后续grounding evaluator的负样本池。"
     ],
     "teacherAction": {
       "readOriginal": true,
       "meetingQuestions": [
-        "对于定位类问题的正向信号，你打算如何更精细地划分问题类型？能否给几个例子？",
-        "内部adapter的监督信号来源具体怎么设计？与外部文本memory的对齐方式如何？",
-        "如果Chunhan的检测结果不能及时提供，你的外部attention文本schema设计会如何调整？"
+        "你提到定位类问题有正向信号，目前是否有按问题类型分组的accuracy数据可以支撑这个判断？如果没有，下周能否先做出分类型表格？",
+        "外部attention文本memory的schema你打算如何约束字段和适用范围？能否在下周给出一个最小schema示例？",
+        "内部adapter的训练数据来源和监督信号，你更倾向用小规模人工标注，还是从现有VQA答案变化中自动提取？",
+        "如果直接塞bbox context整体不稳定，你是否考虑把bbox evidence先放进relevance selector的候选池，而不是直接拼接进所有问题的context？",
+        "月底向胡连宇汇报时，你预计把外部文本memory还是内部adapter作为主线来展示？"
       ],
       "nextWeekWatch": [
-        "外部attention文本schema的具体字段和适用范围定义",
-        "内部adapter训练样例格式是否明确",
-        "是否与Chunhan对齐并获得了初步的grounding证据"
+        "是否按纠偏计划停止无条件扩大bbox memory，转为结构化外部attention输入。",
+        "是否出现分类型评估结果，证明bbox memory的边界作用。",
+        "是否给出text-box memory schema的最小示例或字段清单。",
+        "是否形成adapter训练样例格式，哪怕只有10-20条示例。"
       ]
     },
     "studentFeedback": {
-      "summary": "本周你通过扎实的全量实验获得了关键认知，并清晰规划了内外attention路线，项目管理也很到位，继续推进schema收敛和adapter设计。",
+      "summary": "本周你用405题full set ablation把“text-box memory能否直接提升VQA”从假设变成有边界的结论，并形成了外部文本约束加内部adapter的下一阶段路线，推进扎实。",
       "whatYouDidWell": [
-        "完成了LMEE-Bench全量消融实验，并客观分析了结果，即使没有整体提升也不回避负面发现。",
-        "把实验发现升华成了CoT's CoT，并识别出memory的副作用与任务类型绑定的原则。",
-        "项目管理非常清晰，时间、依赖、纠偏动作都写得很具体，让老师能快速把握进度。"
+        "你把负面结果写成可用的边界：没有把整体accuracy略降直接写成方法失败，而保留了定位类正向信号和非定位类副作用的区分，这为下一步保留了对的方向。",
+        "项目管理很完整，时间投入、依赖关系、关键路径和纠偏动作都清楚，老师可以快速判断项目瓶颈在哪里。",
+        "元认知变化有价值：meta-cognition不只回答后检查，也包括回答前判断视觉证据是否适合进入当前问题，这是一层比上周更深的认知。"
       ],
       "nextStep": [
-        "在外部attention文本schema中，明确定义字段和使用条件，可以给一个具体例子。",
-        "尽快与Chunhan沟通对齐检测/分割结果，为外部attention输入提供更强证据。",
-        "下周在周报中增加一个‘风险与应对’部分，提前写出可能出现的阻碍和备选方案。"
+        "下周先把LMEE-Bench按定位、属性、计数、全局状态四类拆开，分别报告no-memory与bbox-memory的accuracy变化，让“bbox memory只适合定位类”更可验证。",
+        "为外部attention文本memory写一个最小schema示例，字段包含目标物体、坐标、证据来源、适用问题类型，并明确哪些证据不能无条件进context。",
+        "为内部attention adapter准备10-20条样例格式，只验证输入输出结构和监督信号是否合理，不必急于训练。"
       ],
-      "suggestedRewrite": "下周周报可以这样写：外部attention文本schema V1：字段包括[目标物体、bbox坐标、证据来源（检测/生成）、适用问题类型（定位/属性/计数等）]，并对定位类问题优先使用bbox evidence，非定位类问题默认不使用。同时，内部adapter训练样例格式初稿如下：输入image+task，监督信号包括task-relevant object和对应的bbox以及最终答案变化..."
+      "suggestedRewrite": "下周周报可以这样写：本周完成文本memory schema v0.1（字段：target_object, bbox, evidence_source, applicable_question_type），并在LMEE-Bench上按定位、属性、计数、全局状态分评。结果显示定位类accuracy从xx%到xx%，属性、计数、全局状态分别变化x/y/z个点，结论是bbox memory仅在定位类保留；下一步将schema接入relevance selector，并准备adapter训练样例。"
     },
-    "evidenceLinks": []
+    "evidenceLinks": [
+      "实验数据：LMEE-Bench full set 405题 no-memory 73.33%，bbox-memory 73.09%，整体持平略降。",
+      "CoT's CoT证据等级A/B：context memory ablation和内部/外部attention工程路径。",
+      "价值判断：任务一50万、任务二40万、任务三80万，并给出计算方法。",
+      "项目管理：当前阶段、时间投入20-25小时、依赖Chunhan检测/分割结果、关键路径为是、纠偏动作。",
+      "自动化转化路径：context memory ablation workflow、text-box memory schema、relevance selector、adapter training dataset。",
+      "老师动作建议：REFINE / KEEP。"
+    ]
   }
 }
