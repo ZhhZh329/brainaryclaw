@@ -1,13 +1,84 @@
 {
   "key": "person:wu-zhangfa:2026-06-21:horizontal",
-  "generatedAt": "2026-08-05T19:00:47.376Z",
+  "generatedAt": "2026-11-12T09:03:33.088Z",
   "provider": "deepseek",
   "model": "deepseek-v4-pro",
   "reasoningEffort": "high",
-  "inputHash": "a944f2f242ec0a273ae66b35c90eaef39999dec9639fa36aa91b2ba31a1af9e5",
-  "contentHash": "a944f2f242ec0a273ae66b35c90eaef39999dec9639fa36aa91b2ba31a1af9e5",
+  "inputHash": "ea673efbe8bd98a22d4f58ac22e8283d7270ea2ca5c63a0fab09ca3152b28805",
+  "contentHash": "ea673efbe8bd98a22d4f58ac22e8283d7270ea2ca5c63a0fab09ca3152b28805",
   "promptHash": "7ab2efc4d416dbeeb34a0e2d3cc797ac660749509537011b4ea431707a52a0ba",
   "result": {
-    "text": ""
+    "overallLevel": "非常好",
+    "headline": "从实验堆砌转向机制验证：三类消融体系完成高价值规划",
+    "overviewSentence": "本周将 Flow-SCAN 实验验证体系从“做更多实验”升级为“用消融实验精准支撑论文机制主张”，规划质量高但硬实验结果尚未产出。",
+    "shortRead": "规划了模块、对抗强度、Loss 三类消融，明确与论文 claims 的对应关系、替代结构公平、变量控制与指标记录；下周进入正式实验。",
+    "levelRationale": "本周没有获得实际实验结果，但完成了非常扎实的实验设计前置工作。报告具备清晰的问题导向，将模块、对抗强度、Loss 消融分别对应论文核心主张，并识别出替代结构公平、训练协议固定、clean/adversarial 双指标、L_cons/L_margin 作用边界等关键点。这些属于高价值的研究管理动作，降低后续实验不可解释的概率。因此按本周标准属于较值得优先阅读的一类；评为“非常好”而非“特别值得读”，主要因为证据仍停留在规划与认知层，尚未形成可写入论文的实证结果。",
+    "sameWeekPosition": "按本周标准，这份周报属于较值得优先阅读的一类：它没有硬实验数据，但将后续实验可解释性前置，规划完整度和认知增量明显高于一般进度汇报。",
+    "highlightedSignals": [
+      "将模块、对抗强度、Loss 三类消融与论文 claims 建立一一对应关系",
+      "明确提出模块消融不能用直接删除，而要用合理替代结构，保证可训练与公平比较",
+      "识别 L_cons 面向分数稳定性、L_margin 面向异常侧保护，避免鲁棒 loss 混为一谈",
+      "把 clean 与 adversarial 指标同时纳入对抗强度消融解释",
+      "已形成 Claim-to-Ablation Planner、Ablation Variable Controller 等 Brainary workflow 抽象"
+    ],
+    "focusDimensions": {
+      "valueJudgment": {
+        "read": "非常好",
+        "evidence": "报告给出保守估值 6000–9000 元；将三类消融对应论文核心问题，并明确提出主文/附录取舍，避免实验堆砌；价值判断不是追求实验数量，而是服务论文 claims。",
+        "nextLift": "下周可以把每个消融版本预计支撑哪一句论文 claim 写下来，并在实验结果出来后补上实际贡献幅度，让价值判断从设计层进入证据层。"
+      },
+      "projectManagement": {
+        "read": "很好",
+        "evidence": "有明确的卡点识别：主表压缩、Loss 设置区分、threshold 记录、实现公平；下周计划包含第一批消融顺序、统一记录表、主文/附录决策节点。",
+        "nextLift": "建议下周先冻结实验协议版本（模型结构、数据划分、PGD steps、loss 权重、异常比例），再开始第一批消融；每次只切换一个变量，并把偏差记录到实验日志。"
+      },
+      "metacognition": {
+        "read": "非常好",
+        "evidence": "本周认知增量集中体现了从“做更多实验”到“验证机制”的转变；尤其识别出模块消融替代结构公平、Loss 消融要区分稳定性和异常侧保护、对抗强度需同时看 clean 和 robust 性能。",
+        "nextLift": "下一步可以把机制是否必要具体化为可证伪的预测：例如 w/o L_margin 预计 adversarial recall 下降多少 pp，低于多少则说明该模块可进入附录；这会进一步强化元认知到可检验假设。"
+      }
+    },
+    "growthOpportunities": [
+      "在正式实验前，把每个消融的预期结果写成一个可证伪假设，避免跑完后只是描述性比较。",
+      "所有实验记录应固定协议快照，并同步记录任何训练不稳定、替代结构修复或参数调整，防止归因错误。",
+      "主文消融表需要结合方差和显著性判断，而不是只根据单次实验的绝对分数做取舍。"
+    ],
+    "teacherAction": {
+      "readOriginal": true,
+      "meetingQuestions": [
+        "如果下周只能先跑一个消融，你会先跑哪一个？为什么它最能直接支撑论文的核心 claims？",
+        "w/o CEAM 的替代 causal projection 具体怎么定义，特征维度和尺度如何与原 CEAM 对齐？",
+        "你准备用什么阈值判断性能下降来自机制缺失，而不是训练不稳定或替代结构实现问题？",
+        "主表最终倾向保留哪几个消融版本？附录扩容的判断标准是什么？",
+        "下周算力是否能同时支撑模块、对抗强度、Loss 三批消融？如果不够，你的优先级如何排序？"
+      ],
+      "nextWeekWatch": [
+        "第一批模块消融是否按单一变量原则执行，以及替代结构是否保证了输入输出维度和特征尺度公平。",
+        "实验记录是否同时包含 clean/adversarial 下的 AUCPR、AUROC、F1、precision、recall、threshold。",
+        "是否出现 L_cons / L_margin / clean-only / w/o adversarial defense 概念混用。",
+        "是否开始根据实验结果把消融映射回论文 claims，并压缩主表条目。"
+      ]
+    },
+    "studentFeedback": {
+      "summary": "本周你最大的贡献是把实验验证从“做更多实验”转向“用消融精准支撑机制主张”，下周重点是让第一批消融真正跑起来，产出可归因、可解释的证据。",
+      "whatYouDidWell": [
+        "把模块、对抗强度、Loss 三类消融分别对应论文核心 claims，避免实验堆砌，提升了实验部分的问题导向性。",
+        "敏锐识别出模块消融不能直接删除，而要用替代结构保证公平比较，这避免了一类常见的不可解释结果。",
+        "将 L_cons 与 L_margin 的作用边界拆开，区分了分数稳定性和异常侧保护，为后续鲁棒训练解释打下清晰基础。"
+      ],
+      "nextStep": [
+        "下周优先完成 Full、w/o CEAM、w/o ECN、w/o S²EM low-rank mixer、w/o bounded refinement、w/o PHSM 六个版本；固定训练协议，只切换一个变量，并完整记录 clean/adversarial 指标。",
+        "用统一的实验记录表防止 loss 开关、对抗预算、PGD steps 或数据划分同时变化，避免归因混乱。",
+        "根据第一批结果判断哪些消融保留在主文、哪些放入附录，并把每个结果写回它支撑的论文 claim 下。"
+      ],
+      "suggestedRewrite": "下周周报可以这样写：'本周完成模块消融第一批：Full、w/o CEAM、w/o ECN、w/o S²EM low-rank mixer、w/o bounded refinement、w/o PHSM；所有版本在相同训练协议与数据划分下运行，记录 clean/adversarial 的 AUCPR、AUROC、F1、precision、recall、threshold。初步结果：w/o CEAM 使 adversarial recall 下降 X pp，w/o bounded refinement 对 clean F1 影响较小，因此建议将 w/o CEAM 保留主表，w/o bounded refinement 视后续方差决定。' 这样老师能快速看到可解释证据和下一步判断，而不只是留下计划。"
+    },
+    "evidenceLinks": [
+      "周报·一、本周主要工作：模块、对抗强度、Loss 三类消融规划",
+      "周报·二、本周新增进展：claims 对应、替代结构公平、固定训练协议、Loss 解释逻辑",
+      "周报·三、当前卡点：主表压缩、Loss 设置区分、threshold 记录、实现公平",
+      "周报·五、本周认知增量：四个核心认知变化",
+      "周报·六、可沉淀 Brainary workflow：Claim-to-Ablation Planner、Ablation Variable Controller、Loss Contribution Auditor、Robustness Evaluation Tracker"
+    ]
   }
 }
