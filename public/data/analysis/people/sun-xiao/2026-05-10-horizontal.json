@@ -1,86 +1,81 @@
 {
   "key": "person:sun-xiao:2026-05-10:horizontal",
-  "generatedAt": "2026-08-05T14:03:24.434Z",
+  "generatedAt": "2026-11-12T03:04:11.452Z",
   "provider": "deepseek",
   "model": "deepseek-v4-pro",
   "reasoningEffort": "high",
-  "inputHash": "5aa23a4e5c6a03564fac30b18ad62f4165beca8a6fcca294be74ba76d283a1cc",
-  "contentHash": "5aa23a4e5c6a03564fac30b18ad62f4165beca8a6fcca294be74ba76d283a1cc",
+  "inputHash": "0911be4f4527aaf0178308b1122c71c70be9a4a0ea6de9a0c3a046faa9c617da",
+  "contentHash": "0911be4f4527aaf0178308b1122c71c70be9a4a0ea6de9a0c3a046faa9c617da",
   "promptHash": "7ab2efc4d416dbeeb34a0e2d3cc797ac660749509537011b4ea431707a52a0ba",
   "result": {
-    "overallLevel": "特别值得读",
-    "headline": "从 schema 定版到 runtime 可验收：action-first contract 与 communication intervention 的边界收紧",
-    "overviewSentence": "本周将 strict action schema 推进到 runtime 接入规格，并重构 communication 为 source-grounded content-selection intervention，确立了可验收的因果边界。",
-    "shortRead": "本周硬进展明确：1) 将 strict non-comm action schema 从离线文件推进到 benchmark_v4 runtime 接入规格，要求 loader、prompt、apply、summary 全链路对齐；2) 重构 communication 侧，用 13 个 theory-backed content-selection strategy 替代旧 schema id，形成可操控的干预变量。新增认知更新在于认识到“action-first benchmark”必须通过 trace 证明旧路径已彻底清除，communication 变量必须是 source-grounded 的内容机制而非风格改写。项目管理方面，两条主线均进入最小验收阶段，下周计划用 Bargaining 1 case 做最小回归。本周的元认知推进在于将 benchmark 可解释性锚定在“相同 action 与 state 下，不同 content_selection_policy 对后续 trajectory 的影响”这一因果边界上。整体质量非常高，属于本周最值得优先深入阅读和分析的周报之一。",
-    "levelRationale": "这份周报在硬进展、认知深度和项目管理上均达到突出水平。硬进展实现了从离线设计到在线验收的跨越，并定位了六类工程失败模式；认知增量不仅更新了对 action-first 和 communication 角色的理解，还提炼出 CoT’s CoT，揭示了旧路径污染的隐蔽性；项目管理条线清晰、阶段明确、纠偏动作具体；元认知层面将 benchmark 可解释性推进到因果边界验证。证据质量高，引用具体的 schema、CLI、trace 和 pilot 输出；下周动作质量高，聚焦于最小可验证的 BPT 回归。综合来看，这是一份能显著推动研究向前一步、值得老师花时间细读的周报。",
-    "sameWeekPosition": "按本周提交的 40 份周报标准，这份周报在硬进展明确性、认知深度和项目管理清晰度方面表现突出，属于较值得优先阅读的一类。",
+    "overallLevel": "非常好",
+    "headline": "从 schema 定版到 runtime 验收的工程化推进",
+    "overviewSentence": "本周周报把 strict action schema 从离线定版推进到 runtime 接入，并将 communication 重构为 source-grounded content-selection intervention，明确了下周最小验收路径，工程与实验边界清晰，值得优先阅读。",
+    "shortRead": "本周核心进展是：strict non-comm action schema 已从离线设计推进到 benchmark_v4 runtime 可验收规格，明确 action_id/action_name、argument_slots、semantic_payload、apply adapter 和 diagnostic summary 必须同链路对齐；communication 侧从旧 schema id 重构为 13 个 general content-selection strategies，固定 same action 与 S_after_action 下比较不同内容机制对后续 action trajectory 的影响。项目管理给出了 BPT 1 case × repeat 1 的最小验证路径，并识别了六类旧路径残留失败模式。下周关键是先用 trace 证明旧 candidate/mask/communication 路径已退出，再决定扩展 family。",
+    "levelRationale": "这份周报达到“非常好”的等级：硬进展明确且可验收，认知增量清晰，尤其是 CoT’s CoT 指出的 runtime 因果边界验证和 communication 干预变量控制具有方法论价值；项目管理的时间、成本、依赖和纠偏动作完整；下周动作聚焦最小回归，避免了过早大规模 benchmark。尚未到“特别值得读”的主要原因是本周没有正式 benchmark 结果或可报告的实验数据，仍处于规格与验收准备阶段，但按本周标准属于较值得优先阅读的一类。",
+    "sameWeekPosition": "按本周标准，这份周报属于较值得优先阅读的一类。",
     "highlightedSignals": [
-      "将 action schema 接入细化为可验收的 runtime contract，而非仅停留在文件定版",
-      "重构 communication 为 general content-selection strategy registry，使干预变量可控、可解释",
-      "工程验收思维从“代码自报”升级为“trace 可证明”，直指旧路径残留的核心风险",
-      "明确识别了 direct-schema 接入阶段的六类失败模式，为团队避坑提供资产"
+      "strict action schema runtime 接入规格明确到代码可验收粒度，要求 family_action_schema.json 作为唯一来源",
+      "communication 从 baseline/grounding 等粗 schema id 重构为 13 个 source-grounded content-selection strategies",
+      "明确六类 direct-schema 接入失败模式与旧 candidate/mask 路径残留风险",
+      "给出下周 BPT 1 case × 13 communication strategies × rollout repeat 1 的最小验收设计",
+      "CoT’s CoT 定位到 runtime 因果边界验证与 communication 干预变量控制，并提出 trace 可证明已改的原则"
     ],
     "focusDimensions": {
       "valueJudgment": {
-        "read": "非常好",
-        "evidence": "本周明确判断，communication 仍停留在空泛 schema id 就无法支撑核心实验，从而将 communication 重构为 theory-backed content-selection strategy，并锚定在“同一 action 下不同 content 机制是否改变 trajectory”这一研究问题上。周报指出，该题目解决的是 social/business multi-agent benchmark 中 communication 变量不可控的问题，具备通用基建属性。",
-        "nextLift": "建议在下周验证后，进一步量化该基建对 benchmark 结论解释力的提升幅度，例如对比新旧 communication schema 下 action trajectory 差异的可归因程度。"
+        "read": "很好",
+        "evidence": "周报第6节单独判断题目价值，指出其解决 social/business multi-agent benchmark 中 communication 变量不可控的问题；受益方包括 agent benchmark、企业流程 agent、多智能体协作与 AI eval/safety；该结构可迁移到其他 social/business interaction benchmark；若 communication 只停留在 style 则后续实验会失真，因此值得继续做。",
+        "nextLift": "可进一步把“谁会买单”具体到可验证的 adoption 场景，例如写出哪个下游 benchmark 或企业内部流程会因该能力直接降低多少改造成本或提升多少可解释性，这会让价值判断更有说服力。"
       },
       "projectManagement": {
         "read": "非常好",
-        "evidence": "两大主线（strict action schema runtime 接入与 communication strategy 重构）均有清晰的阶段定义、时间资源规划、依赖路径和纠偏动作。特别指出下周最小验收应聚焦 BPT 1 case，避免过早扩大矩阵，体现出极佳的成本控制意识。",
-        "nextLift": "建议为两条主线设定明确的退出标准（如“trace 中无旧 schema 引用”、“13 个 strategy 的 source grounding 成功率 > 90%”），以便下周结束时能做出清晰的 go/no-go 决策。"
+        "evidence": "周报第7节给出两条主线的阶段、时间规划、资源、依赖关系、Token/成本规划和纠偏动作；下周最小验证动作为 BPT 1 case × repeat 1，并明确“先验证 runtime 链路是否干净，再决定扩展”，成本控制意识强。",
+        "nextLift": "可以把 Codex 修改的验收命令进一步固化成脚本，并设定“旧路径残留即失败”的明确 pass/fail 门槛，减少人工逐项判断；同时为 13 个 strategy 预设 source unavailable 时的 fallback 分支标准。"
       },
       "metacognition": {
         "read": "非常好",
-        "evidence": "本周明确提出“真正的比较对象应是同一 strict non-comm action 与同一 S_after_action 下，不同 source-grounded content_selection_policy 对后续 partner action trajectory 的影响”，并认识到多 agent 系统常将“写了 schema”误认为“遵守 schema”。这一理解将可解释性从表层规范推进到链路验证层面。",
-        "nextLift": "下一步可尝试将这种因果边界验证凝练为一条可自动化的规则（如“benchmark 的每个 rollout 必须包含 schema_source_trace”），使之成为项目的标准运行前提。"
+        "evidence": "周报 CoT、CoT’s CoT 与 meta-cognition 部分均体现了从“代码自报已改”到“trace 可证明已改”的元认知跃迁；并把 communication 变量重新定义为 source-grounded content-selection intervention，而非 style/utterance 生成；真正可复用的 social agent benchmark 基建是 strict action schema → direct action selection/apply → theory-backed communication strategy → branch intervention → trajectory-level diagnostics 的强约束链。",
+        "nextLift": "可以尝试把这一元认知进一步写成可复用的认知检查清单，例如每次 runtime 改动后必须验证的六个 trace 字段（action_schema_source、selected_action、apply result、communication source、summary 口径、direct_schema_mode），纳入自动化科研流程。"
       }
     },
     "growthOpportunities": [
-      "可以进一步提炼一条简明的“实验设计准则”：每次比较 communication 的影响前，必须先用 trace 自证 action 侧没有污染。这可以成为团队共享的方法资产。",
-      "下周跑完最小验收后，建议用一小段文字将本周的工程准备与项目的长期研究问题（如何种 communication 机制能系统性地改变 agent 行为）重新链接，增强周报的理论叙事。"
+      "可以把散落在周报中的失败模式和纠偏动作沉淀成一份 trace 验收 checklist，下周每跑一个 rollout 就逐项打分，而不是只看日志摘要。",
+      "在正式 benchmark 前先建立 trace 一致性基线，将旧路径残留是否为零作为唯一的 go/no-go 判据，再决定是否扩展到 RA/WBD family。",
+      "对 13 个 communication strategy 的 source unavailable 情况预设 fallback 分组标准，保持 branch 中 action/state 不变，只替换 content_selection_policy。"
     ],
     "teacherAction": {
       "readOriginal": true,
       "meetingQuestions": [
-        "你在 runtime 接入中，最难删除的旧路径是哪一类？你打算如何验证它已彻底消失？",
-        "communication strategy registry 中，哪些策略最有可能在不同 family 间泛化？哪些可能需要 family-specific 调整？",
-        "下周最小验收通过后，你计划如何逐步过渡到正式的 benchmark 实验矩阵？如何控制 token 成本？"
+        "在下周 BPT 1 case 最小验收中，你最希望先看到哪一条 trace 证据来证明旧 candidate/mask 路径已经退出？为什么是它？",
+        "13 个 communication strategy 中，如果某几个 strategy 经常 source unavailable，你会按什么标准把它们归入后续的减少策略集，而不是继续加标签？",
+        "你提到 communication 影响后续 action 的核心实验，是否已经定义了最小的可接受 effect size 或轨迹差异判据？"
       ],
       "nextWeekWatch": [
-        "BPT 1 case 的运行 trace 是否证明旧 schema/candidate/mask 未进入主链路",
-        "13 个 communication strategies 的 source grounding 失败率和 utterance guard 有效性",
-        "branch treatment 是否真的实现了 strategy 级干预，且未改动 action/state"
+        "CLI choices 是否只剩 --communication-strategy-ids，且 --communication-schema-ids 已彻底删除。",
+        "BPT pilot 的 rollout_record 与 diagnostic_summary 中是否不再出现旧 admissible_candidates、旧 schema id 与 key-value leakage。",
+        "13 个 strategy 的 source grounding 和 private-goal 过滤是否在 utterance 与 summary 中均通过。"
       ]
     },
     "studentFeedback": {
-      "summary": "这周你的工作将项目的核心方法论从纸面设计推进到可验收的工程边界，特别是 action-first runtime contract 和 communication content-selection intervention 的收紧，为后续实验奠定了坚实的基础。",
+      "summary": "你本周把 action schema 从离线定版推进到 runtime 可验收，并把 communication 重构为内容选择干预，工作重心和验收口径都很清楚；下一步可以在最小回归中把“旧路径已退出”验证成可复用的自动化证据。",
       "whatYouDidWell": [
-        "把 action schema 接入问题转化为可验证的链路要求，并系统梳理了六类失败模式，工程思维极强",
-        "重新定义了 communication 的研究变量，用 theory-backed content-selection strategy 替代模糊风格标签，使实验变量真正可控",
-        "在项目管理上表现出色，两条主线阶段清晰、纠偏到位，且严格控制了下周的验收规模"
+        "你把 strict action schema 接入的硬进展落到 action_id/action_name、semantic_payload、apply adapter 和 diagnostic summary 同一条链路，可验收性很强。",
+        "你把 communication 从 style/persona 纠正为 source-grounded content-selection strategy，并用 13 个 general mechanism 固定干预变量，实验设计更干净。",
+        "项目管理上你明确了下周 BPT 1 case × repeat 1 的最小验证路径，并控制了成本和规模，避免过早大规模跑 benchmark。"
       ],
       "nextStep": [
-        "完成 BPT 最小回归，用 trace 验证旧路径是否彻底删除，并记录验证证据",
-        "分析 13 个 communication strategies 的运行表现，关注其 source grounding 情况和跨 case 稳定性",
-        "基于最小验收结果，调整正式 benchmark 的运行配置，并设计结果分析的核心指标"
+        "建议把本周发现的六类失败模式和纠偏动作固化成一份 trace 验收 checklist，下周每跑一个 rollout 就逐项打分，而不是只看日志摘要。",
+        "在 communication strategy 验收中，可先给每个 strategy 预设 source unavailable 时的 fallback 分支写法，确保不影响 action/state 的固定条件。",
+        "下周结束后，可以尝试把“旧路径残留是否为零”作为唯一的 go/no-go 判据，再决定是否扩展到 RA/WBD family。"
       ],
-      "suggestedRewrite": "下周周报可考虑以下结构：一、本周最小验收成果（附 trace 证据截图或描述）；二、BPT runtime 与 strategy 验收中发现的关键问题及修复；三、对 communication strategy 可用性的初步评估；四、下阶段正式实验计划。这样老师能一眼看到硬结论和证据。"
+      "suggestedRewrite": "例如下周周报可这样写：‘本周完成 BPT 1 case × 13 strategies × repeat 1 的 trace 验收。通过 --help 确认仅存在 --communication-strategy-ids；在 rollout_record 中检查 13 个 strategy 的 selected_content_selection_policy 均等于 requested strategy；在 diagnostic_summary 中确认 private_partner_goal_exposed 和 utterance key-value leakage 为零。共发现 X 个旧路径残留，已通过 Y 项修改消除，最后给出 RA/WBD 的扩展条件。’"
     },
     "evidenceLinks": [
-      {
-        "label": "action schema 接入需求细化至代码可验收粒度",
-        "text": "本周新增的关键成果是把 action schema 接入要求明确到代码可验收粒度：action prompt 中的 FAMILY_ACTION_SCHEMA 必须来自 strict JSON；action_id/action_name 必须原样保留；no-mask direct schema 模式不再使用 PDDL mask 裁剪候选..."
-      },
-      {
-        "label": "communication 侧重新定准变量粒度",
-        "text": "本周最重要的硬进展是 communication schema 的粒度被重新定准：同一个 non-comm action N_t 与同一个 S_after_action 下，communication 要比较的是不同 content_selection_policy 如何影响 partner belief、resistance、commitment expectation..."
-      },
-      {
-        "label": "工程验收思维升级为 trace 可证明",
-        "text": "工程验收必须从“代码自报已改”转为“trace 可证明已改”。CLI、prompt view、rollout_record、diagnostic_summary、branch_evaluation 和 llm_io 都必须能证明旧 schema/candidate/mask 没有继续进入主链路。"
-      }
+      "周报原文（2026-05-10）",
+      "strict_noncomm_v4_full 目录下的 family_action_schema.json",
+      "Bargaining pilot 输出与 diagnostic zip",
+      "CommunicationStrategySchema registry 设计文档",
+      "下周 BPT 1 case × 13 strategies × repeat 1 运行配置"
     ]
   }
 }
