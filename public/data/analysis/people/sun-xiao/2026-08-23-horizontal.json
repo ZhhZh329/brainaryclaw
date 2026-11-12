@@ -1,87 +1,82 @@
 {
   "key": "person:sun-xiao:2026-08-23:horizontal",
-  "generatedAt": "2026-08-28T09:07:48.839Z",
+  "generatedAt": "2026-11-12T04:02:08.436Z",
   "provider": "deepseek",
   "model": "deepseek-v4-pro",
   "reasoningEffort": "high",
-  "inputHash": "5143be0482f3fbd02946db6c68aa15fcf15c9e75cac43c5085a55c0352883ac8",
-  "contentHash": "5143be0482f3fbd02946db6c68aa15fcf15c9e75cac43c5085a55c0352883ac8",
+  "inputHash": "847052d4dba55fa6096b508bc0172f3dd74949f187067e5550460c47f6d9624f",
+  "contentHash": "847052d4dba55fa6096b508bc0172f3dd74949f187067e5550460c47f6d9624f",
   "promptHash": "7ab2efc4d416dbeeb34a0e2d3cc797ac660749509537011b4ea431707a52a0ba",
   "result": {
     "overallLevel": "非常好",
-    "headline": "CommActBench 从设计稿进入可审计的 shared T+C+A shell：1,400 个 runtime-qualified 场景与只替换 LLM 的识别策略",
-    "overviewSentence": "本周的周报将 CommActBench 从设计稿推进到 1,400 个 runtime-qualified 场景与 shared T+C+A shell 的可审计实现，并明确把“只替换 LLM、固定其余不变量”作为识别策略，属于较值得优先阅读的一类。",
-    "shortRead": "主要进展包括：冻结 LLM-only shared mandatory T+C+A 评测协议，T/C/A 三个通道全部变为强制可观测；1,400 个场景完成静态 gate，动态 gate 暴露 Planning 查询、Craigslist 目标价、Mediation partner 一致性与 JSON 格式等问题；提出 communication 四层评估与 C-only checkpoint 干预，区分“说得好”与“实际起作用”；并把 TRACE 的延迟 credit 迁移为 native potential + C-only counterfactual 的备选基线。项目管理上建立 24→48→L3 freeze 门槛，禁止静默重试掩盖失败。",
-    "levelRationale": "硬进展明确：形成 1,400 条 runtime-qualified 场景、统一 action inventory 与 T/C/A 日志接口，动态 gate 已经产生真实失败证据。认知增量清晰：从上周比较对象摇摆，推进到 LLM-only shared shell 作为显式控制策略，并把最小因果单元定义为同一 checkpoint 下只替换 C 的 paired continuation。CoT’s CoT 不是简单复述，而是把 T 从可选提升为强制通道、把 LLM-only 作为 identification strategy，且说明为什么还不能进入自动化体系。Brainary 映射具体到 SharedTCAShell、VisibilityContractAudit、CBranchRunner 等模块。证据等级为 B，因 24/48 复门与 evaluator/branch 尚未完成，但已有可审计的静态与动态材料。项目管理跨越数据/shell 与 evaluator/causal credit 两条线，含阶段、关键路径、成本控制与纠偏动作。因此按本周标准，这份周报属于“非常好”，且较值得优先阅读。",
-    "sameWeekPosition": "按本周标准，这份周报属于较值得优先阅读的一类；在仅 25 份周报提交的背景下，它的证据密度与行动粒度使其更适合被老师安排进下一轮 meeting 的优先讨论。",
+    "headline": "统一 mandatory T+C+A shell 与 1,400 场景 runtime gate 的 benchmark 设计收束",
+    "overviewSentence": "本周将 CommActBench 从异构 agent 比较收束为 LLM-only shared mandatory T+C+A shell，形成 1,400 个 runtime-qualified 场景并完成静态 gate，communication credit 方法进入 branch pilot 设计。",
+    "shortRead": "本周完成评测对象的最终确认：只在完全相同的 shared T+C+A shell 下替换底层 LLM，T、C、A 均为强制标准化通道。同时形成 1,400 个 runtime-qualified 场景，覆盖六个任务子组并完成静态 gate，动态复门已暴露若干真实问题。communication evaluation 拆为四层，并设计 C-only checkpoint counterfactual。项目管理清晰，下周动作明确。",
+    "levelRationale": "这份周报提供了从设计收束到可执行 runtime 的实质性硬进展：冻结 LLM-only shared mandatory T+C+A 评测协议，形成 1,400 个 runtime-qualified 场景与 24/48 gate，并识别出三类不可接受的比较偏差。认知增量明确：从比较什么到如何比较，确立了 identification strategy。项目管理成熟，有清晰的依赖路径和成本控制。元认知上主动收束实验对象，从适配异构 agent 转向固定 shell 只换 LLM。证据等级 B，虽然没有主实验结果，但动态 gate 已产生真实错误证据，且下周动作具体可核查。因此给“非常好”。",
+    "sameWeekPosition": "按本周标准，这份周报属于较值得优先阅读的一类。",
     "highlightedSignals": [
-      "把研究问题从“不同 agent 的 native event”收束为同一 mandatory T+C+A shell 下仅替换 LLM，T 不再可选，识别边界更清楚。",
-      "形成 1,400 个 runtime-qualified 场景，覆盖六个任务子组，并完成静态 gate 与六类最小运行通路。",
-      "动态 gate 暴露 Planning 查询语法、Craigslist 目标价格、Mediation partner 一致性等问题，没有被静态 schema 审计通过误导。",
-      "提出 C-only checkpoint 干预作为最小因果单元，固定 state、T、A、partner 与 seed，只改变 C，观察 partner uptake 与后续 T/A。",
-      "区分 communication 的“说得好”与“实际起作用”：前者用硬有效性、grounding 与质量向量，后者看 partner uptake 与 outcome。",
-      "项目管理有明确的 24 定向 gate→48 全量 gate→L3 freeze 顺序，且禁止静默重试掩盖失败，成本上先支付小额 gate 成本。"
+      "冻结 mandatory T+C+A：所有被测模型必须输出 schema 一致的 T、C、A，shell、环境、prompt、partner 与执行约束固定，只替换 LLM。",
+      "明确 LLM-only 作为 identification strategy，而非弱化理论问题，credit assignment 仍是论文核心。",
+      "形成 1,400 个 runtime-qualified 场景，覆盖六个任务子组，静态 gate 完成，六类最小 EpisodeRunner 通路接通。",
+      "识别出三类不可接受的比较偏差：T 可选导致通道不对称、异构 agent shell 混淆模型与框架、COMMUNICATE 放入 task action space 导致 C/A 重复。",
+      "communication evaluation 拆为硬有效性、事实 grounding、质量向量与真实互动效果四层，不合并成不透明总分。",
+      "提出 C-only checkpoint intervention：固定 state、T、A、partner 与 seed，只替换 C，观察 partner 响应、后续 T/A 与 final outcome。",
+      "项目管理明确：24 条定向复门→48 条全量复门→L3 shell freeze→六模型主实验；未通过前不启动正式 E1。",
+      "自动化路径清晰：SharedTCAShell、ActorViewCompiler、RuntimeGateRunner、CommunicationAnnotator、CBranchRunner、NativePotentialCredit 六个可沉淀模块。"
     ],
     "focusDimensions": {
       "valueJudgment": {
-        "read": "非常好",
-        "evidence": "周报第 6 节单独判断了题目价值：真实问题是固定环境、prompt、partner 与 shell 下 communication 对 partner response、后续 T/A 与 outcome 的因果贡献；会买单的是需要诊断交互式 LLM agent 的研究与工程团队；该能力跨 task-oriented、collaborative decision 与 strategic negotiation；做成后可沉淀为 1,400 场景 benchmark、可审计 runtime/partner 协议、communication evaluator 与 checkpoint branch runner。",
-        "nextLift": "下周可以把“值得继续”进一步转化为可证伪的 go/no-go 标准：若小样本 C-only branch 不能显示稳定且方向明确的 channel-specific effect，题目主张如何调整（如缩小场景、重新定义 causal estimand 或把 communication 贡献改为可诊断性质）；并在周报中明确“当前不回答什么”，保护 main claim 边界。"
+        "read": "该项工作从局部 benchmark 构建提升为可识别 LLM 过程贡献的机制诊断工具，价值在于区分模型计划/执行能力与通过沟通改变共同任务过程的能力。",
+        "evidence": "周报明确指出最终公平比较不是让异构 agent 各自暴露不同过程，而是在同一 mandatory T+C+A shell 中只替换 LLM；并为此设计了 C-only counterfactual 与 communication 四层评估框架。",
+        "nextLift": "下一步可补充一个具体下游用户场景（如模型选择、安全审计）来说明该 benchmark 如何被消费，进一步强化可买单能力的定位。"
       },
       "projectManagement": {
-        "read": "非常好",
-        "evidence": "周报第 7 节分为两个项目：A 项目当前为 1,400 场景、mandatory T+C+A prompt、固定 partner 与静态 gate 已通过，24/48 动态复门未完成；时间上按 24→48→L3 freeze 推进，资源仅用 2 focal models、固定 partner 与高风险 subgroup；B 项目当前为方法草案，先 annotation/audit 与人工校准，再扩样；依赖关系和 cost 控制明确，禁止静默重试，失败 case 先修 source-native schema/语义，确实不可执行再预注册剔除并保留 audit reason。",
-        "nextLift": "可以把两个项目的依赖关系合并为一张周-下周-下下周 gate 日历，并给“动态 gate 未通过”设置显式时间盒；C-only branch pilot 也建议定义最小成功判据（如可重放、仅 C 变化、partner uptake 方向性差异），下周一 meeting 可据此决定是否进入六模型主实验。"
+        "read": "项目管理成熟，有明确的阶段划分、资源规划和依赖路径，且对成本与失败处理有预注册式约定，避免过早扩大实验规模。",
+        "evidence": "周报中列出下周最小可验证动作：先跑 24 条定向 gate，逐条核对终端 T/C/A、actor 可见信息、partner response 与 native action，全部通过后再做 48 条全量 gate；同时规定失败 case 优先修 source-native schema/语义，不可执行则按预注册规则剔除并保留 audit reason。",
+        "nextLift": "建议将 gate 复门通过率和修复类型写入下一周周报，形成更量化的进度指标，例如“24 条定向 gate 通过 20/24，剩余 4 条为 JSON 格式问题”。"
       },
       "metacognition": {
-        "read": "非常好",
-        "evidence": "周报第 5 节明确提出：公平性不等于允许每个 agent 使用自己的 native internal trace；若研究 LLM 的 T/C/A 贡献，必须让所有模型经过同一 mandatory T+C+A shell，并固定其他环节；同时意识到静态 schema 通过会制造 runtime 可用错觉，因此不能只依赖静态审计，必须用真实模型轨迹验证。这代表从“兼容两套主张”中主动收束，而不是继续扩展兼容性。",
-        "nextLift": "可以将这一元认知进一步固化为“不变量清单 + 变更记录”，每次修改 shell、partner、prompt 或 seed policy 时都要求说明是否破坏可归因性；并在下周周报中增加一句“本周修正了哪个先前假设、触发证据是什么、代价是什么”，便于老师追踪元认知变化。"
+        "read": "学生主动认识到公平性不等于允许每个 agent 使用自己的 native internal trace，研究对象是 LLM 的 T/C/A 贡献时，必须让所有模型经过同一 mandatory T+C+A shell，否则差异无法明确归因。",
+        "evidence": "在 meta-cognition 部分明确写道：上周强调 native event 与 adapter 不改策略，本周进一步认识到该设计更适合比较 agent framework，却不适合当前要回答的 LLM-only RQ，因此主动收束实验对象，而不是继续兼容两套主张。",
+        "nextLift": "后续可继续强化这种自我纠偏：在每周周报中记录一次已修正的假设，并说明是什么证据或推理触发了该修正。"
       }
     },
     "growthOpportunities": [
-      "把当前“基础设施 gate → evaluator/branch pilot”的过渡细化为可判定退出标准：24/48 gate 全绿、annotation 小样本双标一致、restore 后仅 C 变化且可重放，再进入六模型主实验。",
-      "新增一个“本周 decision log”，记录每次比较对象或协议变更的触发证据与拒绝方案，便于老师快速看到认知增量而不只是任务列表。",
-      "对 24 条 gate 失败样本做根因聚类：区分是 schema/语义问题、模型格式漂移还是场景本身不可执行，据此决定修 schema 还是剔除场景，避免把三类失败混在一起。",
-      "用下周小样本 communication annotation 产出至少一个可视化示例，验证四层 evaluator 是否真的能区隔“说得好”和“实际起作用”，而不是抽象地保留框架。"
+      "可将动态 gate 暴露的具体失败模式（如 Planning 查询语法、Craigslist 目标价格语义）整理成可复用的 schema 修复清单，写入 benchmark 文档。",
+      "建议在下周补充 communication annotation 和 C-only branch 的最小可运行结果，哪怕只有几个样本，也能进一步提升证据等级。",
+      "可以更明确地写出预计的 token 成本和实验预算上限，便于老师评估资源分配。"
     ],
     "teacherAction": {
       "readOriginal": true,
       "meetingQuestions": [
-        "24 条定向 gate 中，哪一类失败最可能破坏你“只替换 LLM”的识别策略？你准备如何证明修复后不是靠宽松 parser 掩盖？",
-        "C-only branch 的最小成功判据是什么？你打算用多少条 checkpoint、多少模型和多少 seed 来验证 restore 后只有 C 被改变且可重放？",
-        "如果下一周小样本 branch pilot 显示 communication-specific effect 很弱或与模型无关，你的题目主张会怎样调整？是缩小情境还是重新定义 causal estimand？",
-        "沟通 evaluator 的盲化质量向量最容易受标注者主观影响；你下周准备怎样做人工双标校准，样本量先定多少？"
+        "在 C-only branch 设计里，你打算如何严格保证 restore 后只有 C 被修改，是否有自动审计工具检测 T/A 或 state 泄漏？",
+        "如果要固定 communication 之外的 T、A、partner 和 seed，那么不同 LLM 生成 T 和 A 的分布可能不同，这会不会影响 C counterfactual 的 baseline 可比性？",
+        "接下来两周，你是否能把 24 条定向 gate 通过率和主要失败类型量化汇报？如果出现无法过门的 case，你的预注册剔除规则具体是什么？"
       ],
       "nextWeekWatch": [
-        "24→48 gate 是否完成且 L3 shell 冻结；失败样本是否按预注册规则处理并保留 audit reason。",
-        "是否产出第一批 communication annotation/audit 日志，并给出 C-only branch 的最小可重放示例。",
-        "是否出现“用不透明总分/删除日志掩盖失败”的倾向；是否能按 runtime-invalid 根因聚类做修复。",
-        "是否能给出一个可讨论的 go/no-go 判据，决定是否进入六模型主实验。"
+        "24 条定向 gate 的通过情况与修复日志",
+        "communication annotation / source grounding 在小样本日志上的首次运行",
+        "C-only branch 最小实现：restore 后的续跑是否只改变 C 且后续响应稳定",
+        "六模型共同使用的 L3 shell 配置是否冻结"
       ]
     },
     "studentFeedback": {
-      "summary": "本周你把 CommActBench 从设计稿推进到可审计的 1,400 场景与 shared T+C+A shell，并把比较逻辑收束为“只替换 LLM”，这一步非常清楚；下周关键是让 C-only branch 在小样本上跑出可判定的第一组证据。",
+      "summary": "本周你把 benchmark 从‘可以比较什么’推进到‘在什么不变量下比较’，这个收束非常关键，尤其是强制 T+C+A 和只换 LLM 的决策让你后续的归因路径清晰很多。",
       "whatYouDidWell": [
-        "完成从“比较什么”到“在什么不变量下比较”的关键收束：固定 shell、环境、prompt、partner、接口与执行约束，只替换 LLM，并把 T 从可选提升为强制通道。",
-        "形成 1,400 个 runtime-qualified 场景，并通过动态 gate 暴露 Planning、Craigslist 目标价和 Mediation partner 一致性问题，说明你没有被静态 schema 通过误导。",
-        "在项目管理上明确“24 定向 gate→48 全量 gate→L3 freeze”以及“先小额 gate 成本、禁止静默重试”，让实验推进有可验证的门槛。"
+        "冻结 shared mandatory T+C+A 协议，并明确 LLM-only 是控制策略而非弱化理论问题，避免了模型与框架混淆。",
+        "把 1,400 个场景推进到 runtime-qualified 状态，并主动暴露动态 gate 中的真实错误，而不是掩盖问题。",
+        "communication evaluation 的四层拆分和 C-only counterfactual 设计，让‘说得好’与‘实际起作用’分开，方法论上很扎实。"
       ],
       "nextStep": [
-        "下周先把 24 条定向 gate 逐条对照终端 T/C/A、actor 可见信息、partner response 与 native action 修完，给失败 case 保留审计原因，再进入 48 条全量 gate。",
-        "在通过 gate 的少量完整日志上做 communication annotation/audit，并生成少数 C_NULL/内容保留分支，确认 restore 后只有 C 被修改且可重放。",
-        "为 C-only branch pilot 设置一个最小成功判据（如 C 变化导致 partner uptake 或后续 T/A 改变超过某个方向性差异），以便下周 meeting 能明确下一步是否进入六模型主实验。"
+        "优先完成 24 条定向 gate 的全部通过，并把每个失败 case 的根因记录清楚；不要急于扩展全量 gate。",
+        "在少量完整日志上跑通 communication annotation 和 C-only branch，验证 restore 后只有 C 被修改，这会是下一周最有说服力的证据。",
+        "可预先给出一个预算上限和失败处理规则，让项目管理在成本维度上也具备可审计性。"
       ],
-      "suggestedRewrite": "建议下周周报开头改写为：“本周目标不是扩大场景数，而是让‘只替换 LLM’的可识别性被 gate 验证：24 条高风险 gate 已修完 X/Y，48 条全量 gate 预计在周几完成；若 C-only branch 在 N 条 checkpoint 上显示可重放且仅修改 C，则下周启动六模型主实验。当前主要失败根因是 A、B、C 三类，对应修 schema、重写 runner 和调整场景准入。”这样老师能一眼看到 gate 状态、失败根因与 go/no-go 判据。"
+      "suggestedRewrite": "下周周报可以这样写得更清楚：在‘本周核心任务’下先列出一个表格，包含‘任务项｜本周完成状态｜剩余 gate｜修复类型｜是否影响主实验启动’，然后用一段话总结你最想验证的关键假设是否被支持。这样老师能更快判断你的基础设施是否已经足够支撑正式实验。"
     },
     "evidenceLinks": [
-      "周报执行摘要第2条：明确 LLM-only 是识别策略而非弱化理论问题；shell、environment、prompt、partner、接口与执行约束固定。",
-      "周报 1.1 本周新增硬进展：冻结 mandatory T+C+A；建立 24 条 infrastructure gate；统一 action inventory，COMMUNICATE 不再作为 task action。",
-      "周报 1.2 新实验：动态模型 gate 已实际运行并暴露 Planning 查询、Craigslist 目标价、Mediation partner 状态与 JSON 格式问题。",
-      "周报 2. CoT 增量第三条：自然 trajectory 上某句 C 与成功共现，不能说明 C 产生贡献；最小因果单元应是同一 checkpoint 下固定当前 T/A 与环境条件、只替换 utterance 的 paired continuation。",
-      "周报 3. CoT’s CoT：统一对象收束为 mandatory T+C+A shell；LLM-only 固定为 identification strategy；证据等级为 B。",
-      "周报 5. 对 meta-cognition 的新理解：公平性不等于允许每个 agent 使用自己的 native internal trace；静态 schema 通过会制造 runtime 已可靠的错觉。",
-      "周报 7. 项目管理 A/B：24 定向 gate→48 全量 gate→L3 freeze；禁止静默重试掩盖失败；communication evaluator 先 annotation/audit 再扩样。"
+      "周报原文 1.1 节：冻结 LLM-only shared mandatory T+C+A 评测协议",
+      "周报原文 1.2 节：1,400 场景 runtime 收束与 communication credit 预设计"
     ]
   }
 }
