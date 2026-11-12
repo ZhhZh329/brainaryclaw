@@ -1,16 +1,15 @@
 {
   "key": "week:2026-04-19:horizontal",
-  "generatedAt": "2026-08-06T05:02:13.961Z",
+  "generatedAt": "2026-11-12T23:01:56.119Z",
   "provider": "deepseek",
   "model": "deepseek-v4-pro",
   "reasoningEffort": "high",
-  "inputHash": "1ce17d3361067bb699878b0bea119c31aea24f4959178fc6305a253693a5d693",
-  "contentHash": "1ce17d3361067bb699878b0bea119c31aea24f4959178fc6305a253693a5d693",
+  "inputHash": "2ca3026ca9cc5657f38681b2f7ab538e408d7c1adba4b7f52022d99d6ad214a8",
+  "contentHash": "2ca3026ca9cc5657f38681b2f7ab538e408d7c1adba4b7f52022d99d6ad214a8",
   "promptHash": "d5dbdfc5549acc1104e527368173d8297b203b85695a994e292ae089aedc6b71",
   "result": {
     "submissionStatus": {
-      "total": 59,
-      "submitted": 49,
+      "submitted": 38,
       "missing": 10,
       "missingNames": [
         "Cao Zong",
@@ -24,156 +23,134 @@
         "Zhang Jingyao",
         "Zhao Xuanyue"
       ],
-      "summary": "本周 49 人提交，10 人未提交，提交率 83%。未提交者需关注原因。"
+      "note": "已提交周报整体质量分化明显，约三分之一包含硬实验数据和A级证据，其余多为概念性推进或流水账。"
     },
-    "overallRead": "本周提交的周报整体质量较高，多条主线的硬进展和认知增量显著。医学影像 KG 与 VQA、量化交易 Agent 系统硬化、软件安全漏洞检测、multi-agent 安全、自动化科研 workflow 等方向均有实质性突破。多份周报开始沉淀可复用的方法论资产（如 dual-system evaluation protocol、bug-type reasoning、condition‑aware知识选择），并明确提出了对 Brainary 能力模块的映射与反馈。共性问题包括：实验闭环不足、资源（API/算力）瓶颈、多项目并行导致主线收敛慢。老师本周最值得关注的信号是：多个方向独立收敛到“用结构化中间表示控制复杂推理”这一共性模式。",
+    "overallRead": "本周高信号集中在少数几个有实验数据支撑的项目上：kernel fault localization的bug-type reasoning将Top-10从3.7%提升到59.3%，肝胆KG关系定型与VQA分布对比揭示临床需求被低估，双系统安全System1分层评价有A级证据，benchmark因子分解与source-alignment审计对Brainary评测基础设施关键。认知增量普遍上升到方法论层，但资源限制（API token、算力、CC账号）和多项目并行导致部分进度延迟，且多个CoT's CoT证据等级仍为B或C，需要进一步最小闭环验证。",
     "ranking": [
       {
-        "name": "Feng Yebo",
-        "userId": "581354334",
-        "brief": "trading survey 收尾 + quant agent 生产硬化 + KDD rebuttal + skills‑security 初稿",
-        "reason": "多项目硬进展密集，工程负债清理带来的稳定性提升具有长期价值。CoT’s CoT 提出了 CoT decay、工程负债信息密度高于功能周、rebuttal 需评估评审质量、真实数据切换必须配套一致性扫描等四条高价值认知，证据等级高（A/B），且全部可映射为 Brainary 的 reflection / calibration / trust modeling 模块。项目管理透明度高，下一步闭环动作明确。金额估值合理且更新及时。"
-      },
-      {
-        "name": "Xie Maoyi",
+        "rank": 1,
+        "name": "谢茂毅",
         "userId": "6269517202",
-        "brief": "kernel fault localization：从 calltree 被动提供信息到 bug‑type aware reasoning",
-        "reason": "实验证据扎实，在 27 个 hard cases 上将 Top‑10 准确率从 3.7% 提升至 59.3%，且明确拆分了信息覆盖与推理两个正交问题。CoT’s CoT 提出了 LLM 在 kernel FL 中的瓶颈是 search space selection 而非 code understanding，并给出决策规则（何时使用 calltree），证据等级 A。直接对应 Brainary 的 reasoning + cognitive control 模块。"
+        "reason": "kernel fault localization通过引入bug-type specific reasoning，将RC-in-calltree子集的Top-10从3.7%提升到59.3%，Top-5从0提升到40.7%，A级证据。认知更新明确：LLM瓶颈是信息可见性和结构化推理，而非模型能力。可直接转化为论文，项目管理清晰，下周最小动作聚焦失败case分析。"
       },
       {
-        "name": "Hu Lianyu",
-        "userId": "8558791940",
-        "brief": "长时记忆多形式知识表达动态选择，视觉任务精度提升 7‑8%",
-        "reason": "完整对比实验验证了知识图谱在长时记忆视觉理解中的核心地位，以及动态选择机制的必要性。CoT’s CoT 明确了两条 A 级证据的认知：知识图谱贡献最大提升，强制单一形式会严重损害性能。对 Brainary 的 memory 和 cognitive control 模块提供了关键实证，并且直接支持老师的“根据 task 和输入动态选择”思路。下一步最小动作是优化边缘场景误判，具有清晰的工程化路径。"
+        "rank": 2,
+        "name": "冯业博",
+        "userId": "581354334",
+        "reason": "多项目并行但每个都有硬进展：Quant-Agent完成生产化硬化（cash-only、sub-penny拒单修复），Survey推进到85-90%，Skills-security切换到真实数据并发现数字一致性债务，KDD rebuttal首次对reviewer质量反向质疑。CoT's CoT有A级证据（数字一致性扫描）和B级，价值估算详细（合计1100万），项目管理成熟。"
       },
       {
-        "name": "Chen Huabao",
+        "rank": 3,
+        "name": "陈华宝",
         "userId": "8021306120",
-        "brief": "时序建模方案对比 + 临床报告 VQA 分布验证",
-        "reason": "在 KG 关系建模上做出了基于下游任务指标（路径长度）的工程决策，形成方法学沉淀（设计方案对比必须先定义下游 metric）。临床报告分析发现公开 VQA 数据集系统性低估关系推理需求，这一信息差对医学 KG 的投资重点有直接指导价值。CoT’s CoT 提出反向驱动模式必须附带代表性校验步骤，可沉淀为 workflow checklist。与李乾坤的合作已明确，项目管理清晰。"
+        "reason": "肝胆KG时序建模对比实验（方案B路径长度2.6 vs 方案A 3.8），临床问句分布对比揭示VQA数据集低估关系推理需求。CoT's CoT有A级（评价指标应锚定下游可操作性）和B级（下游任务代表性校验），价值估算50-100万，下一步全量实例化具体。"
       },
       {
-        "name": "Qian Jiayu",
-        "userId": "6003621600",
-        "brief": "MedVIGOR 写作收敛 + DeepTumorVQA 分阶段训练分析",
-        "reason": "实验已闭环（Stage1a 正向增益、Stage2 softslots 分析），CoT’s CoT 明确指出当前核心变量是“知识是否被用于最难子类”而非“知识是否注入”，并建议题目收敛于高可信知识注入 + benchmark‑aware adaptation。该判断直接影响后续资源投放，且已有 A 级证据支持。提出的 per‑epoch family summary 分析接口本身就是可复用的 eval protocol。"
-      },
-      {
-        "name": "Qiao Wei",
-        "userId": "6937514610",
-        "brief": "MAC‑APT 双系统方案收敛，System 1 实验验证",
-        "reason": "将模糊的模块堆叠收敛为“快系统触发 + 慢系统多角度论证 + 经验回写”的认知闭环，并通过 System 1 实验证明 4/4 攻击场景命中、节点级 precision 0.93。CoT’s CoT 提出分层系统必须分层定义成功标准，不能沿用单 detector 指标，证据等级 A。对 Brainary 的 risk modeling、reasoning、long‑term memory 映射具体，为下一步 System 2 最小闭环提供了明确实验协议。"
-      },
-      {
-        "name": "Sun Xiao",
+        "rank": 4,
+        "name": "孙晓",
         "userId": "8606017399",
-        "brief": "交互式 agent benchmark 方法学收敛与 substrate 编译",
-        "reason": "虽然实验数据尚少，但完成了方法论层面的重大收敛：定义了 factorized non‑comm/comm 框架、7 指标协议、case‑specific executable substrate 以及 source‑alignment 审计口径。CoT’s CoT 揭示了 benchmark 自身对策略输入的截断会系统性扭曲结论，这一认知对自动化科研评测体系的设计有深远影响。建议的 benchmark harness + substrate compiler 可成为 Brainary 的基础设施。目前处于 prototype 向 implementation 过渡的关键期。"
+        "reason": "交互式agent benchmark方法学收敛：non-comm三分式、7指标体系、case-specific substrate重建、source-alignment审计。CoT's CoT A-级，指出benchmark侧action-space预处理会扭曲结论。对Brainary评测基础设施是直接贡献，项目管理详细，下一步最小闭环清晰。"
       },
       {
-        "name": "Li Kaixuan",
-        "userId": "5422578057",
-        "brief": "Fuzz Driver & PoC Migration 方法定型 + TOSEM 录用",
-        "reason": "三条线均进入写作/实验完成阶段，TOSEM 录用为根因分析方向提供了顶刊背书。本周最重要的贡献是方法论层面的元认知提升：“弱化对大模型依赖，强调结构化约束”，并给出两个 A 级证据的实例。这一转向对 Brainary 的 meta‑reasoning 和 system design 有根本性影响，但还需要更多跨项目验证。金额估值合理，项目管理成熟。"
+        "rank": 5,
+        "name": "乔伟",
+        "userId": "6937514610",
+        "reason": "双系统安全方案收敛，System1第一轮行为评估：场景级F1=1.0，节点级precision=0.9286/recall=0.5132。CoT's CoT A级：分层系统必须分层定义成功标准。价值估算合理，下一步误差分析具体。"
       },
       {
-        "name": "Li Qiankun",
-        "userId": "8597930492",
-        "brief": "口腔 npj 论文返修完 + 临床队列闭环 + 跨团队 KG 数据流水线",
-        "reason": "在医学顶刊、临床验证、学生指导、数据流转四个层面都给出了硬闭环。CoT’s CoT “小步快跑、灰度测试”是科研管理的直接方法论沉淀，且正在用 CT‑KG V1 的节奏控制实践。对 Brainary 关联在于真实数据驱动的自动化科研流水线验证（从 agent 抓取到 taxonomy 分类）。因项目偏执行，认知增量深度略低于前几位，但决策有用性强。"
-      },
-      {
-        "name": "Sun Manqi",
+        "rank": 6,
+        "name": "孙蔓淇",
         "userId": "8738385360",
-        "brief": "鸿蒙应用意图‑行为对齐实验，恶意样本 100% 检出",
-        "reason": "虽然周报简洁，但硬进展突出：62 个样本端到端对齐，100% 恶意召回，并据此产出 V2 框架。CoT’s CoT 指出面对复杂文档逻辑，代码层预处理 + 系统指令注入优于纯 prompt，这一神经符号协同设计可直接转化为 Brainary 的 evaluation / reasoning 模块。下一步鸿蒙 API 映射与样本生成计划清晰，具有产品化潜力。"
+        "reason": "鸿蒙意图行为对齐62个配对样本测试，恶意样本100%检出，基于29个FP样本重构Taxonomy V2.0。证据A级，CoT明确（权限安全需API上下文强关联）。但价值估算仅1500元，严重低估，需老师校准。"
+      },
+      {
+        "rank": 7,
+        "name": "王苏元",
+        "userId": "7752141282",
+        "reason": "USENIX rebuttal补充实验：静态分析与LLM推理开销拆解、大模型对比实验，证明大参数LLM边际收益递减。CoT's CoT A级：静态分析应做90%确定性剪枝，LLM只做10%语义判断。价值估算100万，对过程间漏洞检测方向有直接贡献。"
+      },
+      {
+        "rank": 8,
+        "name": "钱加宇",
+        "userId": "6003621600",
+        "reason": "Stage1a高可信知识注入完成并验证：接入VQA后MCQ从0.6318提升到0.6491，但LongTail和Medical Reasoning未同步提升。CoT's CoT A级：知识注入价值需用hardest tasks验证。项目管理清晰，下一步定义Stage1b supervision schema。"
+      },
+      {
+        "rank": 9,
+        "name": "许一佳",
+        "userId": "8795571928",
+        "reason": "从ARIS案例沉淀四维evaluator（Task completion/Execution fidelity/Repair ability/Human intervention ratio），CoT's CoT A级：evaluator是skills库之前的基础设施。硬进展为抽象层，但方向正确，下一步写模板并填充案例。"
+      },
+      {
+        "rank": 10,
+        "name": "张嘉懿",
+        "userId": "8754140321",
+        "reason": "ICSE参会观察识别SE社区agentic narrative cascade与Pradel每任务专用agent路线的对立，CoT²含A级和B级，对Brainary通用vs专用架构决策有直接启示。虽无实验，但为领域信号捕捉提供独特价值。"
+      },
+      {
+        "rank": 11,
+        "name": "李坤乾",
+        "userId": "8597930492",
+        "reason": "管理多项目，npj论文技术审查扫清，Agent数据流水线运行，CT KG V1策略克制。CoT's CoT有“小步快跑、灰度测试”，但自身硬实验少，主要是协调和推进。"
+      },
+      {
+        "rank": 12,
+        "name": "吴章发",
+        "userId": "8651659122",
+        "reason": "方法路线收敛，将review冲突分解为工程审计与论文审计两个位面，辨识出统一控制变量(π_low,π_med,π_high,Δπ)。CoT's CoT有新认知，但尚未完成最小实验验证，证据B。"
+      },
+      {
+        "rank": 13,
+        "name": "吕梦瑶",
+        "userId": "8378078830",
+        "reason": "Taxonomy方向推进association construction和跨场景应用，Communication有少量显著结果但模型能力限制结论。CoT's CoT B级，价值估算高（1000万、800万），但资源瓶颈明显。"
+      },
+      {
+        "rank": 14,
+        "name": "李凯旋",
+        "userId": "5422578057",
+        "reason": "Fuzz Driver和PoC Migration均完成实验，形成“弱化大模型依赖，强调结构化约束”的方法论转向。CoT's CoT A级（实验支撑），价值估算300万+100万，项目进度符合预期。"
+      },
+      {
+        "rank": 15,
+        "name": "廖杰",
+        "userId": "5031262649",
+        "reason": "法律行为数据集生成agent架构从prompt直出重构为semantic memory + working memory + operator驱动。CoT's CoT B级，样本最小单元设计有新意，下一步小规模对比。"
       }
     ],
     "topSignals": [
-      {
-        "signal": "CoT 在真实运行环境中会随时间衰减，需要建立 CoT version history 与 decay evaluator，否则 agent 判断会漂移。",
-        "source": "Feng Yebo (Quant‑Agent 技术分析 agent 在 VIX 抬升后判断明显保守)",
-        "implication": "Brainary 的 reflection 层应增加 per‑CoT‑version 体检与重写机制。"
-      },
-      {
-        "signal": "GEO 绕不过 SEO —— AI 搜索引擎的检索层仍是传统搜索引擎，GEO 新增的只是摘要与引用整合；因此 GEO 研究必须是两阶段串联（先进候选池，后被引用），情报池探测是必要前置。",
-        "source": "Li Wenke (GE 引擎机制逆向 + GEO 论文梳理)",
-        "implication": "可以将情报池探测标准化为 benchmark/workflow，并作为 Brainary 网络信息源可信度评估的基础。"
-      },
-      {
-        "signal": "在 fault localization 中，LLM 的真正瓶颈不是代码理解，而是在大候选空间中的选择问题；通过 bug‑type aware reasoning 引导 LLM 关注符合语义的函数，可使 Top‑10 准确率从 3.7% 跃升至 59.3%。",
-        "source": "Xie Maoyi (kernel crash bugs 实验)",
-        "implication": "Brainary 在复杂推理任务中应增加 candidate pruning 和 bug‑type specific 推理策略模块。"
-      },
-      {
-        "signal": "知识蒸馏到 agent 数据集的正确输出不是最终答案，而是可执行的 working memory schema + operator policy；否则生成的数据只是文本扩写，无法评估 agent 的行为过程。",
-        "source": "Liao Jie (法律 agent 行为数据集生成设计)",
-        "implication": "未来所有面向 agent 的 benchmark 都应包含 working memory snapshot 和 expected tool chain，而不仅仅是 final answer。"
-      },
-      {
-        "signal": "当 review 意见矛盾时，需要先做“审查位面分离”——区分工程闭环、模型假设、理论桥接等不同评价层级，否则会把可跑的分支误判成值得继续押的论文主线。",
-        "source": "Wu Zhangfa (noisy‑PU 训练 review 冲突处理)",
-        "implication": "可沉淀为自动化的 review‑plane disentangler 模块，辅助科研决策。"
-      },
-      {
-        "signal": "科研自动化最先应沉淀的不是 skills 库，而是 evaluator；因为只有 evaluator 先成立，skills 才不会变成主观的经验命名。",
-        "source": "Xu Yijia (ARIS 测试沉淀 evaluator 雏形)",
-        "implication": "Brainary 的 benchmark/evaluation 模块应该优先于其他 cognitive 模块建设。"
-      }
+      "kernel fault localization：bug-type reasoning可将Top-10从3.7%提升到59.3%，证明结构化推理比单纯增加信息量更有效（谢茂毅）。",
+      "肝胆KG：采用temporal_progression关系方案B路径更简洁，临床报告显示关系型问题占比显著高于VQA数据集，公开数据集低估了关系推理临床需求（陈华宝）。",
+      "双系统安全：System1作为触发层应评价召回与误报，而非完整攻击链恢复；场景级F1=1.0但节点级recall=0.5132，需分层定义成功标准（乔伟）。",
+      "交互式agent benchmark：factorized方法学（non-comm三分式+7指标）、case-specific substrate、source-alignment审计能区分talk/action/substrate的贡献，避免benchmark侧改写action space扭曲结论（孙晓）。",
+      "过程间漏洞检测：静态分析应做90%确定性剪枝，LLM只做最后10%语义判断，大参数模型在缺乏精准上下文时存在明显收益天花板（王苏元）。",
+      "医学知识注入：Stage1a注入后VQA Clean有提升，但LongTail和Medical Reasoning未同步，知识注入的价值必须用hardest subtypes验证（钱加宇）。",
+      "自动化科研：evaluator应优先于skills库沉淀，最小评估单位是workflow执行而非文本生成，控制层第一版应做判断权分配结构（许一佳）。",
+      "SE社区出现agentic narrative cascade，但Pradel组等以每任务专用agent路线对冲通用框架；Brainary需讨论通用vs专用架构边界（张嘉懿）。"
     ],
     "commonRisks": [
-      "多个项目仍处于 early prototype 阶段，缺乏大规模实验验证（如 ConformAgent、GEO poisoning、MAS attack 黑盒迁移）。",
-      "API/算力资源成为多线并行的瓶颈，部分学生（如吕梦瑶、周振宏）需要自费或等待配额，影响实验进度。",
-      "协作接口不清晰：跨团队任务（如 taxonomy 与 VLA/skills 对接、真/善元认知监控分工）尚未形成统一 schema，存在重复建设和认知对齐风险。",
-      "部分学生周报停留在概念抽象或调研，缺乏可检验的最小闭环动作，可能导致方向长期悬置。",
-      "周报中‘老师原本不知道’的判断频繁出现，但很多并未被系统性沉淀为 Brainary 的自动化规则或模块，存在知识流失风险。"
+      "资源限制普遍：API token不足（廖杰、吕梦瑶、周振宏）、算力卡点（胡志超、孙凯然）、CC账号缺失（孙凯然）直接影响实验推进。",
+      "证据等级不足：多个CoT's CoT为B或C级，尚未完成最小可验证闭环，概念性推理多于实证。",
+      "多项目并行导致执行分散：冯业博精力被Skills-security吸走导致USENIX rebuttal延迟；吕梦瑶多线推进但资源不足。",
+      "价值估算偏差：孙蔓淇仅估1500元而实际贡献远超；冯业博合计1110万可能高估；需老师校准统一标准。",
+      "方法论沉淀单一项目：陈华宝、谢茂毅等的方法论资产均在单个项目上验证，泛化需跨项目案例。",
+      "系统整合缺失：各student的memory、evaluator、workflow设计孤立，缺少统一schema和接口（孙凯然、许一佳、吕梦瑶均有此反映）。"
     ],
     "collaborationCandidates": [
-      {
-        "pair": [
-          "Chen Huabao",
-          "Li Qiankun"
-        ],
-        "reason": "CT‑KG V1 效果优化与 V2 升级需要双方紧密配合，且李乾坤已验证的病理 LTM V2 架构可为陈华宝提供方法论参考。"
-      },
-      {
-        "pair": [
-          "Sun Xiao",
-          "Liao Zeqin"
-        ],
-        "reason": "孙晓在 factorized benchmark 上的方法论收敛可为廖泽钦的 multi‑agent communication/distribution 场景提供评测框架，而廖泽钦的具身/skill 实际案例可为 benchmark 提供应用验证。"
-      },
-      {
-        "pair": [
-          "Feng Yebo",
-          "Zhang Xiaoyu"
-        ],
-        "reason": "冯业博的 quant‑agent 生产化硬化经验（CoT decay、失败模式字典）可直接帮助张晓宇的 AI testing agent 设计更稳健的 workflow，而张晓宇的资源申请经验可为冯业博的自动化科研 pipeline 提供落地支撑。"
-      },
-      {
-        "pair": [
-          "Hu Lianyu",
-          "Kong Ziqiao"
-        ],
-        "reason": "胡连雨已验证的动态知识表达选择机制与孔梓桥正建模的 working memory KG 结构高度互补，二者可以联合设计一个既有多形式知识存储又有动态选择与遗忘机制的记忆系统。"
-      },
-      {
-        "pair": [
-          "Huang Yitan",
-          "Sun Manqi"
-        ],
-        "reason": "黄奕潭的跨层语义不一致诊断与孙蔓淇的意图‑行为对齐都涉及多层安全策略的联合建模，可以共享 multi‑agent 架构和语义解析模块。"
-      }
+      "陈华宝 + 李坤乾：确认progresses_to与temporal_progression关系分工定义，并共享VQA分布分析结果。",
+      "吴俊豪 + 陈华宝/李坤乾：将整体医学和world model视角引入肝胆KG，探索状态演化图表示。",
+      "孙晓 + 冯业博/许一佳：将factorized benchmark与evaluator设计整合，构建Brainary统一评测基础设施。",
+      "廖杰 + 眭浩：法律行为数据集与文化监控KG结合，形成高风险agent行为benchmark与alignment测试。",
+      "张嘉懿 + 冯业博：讨论ICSE观察的通用vs专用agent路线，影响Brainary架构定位和Quant-Agent设计。",
+      "孙蔓淇 + 安全组：将鸿蒙API映射和恶意样本生成与MAS attack黑盒迁移结合，形成跨平台安全测试。"
     ],
     "teacherChecklist": [
-      "确认 CT‑KG V1 baseline 是否已足够牢固，同意 Chen Huabao 升级到 V2 的时机。",
-      "为 Qian Jiayu 的 NeurIPS 写作提供 contribution boundary 和图示拍板，避免实验收敛但叙事发散。",
-      "对 Feng Yebo 的 CoT decay 观察给予指导，是否需要在 Brainary 中正式立项‘CoT 时效性’子模块。",
-      "协调 API 配额（GPT‑4、Gemini 等）给吕梦瑶、周振宏等资源受限但方向关键的学生，确保实验结论可信。",
-      "审视多份周报中反复出现的‘结构化中间表示’共性（胡连雨、谢茂毅、Liao Jie、孙晓等），决定是否将‘structured intermediate representation’提升为 Brainary 的 formal abstraction。",
-      "就 Xiao Yu 提出的 GEO poisoning 和 game testing 方向给出阶段优先级判断，避免方向过多分散执行带宽。",
-      "推动‘审查位面分离’（review‑plane disentangler）和‘evaluator 先于 skills’等方法论共识在组内落地为 workflow/checklist。",
-      "关注未提交学生（尤其是一直未交的老大难）是否存在方向迷失或动力问题，安排一对一沟通。"
+      "资源分配决策：优先保障A级证据且接近产出的项目（kernel FL、肝胆KG、双系统、benchmark），为吕梦瑶、周振宏等补足API预算。",
+      "关键技术决策：对陈华宝是否扩展第10种关系类型、孙晓的benchmark成功标准、冯业博的投稿定位（CCS vs USENIX）给出明确意见。",
+      "证据校准：要求吴章发、吕梦瑶、许一佳等B级证据项目在下周交付最小可验证动作，避免停留在概念。",
+      "价值估算统一：召集相关学生对齐价值估算方法，避免孙蔓淇式低估和冯业博式高估。",
+      "跨项目基础设施：推动working memory schema、evaluator、failure log等共享模块的标准化，协调孙凯然等人设计。",
+      "架构路线讨论：基于张嘉懿的ICSE观察，组织一次通用vs专用agent架构的内部讨论，明确Brainary边界。"
     ]
   }
 }

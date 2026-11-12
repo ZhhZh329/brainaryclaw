@@ -1,183 +1,378 @@
 {
   "key": "week:2026-06-07:horizontal",
-  "generatedAt": "2026-09-02T14:02:37.183Z",
+  "generatedAt": "2026-11-12T23:04:03.822Z",
   "provider": "deepseek",
   "model": "deepseek-v4-pro",
   "reasoningEffort": "high",
-  "inputHash": "fe53b03b3b6321616cfab5f45a414b7e928093a4acfc005d912a5d74517b1f1a",
-  "contentHash": "fe53b03b3b6321616cfab5f45a414b7e928093a4acfc005d912a5d74517b1f1a",
+  "inputHash": "40caad8ec9d78076c457564ee17a57e545f9f1815356c9dc6402ae1c06ce55ae",
+  "contentHash": "40caad8ec9d78076c457564ee17a57e545f9f1815356c9dc6402ae1c06ce55ae",
   "promptHash": "d5dbdfc5549acc1104e527368173d8297b203b85695a994e292ae089aedc6b71",
   "result": {
-    "submissionStatus": "应提交64人，实际提交41人，缺失23人。缺失名单：曹宗、陈华宝、党文静、黄一帆、李凯旋、李乾坤、李文可、李衍洲、刘丞岳、张绿野、马思远、马晓宇、马晓越、石俊杰、宋苏文、孙宇强、王冲、王苏源、吴志珍、杨博、张静瑶、赵宣越、周子扬。",
-    "overallRead": "本周多条研究线出现实质性突破：量化交易 agent 完成软决策层优化并准备实盘；BRT 主实验对标 SOTA 取得显著提升；经济学元认知在 GAIA 上验证有效；安全评测暴露统一护栏的灾难性失效；LMEE 感知线定位 grounding 瓶颈；内部注意力机制原型跑通。但大量项目仍停留在设计或小规模验证阶段，证据等级以 B 为主，部分价值金额估算口径混乱。整体研究信号集中在上半部：少数项目有硬数据和因果归因，多数仍在探索。",
+    "submissionStatus": {
+      "submitted": 39,
+      "missing": 24,
+      "late": [
+        "Zhou Zhenhong 提交于 2026-06-12，晚于截止 2026-06-08"
+      ],
+      "summary": "39/63 已提交，24 人缺失；1 人迟交。整体提交完成率约 62%，仍有大量未提交需跟进。"
+    },
+    "overallRead": "本周硬进展集中在主实验结果、量化决策修复、经济学元认知验证与安全路由失效发现。郭曜齐 BRT 主实验对标 SOTA 正向显著；冯业博 quant 软决策优化+回放 harness；梁瑞超边际原理 A/B 与 SPIN 形式化验证；黄汛发现 Universal 安全护栏路由率暴跌至 12%。但多数报告仍处于设计/接口阶段，缺乏量化验证；token 成本被系统性低估（郭曜齐 1500 SGD vs 预估 600-800，乔伟 50M tokens）。需老师介入的决策点高度集中在实盘/投稿/API/架构确认。",
     "ranking": [
       {
         "rank": 1,
-        "name": "郭耀骐",
-        "project": "BRT 主实验与 ICSE 投稿冲刺",
-        "reason": "端到端 pipeline 在 SWE-bench Pro 上对标 SOTA 提升 10%，Verified 提升 1-2%，主结果硬数据兑现上周边际预测。提出 headroom 归一化评估原则，动机-兑现自检链路，并诚实暴露 token 成本乘性超支。证据等级 L2，项目管理清晰，下周 ablation 计划具体。",
-        "evidenceLevel": "L2（主实验实证 + 概念论证）",
-        "topAction": "下周过主结果强度是否够 ICSE，确认 headroom 叙事与 ablation 范围。"
+        "name": "Guo Yaoqi",
+        "hardProgress": "BRT 端到端 pipeline 主实验跑通：SWE-bench Pro +10%、Verified +1-2%（对标 SOTA agent）；working memory schema 经大规模验证。",
+        "keySignal": "提出 benchmark 增益必须 headroom 归一化：天花板数据集小增益含金量可能高于大增益；motivation 应写成可证伪预测，主实验为后验验证；成本是乘性而非加性。",
+        "evidenceLevel": "L2（有主实验数据，缺多数据集复用和 ablation）",
+        "teacherDecision": "MEET：确认 Pro +10% 是否够投 ICSE，批准 headroom 叙事与 ablation 范围，重估下周预算。"
       },
       {
         "rank": 2,
-        "name": "冯业博",
-        "project": "Quant 双线软决策优化与实盘准备",
-        "reason": "独立仓库软决策 P1-P5 与 PM CoT 升级，Brainary 版同步并集成 LLM audit ledger，两套 decision-replay harness 建立；MIR 定稿提交。CoT's CoT 指出反思应定位到 CoT 步骤级归因，证据 B。项目管理量化，下一步实盘与 parity 机制化需要老师拍板。",
-        "evidenceLevel": "B（软决策有实现，效果待 replay 验证）",
-        "topAction": "确认上实盘 key，选定 parity 方案（submodule/包依赖/import）。"
+        "name": "Feng Yebo",
+        "hardProgress": "quant-agent 完成 P1-P5 软决策优化、PM CoT 升级、decision-replay harness、LLM audit ledger 集成；MIR 大修 6/7 提交；network-traffic-perceptron 审计收口。",
+        "keySignal": "反思应定位到 CoT 步骤级因果归因+最小干预；软决策层不可回测，必须用 replay harness 验证；代码复用真正成本是持续同步，需 parity 机制化。",
+        "evidenceLevel": "B（多模块有测试支撑，软决策效果未实盘验证）",
+        "teacherDecision": "CONFIRM：上实盘 paper 前确认；定 parity 方案（submodule/import）；决定网络流量线是否推论文。"
       },
       {
         "rank": 3,
-        "name": "梁锐超",
-        "project": "经济学元认知与 SWM/SPIN 验证",
-        "reason": "边际原理停止控制器在 GAIA 取得同模型 A/B 提升（得分+25%，成本-20%，轮次-27%），元认知模板化方法资产形成；SWM 用 SPIN 形式化验证通过，确立 gold-independent 信号原则。证据 A/B，价值估计 150+120万，多项目协调清晰。",
-        "evidenceLevel": "A（GAIA 与 SCTP 实证）",
-        "topAction": "继续机会成本路由 A/B，验证模板可迁移；暂不需老师介入。"
+        "name": "Liang Ruichao",
+        "hardProgress": "经济学元认知边际原理落地并 GAIA A/B：成本 -20.3%、轮次 -27%，得分 +25%；LLM-based SWM + SPIN 端到端验证通过。",
+        "keySignal": "元认知算法可沉淀为可填充模版（Rule+Primitive+FailureMode）；二阶决策必须并入非自报客观信号（gold-independent signal）。",
+        "evidenceLevel": "A（边际原理与 SPIN 有实验数据）/B（其余原理仅设计）",
+        "teacherDecision": "KEEP：待机会成本路由 A/B 后判断是否主线论文切口。"
       },
       {
         "rank": 4,
-        "name": "万文源",
-        "project": "Region PAI 内部注意力原型与 evidence gate",
-        "reason": "Region PAI 把 bbox 映射到 image token 做推理时 attention 增强，代码可运行，LMEE 有正向现象；geometry evidence 接口落地。CoT's CoT 三条关于 internal attention、3D 轻量接口、evidence gate 均有实现支撑。证据 B/C，下一步成对评估明确。",
-        "evidenceLevel": "B（原型通过测试，数值未出）",
-        "topAction": "确认 Region PAI 作为主推方向，3D 先走 geometry evidence。"
+        "name": "Zhang Haonan",
+        "hardProgress": "工具调用路由原型：BFCL Simple entity+slot 联合提示达 95% 工具准确率；BFCL Multiple 坍塌至 5%。",
+        "keySignal": "在大模型和工具之间加意图树并不会自动带来可信性：不可信点从生成工具调用挪到生成意图树，收益只在符号匹配阶段；局部修复会破坏下游阶段（entity-only 掉至 35%）。",
+        "evidenceLevel": "A（局部耦合有直接实验）；B（可信性增益未量化）",
+        "teacherDecision": "MEET：讨论可信性论证取舍；确认能否提供 Claude/OpenAI API 及组内工具调用 benchmark。"
       },
       {
         "rank": 5,
-        "name": "张浩楠",
-        "project": "工具调用路由意图树",
-        "reason": "BFCL Simple 上 entity+slot 联合提示达 95% 工具准确率，但 multiple 场景坍塌至 5%，暴露多工具匹配未设计；发现意图树仍由 LLM 生成，可信性论证未成立。证据 A（实体提示副作用的直接数据），CoT 关于证伪型对照重要，价值 100 万。",
-        "evidenceLevel": "A（阶段耦合负向实验数据）",
-        "topAction": "听取老师对可信性方向取舍意见，修复 multiple 坍塌。"
+        "name": "Huang Xun",
+        "hardProgress": "SafeClaw 三场景评测：code-execution 路由率 100%，google-workspace 路由率 12%，LLM Router 准确率下降；动态红队 v2 对 DeepSeek 实现 100% objective 越狱。",
+        "keySignal": "高智能 Agent 面对大一统安全规则会因过度自信产生流程违建，Universal 安全护栏路由率可暴跌至 12%；红队需跨维度 Thompson Sampling 动态组合。",
+        "evidenceLevel": "A（路由率有直接对比数据）；B（空响应语义未剥离）",
+        "teacherDecision": "UNBLOCK：批准 Anthropic API，否则 SafeClaw 基线无法闭合。"
       },
       {
         "rank": 6,
-        "name": "黄勋",
-        "project": "SafeClaw 安全评测与动态红队",
-        "reason": "google-workspace 统一护栏路由率暴跌至 12%，暴露高置信模型流程违建；动态红队系统使 DeepSeek 100% 越狱，维度级短板发现。证据 A（路由率对比），CoT's CoT 模型自信短路有新意。项目管理明确但缺 Anthropic API。",
-        "evidenceLevel": "A（直接实验数据）",
-        "topAction": "协助解决 Anthropic API，评估统一护栏放弃还是细分路由。"
+        "name": "Li Chunhan",
+        "hardProgress": "LMEE-Bench 小模型流水线 v0 跑通 53.79%；诊断 Counting/Location 主因是 grounding 而非规则；发现 adapter 用卫星域 DINO，切到 DINOv2-large。",
+        "keySignal": "先判断是算法错还是特征弱，比直接改规则更重要；grounding 需按题型路由（OWLv2 提升 Counting 但伤害 Location/Relationship）。",
+        "evidenceLevel": "A（有详细实验与诊断数据）",
+        "teacherDecision": "KEEP：下周 DINOv2-large 单变量训练结果出来后再评估。"
       },
       {
         "rank": 7,
-        "name": "李淳涵",
-        "project": "LMEE-Bench 小模型感知流水线",
-        "reason": "跑通 5-Stage 流水线 53.79%，定位 Counting/Location 瓶颈在 grounding 而非规则；OWLv2 提升 Counting 25.9pt 但伤害 Relationship，证明需 per-category routing；发现 adapter DINO 域不匹配。证据 B，下一步 DINOv2 训练与混合 grounding 明确。",
-        "evidenceLevel": "B（诊断实验支撑）",
-        "topAction": "跟进 DINOv2-large 对比结果，确认路由策略。"
+        "name": "Wan Wenyuan",
+        "hardProgress": "Region PAI internal attention 原型：bbox 映射到 image token 并在 SDPA 层 patch 增强注意力；geometry evidence 接口完成；LMEE-Bench 有正向现象但未给完整数值。",
+        "keySignal": "internal attention 可工程化为推理时 token reweighting，避免改图像或堆 context；3D imagination 先轻量化成 geometry evidence，不做完整重建。",
+        "evidenceLevel": "B（代码原型完成，缺正式结果表）",
+        "teacherDecision": "REFINE：确认 Region PAI 是否作为 internal attention 主线，3D 先以 geometry evidence 轻量推进。"
       },
       {
         "rank": 8,
-        "name": "孙曼琦",
-        "project": "HarmonyOS 样本服务器验证",
-        "reason": "31 个样本用真实 C2 服务器回链验证，27 个通过，定位并修复 JSMiner/Monokle 两处残留；发现代码看达标但服务器端露馅。证据 A-（双向日志对照），价值估计偏低但方法可复用。",
-        "evidenceLevel": "A-（真实流量验证）",
-        "topAction": "提交华为后转向合成 agent 自动化。"
+        "name": "Sun Xiao",
+        "hardProgress": "WBD cutpoint bank A/B/C 三个任务节点可用；communication 作为 episodic memory intervention 的范式形成；三层指标设计但 merge analyzer 未完成。",
+        "keySignal": "communication 任务收益可通过 cutpoint bank 拆开测量：固定前置状态只改变 treatment，看 next action/mechanism/slot 变化。",
+        "evidenceLevel": "B+（有局部分布数据，缺任务级聚合）",
+        "teacherDecision": "KEEP：下周实现 merge analyzer，不扩 cutpoint。"
       },
       {
         "rank": 9,
-        "name": "杨彦靖",
-        "project": "AKB 库级推荐与树结构融合",
-        "reason": "Tree + AKB 组合在真实案例召回率 100%，并能推荐人工未标注的合理 API，未出现幻觉。CoT's CoT 分层决策（Library Selection 才是难点）证据 A，但对价值金额未估算。",
-        "evidenceLevel": "A（案例验证）",
-        "topAction": "推进与刘小夏对接，将记忆协同机制做实。"
+        "name": "Lyu Mengyao",
+        "hardProgress": "Taxonomy/KG 多标签 schema、MMKG SOTA 诊断、Comm RQ 重构、HepaChat retrieval 参数修正四条线推进，均给出下一步最小动作。",
+        "keySignal": "好的 taxonomy 应保留多重角色（功能关联图）；MMKG 很多方法多模态在 feature extraction 后消失；RAG retrieval 应找能承担推理责任的文本，而非仅相似文本。",
+        "evidenceLevel": "B（多为设计/技术分析，缺系统定量验证）",
+        "teacherDecision": "KEEP：注意三线并行，下周用小样本验证 schema/extraction 收口。"
       },
       {
         "rank": 10,
-        "name": "孙晓",
-        "project": "WBD cutpoint bank 与 communication effect",
-        "reason": "把 communication 从风格差异重构为 episodic memory 干预，A/B/C 三个节点可用；提出三层指标预注册原则，证据 B+。项目管理聚焦，下周 merge analyzer 明确。",
-        "evidenceLevel": "B+（cutpoint 可用，指标未聚合）",
-        "topAction": "下周日实现 merge analyzer，不再调 schema。"
+        "name": "Qian Jiayu",
+        "hardProgress": "TumorSU-VQA/MERIT 主结果整理：MERIT 70.4 MCQ；完成 claim-driven 图表设计与消融压缩。",
+        "keySignal": "论文后期不是补内容而是压缩 claim entropy；数据驱动论文把可支持 claim 写窄；图表设计是论证资源分配，不是排版。",
+        "evidenceLevel": "A（来自多轮正文推进，但数值为 clean validation）",
+        "teacherDecision": "KEEP：冻结主表和核心图，准备投稿。"
+      },
+      {
+        "rank": 11,
+        "name": "Sun Manqi",
+        "hardProgress": "31 个 HarmonyOS 样本服务器真实流量核验：25 个一次通过，JSMiner/Monokle 两处残留收尾；50000 良性样本分类流程跑通。",
+        "keySignal": "判断迁移样本好不好最可靠是服务器实测+设备日志对账，不能只看代码；行为必须放回原家族发生层。",
+        "evidenceLevel": "A-（27 样本服务器日志+HiLog 对照）",
+        "teacherDecision": "KEEP：提交华为后开始 synthesis agent 重构。"
+      },
+      {
+        "rank": 12,
+        "name": "Zhang Xiaoyu",
+        "hardProgress": "Intent Graph 框架对齐；MAS debugging 数据集构建完成；scam 策略库与 communication failure 仿真推进；游戏 benchmark 筛选标准明确。",
+        "keySignal": "intention extraction 不只是安全检测子模块，应成为统一白盒语义基座（Intent Graph）；MAS debugging 真问题是数据集复现性差。",
+        "evidenceLevel": "B（系统设计与数据集动作，无实验验证）",
+        "teacherDecision": "KEEP：但需控制 ICSE 投稿对系统线挤压，各线设最小动作。"
+      },
+      {
+        "rank": 13,
+        "name": "Sui Hao",
+        "hardProgress": "Agent Skill IP 确权算法重构：从静态代码水印转向动态时序特征注入，完成第二代核心代码；定位语义稀释机理。",
+        "keySignal": "静态水印在多轮工具链中被语义稀释；确权信号必须在动态推理流中自适应增强。",
+        "evidenceLevel": "B（有失效模式分析与新架构，缺极限压力测试）",
+        "teacherDecision": "KEEP：下周全量实验验证高触发率与隐蔽性。"
+      },
+      {
+        "rank": 14,
+        "name": "Ge Mengmeng",
+        "hardProgress": "APT 重建 Perception 接口定义完成；威胁情报源清单与查询模板；IOC 置信度四维标注接口设计。",
+        "keySignal": "情报置信度是随时间衰减的动态量，不同 IOC 类型衰减函数不同；接口定义是假设审计工具。",
+        "evidenceLevel": "B（设计完成，缺原型）",
+        "teacherDecision": "KEEP：下周接通 OTX API，输出第一个置信度标注原型。"
+      },
+      {
+        "rank": 15,
+        "name": "Hou Xinmeng",
+        "hardProgress": "零结果可入叙事评估协议：6 门+失败判据；claim-evidence 对齐 evaluator 雏形。",
+        "keySignal": "零结果能否入叙事不是写作技艺而是门控评估流程；它是元认知校准的高信号探针。",
+        "evidenceLevel": "B（框架/案例支撑，未系统验证）",
+        "teacherDecision": "KEEP：下周用 ≥5 真实案例校验后再升级 module。"
+      },
+      {
+        "rank": 16,
+        "name": "Xu Yijia",
+        "hardProgress": "secure baseline 收成 dependency/repair/artifact 三条链；evaluator 分层（core+secure appendix）；control layer gate 化（review/trust/approval）。",
+        "keySignal": "secure baseline 第一步不是大而全安全，而是先测最直接影响实验可信性的链；控制层第一版是裁决结构而非自我描述。",
+        "evidenceLevel": "B（设计收缩，尚未跑测试）",
+        "teacherDecision": "REFINE：下周必须落一条链的最小测试点，写出 gate 表。"
+      },
+      {
+        "rank": 17,
+        "name": "Wu Zhangfa",
+        "hardProgress": "FlowSCAN 消融体系设计：clean/defense 双版本，异常比例/标签数量/模块/攻击协议四类消融，CEAM/S²EM 方法论修缮。",
+        "keySignal": "消融实验不是补表，而是把方法贡献拆成可验证命题；clean 与 robust 要分开证明；方法论修缮与实验设计互相约束。",
+        "evidenceLevel": "B（设计与方法论工作，无新实验结果）",
+        "teacherDecision": "KEEP：下周固定主结果表和最小模块消融表。"
+      },
+      {
+        "rank": 18,
+        "name": "Guo Wenbo",
+        "hardProgress": "Skill2Agent POA 架构设计，区分 working memory schema/operators/CoT 三件套，明确逆向路径。",
+        "keySignal": "给 Skill 生成 working memory schema 是 LTM 结构化问题的实例；能力可执行性取决于记忆结构，而非接口。",
+        "evidenceLevel": "C（方向判断，POA 实例未跑出）",
+        "teacherDecision": "MEET：确认 POA 架构组合（A/B/C），后落地跑通一个 POA。"
+      },
+      {
+        "rank": 19,
+        "name": "Liao Jie",
+        "hardProgress": "EFSM scanner 小规模效果提升；意图复原攻击实验推进。",
+        "keySignal": "Skill 安全检测对象应是带变量、条件和动作副作用的行为转移，而非文本；EFSM 比普通 FSM 更合适。",
+        "evidenceLevel": "B（小规模现象，缺批量验证）",
+        "teacherDecision": "KEEP：下周固定 EFSM schema 跑 20-30 个 skill 小 benchmark。"
+      },
+      {
+        "rank": 20,
+        "name": "Jie Wanqing",
+        "hardProgress": "代码检索方向：调整训练思路，从调 Agent 转向前端跨模态模型监督训练。",
+        "keySignal": "不能过早依赖后端 Agent 修正前端模型问题；需先补齐监督训练使相似度本身可靠。",
+        "evidenceLevel": "B（实验观察，新训练未完成）",
+        "teacherDecision": "KEEP：等 Phase 3 新训练结果。"
+      },
+      {
+        "rank": 21,
+        "name": "Qiao Wei",
+        "hardProgress": "APT 检测 pipeline 模块化重构进行中；知己知彼双 Agent 逻辑多轮实验未定架构；与 Chen Zhi 对齐。",
+        "keySignal": "pipeline 模块化程度直接约束研究可实验性与归因清晰性。",
+        "evidenceLevel": "C（重构未完成，未验证）",
+        "teacherDecision": "MEET：下周必须开会定 agent 架构，否则关键路径延期。"
+      },
+      {
+        "rank": 22,
+        "name": "Sun Weisong",
+        "hardProgress": "海通 SAP 问卷生成/需求提取/SAP 知识库三 Agent 原型跑通春风动力案例。",
+        "keySignal": "问卷生成不是单纯写问题，而是多源信息对齐；顾问个人历史案例库可能是关键资产。",
+        "evidenceLevel": "B（单案例，缺系统验证）",
+        "teacherDecision": "KEEP：先和海通确认输入优先级与附件类型。"
+      },
+      {
+        "rank": 23,
+        "name": "Yang Yanjing",
+        "hardProgress": "AKB 与树结构融合，完成开源选型流程验证；库级推荐与人工一致，召回率 100%。",
+        "keySignal": "知识组织结构重要性不亚于知识本身；API 开源选型是分层决策（Library Selection → API Planning），不是检索。",
+        "evidenceLevel": "A（多真实案例，但缺正式 benchmark）",
+        "teacherDecision": "KEEP：继续与刘小夏对接，推进实验与集成。"
+      },
+      {
+        "rank": 24,
+        "name": "Zhang Jiayi",
+        "hardProgress": "测试生成 Agent PoC 地基：可运行骨架 + 两层记忆 schema + 6 主题调研 + 里程碑。",
+        "keySignal": "探索型 agent 工程地基是结构化可 checkpoint working memory + 共享可追溯信息映射。",
+        "evidenceLevel": "B（schema 定稿+合成案例，真实系统未接）",
+        "teacherDecision": "KEEP：下阶段接入真实数据/环境，设 go/no-go 门。"
+      },
+      {
+        "rank": 25,
+        "name": "Xie Maoyi",
+        "hardProgress": "内核 invariant mining：4 个 formal predicate，helper-pair catalogue 扩展到 12，SmPL query 原型。",
+        "keySignal": "taxonomy 价值不在分类，而在能否生成 query；candidate generation 是 precision 问题。",
+        "evidenceLevel": "B（原型命中，大量 FP）",
+        "teacherDecision": "KEEP：下周引入 LLM 二次过滤评估 precision。"
+      },
+      {
+        "rank": 26,
+        "name": "Zhang Banghai",
+        "hardProgress": "FoundationStereo 接入，规则 IK baseline，8000+ pose 数据库；小脑训练失败定位中。",
+        "keySignal": "学习型小脑训练前必须先建立规则 baseline、pose 数据库和执行误差 benchmark。",
+        "evidenceLevel": "B（工程链路，缺统计对比）",
+        "teacherDecision": "KEEP：下周基于 pose 数据库批量测试规则 IK，定位训练失败主因。"
+      },
+      {
+        "rank": 27,
+        "name": "Sun Kairan",
+        "hardProgress": "Claude/DeepSeek agent 行为差异：DeepSeek 执行强但易 assume；用户手动切换模式观察；memory 补偿 session/caching 缺失。",
+        "keySignal": "模型关键差异不只是推理强弱，而是信息不完整时默认动作：先确认还是先假设。",
+        "evidenceLevel": "B（观察与真实使用，未成稳定规则）",
+        "teacherDecision": "KEEP：继续观察并形成任务分阶段使用规则。"
+      },
+      {
+        "rank": 28,
+        "name": "Kong Ziqiao",
+        "hardProgress": "Brainary 两层 SDK 与示例交付；工作重心切至 SP27 DDL。",
+        "keySignal": "系统从内部能力走向外部可用需分层 SDK；deadline 阶段关键是优先级收束而非扩线。",
+        "evidenceLevel": "B（交付完成，缺使用反馈）",
+        "teacherDecision": "KEEP：跟进反馈，继续 SP27 DDL。"
+      },
+      {
+        "rank": 29,
+        "name": "Huang Yitan",
+        "hardProgress": "授权漏洞检测系统设计收敛；WebGoat 接入并跑通 IDOR 两条真实动态确认。",
+        "keySignal": "动态验证关键难点是准备访问关系世界；系统需诚实区分确认/未确认/未执行。",
+        "evidenceLevel": "B（WebGoat 支撑，闭环骨架未实现）",
+        "teacherDecision": "KEEP：下周实现闭环验证骨架。"
+      },
+      {
+        "rank": 30,
+        "name": "Liao Zeqin",
+        "hardProgress": "具身智能目标推理以对象为中心 KG 设计；memory-based 漏洞检测论文重构；跨 Skill 攻击实例构造。",
+        "keySignal": "很多 Agent 失败因长链路中丢失‘自己正在操作的是谁’，身份一致性可能比规划更基础。",
+        "evidenceLevel": "B（多线设计，缺实验）",
+        "teacherDecision": "KEEP：但需聚焦身份一致性主线，防止多线分散。"
+      },
+      {
+        "rank": 31,
+        "name": "Wu Jiahui",
+        "hardProgress": "数据项目管理框架设计，建立 Data Foundation 至 Product 结构，映射 Brainary 能力。",
+        "keySignal": "项目管理本质是 workflow/知识流管理，项目可建模为动态 Knowledge Graph。",
+        "evidenceLevel": "C（框架设计，无落地）",
+        "teacherDecision": "REFINE：下周建数据项目依赖图和 Project State Schema。"
+      },
+      {
+        "rank": 32,
+        "name": "Wu Junhao",
+        "hardProgress": "21 节点全稳态-内感受系统分区、MidAuto Marr 三层 case study、协同度公式、50 数据集 catalog。",
+        "keySignal": "brain-to-AI 迁移算法应写在 motif 层而非单节点；AI 接口强度必须是多模态 stack；需显式标注 system boundary。",
+        "evidenceLevel": "B（case study 完成，缺显著性检验）",
+        "teacherDecision": "KEEP：下周 spin-test 显著性 + Hansen 2024 对齐。"
+      },
+      {
+        "rank": 33,
+        "name": "Zhou Zhenhong",
+        "hardProgress": "Auto-research 数据合成 working memory 多种 workflow 实验进行中；周报管理横向/纵向分析上线。",
+        "keySignal": "auto-research 核心不是直接生成结果，而是先构造可靠 working memory；周报可成个人研究轨迹 memory。",
+        "evidenceLevel": "B（有工程上线，实验未完成）",
+        "teacherDecision": "KEEP：下周一收敛 working memory 结构。"
+      },
+      {
+        "rank": 34,
+        "name": "Hu Lianyu",
+        "hardProgress": "Perception 接口标准化、文件记忆、下游联调完成；启动 3D 特征空间重建。",
+        "keySignal": "多模块协同关键是统一表征范式；特征空间 3D 重建可补充单视角信息。",
+        "evidenceLevel": "A（接口联调实测）/B（3D 未验证）",
+        "teacherDecision": "KEEP：下周全量接口测试，3D 小数据集验证。"
+      },
+      {
+        "rank": 35,
+        "name": "Huang Xinpeng",
+        "hardProgress": "EvoRepair 论文正文撰写与图表绘制推进。",
+        "keySignal": "论文表达需将问题动机、方法设计和实验结果串成完整论证链。",
+        "evidenceLevel": "C（写作推进，无新实验）",
+        "teacherDecision": "KEEP：继续完善，注意篇幅平衡。"
+      },
+      {
+        "rank": 36,
+        "name": "Hu Zhichao",
+        "hardProgress": "白利用 concept 阐述为可结构化建模的攻击策略知识。",
+        "keySignal": "白利用不是使用正常工具，而是可抽取为 Procedure Knowledge 的攻击知识。",
+        "evidenceLevel": "C（概念，缺实验）",
+        "teacherDecision": "REFINE：需转化为可验证的技术路线。"
+      },
+      {
+        "rank": 37,
+        "name": "Ke Changbo",
+        "hardProgress": "无人机协议测试流程依赖树→DSL→XML 已实现。",
+        "keySignal": "无人机协议+文档可形式化建模。",
+        "evidenceLevel": "C（仅流程描述）",
+        "teacherDecision": "KEEP：补充实验数据。"
+      },
+      {
+        "rank": 38,
+        "name": "Zhang Yiran",
+        "hardProgress": "OS/compiler 场景 code→IR→code 流程尝试。",
+        "keySignal": "代码生成瓶颈在代码理解阶段的 complexity，而非生成阶段。",
+        "evidenceLevel": "C（观察，无数据）",
+        "teacherDecision": "REFINE：下周测试 code-req-code，结合 Codex。"
+      },
+      {
+        "rank": 39,
+        "name": "Jia Xiaojun",
+        "hardProgress": "具身智能安全方向调研与技术路线初稿。",
+        "keySignal": "具身安全最值得做的是危险动作发现-修复-防护闭环，而非单点 benchmark。",
+        "evidenceLevel": "C（调研，无 MVP）",
+        "teacherDecision": "KEEP：下周跑通 OpenVLA baseline，构造 20-50 测试场景。"
       }
     ],
     "topSignals": [
-      {
-        "name": "郭耀骐",
-        "signal": "Benchmark 增益必须做 headroom 归一化；motivation 是可证伪预测，主实验是后验验证；端到端 pipeline 成本是乘性而非加性。",
-        "evidence": "Pro +10% / Verified +1-2% 主结果，成本超支 1500+ SGD vs 预估 600-800。",
-        "value": "ICSE 主结果硬数字，准备投稿。"
-      },
-      {
-        "name": "冯业博",
-        "signal": "软决策层改动不可回测，必须用 decision-replay harness 作为验证基底；反思应定位到 CoT 步骤级因果归因。",
-        "evidence": "两套 replay harness 建立，P1-P5 实现，audit ledger 集成。",
-        "value": "quant 实盘前软决策优化，MIR 已投。"
-      },
-      {
-        "name": "梁锐超",
-        "signal": "元认知算法可模板化（Rule + Primitive + FailureMode），元认知自指成本必须核算；gold 不完整时应切换到形式化验证等客观信号。",
-        "evidence": "GAIA A/B cost -20%，SCTP SPIN 全通过。",
-        "value": "经济学元认知可复用模块，SWM 评测方法。"
-      },
-      {
-        "name": "万文源",
-        "signal": "Internal attention 可用 Region PAI 工程化：不改图像、少堆 token，直接调节模型看哪里；3D imagination 先用 geometry evidence 轻量接口。",
-        "evidence": "Region PAI 原型通过单元测试，LMEE 有正向现象。",
-        "value": "perception 中间层可沉淀为 Brainary 模块。"
-      },
-      {
-        "name": "张浩楠",
-        "signal": "意图树仍由 LLM 生成，可信性收益只在符号匹配阶段；多阶段匹配管线存在阶段间负向耦合，单阶段修复可致全局退化。",
-        "evidence": "BFCL Multiple 坍塌 5%，entity-only 提示掉到 35% vs 联合提示 95%。",
-        "value": "工具调用可信性论证需收缩，评测协议优先。"
-      },
-      {
-        "name": "黄勋",
-        "signal": "高置信 LLM 会因自信短路绕过外部工具，统一安全护栏在宽泛场景路由率可暴跌至 12%；模型防御呈维度塌陷，需要 Thompson Sampling 动态红队。",
-        "evidence": "google-workspace 路由率 12%，DeepSeek 100% 越狱。",
-        "value": "推翻 Universal 安全护栏假设，强制细粒度路由。"
-      },
-      {
-        "name": "李淳涵",
-        "signal": "小模型流水线瓶颈在 grounding 而非规则；不同题型需不同 grounding 后端；adapter 存在域不匹配。",
-        "evidence": "Counting 14.8% -> OWLv2 40.7%，但 Relationship 下降 15.4pt。",
-        "value": "per-category routing 策略，DINOv2 单变量实验。"
-      },
-      {
-        "name": "孙曼琦",
-        "signal": "样本合格判据应该是服务器端真实流量 + 设备日志对账，而非代码表面调用。",
-        "evidence": "31 样本中 27 个通过，2 处残留修复，覆盖挖矿、间谍等家族。",
-        "value": "跨生态恶意行为对齐基准的验证层。"
-      },
-      {
-        "name": "杨彦靖",
-        "signal": "知识组织结构比知识内容更关键；API 开源选型是分层决策（Library Selection -> API Planning），不是检索问题。",
-        "evidence": "多个案例召回 100%，推荐合理未标注 API。",
-        "value": "AKB 库推荐可作为 Brainary 记忆组织参考。"
-      },
-      {
-        "name": "孙晓",
-        "signal": "Communication 的任务收益可通过 cutpoint bank 受控测量；user profiling、episodic memory、goal/intent perception、working memory 构成影响链。",
-        "evidence": "A/B/C 三节点可运行，机制分布区分。",
-        "value": "可扩展的 communication evaluation benchmark。"
-      }
+      "主实验 beat SOTA 与 headroom 归一化：郭曜齐 BRT 在 SWE-bench Pro +10% / Verified +1-2%，提出 benchmark 增益应除以剩余空间，避免近天花板数据集贡献被低估。",
+      "软决策层验证与 CoT 步骤级归因：冯业博 quant-agent P1-P5 + decision-replay harness 说明 prompt/CoT 改动不可用单测验证，必须历史重放+上线观测；反思应定位到最小致错步骤。",
+      "经济学元认知模板与客观信号铁律：梁瑞超边际原理 A/B 节省 20% 成本，SPIN 验证说明任何二阶决策不能由自报或不完整 gold 独裁，必须并入独立客观信号。",
+      "Universal 安全护栏失效：黄汛发现 SafeClaw 在宽泛场景路由率暴跌至 12%，高能力 LLM 对大一统规则产生流程违建；红队需跨维度动态组合。",
+      "评测基础设施污染：李淳涵 grounding 诊断、吕梦瑶 RAG reference-list artifact、张浩楠意图树不可信源移，共同指向评测/检索需显式证据质量维度。"
     ],
     "commonRisks": [
-      "大量项目仍停留在设计或小规模验证阶段，缺少系统性实验结果，证据等级多为 B/C。",
-      "价值金额估算口径严重不一致：部分人给出数百万元人民币甚至 S$M，部分人仅几千元，需要统一换算规则。",
-      "多个项目存在外部依赖未解决：如黄勋缺 Anthropic API，乔伟需老师开会定架构，郭耀骐 token 成本超支。",
-      "部分报告把“与老师讨论”或“文献调研”当作硬进展，缺少可验证产出。",
-      "自动化科研转化普遍停留在 checklist/思路，落地为可调用模块者少。",
-      "安全方向多个项目（SafeClaw、EFSM scanner、Intent Graph）均发现现有方法或数据集不可靠，但尚未形成替代方案的系统验证。"
+      "大量报告仍停留在设计/接口/调研阶段，缺少正式实验与量化结果；证据等级多为 B/C，部分 A 级自评缺少对照或显著性检验。",
+      "Token 成本系统性低估：郭曜齐实际 1500 SGD 超预估一倍，乔伟 50M tokens；多阶段 pipeline 成本呈乘性叠加，需建立预算预测器。",
+      "多线并行使关键路径模糊：张晓宇四线、吕梦瑶三线、廖泽钦三线并行，容易分散；需明确单一主线。",
+      "安全评测资源缺口：黄汛缺 Anthropic API，张浩楠缺 Claude/OpenAI key，导致基线对比无法闭环。",
+      "部分周报缺 CoT's CoT 或未标老师已知/未知，证据等级与价值估算随意，需规范模板。"
     ],
     "collaborationCandidates": [
-      "郭耀骐的 headroom 归一化与侯欣萌的零结果评估协议可合作，形成面向评测的 calibration 模块。",
-      "万文源与李淳涵同属 LMEE 感知线，建议合并 Region PAI 与 5-Stage 流水线，统一 evidence gate 与 grounding 路由。",
-      "梁锐超的经济学元认知与孙凯然的模型调度观察可结合，开发按任务阶段/成本的不同模型调度策略。",
-      "黄勋与廖杰的安全路由/EFSM 扫描可共享失败模式库，构建 agent skill 安全评测 benchmark。",
-      "冯业博的 decision-replay harness 与郭耀骐的 motivation-主实验自检链路可相互借鉴，沉淀评估工具。"
+      {
+        "candidate": "冯业博 × 梁瑞超",
+        "reason": "quant 决策回放 harness 与经济学元认知模板可合并为带成本的自反思验证模块，共享 replay/客观信号机制。"
+      },
+      {
+        "candidate": "郭曜齐 × 李淳涵/王文渊",
+        "reason": "headroom 归一化评测协议可与 LMEE-Bench evidence gate 结合，形成多 benchmark 含金量校准与证据路由。"
+      },
+      {
+        "candidate": "张浩楠 × 郭文博 × 徐一佳",
+        "reason": "工具调用中间层、POA 架构、控制 gate 可统一为可审计的 agent 执行与裁决层。"
+      },
+      {
+        "candidate": "黄汛 × 廖杰 × 隋浩",
+        "reason": "SafeClaw 路由失效、EFSM Skill 扫描、动态时序确权可共享攻击样本与评测协议。"
+      },
+      {
+        "candidate": "孙晓 × 张晓宇",
+        "reason": "communication cutpoint bank 与 Intent Graph 可整合为多 agent 意图与沟通效果评估。"
+      }
     ],
     "teacherChecklist": [
-      "与冯业博确认 quant 实盘 key 和 parity 方案（submodule/包依赖/import）。",
-      "与郭耀骐约 MEET，裁决主结果强度是否够 ICSE，headroom 叙事写法，ablation 范围与预算。",
-      "协调解决黄勋 Anthropic API 权限问题，评估 SafeClaw 路由修复优先度。",
-      "与乔伟对齐知己知彼双 Agent 架构，敲定交互流程。",
-      "审查张浩楠工具调用可信性论证，决定是否继续投入意图树方向。",
-      "关注万文源 Region PAI 与李淳涵 DINOv2 结果，决定 internal attention 是否作为主线。",
-      "统一价值金额估算口径，要求缺失价值或过高过低者复核。",
-      "督促缺失周报学生尽快提交，尤其涉及关键路径项目者。"
+      "与郭曜齐开会：确认 Pro +10% / Verified +1-2% 是否够投 ICSE；批准 headroom 叙事与 ablation 范围；用乘性成本模型重估下周预算。",
+      "与冯业博确认：quant 上实盘 paper 前批准；parity 方案选型（submodule/包依赖/import）；是否将 network-traffic-perceptron 推论文。",
+      "为黄汛批准 Anthropic API；为张浩楠提供 Claude/OpenAI API key，否则安全基线与跨模型验证停滞。",
+      "与乔伟开会确定知己知彼 agent 架构；与郭文博确认 POA 架构组合（A/B/C），避免关键路径延期。",
+      "统一证据等级与成本预估纪律：要求乘性成本预算，管道单阶段修改必须重跑端到端对照；规范 CoT's CoT 已/未知标注。"
     ]
   }
 }
