@@ -1,0 +1,56 @@
+{
+  "key": "person:yang-yanjing:2026-11-15:weekly-score",
+  "generatedAt": "2026-11-14T10:02:12.211Z",
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "reasoningEffort": "high",
+  "inputHash": "deab348f68abeaa7a7ff1cfa228c98b85ed2190473fb38e41e2e3f902037d2ee",
+  "contentHash": "deab348f68abeaa7a7ff1cfa228c98b85ed2190473fb38e41e2e3f902037d2ee",
+  "promptHash": "dd5205e0146f7bfc74cbfb84ed9fc44caa48090dca3cd84f010cf05b11b06e18",
+  "result": {
+    "hardProgress": {
+      "score": 12,
+      "reason": "本周实现了 V9 分层 grounding，在固定六题面板上从 V8 的 2/6 提升到 4/6，并完成 K11→K12 最小闭环（Cliffy 学到后 Cattrs 保持通过），说明知识组织方法在局部有可复现进展。但 K12 五题并发只读基线仅 1/5，与六题面板结果矛盾，且样本极小，无法支持稳定泛化结论。",
+      "missingEvidence": "未提供六题和五题面板的逐题 F2P/P2P 原始输出、多次重复运行结果及方差；未说明两套评估为何差异如此之大；未提供 K11→K12 闭环中除 Cattrs/Cliffy 外其他 retention tasks 的保持数据。"
+    },
+    "cognitiveIncrement": {
+      "score": 10,
+      "reason": "从“增加知识原子”转向“Abstraction & Grounding 双向循环、多轴索引、版本分离”是方法论层面的增量，初步区分算法版本与知识状态。但 capability/causal locus 仍依赖规则识别，abstraction 以规则模板为主，尚未从代码级因果链自动归纳新程序，认知自动化程度有限。",
+      "missingEvidence": "未给出 abstraction 的实际样例与模板规则；未证明多轴索引相比单一相似度检索在更多任务上的稳定增益；未提供 capability/failure_mode/causal_locus 的自动识别准确率。"
+    },
+    "cot2Depth": {
+      "score": 10,
+      "reason": "报告对 V8/V9/V10 策略进行了对比，并诊断了 Perception 误路由、模板局限、transferable 凭正负样本判定等元层面问题，体现了一定的 CoT 反思深度。但没有对某个失败题目的实际推理链进行逐步拆解，分析仍停留在策略与聚合指标层面。",
+      "missingEvidence": "缺少具体失败 case 的 CoT 追踪、错误因果链的逐步归因记录；未展示 abstraction 与 grounding 在单题执行中的实际绑定与冲突消解过程。"
+    },
+    "brainaryMapping": {
+      "score": 7,
+      "reason": "使用 LTM、Working Memory、Episodic Retrieval、Schema、role-binding 等认知架构术语，且设计了多轴索引和 P/M/R/F/S 角色分工，映射较为完整。但映射是否真实改善系统行为未经验证，仍属于类比性框架。",
+      "missingEvidence": "未提供各脑结构映射与实验指标的对应关系；未说明多轴索引激活优先级背后的认知依据或消融验证。"
+    },
+    "monetaryValue": {
+      "score": 4,
+      "reason": "该项目若能稳定泛化 DeepSWE-20，对自动化软件修复具有潜在价值，但当前仅在 6 题小面板上达到 4/6，且五题并发基线仅 1/5，方差大，无 held-out 证据，离可交付价值较远。",
+      "missingEvidence": "未提供任何 held-out 任务或真实仓库数据；未进行成本效益分析；未与现有 SOTA 修复工具在相同面板上比较。"
+    },
+    "projectManagement": {
+      "score": 12,
+      "reason": "报告管理动作清晰：版本分离（V9/K12）、备份重启、保护门禁阻止异常 K13、明确安全边界、列出当前问题与验证计划，体现较好的项目控制。但缺少时间表、成功/停止标准、依赖和风险登记，实验规模与结论之间的关系管理尚显薄弱。",
+      "missingEvidence": "未提供实验计划的时间节点与负责人；未定义“稳定泛化”的具体量化门槛；未列出 K13 异常中断后的资源与进度影响。"
+    },
+    "nextAction": {
+      "score": 7,
+      "reason": "已明确下一步为从 K12 备份重启，按“并发只读基线→逐题 RCA/Abs/Grounding→冻结→同五题回测”顺序执行，且并发只用于冻结回测，方向合理。但未包含最关键的 held-out transfer 实验安排和停止条件。",
+      "missingEvidence": "未给出 held-out 任务集、样本量、成功阈值；未说明若回测结果仍不稳定将如何调整；未安排对 capability/causal locus 规则误路由的优先修复。"
+    },
+    "evidenceQuality": {
+      "score": 2,
+      "reason": "提供了策略对比表、知识原子数量和最小闭环结果，但均为自报数据，缺少原始日志、验证器输出、多次重复统计；关键矛盾（6 题 4/6 vs 5 题 1/5）未解释，证据可信度有限。",
+      "missingEvidence": "未附任何原始验证输出、运行日志、随机种子和方差；未说明 F2P/P2P 的计算方式与验证器版本；未提供 V10 为何失败的详细数据。"
+    },
+    "totalScore": 64,
+    "tier": "C",
+    "oneLineJudgment": "本周在知识组织框架上有实质迭代，但泛化证据薄弱、稳定性差、且缺少 held-out 验证，尚不能支撑可靠结论。",
+    "professorFollowUp": "需要学生补充：1) 解释 K12 五题并发基线 1/5 与六题面板 4/6 的巨大差异，并提供全部原始 F2P/P2P 输出；2) 设计至少一个 held-out transfer 实验并给出成功阈值；3) 优先修复 capability/causal locus 规则误路由，否则后续 abstraction 可能系统性偏差；4) 确认所有实验均遵守禁止 gold patch 与跨任务补丁重放的安全边界。"
+  }
+}
