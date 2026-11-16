@@ -1,0 +1,53 @@
+{
+  "key": "innovation:person:zhang-yihe:2026-11-15",
+  "generatedAt": "2026-11-16T06:01:18.094Z",
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "reasoningEffort": "high",
+  "inputHash": "36fed0767a28dbfff4d63f33c770bc205d06485e3470e5af0af2664bfd7e3ce2",
+  "contentHash": "36fed0767a28dbfff4d63f33c770bc205d06485e3470e5af0af2664bfd7e3ce2",
+  "promptHash": "bf2ddf02742a0fe5a3725c366c40e9f709ba1ad8be9317a8d94674e714368321",
+  "result": {
+    "name": "Zhang Yihe",
+    "week": "2026-11-15",
+    "ideas": [
+      {
+        "ideaId": "2026-11-15/zhang-yihe:idea-1",
+        "essence": "保留 measurement 类别并核算观测开销；数据路径合并为独立 C/Rust 进程，Python 仅编排。",
+        "origin": "32 agent 管道等待最大，对端是 supervisor，无法区分瓶颈与测量副作用。",
+        "keyMoves": [
+          "将管道等待按 supervisor 状态拆分，发现等 CPU 49%、与 fsync 重叠 36%",
+          "BPF 时间分布中 syscall 65.45%，贵的是低价值全局挂点",
+          "合成去低价值挂点+移出关键路径，配 5% 分辨测量"
+        ],
+        "innovationKernel": "可核算开销的跨层观测：任务级时间树、工具归属与观测开销上界；未实现。",
+        "reusablePattern": "先量化观测自身开销定位低价值高成本挂点，再移出关键路径并定精度。"
+      },
+      {
+        "ideaId": "2026-11-15/zhang-yihe:idea-2",
+        "essence": "把意图与委托结构作为调度一等信号，驱动准入、牺牲者选择、护航与工具期 KV 保留。",
+        "origin": "G2 S-res 有收益，但不知来源及是否已有先例。",
+        "keyMoves": [
+          "对照去掉意图信息收益不降，排除任务语义",
+          "文献检索发现准入、工具期 KV、轨迹重放均已有工作",
+          "暴露现有系统看不见“有人在等”和“在替谁干活”"
+        ],
+        "innovationKernel": "拟验证意图与委托结构到控制决策的对应；仅护航、继承提供弱支持，三篇相关论文未读。",
+        "reusablePattern": "先对照和文献排除通用机制/已有工作，再聚焦未被覆盖的信号缺口。"
+      },
+      {
+        "ideaId": "2026-11-15/zhang-yihe:idea-3",
+        "essence": "语言级对象级追踪；shell/native/MCP 录制+重放；LLM 节点保守摘要；eBPF 截获边界；重放嵌入下轮推理。",
+        "origin": "Bash 内部敏感文件经管道交给网络程序，消息级看不到；字节污点慢多倍。",
+        "keyMoves": [
+          "相关开销对比发现“运行时×字节级×多轮”空白",
+          "利用工具执行短、LLM 推理有秒级延迟的负载结构",
+          "改为录制+重放嵌入推理间隙，分层精度避开二进制误报"
+        ],
+        "innovationKernel": "连接任务与授权上下文和跨语言追踪，明确 LLM 边界与盲区；先用判定实验决定层。",
+        "reusablePattern": "利用负载空闲期隐藏高成本分析，分层精度并前置实验控风险。"
+      }
+    ],
+    "overallPattern": "三个想法均以“来源不明或成本过高”为起点，先通过数据/文献/对照关闭伪缺口，再围绕智能体负载结构与跨层边界提出可验证的新组合。"
+  }
+}
